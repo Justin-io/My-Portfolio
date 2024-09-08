@@ -3,6 +3,17 @@
   box-sizing: border-box;
 }
 
+#titlee {
+  font-family: 'Courier New', Courier, monospace;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 3px solid;
+  width: 0; /* Will be dynamically changed with JS */
+  transition: all 0.3s;
+
+}
+
+
 bodyy {
   background-color: #050b0800;
   background-image: linear-gradient(147deg, #000000 0%, #272727 74%);
