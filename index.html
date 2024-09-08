@@ -39,13 +39,14 @@
       <h1><a href="index.html">Hari Nandan K</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="mr-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a> -->
-      <h2>I'm a passionate <span>App Developer</span> from Kerala</h2>
-  
+      <!-- <h2>I'm a passionate <span>App Developer</span> from Kerala</h2> -->
+      <h2><span id="titlee"></span> from Kerala</h2>
+
   
       <nav id="navbar" class="navbar">
         <ul>
           <li><a class="nav-link active" href="#header">Home</a></li>
-          <li><a class="nav-link" href="#books">Blogs</a></li>
+            <li><a class="nav-link" href="#books">Blogs</a></li>
           <li><a class="nav-link" href="#about">About</a></li>
           <li><a class="nav-link" href="#resume">Resume</a></li>
           <li><a class="nav-link" href="#services">Services</a></li>
@@ -59,6 +60,8 @@
         <a href="https://www.threads.net/@01.00.10.10" class="twitter"><i class="bi bi-twitter"></i></a>
         <a href="https://github.com/Justin-io" class="facebook"><i class="bi bi-github"></i></a>
         <a href="https://www.instagram.com/01.00.10.10?igsh=OGQ5ZDc2ODk2ZA==" class="instagram"><i class="bi bi-instagram"></i></a>
+        <a href="CV.pdf" class="instagram"><i class="bi bi-download"></i></a>
+
       </div>
 
     </div>
@@ -909,7 +912,40 @@
   }
 </script>
 
-  
+<script>
+  const texts = ["App Developer", "Cyber-Security Analyst"];
+  let currentIndex = 0;
+  let currentText = "";
+  let letterIndex = 0;
+
+  function type() {
+    if (letterIndex < texts[currentIndex].length) {
+      currentText += texts[currentIndex].charAt(letterIndex);
+      document.getElementById("titlee").innerHTML = currentText;
+      letterIndex++;
+      setTimeout(type, 100);  // Speed of typing each letter
+    } else {
+      setTimeout(erase, 500); // Pause before erasing
+    }
+  }
+
+  function erase() {
+    if (letterIndex > 0) {
+      currentText = currentText.substring(0, currentText.length - 1);
+      document.getElementById("titlee").innerHTML = currentText;
+      letterIndex--;
+      setTimeout(erase, 100);  // Speed of erasing each letter
+    } else {
+      currentIndex = (currentIndex + 1) % texts.length;
+      setTimeout(type, 500);  // Pause before typing the next word
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    setTimeout(type, 500);  // Start the typing effect after page load
+  });
+</script>
+
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
