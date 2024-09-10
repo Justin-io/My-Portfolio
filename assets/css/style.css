@@ -263,7 +263,7 @@ h6 {
 .mobile-nav-toggle {
   color: #fff;
   font-size: 28px;
-  cursor: pointer;
+  cursor: context-menu;
   display: none;
   line-height: 0;
   transition: 0.5s;
@@ -273,13 +273,23 @@ h6 {
 }
 
 @media (max-width: 991px) {
-  .mobile-nav-toggle {
+  /**.mobile-nav-toggle {
     display: block;
+  } */
+  .navbar li+li {
+  margin-left: 10px;
   }
 
-  .navbar ul {
+  .navbar a:hover,
+.navbar .active,
+.navbar .active:focus,
+.navbar li:hover>a {
+  color: #3fdf20;
+}
+
+ /** .navbar ul {
     display: none;
-  }
+  } */
 }
 
 .navbar-mobile {
