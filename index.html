@@ -9,7 +9,9 @@
 <meta name="description" content="Explore Hari's Portfolio featuring expertise in web development, cybersecurity, and Android app development. Discover innovative projects, professional skills, and significant achievements.">
 <meta name="keywords" content="Hari Nandan K, portfolio, web development, cybersecurity, Android app development, projects, skills, achievements, technology, developer, security expert, app developer">
   <!-- Favicons -->
-  <link id='favicon' rel="shortcut icon" href="assets/img/20240421_174638.png" type="image/x-png">
+  <link href="assets/img/20240421_174638.png" rel="icon">
+  <link href="assets/img/20240421_174638.png" rel="apple-touch-icon">
+
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
@@ -956,7 +958,32 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+<script>
+  window.onload = function() {
+  var confirmation = confirm("Switch to Cybersecurity mode?");
+  if (confirmation) {
+    window.location.href = "cyber.html"; // Redirect to cyber.html
+  }
+};
 
+var swiper = new Swiper('.blog-slider', {
+  spaceBetween: 30,
+  effect: 'fade',
+  loop: true,
+  mousewheel: {
+    invert: false,
+  },
+  pagination: {
+    el: '.blog-slider__pagination',
+    clickable: true,
+  }
+});
+
+// Your existing code for word animations...
+
+
+
+</script>
 </body>
 
 </html>
