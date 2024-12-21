@@ -536,21 +536,41 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="section-title">
         <h2>About Me --</h2>
       </div>
-
       <div class="row">
-        
-            <h3>I’m Hari Nandan K, also known as Justin Alexia Andre, a passionate app and web developer, data science enthusiast, and cybersecurity specialist based in Kerala, India. I’m currently pursuing a BTech in Data Science at IES College of Engineering and bring over five years of experience in app and web development. As the founder of HOPE, a platform that provides affordable stationery items and notebooks to students, I’m dedicated to creating solutions that make a tangible difference in people’s lives. Through HOPE, I’ve been able to bridge accessibility gaps, offering thousands of students an easier way to access educational supplies.
-
-              In addition to HOPE, I’ve founded TexidoMeg, an online platform teaching ethical hacking and coding, and ShopRoyince, a government e-commerce platform aimed at streamlining the purchase of educational products for students and teachers. My notable projects also include the IES College Data Science Portal, designed to centralize course resources for students, and my work as a GUI Design Specialist at the Candle Institute, where I focused on enhancing user experience in educational software.
-              
-              My technical skills include expertise in HTML, CSS, JavaScript, Java, Python, SQL databases, UI/UX design, machine learning, AI, and cybersecurity (penetration testing and ethical hacking). I’m well-versed in using agile methodologies to manage and deliver projects efficiently. Beyond coding, I’m deeply interested in big data, blockchain, IoT, and pushing the boundaries of AI-powered solutions.
-              
-              I’ve earned certifications such as Junior Software Developer (2024) and completed advanced training in Python and RDBMS. During my internship at Keltron, I worked on Python libraries and conducted training sessions to help individuals integrate these tools into real-world projects. These experiences have shaped me into a versatile developer who thrives on solving complex challenges.
-              
-              Looking ahead, I aim to further expand the reach of my projects, such as HOPE and TexidoMeg, and explore innovative areas like blockchain-driven education platforms and IoT-based solutions. I’m always open to collaborations and freelance opportunities in app development, web design, cybersecurity, and data science. My mission is to create meaningful, user-centric technologies that inspire and empower others.</h3>
-        
+        <h3 id="aboutText">
+          I’m Hari Nandan K, also known as Justin Alexia Andre, a passionate app and web developer, data science enthusiast, and cybersecurity specialist based in Kerala, India. I’m currently pursuing a BTech in Data Science at IES College of Engineering and bring over five years of experience in app and web development. As the founder of HOPE, a platform that provides affordable stationery items and notebooks to students, I’m dedicated to creating solutions that make a tangible difference in people’s lives. Through HOPE, I’ve been able to bridge accessibility gaps, offering thousands of students an easier way to access educational supplies.
+      
+          In addition to HOPE, I’ve founded TexidoMeg, an online platform teaching ethical hacking and coding, and ShopRoyince, a government e-commerce platform aimed at streamlining the purchase of educational products for students and teachers. My notable projects also include the IES College Data Science Portal, designed to centralize course resources for students, and my work as a GUI Design Specialist at the Candle Institute, where I focused on enhancing user experience in educational software.
+      
+          My technical skills include expertise in HTML, CSS, JavaScript, Java, Python, SQL databases, UI/UX design, machine learning, AI, and cybersecurity (penetration testing and ethical hacking). I’m well-versed in using agile methodologies to manage and deliver projects efficiently. Beyond coding, I’m deeply interested in big data, blockchain, IoT, and pushing the boundaries of AI-powered solutions.
+      
+          I’ve earned certifications such as Junior Software Developer (2024) and completed advanced training in Python and RDBMS. During my internship at Keltron, I worked on Python libraries and conducted training sessions to help individuals integrate these tools into real-world projects. These experiences have shaped me into a versatile developer who thrives on solving complex challenges.
+      
+          Looking ahead, I aim to further expand the reach of my projects, such as HOPE and TexidoMeg, and explore innovative areas like blockchain-driven education platforms and IoT-based solutions. I’m always open to collaborations and freelance opportunities in app development, web design, cybersecurity, and data science. My mission is to create meaningful, user-centric technologies that inspire and empower others.
+        </h3>
+        <label for="textSize">Adjust Text Size:</label>
+        <input type="range" id="textSize" min="12" max="40" value="18" oninput="adjustTextSize(this.value)">
       </div>
-
+      
+      <script>
+        function adjustTextSize(size) {
+          const aboutText = document.getElementById("aboutText");
+          aboutText.style.fontSize = size + "px";
+        }
+      </script>
+      
+      <style>
+        #aboutText {
+          font-size: 18px; /* Default size */
+          line-height: 1.6;
+        }
+      
+        #textSize {
+          margin-top: 10px;
+          width: 100%;
+        }
+      </style>
+      
     </div><!-- End Interests -->
 
     <!-- ======= Testimonials ======= 
