@@ -534,7 +534,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="interests container">
 
       <div class="section-title">
-        <h2>About Me --</h2>
+        <h2>About Me</h2>
       </div>
       <div class="row">
         <h3 id="aboutText">
@@ -549,7 +549,7 @@ document.addEventListener('DOMContentLoaded', () => {
           Looking ahead, I aim to further expand the reach of my projects, such as HOPE and TexidoMeg, and explore innovative areas like blockchain-driven education platforms and IoT-based solutions. I’m always open to collaborations and freelance opportunities in app development, web design, cybersecurity, and data science. My mission is to create meaningful, user-centric technologies that inspire and empower others.
         </h3>
         <label for="textSize">Adjust Text Size:</label>
-        <input type="range" id="textSize" min="12" max="40" value="18" oninput="adjustTextSize(this.value)">
+        <input type="range" id="textSize" min="0" max="100" value="14" oninput="adjustTextSize(this.value)">
       </div>
       
       <script>
@@ -561,13 +561,13 @@ document.addEventListener('DOMContentLoaded', () => {
       
       <style>
         #aboutText {
-          font-size: 18px; /* Default size */
-          line-height: 1.6;
+          font-size: 14px; /* Default size */
+          line-height: 1.0;
         }
       
         #textSize {
           margin-top: 10px;
-          width: 100%;
+          width: 50%;
         }
       </style>
       
