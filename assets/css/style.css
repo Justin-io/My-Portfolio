@@ -19,6 +19,29 @@ body::before {
   z-index: -1;
 }
 
+/* Mobile version */
+@media (max-width: 768px) {
+  body::before {
+    animation: slideshow 25s infinite;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}
+
+/* Slideshow Keyframes */
+@keyframes slideshow {
+  0%   { background-image: url("../img/bng1.jpeg"); opacity: 1; }
+  20%  { background-image: url("../img/bng1.jpeg"); opacity: 1; }
+  25%  { background-image: url("../img/bng2.jpeg"); opacity: 0.8; }
+  45%  { background-image: url("../img/bng2.jpeg"); opacity: 1; }
+  50%  { background-image: url("../img/bng3.jpeg"); opacity: 0.8; }
+  70%  { background-image: url("../img/bng3.jpeg"); opacity: 1; }
+  75%  { background-image: url("../img/bng4.jpeg"); opacity: 0.8; }
+  95%  { background-image: url("../img/bng4.jpeg"); opacity: 1; }
+  100% { background-image: url("../img/bng5.jpeg"); opacity: 1; }
+}
+
 @media (min-width: 1024px) {
   body::before {
     background-attachment: fixed;
