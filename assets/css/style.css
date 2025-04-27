@@ -19,10 +19,10 @@ body::before {
   z-index: -1;
 }
 
-/* Mobile version */
-@media (max-width: 768px) {
+/* Mobile and Tablet Versions */
+@media (max-width: 991px) {
   body::before {
-    animation: slideshow 25s infinite;
+    animation: slideshow 10s infinite;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
