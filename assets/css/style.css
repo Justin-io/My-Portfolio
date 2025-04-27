@@ -22,7 +22,7 @@ body::before {
 /* Mobile and Tablet Versions */
 @media (max-width: 991px) {
   body::before {
-    animation: slideshow 10s infinite;
+    animation: slideshow 15s infinite;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -31,10 +31,10 @@ body::before {
 
 /* Slideshow Keyframes */
 @keyframes slideshow {
-  0%   { background-image: url("../img/bng1.jpeg"); opacity: 1; }
-  20%  { background-image: url("../img/bng1.jpeg"); opacity: 1; }
-  25%  { background-image: url("../img/bng2.jpeg"); opacity: 0.8; }
-  45%  { background-image: url("../img/bng2.jpeg"); opacity: 1; }
+  0%   { background-image: url("../img/bng.jpeg"); opacity: 1; }
+  20%  { background-image: url("../img/bng.jpeg"); opacity: 1; }
+  25%  { background-image: url("../img/bng1.jpeg"); opacity: 0.8; }
+  45%  { background-image: url("../img/bng1.jpeg"); opacity: 1; }
   50%  { background-image: url("../img/bng3.jpeg"); opacity: 0.8; }
   70%  { background-image: url("../img/bng3.jpeg"); opacity: 1; }
   75%  { background-image: url("../img/bng4.jpeg"); opacity: 0.8; }
