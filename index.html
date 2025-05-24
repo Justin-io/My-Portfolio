@@ -226,17 +226,23 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 <script>
-  window.addEventListener("scroll", function () {
-    // Check if scrolled to bottom
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 10) {
-      // Scroll to the section smoothly
-      const section = document.querySelector("#about");
-      if (section) {
-        section.scrollIntoView({ behavior: "smooth" });
+  document.addEventListener("DOMContentLoaded", function () {
+    const aboutSection = document.querySelector("#about");
+    const resumeSection = document.querySelector("#resume");
+
+    window.addEventListener("scroll", function () {
+      if (!aboutSection || !resumeSection) return;
+
+      const aboutRect = aboutSection.getBoundingClientRect();
+      const bottomVisible = aboutRect.bottom <= window.innerHeight;
+
+      if (bottomVisible) {
+        resumeSection.scrollIntoView({ behavior: "smooth" });
       }
-    }
+    });
   });
 </script>
+
 
  </head>
 
