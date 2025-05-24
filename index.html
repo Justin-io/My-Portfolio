@@ -224,25 +224,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 </script>
-
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const aboutSection = document.querySelector("#about");
-    const resumeSection = document.querySelector("#resume");
+    const about = document.querySelector("#about");
+    const resume = document.querySelector("#resume");
+    let hasScrolledToResume = false;
 
     window.addEventListener("scroll", function () {
-      if (!aboutSection || !resumeSection) return;
+      if (!about || !resume || hasScrolledToResume) return;
 
-      const aboutRect = aboutSection.getBoundingClientRect();
-      const bottomVisible = aboutRect.bottom <= window.innerHeight;
+      const rect = about.getBoundingClientRect();
+      const scrolledPastAbout = rect.bottom <= window.innerHeight;
 
-      if (bottomVisible) {
-        resumeSection.scrollIntoView({ behavior: "smooth" });
+      if (scrolledPastAbout) {
+        hasScrolledToResume = true;
+        resume.scrollIntoView({ behavior: "smooth" });
       }
     });
   });
 </script>
-
 
  </head>
 
