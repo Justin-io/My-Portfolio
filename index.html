@@ -225,32 +225,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </script>
 
-
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const sections = [
+    const sequence = [
       { id: "about", nextLink: 'a[href="#resume"]' },
       { id: "resume", nextLink: 'a[href="#services"]' },
       { id: "services", nextLink: 'a[href="#contact"]' }
     ];
 
-    const triggered = new Set();
+    let currentStep = 0;
 
     window.addEventListener("scroll", () => {
-      sections.forEach(({ id, nextLink }) => {
-        const section = document.querySelector(`#${id}`);
-        const navLink = document.querySelector(nextLink);
+      if (currentStep >= sequence.length) return;
 
-        if (!section || !navLink || triggered.has(id)) return;
+      const currentSection = document.querySelector(`#${sequence[currentStep].id}`);
+      const nextLink = document.querySelector(sequence[currentStep].nextLink);
 
-        const rect = section.getBoundingClientRect();
-        const isScrolledPast = rect.top < window.innerHeight && rect.bottom <= window.innerHeight;
+      if (!currentSection || !nextLink) return;
 
-        if (isScrolledPast) {
-          triggered.add(id);
-          navLink.click(); // Simulate clicking nav link
-        }
-      });
+      const rect = currentSection.getBoundingClientRect();
+      const isScrolledPast = rect.top < window.innerHeight && rect.bottom <= window.innerHeight;
+
+      if (isScrolledPast) {
+        nextLink.click(); // simulate nav link click
+        currentStep++;    // move to next in sequence
+      }
     });
   });
 </script>
