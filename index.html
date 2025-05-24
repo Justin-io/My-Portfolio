@@ -142,96 +142,6 @@
     box-shadow: 0 8px 10px rgba(0, 0, 0, 0.3);
   }
 </style>
-
-<!-- JavaScript -->
-<script>
-  function openFullscreen(image) {
-    // Create an overlay element
-    const overlay = document.createElement('div');
-    overlay.classList.add('fullscreen-overlay');
-
-    // Add the clicked image to the overlay
-    const fullImage = document.createElement('img');
-    fullImage.src = image.src;
-    overlay.appendChild(fullImage);
-
-    // Add the overlay to the body
-    document.body.appendChild(overlay);
-
-    // Display the overlay
-    overlay.style.display = 'flex';
-
-    // Close the overlay when clicked
-    overlay.onclick = function () {
-      document.body.removeChild(overlay);
-    };
-  }
-</script>
-
-
-<script>
-
-// Disable right-click context menu
-document.addEventListener('contextmenu', (event) => event.preventDefault());
-
-// Prevent F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+S
-document.addEventListener('keydown', (event) => {
-    if (
-        event.key === 'F12' || // F12
-        (event.ctrlKey && event.shiftKey && event.key === 'I') || // Ctrl+Shift+I
-        (event.ctrlKey && event.shiftKey && event.key === 'J') || // Ctrl+Shift+J
-        (event.ctrlKey && event.key === 'U') || // Ctrl+U
-        (event.ctrlKey && event.key === 'S') // Ctrl+S
-    ) {
-        event.preventDefault();
-    }
-});
-
-// Detect and block the opening of developer tools
-(function detectDevTools() {
-    const devToolsCheck = new Function('debugger');
-    setInterval(() => {
-        const start = performance.now();
-        devToolsCheck();
-        if (performance.now() - start > 100) {
-            alert('Developer tools are not allowed on this page.');
-            window.close(); // Close the tab
-        }
-    }, 500);
-})();
-
-// Disable drag-and-drop actions
-document.addEventListener('dragstart', (event) => event.preventDefault());
-
-// Disable copying, cutting, or pasting
-document.addEventListener('copy', (event) => event.preventDefault());
-document.addEventListener('cut', (event) => event.preventDefault());
-document.addEventListener('paste', (event) => event.preventDefault());
-
-// Hide the source code
-document.onkeydown = function (e) {
-    if (e.ctrlKey && e.key === 'P') {
-        // Disable Print
-        e.preventDefault();
-    }
-};
-document.addEventListener('DOMContentLoaded', () => {
-    document.body.style.userSelect = 'none';
-    document.body.style.webkitUserSelect = 'none';
-    document.body.style.mozUserSelect = 'none';
-    document.body.style.msUserSelect = 'none';
-});
-
-
-</script>
-
-
- </head>
-
- <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <style>
     body {
       background-color: #1e1e1e;
@@ -354,8 +264,91 @@ document.addEventListener('DOMContentLoaded', () => {
       pointer-events: auto;
     }
   </style>
-</head>
-<body>
+<!-- JavaScript -->
+<script>
+  function openFullscreen(image) {
+    // Create an overlay element
+    const overlay = document.createElement('div');
+    overlay.classList.add('fullscreen-overlay');
+
+    // Add the clicked image to the overlay
+    const fullImage = document.createElement('img');
+    fullImage.src = image.src;
+    overlay.appendChild(fullImage);
+
+    // Add the overlay to the body
+    document.body.appendChild(overlay);
+
+    // Display the overlay
+    overlay.style.display = 'flex';
+
+    // Close the overlay when clicked
+    overlay.onclick = function () {
+      document.body.removeChild(overlay);
+    };
+  }
+</script>
+
+
+<script>
+
+// Disable right-click context menu
+document.addEventListener('contextmenu', (event) => event.preventDefault());
+
+// Prevent F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+S
+document.addEventListener('keydown', (event) => {
+    if (
+        event.key === 'F12' || // F12
+        (event.ctrlKey && event.shiftKey && event.key === 'I') || // Ctrl+Shift+I
+        (event.ctrlKey && event.shiftKey && event.key === 'J') || // Ctrl+Shift+J
+        (event.ctrlKey && event.key === 'U') || // Ctrl+U
+        (event.ctrlKey && event.key === 'S') // Ctrl+S
+    ) {
+        event.preventDefault();
+    }
+});
+
+// Detect and block the opening of developer tools
+(function detectDevTools() {
+    const devToolsCheck = new Function('debugger');
+    setInterval(() => {
+        const start = performance.now();
+        devToolsCheck();
+        if (performance.now() - start > 100) {
+            alert('Developer tools are not allowed on this page.');
+            window.close(); // Close the tab
+        }
+    }, 500);
+})();
+
+// Disable drag-and-drop actions
+document.addEventListener('dragstart', (event) => event.preventDefault());
+
+// Disable copying, cutting, or pasting
+document.addEventListener('copy', (event) => event.preventDefault());
+document.addEventListener('cut', (event) => event.preventDefault());
+document.addEventListener('paste', (event) => event.preventDefault());
+
+// Hide the source code
+document.onkeydown = function (e) {
+    if (e.ctrlKey && e.key === 'P') {
+        // Disable Print
+        e.preventDefault();
+    }
+};
+document.addEventListener('DOMContentLoaded', () => {
+    document.body.style.userSelect = 'none';
+    document.body.style.webkitUserSelect = 'none';
+    document.body.style.mozUserSelect = 'none';
+    document.body.style.msUserSelect = 'none';
+});
+
+
+</script>
+
+
+ </head>
+
 
   <label>
     <input class="checkbox" type="checkbox" />
@@ -364,9 +357,6 @@ document.addEventListener('DOMContentLoaded', () => {
   <button class="option-a option"><i class="bi bi-github"></i></button>
   <button class="option-b option"><i class="bi bi-download"></i></button>
   <button class="option-c option"><i class="bi bi-laptop"></i></button>
-
-</body>
-</html>
 
 
 <body>
