@@ -228,23 +228,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const aboutSection = document.querySelector("#about");
-    const resumeNavLink = document.querySelector('a[href="#resume"]');
-    let alreadyTriggered = false;
+    const sections = [
+      { id: "about", nextLink: 'a[href="#resume"]' },
+      { id: "resume", nextLink: 'a[href="#services"]' },
+      { id: "services", nextLink: 'a[href="#contact"]' }
+    ];
+
+    const triggered = new Set();
 
     window.addEventListener("scroll", () => {
-      if (!aboutSection || !resumeNavLink || alreadyTriggered) return;
+      sections.forEach(({ id, nextLink }) => {
+        const section = document.querySelector(`#${id}`);
+        const navLink = document.querySelector(nextLink);
 
-      const rect = aboutSection.getBoundingClientRect();
-      const scrolledPastAbout = rect.top < window.innerHeight && rect.bottom <= window.innerHeight;
+        if (!section || !navLink || triggered.has(id)) return;
 
-      if (scrolledPastAbout) {
-        alreadyTriggered = true;
-        resumeNavLink.click(); // Simulate nav link click
-      }
+        const rect = section.getBoundingClientRect();
+        const isScrolledPast = rect.top < window.innerHeight && rect.bottom <= window.innerHeight;
+
+        if (isScrolledPast) {
+          triggered.add(id);
+          navLink.click(); // Simulate clicking nav link
+        }
+      });
     });
   });
 </script>
+
 
 
  </head>
