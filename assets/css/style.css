@@ -386,7 +386,7 @@ section .container {
   background: rgba(0, 0, 0, 0.7);
   padding: 30px;
   border-radius: 20px; /* adjust value as needed */
-
+  padding-bottom: 10px;
 }
 
 @media (max-width: 768px) {
