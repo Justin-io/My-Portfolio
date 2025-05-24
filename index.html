@@ -225,6 +225,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </script>
 
+<script>
+  window.addEventListener("scroll", function () {
+    // Check if scrolled to bottom
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 10) {
+      // Scroll to the section smoothly
+      const section = document.querySelector("#about");
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  });
+</script>
 
  </head>
 
