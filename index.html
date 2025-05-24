@@ -225,34 +225,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </script>
 
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const sequence = [
-      { id: "about", nextLink: 'a[href="#resume"]' },
-      { id: "resume", nextLink: 'a[href="#services"]' },
-      { id: "services", nextLink: 'a[href="#contact"]' }
-    ];
-
-    let currentStep = 0;
-
-    window.addEventListener("scroll", () => {
-      if (currentStep >= sequence.length) return;
-
-      const currentSection = document.querySelector(`#${sequence[currentStep].id}`);
-      const nextLink = document.querySelector(sequence[currentStep].nextLink);
-
-      if (!currentSection || !nextLink) return;
-
-      const rect = currentSection.getBoundingClientRect();
-      const isScrolledPast = rect.top < window.innerHeight && rect.bottom <= window.innerHeight;
-
-      if (isScrolledPast) {
-        nextLink.click(); // simulate nav link click
-        currentStep++;    // move to next in sequence
-      }
-    });
-  });
-</script>
 
 
 
