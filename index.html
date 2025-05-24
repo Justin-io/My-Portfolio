@@ -271,16 +271,6 @@ document.addEventListener('DOMContentLoaded', () => {
       </a>
     </div>End Header -->
     
-    <!-- Floating Toggle Button -->
-<!-- Floating Toggle Button -->
-<label>
-  <input class="checkbox" type="checkbox" />
-  <span class="button-menu"></span>
-</label>
-<button class="option-a option" title="GitHub" onclick="window.open('https://github.com/Justin-io', '_blank')"><i class="bi bi-github"></i></button>
-<button class="option-b option" title="Download CV" onclick="window.open('CV.pdf', '_blank')"><i class="bi bi-download"></i></button>
-<button class="option-c option" title="Visit Site" onclick="window.open('https://justinalexia.vercel.app', '_blank')"><i class="bi bi-laptop"></i></button>
-
   </header><!-- End Header -->
 
 
@@ -1432,6 +1422,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+<div class="floating-container">
+  <input type="checkbox" id="menu-toggle" class="checkbox">
+  <label for="menu-toggle" class="button-menu"></label>
+
+  <button class="option option-a" onclick="window.open('https://github.com/Justin-io', '_blank')">
+    <i class="bi bi-github"></i>
+  </button>
+  <button class="option option-b" onclick="window.open('CV.pdf', '_blank')">
+    <i class="bi bi-download"></i>
+  </button>
+  <button class="option option-c" onclick="window.open('https://justinalexia.vercel.app', '_blank')">
+    <i class="bi bi-laptop"></i>
+  </button>
+</div>
 
 </body>
 

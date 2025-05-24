@@ -280,22 +280,18 @@ bodyy {
   transform: scale(1.1); /* Slight zoom effect on hover */
 }
 
-/* Floating Menu Toggle */
-.checkbox {
-  width: 60px;
-  height: 60px;
-  opacity: 0;
-  z-index: 10;
-  cursor: pointer;
+.floating-container {
   position: fixed;
   bottom: 20px;
   right: 20px;
+  z-index: 1000;
+}
+
+.checkbox {
+  display: none;
 }
 
 .button-menu {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -311,31 +307,33 @@ bodyy {
   -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
   cursor: pointer;
-  z-index: 1;
   transition: 0.3s ease;
 }
 
+.button-menu::before {
+  content: "+";
+}
+
+.checkbox:checked + .button-menu::before {
+  content: "-";
+}
+
 .option {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
+  position: absolute;
   width: 55px;
   height: 55px;
   border-radius: 50%;
   font-size: 24px;
-  color: #1e1e1e;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  opacity: 0;
-  pointer-events: none;
-  z-index: -1;
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
   border: 1.5px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
 }
 
 .option-a {
@@ -354,44 +352,24 @@ bodyy {
   color: white;
 }
 
-.checkbox:hover ~ .button-menu,
-.checkbox:checked ~ .button-menu {
-  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.4) 20%, rgba(0, 230, 92, 0.25) 100%);
-  scale: 0.98;
-  box-shadow: none;
-}
-
-.checkbox:not(:checked) ~ .button-menu::before {
-  content: "+";
-}
-
-.checkbox:checked ~ .button-menu::after {
-  content: "-";
-}
-
-.option:hover {
-  scale: 0.98;
-  box-shadow: none;
-}
-
 .checkbox:checked ~ .option-a {
-  transition-delay: 0.1s;
   transform: translateY(-90px);
   opacity: 1;
   pointer-events: auto;
+  transition-delay: 0.1s;
 }
 
 .checkbox:checked ~ .option-b {
-  transition-delay: 0.2s;
   transform: translateY(-65px) translateX(-65px);
   opacity: 1;
   pointer-events: auto;
+  transition-delay: 0.2s;
 }
 
 .checkbox:checked ~ .option-c {
-  transition-delay: 0.3s;
   transform: translateX(-90px);
   opacity: 1;
   pointer-events: auto;
+  transition-delay: 0.3s;
 }
 
