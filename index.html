@@ -224,25 +224,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 </script>
+
+
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const about = document.querySelector("#about");
-    const resume = document.querySelector("#resume");
-    let hasScrolledToResume = false;
+    const aboutSection = document.querySelector("#about");
+    const resumeNavLink = document.querySelector('a[href="#resume"]');
+    let alreadyTriggered = false;
 
-    window.addEventListener("scroll", function () {
-      if (!about || !resume || hasScrolledToResume) return;
+    window.addEventListener("scroll", () => {
+      if (!aboutSection || !resumeNavLink || alreadyTriggered) return;
 
-      const rect = about.getBoundingClientRect();
-      const scrolledPastAbout = rect.bottom <= window.innerHeight;
+      const rect = aboutSection.getBoundingClientRect();
+      const scrolledPastAbout = rect.top < window.innerHeight && rect.bottom <= window.innerHeight;
 
       if (scrolledPastAbout) {
-        hasScrolledToResume = true;
-        resume.scrollIntoView({ behavior: "smooth" });
+        alreadyTriggered = true;
+        resumeNavLink.click(); // Simulate nav link click
       }
     });
   });
 </script>
+
 
  </head>
 
