@@ -1840,43 +1840,32 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentIndex = 0;
   let currentText = "";
   let letterIndex = 0;
-  let isDeleting = false;
 
   function type() {
-    const current = texts[currentIndex];
-    
-    if (isDeleting) {
-      // Erase text
-      currentText = current.substring(0, letterIndex - 1);
-      letterIndex--;
-    } else {
-      // Type text
-      currentText = current.substring(0, letterIndex + 1);
+    if (letterIndex < texts[currentIndex].length) {
+      currentText += texts[currentIndex].charAt(letterIndex);
+      document.getElementById("titlee").innerHTML = currentText;
       letterIndex++;
+      setTimeout(type, 100);  // Speed of typing each letter
+    } else {
+      setTimeout(erase, 500); // Pause before erasing
     }
+  }
 
-    document.getElementById("titlee").innerHTML = currentText;
-
-    let typeSpeed = 100;  // Normal typing speed
-    
-    if (isDeleting) {
-      typeSpeed = 50;     // Faster deletion
-    } else if (letterIndex === current.length) {
-      // Pause at end of word
-      typeSpeed = 2000;
-      isDeleting = true;
-    } else if (letterIndex === 0 && isDeleting) {
-      // Pause at beginning before next word
-      isDeleting = false;
+  function erase() {
+    if (letterIndex > 0) {
+      currentText = currentText.substring(0, currentText.length - 1);
+      document.getElementById("titlee").innerHTML = currentText;
+      letterIndex--;
+      setTimeout(erase, 100);  // Speed of erasing each letter
+    } else {
       currentIndex = (currentIndex + 1) % texts.length;
-      typeSpeed = 500;
+      setTimeout(type, 500);  // Pause before typing the next word
     }
-
-    setTimeout(type, typeSpeed);
   }
 
   document.addEventListener("DOMContentLoaded", function() {
-    setTimeout(type, 1000);  // Start after 1 second
+    setTimeout(type, 500);  // Start the typing effect after page load
   });
 </script>
 
