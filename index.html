@@ -1825,36 +1825,58 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 <script>
-  const texts = ["App Developer", "Web developer"];
+  const texts = [
+    "App Developer", 
+    "Web Developer",
+    "IoT Engineer",
+    "AI Integration Specialist",
+    "Theoretical Physicist",
+    "Quantum Computing Enthusiast",
+    "Embedded Systems Designer",
+    "Research Innovator",
+    "Tech Educator",
+    "Startup Founder"
+  ];
   let currentIndex = 0;
   let currentText = "";
   let letterIndex = 0;
+  let isDeleting = false;
 
   function type() {
-    if (letterIndex < texts[currentIndex].length) {
-      currentText += texts[currentIndex].charAt(letterIndex);
-      document.getElementById("titlee").innerHTML = currentText;
-      letterIndex++;
-      setTimeout(type, 100);  // Speed of typing each letter
-    } else {
-      setTimeout(erase, 500); // Pause before erasing
-    }
-  }
-
-  function erase() {
-    if (letterIndex > 0) {
-      currentText = currentText.substring(0, currentText.length - 1);
-      document.getElementById("titlee").innerHTML = currentText;
+    const current = texts[currentIndex];
+    
+    if (isDeleting) {
+      // Erase text
+      currentText = current.substring(0, letterIndex - 1);
       letterIndex--;
-      setTimeout(erase, 100);  // Speed of erasing each letter
     } else {
-      currentIndex = (currentIndex + 1) % texts.length;
-      setTimeout(type, 500);  // Pause before typing the next word
+      // Type text
+      currentText = current.substring(0, letterIndex + 1);
+      letterIndex++;
     }
+
+    document.getElementById("titlee").innerHTML = currentText;
+
+    let typeSpeed = 100;  // Normal typing speed
+    
+    if (isDeleting) {
+      typeSpeed = 50;     // Faster deletion
+    } else if (letterIndex === current.length) {
+      // Pause at end of word
+      typeSpeed = 2000;
+      isDeleting = true;
+    } else if (letterIndex === 0 && isDeleting) {
+      // Pause at beginning before next word
+      isDeleting = false;
+      currentIndex = (currentIndex + 1) % texts.length;
+      typeSpeed = 500;
+    }
+
+    setTimeout(type, typeSpeed);
   }
 
   document.addEventListener("DOMContentLoaded", function() {
-    setTimeout(type, 500);  // Start the typing effect after page load
+    setTimeout(type, 1000);  // Start after 1 second
   });
 </script>
 
