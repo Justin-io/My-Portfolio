@@ -3,36 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cybersecurity & Ethical Hacking Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Justin Alexia Andrew | Cybersecurity Specialist & Ethical Hacker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <style>
         :root {
-            --dark-bg: #040404;
-            --glass-bg: rgba(255, 255, 255, 0.08);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --accent-red: #ff4d4d;
-            --accent-red-hover: #ff3333;
-            --text-light: #ffffff;
-            --text-secondary: #cccccc;
+            --dark-bg: #0a0a0a;
+            --matrix-red: #ff1a1a;
+            --matrix-red-dark: #b30000;
+            --matrix-red-darker: #660000;
+            --accent-red: #ff3333;
+            --accent-red-dark: #cc0000;
+            --glass-bg: rgba(20, 10, 10, 0.75);
+            --glass-border: rgba(255, 51, 51, 0.25);
+            --text-light: #ffe0e0;
+            --text-secondary: #d0a0a0;
             --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Share Tech Mono', monospace;
             background: var(--dark-bg);
             color: var(--text-light);
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
+            line-height: 1.6;
         }
-
         body::before {
             content: '';
             position: fixed;
@@ -40,10 +41,22 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 10% 20%, rgba(255, 77, 77, 0.1) 0%, rgba(4, 4, 4, 0) 20%),
-                        radial-gradient(circle at 90% 80%, rgba(255, 77, 77, 0.05) 0%, rgba(4, 4, 4, 0) 20%);
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(255, 51, 51, 0.05) 0%, rgba(10, 10, 10, 0) 25%),
+                radial-gradient(circle at 90% 80%, rgba(179, 0, 0, 0.05) 0%, rgba(10, 10, 10, 0) 25%);
             z-index: -1;
             pointer-events: none;
+        }
+
+        /* === Matrix Rain Canvas === */
+        #matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background-color: var(--dark-bg);
         }
 
         .cyber-section {
@@ -51,12 +64,54 @@
             position: relative;
             overflow: hidden;
         }
-
         .container {
             max-width: 1200px;
             margin: 0 auto;
             position: relative;
             z-index: 2;
+        }
+
+        /* Floating Elements */
+        .floating {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 51, 51, 0.15) 0%, transparent 70%);
+            z-index: 1;
+            pointer-events: none;
+        }
+        .floating:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 5%;
+            animation: float 15s infinite ease-in-out;
+        }
+        .floating:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            bottom: 15%;
+            right: 10%;
+            animation: float 18s infinite ease-in-out;
+            animation-delay: 2s;
+            background: radial-gradient(circle, rgba(179, 0, 0, 0.15) 0%, transparent 70%);
+        }
+        .floating:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            top: 40%;
+            right: 20%;
+            animation: float 12s infinite ease-in-out;
+            animation-delay: 4s;
+            background: radial-gradient(circle, rgba(255, 51, 51, 0.1) 0%, transparent 70%);
+        }
+        .floating:nth-child(4) {
+            width: 100px;
+            height: 100px;
+            bottom: 30%;
+            left: 15%;
+            animation: float 20s infinite ease-in-out;
+            animation-delay: 1s;
+            background: radial-gradient(circle, rgba(204, 0, 0, 0.1) 0%, transparent 70%);
         }
 
         /* Hero Section */
@@ -67,31 +122,76 @@
             overflow: hidden;
             border-radius: 30px;
             margin-bottom: 60px;
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-            backdrop-filter: blur(12px);
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 20px rgba(255, 51, 51, 0.3), inset 0 0 10px rgba(255, 51, 51, 0.1);
             animation: floatIn 1s ease-out;
         }
-
+        .hero-content {
+            position: relative;
+            z-index: 3;
+        }
+        
+        /* === Hero Image Section === */
+        .hero-image-container {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 30px;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 30px rgba(255, 51, 51, 0.3);
+            position: relative;
+            z-index: 3;
+        }
+        .hero-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .hero-image-container:hover img {
+            transform: scale(1.05);
+        }
+        /* ========================= */
+        
         .hero h1 {
+            font-family: 'Orbitron', sans-serif;
             font-size: 2.8rem;
             margin-bottom: 25px;
-            background: linear-gradient(to right, #ffffff, var(--accent-red));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            color: var(--matrix-red);
+            text-shadow: 0 0 10px var(--matrix-red), 0 0 20px var(--matrix-red-dark);
             font-weight: 700;
-            letter-spacing: -0.5px;
+            letter-spacing: 2px;
             animation: textGlow 3s infinite alternate;
         }
-
+        .hero .tagline {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: #ff9999;
+            font-weight: 600;
+            font-family: 'Orbitron', sans-serif;
+        }
         .hero p {
-            font-size: 1.2rem;
-            line-height: 1.7;
+            font-size: 1.1rem;
             max-width: 800px;
-            margin: 0 auto 40px;
+            margin: 0 auto 30px;
             color: var(--text-secondary);
+        }
+        .hero .contact-info {
+            font-size: 1rem;
+            margin-bottom: 20px;
+            color: var(--text-secondary);
+        }
+        .hero .contact-info a {
+            color: var(--matrix-red);
+            text-decoration: none;
+        }
+        .hero .contact-info a:hover {
+            text-decoration: underline;
+            text-shadow: 0 0 5px var(--matrix-red);
         }
 
         /* Skills Chips */
@@ -102,22 +202,22 @@
             gap: 15px;
             margin: 40px 0;
         }
-
         .chip {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(30, 15, 15, 0.7);
             backdrop-filter: blur(10px);
             padding: 12px 24px;
             border-radius: 50px;
             font-size: 0.95rem;
             font-weight: 500;
             transition: var(--transition);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
             position: relative;
             overflow: hidden;
             z-index: 1;
+            cursor: default;
+            color: var(--matrix-red);
         }
-
         .chip::before {
             content: '';
             position: absolute;
@@ -125,18 +225,16 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 77, 77, 0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 51, 51, 0.3), transparent);
             transform: translateX(-100%);
             transition: transform 0.6s ease;
             z-index: -1;
         }
-
         .chip:hover {
             transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 10px 25px rgba(255, 77, 77, 0.2);
-            border-color: rgba(255, 77, 77, 0.3);
+            box-shadow: 0 10px 25px rgba(255, 51, 51, 0.3);
+            border-color: rgba(255, 51, 51, 0.5);
         }
-
         .chip:hover::before {
             transform: translateX(100%);
         }
@@ -144,9 +242,9 @@
         /* CTA Button */
         .cta-button {
             display: inline-block;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(30, 15, 15, 0.7);
             backdrop-filter: blur(10px);
-            color: var(--accent-red);
+            color: var(--matrix-red);
             padding: 16px 40px;
             border-radius: 50px;
             text-decoration: none;
@@ -154,13 +252,14 @@
             font-size: 1.1rem;
             margin-top: 20px;
             transition: var(--transition);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
             position: relative;
             overflow: hidden;
             z-index: 1;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
         }
-
         .cta-button::before {
             content: '';
             position: absolute;
@@ -168,19 +267,18 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 77, 77, 0.3), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 51, 51, 0.4), transparent);
             transform: translateX(-100%);
             transition: transform 0.8s ease;
             z-index: -1;
         }
-
         .cta-button:hover {
-            background: rgba(255, 77, 77, 0.2);
+            background: rgba(255, 51, 51, 0.1);
             transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 35px rgba(255, 77, 77, 0.3);
+            box-shadow: 0 15px 35px rgba(255, 51, 51, 0.4);
             color: #fff;
+            text-shadow: 0 0 8px #fff;
         }
-
         .cta-button:hover::before {
             transform: translateX(100%);
         }
@@ -192,20 +290,19 @@
             gap: 40px;
             margin: 80px 0;
         }
-
         .service-box {
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-            backdrop-filter: blur(12px);
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border-radius: 25px;
             padding: 40px 30px;
             transition: var(--transition);
             border: 1px solid var(--glass-border);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 20px rgba(255, 51, 51, 0.2), inset 0 0 10px rgba(255, 51, 51, 0.05);
             position: relative;
             overflow: hidden;
             z-index: 1;
         }
-
         .service-box::before {
             content: '';
             position: absolute;
@@ -213,74 +310,99 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, transparent, rgba(255, 77, 77, 0.1), transparent);
+            background: linear-gradient(135deg, transparent, rgba(255, 51, 51, 0.1), transparent);
             transform: translateX(-100%);
             transition: transform 0.8s ease;
             z-index: -1;
         }
-
+        .service-box.offensive::before {
+             background: linear-gradient(135deg, transparent, rgba(204, 0, 0, 0.1), transparent);
+        }
+        .service-box.research::before {
+             background: linear-gradient(135deg, transparent, rgba(179, 0, 0, 0.1), transparent);
+        }
         .service-box:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(255, 77, 77, 0.2);
-            border-color: rgba(255, 77, 77, 0.2);
+            box-shadow: 0 0 30px rgba(255, 51, 51, 0.4), inset 0 0 15px rgba(255, 51, 51, 0.1);
+            border-color: rgba(255, 51, 51, 0.4);
         }
-
+        .service-box.offensive:hover {
+            box-shadow: 0 0 30px rgba(204, 0, 0, 0.4), inset 0 0 15px rgba(204, 0, 0, 0.1);
+            border-color: rgba(204, 0, 0, 0.4);
+        }
+        .service-box.research:hover {
+            box-shadow: 0 0 30px rgba(179, 0, 0, 0.4), inset 0 0 15px rgba(179, 0, 0, 0.1);
+            border-color: rgba(179, 0, 0, 0.4);
+        }
         .service-box:hover::before {
             transform: translateX(100%);
         }
-
         .service-box .icon {
             font-size: 3.5rem;
             margin-bottom: 25px;
-            color: var(--accent-red);
+            color: var(--matrix-red);
             transition: var(--transition);
         }
-
+        .service-box.offensive .icon {
+            color: var(--accent-red);
+        }
+        .service-box.research .icon {
+            color: var(--matrix-red-dark);
+        }
         .service-box:hover .icon {
             transform: scale(1.1) rotate(5deg);
         }
-
         .service-box h3 {
+            font-family: 'Orbitron', sans-serif;
             font-size: 1.8rem;
             margin-bottom: 20px;
             font-weight: 600;
+            color: var(--matrix-red);
+        }
+        .service-box.offensive h3 {
             color: var(--accent-red);
         }
-
+        .service-box.research h3 {
+            color: var(--matrix-red-dark);
+        }
         .service-box p {
             color: var(--text-secondary);
-            line-height: 1.7;
             margin-bottom: 25px;
         }
-
         .service-box ul {
             list-style: none;
             padding-left: 0;
         }
-
         .service-box ul li {
             margin-bottom: 15px;
             padding-left: 25px;
             position: relative;
             color: var(--text-secondary);
         }
-
         .service-box ul li::before {
-            content: '⚔';
+            content: '>';
             position: absolute;
             left: 0;
-            color: var(--accent-red);
+            color: var(--matrix-red);
             font-weight: bold;
         }
+        .service-box.offensive ul li::before {
+            color: var(--accent-red);
+        }
+        .service-box.research ul li::before {
+            color: var(--matrix-red-dark);
+        }
 
-        /* Projects Section */
+        /* Section Title */
         .section-title {
             text-align: center;
+            font-family: 'Orbitron', sans-serif;
             font-size: 2.5rem;
             margin: 80px 0 50px;
             position: relative;
+            color: var(--matrix-red);
+            text-shadow: 0 0 5px var(--matrix-red);
         }
-
         .section-title::after {
             content: '';
             position: absolute;
@@ -289,30 +411,31 @@
             transform: translateX(-50%);
             width: 80px;
             height: 4px;
-            background: var(--accent-red);
+            background: var(--matrix-red);
             border-radius: 2px;
+            box-shadow: 0 0 10px var(--matrix-red);
         }
 
+        /* Projects Section */
         .project-cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 40px;
             margin-bottom: 80px;
         }
-
         .project-card {
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-            backdrop-filter: blur(12px);
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border-radius: 25px;
             padding: 35px;
             transition: var(--transition);
             border: 1px solid var(--glass-border);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 20px rgba(255, 51, 51, 0.2), inset 0 0 10px rgba(255, 51, 51, 0.05);
             position: relative;
             overflow: hidden;
             z-index: 1;
         }
-
         .project-card::before {
             content: '';
             position: absolute;
@@ -320,65 +443,57 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, transparent, rgba(255, 77, 77, 0.1), transparent);
+            background: linear-gradient(135deg, transparent, rgba(255, 51, 51, 0.1), transparent);
             transform: translateX(-100%);
             transition: transform 0.8s ease;
             z-index: -1;
         }
-
         .project-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(255, 77, 77, 0.2);
-            border-color: rgba(255, 77, 77, 0.2);
+            box-shadow: 0 0 30px rgba(255, 51, 51, 0.4), inset 0 0 15px rgba(255, 51, 51, 0.1);
+            border-color: rgba(255, 51, 51, 0.4);
         }
-
         .project-card:hover::before {
             transform: translateX(100%);
         }
-
         .project-card h3 {
+            font-family: 'Orbitron', sans-serif;
             font-size: 1.6rem;
             margin-bottom: 15px;
-            color: var(--accent-red);
+            color: var(--matrix-red);
         }
-
         .project-card .type {
             font-style: italic;
             color: var(--text-secondary);
             margin-bottom: 20px;
             font-size: 0.95rem;
         }
-
         .project-card .desc {
             margin-bottom: 20px;
-            line-height: 1.7;
         }
-
         .project-card .tech,
         .project-card .features {
             margin-bottom: 15px;
             font-size: 0.95rem;
             color: var(--text-secondary);
         }
-
         .project-card .tech strong,
         .project-card .features strong {
             color: #fff;
         }
-
         .project-link {
             display: inline-block;
             margin-top: 15px;
-            color: var(--accent-red);
+            color: var(--matrix-red);
             text-decoration: none;
             font-weight: 600;
             transition: var(--transition);
             position: relative;
             padding-right: 25px;
+            font-family: 'Orbitron', sans-serif;
         }
-
         .project-link::after {
-            content: '→';
+            content: '>>';
             position: absolute;
             right: 0;
             top: 50%;
@@ -386,50 +501,45 @@
             opacity: 0;
             transition: var(--transition);
         }
-
         .project-link:hover {
-            color: var(--accent-red-hover);
+            color: #fff;
+            text-shadow: 0 0 8px var(--matrix-red);
             padding-right: 30px;
         }
-
         .project-link:hover::after {
             opacity: 1;
             right: -5px;
         }
 
-        /* Skills Section */
+        /* Skills Proficiency */
         .skills-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
             margin-top: 50px;
         }
-
         .skill {
             margin-bottom: 25px;
         }
-
         .skill p {
             margin-bottom: 12px;
             font-size: 1.05rem;
             display: flex;
             justify-content: space-between;
         }
-
         .skill .percentage {
-            color: var(--accent-red);
+            color: var(--matrix-red);
             font-weight: 600;
         }
-
         .progress-bar {
-            height: 12px;
-            background: rgba(255, 255, 255, 0.08);
+            height: 16px; /* Increased height */
+            background: rgba(30, 15, 15, 0.7); /* Darker background */
             border-radius: 10px;
             overflow: hidden;
             position: relative;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--glass-border); /* Added border */
         }
-
         .progress-bar::before {
             content: '';
             position: absolute;
@@ -440,16 +550,23 @@
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
             animation: progressShine 2s infinite;
         }
-
         .bar {
             height: 100%;
-            background: linear-gradient(90deg, var(--accent-red), var(--accent-red-hover));
+            background: linear-gradient(90deg, var(--matrix-red-dark), var(--matrix-red));
             border-radius: 10px;
             position: relative;
             width: 0;
             transition: width 1.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+            box-shadow: 0 0 10px rgba(255, 51, 51, 0.3); /* Added glow */
         }
-
+        .bar.offensive {
+            background: linear-gradient(90deg, var(--accent-red-dark), var(--accent-red));
+            box-shadow: 0 0 10px rgba(204, 0, 0, 0.3);
+        }
+        .bar.research {
+            background: linear-gradient(90deg, var(--matrix-red-darker), var(--matrix-red-dark));
+            box-shadow: 0 0 10px rgba(179, 0, 0, 0.3);
+        }
         .bar::after {
             content: '';
             position: absolute;
@@ -465,27 +582,25 @@
         .tools-section {
             margin: 80px 0;
         }
-
         .tools-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             gap: 25px;
             margin-top: 40px;
         }
-
         .tool-card {
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-            backdrop-filter: blur(12px);
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border-radius: 20px;
             padding: 25px 15px;
             text-align: center;
             transition: var(--transition);
             border: 1px solid var(--glass-border);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 20px rgba(255, 51, 51, 0.2), inset 0 0 10px rgba(255, 51, 51, 0.05);
             position: relative;
             overflow: hidden;
         }
-
         .tool-card::before {
             content: '';
             position: absolute;
@@ -493,146 +608,139 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, transparent, rgba(255, 77, 77, 0.1), transparent);
+            background: linear-gradient(135deg, transparent, rgba(255, 51, 51, 0.1), transparent);
             transform: translateX(-100%);
             transition: transform 0.8s ease;
             z-index: -1;
         }
-
         .tool-card:hover {
             transform: translateY(-8px) scale(1.05);
-            box-shadow: 0 15px 35px rgba(255, 77, 77, 0.2);
-            border-color: rgba(255, 77, 77, 0.2);
+            box-shadow: 0 0 30px rgba(255, 51, 51, 0.4), inset 0 0 15px rgba(255, 51, 51, 0.1);
+            border-color: rgba(255, 51, 51, 0.4);
         }
-
         .tool-card:hover::before {
             transform: translateX(100%);
         }
-
         .tool-card i {
             font-size: 2.5rem;
             margin-bottom: 15px;
-            color: var(--accent-red);
+            color: var(--matrix-red);
         }
-
         .tool-card span {
             display: block;
             font-size: 0.9rem;
             font-weight: 500;
         }
 
+        /* Contact Section */
+        .contact-section {
+            text-align: center;
+            margin: 100px 0 50px;
+            padding: 50px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 30px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 0 20px rgba(255, 51, 51, 0.3), inset 0 0 10px rgba(255, 51, 51, 0.1);
+        }
+        .contact-section h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: var(--matrix-red);
+        }
+        .contact-section p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            color: var(--text-secondary);
+        }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(30, 15, 15, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            color: var(--matrix-red);
+            font-size: 1.8rem;
+            transition: var(--transition);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        .social-link:hover {
+            transform: translateY(-8px) scale(1.1);
+            background: rgba(255, 51, 51, 0.1);
+            box-shadow: 0 0 20px rgba(255, 51, 51, 0.4);
+            color: #fff;
+            text-shadow: 0 0 8px #fff;
+        }
+
         /* Animations */
         @keyframes floatIn {
-            0% {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
-
         @keyframes textGlow {
-            0% {
-                text-shadow: 0 0 5px rgba(255, 77, 77, 0.3);
-            }
-            100% {
-                text-shadow: 0 0 20px rgba(255, 77, 77, 0.7);
-            }
+            0% { text-shadow: 0 0 5px var(--matrix-red), 0 0 10px var(--matrix-red-dark); }
+            100% { text-shadow: 0 0 15px var(--matrix-red), 0 0 30px var(--matrix-red-dark), 0 0 45px var(--matrix-red-darker); }
         }
-
         @keyframes progressShine {
-            0% {
-                transform: translateX(-100%);
-            }
-            100% {
-                transform: translateX(100%);
-            }
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
-
-        /* Floating Elements */
-        .floating {
-            position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255, 77, 77, 0.2) 0%, transparent 70%);
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .floating:nth-child(1) {
-            width: 300px;
-            height: 300px;
-            top: 10%;
-            left: 5%;
-            animation: float 15s infinite ease-in-out;
-        }
-
-        .floating:nth-child(2) {
-            width: 200px;
-            height: 200px;
-            bottom: 15%;
-            right: 10%;
-            animation: float 18s infinite ease-in-out;
-            animation-delay: 2s;
-        }
-
-        .floating:nth-child(3) {
-            width: 150px;
-            height: 150px;
-            top: 40%;
-            right: 20%;
-            animation: float 12s infinite ease-in-out;
-            animation-delay: 4s;
-        }
-
-        .floating:nth-child(4) {
-            width: 250px;
-            height: 250px;
-            bottom: 20%;
-            left: 15%;
-            background: radial-gradient(circle, rgba(255, 77, 77, 0.15) 0%, transparent 70%);
-            animation: float 20s infinite ease-in-out;
-            animation-delay: 1s;
-        }
-
         @keyframes float {
-            0% {
-                transform: translate(0, 0) rotate(0deg);
-            }
-            33% {
-                transform: translate(20px, -30px) rotate(10deg);
-            }
-            66% {
-                transform: translate(-20px, 20px) rotate(-10deg);
-            }
-            100% {
-                transform: translate(0, 0) rotate(0deg);
-            }
+            0% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(20px, -30px) rotate(10deg); }
+            66% { transform: translate(-20px, 20px) rotate(-10deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .pulse { animation: pulse 2s infinite; }
+
+        /* Matrix Rain Specific Styles */
+        .matrix-char {
+            position: absolute;
+            top: -20px;
+            color: var(--matrix-red);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 16px;
+            opacity: 0.8;
+            user-select: none;
+            pointer-events: none;
+            text-shadow: 0 0 5px var(--matrix-red);
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-            
-            .hero p {
-                font-size: 1rem;
-            }
-            
-            .services-grid,
-            .project-cards {
-                grid-template-columns: 1fr;
-            }
-            
-            .section-title {
-                font-size: 2rem;
+            .hero h1 { font-size: 2.2rem; }
+            .hero .tagline { font-size: 1.2rem; }
+            .hero p { font-size: 1rem; }
+            .services-grid, .project-cards { grid-template-columns: 1fr; }
+            .section-title { font-size: 2rem; }
+            .floating:nth-child(1), .floating:nth-child(2), .floating:nth-child(3), .floating:nth-child(4) {
+                width: 150px; height: 150px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- === Matrix Rain Canvas === -->
+    <canvas id="matrix-rain"></canvas>
+    <!-- =================== -->
+
     <!-- Floating background elements -->
     <div class="floating"></div>
     <div class="floating"></div>
@@ -643,138 +751,206 @@
         <div class="container">
             <!-- Hero/Open Section -->
             <div class="hero">
-                <h1>Securing the Digital Realm: Cybersecurity & Ethical Hacking</h1>
-                <p>
-                    My technical stack includes Penetration Testing, Ethical Hacking, applied Machine Learning, and Cybersecurity R&D.
-                    <br><strong>I don't just code. I build ecosystems... I create lasting impact.</strong>
-                </p>
-                <p>
-                    I architect clean, scalable systems using agile principles, and I build with the end-user always in focus.
-                </p>
+                <div class="hero-content">
+                    <!-- === Hero Image === -->
+                    <div class="hero-image-container">
+                        <img src="assets/img/clrme.jpeg" alt="Justin Alexia Andrew">
+                    </div>
+                    <!-- ================= -->
+                    <h1>Justin Alexia Andrew</h1>
+                    <p class="tagline">Cybersecurity Specialist | Ethical Hacker | Red Team Operator | IoT Security Researcher</p>
+                    <p class="contact-info">
+                        <i class='bx bx-map'></i> Cyber Range, Global |
+                        <i class='bx bx-calendar'></i> Classified |
+                        <i class='bx bx-phone'></i> <a href="tel:+0000000000">+00 00000 00000</a> |
+                        <i class='bx bx-envelope'></i> <a href="mailto:justin.aa@cybersec.tld">justin.aa@cybersec.tld</a>
+                    </p>
+                    <p>
+                        A passionate cybersecurity professional and ethical hacker dedicated to protecting digital assets, uncovering vulnerabilities, and building robust security solutions. Focused on offensive security, penetration testing, and securing the Internet of Things landscape.
+                    </p>
+                    <p><strong>Mission:</strong> Secure. Test. Defend.</p>
 
-                <!-- Key Skills Chips -->
-                <div class="skills-chips">
-                    <span class="chip">Penetration Testing</span>
-                    <span class="chip">Ethical Hacking (Parrot OS)</span>
-                    <span class="chip">Linux System Administration</span>
-                    <span class="chip">Privacy Tools</span>
-                    <span class="chip">Red Teaming</span>
-                    <span class="chip">IoT Security & Threat Response</span>
-                    <span class="chip">Cybersecurity R&D</span>
+                    <!-- Key Skills Chips -->
+                    <div class="skills-chips">
+                        <span class="chip">Penetration Testing</span>
+                        <span class="chip">Ethical Hacking</span>
+                        <span class="chip">Red Teaming</span>
+                        <span class="chip">IoT Security</span>
+                        <span class="chip">Linux/Parrot OS</span>
+                        <span class="chip">Python</span>
+                        <span class="chip">Network Security</span>
+                        <span class="chip">Vulnerability Assessment</span>
+                        <span class="chip">Threat Response</span>
+                        <span class="chip">Privacy Tools</span>
+                        <span class="chip">Incident Response</span>
+                        <span class="chip">Malware Analysis</span>
+                        <span class="chip">SOC Operations</span>
+                        <span class="chip">Cloud Security</span>
+                    </div>
+
+                    <!-- Call to Action -->
+                    <a href="#projects" class="cta-button pulse">Explore My Security Work</a>
                 </div>
-
-                <!-- Call to Action -->
-                <a href="#projects" class="cta-button">Explore My Security Projects</a>
             </div>
 
             <!-- Detailed Services -->
             <div class="services-grid">
-                <!-- Ethical Hacking & Penetration Testing -->
-                <div class="service-box">
-                    <div class="icon"><i class='bx bx-lock'></i></div>
-                    <h3>Ethical Hacking & Penetration Testing</h3>
-                    <p>Penetration Testing, Red Teaming, Ethical Hacking (Parrot OS). My technical stack includes Penetration Testing, Ethical Hacking. Cybersecurity and privacy-focused system design.</p>
-                    <ul>
-                        <li><strong>Technologies:</strong> Parrot OS, Privacy Tools, Linux.</li>
-                        <li><strong>Capabilities:</strong> Identifying vulnerabilities, simulating real-world attacks, securing systems.</li>
-                    </ul>
-                </div>
-
-                <!-- Red Teaming -->
-                <div class="service-box">
-                    <div class="icon"><i class='bx bx-target-lock'></i></div>
-                    <h3>Red Teaming</h3>
-                    <p>Simulating adversarial attacks to test and strengthen organizational defenses.</p>
-                    <ul>
-                        <li><strong>Technologies:</strong> Parrot OS, relevant frameworks.</li>
-                        <li><strong>Capabilities:</strong> Adversary simulation, advanced threat assessment, strategic security testing.</li>
-                    </ul>
-                </div>
-
-                <!-- IoT Security & Threat Response -->
-                <div class="service-box">
-                    <div class="icon"><i class='bx bx-radar'></i></div>
-                    <h3>IoT Security & Threat Response</h3>
-                    <p>IoT Security & Threat Response. Cybersecurity and privacy-focused system design.</p>
-                    <ul>
-                        <li><strong>Technologies:</strong> Knowledge of IoT systems like Arduino, ESP32, Raspberry Pi.</li>
-                        <li><strong>Capabilities:</strong> Securing connected devices, threat analysis for IoT ecosystems, incident response.</li>
-                    </ul>
-                </div>
-
-                <!-- Cybersecurity R&D -->
-                <div class="service-box">
+                <!-- Offensive Security Box -->
+                <div class="service-box offensive">
                     <div class="icon"><i class='bx bx-shield-quarter'></i></div>
-                    <h3>Cybersecurity R&D</h3>
-                    <p>Cybersecurity R&D. My forward goals are multi-dimensional: Dive deeper into smart systems powered by AI, IoT, and potentially blockchain.</p>
+                    <h3>Ethical Hacking & Penetration Testing</h3>
+                    <p>Conducting authorized security assessments to identify vulnerabilities and weaknesses in networks, systems, and applications before malicious actors can exploit them.</p>
                     <ul>
-                        <li><strong>Technologies:</strong> Exploring new security paradigms, potentially integrating AI/ML.</li>
-                        <li><strong>Capabilities:</strong> Researching emerging threats, developing innovative security solutions.</li>
+                        <li><strong>Technologies:</strong> Parrot OS, Kali Linux, Nmap, Metasploit, Burp Suite, SQLMap, Wireshark, Nessus, OpenVAS.</li>
+                        <li><strong>Capabilities:</strong> Network scanning & enumeration, Web application testing (OWASP Top 10), Exploitation, Post-exploitation, Reporting & Remediation advice, Social Engineering Assessments.</li>
+                        <li><strong>Reference Projects:</strong> TexidoMeg Training Portal Security Audit, Keltron Internship Network Assessment, Corporate Network Penetration Test.</li>
+                    </ul>
+                </div>
+
+                <!-- Red Teaming Box -->
+                <div class="service-box offensive">
+                    <div class="icon"><i class='bx bxs-virus'></i></div>
+                    <h3>Red Teaming & Adversary Simulation</h3>
+                    <p>Simulating real-world, advanced persistent threat (APT) attacks to test an organization's defensive capabilities and incident response procedures.</p>
+                    <ul>
+                        <li><strong>Focus Areas:</strong> Advanced Exploitation Techniques, Social Engineering, Physical Security Testing, Custom Tool Development (Python), Evasion and Persistence.</li>
+                        <li><strong>Capabilities:</strong> Full-spectrum attack simulation, Stealth operations, Lateral movement, Persistence, Comprehensive reporting with strategic recommendations, Post-Engagement Hardening.</li>
+                        <li><strong>Experience:</strong> Hands-on experience with offensive tools and tactics in controlled environments, CTF competitions, Bug Bounty participation.</li>
+                    </ul>
+                </div>
+
+                <!-- IoT Security Box -->
+                <div class="service-box research">
+                    <div class="icon"><i class='bx bx-devices'></i></div>
+                    <h3>IoT Security & Threat Response</h3>
+                    <p>Analyzing and securing the expanding landscape of Internet of Things devices, focusing on identifying vulnerabilities and developing robust threat response strategies.</p>
+                    <ul>
+                        <li><strong>Technologies:</strong> Embedded systems analysis, Network protocol dissectors, Firmware analysis tools, Python for automation, Shodan, IoT Penetration Testing Frameworks.</li>
+                        <li><strong>Capabilities:</strong> Device fingerprinting, Communication protocol security assessment, Firmware reverse engineering basics, Secure IoT architecture design, Threat Modeling for IoT.</li>
+                        <li><strong>Initiatives:</strong> HOPE Summer IoT Camp (Security Focus), Resource sharing for Termux/Linux tools, Research on Botnet Mitigation in Smart Devices.</li>
+                    </ul>
+                </div>
+
+                <!-- R&D Box -->
+                <div class="service-box research">
+                    <div class="icon"><i class='bx bx-search-alt'></i></div>
+                    <h3>Cybersecurity R&D</h3>
+                    <p>Exploring emerging threats, researching novel attack vectors, and developing innovative defensive strategies to stay ahead in the ever-evolving cybersecurity landscape.</p>
+                    <ul>
+                        <li><strong>Focus Areas:</strong> Emerging Threat Intelligence, AI/ML in Cybersecurity, Privacy-preserving technologies, Blockchain security concepts, Zero Trust Architecture.</li>
+                        <li><strong>Capabilities:</strong> Literature review, Conceptual innovation, Proof-of-concept development, Integration of security into new technologies (AI, IoT), Threat Hunting.</li>
+                        <li><strong>Future Goals:</strong> Diving deeper into smart systems powered by AI and exploring the security implications of decentralized technologies, contributing to open-source security tools.</li>
                     </ul>
                 </div>
             </div>
 
             <!-- Projects Showcase -->
-            <h2 class="section-title">Cybersecurity Projects</h2>
+            <h2 class="section-title">Featured Security Projects & Initiatives</h2>
             <div class="project-cards">
                 <!-- Project 1 -->
                 <div class="project-card">
-                    <h3>TexidoMeg</h3>
-                    <p class="type">Cybersecurity Training Portal / Educational Initiative</p>
-                    <p class="desc">Alongside HOPE, I've founded TexidoMeg, an open-learning platform for cybersecurity and coding. A learning platform focused on cybersecurity, ethical hacking, and foundational programming for early learners. Created modular courses in hacking fundamentals and Python automation. Partnered with peer educators and tech communities to expand outreach. Mentored over 100 students through hands-on labs and certification challenges.</p>
-                    <p class="tech"><strong>Technologies:</strong> Ethical Hacking tools, Python, potentially Parrot OS environment.</p>
-                    <p class="features"><strong>Features:</strong> Open-learning platform, course creation, student mentorship, community building.</p>
-                    <a href="https://texidomeg.vercel.app" target="_blank" class="project-link">Live Preview</a>
+                    <h3>TexidoMeg (Training Portal)</h3>
+                    <p class="type">Educational Platform / Co-Founder (with HOPE)</p>
+                    <p class="desc">An open-learning platform focused on cybersecurity and programming education. Provides mentorship, training modules, and practical labs for aspiring security professionals.</p>
+                    <p class="tech"><strong>Technologies/Concepts:</strong> Web Security Fundamentals, Linux/Parrot OS Training, Python Scripting, Mentorship Frameworks, Capture The Flag (CTF) Labs.</p>
+                    <p class="features"><strong>Features:</strong> Structured cybersecurity curriculum, Hands-on labs, Community mentorship, Resource repository, Vulnerable Application Sandbox.</p>
                 </div>
 
                 <!-- Project 2 -->
                 <div class="project-card">
-                    <h3>Python Library Integration & Training</h3>
-                    <p class="type">Internship / Skill Development</p>
-                    <p class="desc">Intern – Keltron (2023 – 2024) - Python Library Integration & Training. During my Keltron internship, I conducted peer trainings on Python automation libraries and helped integrate tech into live workflows. I've also developed custom scripts for data verification, email automation, and IoT system optimization.</p>
-                    <p class="tech"><strong>Technologies:</strong> Python, Automation Libraries, Linux.</p>
-                    <p class="features"><strong>Features:</strong> Skill development, peer training, practical application (potentially security-related scripts).</p>
+                    <h3>Python Library Integration & Training (Internship)</h3>
+                    <p class="type">Internship Project / Keltron</p>
+                    <p class="desc">Focused on integrating Python automation libraries into workflows. Conducted peer training sessions on libraries and developed automation scripts for data verification, email, and IoT applications.</p>
+                    <p class="tech"><strong>Technologies:</strong> Python, Automation Libraries (e.g., Requests, Selenium, Paramiko, Scapy), Scripting, Peer Training, Network Automation.</p>
+                    <p class="features"><strong>Features:</strong> Workflow automation scripts, Peer-led training sessions, Practical application of Python in tech workflows, Security Script Development.</p>
                 </div>
 
                 <!-- Project 3 -->
                 <div class="project-card">
-                    <h3>Termux/Linux Tools & AWT MODS</h3>
-                    <p class="type">Resource Sharing / Tool Development</p>
-                    <p class="desc">Introducing a beginner-friendly application designed for developers, hackers, and learners. Explore and experiment with a variety of free tools powered by Termux and Linux. This early access platform promises an accessible learning experience for everyone. Coming soon. This website is your ultimate destination for cracked applications, ensuring safety and malware-free downloads. You can find any app you need, suggest apps for modification or premium access, all with complete security. If you're passionate about cybersecurity, this site provides over 100 functional Termux and Linux-based tools completely free of charge.</p>
-                    <p class="tech"><strong>Technologies:</strong> Termux, Linux, various security tools.</p>
-                    <p class="features"><strong>Features:</strong> Resource sharing, tool accessibility, community engagement.</p>
-                    <a href="#" class="project-link">Pre-Book Link</a>
-                    <a href="#" class="project-link">AWT MODS</a>
-                    <a href="#" class="project-link">100+ Tools</a>
+                    <h3>Termux/Linux Tools & AWT MODS (Resource Sharing)</h3>
+                    <p class="type">Resource Sharing Initiative / Toolkit</p>
+                    <p class="desc">(Upcoming/Pre-bookable) A curated collection and sharing platform for essential Termux and Linux tools, along with custom modifications (AWT MODS) for penetration testing and security research on mobile/desktop platforms.</p>
+                    <p class="tech"><strong>Technologies:</strong> Termux, Linux (Parrot OS/Kali), Shell Scripting, Mobile Security Tools, Custom Payload Generators.</p>
+                    <p class="features"><strong>Features:</strong> Centralized tool repository, Custom tool modifications, Installation guides, Community-driven updates, Mobile Forensics Kit.</p>
+                </div>
+                
+                <!-- Project 4 -->
+                <div class="project-card">
+                    <h3>Automated Vulnerability Scanner</h3>
+                    <p class="type">Open Source Tool / Personal Project</p>
+                    <p class="desc">Developed a Python-based automated vulnerability scanner that integrates with Nmap and other security tools to perform comprehensive network and web application scans.</p>
+                    <p class="tech"><strong>Technologies:</strong> Python, Nmap, BeautifulSoup, Requests, SQLite, Flask API.</p>
+                    <p class="features"><strong>Features:</strong> Multi-threaded scanning, Web dashboard for results, Report generation, Plugin architecture for new checks, Scheduled scans.</p>
+                </div>
+                
+                <!-- Project 5 -->
+                <div class="project-card">
+                    <h3>IoT Botnet Detection Research</h3>
+                    <p class="type">Research Project / Academic Collaboration</p>
+                    <p class="desc">Conducted research on detecting and mitigating IoT botnets using machine learning techniques on network traffic data.</p>
+                    <p class="tech"><strong>Technologies:</strong> Python, Scikit-learn, Pandas, Wireshark, MQTT Simulation, Jupyter Notebook.</p>
+                    <p class="features"><strong>Features:</strong> Traffic analysis algorithms, Anomaly detection models, Simulation of botnet behavior, Performance evaluation metrics.</p>
                 </div>
             </div>
 
             <!-- Skills Proficiency -->
-            <h2 class="section-title">Cybersecurity Skills Proficiency</h2>
+            <h2 class="section-title">Cybersecurity & Technical Skills Proficiency</h2>
             <div class="skills-container">
                 <div class="skill">
-                    <p>Ethical Hacking & Penetration Testing <span class="percentage">90%</span></p>
+                    <p>Ethical Hacking & Penetration Testing <span class="percentage">95%</span></p>
+                    <div class="progress-bar"><div class="bar offensive" style="width: 95%;"></div></div>
+                </div>
+                <div class="skill">
+                    <p>Linux System Administration (Parrot OS/Kali) <span class="percentage">90%</span></p>
                     <div class="progress-bar"><div class="bar" style="width: 90%;"></div></div>
                 </div>
                 <div class="skill">
-                    <p>Linux, Parrot OS & Server Ops <span class="percentage">85%</span></p>
+                    <p>Privacy & Anonymity Tools <span class="percentage">85%</span></p>
+                    <div class="progress-bar"><div class="bar research" style="width: 85%;"></div></div>
+                </div>
+                <div class="skill">
+                    <p>IoT Security Assessment <span class="percentage">80%</span></p>
+                    <div class="progress-bar"><div class="bar research" style="width: 80%;"></div></div>
+                </div>
+                <div class="skill">
+                    <p>Red Teaming & Adversary Simulation <span class="percentage">85%</span></p>
+                    <div class="progress-bar"><div class="bar offensive" style="width: 85%;"></div></div>
+                </div>
+                <div class="skill">
+                    <p>Cybersecurity R&D & Emerging Threats <span class="percentage">80%</span></p>
+                    <div class="progress-bar"><div class="bar research" style="width: 80%;"></div></div>
+                </div>
+                <div class="skill">
+                    <p>Python Scripting for Security <span class="percentage">90%</span></p>
+                    <div class="progress-bar"><div class="bar" style="width: 90%;"></div></div>
+                </div>
+                <div class="skill">
+                    <p>Network Security & Analysis (Nmap, Wireshark) <span class="percentage">90%</span></p>
+                    <div class="progress-bar"><div class="bar" style="width: 90%;"></div></div>
+                </div>
+                <div class="skill">
+                    <p>Vulnerability Assessment <span class="percentage">90%</span></p>
+                    <div class="progress-bar"><div class="bar" style="width: 90%;"></div></div>
+                </div>
+                <div class="skill">
+                    <p>Incident Response & Forensics <span class="percentage">75%</span></p>
+                    <div class="progress-bar"><div class="bar offensive" style="width: 75%;"></div></div>
+                </div>
+                <div class="skill">
+                    <p>Web Application Security (OWASP) <span class="percentage">85%</span></p>
                     <div class="progress-bar"><div class="bar" style="width: 85%;"></div></div>
                 </div>
                 <div class="skill">
-                    <p>Privacy Tools <span class="percentage">80%</span></p>
-                    <div class="progress-bar"><div class="bar" style="width: 80%;"></div></div>
+                    <p>Cloud Security (AWS, Azure) <span class="percentage">70%</span></p>
+                    <div class="progress-bar"><div class="bar research" style="width: 70%;"></div></div>
                 </div>
                 <div class="skill">
-                    <p>IoT Security <span class="percentage">75%</span></p>
+                    <p>Cryptography & Encryption <span class="percentage">75%</span></p>
                     <div class="progress-bar"><div class="bar" style="width: 75%;"></div></div>
                 </div>
                 <div class="skill">
-                    <p>Red Teaming <span class="percentage">70%</span></p>
-                    <div class="progress-bar"><div class="bar" style="width: 70%;"></div></div>
-                </div>
-                <div class="skill">
-                    <p>Cybersecurity R&D <span class="percentage">75%</span></p>
-                    <div class="progress-bar"><div class="bar" style="width: 75%;"></div></div>
+                    <p>Social Engineering & Phishing <span class="percentage">80%</span></p>
+                    <div class="progress-bar"><div class="bar offensive" style="width: 80%;"></div></div>
                 </div>
             </div>
 
@@ -791,7 +967,7 @@
                         <span>Terminal</span>
                     </div>
                     <div class="tool-card">
-                        <i class='bx bx-shield-alt-2'></i>
+                        <i class='bx bx-network-chart'></i>
                         <span>Nmap</span>
                     </div>
                     <div class="tool-card">
@@ -799,7 +975,7 @@
                         <span>Wireshark</span>
                     </div>
                     <div class="tool-card">
-                        <i class='bx bx-bug-alt'></i>
+                        <i class='bx bxs-virus'></i>
                         <span>Metasploit</span>
                     </div>
                     <div class="tool-card">
@@ -807,41 +983,124 @@
                         <span>Burp Suite</span>
                     </div>
                     <div class="tool-card">
-                        <i class='bx bx-server'></i>
+                        <i class='bx bxl-kubernetes'></i>
                         <span>Kali Linux</span>
                     </div>
                     <div class="tool-card">
-                        <i class='bx bx-target-lock'></i>
+                        <i class='bx bx-data'></i>
                         <span>SQLMap</span>
                     </div>
+                    <div class="tool-card">
+                        <i class='bx bx-bug'></i>
+                        <span>Nessus</span>
+                    </div>
+                    <div class="tool-card">
+                        <i class='bx bx-server'></i>
+                        <span>OpenVAS</span>
+                    </div>
+                    <div class="tool-card">
+                        <i class='bx bx-search'></i>
+                        <span>Shodan</span>
+                    </div>
+                    <div class="tool-card">
+                        <i class='bx bx-cctv'></i>
+                        <span>Snort</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="contact-section">
+                <h2>Ready to Secure Your Digital Realm?</h2>
+                <p>Have a security assessment in mind, need help fortifying your systems, or want to discuss potential collaborations in the field of cybersecurity? I'm always ready to tackle new challenges and strengthen digital defenses.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class='bx bxl-github'></i></a>
+                    <a href="#" class="social-link"><i class='bx bxl-linkedin'></i></a>
+                    <a href="#" class="social-link"><i class='bx bxl-twitter'></i></a>
+                    <a href="#" class="social-link"><i class='bx bxl-instagram'></i></a>
+                    <a href="#" class="social-link"><i class='bx bxl-youtube'></i></a>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- === Matrix Rain Script === -->
     <script>
-        // Animate progress bars when they come into view
-        document.addEventListener('DOMContentLoaded', function() {
-            const progressBars = document.querySelectorAll('.bar');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const bar = entry.target;
-                        const width = bar.style.width;
-                        bar.style.width = '0';
-                        setTimeout(() => {
-                            bar.style.width = width;
-                        }, 300);
-                        observer.unobserve(bar);
+        document.addEventListener('DOMContentLoaded', function () {
+            const canvas = document.getElementById('matrix-rain');
+            const ctx = canvas.getContext('2d');
+
+            // Set canvas dimensions to match the window
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            // Characters for the Matrix rain (Latin, Numbers, Symbols)
+            const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ$#@%&*<>+-=/\\|";
+            const charArray = chars.split('');
+
+            const fontSize = 16;
+            const columns = canvas.width / fontSize;
+
+            // Array to track the y position of the drop for each column
+            const drops = [];
+            for (let x = 0; x < columns; x++) {
+                // Initialize drops at random positions above the screen
+                drops[x] = Math.floor(Math.random() * -canvas.height / fontSize);
+            }
+
+            function draw() {
+                // Semi-transparent dark red overlay to create fading trail effect
+                ctx.fillStyle = 'rgba(10, 10, 10, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.font = `${fontSize}px 'Share Tech Mono'`;
+                ctx.textBaseline = 'top';
+
+                for (let i = 0; i < drops.length; i++) {
+                    const char = charArray[Math.floor(Math.random() * charArray.length)];
+                    const x = i * fontSize;
+
+                    // Set color: Head is brighter, trail fades to darker red
+                    const y = drops[i] * fontSize;
+                    if (y > 0) {
+                        // Calculate opacity based on position (head brighter)
+                        const headOpacity = 1;
+                        const trailOpacity = Math.max(0, 0.3 - (Math.random() * 0.2));
+                        
+                        // Draw head character (brighter)
+                        ctx.fillStyle = `rgba(255, 51, 51, ${headOpacity})`; // Bright Red
+                        ctx.fillText(char, x, y);
+                        
+                        // Draw trail characters (darker)
+                        for (let j = 1; j < 10; j++) { // Draw 10 trail characters
+                            const trailY = y - j * fontSize;
+                            if (trailY > 0) {
+                                const opacity = Math.max(0, trailOpacity - j * 0.03);
+                                ctx.fillStyle = `rgba(179, 0, 0, ${opacity})`; // Darker Red
+                                const trailChar = charArray[Math.floor(Math.random() * charArray.length)];
+                                ctx.fillText(trailChar, x, trailY);
+                            }
+                        }
                     }
-                });
-            }, { threshold: 0.5 });
-            
-            progressBars.forEach(bar => {
-                observer.observe(bar);
+
+                    // Move drop down, reset if it goes off screen
+                    drops[i]++;
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = Math.floor(Math.random() * -20);
+                    }
+                }
+            }
+
+            // Adjust canvas size on window resize
+            window.addEventListener('resize', function () {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
             });
+
+            // Run the animation loop
+            setInterval(draw, 33); // ~30 FPS
         });
     </script>
+    <!-- ========================= -->
 </body>
 </html>
