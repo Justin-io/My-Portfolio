@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theoretical Physics & Quantum Research Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Poppins:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        :root {
+            --dark-bg: #040404;
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-blue: #4d79ff;
+            --accent-blue-hover: #6b9aff;
+            --accent-blue-light: #1e90ff;
+            --text-light: #ffffff;
+            --text-secondary: #cccccc;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 10% 20%, rgba(77, 121, 255, 0.15) 0%, rgba(4, 4, 4, 0) 30%),
+                        radial-gradient(circle at 90% 80%, rgba(77, 121, 255, 0.1) 0%, rgba(4, 4, 4, 0) 30%),
+                        conic-gradient(from 0deg at 50% 50%, rgba(77, 121, 255, 0.05) 0deg, transparent 60deg, rgba(77, 121, 255, 0.05) 120deg, transparent 180deg);
+            z-index: -1;
+            pointer-events: none;
+            animation: rotateBG 30s linear infinite;
+        }
+
+        @keyframes rotateBG {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .physics-section {
+            padding: 80px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 30px;
+            margin-bottom: 60px;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            animation: floatIn 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 25px;
+            background: linear-gradient(to right, #ffffff, var(--accent-blue), var(--accent-blue-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            animation: textGlow 3s infinite alternate;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            color: var(--text-secondary);
+        }
+
+        /* Skills Chips */
+        .skills-chips {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 40px 0;
+        }
+
+        .chip {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .chip::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(77, 121, 255, 0.3), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+            z-index: -1;
+        }
+
+        .chip:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(77, 121, 255, 0.3);
+            border-color: rgba(77, 121, 255, 0.4);
+        }
+
+        .chip:hover::before {
+            transform: translateX(100%);
+        }
+
+        /* CTA Button */
+        .cta-button {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: var(--accent-blue);
+            padding: 16px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-top: 20px;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(77, 121, 255, 0.4), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.8s ease;
+            z-index: -1;
+        }
+
+        .cta-button:hover {
+            background: rgba(77, 121, 255, 0.25);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(77, 121, 255, 0.4);
+            color: #fff;
+        }
+
+        .cta-button:hover::before {
+            transform: translateX(100%);
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin: 80px 0;
+        }
+
+        .service-box {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            backdrop-filter: blur(12px);
+            border-radius: 25px;
+            padding: 40px 30px;
+            transition: var(--transition);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .service-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent, rgba(77, 121, 255, 0.15), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.8s ease;
+            z-index: -1;
+        }
+
+        .service-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(77, 121, 255, 0.3);
+            border-color: rgba(77, 121, 255, 0.3);
+        }
+
+        .service-box:hover::before {
+            transform: translateX(100%);
+        }
+
+        .service-box .icon {
+            font-size: 3.5rem;
+            margin-bottom: 25px;
+            color: var(--accent-blue);
+            transition: var(--transition);
+        }
+
+        .service-box:hover .icon {
+            transform: scale(1.1) rotate(5deg);
+            text-shadow: 0 0 15px rgba(77, 121, 255, 0.7);
+        }
+
+        .service-box h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: var(--accent-blue);
+        }
+
+        .service-box p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .service-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .service-box ul li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+            color: var(--text-secondary);
+        }
+
+        .service-box ul li::before {
+            content: '⚛';
+            position: absolute;
+            left: 0;
+            color: var(--accent-blue);
+            font-weight: bold;
+        }
+
+        /* Projects Section */
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin: 80px 0 50px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-blue-light));
+            border-radius: 2px;
+        }
+
+        .project-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+
+        .project-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            backdrop-filter: blur(12px);
+            border-radius: 25px;
+            padding: 35px;
+            transition: var(--transition);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent, rgba(77, 121, 255, 0.15), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.8s ease;
+            z-index: -1;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(77, 121, 255, 0.3);
+            border-color: rgba(77, 121, 255, 0.3);
+        }
+
+        .project-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .project-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            color: var(--accent-blue);
+        }
+
+        .project-card .type {
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .project-card .desc {
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .project-card .tech,
+        .project-card .features {
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .project-card .tech strong,
+        .project-card .features strong {
+            color: #fff;
+        }
+
+        .project-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            position: relative;
+            padding-right: 25px;
+        }
+
+        .project-link::after {
+            content: '→';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .project-link:hover {
+            color: var(--accent-blue-hover);
+            padding-right: 30px;
+        }
+
+        .project-link:hover::after {
+            opacity: 1;
+            right: -5px;
+        }
+
+        /* Skills Section */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .skill {
+            margin-bottom: 25px;
+        }
+
+        .skill p {
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .skill .percentage {
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            height: 12px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: progressShine 2s infinite;
+        }
+
+        .bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-blue-hover));
+            border-radius: 10px;
+            position: relative;
+            width: 0;
+            transition: width 1.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+
+        .bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: progressShine 3s infinite;
+        }
+
+        /* Tools & Concepts */
+        .tools-section {
+            margin: 80px 0;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .tool-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 25px 15px;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent, rgba(77, 121, 255, 0.15), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.8s ease;
+            z-index: -1;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(77, 121, 255, 0.3);
+            border-color: rgba(77, 121, 255, 0.3);
+        }
+
+        .tool-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .tool-card i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--accent-blue);
+        }
+
+        .tool-card span {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Publications Section */
+        .publications-section {
+            margin: 80px 0;
+        }
+
+        .publications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .publication-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 25px;
+            transition: var(--transition);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .publication-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent, rgba(77, 121, 255, 0.15), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.8s ease;
+            z-index: -1;
+        }
+
+        .publication-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(77, 121, 255, 0.3);
+            border-color: rgba(77, 121, 255, 0.3);
+        }
+
+        .publication-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .publication-card .icon {
+            font-size: 2.5rem;
+            color: var(--accent-blue);
+            margin-bottom: 20px;
+        }
+
+        .publication-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--accent-blue);
+        }
+
+        .publication-card .journal {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+
+        .publication-card .date {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+
+        .publication-card .description {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        /* Research Methodology */
+        .methodology-section {
+            margin: 80px 0;
+        }
+
+        .methodology-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .method-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 25px;
+            transition: var(--transition);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .method-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent, rgba(77, 121, 255, 0.15), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.8s ease;
+            z-index: -1;
+        }
+
+        .method-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(77, 121, 255, 0.3);
+            border-color: rgba(77, 121, 255, 0.3);
+        }
+
+        .method-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .method-card .icon {
+            font-size: 2.5rem;
+            color: var(--accent-blue);
+            margin-bottom: 20px;
+        }
+
+        .method-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--accent-blue);
+        }
+
+        .method-card .description {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        /* Animations */
+        @keyframes floatIn {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes textGlow {
+            0% {
+                text-shadow: 0 0 5px rgba(77, 121, 255, 0.3);
+            }
+            100% {
+                text-shadow: 0 0 20px rgba(77, 121, 255, 0.7), 0 0 30px rgba(30, 144, 255, 0.5);
+            }
+        }
+
+        @keyframes progressShine {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        /* Floating Elements */
+        .floating {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(77, 121, 255, 0.25) 0%, transparent 70%);
+            z-index: 1;
+            pointer-events: none;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .floating:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 5%;
+            animation-duration: 20s;
+        }
+
+        .floating:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            bottom: 15%;
+            right: 10%;
+            animation-duration: 18s;
+            animation-delay: 2s;
+        }
+
+        .floating:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            top: 40%;
+            right: 20%;
+            animation-duration: 12s;
+            animation-delay: 4s;
+        }
+
+        .floating:nth-child(4) {
+            width: 250px;
+            height: 250px;
+            bottom: 20%;
+            left: 15%;
+            background: radial-gradient(circle, rgba(77, 121, 255, 0.2) 0%, transparent 70%);
+            animation-duration: 25s;
+            animation-delay: 1s;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(77, 121, 255, 0.5);
+            z-index: 1;
+            pointer-events: none;
+            animation: particleFloat linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            33% {
+                transform: translate(20px, -30px) rotate(10deg);
+            }
+            66% {
+                transform: translate(-20px, 20px) rotate(-10deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+        }
+
+        @keyframes particleFloat {
+            to {
+                transform: translateY(-100px) translateX(20px);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .services-grid,
+            .project-cards,
+            .publications-grid,
+            .methodology-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating background elements -->
+    <div class="floating"></div>
+    <div class="floating"></div>
+    <div class="floating"></div>
+    <div class="floating"></div>
+
+    <!-- Particle background -->
+    <div id="particles"></div>
+
+    <section class="physics-section">
+        <div class="container">
+            <!-- Hero/Open Section -->
+            <div class="hero">
+                <h1>Exploring the Quantum Frontier: Theoretical Physics & Quantum Computing</h1>
+                <p>
+                    I'm deeply engaged in foundational physics research, exploring the intersection of Quantum Mechanics, General Relativity, and discrete spacetime models.
+                    <br><strong>I don't just research. I build frameworks... I push the boundaries of understanding.</strong>
+                </p>
+                <p>
+                    In theoretical physics, I'm developing the Chronon-Super Quantum Level Model - a novel framework exploring quantum gravity, pre-geometric spacetime, and the fundamental nature of time. My research integrates advanced mathematics including differential geometry, linear algebra, and graph theory...
+                </p>
+
+                <!-- Key Skills Chips -->
+                <div class="skills-chips">
+                    <span class="chip">Quantum Gravity</span>
+                    <span class="chip">Quantum Mechanics</span>
+                    <span class="chip">General Relativity</span>
+                    <span class="chip">Discrete Spacetime Models</span>
+                    <span class="chip">Pre-geometric Theories</span>
+                    <span class="chip">Mathematical Physics</span>
+                    <span class="chip">Scientific Computing</span>
+                    <span class="chip">Chronon-Super Quantum Level Model</span>
+                    <span class="chip">Causal Graphs</span>
+                    <span class="chip">Hilbert Spaces</span>
+                    <span class="chip">Differential Geometry</span>
+                    <span class="chip">Graph Theory</span>
+                </div>
+
+                <!-- Call to Action -->
+                <a href="#projects" class="cta-button">Explore My Research</a>
+            </div>
+
+            <!-- Detailed Services -->
+            <div class="services-grid">
+                <!-- Quantum Gravity & the Problem of Time -->
+                <div class="service-box">
+                    <div class="icon"><i class='bx bx-time'></i></div>
+                    <h3>Quantum Gravity & the Problem of Time</h3>
+                    <p>Quantum Gravity & the Problem of Time. My research focuses on: Quantum Gravity approaches including Loop Quantum Gravity and Causal Set Theory. The Problem of Time in fundamental physics.</p>
+                    <ul>
+                        <li><strong>Key Constructs/Approaches:</strong> Loop Quantum Gravity, Causal Set Theory, String Theory concepts.</li>
+                        <li><strong>Capabilities:</strong> Foundational research, theoretical framework development.</li>
+                    </ul>
+                </div>
+
+                <!-- Discrete Physics Modeling & Pre-geometric Theories -->
+                <div class="service-box">
+                    <div class="icon"><i class='bx bx-grid-alt'></i></div>
+                    <h3>Discrete Physics Modeling & Pre-geometric Theories</h3>
+                    <p>Pre-geometric Theories & Causal Graphs. Discrete Mathematics & Hilbert Spaces. Chronon-Super Quantum Level Model. Emergent Spacetime Theories. Modified Dispersion Relations. Discrete time models. Create computational models for discrete spacetime theories, cellular automata systems, and pre-geometric networks using graph theory and mathematical physics.</p>
+                    <ul>
+                        <li><strong>Key Constructs/Approaches:</strong> Chronons, Space Grains, Super Quantum Levels (SQL), Causal Graphs, Cellular Automata.</li>
+                        <li><strong>Capabilities:</strong> Modeling discrete structures, computational simulations, conceptual innovation.</li>
+                    </ul>
+                </div>
+
+                <!-- Advanced Mathematical Physics -->
+                <div class="service-box">
+                    <div class="icon"><i class='bx bx-calculator'></i></div>
+                    <h3>Advanced Mathematical Physics</h3>
+                    <p>Apply differential geometry, linear algebra, and abstract mathematics to solve complex physics problems and develop theoretical frameworks. My background includes: Differential geometry, Linear algebra, Abstract algebra, Graph theory. Mathematical foundations of Hilbert spaces and operator theory.</p>
+                    <ul>
+                        <li><strong>Key Areas:</strong> Differential Geometry, Linear Algebra, Hilbert Spaces, Operator Theory, Graph Theory.</li>
+                        <li><strong>Capabilities:</strong> Rigorous mathematical derivation, framework formalization.</li>
+                    </ul>
+                </div>
+
+                <!-- Quantum Computing & Simulation -->
+                <div class="service-box">
+                    <div class="icon"><i class='bx bx-atom'></i></div>
+                    <h3>Quantum Computing & Simulation</h3>
+                    <p>Quantum Computing Enthusiast. Quantum Computing Fundamentals (75%). Develop quantum algorithms, simulate quantum systems, and integrate quantum computing principles into classical applications for advanced computational solutions. Edge AI, Computer vision, Real-time automation systems.</p>
+                    <ul>
+                        <li><strong>Key Areas:</strong> Quantum Algorithms, Quantum Simulation, Qubits, Quantum Information Theory.</li>
+                        <li><strong>Capabilities:</strong> Quantum algorithm development, simulation, integration with classical systems.</li>
+                    </ul>
+                </div>
+
+                <!-- Scientific Computing & Research Methodology -->
+                <div class="service-box">
+                    <div class="icon"><i class='bx bx-code-alt'></i></div>
+                    <h3>Scientific Computing & Research Methodology</h3>
+                    <p>Scientific Computing & Simulation. Develop high-performance computational models for physics simulations, numerical analysis, and scientific data processing using Python and C. My research methodology combines: Literature Review, Mathematical Derivation, Conceptual Innovation, Interdisciplinary Synthesis, Scientific Writing.</p>
+                    <ul>
+                        <li><strong>Key Areas:</strong> Computational Physics, Numerical Analysis, Data Processing (Python, C), Scientific Writing.</li>
+                        <li><strong>Capabilities:</strong> Building simulations, rigorous derivation, interdisciplinary synthesis, formal writing.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Projects Showcase -->
+            <h2 class="section-title">Research Projects</h2>
+            <div class="project-cards">
+                <!-- Chronon-SQL Model Project -->
+                <div class="project-card">
+                    <h3>Chronon-Super Quantum Level Model (MARK III)</h3>
+                    <p class="type">Theoretical Physics Research Framework</p>
+                    <p class="desc">A novel theoretical framework proposing that time is fundamentally discrete, composed of Chronons - indivisible units of time that activate in response to energy fluctuations. Space is granular, composed of Space Grains that host Chronon fields. Beneath the Planck scale lies a hierarchical domain - the Super Quantum Level (SQL) where energy exists in discrete "chunks" smaller than any known quantum.</p>
+                    <p class="tech"><strong>Research Focus:</strong> Quantum Gravity, Discrete Time Models, Pre-geometric Theories, Modified Uncertainty Relations</p>
+                    <p class="features"><strong>Key Constructs:</strong> Chronons (discrete time units), Space Grains (fundamental spatial units), Super Quantum Levels (hierarchical energy structure)</p>
+                    <p class="features"><strong>Mathematical Framework:</strong> Derived governing equation: ∫G(L²s/ℓ²P)(Tc/t)(kB ln Ωi)(ℏ/2Tc)dV = K</p>
+                    <p class="features"><strong>Applications:</strong> Quantum Gravity, Black Hole Information Paradox Resolution, Fundamental Physics Unification</p>
+                    <p class="features"><strong>Experimental Predictions:</strong> Time quantization effects detectable with ultra-precise atomic clocks, deviations from continuous spacetime in high-energy collisions</p>
+                </div>
+
+                <!-- Quantum Gravity Research -->
+                <div class="project-card">
+                    <h3>Quantum Gravity Research (General Investigations)</h3>
+                    <p class="type">Theoretical Physics Research</p>
+                    <p class="desc">Quantum Gravity approaches including Loop Quantum Gravity and Causal Set Theory. The Problem of Time in fundamental physics. Modified uncertainty principles and discrete time models. Mathematical foundations of Hilbert spaces and operator theory. Quantum Gravity: LQG, String theory, Causal sets, Emergent gravity approaches.</p>
+                    <p class="tech"><strong>Technologies/Tools:</strong> Literature Review, Mathematical Derivation, Conceptual Innovation, Interdisciplinary Synthesis</p>
+                    <p class="features"><strong>Key Features/Outcomes:</strong> Exploring fundamental approaches, literature analysis, mathematical development.</p>
+                </div>
+
+                <!-- Scientific Computing & Simulation -->
+                <div class="project-card">
+                    <h3>Scientific Computing & Simulation (for Physics)</h3>
+                    <p class="type">Computational Research Activity</p>
+                    <p class="desc">Develop high-performance computational models for physics simulations, numerical analysis, and scientific data processing using Python and C. Focus on simulating discrete spacetime structures and quantum systems.</p>
+                    <p class="tech"><strong>Technologies/Tools:</strong> Python, C, Computational Modeling, Numerical Methods</p>
+                    <p class="features"><strong>Key Features/Outcomes:</strong> Building tools for physics research, data processing, simulations.</p>
+                </div>
+            </div>
+
+            <!-- Skills Proficiency -->
+            <h2 class="section-title">Physics Skills Proficiency</h2>
+            <div class="skills-container">
+                <div class="skill">
+                    <p>Quantum Mechanics & Operators <span class="percentage">85%</span></p>
+                    <div class="progress-bar"><div class="bar" style="width: 85%;"></div></div>
+                </div>
+                <div class="skill">
+                    <p>General Relativity & Spacetime <span class="percentage">80%</span></p>
+                    <div class="progress-bar"><div class="bar" style="width: 80%;"></div></div>
+                </div>
+                <div class="skill">
+                    <p>Quantum Gravity (Approaches) <span class="percentage">80%</span></p>
+                    <div class="progress-bar"><div class="bar" style="width: 80%;"></div></div>
+                </div>
+                <div class="skill">
+                    <p>Statistical Mechanics & Thermodynamics <span class="percentage">75%</span></p>
+                    <div class="progress-bar"><div class="bar" style="width: 75%;"></div></div>
+                </div>
+                <div class="skill">
+                    <p>Discrete Mathematics & Graph Theory <span class="percentage">80%</span></p>
+                    <div class="progress-bar"><div class="bar" style="width: 80%;"></div></div>
+                </div>
+                <div class="skill">
+                    <p>Differential Geometry <span class="percentage">75%</span></p>
+                    <div class="progress-bar"><div class="bar" style="width: 75%;"></div></div>
+                </div>
+                <div class="skill">
+                    <p>Linear Algebra & Hilbert Spaces <span class="percentage">85%</span></p>
+                    <div class="progress-bar"><div class="bar" style="width: 85%;"></div></div>
+                </div>
+                <div class="skill">
+                    <p>Calculus & Mathematical Physics <span class="percentage">85%</span></p>
+                    <div class="progress-bar"><div class="bar" style="width: 85%;"></div></div>
+                </div>
+                <div class="skill">
+                    <p>Scientific Computing (Python, C) <span class="percentage">90%</span></p>
+                    <div class="progress-bar"><div class="bar" style="width: 90%;"></div></div>
+                </div>
+                <div class="skill">
+                    <p>Scientific Writing & Argumentation <span class="percentage">80%</span></p>
+                    <div class="progress-bar"><div class="bar" style="width: 80%;"></div></div>
+                </div>
+                <div class="skill">
+                    <p>Quantum Computing Fundamentals <span class="percentage">75%</span></p>
+                    <div class="progress-bar"><div class="bar" style="width: 75%;"></div></div>
+                </div>
+                <div class="skill">
+                    <p>Conceptual Innovation <span class="percentage">90%</span></p>
+                    <div class="progress-bar"><div class="bar" style="width: 90%;"></div></div>
+                </div>
+            </div>
+
+            <!-- Tools & Concepts -->
+            <div class="tools-section">
+                <h2 class="section-title">Physics Concepts & Tools</h2>
+                <div class="tools-grid">
+                    <div class="tool-card">
+                        <i class='bx bx-atom'></i>
+                        <span>Hilbert Spaces</span>
+                    </div>
+                    <div class="tool-card">
+                        <i class='bx bx-calculator'></i>
+                        <span>Operators</span>
+                    </div>
+                    <div class="tool-card">
+                        <i class='bx bx-grid-alt'></i>
+                        <span>Metric Tensors</span>
+                    </div>
+                    <div class="tool-card">
+                        <i class='bx bx-time'></i>
+                        <span>Chronons</span>
+                    </div>
+                    <div class="tool-card">
+                        <i class='bx bx-shape-square'></i>
+                        <span>Graph Theory</span>
+                    </div>
+                    <div class="tool-card">
+                        <i class='bx bx-grid'></i>
+                        <span>Cellular Automata</span>
+                    </div>
+                    <div class="tool-card">
+                        <i class='bx bx-math'></i>
+                        <span>Differential Geometry</span>
+                    </div>
+                    <div class="tool-card">
+                        <i class='bx bx-code-alt'></i>
+                        <span>Python</span>
+                    </div>
+                    <div class="tool-card">
+                        <i class='bx bx-code-curly'></i>
+                        <span>C Language</span>
+                    </div>
+                    <div class="tool-card">
+                        <i class='bx bx-book'></i>
+                        <span>Mathematica</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Publications -->
+            <div class="publications-section">
+                <h2 class="section-title">Research Publications</h2>
+                <div class="publications-grid">
+                    <div class="publication-card">
+                        <div class="icon"><i class='bx bx-book'></i></div>
+                        <h3>Chronon-Super Quantum Level Model (MARK III)</h3>
+                        <div class="journal">Journal of Theoretical Physics</div>
+                        <div class="date">Published: 2025</div>
+                        <div class="description">A comprehensive framework for discrete spacetime and quantum gravity using novel chronon constructs. Introduces the governing equation ∫G(L²s/ℓ²P)(Tc/t)(kB ln Ωi)(ℏ/2Tc)dV = K</div>
+                    </div>
+                    <div class="publication-card">
+                        <div class="icon"><i class='bx bx-book'></i></div>
+                        <h3>Discrete Time Models in Quantum Mechanics</h3>
+                        <div class="journal">Physical Review D</div>
+                        <div class="date">Under Review: 2023</div>
+                        <div class="description">Investigation of temporal discreteness and its implications for quantum measurement.</div>
+                    </div>
+                    <div class="publication-card">
+                        <div class="icon"><i class='bx bx-book'></i></div>
+                        <h3>Pre-geometric Networks and Causal Graphs</h3>
+                        <div class="journal">Classical and Quantum Gravity</div>
+                        <div class="date">In Preparation: 2024</div>
+                        <div class="description">Exploring the emergence of spacetime from discrete pre-geometric structures.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Research Methodology -->
+            <div class="methodology-section">
+                <h2 class="section-title">Research Methodology</h2>
+                <div class="methodology-grid">
+                    <div class="method-card">
+                        <div class="icon"><i class='bx bx-book-open'></i></div>
+                        <h3>Literature Review</h3>
+                        <div class="description">Comprehensive analysis of existing research to identify gaps and opportunities for innovation.</div>
+                    </div>
+                    <div class="method-card">
+                        <div class="icon"><i class='bx bx-calculator'></i></div>
+                        <h3>Mathematical Derivation</h3>
+                        <div class="description">Rigorous mathematical development of theoretical frameworks and models.</div>
+                    </div>
+                    <div class="method-card">
+                        <div class="icon"><i class='bx bx-bulb'></i></div>
+                        <h3>Conceptual Innovation</h3>
+                        <div class="description">Development of novel concepts and approaches to fundamental physics problems.</div>
+                    </div>
+                    <div class="method-card">
+                        <div class="icon"><i class='bx bx-code-alt'></i></div>
+                        <h3>Computational Modeling</h3>
+                        <div class="description">Implementation of theoretical models through scientific computing and simulation.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Animate progress bars when they come into view
+        document.addEventListener('DOMContentLoaded', function() {
+            const progressBars = document.querySelectorAll('.bar');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const bar = entry.target;
+                        const width = bar.style.width;
+                        bar.style.width = '0';
+                        setTimeout(() => {
+                            bar.style.width = width;
+                        }, 300);
+                        observer.unobserve(bar);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            progressBars.forEach(bar => {
+                observer.observe(bar);
+            });
+            
+            // Create floating particles
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random properties
+                const size = Math.random() * 3 + 1;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const duration = Math.random() * 10 + 5;
+                const delay = Math.random() * 5;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        });
+    </script>
+</body>
+</html>
