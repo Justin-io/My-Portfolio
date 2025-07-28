@@ -261,112 +261,89 @@ document.addEventListener('DOMContentLoaded', () => {
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
       <div class="social-links">
-    <a href="dev.htm" class="twitter" title="Developer"><i class="bi bi-code-slash tap-indicator"></i></a>
-    <a href="cyb.htm" class="facebook" title="Cyber Security"><i class="bi bi-shield-lock tap-indicator"></i></a>
-    <a href="phy.htm" class="instagram" title="Theoretical Physics"><i class="bi bi-stars tap-indicator"></i></a>
-    <a href="ppr.html" class="instagram" title="Physics Paper"><i class="bi bi-file-earmark-text tap-indicator"></i></a>
-    <a href="ctct.html" class="linkedin" title="Contact"><i class="bi bi-envelope tap-indicator"></i></a>
+    <a href="dev.htm" class="twitter" title="Developer"><i class="bi bi-code-slash hook-animation"></i></a>
+    <a href="cyb.htm" class="facebook" title="Cyber Security"><i class="bi bi-shield-lock hook-animation"></i></a>
+    <a href="phy.htm" class="instagram" title="Theoretical Physics"><i class="bi bi-stars hook-animation"></i></a>
+    <a href="ppr.html" class="instagram" title="Physics Paper"><i class="bi bi-file-earmark-text hook-animation"></i></a>
+    <a href="ctct.html" class="linkedin" title="Contact"><i class="bi bi-envelope hook-animation"></i></a>
 </div>
 
 <style>
-/* Continuous tap indicator animation */
-.tap-indicator {
-    animation: tapPulse 2s infinite;
+/* Hooking attention-grabbing animation */
+.hook-animation {
     display: inline-block;
+    animation: hookAttention 3s infinite;
+    cursor: pointer;
+    position: relative;
 }
 
-.tap-indicator:nth-child(1) { animation-delay: 0s; }
-.tap-indicator:nth-child(2) { animation-delay: 0.4s; }
-.tap-indicator:nth-child(3) { animation-delay: 0.8s; }
-.tap-indicator:nth-child(4) { animation-delay: 1.2s; }
-.tap-indicator:nth-child(5) { animation-delay: 1.6s; }
+.hook-animation:nth-child(1) { animation-delay: 0s; }
+.hook-animation:nth-child(2) { animation-delay: 0.5s; }
+.hook-animation:nth-child(3) { animation-delay: 1s; }
+.hook-animation:nth-child(4) { animation-delay: 1.5s; }
+.hook-animation:nth-child(5) { animation-delay: 2s; }
 
-@keyframes tapPulse {
+@keyframes hookAttention {
     0% {
-        transform: scale(1);
-        opacity: 1;
+        transform: scale(1) rotate(0deg);
+        color: inherit;
+        text-shadow: none;
     }
-    50% {
-        transform: scale(1.3);
-        opacity: 0.7;
+    10% {
+        transform: scale(1.2) rotate(-5deg);
+        color: #ff6b6b;
+        text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+    }
+    20% {
+        transform: scale(1.3) rotate(5deg);
+        color: #4ecdc4;
+        text-shadow: 0 0 15px rgba(78, 205, 196, 0.7);
+    }
+    30% {
+        transform: scale(1.1) rotate(-3deg);
+        color: #45b7d1;
+        text-shadow: 0 0 12px rgba(69, 183, 209, 0.6);
+    }
+    40% {
+        transform: scale(1.4) rotate(0deg);
+        color: #f9ca24;
+        text-shadow: 0 0 20px rgba(249, 202, 36, 0.8);
+    }
+    60% {
+        transform: scale(1);
+        color: inherit;
+        text-shadow: none;
     }
     100% {
-        transform: scale(1);
-        opacity: 1;
+        transform: scale(1) rotate(0deg);
+        color: inherit;
+        text-shadow: none;
     }
 }
 
-/* Alternative: Bounce animation */
-/*
-@keyframes tapBounce {
+/* Add a subtle continuous pulse for ongoing attention */
+.hook-animation:not(:hover) {
+    animation: hookAttention 4s infinite, subtlePulse 2s infinite;
+}
+
+@keyframes subtlePulse {
     0%, 100% {
-        transform: translateY(0);
+        transform: scale(1);
     }
     50% {
-        transform: translateY(-10px);
+        transform: scale(1.05);
     }
 }
-*/
 
-/* Optional: Add a glow effect */
-.tap-indicator::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: currentColor;
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(1);
-    z-index: -1;
-}
-
-.tap-indicator.glow::after {
-    animation: tapGlow 2s infinite;
-}
-
-@keyframes tapGlow {
-    0% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.8);
-    }
-    50% {
-        opacity: 0.3;
-        transform: translate(-50%, -50%) scale(1.2);
-    }
-    100% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.8);
-    }
+/* Hover effect for extra feedback */
+.hook-animation:hover {
+    animation: none !important;
+    transform: scale(1.5) rotate(10deg) !important;
+    transition: all 0.3s ease;
+    color: #ff4757 !important;
+    text-shadow: 0 0 20px rgba(255, 71, 87, 0.8) !important;
 }
 </style>
-
-<script>
-// Optional: Add glow effect to one icon at a time
-document.addEventListener('DOMContentLoaded', function() {
-    const indicators = document.querySelectorAll('.tap-indicator');
-    let currentIndex = 0;
-    
-    function highlightNext() {
-        // Remove glow class from all
-        indicators.forEach(indicator => indicator.classList.remove('glow'));
-        
-        // Add glow to current
-        if (indicators[currentIndex]) {
-            indicators[currentIndex].classList.add('glow');
-        }
-        
-        // Move to next
-        currentIndex = (currentIndex + 1) % indicators.length;
-    }
-    
-    // Start the sequence
-    highlightNext();
-    setInterval(highlightNext, 1000);
-});
-</script>
 
 
 
