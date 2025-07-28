@@ -19,13 +19,11 @@
             --text-secondary: #cccccc;
             --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: 'Poppins', sans-serif;
             background: var(--dark-bg);
@@ -34,7 +32,6 @@
             overflow-x: hidden;
             position: relative;
         }
-
         body::before {
             content: '';
             position: fixed;
@@ -49,25 +46,21 @@
             pointer-events: none;
             animation: rotateBG 30s linear infinite;
         }
-
         @keyframes rotateBG {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-
         .physics-section {
             padding: 80px 20px;
             position: relative;
             overflow: hidden;
         }
-
         .container {
             max-width: 1200px;
             margin: 0 auto;
             position: relative;
             z-index: 2;
         }
-
         /* Hero Section */
         .hero {
             text-align: center;
@@ -81,11 +74,60 @@
             border: 1px solid var(--glass-border);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             animation: floatIn 1s ease-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-
+        .profile-container {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent-blue);
+            box-shadow: 0 0 20px rgba(77, 121, 255, 0.5);
+            transition: var(--transition);
+            position: relative;
+            z-index: 2;
+        }
+        .profile-container:hover .profile-image {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(77, 121, 255, 0.8), 0 0 40px rgba(30, 144, 255, 0.6);
+        }
+        .profile-container::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border-radius: 50%;
+            background: conic-gradient(
+                from 0deg,
+                transparent,
+                var(--accent-blue),
+                transparent,
+                var(--accent-blue-light),
+                transparent
+            );
+            z-index: 1;
+            animation: rotateBorder 4s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .profile-container:hover::before {
+            opacity: 1;
+        }
+        @keyframes rotateBorder {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
         .hero h1 {
             font-size: 2.8rem;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
             background: linear-gradient(to right, #ffffff, var(--accent-blue), var(--accent-blue-light));
             -webkit-background-clip: text;
             background-clip: text;
@@ -94,7 +136,12 @@
             letter-spacing: -0.5px;
             animation: textGlow 3s infinite alternate;
         }
-
+        .hero .name {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
         .hero p {
             font-size: 1.2rem;
             line-height: 1.7;
@@ -102,7 +149,6 @@
             margin: 0 auto 40px;
             color: var(--text-secondary);
         }
-
         /* Skills Chips */
         .skills-chips {
             display: flex;
@@ -111,7 +157,6 @@
             gap: 15px;
             margin: 40px 0;
         }
-
         .chip {
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(10px);
@@ -126,7 +171,6 @@
             overflow: hidden;
             z-index: 1;
         }
-
         .chip::before {
             content: '';
             position: absolute;
@@ -139,17 +183,14 @@
             transition: transform 0.6s ease;
             z-index: -1;
         }
-
         .chip:hover {
             transform: translateY(-5px) scale(1.05);
             box-shadow: 0 10px 25px rgba(77, 121, 255, 0.3);
             border-color: rgba(77, 121, 255, 0.4);
         }
-
         .chip:hover::before {
             transform: translateX(100%);
         }
-
         /* CTA Button */
         .cta-button {
             display: inline-block;
@@ -169,7 +210,6 @@
             overflow: hidden;
             z-index: 1;
         }
-
         .cta-button::before {
             content: '';
             position: absolute;
@@ -182,18 +222,15 @@
             transition: transform 0.8s ease;
             z-index: -1;
         }
-
         .cta-button:hover {
             background: rgba(77, 121, 255, 0.25);
             transform: translateY(-5px) scale(1.05);
             box-shadow: 0 15px 35px rgba(77, 121, 255, 0.4);
             color: #fff;
         }
-
         .cta-button:hover::before {
             transform: translateX(100%);
         }
-
         /* Services Grid */
         .services-grid {
             display: grid;
@@ -201,7 +238,6 @@
             gap: 40px;
             margin: 80px 0;
         }
-
         .service-box {
             background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
             backdrop-filter: blur(12px);
@@ -214,7 +250,6 @@
             overflow: hidden;
             z-index: 1;
         }
-
         .service-box::before {
             content: '';
             position: absolute;
@@ -227,54 +262,45 @@
             transition: transform 0.8s ease;
             z-index: -1;
         }
-
         .service-box:hover {
             transform: translateY(-10px);
             box-shadow: 0 15px 40px rgba(77, 121, 255, 0.3);
             border-color: rgba(77, 121, 255, 0.3);
         }
-
         .service-box:hover::before {
             transform: translateX(100%);
         }
-
         .service-box .icon {
             font-size: 3.5rem;
             margin-bottom: 25px;
             color: var(--accent-blue);
             transition: var(--transition);
         }
-
         .service-box:hover .icon {
             transform: scale(1.1) rotate(5deg);
             text-shadow: 0 0 15px rgba(77, 121, 255, 0.7);
         }
-
         .service-box h3 {
             font-size: 1.8rem;
             margin-bottom: 20px;
             font-weight: 600;
             color: var(--accent-blue);
         }
-
         .service-box p {
             color: var(--text-secondary);
             line-height: 1.7;
             margin-bottom: 25px;
         }
-
         .service-box ul {
             list-style: none;
             padding-left: 0;
         }
-
         .service-box ul li {
             margin-bottom: 15px;
             padding-left: 25px;
             position: relative;
             color: var(--text-secondary);
         }
-
         .service-box ul li::before {
             content: '⚛';
             position: absolute;
@@ -282,7 +308,6 @@
             color: var(--accent-blue);
             font-weight: bold;
         }
-
         /* Projects Section */
         .section-title {
             text-align: center;
@@ -290,7 +315,6 @@
             margin: 80px 0 50px;
             position: relative;
         }
-
         .section-title::after {
             content: '';
             position: absolute;
@@ -302,14 +326,12 @@
             background: linear-gradient(to right, var(--accent-blue), var(--accent-blue-light));
             border-radius: 2px;
         }
-
         .project-cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 40px;
             margin-bottom: 80px;
         }
-
         .project-card {
             background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
             backdrop-filter: blur(12px);
@@ -322,7 +344,6 @@
             overflow: hidden;
             z-index: 1;
         }
-
         .project-card::before {
             content: '';
             position: absolute;
@@ -335,47 +356,39 @@
             transition: transform 0.8s ease;
             z-index: -1;
         }
-
         .project-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 15px 40px rgba(77, 121, 255, 0.3);
             border-color: rgba(77, 121, 255, 0.3);
         }
-
         .project-card:hover::before {
             transform: translateX(100%);
         }
-
         .project-card h3 {
             font-size: 1.6rem;
             margin-bottom: 15px;
             color: var(--accent-blue);
         }
-
         .project-card .type {
             font-style: italic;
             color: var(--text-secondary);
             margin-bottom: 20px;
             font-size: 0.95rem;
         }
-
         .project-card .desc {
             margin-bottom: 20px;
             line-height: 1.7;
         }
-
         .project-card .tech,
         .project-card .features {
             margin-bottom: 15px;
             font-size: 0.95rem;
             color: var(--text-secondary);
         }
-
         .project-card .tech strong,
         .project-card .features strong {
             color: #fff;
         }
-
         .project-link {
             display: inline-block;
             margin-top: 15px;
@@ -386,7 +399,6 @@
             position: relative;
             padding-right: 25px;
         }
-
         .project-link::after {
             content: '→';
             position: absolute;
@@ -396,17 +408,14 @@
             opacity: 0;
             transition: var(--transition);
         }
-
         .project-link:hover {
             color: var(--accent-blue-hover);
             padding-right: 30px;
         }
-
         .project-link:hover::after {
             opacity: 1;
             right: -5px;
         }
-
         /* Skills Section */
         .skills-container {
             display: grid;
@@ -414,23 +423,19 @@
             gap: 30px;
             margin-top: 50px;
         }
-
         .skill {
             margin-bottom: 25px;
         }
-
         .skill p {
             margin-bottom: 12px;
             font-size: 1.05rem;
             display: flex;
             justify-content: space-between;
         }
-
         .skill .percentage {
             color: var(--accent-blue);
             font-weight: 600;
         }
-
         .progress-bar {
             height: 12px;
             background: rgba(255, 255, 255, 0.08);
@@ -439,7 +444,6 @@
             position: relative;
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
         }
-
         .progress-bar::before {
             content: '';
             position: absolute;
@@ -450,7 +454,6 @@
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
             animation: progressShine 2s infinite;
         }
-
         .bar {
             height: 100%;
             background: linear-gradient(90deg, var(--accent-blue), var(--accent-blue-hover));
@@ -459,7 +462,6 @@
             width: 0;
             transition: width 1.5s cubic-bezier(0.22, 0.61, 0.36, 1);
         }
-
         .bar::after {
             content: '';
             position: absolute;
@@ -470,19 +472,16 @@
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
             animation: progressShine 3s infinite;
         }
-
         /* Tools & Concepts */
         .tools-section {
             margin: 80px 0;
         }
-
         .tools-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             gap: 25px;
             margin-top: 40px;
         }
-
         .tool-card {
             background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
             backdrop-filter: blur(12px);
@@ -495,7 +494,6 @@
             position: relative;
             overflow: hidden;
         }
-
         .tool-card::before {
             content: '';
             position: absolute;
@@ -508,41 +506,34 @@
             transition: transform 0.8s ease;
             z-index: -1;
         }
-
         .tool-card:hover {
             transform: translateY(-8px) scale(1.05);
             box-shadow: 0 15px 35px rgba(77, 121, 255, 0.3);
             border-color: rgba(77, 121, 255, 0.3);
         }
-
         .tool-card:hover::before {
             transform: translateX(100%);
         }
-
         .tool-card i {
             font-size: 2.5rem;
             margin-bottom: 15px;
             color: var(--accent-blue);
         }
-
         .tool-card span {
             display: block;
             font-size: 0.9rem;
             font-weight: 500;
         }
-
         /* Publications Section */
         .publications-section {
             margin: 80px 0;
         }
-
         .publications-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
             margin-top: 40px;
         }
-
         .publication-card {
             background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
             backdrop-filter: blur(12px);
@@ -554,7 +545,6 @@
             position: relative;
             overflow: hidden;
         }
-
         .publication-card::before {
             content: '';
             position: absolute;
@@ -567,59 +557,49 @@
             transition: transform 0.8s ease;
             z-index: -1;
         }
-
         .publication-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 15px 35px rgba(77, 121, 255, 0.3);
             border-color: rgba(77, 121, 255, 0.3);
         }
-
         .publication-card:hover::before {
             transform: translateX(100%);
         }
-
         .publication-card .icon {
             font-size: 2.5rem;
             color: var(--accent-blue);
             margin-bottom: 20px;
         }
-
         .publication-card h3 {
             font-size: 1.4rem;
             margin-bottom: 10px;
             color: var(--accent-blue);
         }
-
         .publication-card .journal {
             font-size: 1rem;
             color: var(--text-secondary);
             margin-bottom: 15px;
         }
-
         .publication-card .date {
             font-size: 0.9rem;
             color: var(--text-secondary);
             margin-bottom: 15px;
         }
-
         .publication-card .description {
             font-size: 0.95rem;
             line-height: 1.6;
             color: var(--text-secondary);
         }
-
         /* Research Methodology */
         .methodology-section {
             margin: 80px 0;
         }
-
         .methodology-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 30px;
             margin-top: 40px;
         }
-
         .method-card {
             background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
             backdrop-filter: blur(12px);
@@ -632,7 +612,6 @@
             overflow: hidden;
             text-align: center;
         }
-
         .method-card::before {
             content: '';
             position: absolute;
@@ -645,35 +624,29 @@
             transition: transform 0.8s ease;
             z-index: -1;
         }
-
         .method-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 15px 35px rgba(77, 121, 255, 0.3);
             border-color: rgba(77, 121, 255, 0.3);
         }
-
         .method-card:hover::before {
             transform: translateX(100%);
         }
-
         .method-card .icon {
             font-size: 2.5rem;
             color: var(--accent-blue);
             margin-bottom: 20px;
         }
-
         .method-card h3 {
             font-size: 1.4rem;
             margin-bottom: 15px;
             color: var(--accent-blue);
         }
-
         .method-card .description {
             font-size: 0.95rem;
             line-height: 1.6;
             color: var(--text-secondary);
         }
-
         /* Animations */
         @keyframes floatIn {
             0% {
@@ -685,7 +658,6 @@
                 transform: translateY(0);
             }
         }
-
         @keyframes textGlow {
             0% {
                 text-shadow: 0 0 5px rgba(77, 121, 255, 0.3);
@@ -694,7 +666,6 @@
                 text-shadow: 0 0 20px rgba(77, 121, 255, 0.7), 0 0 30px rgba(30, 144, 255, 0.5);
             }
         }
-
         @keyframes progressShine {
             0% {
                 transform: translateX(-100%);
@@ -703,7 +674,6 @@
                 transform: translateX(100%);
             }
         }
-
         /* Floating Elements */
         .floating {
             position: absolute;
@@ -713,7 +683,6 @@
             pointer-events: none;
             animation: float 15s infinite ease-in-out;
         }
-
         .floating:nth-child(1) {
             width: 300px;
             height: 300px;
@@ -721,7 +690,6 @@
             left: 5%;
             animation-duration: 20s;
         }
-
         .floating:nth-child(2) {
             width: 200px;
             height: 200px;
@@ -730,7 +698,6 @@
             animation-duration: 18s;
             animation-delay: 2s;
         }
-
         .floating:nth-child(3) {
             width: 150px;
             height: 150px;
@@ -739,7 +706,6 @@
             animation-duration: 12s;
             animation-delay: 4s;
         }
-
         .floating:nth-child(4) {
             width: 250px;
             height: 250px;
@@ -749,7 +715,6 @@
             animation-duration: 25s;
             animation-delay: 1s;
         }
-
         .particle {
             position: absolute;
             border-radius: 50%;
@@ -758,7 +723,6 @@
             pointer-events: none;
             animation: particleFloat linear infinite;
         }
-
         @keyframes float {
             0% {
                 transform: translate(0, 0) rotate(0deg);
@@ -773,31 +737,118 @@
                 transform: translate(0, 0) rotate(0deg);
             }
         }
-
         @keyframes particleFloat {
             to {
                 transform: translateY(-100px) translateX(20px);
                 opacity: 0;
             }
         }
-
+        /* Atom Animation */
+        .atom-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .atom {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border: 2px solid rgba(77, 121, 255, 0.3);
+            border-radius: 50%;
+            animation: atomRotate 20s linear infinite;
+        }
+        .atom:nth-child(1) {
+            top: 15%;
+            left: 8%;
+            animation-duration: 25s;
+        }
+        .atom:nth-child(2) {
+            top: 65%;
+            right: 12%;
+            animation-duration: 30s;
+            animation-direction: reverse;
+        }
+        .atom:nth-child(3) {
+            top: 35%;
+            left: 68%;
+            animation-duration: 20s;
+        }
+        .nucleus {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-blue), 0 0 20px var(--accent-blue);
+            animation: nucleusPulse 2s infinite alternate;
+        }
+        @keyframes nucleusPulse {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            100% { transform: translate(-50%, -50%) scale(1.2); }
+        }
+        .electron {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 12px;
+            height: 12px;
+            background: #ff6b6b;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: electronOrbit 5s linear infinite;
+            box-shadow: 0 0 8px #ff6b6b, 0 0 15px #ff6b6b;
+        }
+        .electron:nth-child(2) {
+            animation-delay: 1s;
+            background: #4dffb8;
+            box-shadow: 0 0 8px #4dffb8, 0 0 15px #4dffb8;
+        }
+        .electron:nth-child(3) {
+            animation-delay: 2s;
+            background: #ffd93d;
+            box-shadow: 0 0 8px #ffd93d, 0 0 15px #ffd93d;
+        }
+        .electron:nth-child(4) {
+            animation-delay: 3s;
+            background: #6b6bff;
+            box-shadow: 0 0 8px #6b6bff, 0 0 15px #6b6bff;
+        }
+        @keyframes atomRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes electronOrbit {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg) translateX(50px) rotate(0deg);
+            }
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg) translateX(50px) rotate(-360deg);
+            }
+        }
         /* Responsive */
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.2rem;
             }
-            
+            .hero .name {
+                font-size: 1.5rem;
+            }
             .hero p {
                 font-size: 1rem;
             }
-            
             .services-grid,
             .project-cards,
             .publications-grid,
             .methodology-grid {
                 grid-template-columns: 1fr;
             }
-            
             .section-title {
                 font-size: 2rem;
             }
@@ -810,14 +861,40 @@
     <div class="floating"></div>
     <div class="floating"></div>
     <div class="floating"></div>
-
+    
+    <!-- Atom animations -->
+    <div class="atom-container">
+        <div class="atom">
+            <div class="nucleus"></div>
+            <div class="electron"></div>
+            <div class="electron"></div>
+            <div class="electron"></div>
+        </div>
+        <div class="atom">
+            <div class="nucleus"></div>
+            <div class="electron"></div>
+            <div class="electron"></div>
+            <div class="electron"></div>
+            <div class="electron"></div>
+        </div>
+        <div class="atom">
+            <div class="nucleus"></div>
+            <div class="electron"></div>
+            <div class="electron"></div>
+        </div>
+    </div>
+    
     <!-- Particle background -->
     <div id="particles"></div>
-
+    
     <section class="physics-section">
         <div class="container">
             <!-- Hero/Open Section -->
             <div class="hero">
+                <div class="profile-container">
+                    <img src="assets/img/me.jpg" alt="Profile Image" class="profile-image">
+                </div>
+                <h1 class="name">Hari Nandan K</h1>
                 <h1>Exploring the Quantum Frontier: Theoretical Physics & Quantum Computing</h1>
                 <p>
                     I'm deeply engaged in foundational physics research, exploring the intersection of Quantum Mechanics, General Relativity, and discrete spacetime models.
@@ -826,7 +903,6 @@
                 <p>
                     In theoretical physics, I'm developing the Chronon-Super Quantum Level Model - a novel framework exploring quantum gravity, pre-geometric spacetime, and the fundamental nature of time. My research integrates advanced mathematics including differential geometry, linear algebra, and graph theory...
                 </p>
-
                 <!-- Key Skills Chips -->
                 <div class="skills-chips">
                     <span class="chip">Quantum Gravity</span>
@@ -842,11 +918,9 @@
                     <span class="chip">Differential Geometry</span>
                     <span class="chip">Graph Theory</span>
                 </div>
-
                 <!-- Call to Action -->
                 <a href="#projects" class="cta-button">Explore My Research</a>
             </div>
-
             <!-- Detailed Services -->
             <div class="services-grid">
                 <!-- Quantum Gravity & the Problem of Time -->
@@ -859,7 +933,6 @@
                         <li><strong>Capabilities:</strong> Foundational research, theoretical framework development.</li>
                     </ul>
                 </div>
-
                 <!-- Discrete Physics Modeling & Pre-geometric Theories -->
                 <div class="service-box">
                     <div class="icon"><i class='bx bx-grid-alt'></i></div>
@@ -870,7 +943,6 @@
                         <li><strong>Capabilities:</strong> Modeling discrete structures, computational simulations, conceptual innovation.</li>
                     </ul>
                 </div>
-
                 <!-- Advanced Mathematical Physics -->
                 <div class="service-box">
                     <div class="icon"><i class='bx bx-calculator'></i></div>
@@ -881,7 +953,6 @@
                         <li><strong>Capabilities:</strong> Rigorous mathematical derivation, framework formalization.</li>
                     </ul>
                 </div>
-
                 <!-- Quantum Computing & Simulation -->
                 <div class="service-box">
                     <div class="icon"><i class='bx bx-atom'></i></div>
@@ -892,7 +963,6 @@
                         <li><strong>Capabilities:</strong> Quantum algorithm development, simulation, integration with classical systems.</li>
                     </ul>
                 </div>
-
                 <!-- Scientific Computing & Research Methodology -->
                 <div class="service-box">
                     <div class="icon"><i class='bx bx-code-alt'></i></div>
@@ -904,7 +974,6 @@
                     </ul>
                 </div>
             </div>
-
             <!-- Projects Showcase -->
             <h2 class="section-title">Research Projects</h2>
             <div class="project-cards">
@@ -919,7 +988,6 @@
                     <p class="features"><strong>Applications:</strong> Quantum Gravity, Black Hole Information Paradox Resolution, Fundamental Physics Unification</p>
                     <p class="features"><strong>Experimental Predictions:</strong> Time quantization effects detectable with ultra-precise atomic clocks, deviations from continuous spacetime in high-energy collisions</p>
                 </div>
-
                 <!-- Quantum Gravity Research -->
                 <div class="project-card">
                     <h3>Quantum Gravity Research (General Investigations)</h3>
@@ -928,7 +996,6 @@
                     <p class="tech"><strong>Technologies/Tools:</strong> Literature Review, Mathematical Derivation, Conceptual Innovation, Interdisciplinary Synthesis</p>
                     <p class="features"><strong>Key Features/Outcomes:</strong> Exploring fundamental approaches, literature analysis, mathematical development.</p>
                 </div>
-
                 <!-- Scientific Computing & Simulation -->
                 <div class="project-card">
                     <h3>Scientific Computing & Simulation (for Physics)</h3>
@@ -938,7 +1005,6 @@
                     <p class="features"><strong>Key Features/Outcomes:</strong> Building tools for physics research, data processing, simulations.</p>
                 </div>
             </div>
-
             <!-- Skills Proficiency -->
             <h2 class="section-title">Physics Skills Proficiency</h2>
             <div class="skills-container">
@@ -991,7 +1057,6 @@
                     <div class="progress-bar"><div class="bar" style="width: 90%;"></div></div>
                 </div>
             </div>
-
             <!-- Tools & Concepts -->
             <div class="tools-section">
                 <h2 class="section-title">Physics Concepts & Tools</h2>
@@ -1038,7 +1103,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- Publications -->
             <div class="publications-section">
                 <h2 class="section-title">Research Publications</h2>
@@ -1066,7 +1130,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- Research Methodology -->
             <div class="methodology-section">
                 <h2 class="section-title">Research Methodology</h2>
@@ -1095,12 +1158,10 @@
             </div>
         </div>
     </section>
-
     <script>
         // Animate progress bars when they come into view
         document.addEventListener('DOMContentLoaded', function() {
             const progressBars = document.querySelectorAll('.bar');
-            
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -1114,33 +1175,30 @@
                     }
                 });
             }, { threshold: 0.5 });
-            
             progressBars.forEach(bar => {
                 observer.observe(bar);
             });
-            
             // Create floating particles
             const particlesContainer = document.getElementById('particles');
-            const particleCount = 50;
-            
+            const particleCount = 100;
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
-                
                 // Random properties
-                const size = Math.random() * 3 + 1;
+                const size = Math.random() * 4 + 1;
                 const posX = Math.random() * 100;
                 const posY = Math.random() * 100;
-                const duration = Math.random() * 10 + 5;
-                const delay = Math.random() * 5;
-                
+                const duration = Math.random() * 15 + 5;
+                const delay = Math.random() * 10;
+                // Add some color variation
+                const hue = 220 + Math.random() * 40;
+                particle.style.backgroundColor = `hsla(${hue}, 100%, 70%, ${Math.random() * 0.5 + 0.3})`;
                 particle.style.width = `${size}px`;
                 particle.style.height = `${size}px`;
                 particle.style.left = `${posX}%`;
                 particle.style.top = `${posY}%`;
                 particle.style.animationDuration = `${duration}s`;
                 particle.style.animationDelay = `${delay}s`;
-                
                 particlesContainer.appendChild(particle);
             }
         });
