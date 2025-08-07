@@ -1,0 +1,1802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>28-Day Zero to Coder - Learn Coding on Your Phone</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #4A90E2;
+            --secondary: #50C878;
+            --accent: #F5A623;
+            --dark: #121212;
+            --darker: #0a0a0a;
+            --light: #f8f9fa;
+            --glass: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding-bottom: 70px;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        }
+        
+        /* Glassmorphism Effect */
+        .glass {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        
+        .glass-card {
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-top: 1px solid var(--glass-border);
+            z-index: 1000;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-item {
+            text-align: center;
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-radius: 8px;
+            margin: 0 2px;
+        }
+        
+        .nav-item:hover, .nav-item.active {
+            background: rgba(255, 255, 255, 0.15);
+            color: var(--accent);
+        }
+        
+        .nav-item i {
+            font-size: 1.2rem;
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+        
+        .nav-item span {
+            font-size: 0.7rem;
+            display: block;
+        }
+        
+        /* Sections */
+        .section {
+            display: none;
+            padding: 1rem;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .hero h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 30px;
+            padding: 0.7rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+        }
+        
+        /* Progress Bar */
+        .progress-container {
+            margin: 1.5rem 0;
+        }
+        
+        .progress {
+            height: 25px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            overflow: visible;
+        }
+        
+        .progress-bar {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 500;
+            transition: width 0.6s ease;
+        }
+        
+        /* Checklist */
+        .week-card {
+            margin-bottom: 1.5rem;
+        }
+        
+        .week-header {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 10px 10px 0 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .week-header:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .week-content {
+            padding: 1rem;
+            display: none;
+        }
+        
+        .week-content.active {
+            display: block;
+        }
+        
+        .day-item {
+            padding: 0.8rem;
+            margin-bottom: 0.8rem;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .day-header {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .day-details {
+            margin-top: 0.8rem;
+            padding-top: 0.8rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: none;
+        }
+        
+        .day-details.active {
+            display: block;
+        }
+        
+        .custom-checkbox {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        
+        /* Resource Cards */
+        .resource-card {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .resource-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .resource-icon {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            color: var(--accent);
+        }
+        
+        /* GitHub Guide Steps */
+        .step-item {
+            display: flex;
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex-grow: 1;
+        }
+        
+        /* Live Classes */
+        .class-card {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .class-date {
+            font-weight: 500;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Download Items */
+        .download-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        /* Portfolio Demo */
+        .portfolio-preview {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .portfolio-header {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .portfolio-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 4px solid white;
+            margin: 0 auto 1rem;
+            background: url('https://randomuser.me/api/portraits/men/32.jpg') center/cover;
+        }
+        
+        .portfolio-section {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* About Section */
+        .about-card {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .about-icon {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        /* Logic Game */
+        .game-container {
+            padding: 1.5rem;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            margin-top: 1.5rem;
+        }
+        
+        .game-input {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            margin-bottom: 1rem;
+        }
+        
+        .game-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .game-result {
+            padding: 1rem;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .nav-item span {
+                font-size: 0.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-2 nav-item active" data-section="home">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </div>
+                <div class="col-2 nav-item" data-section="resources">
+                    <i class="fas fa-book"></i>
+                    <span>Resources</span>
+                </div>
+                <div class="col-2 nav-item" data-section="github">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub</span>
+                </div>
+                <div class="col-2 nav-item" data-section="classes">
+                    <i class="fas fa-video"></i>
+                    <span>Classes</span>
+                </div>
+                <div class="col-2 nav-item" data-section="downloads">
+                    <i class="fas fa-download"></i>
+                    <span>Downloads</span>
+                </div>
+                <div class="col-2 nav-item" data-section="portfolio">
+                    <i class="fas fa-briefcase"></i>
+                    <span>Portfolio</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Home Section -->
+    <section id="home" class="section active">
+        <div class="hero">
+            <h1>Turn Your Phone into a Coding Lab</h1>
+            <p>Learn to code in just 28 days, 1 hour a day. No laptop needed! Build your first portfolio and start your coding journey today.</p>
+            <button class="btn btn-primary btn-lg" id="startBtn">Start Day 1 Now</button>
+        </div>
+
+        <div class="container">
+            <div class="progress-container">
+                <div class="progress">
+                    <div class="progress-bar" id="progressBar" role="progressbar" style="width: 0%;">0%</div>
+                </div>
+            </div>
+
+            <div class="glass glass-card">
+                <h2 class="mb-4">Your 28-Day Coding Journey</h2>
+                
+                <!-- Week 1 -->
+                <div class="week-card glass">
+                    <div class="week-header" data-week="1">
+                        <h3><i class="fas fa-seedling me-2"></i> Week 1: Foundations</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="week-content" id="week1">
+                        <div class="day-item glass">
+                            <div class="day-header">
+                                <input type="checkbox" class="custom-checkbox" id="day1">
+                                <div>
+                                    <strong>Day 1: HTML Basics</strong>
+                                    <p>Learn the structure of web pages</p>
+                                </div>
+                                <i class="fas fa-chevron-down ms-auto"></i>
+                            </div>
+                            <div class="day-details">
+                                <p><strong>Tasks:</strong></p>
+                                <ul>
+                                    <li>Watch: <a href="#" class="text-info">HTML for Beginners (15 min)</a></li>
+                                    <li>Read: <a href="#" class="text-info">HTML Elements Guide</a></li>
+                                    <li>Practice: Create your first HTML page</li>
+                                </ul>
+                                <p><strong>Logic Exercise:</strong> Think about how you'd structure a recipe page</p>
+                                <p><strong>Tip:</strong> Use Replit on your phone to practice coding</p>
+                            </div>
+                        </div>
+                        
+                        <div class="day-item glass">
+                            <div class="day-header">
+                                <input type="checkbox" class="custom-checkbox" id="day2">
+                                <div>
+                                    <strong>Day 2: CSS Styling</strong>
+                                    <p>Make your pages look beautiful</p>
+                                </div>
+                                <i class="fas fa-chevron-down ms-auto"></i>
+                            </div>
+                            <div class="day-details">
+                                <p><strong>Tasks:</strong></p>
+                                <ul>
+                                    <li>Watch: <a href="#" class="text-info">CSS Crash Course (20 min)</a></li>
+                                    <li>Read: <a href="#" class="text-info">CSS Selectors Guide</a></li>
+                                    <li>Practice: Style your HTML page</li>
+                                </ul>
+                                <p><strong>Logic Exercise:</strong> Plan the color scheme for your portfolio</p>
+                                <p><strong>Tip:</strong> Use browser DevTools to experiment with styles</p>
+                            </div>
+                        </div>
+                        
+                        <div class="day-item glass">
+                            <div class="day-header">
+                                <input type="checkbox" class="custom-checkbox" id="day3">
+                                <div>
+                                    <strong>Day 3: Responsive Design</strong>
+                                    <p>Make your site work on all devices</p>
+                                </div>
+                                <i class="fas fa-chevron-down ms-auto"></i>
+                            </div>
+                            <div class="day-details">
+                                <p><strong>Tasks:</strong></p>
+                                <ul>
+                                    <li>Watch: <a href="#" class="text-info">Responsive Web Design (15 min)</a></li>
+                                    <li>Read: <a href="#" class="text-info">Mobile-First Design</a></li>
+                                    <li>Practice: Add media queries to your page</li>
+                                </ul>
+                                <p><strong>Logic Exercise:</strong> Think about how content should reflow on smaller screens</p>
+                                <p><strong>Tip:</strong> Test your site on different screen sizes</p>
+                            </div>
+                        </div>
+                        
+                        <div class="day-item glass">
+                            <div class="day-header">
+                                <input type="checkbox" class="custom-checkbox" id="day4">
+                                <div>
+                                    <strong>Day 4: JavaScript Basics</strong>
+                                    <p>Add interactivity to your pages</p>
+                                </div>
+                                <i class="fas fa-chevron-down ms-auto"></i>
+                            </div>
+                            <div class="day-details">
+                                <p><strong>Tasks:</strong></p>
+                                <ul>
+                                    <li>Watch: <a href="#" class="text-info">JavaScript for Beginners (25 min)</a></li>
+                                    <li>Read: <a href="#" class="text-info">JS Variables and Functions</a></li>
+                                    <li>Practice: Add a button that changes text</li>
+                                </ul>
+                                <p><strong>Logic Exercise:</strong> Plan a simple calculator</p>
+                                <p><strong>Tip:</strong> Use console.log() to debug your code</p>
+                            </div>
+                        </div>
+                        
+                        <div class="day-item glass">
+                            <div class="day-header">
+                                <input type="checkbox" class="custom-checkbox" id="day5">
+                                <div>
+                                    <strong>Day 5: DOM Manipulation</strong>
+                                    <p>Control your page with JavaScript</p>
+                                </div>
+                                <i class="fas fa-chevron-down ms-auto"></i>
+                            </div>
+                            <div class="day-details">
+                                <p><strong>Tasks:</strong></p>
+                                <ul>
+                                    <li>Watch: <a href="#" class="text-info">DOM Manipulation (20 min)</a></li>
+                                    <li>Read: <a href="#" class="text-info">Selecting and Changing Elements</a></li>
+                                    <li>Practice: Create a to-do list</li>
+                                </ul>
+                                <p><strong>Logic Exercise:</strong> Think about how you'd update a counter</p>
+                                <p><strong>Tip:</strong> Use event listeners for user interactions</p>
+                            </div>
+                        </div>
+                        
+                        <div class="day-item glass">
+                            <div class="day-header">
+                                <input type="checkbox" class="custom-checkbox" id="day6">
+                                <div>
+                                    <strong>Day 6: Weekend Project</strong>
+                                    <p>Build your bio page</p>
+                                </div>
+                                <i class="fas fa-chevron-down ms-auto"></i>
+                            </div>
+                            <div class="day-details">
+                                <p><strong>Tasks:</strong></p>
+                                <ul>
+                                    <li>Create a personal bio page with HTML/CSS</li>
+                                    <li>Add a photo, about section, and contact info</li>
+                                    <li>Make it responsive</li>
+                                </ul>
+                                <p><strong>Logic Exercise:</strong> Plan the layout for your bio page</p>
+                                <p><strong>Tip:</strong> Keep it simple and focus on clean design</p>
+                            </div>
+                        </div>
+                        
+                        <div class="day-item glass">
+                            <div class="day-header">
+                                <input type="checkbox" class="custom-checkbox" id="day7">
+                                <div>
+                                    <strong>Day 7: Review & Rest</strong>
+                                    <p>Reflect on your learning</p>
+                                </div>
+                                <i class="fas fa-chevron-down ms-auto"></i>
+                            </div>
+                            <div class="day-details">
+                                <p><strong>Tasks:</strong></p>
+                                <ul>
+                                    <li>Review what you learned this week</li>
+                                    <li>Fix any issues with your bio page</li>
+                                    <li>Plan for next week</li>
+                                </ul>
+                                <p><strong>Logic Exercise:</strong> Think about how you'd explain HTML/CSS/JS to a friend</p>
+                                <p><strong>Tip:</strong> Rest is important for learning!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Week 2 -->
+                <div class="week-card glass">
+                    <div class="week-header" data-week="2">
+                        <h3><i class="fas fa-code me-2"></i> Week 2: Building Projects</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="week-content" id="week2">
+                        <div class="day-item glass">
+                            <div class="day-header">
+                                <input type="checkbox" class="custom-checkbox" id="day8">
+                                <div>
+                                    <strong>Day 8: JavaScript Functions</strong>
+                                    <p>Write reusable code</p>
+                                </div>
+                                <i class="fas fa-chevron-down ms-auto"></i>
+                            </div>
+                            <div class="day-details">
+                                <p><strong>Tasks:</strong></p>
+                                <ul>
+                                    <li>Watch: <a href="#" class="text-info">JavaScript Functions (20 min)</a></li>
+                                    <li>Read: <a href="#" class="text-info">Parameters and Return Values</a></li>
+                                    <li>Practice: Refactor your bio page with functions</li>
+                                </ul>
+                                <p><strong>Logic Exercise:</strong> Plan functions for a calculator</p>
+                                <p><strong>Tip:</strong> Functions help you avoid repeating code</p>
+                            </div>
+                        </div>
+                        
+                        <div class="day-item glass">
+                            <div class="day-header">
+                                <input type="checkbox" class="custom-checkbox" id="day9">
+                                <div>
+                                    <strong>Day 9: Arrays & Objects</strong>
+                                    <p>Organize your data</p>
+                                </div>
+                                <i class="fas fa-chevron-down ms-auto"></i>
+                            </div>
+                            <div class="day-details">
+                                <p><strong>Tasks:</strong></p>
+                                <ul>
+                                    <li>Watch: <a href="#" class="text-info">JS Arrays and Objects (25 min)</a></li>
+                                    <li>Read: <a href="#" class="text-info">Data Structures in JS</a></li>
+                                    <li>Practice: Store your bio info in an object</li>
+                                </ul>
+                                <p><strong>Logic Exercise:</strong> Plan how to store a list of projects</p>
+                                <p><strong>Tip:</strong> Arrays for lists, objects for properties</p>
+                            </div>
+                        </div>
+                        
+                        <div class="day-item glass">
+                            <div class="day-header">
+                                <input type="checkbox" class="custom-checkbox" id="day10">
+                                <div>
+                                    <strong>Day 10: Working with APIs</strong>
+                                    <p>Get data from the web</p>
+                                </div>
+                                <i class="fas fa-chevron-down ms-auto"></i>
+                            </div>
+                            <div class="day-details">
+                                <p><strong>Tasks:</strong></p>
+                                <ul>
+                                    <li>Watch: <a href="#" class="text-info">APIs for Beginners (20 min)</a></li>
+                                    <li>Read: <a href="#" class="text-info">Fetch API Guide</a></li>
+                                    <li>Practice: Get a random quote from an API</li>
+                                </ul>
+                                <p><strong>Logic Exercise:</strong> Think about how weather apps get data</p>
+                                <p><strong>Tip:</strong> Use JSONPlaceholder for practice</p>
+                            </div>
+                        </div>
+                        
+                        <div class="day-item glass">
+                            <div class="day-header">
+                                <input type="checkbox" class="custom-checkbox" id="day11">
+                                <div>
+                                    <strong>Day 11: Forms & Validation</strong>
+                                    <p>Collect user input</p>
+                                </div>
+                                <i class="fas fa-chevron-down ms-auto"></i>
+                            </div>
+                            <div class="day-details">
+                                <p><strong>Tasks:</strong></p>
+                                <ul>
+                                    <li>Watch: <a href="#" class="text-info">HTML Forms (15 min)</a></li>
+                                    <li>Read: <a href="#" class="text-info">Form Validation</a></li>
+                                    <li>Practice: Add a contact form to your bio page</li>
+                                </ul>
+                                <p><strong>Logic Exercise:</strong> Plan validation rules for a signup form</p>
+                                <p><strong>Tip:</strong> Validate on both client and server side</p>
+                            </div>
+                        </div>
+                        
+                        <div class="day-item glass">
+                            <div class="day-header">
+                                <input type="checkbox" class="custom-checkbox" id="day12">
+                                <div>
+                                    <strong>Day 12: Local Storage</strong>
+                                    <p>Save data in the browser</p>
+                                </div>
+                                <i class="fas fa-chevron-down ms-auto"></i>
+                            </div>
+                            <div class="day-details">
+                                <p><strong>Tasks:</strong></p>
+                                <ul>
+                                    <li>Watch: <a href="#" class="text-info">Local Storage (15 min)</a></li>
+                                    <li>Read: <a href="#" class="text-info">Browser Storage Options</a></li>
+                                    <li>Practice: Save form data locally</li>
+                                </ul>
+                                <p><strong>Logic Exercise:</strong> Think about how to save user preferences</p>
+                                <p><strong>Tip:</strong> LocalStorage persists between sessions</p>
+                            </div>
+                        </div>
+                        
+                        <div class="day-item glass">
+                            <div class="day-header">
+                                <input type="checkbox" class="custom-checkbox" id="day13">
+                                <div>
+                                    <strong>Day 13: Weekend Project</strong>
+                                    <p>Build a quiz app</p>
+                                </div>
+                                <i class="fas fa-chevron-down ms-auto"></i>
+                            </div>
+                            <div class="day-details">
+                                <p><strong>Tasks:</strong></p>
+                                <ul>
+                                    <li>Create a multiple-choice quiz app</li>
+                                    <li>Store questions in an array</li>
+                                    <li>Track score and show results</li>
+                                </ul>
+                                <p><strong>Logic Exercise:</strong> Plan the quiz flow and scoring</p>
+                                <p><strong>Tip:</strong> Start with a simple version and add features</p>
+                            </div>
+                        </div>
+                        
+                        <div class="day-item glass">
+                            <div class="day-header">
+                                <input type="checkbox" class="custom-checkbox" id="day14">
+                                <div>
+                                    <strong>Day 14: Review & Rest</strong>
+                                    <p>Reflect on your learning</p>
+                                </div>
+                                <i class="fas fa-chevron-down ms-auto"></i>
+                            </div>
+                            <div class="day-details">
+                                <p><strong>Tasks:</strong></p>
+                                <ul>
+                                    <li>Review what you learned this week</li>
+                                    <li>Polish your quiz app</li>
+                                    <li>Plan for next week</li>
+                                </ul>
+                                <p><strong>Logic Exercise:</strong> Think about how you'd improve your quiz app</p>
+                                <p><strong>Tip:</strong> Take time to understand concepts deeply</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Week 3 -->
+                <div class="week-card glass">
+                    <div class="week-header" data-week="3">
+                        <h3><i class="fas fa-puzzle-piece me-2"></i> Week 3: Advanced Concepts</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="week-content" id="week3">
+                        <div class="day-item glass">
+                            <div class="day-header">
+                                <input type="checkbox" class="custom-checkbox" id="day15">
+                                <div>
+                                    <strong>Day 15: CSS Flexbox</strong>
+                                    <p>Master layout techniques</p>
+                                </div>
+                                <i class="fas fa-chevron-down ms-auto"></i>
+                            </div>
+                            <div class="day-details">
+                                <p><strong>Tasks:</strong></p>
+                                <ul>
+                                    <li>Watch: <a href="#" class="text-info">Flexbox Crash Course (20 min)</a></li>
+                                    <li>Read: <a href="#" class="text-info">Flexbox Properties</a></li>
+                                    <li>Practice: Redesign your bio page with Flexbox</li>
+                                </ul>
+                                <p><strong>Logic Exercise:</strong> Plan a card layout with Flexbox</p>
+                                <p><strong>Tip:</strong> Flexbox makes responsive layouts easier</p>
+                            </div>
+                        </div>
+                        
+                        <div class="day-item glass">
+                            <div class="day-header">
+                                <input type="checkbox" class="custom-checkbox" id="day16">
+                                <div>
+                                    <strong>Day 16: CSS Grid</strong>
+                                    <p>Create complex layouts</p>
+                                </div>
+                                <i class="fas fa-chevron-down ms-auto"></i>
+                            </div>
+                            <div class="day-details">
+                                <p><strong>Tasks:</strong></p>
+                                <ul>
+                                    <li>Watch: <a href="#" class="text-info">CSS Grid (25 min)</a></li>
+                                    <li>Read: <a href="#" class="text-info">Grid vs Flexbox</a></li>
+                                    <li>Practice: Create a gallery layout with Grid</li>
+                                </ul>
+                                <p><strong>Logic Exercise:</strong> Plan a magazine-style layout</p>
+                                <p><strong>Tip:</strong> Use Grid for 2D layouts, Flexbox for 1D</p>
+                            </div>
+                        </div>
+                        
+                        <div class="day-item glass">
+                            <div class="day-header">
+                                <input type="checkbox" class="custom-checkbox" id="day17">
+                                <div>
+                                    <strong>Day 17: JavaScript Events</strong>
+                                    <p>Respond to user actions</p>
+                                </div>
+                                <i class="fas fa-chevron-down ms-auto"></i>
+                            </div>
+                            <div class="day-details">
+                                <p><strong>Tasks:</strong></p>
+                                <ul>
+                                    <li>Watch: <a href="#" class="text-info">JS Events (20 min)</a></li>
+                                    <li>Read: <a href="#" class="text-info">Event Listeners</a></li>
+                                    <li>Practice: Add interactive elements to your quiz</li>
+                                </ul>
+                                <p><strong>Logic Exercise:</strong> Plan a drag-and-drop interface</p>
+                                <p><strong>Tip:</strong> Events make your page interactive</p>
+                            </div>
+                        </div>
+                        
+                        <div class="day-item glass">
+                            <div class="day-header">
+                                <input type="checkbox" class="custom-checkbox" id="day18">
+                                <div>
+                                    <strong>Day 18: Asynchronous JavaScript</strong>
+                                    <p>Handle time-consuming tasks</p>
+                                </div>
+                                <i class="fas fa-chevron-down ms-auto"></i>
+                            </div>
+                            <div class="day-details">
+                                <p><strong>Tasks:</strong></p>
+                                <ul>
+                                    <li>Watch: <a href="#" class="text-info">Async JS (25 min)</a></li>
+                                    <li>Read: <a href="#" class="text-info">Promises and Async/Await</a></li>
+                                    <li>Practice: Add a loading spinner to API calls</li>
+                                </ul>
+                                <p><strong>Logic Exercise:</strong> Think about how to handle slow data</p>
+                                <p><strong>Tip:</strong> Async code doesn't block the main thread</p>
+                            </div>
+                        </div>
+                        
+                        <div class="day-item glass">
+                            <div class="day-header">
+                                <input type="checkbox" class="custom-checkbox" id="day19">
+                                <div>
+                                    <strong>Day 19: Debugging Techniques</strong>
+                                    <p>Find and fix errors</p>
+                                </div>
+                                <i class="fas fa-chevron-down ms-auto"></i>
+                            </div>
+                            <div class="day-details">
+                                <p><strong>Tasks:</strong></p>
+                                <ul>
+                                    <li>Watch: <a href="#" class="text-info">Debugging JavaScript (20 min)</a></li>
+                                    <li>Read: <a href="#" class="text-info">Common JS Errors</a></li>
+                                    <li>Practice: Debug a broken app</li>
+                                </ul>
+                                <p><strong>Logic Exercise:</strong> Plan how to test your code</p>
+                                <p><strong>Tip:</strong> Console.log is your best friend</p>
+                            </div>
+                        </div>
+                        
+                        <div class="day-item glass">
+                            <div class="day-header">
+                                <input type="checkbox" class="custom-checkbox" id="day20">
+                                <div>
+                                    <strong>Day 20: Weekend Project</strong>
+                                    <p>Build a weather app</p>
+                                </div>
+                                <i class="fas fa-chevron-down ms-auto"></i>
+                            </div>
+                            <div class="day-details">
+                                <p><strong>Tasks:</strong></p>
+                                <ul>
+                                    <li>Create a weather app using an API</li>
+                                    <li>Display current weather and forecast</li>
+                                    <li>Add location detection</li>
+                                </ul>
+                                <p><strong>Logic Exercise:</strong> Plan the app's data flow</p>
+                                <p><strong>Tip:</strong> Use OpenWeatherMap API for free data</p>
+                            </div>
+                        </div>
+                        
+                        <div class="day-item glass">
+                            <div class="day-header">
+                                <input type="checkbox" class="custom-checkbox" id="day21">
+                                <div>
+                                    <strong>Day 21: Review & Rest</strong>
+                                    <p>Reflect on your learning</p>
+                                </div>
+                                <i class="fas fa-chevron-down ms-auto"></i>
+                            </div>
+                            <div class="day-details">
+                                <p><strong>Tasks:</strong></p>
+                                <ul>
+                                    <li>Review what you learned this week</li>
+                                    <li>Polish your weather app</li>
+                                    <li>Plan for next week</li>
+                                </ul>
+                                <p><strong>Logic Exercise:</strong> Think about how to improve your apps</p>
+                                <p><strong>Tip:</strong> Take time to understand concepts deeply</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Week 4 -->
+                <div class="week-card glass">
+                    <div class="week-header" data-week="4">
+                        <h3><i class="fas fa-rocket me-2"></i> Week 4: Launch Your Portfolio</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="week-content" id="week4">
+                        <div class="day-item glass">
+                            <div class="day-header">
+                                <input type="checkbox" class="custom-checkbox" id="day22">
+                                <div>
+                                    <strong>Day 22: Portfolio Planning</strong>
+                                    <p>Design your showcase</p>
+                                </div>
+                                <i class="fas fa-chevron-down ms-auto"></i>
+                            </div>
+                            <div class="day-details">
+                                <p><strong>Tasks:</strong></p>
+                                <ul>
+                                    <li>Watch: <a href="#" class="text-info">Portfolio Design (15 min)</a></li>
+                                    <li>Read: <a href="#" class="text-info">Showcasing Your Work</a></li>
+                                    <li>Practice: Sketch your portfolio layout</li>
+                                </ul>
+                                <p><strong>Logic Exercise:</strong> Plan how to organize your projects</p>
+                                <p><strong>Tip:</strong> Your portfolio represents you as a developer</p>
+                            </div>
+                        </div>
+                        
+                        <div class="day-item glass">
+                            <div class="day-header">
+                                <input type="checkbox" class="custom-checkbox" id="day23">
+                                <div>
+                                    <strong>Day 23: Building Your Portfolio</strong>
+                                    <p>Create your showcase site</p>
+                                </div>
+                                <i class="fas fa-chevron-down ms-auto"></i>
+                            </div>
+                            <div class="day-details">
+                                <p><strong>Tasks:</strong></p>
+                                <ul>
+                                    <li>Create the HTML structure for your portfolio</li>
+                                    <li>Add sections: About, Projects, Contact</li>
+                                    <li>Style it with CSS</li>
+                                </ul>
+                                <p><strong>Logic Exercise:</strong> Plan the navigation for your portfolio</p>
+                                <p><strong>Tip:</strong> Keep the design clean and professional</p>
+                            </div>
+                        </div>
+                        
+                        <div class="day-item glass">
+                            <div class="day-header">
+                                <input type="checkbox" class="custom-checkbox" id="day24">
+                                <div>
+                                    <strong>Day 24: Adding Your Projects</strong>
+                                    <p>Showcase your work</p>
+                                </div>
+                                <i class="fas fa-chevron-down ms-auto"></i>
+                            </div>
+                            <div class="day-details">
+                                <p><strong>Tasks:</strong></p>
+                                <ul>
+                                    <li>Add your bio page to the portfolio</li>
+                                    <li>Add your quiz app to the portfolio</li>
+                                    <li>Add your weather app to the portfolio</li>
+                                </ul>
+                                <p><strong>Logic Exercise:</strong> Plan how to present each project</p>
+                                <p><strong>Tip:</strong> Include screenshots and descriptions</p>
+                            </div>
+                        </div>
+                        
+                        <div class="day-item glass">
+                            <div class="day-header">
+                                <input type="checkbox" class="custom-checkbox" id="day25">
+                                <div>
+                                    <strong>Day 25: GitHub Setup</strong>
+                                    <p>Prepare for deployment</p>
+                                </div>
+                                <i class="fas fa-chevron-down ms-auto"></i>
+                            </div>
+                            <div class="day-details">
+                                <p><strong>Tasks:</strong></p>
+                                <ul>
+                                    <li>Watch: <a href="#" class="text-info">GitHub for Beginners (20 min)</a></li>
+                                    <li>Read: <a href="#" class="text-info">Version Control Basics</a></li>
+                                    <li>Practice: Create a GitHub account</li>
+                                </ul>
+                                <p><strong>Logic Exercise:</strong> Plan your repository structure</p>
+                                <p><strong>Tip:</strong> GitHub is essential for developers</p>
+                            </div>
+                        </div>
+                        
+                        <div class="day-item glass">
+                            <div class="day-header">
+                                <input type="checkbox" class="custom-checkbox" id="day26">
+                                <div>
+                                    <strong>Day 26: Deploying Your Portfolio</strong>
+                                    <p>Go live!</p>
+                                </div>
+                                <i class="fas fa-chevron-down ms-auto"></i>
+                            </div>
+                            <div class="day-details">
+                                <p><strong>Tasks:</strong></p>
+                                <ul>
+                                    <li>Watch: <a href="#" class="text-info">GitHub Pages (15 min)</a></li>
+                                    <li>Read: <a href="#" class="text-info">Deployment Guide</a></li>
+                                    <li>Practice: Deploy your portfolio to GitHub Pages</li>
+                                </ul>
+                                <p><strong>Logic Exercise:</strong> Plan your deployment workflow</p>
+                                <p><strong>Tip:</strong> GitHub Pages is free and easy to use</p>
+                            </div>
+                        </div>
+                        
+                        <div class="day-item glass">
+                            <div class="day-header">
+                                <input type="checkbox" class="custom-checkbox" id="day27">
+                                <div>
+                                    <strong>Day 27: Final Touches</strong>
+                                    <p>Polish your portfolio</p>
+                                </div>
+                                <i class="fas fa-chevron-down ms-auto"></i>
+                            </div>
+                            <div class="day-details">
+                                <p><strong>Tasks:</strong></p>
+                                <ul>
+                                    <li>Test your portfolio on different devices</li>
+                                    <li>Fix any issues</li>
+                                    <li>Add a custom domain (optional)</li>
+                                </ul>
+                                <p><strong>Logic Exercise:</strong> Plan how to maintain your portfolio</p>
+                                <p><strong>Tip:</strong> Ask for feedback from others</p>
+                            </div>
+                        </div>
+                        
+                        <div class="day-item glass">
+                            <div class="day-header">
+                                <input type="checkbox" class="custom-checkbox" id="day28">
+                                <div>
+                                    <strong>Day 28: Celebration!</strong>
+                                    <p>You're a coder now!</p>
+                                </div>
+                                <i class="fas fa-chevron-down ms-auto"></i>
+                            </div>
+                            <div class="day-details">
+                                <p><strong>Tasks:</strong></p>
+                                <ul>
+                                    <li>Share your portfolio with friends</li>
+                                    <li>Reflect on your journey</li>
+                                    <li>Plan your next steps as a developer</li>
+                                </ul>
+                                <p><strong>Logic Exercise:</strong> Think about what you want to learn next</p>
+                                <p><strong>Tip:</strong> Congratulations! You've completed the challenge!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Logic Training Mini-Game -->
+                <div class="game-container glass">
+                    <h3><i class="fas fa-brain me-2"></i> Logic Training: Fix the Tea-Making Algorithm</h3>
+                    <p>Can you spot the error in this tea-making algorithm?</p>
+                    <div class="glass p-3 mb-3">
+                        <pre>1. Boil water
+2. Place tea bag in cup
+3. Pour water into cup
+4. Wait 3 minutes
+5. Remove tea bag
+6. Add milk BEFORE removing tea bag</pre>
+                    </div>
+                    <input type="text" class="game-input" id="logicAnswer" placeholder="What's the error?">
+                    <button class="btn btn-primary" id="checkLogic">Check Answer</button>
+                    <div class="game-result" id="logicResult"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section id="resources" class="section">
+        <div class="container">
+            <div class="hero">
+                <h1>Learning Resources</h1>
+                <p>Tools and platforms to help you learn coding on your phone</p>
+            </div>
+
+            <div class="glass glass-card">
+                <h2 class="mb-4"><i class="fas fa-mobile-alt me-2"></i> Mobile Apps</h2>
+                
+                <div class="resource-card glass">
+                    <div class="resource-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <div>
+                        <h4>Replit</h4>
+                        <p>Code directly on your phone with this online IDE</p>
+                        <a href="https://replit.com" target="_blank" class="btn btn-sm btn-outline-light">Visit Site</a>
+                    </div>
+                </div>
+                
+                <div class="resource-card glass">
+                    <div class="resource-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div>
+                        <h4>Sololearn</h4>
+                        <p>Learn JavaScript and other languages with bite-sized lessons</p>
+                        <a href="https://sololearn.com" target="_blank" class="btn btn-sm btn-outline-light">Visit Site</a>
+                    </div>
+                </div>
+                
+                <div class="resource-card glass">
+                    <div class="resource-icon">
+                        <i class="fab fa-github"></i>
+                    </div>
+                    <div>
+                        <h4>GitHub Mobile</h4>
+                        <p>Manage your code repositories from your phone</p>
+                        <a href="https://github.com/mobile" target="_blank" class="btn btn-sm btn-outline-light">Visit Site</a>
+                    </div>
+                </div>
+                
+                <div class="resource-card glass">
+                    <div class="resource-icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <div>
+                        <h4>Notebloc / JotterPad</h4>
+                        <p>Markdown editors for taking notes and writing code</p>
+                        <a href="https://play.google.com" target="_blank" class="btn btn-sm btn-outline-light">Get on Android</a>
+                    </div>
+                </div>
+                
+                <div class="resource-card glass">
+                    <div class="resource-icon">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <div>
+                        <h4>PWA Support</h4>
+                        <p>Install this site as an app on your phone for offline access</p>
+                        <button class="btn btn-sm btn-outline-light" id="installPWA">Install App</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="glass glass-card mt-4">
+                <h2 class="mb-4"><i class="fas fa-globe me-2"></i> Free Learning Sites</h2>
+                
+                <div class="resource-card glass">
+                    <div class="resource-icon">
+                        <i class="fab fa-free-code-camp"></i>
+                    </div>
+                    <div>
+                        <h4>freeCodeCamp</h4>
+                        <p>Learn to code for free with interactive lessons</p>
+                        <a href="https://www.freecodecamp.org" target="_blank" class="btn btn-sm btn-outline-light">Visit Site</a>
+                    </div>
+                </div>
+                
+                <div class="resource-card glass">
+                    <div class="resource-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div>
+                        <h4>W3Schools</h4>
+                        <p>Web development tutorials and references</p>
+                        <a href="https://www.w3schools.com" target="_blank" class="btn btn-sm btn-outline-light">Visit Site</a>
+                    </div>
+                </div>
+                
+                <div class="resource-card glass">
+                    <div class="resource-icon">
+                        <i class="fab fa-firefox"></i>
+                    </div>
+                    <div>
+                        <h4>MDN Web Docs</h4>
+                        <p>Resources for developers by developers</p>
+                        <a href="https://developer.mozilla.org" target="_blank" class="btn btn-sm btn-outline-light">Visit Site</a>
+                    </div>
+                </div>
+                
+                <div class="resource-card glass">
+                    <div class="resource-icon">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                    <div>
+                        <h4>YouTube: HTML for Beginners</h4>
+                        <p>Video tutorials to supplement your learning</p>
+                        <a href="https://www.youtube.com/results?search_query=html+for+beginners" target="_blank" class="btn btn-sm btn-outline-light">Watch Videos</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GitHub Guide Section -->
+    <section id="github" class="section">
+        <div class="container">
+            <div class="hero">
+                <h1>GitHub Setup Guide</h1>
+                <p>Step-by-step instructions to create your portfolio and deploy it</p>
+            </div>
+
+            <div class="glass glass-card">
+                <h2 class="mb-4"><i class="fab fa-github me-2"></i> Creating Your GitHub Portfolio</h2>
+                
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Create a GitHub Account</h4>
+                        <p>Go to <a href="https://github.com" target="_blank" class="text-info">github.com</a> and sign up for a free account. Use your email address and create a strong password.</p>
+                        <div class="glass p-3 mt-2">
+                            <pre>👤 Username: your-username
+🔒 Password: ••••••••
+📧 Email: your-email@example.com</pre>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Create a New Repository</h4>
+                        <p>Click the "+" icon in the top right corner and select "New repository". Name it <code>my-portfolio</code> and make it public.</p>
+                        <div class="glass p-3 mt-2">
+                            <pre>Repository name: my-portfolio
+Description: My coding portfolio
+☑️ Public
+☐ Initialize with README</pre>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Upload Your Files</h4>
+                        <p>Click "uploading an existing file" and drag your portfolio files (index.html, style.css, script.js) to the upload area.</p>
+                        <div class="glass p-3 mt-2">
+                            <pre>📁 index.html
+📁 style.css
+📁 script.js
+📁 images/</pre>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-item">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Enable GitHub Pages</h4>
+                        <p>Go to your repository settings, scroll down to "GitHub Pages", and select the main branch as the source.</p>
+                        <div class="glass p-3 mt-2">
+                            <pre>Settings → Pages → Source: main branch → Save</pre>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-item">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h4>Visit Your Live Site</h4>
+                        <p>After a few minutes, your site will be live at: <code>https://[yourname].github.io/my-portfolio</code></p>
+                        <div class="glass p-3 mt-2">
+                            <pre>🌐 Your site is live!
+🔗 https://yourname.github.io/my-portfolio</pre>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 class="mt-5 mb-3">Portfolio Template</h3>
+                <div class="glass p-3">
+                    <p>Here's a basic HTML template to get you started:</p>
+                    <pre>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;My Portfolio&lt;/title&gt;
+    &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;header&gt;
+        &lt;h1&gt;Your Name&lt;/h1&gt;
+        &lt;p&gt;Web Developer&lt;/p&gt;
+    &lt;/header&gt;
+    
+    &lt;main&gt;
+        &lt;section id="about"&gt;
+            &lt;h2&gt;About Me&lt;/h2&gt;
+            &lt;p&gt;Your bio goes here...&lt;/p&gt;
+        &lt;/section&gt;
+        
+        &lt;section id="projects"&gt;
+            &lt;h2&gt;My Projects&lt;/h2&gt;
+            &lt;div class="project"&gt;
+                &lt;h3&gt;Project 1&lt;/h3&gt;
+                &lt;p&gt;Description of your project...&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/section&gt;
+        
+        &lt;section id="contact"&gt;
+            &lt;h2&gt;Contact Me&lt;/h2&gt;
+            &lt;form&gt;
+                &lt;input type="text" placeholder="Your Name"&gt;
+                &lt;input type="email" placeholder="Your Email"&gt;
+                &lt;textarea placeholder="Your Message"&gt;&lt;/textarea&gt;
+                &lt;button type="submit"&gt;Send&lt;/button&gt;
+            &lt;/form&gt;
+        &lt;/section&gt;
+    &lt;/main&gt;
+    
+    &lt;footer&gt;
+        &lt;p&gt;&copy; 2025 Your Name&lt;/p&gt;
+    &lt;/footer&gt;
+    
+    &lt;script src="script.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Classes Section -->
+    <section id="classes" class="section">
+        <div class="container">
+            <div class="hero">
+                <h1>Live Classes</h1>
+                <p>Join our weekly sessions to enhance your learning</p>
+            </div>
+
+            <div class="glass glass-card">
+                <h2 class="mb-4"><i class="fas fa-calendar-alt me-2"></i> Weekly Schedule</h2>
+                
+                <div class="class-card glass">
+                    <div class="class-date">Monday, 7:00 PM - 8:00 PM</div>
+                    <h4>HTML Structure</h4>
+                    <p>Learn the building blocks of web pages</p>
+                    <a href="#" class="btn btn-sm btn-outline-light mt-2">Join Zoom</a>
+                </div>
+                
+                <div class="class-card glass">
+                    <div class="class-date">Wednesday, 7:00 PM - 8:00 PM</div>
+                    <h4>Think Like a Programmer</h4>
+                    <p>Develop problem-solving skills and logical thinking</p>
+                    <a href="#" class="btn btn-sm btn-outline-light mt-2">Join Zoom</a>
+                </div>
+                
+                <div class="class-card glass">
+                    <div class="class-date">Friday, 7:00 PM - 8:00 PM</div>
+                    <h4>Debugging Practice</h4>
+                    <p>Learn to find and fix errors in your code</p>
+                    <a href="#" class="btn btn-sm btn-outline-light mt-2">Join Zoom</a>
+                </div>
+                
+                <div class="class-card glass">
+                    <div class="class-date">Sunday, 7:00 PM - 8:00 PM</div>
+                    <h4>Deploy & Celebrate!</h4>
+                    <p>Showcase your projects and celebrate your progress</p>
+                    <a href="#" class="btn btn-sm btn-outline-light mt-2">Join Zoom</a>
+                </div>
+            </div>
+            
+            <div class="glass glass-card mt-4">
+                <h2 class="mb-4"><i class="fas fa-file-alt me-2"></i> Slide Outlines</h2>
+                
+                <div class="glass p-3 mb-3">
+                    <h4>Class 1: HTML Structure</h4>
+                    <ul>
+                        <li>Introduction to HTML</li>
+                        <li>Basic HTML tags</li>
+                        <li>Document structure</li>
+                        <li>Semantic HTML</li>
+                        <li>Best practices</li>
+                    </ul>
+                </div>
+                
+                <div class="glass p-3 mb-3">
+                    <h4>Class 2: Think Like a Programmer</h4>
+                    <ul>
+                        <li>Computational thinking</li>
+                        <li>Breaking down problems</li>
+                        <li>Algorithm design</li>
+                        <li>Pseudocode</li>
+                        <li>Logic puzzles</li>
+                    </ul>
+                </div>
+                
+                <div class="glass p-3 mb-3">
+                    <h4>Class 3: Debugging Practice</h4>
+                    <ul>
+                        <li>Common errors</li>
+                        <li>Using browser DevTools</li>
+                        <li>Debugging techniques</li>
+                        <li>Preventing bugs</li>
+                        <li>Hands-on debugging</li>
+                    </ul>
+                </div>
+                
+                <div class="glass p-3">
+                    <h4>Class 4: Deploy & Celebrate!</h4>
+                    <ul>
+                        <li>Portfolio showcase</li>
+                        <li>Deployment options</li>
+                        <li>Next steps in coding</li>
+                        <li>Career paths</li>
+                        <li>Celebration and Q&A</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="glass glass-card mt-4">
+                <h2 class="mb-4"><i class="fas fa-video me-2"></i> Class Replays</h2>
+                
+                <div class="resource-card glass">
+                    <div class="resource-icon">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                    <div>
+                        <h4>HTML Structure - Class 1</h4>
+                        <p>Recorded session from Monday</p>
+                        <a href="#" target="_blank" class="btn btn-sm btn-outline-light">Watch Replay</a>
+                    </div>
+                </div>
+                
+                <div class="resource-card glass">
+                    <div class="resource-icon">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                    <div>
+                        <h4>Think Like a Programmer - Class 2</h4>
+                        <p>Recorded session from Wednesday</p>
+                        <a href="#" target="_blank" class="btn btn-sm btn-outline-light">Watch Replay</a>
+                    </div>
+                </div>
+                
+                <div class="resource-card glass">
+                    <div class="resource-icon">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                    <div>
+                        <h4>Debugging Practice - Class 3</h4>
+                        <p>Recorded session from Friday</p>
+                        <a href="#" target="_blank" class="btn btn-sm btn-outline-light">Watch Replay</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Downloads Section -->
+    <section id="downloads" class="section">
+        <div class="container">
+            <div class="hero">
+                <h1>Downloads</h1>
+                <p>Get helpful resources to support your learning journey</p>
+            </div>
+
+            <div class="glass glass-card">
+                <h2 class="mb-4"><i class="fas fa-download me-2"></i> Learning Materials</h2>
+                
+                <div class="download-item glass">
+                    <div>
+                        <h4>28-Day Checklist (PDF)</h4>
+                        <p>Printable version of the daily tasks</p>
+                    </div>
+                    <button class="btn btn-primary">Download</button>
+                </div>
+                
+                <div class="download-item glass">
+                    <div>
+                        <h4>Certificate of Completion</h4>
+                        <p>Editable template for your achievement</p>
+                    </div>
+                    <button class="btn btn-primary">Download</button>
+                </div>
+                
+                <div class="download-item glass">
+                    <div>
+                        <h4>HTML/CSS/JS Cheatsheet</h4>
+                        <p>Quick reference guide for common syntax</p>
+                    </div>
+                    <button class="btn btn-primary">Download</button>
+                </div>
+                
+                <div class="download-item glass">
+                    <div>
+                        <h4>Favicon Pack</h4>
+                        <p>Icons for your portfolio website</p>
+                    </div>
+                    <button class="btn btn-primary">Download</button>
+                </div>
+                
+                <div class="download-item glass">
+                    <div>
+                        <h4>Code Templates</h4>
+                        <p>Starter templates for common projects</p>
+                    </div>
+                    <button class="btn btn-primary">Download</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="section">
+        <div class="container">
+            <div class="hero">
+                <h1>Portfolio Showcase</h1>
+                <p>Preview of what your portfolio will look like</p>
+            </div>
+
+            <div class="glass glass-card">
+                <div class="portfolio-preview">
+                    <div class="portfolio-header">
+                        <div class="portfolio-avatar"></div>
+                        <h2>Alex Johnson</h2>
+                        <p>Web Developer</p>
+                    </div>
+                    
+                    <div class="portfolio-section">
+                        <h3>About Me</h3>
+                        <p>I'm a passionate web developer with a focus on creating beautiful, functional websites. I recently completed the 28-Day Zero to Coder challenge and built my first portfolio from scratch using only my phone!</p>
+                    </div>
+                    
+                    <div class="portfolio-section">
+                        <h3>My Projects</h3>
+                        <div class="glass p-3 mb-3">
+                            <h4>Personal Bio Page</h4>
+                            <p>A clean, responsive bio page built with HTML and CSS.</p>
+                            <a href="#" class="btn btn-sm btn-outline-light">View Project</a>
+                        </div>
+                        
+                        <div class="glass p-3 mb-3">
+                            <h4>Quiz App</h4>
+                            <p>An interactive quiz application built with JavaScript.</p>
+                            <a href="#" class="btn btn-sm btn-outline-light">View Project</a>
+                        </div>
+                        
+                        <div class="glass p-3">
+                            <h4>Weather App</h4>
+                            <p>A weather application that fetches data from an API.</p>
+                            <a href="#" class="btn btn-sm btn-outline-light">View Project</a>
+                        </div>
+                    </div>
+                    
+                    <div class="portfolio-section">
+                        <h3>Contact Me</h3>
+                        <form>
+                            <div class="mb-3">
+                                <input type="text" class="form-control bg-dark text-light border-secondary" placeholder="Your Name">
+                            </div>
+                            <div class="mb-3">
+                                <input type="email" class="form-control bg-dark text-light border-secondary" placeholder="Your Email">
+                            </div>
+                            <div class="mb-3">
+                                <textarea class="form-control bg-dark text-light border-secondary" rows="3" placeholder="Your Message"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <button class="btn btn-primary btn-lg">Build Yours Now</button>
+                </div>
+                
+                <div class="text-center mt-3">
+                    <button class="btn btn-outline-light" id="toggleView">Toggle Desktop/Mobile View</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <div class="hero">
+                <h1>About the Program</h1>
+                <p>Learn about our mission and team</p>
+            </div>
+
+            <div class="glass glass-card about-card">
+                <div class="about-icon">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <h2>Our Mission</h2>
+                <p>We believe that everyone should have the opportunity to learn coding, regardless of their access to expensive equipment. Our program is designed specifically for students with no laptop and no prior experience, but with big dreams.</p>
+                
+                <h3 class="mt-4">Who We Are</h3>
+                <p>We're a team of passionate educators and developers who want to democratize coding education. We've seen firsthand how learning to code can transform lives, and we want to make that accessible to everyone.</p>
+                
+                <h3 class="mt-4">Contact Us</h3>
+                <p>Email: <a href="mailto:contact@zerotocoder.com" class="text-info">contact@zerotocoder.com</a></p>
+                
+                <div class="mt-4">
+                    <p>&copy; 2025 28-Day Zero to Coder | Hosted on GitHub Pages</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Navigation functionality
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                // Remove active class from all nav items and sections
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+                
+                // Add active class to clicked nav item
+                item.classList.add('active');
+                
+                // Show corresponding section
+                const sectionId = item.getAttribute('data-section');
+                document.getElementById(sectionId).classList.add('active');
+            });
+        });
+        
+        // Week accordion functionality
+        document.querySelectorAll('.week-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const weekContent = header.nextElementSibling;
+                const icon = header.querySelector('.fa-chevron-down');
+                
+                weekContent.classList.toggle('active');
+                icon.classList.toggle('fa-chevron-up');
+            });
+        });
+        
+        // Day accordion functionality
+        document.querySelectorAll('.day-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const dayDetails = header.nextElementSibling;
+                const icon = header.querySelector('.fa-chevron-down');
+                
+                dayDetails.classList.toggle('active');
+                icon.classList.toggle('fa-chevron-up');
+            });
+        });
+        
+        // Progress tracking
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('.custom-checkbox');
+            const totalDays = checkboxes.length;
+            let completedDays = 0;
+            
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    completedDays++;
+                    // Save to localStorage
+                    localStorage.setItem(checkbox.id, 'true');
+                } else {
+                    // Load from localStorage
+                    if (localStorage.getItem(checkbox.id) === 'true') {
+                        checkbox.checked = true;
+                        completedDays++;
+                    }
+                }
+            });
+            
+            const progress = Math.round((completedDays / totalDays) * 100);
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = `${progress}%`;
+            progressBar.textContent = `${progress}%`;
+            
+            // Show completion modal if all days are completed
+            if (completedDays === totalDays) {
+                showCompletionModal();
+            }
+        }
+        
+        // Add event listeners to checkboxes
+        document.querySelectorAll('.custom-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', updateProgress);
+        });
+        
+        // Initialize progress on page load
+        updateProgress();
+        
+        // Start button functionality
+        document.getElementById('startBtn').addEventListener('click', () => {
+            document.getElementById('day1').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // Logic game functionality
+        document.getElementById('checkLogic').addEventListener('click', () => {
+            const answer = document.getElementById('logicAnswer').value.toLowerCase();
+            const resultDiv = document.getElementById('logicResult');
+            
+            if (answer.includes('milk') && answer.includes('before')) {
+                resultDiv.textContent = 'Correct! You should add milk AFTER removing the tea bag.';
+                resultDiv.className = 'game-result alert alert-success';
+            } else if (answer.includes('milk')) {
+                resultDiv.textContent = 'Close! The issue is with when to add the milk.';
+                resultDiv.className = 'game-result alert alert-warning';
+            } else {
+                resultDiv.textContent = 'Not quite. Look at step 6 carefully.';
+                resultDiv.className = 'game-result alert alert-danger';
+            }
+            
+            resultDiv.style.display = 'block';
+        });
+        
+        // Portfolio view toggle
+        document.getElementById('toggleView').addEventListener('click', () => {
+            const portfolioPreview = document.querySelector('.portfolio-preview');
+            portfolioPreview.style.maxWidth = portfolioPreview.style.maxWidth === '400px' ? '100%' : '400px';
+            portfolioPreview.style.margin = portfolioPreview.style.maxWidth === '400px' ? '0 auto' : '';
+        });
+        
+        // PWA installation
+        let deferredPrompt;
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('installPWA').style.display = 'block';
+        });
+        
+        document.getElementById('installPWA').addEventListener('click', () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                    }
+                    deferredPrompt = null;
+                });
+            }
+        });
+        
+        // Completion modal
+        function showCompletionModal() {
+            const modal = document.createElement('div');
+            modal.className = 'modal fade show';
+            modal.style.display = 'block';
+            modal.style.backgroundColor = 'rgba(0,0,0,0.8)';
+            modal.innerHTML = `
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content glass">
+                        <div class="modal-header border-0">
+                            <h5 class="modal-title">Congratulations! 🎉</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>You've completed all 28 days of the Zero to Coder challenge!</p>
+                            <p>You're now ready to start your journey as a developer. Don't forget to deploy your portfolio and share it with the world!</p>
+                        </div>
+                        <div class="modal-footer border-0">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Continue</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            modal.querySelector('.btn-close').addEventListener('click', () => {
+                document.body.removeChild(modal);
+            });
+            
+            modal.querySelector('.btn-primary').addEventListener('click', () => {
+                document.body.removeChild(modal);
+            });
+        }
+        
+        // Download functionality
+        document.querySelectorAll('.download-item button').forEach(button => {
+            button.addEventListener('click', () => {
+                const fileName = button.parentElement.querySelector('h4').textContent;
+                alert(`Downloading ${fileName}...`);
+                // In a real implementation, this would trigger an actual download
+            });
+        });
+    </script>
+</body>
+</html>
