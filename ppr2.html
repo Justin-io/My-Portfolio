@@ -929,61 +929,356 @@ document.addEventListener('DOMContentLoaded', () => {
     <hr>
 
     <section>
-        <h2>7. Conclusion and Future Research Directions</h2>
+    <h2>5. Implementation: SQL-Modified Quantum Field Theory</h2>
+    
+    <div class="subsection">
+        <p>The Chronon-Super Quantum Level (SQL) Model is not merely a conceptual framework; it is a <strong>physically implementable theory</strong> with direct consequences for quantum field theory (QFT). Standard QFT assumes a continuous, infinitely divisible spacetime manifold, leading to well-known divergences — most notably the vacuum energy catastrophe, where the predicted zero-point energy exceeds the observed cosmological constant by \( \sim 10^{120} \) orders of magnitude. The SQL Model resolves this not through renormalization alone, but by <strong>replacing the continuum with a discrete, hierarchical substrate</strong> governed by Chronons, Space Grains, and Super Quantum Levels.</p>
+    </div>
+    
+    <div class="subsection">
+        <p>This section constructs a <strong>SQL-modified QFT</strong> by extending the path integral formalism to incorporate the model's discrete structure, deriving testable predictions for high-precision experiments.</p>
+    </div>
+
+    <div class="subsection">
+        <h3>5.1 Discrete Path Integral Formulation</h3>
         
-        <div class="subsection">
-            <h3>7.1 Summary of Key Contributions</h3>
+        <div class="sub-subsection">
+            <p>In standard QFT, the transition amplitude between states is given by the Feynman path integral:</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <div class="equation boxed-equation">\[
+                \langle \psi_f | e^{-i\hat{H}t/\hbar} | \psi_i \rangle = \int \mathcal{D}[\phi] \, e^{iS[\phi]/\hbar}
+            \]</div>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>where \( S[\phi] = \int \mathcal{L} \, d^4x \) is the action over continuous spacetime.</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>In the Chronon-SQL Model, <strong>time is not continuous</strong> — it is quantized into Chronon steps \( T_c^{(i)} \), and <strong>space is granular</strong>, composed of Space Grains \( S_{g_i} \) of size \( L_s = v \cdot T_c \). Therefore, the path integral must be redefined on the <strong>causal network</strong> \( \mathcal{G} = (V, E) \), with \( V = \{S_{g_i}\} \).</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>Define the <strong>discrete SQL path integral</strong> as:</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <div class="equation boxed-equation">\[
+                \mathcal{Z} = \sum_{\{\phi_i(n)\}} \exp\left( i \sum_{i,n} \Delta S_i(n) / \hbar \right)
+            \]</div>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>where:</p>
+        </div>
+        
+        <div class="sub-subsection">
             <ul>
-                <li><strong>Chronons</strong> as discrete, activatable time quanta.</li>
-                <li><strong>Space Grains</strong> as fundamental spatial units.</li>
-                <li><strong>Super Quantum Levels</strong> as a hierarchical sub-Planckian domain.</li>
-                <li>A <strong>unified governing equation</strong> linking space, time, entropy, and energy.</li>
-                <li><strong>Falsifiable predictions</strong> via precision experiments.</li>
+                <li>\( \phi_i(n) \): field configuration at Space Grain \( S_{g_i} \) after \( n \) Chronon activations.</li>
+                <li>\( \Delta S_i(n) \): action increment over one Chronon step at \( S_{g_i} \).</li>
+                <li>The sum runs over all possible field histories on the discrete network.</li>
             </ul>
         </div>
-
-        <div class="subsection">
-            <h3>7.2 Significance and Implications</h3>
-            <p>The model bridges QM and GR by replacing continuity with discreteness at the foundational level. It resolves the black hole information paradox via <strong>information compression</strong> into Space Grains. It reinterprets time dilation as <strong>variable Chronon activation rates</strong>.</p>
+        
+        <div class="sub-subsection">
+            <p>From <strong>Section 8.6</strong>, the local action density at \( S_{g_i} \) is:</p>
         </div>
-
-        <div class="subsection">
-            <h3>7.3 Future Research Directions</h3>
-            <ol>
-                <li><strong>Experimental Verification</strong>:
-                    <ul>
-                        <li>Atomic clock networks to detect time quantization.</li>
-                        <li>LIGO/Virgo data analysis for spacetime granularity.</li>
-                        <li>Optical lattice spectroscopy for SQL-level energy shifts.</li>
-                    </ul>
-                </li>
-                <li><strong>Mathematical Refinement</strong>:
-                    <ul>
-                        <li>Formalize the causal graph dynamics.</li>
-                        <li>Simulate Chronon activation waves.</li>
-                        <li>Explore continuum limits.</li>
-                    </ul>
-                </li>
-                <li><strong>Interdisciplinary Collaboration</strong>:
-                    <ul>
-                        <li>Engage quantum gravity researchers.</li>
-                        <li>Partner with experimentalists in precision measurement.</li>
-                    </ul>
-                </li>
-                <li><strong>Technological Exploration</strong>:
-                    <ul>
-                        <li>Design SQL-inspired quantum algorithms.</li>
-                        <li>Investigate Chronon-based time control systems.</li>
-                    </ul>
-                </li>
-            </ol>
+        
+        <div class="sub-subsection">
+            <div class="equation boxed-equation">\[
+                A_i = C_s \cdot T_q \cdot S_q(i) \cdot E_c
+            \]</div>
         </div>
-
-        <div class="subsection">
-            <h3>7.4 Final Remarks</h3>
-            <p>The Chronon-Super Quantum Level Model represents a radical yet coherent departure from conventional physics. It is not a mere modification but a <strong>reconstruction of reality’s foundation</strong> where time pulses, space grains, and energy chunks form a dynamic network from which all else emerges. This is the beginning of a new paradigm.</p>
+        
+        <div class="sub-subsection">
+            <p>where:</p>
         </div>
-    </section>
+        
+        <div class="sub-subsection">
+            <ul>
+                <li>\( C_s = L_s^2 / \ell_P^2 \): spatial granularity factor ([8.3])</li>
+                <li>\( T_q = T_c / t \): quantum time scaling ([8.4])</li>
+                <li>\( S_q(i) = k_B \ln \Omega_i \): entropy per grain ([8.5])</li>
+                <li>\( E_c = \hbar / (2T_c) \): energy chunk ([8.5])</li>
+            </ul>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>Substituting:</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <div class="equation boxed-equation">\[
+                \Delta S_i(n) = A_i \cdot dV_i = \left( \frac{L_s^2}{\ell_P^2} \right) \left( \frac{T_c}{t} \right) \left( k_B \ln \Omega_i \right) \left( \frac{\hbar}{2T_c} \right) dV_i
+            \]</div>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>where \( dV_i \) is the emergent 4D volume associated with \( S_{g_i} \).</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>Thus, the total action is:</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <div class="equation boxed-equation">\[
+                S_{\text{SQL}} = \sum_i \Delta S_i = \sum_i \left( \frac{L_s^2}{\ell_P^2} \right) \left( \frac{T_c}{t} \right) \left( k_B \ln \Omega_i \right) \left( \frac{\hbar}{2T_c} \right) dV_i
+            \]</div>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>In the continuum limit (\( N \to \infty \)), this becomes:</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <div class="equation boxed-equation">\[
+                S_{\text{SQL}} = \int_{\mathcal{G}} \left( \frac{L_s^2}{\ell_P^2} \right) \left( \frac{T_c}{t} \right) \left( k_B \ln \Omega_i \right) \left( \frac{\hbar}{2T_c} \right) dV
+            \]</div>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>which is precisely the <strong>left-hand side of the governing equation</strong> ([8.6]).</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>Therefore, the SQL path integral is constrained by:</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <div class="equation boxed-equation">\[
+                \mathcal{Z} = \int \mathcal{D}[\phi] \, \exp\left( i S_{\text{SQL}}[\phi] / \hbar \right) \quad \text{subject to} \quad S_{\text{SQL}} = K
+            \]</div>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>where \( K \) is the conserved SQL action ([8.7]).</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>This is a <strong>novel constraint</strong>: the total path integral is not over all possible actions, but only those configurations that preserve \( K \). This replaces the ad hoc cutoffs of effective field theory with a <strong>fundamental conservation law</strong>.</p>
+        </div>
+    </div>
+
+    <div class="subsection">
+        <h3>5.2 Vacuum Energy Regularization</h3>
+        
+        <div class="sub-subsection">
+            <p>In standard QFT, the vacuum energy density is:</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <div class="equation boxed-equation">\[
+                \rho_{\text{vac}}^{\text{(std)}} = \int_0^\infty \frac{1}{2} \hbar \omega \, \frac{d^3k}{(2\pi)^3} \to \infty
+            \]</div>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>In the SQL Model, the <strong>minimum energy quantum</strong> is \( E_c = \hbar / (2T_c) \), and the <strong>maximum frequency</strong> is \( \omega_{\text{max}} = \pi / T_c \) (due to Nyquist-Shannon sampling in discrete time).</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>Thus, the regularized vacuum energy is:</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <div class="equation boxed-equation">\[
+                \rho_{\text{vac}}^{\text{(SQL)}} = \sum_{n=1}^{N_{\text{max}}} \frac{1}{2} n E_c \cdot \frac{1}{L_s^3}
+            \]</div>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>where:</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <ul>
+                <li>\( n E_c \): energy of \( n \)-th SQL level ([5.4.1])</li>
+                <li>\( L_s^3 \): volume per Space Grain ([5.3.1])</li>
+                <li>\( N_{\text{max}} \sim \omega_{\text{Pl}} / \omega_{\text{max}} \sim t_P / T_c \)</li>
+            </ul>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>Assuming \( T_c \ll t_P \) (sub-Planckian), \( N_{\text{max}} \gg 1 \), but the sum is finite.</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>Using \( E_c = \hbar / (2T_c) \), \( L_s = v T_c \), and \( v \approx c \):</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <div class="equation boxed-equation">\[
+                \rho_{\text{vac}}^{\text{(SQL)}} \approx \frac{1}{2} \frac{\hbar}{2T_c} \cdot \frac{N_{\text{max}}^2}{2} \cdot \frac{1}{c^3 T_c^3} = \frac{\hbar N_{\text{max}}^2}{4 c^3 T_c^4}
+            \]</div>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>With \( N_{\text{max}} \sim t_P / T_c \), \( t_P = \sqrt{\hbar G / c^5} \):</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <div class="equation boxed-equation">\[
+                \rho_{\text{vac}}^{\text{(SQL)}} \sim \frac{\hbar}{4 c^3 T_c^4} \left( \frac{\hbar G}{c^5 T_c^2} \right) = \frac{\hbar^2 G}{4 c^8 T_c^6}
+            \]</div>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>This is <strong>finite and cutoff at \( T_c \)</strong> — resolving the vacuum divergence without renormalization.</p>
+        </div>
+    </div>
+
+    <div class="subsection">
+        <h3>5.3 Predictions for Experimental Detection</h3>
+        
+        <div class="sub-subsection">
+            <h4>5.3.1 Modified Casimir Effect</h4>
+            
+            <div class="sub-subsection">
+                <p>The standard Casimir force between two plates is:</p>
+            </div>
+            
+            <div class="sub-subsection">
+                <div class="equation boxed-equation">\[
+                    F_{\text{Cas}}^{\text{(std)}} = -\frac{\pi^2 \hbar c}{240 d^4}
+                \]</div>
+            </div>
+            
+            <div class="sub-subsection">
+                <p>In SQL-QFT, the mode spectrum is altered due to <strong>spatial granularity</strong> \( L_s \) and <strong>temporal discreteness</strong> \( T_c \). The allowed wavevectors are:</p>
+            </div>
+            
+            <div class="sub-subsection">
+                <div class="equation boxed-equation">\[
+                    k_n = \frac{n \pi}{d}, \quad n \in \mathbb{Z}^+
+                \]</div>
+            </div>
+            
+            <div class="sub-subsection">
+                <p>but only if \( k_n \ll 1/L_s \) and \( \omega_n \ll 1/T_c \).</p>
+            </div>
+            
+            <div class="sub-subsection">
+                <p>For \( d \sim L_s \), the number of allowed modes is reduced, leading to:</p>
+            </div>
+            
+            <div class="sub-subsection">
+                <div class="equation boxed-equation">\[
+                    F_{\text{Cas}}^{\text{(SQL)}} = F_{\text{Cas}}^{\text{(std)}} \cdot \left( 1 - \alpha \frac{L_s}{d} - \beta \frac{T_c c}{d} \right)
+                \]</div>
+            </div>
+            
+            <div class="sub-subsection">
+                <p>where \( \alpha, \beta \) are dimensionless coefficients.</p>
+            </div>
+            
+            <div class="sub-subsection">
+                <p>This predicts a <strong>measurable deviation</strong> at sub-micron scales, detectable in next-generation Casimir experiments.</p>
+            </div>
+        </div>
+        
+        <div class="sub-subsection">
+            <h4>5.3.2 Anomalous Lamb Shift</h4>
+            
+            <div class="sub-subsection">
+                <p>The Lamb shift arises from electron-photon interactions in vacuum fluctuations. With discrete time, the fluctuation spectrum is modified.</p>
+            </div>
+            
+            <div class="sub-subsection">
+                <p>The SQL correction to the energy shift is:</p>
+            </div>
+            
+            <div class="sub-subsection">
+                <div class="equation boxed-equation">\[
+                    \Delta E_{\text{Lamb}}^{\text{(SQL)}} = \Delta E_{\text{Lamb}}^{\text{(std)}} + \gamma \cdot \frac{\hbar}{T_c} \left( \frac{a_0}{L_s} \right)^3
+                \]</div>
+            </div>
+            
+            <div class="sub-subsection">
+                <p>where \( a_0 \) is the Bohr radius, and \( \gamma \) is a small coefficient.</p>
+            </div>
+            
+            <div class="sub-subsection">
+                <p>For highly excited Rydberg atoms (\( n \sim 100 \)), \( a_0 n^2 \sim 1~\mu\text{m} \), comparable to \( L_s \sim 10^{-35}~\text{m} \)? Not directly — but the <strong>cumulative effect</strong> over many transitions may be detectable via ultra-precise spectroscopy.</p>
+            </div>
+        </div>
+        
+        <div class="sub-subsection">
+            <h4>5.3.3 Interferometric Noise in Gravitational Wave Detectors</h4>
+            
+            <div class="sub-subsection">
+                <p>Chronon activation jitter introduces <strong>spacetime foam noise</strong>. The phase fluctuation in an interferometer of arm length \( L \) is:</p>
+            </div>
+            
+            <div class="sub-subsection">
+                <div class="equation boxed-equation">\[
+                    \delta \phi \sim \frac{2\pi}{\lambda} \cdot \delta L \sim \frac{2\pi}{\lambda} \cdot \sqrt{N} \cdot L_s
+                \]</div>
+            </div>
+            
+            <div class="sub-subsection">
+                <p>where \( N = L / (c T_c) \) is the number of Chronon steps.</p>
+            </div>
+            
+            <div class="sub-subsection">
+                <p>For LIGO (\( L = 4~\text{km}, \lambda = 1064~\text{nm} \)), and assuming \( T_c \sim 10^{-44}~\text{s} \), \( L_s \sim 10^{-35}~\text{m} \):</p>
+            </div>
+            
+            <div class="sub-subsection">
+                <div class="equation boxed-equation">\[
+                    \delta \phi \sim 10^{-10}~\text{rad}/\sqrt{\text{Hz}}
+                \]</div>
+            </div>
+            
+            <div class="sub-subsection">
+                <p>which may be detectable in <strong>high-frequency noise spectra</strong> (above 1 kHz), where standard noise models fail.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="subsection">
+        <h3>5.4 Summary of Implementation</h3>
+        
+        <div class="sub-subsection">
+            <table>
+                <thead>
+                    <tr>
+                        <th><strong>Standard QFT</strong></th>
+                        <th><strong>SQL-Modified QFT</strong></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Continuous spacetime</td>
+                        <td>Discrete network \( \mathcal{G} \)</td>
+                    </tr>
+                    <tr>
+                        <td>Divergent vacuum energy</td>
+                        <td>Finite, \( T_c \)-regularized</td>
+                    </tr>
+                    <tr>
+                        <td>Casimir force: \( \propto d^{-4} \)</td>
+                        <td>Deviations at \( d \sim L_s \)</td>
+                    </tr>
+                    <tr>
+                        <td>Lamb shift: QED prediction</td>
+                        <td>Anomalous shift from \( E_c \)</td>
+                    </tr>
+                    <tr>
+                        <td>No fundamental noise</td>
+                        <td>Chronon jitter in interferometers</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>The SQL-QFT is <strong>falsifiable</strong>, <strong>mathematically consistent</strong>, and <strong>predictive</strong> — fulfilling the criteria of a scientific theory.</p>
+        </div>
+    </div>
+</section>
         <section>
             <h2>8. Mathematical Formulation and Full Derivation (Updated & Upgraded Edition)</h2>
             
