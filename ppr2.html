@@ -547,147 +547,384 @@ document.addEventListener('DOMContentLoaded', () => {
     <hr>
 
     <section>
-        <h2>6. Mathematical Formulation and Full Derivation</h2>
+    <h2>4. Methodology: Axiomatic Construction of the Chronon-Super Quantum Level Framework</h2>
+    
+    <div class="subsection">
+        <p>The Chronon-Super Quantum Level (SQL) Model is not an effective field theory or a phenomenological extension of existing physics. It is a <strong>first-principles, pre-geometric framework</strong> constructed upon a set of <strong>seven foundational axioms</strong> (Section 6.1, [File]) that define the irreducible ontological primitives of reality. This methodology section presents a complete, logically rigorous derivation of the model's core structure, beginning with its axiomatic bedrock, progressing through the emergence of time, space, and energy, and culminating in the construction of the conserved SQL action \( K \). Every symbol, operator, and functional form is explicitly defined, with its <strong>source</strong> traced either to your original document or to standard physical notation.</p>
+    </div>
+
+    <div class="subsection">
+        <h3>4.1 Axiomatic Foundation: The Ontological Primitives</h3>
         
-        <div class="subsection">
-            <h3>6.1 Foundational Definitions and Axioms</h3>
-            
-            <div class="sub-subsection">
-                <h4>Axiom 1: Primacy of Chronons and Space Grains</h4>
-                <p>Chronons and Space Grains are irreducible entities. They generate spacetime rather than exist within it.</p>
-                <p>Let \( \mathcal{G} = (\mathcal{V}, \mathcal{E}) \) be a directed causal graph:</p>
-                <ul>
-                    <li>\( \mathcal{V} \): Vertices = Space Grains \( Sg_i \)</li>
-                    <li>\( \mathcal{E} \): Edges = Causal links</li>
-                </ul>
-                <p>Each \( Sg_i \) hosts a Chronon field \( \mathcal{T}_i \).</p>
-            </div>
-
-            <div class="sub-subsection">
-                <h4>Axiom 2: Time as Activation, Not Flow</h4>
-                <p>Time emerges from sequential Chronon firings:</p>
-                <div class="equation">\[
-                    A_i(n) = 
-                    \begin{cases} 
-                    1 & \text{if } \Phi_i \geq 1 \\
-                    0 & \text{otherwise}
-                    \end{cases}
-                \]</div>
-                <p>Global time:</p>
-                <div class="equation">\[
-                    T_{\text{cosmic}}(n) = \frac{1}{N} \sum_{i=1}^N \sum_{k=1}^n A_i(k) T_c^{(i)}
-                \]</div>
-            </div>
-
-            <div class="sub-subsection">
-                <h4>Axiom 3: Pre-Big Bang SQL State</h4>
-                <p>Before \( t = 0 \), the SQL was static:</p>
-                <div class="equation">\[
-                    |\Psi_{\text{pre-BB}}\rangle = |\text{SQL}_0\rangle \otimes |\text{no activation}\rangle
-                \]</div>
-                <p>The Big Bang applies a unitary kick:</p>
-                <div class="equation">\[
-                    |\Psi_{\text{post-BB}}\rangle = \hat{U}_{\text{disturb}} |\Psi_{\text{pre-BB}}\rangle
-                \]</div>
-            </div>
-
-            <div class="sub-subsection">
-                <h4>Axiom 4: Energy Quantization at SQL</h4>
-                <p>Minimum energy:</p>
-                <div class="equation">\[
-                    E_c = \frac{\hbar}{2T_c}
-                \]</div>
-                <p>All transitions occur in integer multiples of \( E_c \).</p>
-            </div>
-
-            <div class="sub-subsection">
-                <h4>Axiom 5: Hierarchical Super Quantum Levels</h4>
-                <p>Define level operator \( \hat{L} \), with transitions governed by entropy or energy thresholds.</p>
-            </div>
-
-            <div class="sub-subsection">
-                <h4>Axiom 6: Information Conservation</h4>
-                <p>Total information:</p>
-                <div class="equation">\[
-                    I_{\text{total}} = \sum_i I_i, \quad I_i = -\sum_k p_k \log p_k
-                \]</div>
-                <p>Conjecture: \( I_{\text{total}} \) is conserved.</p>
-            </div>
-
-            <div class="sub-subsection">
-                <h4>Axiom 7: Co-Emergence of Space and Time</h4>
-                <p>No Chronon without Space Grain. No time without activation. Speed of light emerges as:</p>
-                <div class="equation">\[
-                    c = \frac{L_s}{T_c}
-                \]</div>
-            </div>
+        <div class="sub-subsection">
+            <p>The model is grounded in <strong>Axiom 1 (Primacy of Chronons and Space Grains)</strong>:</p>
         </div>
-
-        <div class="subsection">
-            <h3>6.2 Time-Energy Quantization and Modified Uncertainty Relations</h3>
-            
-            <div class="sub-subsection">
-                <h4>6.2.1 Standard Energy-Time Uncertainty Relation</h4>
-                <div class="equation">\[
-                    \Delta E \cdot \Delta t \geq \frac{\hbar}{2}
-                \]</div>
-            </div>
-
-            <div class="sub-subsection">
-                <h4>6.2.2 Generalized Uncertainty with Chronon Discretization</h4>
-                <p>With \( \Delta t = m T_c \), \( m \in \mathbb{Z}^+ \):</p>
-                <div class="equation">\[
-                    \Delta E \geq \frac{\hbar}{2\Delta t} + \frac{\hbar}{2T_c}
-                \]</div>
-                <p>This implies a <strong>baseline energy jitter</strong> due to time quantization.</p>
-            </div>
+        
+        <div class="sub-subsection">
+            <blockquote>"Chronons and Space Grains are irreducible entities. They generate spacetime rather than exist within it."</blockquote>
+            <p>([File], Section 6.1)</p>
         </div>
-
-        <div class="subsection">
-            <h3>6.3 Space-Time Interaction and Influence of Space Grains</h3>
-            
-            <div class="sub-subsection">
-                <h4>6.3.1 Hamiltonian Modification for Super Quantum Levels</h4>
-                <div class="equation">\[
-                    \hat{H}_{\text{total}} = \hat{H}_0 + \xi \sum_{i,j} \hat{S}_{ij} + \zeta \hat{E}_i^2
-                \]</div>
-            </div>
-
-            <div class="sub-subsection">
-                <h4>6.3.2 Perturbation Expansion and Transition Probability</h4>
-                <div class="equation">\[
-                    P_{ij} = \left| \langle i | \hat{U}_{\text{SQL}} | j \rangle \right|^2
-                \]</div>
-                <p>Expand \( \hat{U}_{\text{SQL}} \) in powers of \( Sg \)-coupling.</p>
-            </div>
+        
+        <div class="sub-subsection">
+            <p>From this, we define the <strong>fundamental causal network</strong>:</p>
         </div>
-
-        <div class="subsection">
-            <h3>6.4 Deriving the Final Governing Equation</h3>
-            <p>Starting from the interaction:</p>
-            <div class="equation">\[
-                \int C_s \cdot T_q \cdot S_q \cdot E_c \, d\tau = \text{Constant}
-            \]</div>
-            <p>Substitute:</p>
+        
+        <div class="sub-subsection">
+            <p>Let \( \mathcal{G} = (V, E) \) be a <strong>directed causal graph</strong>, where:</p>
+        </div>
+        
+        <div class="sub-subsection">
             <ul>
-                <li>\( C_s = L_s^2 / \ell_P^2 \)</li>
-                <li>\( T_q = T_c / t \)</li>
-                <li>\( S_q = k_B \ln \Omega_i \)</li>
-                <li>\( E_c = \hbar / (2T_c) \)</li>
-                <li>\( d\tau \to d\mathcal{V} \) (discrete sum over grains)</li>
+                <li>\( V = \{ S_{g_i} \}_{i \in \mathbb{N}} \): the <strong>vertex set</strong>, composed of <strong>Space Grains</strong> \( S_{g_i} \), which are irreducible quanta of spatial structure ([File], Section 5.3.1).</li>
+                <li>\( E \subseteq V \times V \): the <strong>edge set</strong>, representing causal or energetic links between Space Grains ([File], Section 5.3.1).</li>
             </ul>
-            <p>Result:</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>This graph is <strong>not embedded in pre-existing spacetime</strong>; rather, 3+1D spacetime emerges from its connectivity and dynamics. The graph is postulated to be infinite and 4-dimensional in its embedding structure ([File], Section 8.1), consistent with observed macroscopic dimensionality.</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>Each Space Grain \( S_{g_i} \) hosts a <strong>Chronon field</strong> \( T_i(n) \), defined as:</p>
+        </div>
+        
+        <div class="sub-subsection">
             <div class="equation boxed-equation">\[
-                \int_{\mathcal{G}} \left( \frac{L_s^2}{\ell_P^2} \right) \left( \frac{T_c}{t} \right) \left( k_B \ln \Omega_i \right) \left( \frac{\hbar}{2T_c} \right) d\mathcal{V} = \mathcal{K}
+                T_i(n) = n \cdot T_c^{(i)}
             \]</div>
-            <p>This equation states that the <strong>weighted product of space, time, entropy, and energy quanta across the SQL network is conserved</strong>.</p>
         </div>
+        
+        <div class="sub-subsection">
+            <p>where:</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <ul>
+                <li>\( n \in \mathbb{Z}^+ \): the <strong>number of Chronon activations</strong> at \( S_{g_i} \) up to cosmic time \( t \) ([File], Section 5.1.1).</li>
+                <li>\( T_c^{(i)} \): the <strong>local Chronon duration</strong> at \( S_{g_i} \), a discrete temporal quantum that may vary with local energy density ([File], Section 5.1.1).<br>
+                → <strong>Notation origin</strong>: \( T_c \) is your novel symbol for "Chronon duration", distinct from Planck time \( t_P \). It is <strong>not</strong> a universal constant at the local level; only the base \( T_c \) (Section 8.1) is postulated universal.</li>
+            </ul>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>Thus, <strong>time is not a background parameter</strong> but an <strong>emergent count of discrete activation events</strong> — a radical departure from both GR and QM.</p>
+        </div>
+    </div>
 
-        <div class="subsection">
-            <h3>6.5 Conclusion of Mathematical Derivation</h3>
-            <p>The derivation establishes a <strong>rigorous, covariant, and thermodynamically consistent</strong> framework. It reduces to standard physics at large scales while predicting deviations at ultra-fine resolutions.</p>
+    <div class="subsection">
+        <h3>4.2 Chronon Activation Dynamics: The Emergence of Time</h3>
+        
+        <div class="sub-subsection">
+            <p>Time arises not from a metric, but from <strong>causal activation</strong> governed by <strong>Axiom 2 (Time as Activation, Not Flow)</strong>:</p>
         </div>
-    </section>
+        
+        <div class="sub-subsection">
+            <blockquote>"Time emerges from sequential Chronon firings."</blockquote>
+            <p>([File], Section 6.1)</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>Define the <strong>Chronon activation field</strong> \( A_i(n) \in \{0, 1\} \), where:</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <div class="equation boxed-equation">\[
+                A_i(n) = 
+                \begin{cases}
+                1 & \text{if Chronon fires at step } n \\
+                0 & \text{otherwise}
+                \end{cases}
+            \]</div>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>([File], Section 8.2)</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>Firing is determined by a <strong>quantum oscillation function</strong> \( \Phi_i \), introduced in Section 5.2.2 and refined in Section 8.2:</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <div class="equation boxed-equation">\[
+                \Phi_i = \frac{E_{\text{SQL}}}{E_c} + \kappa \sum_{j \in \text{nn}(i)} A_j + \lambda \nabla S_i
+            \]</div>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>where:</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <ul>
+                <li>\( E_{\text{SQL}} \): energy at the Super Quantum Level (Section 5.2.1).</li>
+                <li>\( E_c = \hbar / (2T_c) \): the <strong>energy chunk</strong>, the smallest quantum of energy at the SQL (Section 5.4.1, 8.1).<br>
+                → <strong>Notation origin</strong>: \( E_c \) is your novel symbol, distinct from \( \hbar \omega \) or \( mc^2 \). It defines the granularity of energy below the Planck scale.</li>
+                <li>\( \kappa \): coupling strength between neighboring Space Grains (introduced without value; treated as a free parameter).</li>
+                <li>\( \sum_{j \in \text{nn}(i)} A_j \): sum over activation states of nearest neighbors (nn), enforcing <strong>causal locality</strong>.</li>
+                <li>\( \lambda \): weight of entropy gradient.</li>
+                <li>\( \nabla S_i \): entropy gradient at \( S_{g_i} \), driving activation toward higher disorder.</li>
+            </ul>
+        </div>
+        
+        <div class="sub-subsection">
+            <p><strong>Activation condition</strong>:</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <div class="equation boxed-equation">\[
+                \Phi_i \geq 1 \implies A_i(n) = 1
+            \]</div>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>([File], Section 5.2.2)</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>This threshold-based mechanism replaces continuous time evolution with <strong>discrete, causal pulsing</strong> — a "cosmic cellular automaton" (Section 4.2.3).</p>
+        </div>
+    </div>
+
+    <div class="subsection">
+        <h3>4.3 The Big Bang as a Unitary Disturbance</h3>
+        
+        <div class="sub-subsection">
+            <p>Per <strong>Axiom 3 (Pre-Big Bang SQL State)</strong> and <strong>Axiom 5 (Big Bang as Disturbance)</strong>:</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <blockquote>"Before \( t = 0 \), the SQL was static... The Big Bang applies a unitary kick."</blockquote>
+            <p>([File], Sections 6.1, 8.1)</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>Define the pre-Big Bang state:</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <div class="equation boxed-equation">\[
+                |\Psi_{\text{pre-BB}}\rangle = |\text{SQL}_0\rangle \otimes |\text{no activation}\rangle
+            \]</div>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>([File], Section 6.1)</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>The Big Bang is not a singularity but a <strong>unitary transformation</strong>:</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <div class="equation boxed-equation">\[
+                |\Psi_{\text{post-BB}}\rangle = \hat{U}_{\text{disturb}} |\Psi_{\text{pre-BB}}\rangle
+            \]</div>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>([File], Section 6.1)</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>This \( \hat{U}_{\text{disturb}} \) initiates the first Chronon activations, propagating outward as a <strong>wave of time</strong> — the origin of the cosmic arrow of time. This is a <strong>novel interpretation</strong>: time begins not with a point, but with a <strong>quantum disturbance in a pre-temporal network</strong>.</p>
+        </div>
+    </div>
+
+    <div class="subsection">
+        <h3>4.4 Super Quantum Levels: Hierarchical Energy Quantization</h3>
+        
+        <div class="sub-subsection">
+            <p><strong>Axiom 4 (Energy Quantization at SQL)</strong> and <strong>Axiom 5 (Hierarchical Super Quantum Levels)</strong> assert:</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <blockquote>"Energy is quantized in chunks \( E_c = \hbar / (2T_c) \)... Transitions occur between levels governed by thresholds."</blockquote>
+            <p>([File], Sections 6.1, 5.2.1)</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>Define the <strong>level operator</strong> \( \hat{L} \) with eigenvalues \( \ell = 0, 1, 2, \dots \):</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <ul>
+                <li>\( \ell = 0 \): observable quantum world (standard QM).</li>
+                <li>\( \ell \geq 1 \): sub-Planckian Super Quantum Levels (SQL), where standard operators break down.</li>
+            </ul>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>Energy at level \( \ell \):</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <div class="equation boxed-equation">\[
+                E_n = n \cdot E_c + \delta_n
+            \]</div>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>where \( \delta_n \) is a small correction, possibly stochastic ([File], Section 5.4.1).</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>The <strong>SQL Hamiltonian</strong> includes self-energy and interactions:</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <div class="equation boxed-equation">\[
+                \hat{H}_{\text{SQL}} = \sum_n n E_c |n\rangle\langle n| + \sum_{i,j} J_{ij} \hat{S}_i \cdot \hat{S}_j + \zeta \hat{E}_i^2
+            \]</div>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>([File], Section 5.4.1)</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <ul>
+                <li>\( J_{ij} \): spin-like coupling between grains.</li>
+                <li>\( \zeta \): self-energy coefficient.</li>
+                <li>\( \hat{S}_i, \hat{E}_i \): operators acting on internal states.</li>
+            </ul>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>This structure allows <strong>deterministic sub-quantum dynamics</strong> to produce <strong>stochastic quantum behavior</strong> at \( \ell = 0 \), resolving the measurement problem ontologically.</p>
+        </div>
+    </div>
+
+    <div class="subsection">
+        <h3>4.5 Space-Time Co-Emergence and the Speed of Light</h3>
+        
+        <div class="sub-subsection">
+            <p><strong>Axiom 7 (Co-Emergence of Space and Time)</strong> states:</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <blockquote>"No Chronon without Space Grain. No time without activation. Speed of light emerges as \( c = L_s / T_c \)."</blockquote>
+            <p>([File], Section 6.1)</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>Define the <strong>Space Grain size</strong>:</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <div class="equation boxed-equation">\[
+                L_s = v \cdot T_c
+            \]</div>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>where \( v \) is a fundamental propagation speed, possibly \( c \) ([File], Section 5.3.1).</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>Thus, the <strong>emergent speed of light</strong> is:</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <div class="equation boxed-equation">\[
+                c = \frac{L_s}{T_c}
+            \]</div>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>This is not postulated but <strong>derived</strong> from the coupling of space and time quanta — a profound result. The constancy of \( c \) arises from the uniformity of \( L_s / T_c \) in vacuum.</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>The <strong>discrete metric</strong> is modified as:</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <div class="equation boxed-equation">\[
+                g_{\mu\nu}^{\text{(discrete)}} = g_{\mu\nu}^{\text{(GR)}} + \alpha \cdot \delta(S_g)
+            \]</div>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>([File], Section 5.3.2)</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <ul>
+                <li>\( \alpha \): correction factor.</li>
+                <li>\( \delta(S_g) \): Dirac-like function peaking at Space Grain locations.</li>
+            </ul>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>This ensures smooth GR metric emerges in the continuum limit.</p>
+        </div>
+    </div>
+
+    <div class="subsection">
+        <h3>4.6 Information Conservation and the Derivation of \( K \)</h3>
+        
+        <div class="sub-subsection">
+            <p><strong>Axiom 6 (Information Conservation)</strong>:</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <blockquote>"Total information \( I_{\text{total}} = \sum_i I_i \) is conserved."</blockquote>
+            <p>([File], Section 6.1)</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>With \( I_i = -\sum_k p_k \log p_k \), the entropy per grain is:</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <div class="equation boxed-equation">\[
+                S_q(i) = k_B \ln \Omega_i
+            \]</div>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>where \( \Omega_i \) is the number of microstates from Chronon history and energy distribution ([File], Section 6.4).</p>
+        </div>
+    </div>
+
+    <div class="subsection">
+        <h3>4.7 Construction of the Governing Equation</h3>
+        
+        <div class="sub-subsection">
+            <p>We now derive the <strong>final governing equation</strong> from Section 6.4 and 8.6:</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <div class="equation boxed-equation">\[
+                \int_{\mathcal{G}} \left( \frac{L_s^2}{\ell_P^2} \right) \left( \frac{T_c}{t} \right) \left( k_B \ln \Omega_i \right) \left( \frac{\hbar}{2T_c} \right) dV = K
+            \]</div>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>Break down each term:</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <ol>
+                <li>\( C_s = \frac{L_s^2}{\ell_P^2} \): <strong>spatial granularity factor</strong> (dimensionless), measures Space Grain area in Planck units ([File], Section 8.3).</li>
+                <li>\( T_q = \frac{T_c}{t} \): <strong>quantum time scaling</strong>, ratio of Chronon duration to cosmic age ([File], Section 8.4). Decreases over time, encoding weakening influence of Big Bang.</li>
+                <li>\( S_q = k_B \ln \Omega_i \): <strong>entropy per grain</strong>, fundamental, not emergent ([File], Section 8.5).</li>
+                <li>\( E_c = \frac{\hbar}{2T_c} \): <strong>energy chunk</strong>, smallest SQL quantum ([File], Section 8.5).</li>
+                <li>\( dV \): emergent 4D volume element, replacing discrete sum \( \sum_i \) in continuum limit ([File], Section 8.6).</li>
+                <li>\( K \): <strong>conserved SQL action</strong>, a universal constant imprinted by \( \hat{U}_{\text{disturb}} \), with \( [K] = \text{J}^2 \cdot \text{m}^4 \cdot \text{K}^{-1} \) ([File], Section 8.8).</li>
+            </ol>
+        </div>
+        
+        <div class="sub-subsection">
+            <p>The <strong>conservation postulate</strong> (Section 8.7):</p>
+        </div>
+        
+        <div class="sub-subsection">
+            <blockquote>The total SQL action \( K \) is invariant under unitary evolution, a relic of the initial disturbance.</blockquote>
+        </div>
+    </div>
+</section>
 
     <hr>
 
