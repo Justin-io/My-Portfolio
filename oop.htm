@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+    <meta property="og:title" content="OOPS Concepts in Java - Question Bank" />
+<meta property="og:description" content="Hosted by Hari" />
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OOPS Concepts in Java - Question Bank</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3, h4 {
+            color: #2c3e50;
+        }
+        h1 {
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        h2 {
+            border-left: 5px solid #3498db;
+            padding-left: 15px;
+            margin-top: 30px;
+            background-color: #ecf0f1;
+            padding: 10px;
+        }
+        h3 {
+            color: #34495e;
+            margin-top: 25px;
+        }
+        .question {
+            margin-bottom: 30px;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            border-left: 3px solid #3498db;
+        }
+        .answer {
+            margin-top: 10px;
+            padding: 15px;
+            background-color: #e8f4fc;
+            border-radius: 5px;
+        }
+        .answer ul, .answer ol {
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+        .answer li {
+            margin-bottom: 8px;
+        }
+        code {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        pre {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+        }
+        .boxed {
+            display: inline-block;
+            padding: 5px 15px;
+            border: 2px solid #3498db;
+            border-radius: 5px;
+            background-color: #e1f0fa;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #bdc3c7;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        /* Print-specific styles */
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+                font-size: 12px;
+            }
+            .container {
+                box-shadow: none;
+                padding: 20px;
+                max-width: 100%;
+            }
+            pre {
+                background-color: transparent;
+                color: black;
+                border: 1px solid #ccc;
+                padding: 10px;
+            }
+            code {
+                background-color: transparent;
+                color: black;
+                border: 1px solid #ccc;
+                padding: 1px 4px;
+            }
+            .boxed {
+                border: 1px solid #3498db;
+                background-color: transparent;
+            }
+            h1, h2, h3, h4 {
+                color: black;
+            }
+            th {
+                background-color: transparent;
+                color: black;
+                border: 1px solid #000;
+            }
+            td {
+                border: 1px solid #000;
+            }
+            .question, .answer {
+                background-color: transparent;
+                border: 1px solid #ccc;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>OOPS Concepts in Java - Question Bank</h1>
+
+        <h2>2-Mark Questions (Short Answer)</h2>
+
+        <div class="question">
+            <h3>1. Discuss the use of public, private and protected access specifiers.</h3>
+            <div class="answer">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Access Specifier</th>
+                            <th>Scope</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>public</code></td>
+                            <td>Everywhere</td>
+                            <td>Accessible from any class in the same package or different packages. No restrictions.</td>
+                        </tr>
+                        <tr>
+                            <td><code>private</code></td>
+                            <td>Same class only</td>
+                            <td>Accessible only within the class where it is declared. Not accessible outside, even by subclasses.</td>
+                        </tr>
+                        <tr>
+                            <td><code>protected</code></td>
+                            <td>Same package + Subclasses</td>
+                            <td>Accessible within the same package and also by subclasses in other packages.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p><strong>Example:</strong></p>
+                <pre>
+class Parent {
+    public int a = 10;
+    private int b = 20;
+    protected int c = 30;
+}</pre>
+                <ul>
+                    <li><code>a</code> can be accessed anywhere.</li>
+                    <li><code>b</code> only inside <code>Parent</code>.</li>
+                    <li><code>c</code> in same package classes and subclasses (even in different packages).</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>2. What is the Vector class in Java? Mention one of its key characteristics.</h3>
+            <div class="answer">
+                <p>The <code>Vector</code> class is a legacy collection class in Java that implements a <strong>dynamically resizable array</strong>. It is part of the <code>java.util</code> package.</p>
+                <p><strong>Key Characteristic:</strong></p>
+                <ul>
+                    <li><strong>Synchronized / Thread-safe</strong>: All methods in <code>Vector</code> are synchronized, making it safe for use in multi-threaded environments.</li>
+                </ul>
+                <p><strong>Example:</strong></p>
+                <pre>
+Vector<Integer> v = new Vector<>();
+v.add(10);
+v.add(20);</pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>4. Write a simple if-else statement to check if a number is positive or negative.</h3>
+            <div class="answer">
+                <pre>
+int num = -5;
+if (num > 0) {
+    System.out.println("Positive");
+} else if (num < 0) {
+    System.out.println("Negative");
+} else {
+    System.out.println("Zero");
+}</pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>5. What is the use of the final keyword in Java?</h3>
+            <div class="answer">
+                <p>The <code>final</code> keyword restricts modification. It can be applied to:</p>
+                <ul>
+                    <li><strong>Variable</strong>: Value cannot be changed once assigned (constant).</li>
+                    <li><strong>Method</strong>: Cannot be overridden in a subclass.</li>
+                    <li><strong>Class</strong>: Cannot be inherited (no subclass allowed).</li>
+                </ul>
+                <p><strong>Example:</strong></p>
+                <pre>
+final int MAX = 100; // Cannot change
+final class FinalClass { } // Cannot extend</pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>6. What is an inner class? Briefly describe one scenario where an inner class might be useful.</h3>
+            <div class="answer">
+                <p>An <strong>inner class</strong> is a class defined within another class.</p>
+                <p><strong>Use Case:</strong><br>
+                When one class logically belongs to another and needs direct access to its enclosing class's members (including private ones), e.g., event handlers in GUI applications.</p>
+                <p><strong>Example:</strong></p>
+                <pre>
+class Outer {
+    private int x = 10;
+    class Inner {
+        void show() { System.out.println(x); } // Can access private member
+    }
+}</pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>7. Explain the use of static variable with the help of an example.</h3>
+            <div class="answer">
+                <p>A <code>static</code> variable belongs to the <strong>class</strong>, not instances. It is shared among all objects.</p>
+                <p><strong>Use:</strong> To represent common properties like <code>collegeName</code> for all students.</p>
+                <p><strong>Example:</strong></p>
+                <pre>
+class Student {
+    int rollNo;
+    String name;
+    static String college = "ABC College";
+}
+
+Student s1 = new Student();
+Student s2 = new Student();
+System.out.println(s1.college); // ABC College
+System.out.println(s2.college); // ABC College</pre>
+                <p>Changing <code>college</code> affects all objects.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>8. Explain the syntax and basic usage of the conditional (ternary) operator.</h3>
+            <div class="answer">
+                <p><strong>Syntax:</strong></p>
+                <pre>condition ? expression1 : expression2</pre>
+                <p>If <code>condition</code> is true, returns <code>expression1</code>, else <code>expression2</code>.</p>
+                <p><strong>Example:</strong></p>
+                <pre>
+int age = 18;
+String status = (age >= 18) ? "Adult" : "Minor";
+System.out.println(status); // Adult</pre>
+                <p>Used for short if-else logic.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>9. Define what a "class" is in object-oriented programming.</h3>
+            <div class="answer">
+                <p>A <strong>class</strong> is a blueprint or template that defines the <strong>state (fields/variables)</strong> and <strong>behavior (methods)</strong> of objects. It does not occupy memory until an object is created.</p>
+                <p><strong>Example:</strong></p>
+                <pre>
+class Car {
+    String model;
+    int year;
+    void start() { System.out.println("Car started"); }
+}</pre>
+                <p>From this class, multiple <code>Car</code> objects can be instantiated.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>10. Explain the use of static variable with the help of an example.</h3>
+            <div class="answer">
+                <p>Answered in Question 7.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>11. Define method overloading. What are the key rules for achieving method overloading?</h3>
+            <div class="answer">
+                <p><strong>Method Overloading:</strong> Defining multiple methods in the same class with the <strong>same name but different parameters</strong>.</p>
+                <p><strong>Rules:</strong></p>
+                <ol>
+                    <li>Methods must have the <strong>same name</strong>.</li>
+                    <li>Parameters must differ in:
+                        <ul>
+                            <li>Number of parameters</li>
+                            <li>Type of parameters</li>
+                            <li>Order of parameters</li>
+                        </ul>
+                    </li>
+                    <li>Return type <strong>does not matter</strong>.</li>
+                    <li>Cannot overload by changing only return type.</li>
+                </ol>
+                <p><strong>Example:</strong></p>
+                <pre>
+void add(int a, int b)
+void add(int a, int b, int c)
+void add(double a, double b)</pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>12. What is the primary use of the super keyword in Java?</h3>
+            <div class="answer">
+                <p>The <code>super</code> keyword refers to the <strong>immediate parent class</strong>.</p>
+                <p><strong>Uses:</strong></p>
+                <ol>
+                    <li>Call parent class method: <code>super.methodName()</code></li>
+                    <li>Call parent class constructor: <code>super()</code></li>
+                    <li>Access parent class variable: <code>super.var</code></li>
+                </ol>
+                <p><strong>Example:</strong></p>
+                <pre>
+class Parent { void show() { System.out.println("Parent"); } }
+class Child extends Parent {
+    void show() {
+        super.show(); // Calls parent's show()
+        System.out.println("Child");
+    }
+}</pre>
+            </div>
+        </div>
+
+        <h2>4 or 5-Mark Questions (Descriptive / Program-Based)</h2>
+
+        <div class="question">
+            <h3>1. Write a Java program to find the frequency (count the occurrence) of each element in an integer array.</h3>
+            <div class="answer">
+                <pre>
+import java.util.*;
+
+public class FrequencyCounter {
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 2, 3, 1, 3, 3};
+        Map<Integer, Integer> freqMap = new HashMap<>();
+
+        for (int num : arr) {
+            freqMap.put(num, freqMap.getOrDefault(num, 0) + 1);
+        }
+
+        for (Map.Entry<Integer, Integer> entry : freqMap.entrySet()) {
+            System.out.println("Element " + entry.getKey() + " occurs " + entry.getValue() + " times");
+        }
+    }
+}</pre>
+                <p><strong>Output:</strong></p>
+                <pre>
+Element 1 occurs 2 times
+Element 2 occurs 2 times
+Element 3 occurs 3 times</pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>2. Write a Java program that defines a Student class with data members...</h3>
+            <div class="answer">
+                <pre>
+import java.util.Scanner;
+
+class Student {
+    int rollNumber;
+    String name;
+    double mathMarks, phyMarks, chemMarks;
+
+    void getRequiredDetails() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter Roll Number: ");
+        rollNumber = sc.nextInt();
+        System.out.print("Enter Name: ");
+        name = sc.next();
+        System.out.print("Enter Math Marks: ");
+        mathMarks = sc.nextDouble();
+        System.out.print("Enter Physics Marks: ");
+        phyMarks = sc.nextDouble();
+        System.out.print("Enter Chemistry Marks: ");
+        chemMarks = sc.nextDouble();
+    }
+
+    void displayAverage() {
+        double avg = (mathMarks + phyMarks + chemMarks) / 3;
+        System.out.println("Average Marks: " + avg);
+    }
+}
+
+public class Implement {
+    public static void main(String[] args) {
+        Student s = new Student();
+        s.getRequiredDetails();
+        s.displayAverage();
+    }
+}</pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>3. Define "class" and "object." Write a simple Java class Car...</h3>
+            <div class="answer">
+                <p><strong>Definition:</strong></p>
+                <ul>
+                    <li><strong>Class</strong>: A template defining properties and behaviors.</li>
+                    <li><strong>Object</strong>: An instance of a class (real-world entity).</li>
+                </ul>
+                <pre>
+class Car {
+    String make;
+    String model;
+    int year;
+
+    public static void main(String[] args) {
+        // Instantiation
+        Car myCar = new Car();
+        myCar.make = "Toyota";
+        myCar.model = "Corolla";
+        myCar.year = 2020;
+
+        // Accessing fields
+        System.out.println("Make: " + myCar.make);
+        System.out.println("Model: " + myCar.model);
+        System.out.println("Year: " + myCar.year);
+    }
+}</pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>4. Discuss the complete lifecycle of a Java program from source code creation to execution.</h3>
+            <div class="answer">
+                <p><strong>Lifecycle Steps:</strong></p>
+                <ol>
+                    <li><strong>Write Source Code</strong> (<code>Hello.java</code>)</li>
+                    <li><strong>Compile</strong> using <code>javac Hello.java</code> → generates <code>Hello.class</code> (bytecode)</li>
+                    <li><strong>Load</strong> by JVM using Class Loader</li>
+                    <li><strong>Verify</strong> bytecode for security</li>
+                    <li><strong>Execute</strong> by JVM using Interpreter/JIT Compiler</li>
+                    <li><strong>Runtime Environment (JRE)</strong> provides libraries and JVM</li>
+                    <li><strong>Operating System</strong> manages resources (memory, CPU)</li>
+                </ol>
+                <p><strong>Diagram Flow:</strong></p>
+                <pre>
+Source Code (.java)
+       ↓ javac
+Bytecode (.class)
+       ↓ JVM (Class Loader → Bytecode Verifier → Interpreter/JIT)
+Execution on OS</pre>
+                <p><strong>Tools Involved:</strong></p>
+                <ul>
+                    <li><strong>JDK</strong>: Contains compiler (<code>javac</code>), JVM, JRE</li>
+                    <li><strong>JVM</strong>: Executes bytecode (platform-dependent)</li>
+                    <li><strong>JRE</strong>: Libraries + JVM (no compiler)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>5. Explain types of inheritance in Java with an example program.</h3>
+            <div class="answer">
+                <p>Java supports:</p>
+                <ol>
+                    <li><strong>Single Inheritance</strong>: One class extends another.</li>
+                    <li><strong>Multilevel Inheritance</strong>: Chain of inheritance.</li>
+                    <li><strong>Hierarchical Inheritance</strong>: Multiple classes extend one class.</li>
+                    <li>❌ <strong>Multiple Inheritance (Classes)</strong>: Not supported (avoid ambiguity).</li>
+                    <li>✅ <strong>Multiple Inheritance via Interfaces</strong></li>
+                </ol>
+                <p><strong>Example (Single & Multilevel):</strong></p>
+                <pre>
+class Animal {
+    void eat() { System.out.println("Eating..."); }
+}
+
+class Dog extends Animal {
+    void bark() { System.out.println("Barking..."); }
+}
+
+class Puppy extends Dog {
+    void weep() { System.out.println("Weeping..."); }
+}
+
+public class InheritanceDemo {
+    public static void main(String[] args) {
+        Puppy p = new Puppy();
+        p.eat();  // From Animal
+        p.bark(); // From Dog
+        p.weep(); // From Puppy
+    }
+}</pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>6. Write a Java program to find the factorial of a number using recursion.</h3>
+            <div class="answer">
+                <pre>
+public class Factorial {
+    public static int factorial(int n) {
+        if (n == 0 || n == 1)
+            return 1;
+        return n * factorial(n - 1);
+    }
+
+    public static void main(String[] args) {
+        int num = 5;
+        System.out.println("Factorial of " + num + " is " + factorial(num));
+    }
+}</pre>
+                <p><strong>Working for <code>factorial(4)</code>:</strong></p>
+                <pre>
+factorial(4) = 4 * factorial(3)
+             = 4 * 3 * factorial(2)
+             = 4 * 3 * 2 * factorial(1)
+             = 4 * 3 * 2 * 1 = 24</pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>7. Explain how the final keyword is used with classes and methods in the context of inheritance. What are the implications?</h3>
+            <div class="answer">
+                <ul>
+                    <li><strong>Final Method</strong>: Cannot be overridden in subclass.
+                        <pre>
+class Parent {
+    final void display() {
+        System.out.println("This cannot be overridden");
+    }
+}</pre>
+                        → Any attempt to override causes <strong>compile-time error</strong>.
+                    </li>
+                    <li><strong>Final Class</strong>: Cannot be extended.
+                        <pre>
+final class FinalClass { }
+// class Child extends FinalClass → ERROR</pre>
+                    </li>
+                </ul>
+                <p><strong>Implications:</strong></p>
+                <ul>
+                    <li>Ensures <strong>security and design integrity</strong>.</li>
+                    <li>Prevents unintended behavior changes in subclasses.</li>
+                    <li>Used in API design (e.g., <code>String</code> class is final).</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>8. Design a class hierarchy for Shape, Circle, and Rectangle...</h3>
+            <div class="answer">
+                <pre>
+abstract class Shape {
+    abstract double area();
+    abstract double perimeter();
+}
+
+class Circle extends Shape {
+    double radius;
+    Circle(double r) { radius = r; }
+
+    double area() { return Math.PI * radius * radius; }
+    double perimeter() { return 2 * Math.PI * radius; }
+}
+
+class Rectangle extends Shape {
+    double length, width;
+    Rectangle(double l, double w) {
+        length = l;
+        width = w;
+    }
+
+    double area() { return length * width; }
+    double perimeter() { return 2 * (length + width); }
+}
+
+public class ShapeDemo {
+    public static void main(String[] args) {
+        Shape c = new Circle(5);
+        Shape r = new Rectangle(4, 5);
+
+        System.out.println("Circle Area: " + c.area());
+        System.out.println("Rectangle Perimeter: " + r.perimeter());
+
+        // Using super not needed here since no overriding of constructors
+        // But if needed: super() in subclass constructor calls parent constructor
+    }
+}</pre>
+                <p><strong>Method Overriding</strong>: Implemented via <code>area()</code> and <code>perimeter()</code> in subclasses.<br>
+                <strong>Dynamic Polymorphism</strong>: <code>Shape ref = new Circle();</code></p>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>9. Define "class" and "object." Write a simple Java class Car...</h3>
+            <div class="answer">
+                <p>Answered in Question 3.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>10. Explain the while loop and do-while loop with examples. Discuss when to use each.</h3>
+            <div class="answer">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th><code>while</code></th>
+                            <th><code>do-while</code></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Condition Check</td>
+                            <td>Before loop body</td>
+                            <td>After loop body</td>
+                        </tr>
+                        <tr>
+                            <td>Execution</td>
+                            <td>May not run at all</td>
+                            <td>Runs at least once</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p><strong>Example:</strong></p>
+                <pre>
+// while
+int i = 1;
+while (i <= 3) {
+    System.out.println(i);
+    i++;
+}
+
+// do-while
+int j = 1;
+do {
+    System.out.println(j);
+    j++;
+} while (j <= 3);</pre>
+                <p><strong>When to use:</strong></p>
+                <ul>
+                    <li><strong><code>while</code></strong>: When condition must be checked before execution (e.g., reading file until EOF).</li>
+                    <li><strong><code>do-while</code></strong>: Menu-driven programs (show menu at least once):
+                        <pre>
+do {
+    showMenu();
+    choice = sc.nextInt();
+} while (choice != 0);</pre>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>11. Write a Java program that displays an array of N numbers.</h3>
+            <div class="answer">
+                <pre>
+import java.util.Scanner;
+
+public class DisplayArray {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter number of elements: ");
+        int n = sc.nextInt();
+        int[] arr = new int[n];
+
+        System.out.println("Enter " + n + " elements:");
+        for (int i = 0; i < n; i++) {
+            arr[i] = sc.nextInt();
+        }
+
+        System.out.println("Array elements are:");
+        for (int num : arr) {
+            System.out.print(num + " ");
+        }
+    }
+}</pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>12. Write a Java class Calculator that implements method overloading...</h3>
+            <div class="answer">
+                <pre>
+class Calculator {
+    int add(int a, int b) {
+        return a + b;
+    }
+
+    int add(int a, int b, int c) {
+        return a + b + c;
+    }
+
+    double add(double a, double b) {
+        return a + b;
+    }
+
+    String add(String s, int n) {
+        return s + n;
+    }
+}
+
+public class CalcTest {
+    public static void main(String[] args) {
+        Calculator calc = new Calculator();
+        System.out.println(calc.add(2, 3));           // 5
+        System.out.println(calc.add(1, 2, 3));        // 6
+        System.out.println(calc.add(2.5, 3.5));       // 6.0
+        System.out.println(calc.add("Score: ", 95));  // Score: 95
+    }
+}</pre>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>16. Write a Java program to add all the numbers up to 10 using recursion.</h3>
+            <div class="answer">
+                <pre>
+public class SumRecursion {
+    public static int sumUpTo(int n) {
+        if (n <= 1) return n;
+        return n + sumUpTo(n - 1);
+    }
+
+    public static void main(String[] args) {
+        int result = sumUpTo(10);
+        System.out.println("Sum of numbers from 1 to 10 is: " + result);
+    }
+}</pre>
+                <p><strong>Output:</strong> <code>55</code></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
