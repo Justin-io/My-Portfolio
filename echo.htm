@@ -2902,22 +2902,60 @@ Let your potential Echo across the future.</p>
 </section>
     <!-- Registration Section -->
     <section class="registration" id="register">
-        <h2 class="section-title">Register Now</h2>
-        
-        <div class="registration-container">
-            <div class="seat-counter">
-                <h3>Limited Seats Available</h3>
-                <div class="seats-left" id="seatsLeft">42</div>
-                <p>seats remaining out of 80</p>
-            </div>
-            
-            <a href="https://forms.gle/your-form-link" target="_blank" class="register-btn">
-                <i class="fas fa-external-link-alt"></i> Register for Workshop
-            </a>
-            
-            <p class="register-note">Registration closes on September 24, 2025</p>
+    <h2 class="section-title">Register Now</h2>
+    
+    <div class="registration-container">
+        <div class="seat-counter">
+            <h3>Limited Seats Available</h3>
+            <div class="seats-left" id="seatsLeft">42</div>
+            <p>seats remaining out of 80</p>
         </div>
-    </section>
+        
+        <a href="https://forms.gle/your-form-link " target="_blank" class="register-btn">
+            <i class="fas fa-external-link-alt"></i> Secure Your Spot
+        </a>
+        
+        <p class="register-note" id="countdown-note">
+            Registration closes on September 24, 2025
+        </p>
+    </div>
+</section>
+
+<script>
+// Dynamic Day Counter for Registration Deadline
+document.addEventListener("DOMContentLoaded", function () {
+    const deadline = new Date("September 24, 2025 23:59:59").getTime();
+    const noteElement = document.getElementById("countdown-note");
+
+    // Update the counter every day (and immediately on load)
+    function updateCounter() {
+        const now = new Date().getTime();
+        const distance = deadline - now;
+
+        if (distance < 0) {
+            noteElement.innerHTML = "Registration has closed. Stay tuned for the next session.";
+            return;
+        }
+
+        // Calculate remaining days
+        const daysLeft = Math.floor(distance / (1000 * 60 * 60 * 24));
+
+        // Update message
+        if (daysLeft === 1) {
+            noteElement.innerHTML = "⏳ Only <strong>1 day</strong> left to register! Don’t miss your chance to join ECHO.";
+        } else {
+            noteElement.innerHTML = "⏳ <strong>" + daysLeft + " days</strong> left to register. Secure your spot before seats fill up.";
+        }
+    }
+
+    // Run immediately
+    updateCounter();
+
+    // Update daily (optional: you can use setInterval for real-time, but once per day is enough)
+    // Here we update every 6 hours for smooth UX
+    setInterval(updateCounter, 6 * 60 * 60 * 1000);
+});
+</script>
 
     <!-- Floating Action Button -->
     <a href="#register" target="_blank" class="fab" title="Quick Registration">
