@@ -137,11 +137,13 @@
   <div id="glassy-popup-overlay"></div>
   <div id="glassy-popup-dialog">
     <div id="glassy-popup-header">
-      <h3 id="glassy-popup-title">Welcome</h3>
+      <div id="glassy-popup-image-container">
+        <img id="glassy-popup-image" src="https://picsum.photos/seed/glassy-popup/800/450.jpg" alt="Popup Image">
+      </div>
       <button id="glassy-popup-close">&times;</button>
     </div>
     <div id="glassy-popup-content">
-      <p>This is your glassy popup content. It appears automatically with fluid animations.</p>
+      <p>This is your glassy popup content with a beautiful 16:9 image.</p>
     </div>
     <div id="glassy-popup-footer">
       <button id="glassy-popup-cancel">Close</button>
@@ -149,6 +151,15 @@
     </div>
   </div>
 </div>
+
+<!-- Floating Action Button -->
+<button id="glassy-fab">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+    <line x1="8" y1="10" x2="16" y2="10"></line>
+    <line x1="8" y1="14" x2="12" y2="14"></line>
+  </svg>
+</button>
 
 <style>
   /* Glassy Popup Styles */
@@ -207,40 +218,56 @@
   }
 
   #glassy-popup-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 25px;
+    position: relative;
+    padding: 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
   }
 
-  #glassy-popup-title {
-    margin: 0;
-    color: #fff;
-    font-size: 1.8rem;
-    font-weight: 300;
-    letter-spacing: 1px;
+  #glassy-popup-image-container {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    overflow: hidden;
+  }
+
+  #glassy-popup-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  #glassy-popup-dialog:hover #glassy-popup-image {
+    transform: scale(1.05);
   }
 
   #glassy-popup-close {
-    background: none;
-    border: none;
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 2rem;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.8rem;
     cursor: pointer;
     transition: all 0.3s ease;
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
+    z-index: 10;
   }
 
   #glassy-popup-close:hover {
     color: #fff;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.7);
     transform: rotate(90deg);
   }
 
@@ -296,6 +323,45 @@
     box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
   }
 
+  /* Floating Action Button */
+  #glassy-fab {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 1000;
+    opacity: 0;
+    transform: scale(0);
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  #glassy-fab.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  #glassy-fab:hover {
+    transform: scale(1.1);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.15));
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  #glassy-fab:active {
+    transform: scale(0.95);
+  }
+
   /* Fluid animation for the popup */
   @keyframes fluid {
     0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
@@ -341,14 +407,19 @@
     const popupCancel = document.getElementById('glassy-popup-cancel');
     const popupConfirm = document.getElementById('glassy-popup-confirm');
     const popupOverlay = document.getElementById('glassy-popup-overlay');
+    const fabButton = document.getElementById('glassy-fab');
 
     function openPopup() {
       popupContainer.classList.add('active');
+      fabButton.classList.remove('visible');
       document.body.style.overflow = 'hidden'; // Prevent scrolling
     }
 
     function closePopup() {
       popupContainer.classList.remove('active');
+      setTimeout(() => {
+        fabButton.classList.add('visible');
+      }, 300); // Show FAB after popup closes
       document.body.style.overflow = ''; // Restore scrolling
     }
 
@@ -360,6 +431,7 @@
     popupCancel.addEventListener('click', closePopup);
     popupConfirm.addEventListener('click', closePopup);
     popupOverlay.addEventListener('click', closePopup);
+    fabButton.addEventListener('click', openPopup);
 
     // Prevent clicks inside the dialog from closing it
     document.getElementById('glassy-popup-dialog').addEventListener('click', function(e) {
