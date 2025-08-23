@@ -181,6 +181,73 @@
             transform: rotate(15deg);
         }
 
+        /* Search and Filter Section */
+        .search-filter-section {
+            margin-bottom: 2rem;
+        }
+
+        .search-container {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 3rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            font-size: 1rem;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .filter-btn:hover {
+            background: var(--primary-blue);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background: var(--primary-blue);
+            color: white;
+        }
+
         /* File Grid */
         .files-grid {
             display: grid;
@@ -375,6 +442,19 @@
             overflow-y: auto;
         }
 
+        .image-preview {
+            width: 100%;
+            max-height: 500px;
+            object-fit: contain;
+            border-radius: 12px;
+        }
+
+        .video-preview {
+            width: 100%;
+            max-height: 500px;
+            border-radius: 12px;
+        }
+
         /* Loading Spinner */
         .loading-spinner {
             display: inline-block;
@@ -544,6 +624,19 @@
             font-size: 0.875rem;
         }
 
+        /* No Results Message */
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .no-results-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
         /* Animations */
         @keyframes fadeIn {
             from {
@@ -644,6 +737,22 @@
                             <span class="text-secondary" id="fileCount">Loading...</span>
                         </div>
                         
+                        <!-- Search and Filter Section -->
+                        <div class="search-filter-section">
+                            <div class="search-container">
+                                <i class="bi bi-search search-icon"></i>
+                                <input type="text" id="searchInput" class="search-input" placeholder="Search files...">
+                            </div>
+                            <div class="filter-buttons" id="filterButtons">
+                                <button class="filter-btn active" data-filter="all">All</button>
+                                <button class="filter-btn" data-filter="PDF">PDF</button>
+                                <button class="filter-btn" data-filter="TXT">Text</button>
+                                <button class="filter-btn" data-filter="DOCX">Documents</button>
+                                <button class="filter-btn" data-filter="IMAGE">Images</button>
+                                <button class="filter-btn" data-filter="VIDEO">Videos</button>
+                            </div>
+                        </div>
+                        
                         <div id="filesContainer" class="files-grid">
                             <!-- Files will be dynamically inserted here -->
                         </div>
@@ -682,10 +791,10 @@
         <span>Connected to GitHub API</span>
     </div>
 
-    <!-- Floating Action Button
+    <!-- Floating Action Button -->
     <div class="fab" id="fabBtn">
         <i class="bi bi-plus-lg"></i>
-    </div> -->
+    </div>
 
     <!-- Notification -->
     <div class="notification" id="notification">
@@ -705,12 +814,18 @@
         // Configuration - replace with actual GitHub username and repo name
         const GITHUB_CONFIG = {
             owner: 'justin-io', // Replace with your GitHub username
-            repo: 'My-Portfolio', // Replace with your repository name
+            repo: 'Ds-core', // Replace with your repository name
             filesPath: 'files'
         };
 
         // Cache key for localStorage
         const CACHE_KEY = 'dsCore_fileCache';
+
+        // Global state
+        let allFiles = [];
+        let filteredFiles = [];
+        let currentFilter = 'all';
+        let searchTerm = '';
 
         // Helper function to determine file type from extension
         function getFileType(extension) {
@@ -727,11 +842,17 @@
                 'jpeg': 'IMAGE',
                 'png': 'IMAGE',
                 'gif': 'IMAGE',
+                'bmp': 'IMAGE',
+                'svg': 'IMAGE',
                 'mp4': 'VIDEO',
                 'mov': 'VIDEO',
                 'avi': 'VIDEO',
+                'mkv': 'VIDEO',
+                'webm': 'VIDEO',
                 'mp3': 'AUDIO',
-                'wav': 'AUDIO'
+                'wav': 'AUDIO',
+                'flac': 'AUDIO',
+                'aac': 'AUDIO'
             };
             
             return typeMap[extension.toLowerCase()] || 'unknown';
@@ -813,12 +934,8 @@
             
             try {
                 const fileList = await fetchFileList();
-                
-                // Render the files
-                renderFiles(fileList);
-                
-                // Update file count
-                fileCount.textContent = `${fileList.length} items`;
+                allFiles = fileList;
+                applyFilters();
                 
                 // Show success notification
                 if (fileList.length > 0) {
@@ -839,19 +956,38 @@
             }
         }
 
-        // Function to fetch and display text file content
-        async function fetchTextFileContent(url) {
+        // Apply search and filters
+        function applyFilters() {
+            filteredFiles = allFiles.filter(file => {
+                const matchesSearch = searchTerm === '' || 
+                    file.name.toLowerCase().includes(searchTerm.toLowerCase());
+                const matchesFilter = currentFilter === 'all' || 
+                    file.type === currentFilter;
+                
+                return matchesSearch && matchesFilter;
+            });
+            
+            renderFiles(filteredFiles);
+            fileCount.textContent = `${filteredFiles.length} of ${allFiles.length} items`;
+        }
+
+        // Function to fetch and display file content
+        async function fetchFileContent(url, type) {
             try {
                 const response = await fetch(url);
                 
                 if (!response.ok) {
-                    throw new Error(`Failed to fetch text file: ${response.status} ${response.statusText}`);
+                    throw new Error(`Failed to fetch file: ${response.status} ${response.statusText}`);
                 }
                 
-                return await response.text();
+                if (type === 'TXT') {
+                    return await response.text();
+                } else {
+                    return url; // For other types, return the URL
+                }
             } catch (error) {
-                console.error('Error fetching text file content:', error);
-                return 'Failed to load file content.';
+                console.error('Error fetching file content:', error);
+                return null;
             }
         }
 
@@ -860,6 +996,8 @@
         const detailView = document.getElementById('detailView');
         const filesContainer = document.getElementById('filesContainer');
         const fileCount = document.getElementById('fileCount');
+        const searchInput = document.getElementById('searchInput');
+        const filterButtons = document.getElementById('filterButtons');
         const refreshBtn = document.getElementById('refreshBtn');
         const themeToggle = document.getElementById('themeToggle');
         const backBtn = document.getElementById('backBtn');
@@ -906,8 +1044,8 @@
             
             try {
                 const files = await fetchFileList();
-                renderFiles(files);
-                fileCount.textContent = `${files.length} items`;
+                allFiles = files;
+                applyFilters();
             } catch (error) {
                 showNotification('Failed to load files. Please try again.', 'error');
                 filesContainer.innerHTML = '<p class="text-center text-danger">Failed to load files</p>';
@@ -919,7 +1057,15 @@
             filesContainer.innerHTML = '';
             
             if (files.length === 0) {
-                filesContainer.innerHTML = '<p class="text-center text-secondary">No files found. Make sure your GitHub repository has a "files" folder.</p>';
+                filesContainer.innerHTML = `
+                    <div class="no-results col-12">
+                        <div class="no-results-icon">
+                            <i class="bi bi-search"></i>
+                        </div>
+                        <h4>No files found</h4>
+                        <p>Try adjusting your search or filter criteria</p>
+                    </div>
+                `;
                 return;
             }
             
@@ -949,6 +1095,8 @@
                 case 'XLSX': return 'xlsx-icon';
                 case 'PPTX': return 'pptx-icon';
                 case 'IMAGE': return 'image-icon';
+                case 'VIDEO': return 'video-icon';
+                case 'AUDIO': return 'audio-icon';
                 default: return 'default-icon';
             }
         }
@@ -962,6 +1110,8 @@
                 case 'XLSX': return 'bi-file-earmark-excel-fill';
                 case 'PPTX': return 'bi-file-earmark-ppt-fill';
                 case 'IMAGE': return 'bi-file-earmark-image-fill';
+                case 'VIDEO': return 'bi-file-earmark-play-fill';
+                case 'AUDIO': return 'bi-file-earmark-music-fill';
                 default: return 'bi-file-earmark-fill';
             }
         }
@@ -975,25 +1125,24 @@
             detailMeta.textContent = `${file.type} • ${file.size} • Modified: ${file.modified || 'Unknown'}`;
             detailDescription.textContent = `This file is stored in your GitHub repository and can be accessed at: ${file.url}`;
             
+            // Show loading state
+            previewContainer.innerHTML = `
+                <div class="preview-placeholder">
+                    <div class="loading-spinner"></div>
+                    <p>Loading file preview...</p>
+                </div>
+            `;
+            
             // Set preview content based on file type
             if (file.type === 'PDF') {
                 previewContainer.innerHTML = `
                     <embed src="${file.url}" type="application/pdf" class="pdf-preview" />
                 `;
             } else if (file.type === 'TXT') {
-                // Show loading state
-                previewContainer.innerHTML = `
-                    <div class="preview-placeholder">
-                        <div class="loading-spinner"></div>
-                        <p>Loading file content...</p>
-                    </div>
-                `;
-                
-                // Fetch and display text content
                 try {
-                    const content = await fetchTextFileContent(file.url);
+                    const content = await fetchFileContent(file.url, 'TXT');
                     previewContainer.innerHTML = `
-                        <div class="text-preview">${content}</div>
+                        <div class="text-preview">${content || 'Failed to load content.'}</div>
                     `;
                 } catch (error) {
                     previewContainer.innerHTML = `
@@ -1006,6 +1155,30 @@
                         </div>
                     `;
                 }
+            } else if (file.type === 'IMAGE') {
+                previewContainer.innerHTML = `
+                    <img src="${file.url}" alt="${file.name}" class="image-preview" />
+                `;
+            } else if (file.type === 'VIDEO') {
+                previewContainer.innerHTML = `
+                    <video controls class="video-preview">
+                        <source src="${file.url}" type="video/${file.extension}">
+                        Your browser does not support the video tag.
+                    </video>
+                `;
+            } else if (file.type === 'AUDIO') {
+                previewContainer.innerHTML = `
+                    <div class="preview-placeholder">
+                        <h4>Audio Player</h4>
+                        <audio controls style="width: 100%; margin-top: 1rem;">
+                            <source src="${file.url}" type="audio/${file.extension}">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <button class="btn-primary-custom mt-3" onclick="downloadFile('${file.url}', '${file.name}')">
+                            <i class="bi bi-download"></i> Download File
+                        </button>
+                    </div>
+                `;
             } else {
                 previewContainer.innerHTML = `
                     <div class="preview-placeholder">
@@ -1099,6 +1272,30 @@
 
         // Setup event listeners
         function setupEventListeners() {
+            // Search functionality
+            searchInput.addEventListener('input', (e) => {
+                searchTerm = e.target.value;
+                applyFilters();
+            });
+            
+            // Filter buttons
+            filterButtons.addEventListener('click', (e) => {
+                if (e.target.classList.contains('filter-btn')) {
+                    // Remove active class from all buttons
+                    filterButtons.querySelectorAll('.filter-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked button
+                    e.target.classList.add('active');
+                    
+                    // Update current filter
+                    currentFilter = e.target.dataset.filter;
+                    applyFilters();
+                }
+            });
+            
+            // Refresh button
             refreshBtn.addEventListener('click', refreshFiles);
             themeToggle.addEventListener('click', toggleTheme);
             backBtn.addEventListener('click', showFolderView);
