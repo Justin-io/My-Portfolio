@@ -23,7 +23,6 @@
             --bg-secondary: #e2e8f0;
             --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
-
         [data-theme="dark"] {
             --glass-bg: rgba(15, 23, 42, 0.7);
             --glass-border: rgba(255, 255, 255, 0.1);
@@ -34,13 +33,11 @@
             --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
             --light-blue: #0c4a6e;
         }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             background-color: var(--bg-primary);
@@ -50,7 +47,6 @@
             overflow-x: hidden;
             position: relative;
         }
-
         /* Background Pattern */
         .bg-pattern {
             position: fixed;
@@ -65,14 +61,12 @@
             opacity: 0.3;
             z-index: -1;
         }
-
         /* App Container */
         .app-wrapper {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
-
         .app-header {
             background: var(--glass-bg);
             backdrop-filter: blur(10px);
@@ -85,25 +79,20 @@
             box-shadow: var(--card-shadow);
             transition: all 0.3s ease;
         }
-
         .app-header.collapsed {
             padding: 0.5rem 0;
         }
-
         .app-container {
             flex: 1;
             padding: 2rem 0;
             transition: padding-top 0.3s ease;
         }
-
         .app-container.expanded {
             padding-top: 2rem;
         }
-
         .app-container.collapsed {
             padding-top: 1rem;
         }
-
         /* Glass Container */
         .glass-container {
             background: var(--glass-bg);
@@ -117,7 +106,6 @@
             max-width: 1200px;
             animation: fadeIn 0.5s ease-in-out;
         }
-
         /* Header Styles */
         .main-header {
             display: flex;
@@ -128,11 +116,9 @@
             gap: 1rem;
             transition: all 0.3s ease;
         }
-
         .main-header.collapsed {
             margin-bottom: 1rem;
         }
-
         .logo {
             display: flex;
             align-items: center;
@@ -142,11 +128,9 @@
             color: var(--primary-blue);
             transition: all 0.3s ease;
         }
-
         .logo.collapsed {
             font-size: 1.5rem;
         }
-
         .logo-icon {
             width: 40px;
             height: 40px;
@@ -158,23 +142,19 @@
             color: white;
             transition: all 0.3s ease;
         }
-
         .logo-icon.collapsed {
             width: 35px;
             height: 35px;
         }
-
         .header-actions {
             display: flex;
             gap: 1rem;
             align-items: center;
             transition: all 0.3s ease;
         }
-
         .header-actions.collapsed {
             gap: 0.5rem;
         }
-
         .collapse-toggle {
             position: absolute;
             top: 0.5rem;
@@ -194,12 +174,10 @@
             z-index: 101;
             transition: all 0.3s ease;
         }
-
         .collapse-toggle:hover {
             background: var(--primary-blue);
             color: white;
         }
-
         /* Button Styles */
         .btn-primary-custom {
             background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
@@ -214,12 +192,10 @@
             transition: all 0.3s ease;
             box-shadow: 0 4px 6px -1px rgba(14, 165, 233, 0.3);
         }
-
         .btn-primary-custom:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.4);
         }
-
         .btn-icon {
             background: var(--glass-bg);
             backdrop-filter: blur(8px);
@@ -234,33 +210,27 @@
             color: var(--text-primary);
             transition: all 0.3s ease;
         }
-
         .btn-icon:hover {
             background: var(--primary-blue);
             color: white;
             transform: rotate(15deg);
         }
-
         .btn-icon.collapsed {
             width: 35px;
             height: 35px;
         }
-
         /* Search and Filter Section */
         .search-filter-section {
             margin-bottom: 2rem;
             transition: all 0.3s ease;
         }
-
         .search-filter-section.collapsed {
             margin-bottom: 1rem;
         }
-
         .search-container {
             position: relative;
             margin-bottom: 1rem;
         }
-
         .search-input {
             width: 100%;
             padding: 0.75rem 1rem 0.75rem 3rem;
@@ -273,13 +243,11 @@
             color: var(--text-primary);
             transition: all 0.3s ease;
         }
-
         .search-input:focus {
             outline: none;
             border-color: var(--primary-blue);
             box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
         }
-
         .search-icon {
             position: absolute;
             left: 1rem;
@@ -287,13 +255,11 @@
             transform: translateY(-50%);
             color: var(--text-secondary);
         }
-
         .filter-buttons {
             display: flex;
             gap: 0.5rem;
             flex-wrap: wrap;
         }
-
         .filter-btn {
             padding: 0.5rem 1rem;
             background: var(--glass-bg);
@@ -306,25 +272,21 @@
             transition: all 0.3s ease;
             cursor: pointer;
         }
-
         .filter-btn:hover {
             background: var(--primary-blue);
             color: white;
             transform: translateY(-2px);
         }
-
         .filter-btn.active {
             background: var(--primary-blue);
             color: white;
         }
-
         /* File Grid */
         .files-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 1.5rem;
         }
-
         /* File Card */
         .file-card {
             background: var(--glass-bg);
@@ -339,7 +301,6 @@
             position: relative;
             overflow: hidden;
         }
-
         .file-card::before {
             content: '';
             position: absolute;
@@ -351,16 +312,13 @@
             transform: translateX(-100%);
             transition: transform 0.3s ease;
         }
-
         .file-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
-
         .file-card:hover::before {
             transform: translateX(0);
         }
-
         .file-icon {
             width: 50px;
             height: 50px;
@@ -371,42 +329,34 @@
             margin-bottom: 1rem;
             font-size: 1.5rem;
         }
-
         .pdf-icon {
             background: rgba(239, 68, 68, 0.1);
             color: #ef4444;
         }
-
         .txt-icon {
             background: rgba(59, 130, 246, 0.1);
             color: #3b82f6;
         }
-
         .docx-icon {
             background: rgba(16, 185, 129, 0.1);
             color: #10b981;
         }
-
         .xlsx-icon {
             background: rgba(34, 197, 94, 0.1);
             color: #22c55e;
         }
-
         .pptx-icon {
             background: rgba(249, 115, 22, 0.1);
             color: #f97316;
         }
-
         .image-icon {
             background: rgba(168, 85, 247, 0.1);
             color: #a855f7;
         }
-
         .default-icon {
             background: rgba(107, 114, 128, 0.1);
             color: #6b7280;
         }
-
         .file-name {
             font-weight: 600;
             font-size: 1.1rem;
@@ -415,13 +365,11 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-
         .file-meta {
             font-size: 0.85rem;
             color: var(--text-secondary);
             margin-bottom: 0.75rem;
         }
-
         .file-description {
             font-size: 0.9rem;
             color: var(--text-secondary);
@@ -431,13 +379,11 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-
         /* Detail View */
         .detail-container {
             max-width: 800px;
             margin: 0 auto;
         }
-
         .detail-header {
             display: flex;
             align-items: center;
@@ -445,7 +391,6 @@
             flex-wrap: wrap;
             gap: 1.5rem;
         }
-
         .detail-icon {
             width: 70px;
             height: 70px;
@@ -456,17 +401,14 @@
             font-size: 2rem;
             flex-shrink: 0;
         }
-
         .detail-title {
             font-size: 1.75rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
         }
-
         .detail-meta {
             color: var(--text-secondary);
         }
-
         .detail-description {
             margin: 2rem 0;
             line-height: 1.6;
@@ -477,14 +419,12 @@
             border: 1px solid var(--glass-border);
             padding: 1.5rem;
         }
-
         .preview-container {
             margin-top: 2rem;
             border-radius: 12px;
             overflow: hidden;
             border: 1px solid var(--glass-border);
         }
-
         .preview-placeholder {
             background: var(--glass-bg);
             backdrop-filter: blur(8px);
@@ -492,13 +432,11 @@
             padding: 3rem;
             text-align: center;
         }
-
         .pdf-preview {
             width: 100%;
             height: 500px;
             border: none;
         }
-
         .text-preview {
             background: var(--glass-bg);
             backdrop-filter: blur(8px);
@@ -511,20 +449,17 @@
             max-height: 500px;
             overflow-y: auto;
         }
-
         .image-preview {
             width: 100%;
             max-height: 500px;
             object-fit: contain;
             border-radius: 12px;
         }
-
         .video-preview {
             width: 100%;
             max-height: 500px;
             border-radius: 12px;
         }
-
         /* PDF Modal */
         .pdf-modal {
             position: fixed;
@@ -540,12 +475,10 @@
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
         }
-
         .pdf-modal.active {
             opacity: 1;
             visibility: visible;
         }
-
         .pdf-modal-header {
             background: white;
             padding: 1rem 1.5rem;
@@ -555,7 +488,6 @@
             z-index: 2001;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
-
         .pdf-modal-title {
             font-weight: 600;
             font-size: 1.1rem;
@@ -565,12 +497,10 @@
             text-overflow: ellipsis;
             max-width: 70%;
         }
-
         .pdf-modal-actions {
             display: flex;
             gap: 0.5rem;
         }
-
         .pdf-modal-btn {
             background: #f3f4f6;
             border: none;
@@ -584,12 +514,10 @@
             cursor: pointer;
             transition: all 0.2s ease;
         }
-
         .pdf-modal-btn:hover {
             background: #e5e7eb;
             color: #1f2937;
         }
-
         .pdf-modal-content {
             flex: 1;
             overflow: hidden;
@@ -599,13 +527,11 @@
             justify-content: center;
             align-items: center;
         }
-
         .pdf-modal-embed {
             width: 100%;
             height: 100%;
             border: none;
         }
-
         .pdf-loading {
             position: absolute;
             top: 0;
@@ -619,7 +545,6 @@
             align-items: center;
             z-index: 2002;
         }
-
         .pdf-loading-spinner {
             width: 40px;
             height: 40px;
@@ -629,7 +554,6 @@
             animation: spin 1s linear infinite;
             margin-bottom: 1rem;
         }
-
         /* Loading Spinner */
         .loading-spinner {
             display: inline-block;
@@ -640,11 +564,9 @@
             border-top-color: white;
             animation: spin 1s ease-in-out infinite;
         }
-
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
-
         /* Skeleton Loading */
         .skeleton {
             background: linear-gradient(90deg, var(--glass-bg) 25%, var(--bg-secondary) 50%, var(--glass-bg) 75%);
@@ -652,12 +574,10 @@
             animation: loading 1.5s infinite;
             border-radius: 4px;
         }
-
         @keyframes loading {
             0% { background-position: 200% 0; }
             100% { background-position: -200% 0; }
         }
-
         .skeleton-card {
             background: var(--glass-bg);
             backdrop-filter: blur(8px);
@@ -668,31 +588,25 @@
             padding: 1.5rem;
             margin-bottom: 1.5rem;
         }
-
         .skeleton-icon {
             width: 50px;
             height: 50px;
             border-radius: 10px;
             margin-bottom: 1rem;
         }
-
         .skeleton-text {
             height: 16px;
             margin-bottom: 8px;
         }
-
         .skeleton-text.short {
             width: 60%;
         }
-
         .skeleton-text.medium {
             width: 80%;
         }
-
         .skeleton-text.long {
             width: 100%;
         }
-
         /* API Status */
         .api-status {
             position: fixed;
@@ -710,7 +624,6 @@
             font-size: 0.875rem;
             z-index: 100;
         }
-
         .status-indicator {
             width: 8px;
             height: 8px;
@@ -718,13 +631,11 @@
             background: #10b981;
             animation: pulse 2s infinite;
         }
-
         @keyframes pulse {
             0% { opacity: 1; }
             50% { opacity: 0.5; }
             100% { opacity: 1; }
         }
-
         /* Floating Action Button */
         .fab {
             position: fixed;
@@ -743,12 +654,10 @@
             z-index: 100;
             color: white;
         }
-
         .fab:hover {
             transform: scale(1.1);
             box-shadow: 0 20px 25px -5px rgba(14, 165, 233, 0.5);
         }
-
         /* Notification */
         .notification {
             position: fixed;
@@ -766,18 +675,15 @@
             transition: transform 0.3s ease-out;
             max-width: 300px;
         }
-
         .notification.show {
             transform: translateX(0);
         }
-
         .notification-header {
             display: flex;
             align-items: center;
             gap: 0.75rem;
             margin-bottom: 0.5rem;
         }
-
         .notification-icon {
             width: 24px;
             height: 24px;
@@ -789,29 +695,24 @@
             justify-content: center;
             font-size: 0.875rem;
         }
-
         .notification-title {
             font-weight: 600;
         }
-
         .notification-message {
             color: var(--text-secondary);
             font-size: 0.875rem;
         }
-
         /* No Results Message */
         .no-results {
             text-align: center;
             padding: 3rem;
             color: var(--text-secondary);
         }
-
         .no-results-icon {
             font-size: 3rem;
             margin-bottom: 1rem;
             opacity: 0.5;
         }
-
         /* Animations */
         @keyframes fadeIn {
             from {
@@ -823,7 +724,6 @@
                 transform: translateY(0);
             }
         }
-
         /* Responsive Design */
         @media (max-width: 768px) {
             .glass-container {
@@ -866,7 +766,6 @@
                 max-width: 50%;
             }
         }
-
         @media (max-width: 480px) {
             .files-grid {
                 grid-template-columns: 1fr;
@@ -891,7 +790,6 @@
 <body>
     <!-- Background Pattern -->
     <div class="bg-pattern"></div>
-
     <div class="app-wrapper">
         <!-- App Header -->
         <header class="app-header" id="appHeader">
@@ -917,7 +815,6 @@
                 <i class="bi bi-chevron-up"></i>
             </button>
         </header>
-
         <!-- Main App Container -->
         <main class="app-container expanded" id="appContainer">
             <div class="container">
@@ -950,7 +847,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- File Detail View -->
                 <div id="detailView" style="display: none;">
                     <div class="glass-container detail-container">
@@ -976,7 +872,6 @@
             </div>
         </main>
     </div>
-
     <!-- PDF Modal -->
     <div class="pdf-modal" id="pdfModal">
         <div class="pdf-modal-header">
@@ -1007,18 +902,15 @@
             <iframe id="pdfEmbed" class="pdf-modal-embed" style="display: none;"></iframe>
         </div>
     </div>
-
     <!-- API Status Indicator -->
     <div class="api-status">
         <div class="status-indicator"></div>
         <span>Connected to GitHub API</span>
     </div>
-
     <!-- Floating Action Button -->
     <div class="fab" id="fabBtn">
         <i class="bi bi-plus-lg"></i>
     </div>
-
     <!-- Notification -->
     <div class="notification" id="notification">
         <div class="notification-header">
@@ -1029,7 +921,6 @@
         </div>
         <div class="notification-message" id="notificationMessage"></div>
     </div>
-
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
@@ -1040,15 +931,12 @@
             repo: 'My-Portfolio',
             filesPath: 'hide'
         };
-
         // PDF rendering configuration
         const PDF_RENDER_BASE_URL = 'https://justinalexia.vercel.app/hide';
-
         // Cache keys for localStorage
         const CACHE_KEY = 'dsCore_fileCache';
         const DOWNLOADED_FILES_KEY = 'dsCore_downloadedFiles';
         const COLLAPSED_STATE_KEY = 'dsCore_toolbarCollapsed';
-
         // Global state
         let allFiles = [];
         let filteredFiles = [];
@@ -1056,7 +944,6 @@
         let searchTerm = '';
         let currentPdfFile = null;
         let pdfZoomLevel = 100;
-
         // Helper function to determine file type from extension
         function getFileType(extension) {
             const typeMap = {
@@ -1087,7 +974,6 @@
             
             return typeMap[extension.toLowerCase()] || 'unknown';
         }
-
         // Helper function to format file size
         function formatFileSize(bytes) {
             if (bytes < 1024) {
@@ -1098,7 +984,6 @@
                 return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
             }
         }
-
         // Get downloaded files from localStorage
         function getDownloadedFiles() {
             try {
@@ -1108,7 +993,6 @@
                 return [];
             }
         }
-
         // Add a file to downloaded files list
         function addDownloadedFile(fileUrl) {
             try {
@@ -1121,12 +1005,10 @@
                 console.error('Error adding downloaded file:', error);
             }
         }
-
         // Check if a file has been downloaded
         function isFileDownloaded(fileUrl) {
             return getDownloadedFiles().includes(fileUrl);
         }
-
         // Fetch file list from GitHub API
         async function fetchFileList() {
             try {
@@ -1140,14 +1022,14 @@
                 
                 const rootData = await rootResponse.json();
                 
-                // Check if 'files' directory exists
-                const filesDir = rootData.find(item => item.name === 'files' && item.type === 'dir');
+                // Check if 'hide' directory exists (using the filesPath from config)
+                const filesDir = rootData.find(item => item.name === GITHUB_CONFIG.filesPath && item.type === 'dir');
                 
                 let files = [];
                 
                 if (filesDir) {
-                    // If 'files' directory exists, get its contents
-                    const filesUrl = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/files`;
+                    // If 'hide' directory exists, get its contents
+                    const filesUrl = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.filesPath}`;
                     const filesResponse = await fetch(filesUrl);
                     
                     if (!filesResponse.ok) {
@@ -1157,7 +1039,7 @@
                     const filesData = await filesResponse.json();
                     files = filesData.filter(item => item.type === 'file');
                 } else {
-                    // If no 'files' directory, look for files in root
+                    // If no 'hide' directory, look for files in root
                     files = rootData.filter(item => item.type === 'file');
                 }
                 
@@ -1201,7 +1083,6 @@
                 return [];
             }
         }
-
         // Refresh files by calling fetchFileList and updating the UI
         async function refreshFiles() {
             // Show loading state
@@ -1231,7 +1112,6 @@
                 refreshBtn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Refresh';
             }
         }
-
         // Apply search and filters
         function applyFilters() {
             filteredFiles = allFiles.filter(file => {
@@ -1246,7 +1126,6 @@
             renderFiles(filteredFiles);
             fileCount.textContent = `${filteredFiles.length} of ${allFiles.length} items`;
         }
-
         // Function to fetch and display file content
         async function fetchFileContent(url, type) {
             try {
@@ -1266,7 +1145,6 @@
                 return null;
             }
         }
-
         // Toggle toolbar collapse state
         function toggleToolbar() {
             const appHeader = document.getElementById('appHeader');
@@ -1311,7 +1189,6 @@
                 localStorage.setItem(COLLAPSED_STATE_KEY, 'true');
             }
         }
-
         // Show PDF in modal
         function showPdfModal(file) {
             const pdfModal = document.getElementById('pdfModal');
@@ -1351,7 +1228,6 @@
                 showNotification('Failed to load PDF. Please try again.', 'error');
             };
         }
-
         // Close PDF modal
         function closePdfModal() {
             const pdfModal = document.getElementById('pdfModal');
@@ -1365,7 +1241,6 @@
             
             currentPdfFile = null;
         }
-
         // Zoom PDF in
         function zoomInPdf() {
             if (pdfZoomLevel < 200) {
@@ -1373,7 +1248,6 @@
                 updatePdfZoom();
             }
         }
-
         // Zoom PDF out
         function zoomOutPdf() {
             if (pdfZoomLevel > 50) {
@@ -1381,14 +1255,12 @@
                 updatePdfZoom();
             }
         }
-
         // Update PDF zoom
         function updatePdfZoom() {
             const pdfEmbed = document.getElementById('pdfEmbed');
             pdfEmbed.style.transform = `scale(${pdfZoomLevel / 100})`;
             pdfEmbed.style.transformOrigin = 'top center';
         }
-
         // Print PDF
         function printPdf() {
             if (currentPdfFile) {
@@ -1407,7 +1279,6 @@
                 }, 1000);
             }
         }
-
         // DOM elements
         const folderView = document.getElementById('folderView');
         const detailView = document.getElementById('detailView');
@@ -1433,7 +1304,6 @@
         const pdfZoomInBtn = document.getElementById('pdfZoomInBtn');
         const pdfZoomOutBtn = document.getElementById('pdfZoomOutBtn');
         const pdfCloseBtn = document.getElementById('pdfCloseBtn');
-
         // Initialize app
         async function init() {
             try {
@@ -1450,7 +1320,6 @@
                 showNotification('Failed to initialize app. Please refresh the page.', 'error');
             }
         }
-
         // Show skeleton loading
         function showSkeletonLoading() {
             filesContainer.innerHTML = '';
@@ -1467,7 +1336,6 @@
                 filesContainer.appendChild(skeletonCard);
             }
         }
-
         // Load files from backend
         async function loadFiles() {
             showSkeletonLoading();
@@ -1481,7 +1349,6 @@
                 filesContainer.innerHTML = '<p class="text-center text-danger">Failed to load files</p>';
             }
         }
-
         // Render files in the folder view
         function renderFiles(files) {
             filesContainer.innerHTML = '';
@@ -1515,7 +1382,6 @@
                 filesContainer.appendChild(fileCard);
             });
         }
-
         // Get file icon class based on file type
         function getFileIconClass(type) {
             switch(type) {
@@ -1530,7 +1396,6 @@
                 default: return 'default-icon';
             }
         }
-
         // Get file icon based on file type
         function getFileIcon(type) {
             switch(type) {
@@ -1545,7 +1410,6 @@
                 default: return 'bi-file-earmark-fill';
             }
         }
-
         // Show file detail view
         async function showFileDetail(file) {
             // For PDF files, show in modal instead of detail view
@@ -1627,13 +1491,11 @@
             folderView.style.display = 'none';
             detailView.style.display = 'block';
         }
-
         // Show folder view
         function showFolderView() {
             detailView.style.display = 'none';
             folderView.style.display = 'block';
         }
-
         // Simulate file download
         function downloadFile(url, filename) {
             showNotification(`Downloading ${filename}...`, 'success');
@@ -1654,12 +1516,10 @@
                 showNotification(`${filename} download started!`, 'success');
             }, 500);
         }
-
         // Open file in new tab
         function openFileInNewTab(url) {
             window.open(url, '_blank');
         }
-
         // Show notification
         function showNotification(message, type = 'info') {
             notificationMessage.textContent = message;
@@ -1686,7 +1546,6 @@
                 notification.classList.remove('show');
             }, 3000);
         }
-
         // Toggle theme
         function toggleTheme() {
             const currentTheme = document.documentElement.getAttribute('data-theme');
@@ -1699,7 +1558,6 @@
             const icon = themeToggle.querySelector('i');
             icon.className = newTheme === 'dark' ? 'bi bi-sun-fill' : 'bi bi-moon-fill';
         }
-
         // Check theme preference
         function checkThemePreference() {
             const savedTheme = localStorage.getItem('dsCoreTheme') || 'light';
@@ -1709,7 +1567,6 @@
             const icon = themeToggle.querySelector('i');
             icon.className = savedTheme === 'dark' ? 'bi bi-sun-fill' : 'bi bi-moon-fill';
         }
-
         // Setup event listeners
         function setupEventListeners() {
             // Search functionality
@@ -1771,7 +1628,6 @@
                 }, 300);
             });
         }
-
         // Initialize the app when DOM is loaded
         document.addEventListener('DOMContentLoaded', init);
     </script>
