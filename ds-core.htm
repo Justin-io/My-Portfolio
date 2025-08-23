@@ -1041,6 +1041,9 @@
             filesPath: 'files'
         };
 
+        // PDF rendering configuration
+        const PDF_RENDER_BASE_URL = 'https://justinalexia.vercel.app/files';
+
         // Cache keys for localStorage
         const CACHE_KEY = 'dsCore_fileCache';
         const DOWNLOADED_FILES_KEY = 'dsCore_downloadedFiles';
@@ -1327,8 +1330,11 @@
             pdfLoading.style.display = 'flex';
             pdfEmbed.style.display = 'none';
             
+            // Construct PDF URL using the specified pattern
+            const pdfUrl = `${PDF_RENDER_BASE_URL}/${encodeURIComponent(file.name)}`;
+            
             // Set PDF source
-            pdfEmbed.src = file.url;
+            pdfEmbed.src = pdfUrl;
             
             // Show modal
             pdfModal.classList.add('active');
@@ -1387,7 +1393,8 @@
         function printPdf() {
             if (currentPdfFile) {
                 // Open PDF in new tab for printing
-                const printWindow = window.open(currentPdfFile.url, '_blank');
+                const pdfUrl = `${PDF_RENDER_BASE_URL}/${encodeURIComponent(currentPdfFile.name)}`;
+                const printWindow = window.open(pdfUrl, '_blank');
                 
                 // Try to trigger print after a short delay
                 setTimeout(() => {
