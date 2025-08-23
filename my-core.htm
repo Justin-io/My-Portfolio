@@ -3,1556 +3,1149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JARVIS :: AUTHORIZATION REQUIRED</title>
+    <title>NEXUS SECURE VAULT</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src='https://unpkg.com/tesseract.js@v4.0.2/dist/tesseract.min.js'></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap');
+        
         * {
+            font-family: 'Exo 2', sans-serif;
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         
         body {
-            background: linear-gradient(135deg, #0a0a1a, #1a1a3a, #0a0a1a);
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #fff;
             min-height: 100vh;
-            font-family: 'Exo 2', 'Arial', sans-serif;
             overflow-x: hidden;
             position: relative;
-            color: #00eeff;
         }
         
-        body::before {
-            content: '';
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+        
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-family: 'Orbitron', monospace;
+            font-weight: 900;
+            font-size: 3rem;
+            background: linear-gradient(90deg, #00d2ff, #3a47d5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(0, 210, 255, 0.5);
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            color: #a0a0ff;
+            font-weight: 300;
+        }
+        
+        .auth-container, .vault-container, .blocked-container {
+            background: rgba(20, 20, 40, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 210, 255, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 210, 255, 0.1);
+            padding: 40px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .auth-container::before, .vault-container::before, .blocked-container::before {
+            content: "";
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background: 
-                radial-gradient(circle at 20% 30%, rgba(0, 238, 255, 0.1) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(255, 0, 128, 0.1) 0%, transparent 40%),
-                repeating-linear-gradient(
-                    0deg,
-                    rgba(0, 238, 255, 0.03),
-                    rgba(0, 238, 255, 0.03) 1px,
-                    transparent 1px,
-                    transparent 20px
-                );
-            z-index: -1;
+                radial-gradient(circle at 20% 30%, rgba(0, 210, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(58, 71, 213, 0.1) 0%, transparent 50%);
+            pointer-events: none;
         }
         
-        .jarvis-header {
-            background: rgba(0, 15, 30, 0.9);
-            border-bottom: 1px solid rgba(0, 238, 255, 0.5);
-            padding: 12px 20px;
-            backdrop-filter: blur(10px);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .jarvis-title {
-            font-weight: 700;
-            color: #00eeff;
-            text-shadow: 0 0 10px rgba(0, 238, 255, 0.7);
-            font-size: 1.2rem;
-            letter-spacing: 1px;
-        }
-        
-        .system-status {
-            color: #00ff9d;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-        
-        .login-container {
-            background: rgba(5, 10, 25, 0.95);
-            border: 2px solid rgba(0, 238, 255, 0.3);
-            margin: 30px auto;
-            padding: 25px;
-            position: relative;
-            box-shadow: 0 0 30px rgba(0, 238, 255, 0.2);
-            border-radius: 12px;
-            backdrop-filter: blur(15px);
-            overflow: hidden;
-            max-width: 95%;
-        }
-        
-        @media (min-width: 768px) {
-            .login-container {
-                max-width: 550px;
-                padding: 35px;
-                margin: 50px auto;
-            }
-        }
-        
-        .login-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #00eeff, transparent);
-            animation: scan 4s linear infinite;
-        }
-        
-        @keyframes scan {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-        
-        .vault-content {
+        .vault-container, .blocked-container {
             display: none;
-            background: rgba(5, 10, 25, 0.95);
-            border: 2px solid rgba(0, 238, 255, 0.3);
-            padding: 25px;
-            margin: 20px auto;
-            box-shadow: 0 0 40px rgba(0, 238, 255, 0.3);
-            position: relative;
-            border-radius: 12px;
-            backdrop-filter: blur(15px);
-            max-width: 95%;
-        }
-        
-        @media (min-width: 768px) {
-            .vault-content {
-                max-width: 1200px;
-                padding: 35px;
-            }
-        }
-        
-        @media (min-width: 1200px) {
-            .vault-content {
-                max-width: 1400px;
-            }
-        }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 25px;
-            border-bottom: 1px solid rgba(0, 238, 255, 0.3);
-            padding-bottom: 20px;
-        }
-        
-        .header h1 {
-            color: #00eeff;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-shadow: 0 0 15px rgba(0, 238, 255, 0.8);
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-            background: linear-gradient(90deg, #00eeff, #00ff9d);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        @media (min-width: 768px) {
-            .header h1 {
-                font-size: 2.5rem;
-            }
-        }
-        
-        .header p {
-            color: #00ccff;
-            margin-top: 10px;
-            font-size: 1rem;
-            letter-spacing: 1px;
-        }
-        
-        @media (min-width: 768px) {
-            .header p {
-                font-size: 1.2rem;
-            }
         }
         
         .form-control {
-            background: rgba(0, 20, 40, 0.8);
-            border: 1px solid rgba(0, 238, 255, 0.5);
-            color: #00eeff;
-            border-radius: 8px;
+            background: rgba(10, 10, 30, 0.8);
+            border: 1px solid rgba(0, 210, 255, 0.5);
+            color: #fff;
+            border-radius: 10px;
             padding: 15px;
-            font-family: 'Exo 2', monospace;
-            font-size: 1rem;
+            font-size: 1.1rem;
             transition: all 0.3s;
-            box-shadow: 0 0 10px rgba(0, 238, 255, 0.1);
-        }
-        
-        @media (min-width: 768px) {
-            .form-control {
-                padding: 18px 20px;
-                font-size: 1.2rem;
-            }
         }
         
         .form-control:focus {
-            background: rgba(0, 30, 60, 0.9);
-            border-color: #00eeff;
-            box-shadow: 0 0 0 0.25rem rgba(0, 238, 255, 0.3);
-            color: #00eeff;
+            background: rgba(10, 10, 30, 0.9);
+            border-color: #00d2ff;
+            color: #fff;
+            box-shadow: 0 0 0 0.25rem rgba(0, 210, 255, 0.25);
         }
         
-        .form-control::placeholder {
-            color: rgba(0, 238, 255, 0.4);
+        .btn {
+            border-radius: 10px;
+            font-weight: 600;
+            padding: 12px 25px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .btn-primary {
-            background: linear-gradient(45deg, #0066ff, #00eeff);
-            border: none;
-            border-radius: 8px;
-            padding: 14px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            transition: all 0.4s;
-            font-family: 'Exo 2', sans-serif;
-            font-size: 1rem;
-            color: #000;
-            text-transform: uppercase;
-            box-shadow: 0 5px 15px rgba(0, 102, 255, 0.4);
-        }
-        
-        @media (min-width: 768px) {
-            .btn-primary {
-                padding: 16px;
-                font-size: 1.2rem;
-            }
+            background: linear-gradient(90deg, #00d2ff, #3a47d5);
+            color: #fff;
         }
         
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 238, 255, 0.6);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 210, 255, 0.3);
         }
         
-        .secret-card {
-            background: rgba(0, 20, 40, 0.8);
-            border-left: 3px solid #00eeff;
+        .btn-success {
+            background: linear-gradient(90deg, #00c851, #007e33);
+            color: #fff;
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 200, 81, 0.3);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(90deg, #ff3547, #c62828);
+            color: #fff;
+        }
+        
+        .btn-danger:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 53, 71, 0.3);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #00d2ff;
+            color: #00d2ff;
+        }
+        
+        .btn-outline:hover {
+            background: rgba(0, 210, 255, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 210, 255, 0.2);
+        }
+        
+        .search-section {
+            background: rgba(10, 10, 30, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(0, 210, 255, 0.3);
+        }
+        
+        .search-section h3 {
+            color: #00d2ff;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .image-upload {
+            border: 2px dashed rgba(0, 210, 255, 0.5);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .image-upload:hover {
+            border-color: #00d2ff;
+            background: rgba(0, 210, 255, 0.05);
+        }
+        
+        .image-upload.dragover {
+            border-color: #00d2ff;
+            background: rgba(0, 210, 255, 0.1);
+        }
+        
+        .image-preview {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 10px;
+            margin: 20px auto;
+            display: none;
+        }
+        
+        .contact-item {
+            background: rgba(20, 20, 40, 0.8);
+            border-radius: 15px;
             padding: 20px;
             margin-bottom: 20px;
-            border-radius: 10px;
-            transition: all 0.4s;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 238, 255, 0.2);
+            border-left: 4px solid #00d2ff;
+            transition: all 0.3s;
         }
         
-        @media (min-width: 768px) {
-            .secret-card {
-                padding: 25px;
-            }
+        .contact-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 210, 255, 0.2);
         }
         
-        .secret-card:hover {
-            background: rgba(0, 40, 80, 0.9);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 238, 255, 0.3);
-        }
-        
-        .secret-title {
-            color: #00eeff;
+        .contact-item h5 {
+            color: #00d2ff;
             font-weight: 700;
-            margin-bottom: 12px;
-            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .contact-item p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .contact-actions {
             display: flex;
-            align-items: center;
             gap: 10px;
         }
         
-        @media (min-width: 768px) {
-            .secret-title {
-                font-size: 1.5rem;
-                margin-bottom: 15px;
-            }
-        }
-        
-        .secret-content {
-            color: #00ccff;
-            font-size: 0.9rem;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-        
-        @media (min-width: 768px) {
-            .secret-content {
-                font-size: 1.1rem;
-                margin-bottom: 20px;
-            }
-        }
-        
-        .secret-number {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #00eeff;
-            letter-spacing: 2px;
-            margin: 15px 0;
-            text-shadow: 0 0 10px rgba(0, 238, 255, 0.7);
-            font-family: 'Exo 2', monospace;
-            background: rgba(0, 15, 30, 0.6);
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid rgba(0, 238, 255, 0.3);
-        }
-        
-        @media (min-width: 768px) {
-            .secret-number {
-                font-size: 2rem;
-                padding: 15px;
-            }
-        }
-        
-        .btn-call {
-            background: linear-gradient(45deg, #0066ff, #00ccff);
-            border: none;
-            border-radius: 8px;
-            padding: 12px 20px;
-            font-weight: 700;
-            margin: 5px;
-            transition: all 0.3s;
-            color: #fff;
-            font-family: 'Exo 2', sans-serif;
-            font-size: 0.9rem;
-            box-shadow: 0 3px 10px rgba(0, 102, 255, 0.3);
-        }
-        
-        @media (min-width: 768px) {
-            .btn-call {
-                padding: 14px 25px;
-                font-size: 1.1rem;
-            }
-        }
-        
-        .btn-call:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 102, 255, 0.5);
-        }
-        
-        .btn-whatsapp {
-            background: linear-gradient(45deg, #25D366, #128C7E);
-            border: none;
-            border-radius: 8px;
-            padding: 12px 20px;
-            font-weight: 700;
-            margin: 5px;
-            transition: all 0.3s;
-            color: #fff;
-            font-family: 'Exo 2', sans-serif;
-            font-size: 0.9rem;
-            box-shadow: 0 3px 10px rgba(37, 211, 102, 0.3);
-        }
-        
-        @media (min-width: 768px) {
-            .btn-whatsapp {
-                padding: 14px 25px;
-                font-size: 1.1rem;
-            }
-        }
-        
-        .btn-whatsapp:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.5);
-        }
-        
-        .alert {
-            border-radius: 10px;
-            font-size: 0.9rem;
-            border: 1px solid #ff0055;
-            background: rgba(40, 0, 20, 0.9);
-            color: #ff4488;
+        .timer-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(20, 20, 40, 0.9);
             backdrop-filter: blur(10px);
+            border: 2px solid #ff3547;
+            border-radius: 15px;
             padding: 15px;
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 10px 30px rgba(255, 53, 71, 0.3);
         }
         
-        @media (min-width: 768px) {
-            .alert {
-                font-size: 1.1rem;
-                padding: 20px;
-            }
-        }
-        
-        .lock-icon {
-            font-size: 3rem;
-            color: #00eeff;
-            margin-bottom: 20px;
-            text-align: center;
-            text-shadow: 0 0 20px rgba(0, 238, 255, 0.8);
-            animation: pulse 2s infinite;
-        }
-        
-        @media (min-width: 768px) {
-            .lock-icon {
-                font-size: 4.5rem;
-                margin-bottom: 25px;
-            }
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        
-        .logout-btn {
-            background: linear-gradient(45deg, #ff0055, #ff00aa);
-            border: none;
-            border-radius: 10px;
-            padding: 14px 25px;
-            font-weight: 700;
-            font-size: 1rem;
-            transition: all 0.4s;
-            color: #fff;
-            font-family: 'Exo 2', sans-serif;
-            margin-top: 20px;
-            box-shadow: 0 5px 15px rgba(255, 0, 85, 0.4);
-        }
-        
-        @media (min-width: 768px) {
-            .logout-btn {
-                padding: 15px 35px;
-                font-size: 1.2rem;
-                margin-top: 25px;
-            }
-        }
-        
-        .logout-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 0, 170, 0.6);
-        }
-        
-        .timer-display {
-            background: rgba(0, 15, 30, 0.9);
-            border: 1px solid rgba(0, 238, 255, 0.4);
-            padding: 15px;
-            text-align: center;
-            margin: 20px 0;
-            font-family: 'Exo 2', monospace;
-            font-size: 1.4rem;
-            border-radius: 10px;
-            backdrop-filter: blur(10px);
-        }
-        
-        @media (min-width: 768px) {
-            .timer-display {
-                padding: 20px;
-                font-size: 1.8rem;
-            }
-        }
-        
-        .timer-warning {
-            color: #ff4488;
-            font-weight: 700;
-            animation: blink 0.8s infinite;
-        }
-        
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0.4; }
-        }
-        
-        .system-info {
-            background: rgba(0, 15, 30, 0.8);
-            border: 1px solid rgba(0, 238, 255, 0.3);
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-            backdrop-filter: blur(10px);
-        }
-        
-        @media (min-width: 768px) {
-            .system-info {
-                padding: 20px;
-                margin: 20px 0;
-            }
-        }
-        
-        .info-item {
-            margin: 10px 0;
-            color: #00ccff;
-            font-size: 0.9rem;
-        }
-        
-        @media (min-width: 768px) {
-            .info-item {
-                font-size: 1.1rem;
-                margin: 12px 0;
-            }
-        }
-        
-        .info-label {
-            color: #00eeff;
+        .timer-container .timer-label {
+            color: #ff3547;
             font-weight: 600;
-            display: inline-block;
-            width: 120px;
+            margin-bottom: 5px;
+            text-align: center;
         }
         
-        @media (min-width: 768px) {
-            .info-label {
-                width: 180px;
-            }
+        .timer-container .timer {
+            color: #ff3547;
+            font-weight: 700;
+            font-size: 1.5rem;
+            text-align: center;
+            font-family: 'Orbitron', monospace;
         }
         
-        #security-overlay {
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(20, 20, 40, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid #00d2ff;
+            border-radius: 15px;
+            padding: 20px;
+            z-index: 1001;
+            display: none;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            max-width: 80%;
+            text-align: center;
+        }
+        
+        .notification .notification-title {
+            color: #00d2ff;
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .notification .notification-message {
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        .loading-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #000, #1a0033);
-            z-index: 9999;
-            display: none;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
-            color: #ff0055;
-            font-family: 'Exo 2', sans-serif;
-            font-size: 1.5rem;
+            z-index: 2000;
+            display: none;
+        }
+        
+        .loading-content {
             text-align: center;
-            backdrop-filter: blur(20px);
-            padding: 20px;
         }
         
-        @media (min-width: 768px) {
-            #security-overlay {
-                font-size: 2rem;
-            }
+        .loading-spinner {
+            width: 80px;
+            height: 80px;
+            border: 8px solid rgba(0, 210, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #00d2ff;
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto 20px;
         }
         
-        .access-denied {
-            color: #ff0055;
-            text-align: center;
-            padding: 30px;
-            font-size: 1.8rem;
-            font-weight: 700;
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
         
-        @media (min-width: 768px) {
-            .access-denied {
-                padding: 50px;
-                font-size: 2.5rem;
-            }
-        }
-        
-        .attempts-display {
-            color: #ff4488;
-            font-size: 1rem;
-            text-align: center;
-            margin-top: 12px;
+        .loading-text {
+            color: #00d2ff;
             font-weight: 600;
+            font-size: 1.2rem;
         }
         
-        @media (min-width: 768px) {
-            .attempts-display {
-                font-size: 1.2rem;
-                margin-top: 15px;
-            }
+        .scan-progress {
+            margin-top: 20px;
+            display: none;
         }
         
-        .chart-container {
-            background: rgba(0, 15, 30, 0.8);
-            border: 1px solid rgba(0, 238, 255, 0.3);
-            border-radius: 10px;
-            padding: 15px;
-            margin: 15px 0;
-            backdrop-filter: blur(10px);
-        }
-        
-        @media (min-width: 768px) {
-            .chart-container {
-                padding: 20px;
-                margin: 20px 0;
-            }
-        }
-        
-        .hologram-effect {
-            position: relative;
+        .progress {
+            height: 10px;
+            background: rgba(10, 10, 30, 0.8);
+            border-radius: 5px;
             overflow: hidden;
         }
         
-        .hologram-effect::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
+        .progress-bar {
+            background: linear-gradient(90deg, #00d2ff, #3a47d5);
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 238, 255, 0.2), transparent);
-            transition: 0.5s;
-        }
-        
-        .hologram-effect:hover::before {
-            left: 100%;
-        }
-        
-        .neon-text {
-            text-shadow: 
-                0 0 5px #00eeff,
-                0 0 10px #00eeff,
-                0 0 20px #00eeff,
-                0 0 40px #0088ff;
-        }
-        
-        .jarvis-simulation {
-            background: rgba(0, 15, 30, 0.8);
-            border: 1px solid rgba(0, 238, 255, 0.3);
-            border-radius: 10px;
-            padding: 15px;
-            margin: 15px 0;
-            backdrop-filter: blur(10px);
-            min-height: 120px;
-            font-family: 'Courier New', monospace;
-            color: #00ff9d;
-            overflow-y: auto;
-            max-height: 180px;
-            font-size: 0.8rem;
-        }
-        
-        @media (min-width: 768px) {
-            .jarvis-simulation {
-                padding: 20px;
-                min-height: 150px;
-                max-height: 200px;
-                font-size: 1rem;
-            }
-        }
-        
-        .jarvis-text {
-            margin: 3px 0;
-            animation: type 0.1s steps(40, end);
-        }
-        
-        @keyframes type {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-        
-        .loading-bar {
-            height: 4px;
-            background: rgba(0, 238, 255, 0.2);
-            border-radius: 2px;
-            margin: 12px 0;
-            overflow: hidden;
-        }
-        
-        @media (min-width: 768px) {
-            .loading-bar {
-                height: 5px;
-                margin: 15px 0;
-            }
-        }
-        
-        .loading-progress {
-            height: 100%;
-            background: linear-gradient(90deg, #0066ff, #00eeff);
             width: 0%;
             transition: width 0.3s;
         }
         
-        .api-status {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin: 8px 0;
-            font-size: 0.8rem;
+        .extracted-contacts {
+            margin-top: 30px;
         }
         
-        @media (min-width: 768px) {
-            .api-status {
-                gap: 10px;
-                margin: 10px 0;
-                font-size: 0.9rem;
-            }
+        .extracted-contacts h4 {
+            color: #00d2ff;
+            margin-bottom: 20px;
+            font-weight: 700;
         }
         
-        .status-indicator {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            display: inline-block;
-        }
-        
-        @media (min-width: 768px) {
-            .status-indicator {
-                width: 12px;
-                height: 12px;
-            }
-        }
-        
-        .status-online {
-            background: #00ff9d;
-            box-shadow: 0 0 8px #00ff9d;
-        }
-        
-        .status-offline {
-            background: #ff4488;
-        }
-        
-        .status-loading {
-            background: #ffaa00;
-            animation: pulse 1s infinite;
-        }
-        
-        .grid-responsive {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-        }
-        
-        @media (min-width: 768px) {
-            .grid-responsive {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 20px;
-            }
-        }
-        
-        @media (min-width: 1200px) {
-            .grid-responsive {
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            }
-        }
-        
-        .text-center-mobile {
+        .blocked-message {
             text-align: center;
+            padding: 40px;
         }
         
-        @media (min-width: 768px) {
-            .text-center-mobile {
-                text-align: left;
-            }
+        .blocked-message h2 {
+            color: #ff3547;
+            margin-bottom: 20px;
+        }
+        
+        .blocked-message p {
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            font-size: 0.9rem;
+            color: #a0a0ff;
+            border-top: 1px solid rgba(0, 210, 255, 0.2);
+        }
+        
+        .security-warning {
+            background: rgba(255, 53, 71, 0.1);
+            border: 1px solid #ff3547;
+            color: #ff3547;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+            font-weight: 600;
+        }
+        
+        .attempts-counter {
+            text-align: center;
+            margin-top: 20px;
+            color: #ff3547;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .contact-card {
+            background: rgba(30, 30, 50, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 210, 255, 0.3);
+            transition: all 0.3s;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 210, 255, 0.2);
+        }
+        
+        .contact-card h5 {
+            color: #00d2ff;
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .contact-card .number {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        
+        .contact-card .actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #a0a0ff;
+        }
+        
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: rgba(0, 210, 255, 0.3);
         }
     </style>
 </head>
 <body>
-    <!-- Security Overlay -->
-    <div id="security-overlay">
-        <div style="font-size: 3rem; margin-bottom: 20px; animation: pulse 1s infinite;">
-            <i class="fas fa-exclamation-triangle"></i>
-        </div>
-        <div class="neon-text">SECURITY BREACH DETECTED</div>
-        <div style="font-size: 1.2rem; margin-top: 20px; color: #ff00aa;">
-            ACCESS TERMINATED
-        </div>
-        <div style="font-size: 1rem; margin-top: 30px; color: #888;">
-            INITIATING SYSTEM LOCKDOWN...
+    <div class="particles" id="particles"></div>
+    
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text" id="loadingText">INITIALIZING SYSTEM...</div>
         </div>
     </div>
     
-    <!-- JARVIS Header -->
-    <div class="jarvis-header">
-        <div class="jarvis-title">
-            <i class="fas fa-robot me-2"></i>JARVIS v4.2
-        </div>
-        <div class="system-status" id="systemStatus">
-            <i class="fas fa-circle me-1"></i>ONLINE
-        </div>
+    <div class="notification" id="notification">
+        <div class="notification-title" id="notificationTitle">SYSTEM NOTIFICATION</div>
+        <div class="notification-message" id="notificationMessage">System message</div>
     </div>
     
-    <div class="container-fluid">
-        <div class="login-container" id="loginContainer">
-            <div class="header">
-                <div class="lock-icon">
-                    <i class="fas fa-user-shield"></i>
-                </div>
-                <h1>AUTHORIZATION REQUIRED</h1>
-                <p>ENTER SECURITY CREDENTIALS</p>
+    <div class="main-container">
+        <div class="header">
+            <h1>NEXUS SECURE VAULT</h1>
+            <p>ADVANCED CONTACT MANAGEMENT SYSTEM</p>
+        </div>
+        
+        <!-- Authentication Container -->
+        <div class="auth-container" id="authContainer">
+            <div class="security-warning" id="securityWarning">
+                <i class="fas fa-exclamation-triangle me-2"></i> SECURITY ALERT: DEVELOPER TOOLS DETECTED. INITIATING COUNTERMEASURES...
             </div>
             
-            <div class="system-info">
-                <div class="info-item">
-                    <span class="info-label">SYSTEM:</span> JARVIS v4.2.1
-                </div>
-                <div class="info-item">
-                    <span class="info-label">ENCRYPTION:</span> QUANTUM AES-256
-                </div>
-                <div class="info-item">
-                    <span class="info-label">STATUS:</span> <span id="statusText">AWAITING AUTHORIZATION</span>
-                </div>
-                <div class="info-item" id="ipInfo">
-                    <span class="info-label">IP ADDRESS:</span> DETECTING...
-                </div>
-                <div class="info-item" id="locationInfo">
-                    <span class="info-label">LOCATION:</span> DETECTING...
-                </div>
-                <div class="info-item" id="deviceInfo">
-                    <span class="info-label">DEVICE:</span> DETECTING...
-                </div>
-            </div>
-            
-            <div class="loading-bar">
-                <div class="loading-progress" id="loadingProgress"></div>
-            </div>
-            
-            <div id="apiStatus" class="mb-3"></div>
-            
-            <div id="loginAlert" class="alert" style="display: none;">
-                <i class="fas fa-exclamation-triangle me-2"></i> ACCESS DENIED: INVALID CREDENTIALS
-            </div>
-            
-            <div class="attempts-display" id="attemptsDisplay">
-                ATTEMPTS REMAINING: 2
-            </div>
+            <h2 class="text-center mb-4">SECURITY AUTHENTICATION</h2>
+            <p class="text-center mb-4">Enter your access code to unlock the vault</p>
             
             <form id="loginForm">
-                <div class="mb-3">
-                    <label for="password" class="form-label">
-                        <i class="fas fa-key me-2"></i>ACCESS CODE
-                    </label>
-                    <input type="password" class="form-control" id="password" placeholder="ENTER AUTHORIZATION CODE" required autocomplete="off">
+                <div class="mb-4">
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="password" placeholder="Enter access code" required>
+                        <button class="btn btn-outline" type="button" id="togglePassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-primary w-100 hologram-effect">
-                    <i class="fas fa-lock me-2"></i>AUTHORIZE ACCESS
-                </button>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">UNLOCK VAULT</button>
+                </div>
             </form>
             
-            <div class="text-center" style="margin-top: 20px; color: #666; font-size: 0.8rem;">
-                <i class="fas fa-shield-alt me-1"></i> ALL ACCESS ATTEMPTS ARE LOGGED AND MONITORED
+            <div class="attempts-counter" id="attemptsCounter">
+                REMAINING ATTEMPTS: <span id="remainingAttempts">2</span>
             </div>
         </div>
         
-        <div class="vault-content" id="vaultContent">
-            <div class="header">
-                <h1><i class="fas fa-shield-alt me-2"></i>CLASSIFIED DATA ACCESS</h1>
-                <p>SECURE COMMUNICATION PROTOCOLS // STARK INDUSTRIES</p>
-            </div>
-            
-            <div class="timer-display" id="timerDisplay">
-                SESSION EXPIRES IN: <span id="timeLeft" class="neon-text">00:30</span>
-            </div>
-            
-            <div class="jarvis-simulation" id="jarvisSimulation">
-                <div class="jarvis-text">[JARVIS] System initialization complete...</div>
-                <div class="jarvis-text">[JARVIS] Security protocols engaged...</div>
-                <div class="jarvis-text">[JARVIS] Access granted to authorized personnel...</div>
-            </div>
-            
-            <div class="grid-responsive">
-                <div class="secret-card hologram-effect">
-                    <div class="secret-title">
-                        <i class="fas fa-phone-alt"></i> EMERGENCY CONTACT
-                    </div>
-                    <div class="secret-content">
-                        DIRECT LINE TO SECURITY COMMAND
-                    </div>
-                    <div class="secret-number" id="emergencyNumber">+1 (555) 123-4567</div>
-                    <div class="text-center-mobile">
-                        <button class="btn btn-call" onclick="callNumber('emergencyNumber')">
-                            <i class="fas fa-phone me-1"></i>CALL
-                        </button>
-                        <button class="btn btn-whatsapp" onclick="whatsappNumber('emergencyNumber')">
-                            <i class="fab fa-whatsapp me-1"></i>MSG
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="secret-card hologram-effect">
-                    <div class="secret-title">
-                        <i class="fas fa-fax"></i> ENCRYPTED TRANSMISSION
-                    </div>
-                    <div class="secret-content">
-                        CLASSIFIED DOCUMENT DELIVERY
-                    </div>
-                    <div class="secret-number" id="faxNumber">+1 (555) 987-6543</div>
-                    <div class="text-center-mobile">
-                        <button class="btn btn-call" onclick="callNumber('faxNumber')">
-                            <i class="fas fa-fax me-1"></i>TRANSMIT
-                        </button>
-                        <button class="btn btn-whatsapp" onclick="whatsappNumber('faxNumber')">
-                            <i class="fab fa-whatsapp me-1"></i>MSG
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="secret-card hologram-effect">
-                    <div class="secret-title">
-                        <i class="fas fa-mobile-alt"></i> MOBILE SECURITY
-                    </div>
-                    <div class="secret-content">
-                        FIELD AGENT COMMUNICATION
-                    </div>
-                    <div class="secret-number" id="mobileNumber">+1 (555) 456-7890</div>
-                    <div class="text-center-mobile">
-                        <button class="btn btn-call" onclick="callNumber('mobileNumber')">
-                            <i class="fas fa-mobile-alt me-1"></i>CALL
-                        </button>
-                        <button class="btn btn-whatsapp" onclick="whatsappNumber('mobileNumber')">
-                            <i class="fab fa-whatsapp me-1"></i>MSG
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="secret-card hologram-effect">
-                    <div class="secret-title">
-                        <i class="fas fa-satellite"></i> SATELLITE UPLINK
-                    </div>
-                    <div class="secret-content">
-                        GLOBAL COMMUNICATION CHANNEL
-                    </div>
-                    <div class="secret-number" id="satelliteNumber">+1 (555) 321-0987</div>
-                    <div class="text-center-mobile">
-                        <button class="btn btn-call" onclick="callNumber('satelliteNumber')">
-                            <i class="fas fa-satellite-dish me-1"></i>CONNECT
-                        </button>
-                        <button class="btn btn-whatsapp" onclick="whatsappNumber('satelliteNumber')">
-                            <i class="fab fa-whatsapp me-1"></i>MSG
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="secret-card hologram-effect">
-                <div class="secret-title">
-                    <i class="fas fa-exclamation-triangle"></i> CRITICAL ALERT SYSTEM
-                </div>
-                <div class="secret-content">
-                    IMMEDIATE RESPONSE COORDINATION
-                </div>
-                <div class="secret-number" id="criticalNumber">+1 (555) 789-1234</div>
-                <div class="text-center">
-                    <button class="btn btn-call" onclick="callNumber('criticalNumber')">
-                        <i class="fas fa-bell me-2"></i>PRIORITY ALERT
-                    </button>
-                    <button class="btn btn-whatsapp" onclick="whatsappNumber('criticalNumber')">
-                        <i class="fab fa-whatsapp me-2"></i>ENCRYPTED MESSAGE
-                    </button>
-                </div>
-            </div>
-            
-            <div class="system-info">
-                <div class="row">
-                    <div class="col-md-6 col-lg-3">
-                        <div class="info-item">
-                            <span class="info-label">DEVICE ID:</span> <span id="deviceId">STK-001-MK47</span>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="info-item">
-                            <span class="info-label">LOCATION:</span> <span id="location">NEW YORK, NY</span>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="info-item">
-                            <span class="info-label">ENCRYPTION:</span> QUANTUM AES-256
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="info-item">
-                            <span class="info-label">SESSION:</span> <span id="sessionId">SEC-2023-001</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="chart-container">
-                <canvas id="securityChart"></canvas>
-            </div>
-            
-            <div class="text-center">
-                <button class="logout-btn hologram-effect" onclick="logout()">
-                    <i class="fas fa-power-off me-2"></i>TERMINATE SESSION
+        <!-- Vault Container -->
+        <div class="vault-container" id="vaultContainer">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2><i class="fas fa-shield-alt me-2"></i>SECURE VAULT</h2>
+                <button class="btn btn-danger" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt me-2"></i>LOGOUT
                 </button>
             </div>
+            
+            <!-- Search Section -->
+            <div class="search-section">
+                <h3><i class="fas fa-search me-2"></i>CONTACT SCANNER</h3>
+                <p>Upload an image to extract contact information</p>
+                
+                <div class="image-upload" id="imageUpload">
+                    <i class="fas fa-cloud-upload-alt fa-3x mb-3"></i>
+                    <h4>DRAG & DROP IMAGE HERE</h4>
+                    <p>or click to browse</p>
+                    <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                </div>
+                
+                <img class="image-preview" id="imagePreview" alt="Preview">
+                
+                <div class="scan-progress" id="scanProgress">
+                    <div class="progress">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                    <p class="text-center mt-2">Scanning image... <span id="progressText">0%</span></p>
+                </div>
+                
+                <div class="d-grid mt-3">
+                    <button class="btn btn-primary" id="scanBtn" disabled>
+                        <i class="fas fa-satellite-dish me-2"></i>SCAN IMAGE
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Extracted Contacts -->
+            <div class="extracted-contacts" id="extractedContacts">
+                <h4><i class="fas fa-user-friends me-2"></i>EXTRACTED CONTACTS</h4>
+                <div id="extractedContactsList">
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <p>No contacts extracted yet. Upload an image to scan for contacts.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Saved Contacts -->
+            <div class="mt-5">
+                <h4><i class="fas fa-address-book me-2"></i>SAVED CONTACTS</h4>
+                <div id="savedContactsList">
+                    <div class="empty-state">
+                        <i class="fas fa-user-shield"></i>
+                        <p>No saved contacts yet. Extract and save contacts to see them here.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Blocked Container -->
+        <div class="blocked-container" id="blockedContainer">
+            <div class="blocked-message">
+                <i class="fas fa-ban fa-4x mb-4" style="color: #ff3547;"></i>
+                <h2>ACCESS DENIED</h2>
+                <p>This device has been permanently blocked due to multiple failed authentication attempts.</p>
+                <p>Your device information has been logged and reported.</p>
+                <button class="btn btn-danger" onclick="redirectBlocked()">
+                    <i class="fas fa-external-link-alt me-2"></i>LEAVE SYSTEM
+                </button>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2023 NEXUS SECURE VAULT | ALL RIGHTS RESERVED | UNAUTHORIZED ACCESS IS PROHIBITED</p>
         </div>
     </div>
     
+    <div class="timer-container" id="timerContainer">
+        <div class="timer-label">SESSION TIME REMAINING:</div>
+        <div class="timer" id="sessionTimer">00:30</div>
+    </div>
+
     <script>
-        // Security configuration
-        const CORRECT_PASSWORD = 'justin3237';
-        const MAX_ATTEMPTS = 2;
-        const SESSION_TIMEOUT = 30; // 30 seconds
-        const BLOCKED_REDIRECT = 'https://www.starkindustries.com/security-breach';
+        // Create particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                const size = Math.random() * 5 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                
+                const duration = Math.random() * 20 + 10;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
         
-        // State management
-        let attemptsRemaining = MAX_ATTEMPTS;
-        let sessionTimer = SESSION_TIMEOUT;
-        let timerInterval;
-        let devToolsDetectionActive = true;
-        let isBlocked = localStorage.getItem('jarvis_blocked') === 'true';
-        let securityChart;
-        let jarvisMessages = [
-            "[JARVIS] System initialization complete...",
-            "[JARVIS] Security protocols engaged...",
-            "[JARVIS] Access granted to authorized personnel...",
-            "[JARVIS] Monitoring network activity...",
-            "[JARVIS] Scanning for security threats...",
-            "[JARVIS] All systems operational...",
-            "[JARVIS] Quantum encryption active...",
-            "[JARVIS] Firewall status: GREEN",
-            "[JARVIS] Intrusion detection: OFFLINE",
-            "[JARVIS] Backup systems: ONLINE"
-        ];
+        createParticles();
         
-        // DOM Elements
-        const loginContainer = document.getElementById('loginContainer');
-        const vaultContent = document.getElementById('vaultContent');
-        const loginForm = document.getElementById('loginForm');
-        const passwordInput = document.getElementById('password');
-        const loginAlert = document.getElementById('loginAlert');
-        const securityOverlay = document.getElementById('security-overlay');
-        const timerDisplay = document.getElementById('timerDisplay');
-        const timeLeft = document.getElementById('timeLeft');
-        const attemptsDisplay = document.getElementById('attemptsDisplay');
-        const statusText = document.getElementById('statusText');
-        const ipInfo = document.getElementById('ipInfo');
-        const locationInfo = document.getElementById('locationInfo');
-        const deviceInfo = document.getElementById('deviceInfo');
-        const deviceId = document.getElementById('deviceId');
-        const locationDisplay = document.getElementById('location');
-        const sessionId = document.getElementById('sessionId');
-        const loadingProgress = document.getElementById('loadingProgress');
-        const apiStatus = document.getElementById('apiStatus');
-        const jarvisSimulation = document.getElementById('jarvisSimulation');
+        // Show loading overlay
+        document.getElementById('loadingOverlay').style.display = 'flex';
         
-        // Initialize the system
-        function initSystem() {
-            // Check if blocked
-            if (isBlocked) {
-                showBlockedScreen();
+        // Security measures to prevent developer tools
+        (function() {
+            'use strict';
+            
+            // Check if device is blocked
+            if (localStorage.getItem('deviceBlocked') === 'true') {
+                document.getElementById('authContainer').style.display = 'none';
+                document.getElementById('blockedContainer').style.display = 'block';
+                document.getElementById('loadingOverlay').style.display = 'none';
                 return;
             }
             
-            // Update attempts display
-            updateAttemptsDisplay();
-            
-            // Get system information with multiple API fallbacks
-            getSystemInfo();
-            
-            // Generate session ID
-            sessionId.textContent = `SEC-${new Date().getFullYear()}-${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`;
-            
-            // Initialize security
-            initSecurity();
-            
-            // Initialize chart
-            initChart();
-            
-            // Start JARVIS simulation
-            startJarvisSimulation();
-        }
-        
-        // Get system information using multiple APIs with fallbacks
-        async function getSystemInfo() {
-            // Show loading progress
-            loadingProgress.style.width = '20%';
-            
-            // Try multiple APIs for IP and location data
-            const apis = [
-                {
-                    name: 'ipapi.co',
-                    url: 'https://ipapi.co/json/',
-                    parser: (data) => ({
-                        ip: data.ip,
-                        city: data.city,
-                        region: data.region,
-                        country: data.country_name,
-                        org: data.org
-                    })
-                },
-                {
-                    name: 'ip-api.com',
-                    url: 'http://ip-api.com/json/',
-                    parser: (data) => ({
-                        ip: data.query,
-                        city: data.city,
-                        region: data.regionName,
-                        country: data.country,
-                        org: data.isp
-                    })
-                },
-                {
-                    name: 'ipinfo.io',
-                    url: 'https://ipinfo.io/json',
-                    parser: (data) => ({
-                        ip: data.ip,
-                        city: data.city,
-                        region: data.region,
-                        country: data.country,
-                        org: data.org
-                    })
-                }
-            ];
-            
-            // Try each API in sequence
-            for (let i = 0; i < apis.length; i++) {
-                const api = apis[i];
-                loadingProgress.style.width = `${20 + (i * 25)}%`;
-                
-                // Update API status
-                updateApiStatus(api.name, 'loading');
-                
-                try {
-                    const response = await fetchWithTimeout(api.url, 3000);
-                    if (response.ok) {
-                        const data = await response.json();
-                        const parsedData = api.parser(data);
-                        
-                        // Update UI with real data
-                        ipInfo.innerHTML = `<span class="info-label">IP ADDRESS:</span> ${parsedData.ip}`;
-                        locationInfo.innerHTML = `<span class="info-label">LOCATION:</span> ${parsedData.city}, ${parsedData.region}, ${parsedData.country}`;
-                        deviceInfo.innerHTML = `<span class="info-label">DEVICE:</span> ${parsedData.org || 'Unknown'}`;
-                        
-                        // Update other displays
-                        locationDisplay.textContent = `${parsedData.city}, ${parsedData.region}`;
-                        deviceId.textContent = `STK-${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}-MK${Math.floor(Math.random() * 100)}`;
-                        
-                        updateApiStatus(api.name, 'online');
-                        loadingProgress.style.width = '100%';
-                        statusText.textContent = 'SYSTEM READY';
-                        statusText.style.color = '#00ff9d';
-                        return;
-                    }
-                } catch (error) {
-                    console.log(`API ${api.name} failed:`, error);
-                    updateApiStatus(api.name, 'offline');
-                }
-            }
-            
-            // Fallback to simulated data if all APIs fail
-            loadingProgress.style.width = '100%';
-            simulateSystemInfo();
-        }
-        
-        // Fetch with timeout
-        function fetchWithTimeout(url, timeout = 5000) {
-            return Promise.race([
-                fetch(url),
-                new Promise((_, reject) =>
-                    setTimeout(() => reject(new Error('timeout')), timeout)
-                )
-            ]);
-        }
-        
-        // Update API status display
-        function updateApiStatus(apiName, status) {
-            const statusElement = document.createElement('div');
-            statusElement.className = 'api-status';
-            statusElement.innerHTML = `
-                <span class="status-indicator status-${status}"></span>
-                <span>${apiName}: ${status.toUpperCase()}</span>
-            `;
-            apiStatus.appendChild(statusElement);
-        }
-        
-        // Simulate system information (fallback)
-        function simulateSystemInfo() {
-            const fakeIP = `${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
-            const cities = ['NEW YORK', 'LOS ANGELES', 'LONDON', 'TOKYO', 'SYDNEY'];
-            const regions = ['NY', 'CA', 'UK', 'JP', 'AU'];
-            const countries = ['USA', 'USA', 'UK', 'JAPAN', 'AUSTRALIA'];
-            const orgs = ['Stark Industries', 'Avengers Network', 'SHIELD', 'Stark Tower'];
-            
-            const city = cities[Math.floor(Math.random() * cities.length)];
-            const region = regions[cities.indexOf(city)];
-            const country = countries[cities.indexOf(city)];
-            const org = orgs[Math.floor(Math.random() * orgs.length)];
-            
-            ipInfo.innerHTML = `<span class="info-label">IP ADDRESS:</span> ${fakeIP}`;
-            locationInfo.innerHTML = `<span class="info-label">LOCATION:</span> ${city}, ${region}, ${country}`;
-            deviceInfo.innerHTML = `<span class="info-label">DEVICE:</span> ${org}`;
-            
-            locationDisplay.textContent = `${city}, ${region}`;
-            deviceId.textContent = `STK-${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}-MK${Math.floor(Math.random() * 100)}`;
-            
-            statusText.textContent = 'SYSTEM READY (SIMULATED)';
-            statusText.style.color = '#ffaa00';
-        }
-        
-        // Initialize security chart
-        function initChart() {
-            const ctx = document.getElementById('securityChart').getContext('2d');
-            securityChart = new Chart(ctx, {
-                type: 'radar',
-                 {
-                    labels: ['Encryption', 'Firewall', 'Intrusion', 'Access', 'Monitoring', 'Backup'],
-                    datasets: [{
-                        label: 'Security Level',
-                         [95, 98, 92, 96, 94, 89],
-                        backgroundColor: 'rgba(0, 238, 255, 0.2)',
-                        borderColor: 'rgba(0, 238, 255, 1)',
-                        pointBackgroundColor: 'rgba(0, 238, 255, 1)',
-                        pointBorderColor: '#fff',
-                        pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: 'rgba(0, 238, 255, 1)'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        legend: {
-                            labels: {
-                                color: '#00eeff',
-                                font: {
-                                    size: 12
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        r: {
-                            angleLines: {
-                                color: 'rgba(0, 238, 255, 0.3)'
-                            },
-                            grid: {
-                                color: 'rgba(0, 238, 255, 0.2)'
-                            },
-                            pointLabels: {
-                                color: '#00ccff',
-                                font: {
-                                    size: 10
-                                }
-                            },
-                            ticks: {
-                                backdropColor: 'transparent',
-                                color: '#0088ff',
-                                font: {
-                                    size: 9
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        }
-        
-        // Start JARVIS simulation
-        function startJarvisSimulation() {
-            if (vaultContent.style.display !== 'block') return;
-            
-            // Clear previous messages
-            jarvisSimulation.innerHTML = '';
-            
-            // Add initial messages
-            jarvisMessages.slice(0, 3).forEach(msg => {
-                const msgElement = document.createElement('div');
-                msgElement.className = 'jarvis-text';
-                msgElement.textContent = msg;
-                jarvisSimulation.appendChild(msgElement);
-            });
-            
-            // Add periodic messages
-            setInterval(() => {
-                if (vaultContent.style.display !== 'block') return;
-                
-                const randomMsg = jarvisMessages[Math.floor(Math.random() * jarvisMessages.length)];
-                const msgElement = document.createElement('div');
-                msgElement.className = 'jarvis-text';
-                msgElement.textContent = randomMsg;
-                jarvisSimulation.appendChild(msgElement);
-                
-                // Auto-scroll to bottom
-                jarvisSimulation.scrollTop = jarvisSimulation.scrollHeight;
-            }, 3000);
-        }
-        
-        // Update attempts display
-        function updateAttemptsDisplay() {
-            attemptsDisplay.textContent = `ATTEMPTS REMAINING: ${attemptsRemaining}`;
-            if (attemptsRemaining <= 1) {
-                attemptsDisplay.style.color = '#ff4488';
-                attemptsDisplay.style.fontWeight = '700';
-            }
-        }
-        
-        // Show blocked screen
-        function showBlockedScreen() {
-            document.body.innerHTML = `
-                <div class="access-denied">
-                    <div style="font-size: 4rem; margin-bottom: 30px; animation: pulse 1s infinite;">
-                        <i class="fas fa-ban"></i>
-                    </div>
-                    <div>ACCESS PERMANENTLY DENIED</div>
-                    <div style="font-size: 1.5rem; margin-top: 30px; color: #ff00aa;">
-                        DEVICE BLACKLISTED
-                    </div>
-                    <div style="font-size: 1rem; margin-top: 20px; color: #888;">
-                        ALL ACTIVITIES HAVE BEEN REPORTED TO STARK INDUSTRIES SECURITY
-                    </div>
-                </div>
-            `;
-            setTimeout(() => {
-                window.location.href = BLOCKED_REDIRECT;
-            }, 5000);
-        }
-        
-        // Initialize security measures
-        function initSecurity() {
             // Disable right-click
-            document.addEventListener('contextmenu', event => {
-                event.preventDefault();
-                triggerSecurityViolation();
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                return false;
             });
             
             // Disable common keyboard shortcuts
-            document.onkeydown = function(e) {
+            document.addEventListener('keydown', function(e) {
+                // F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C, Ctrl+U
                 if (
-                    e.keyCode === 123 || // F12
-                    (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || // Ctrl+Shift+I/J/C
-                    (e.ctrlKey && e.keyCode === 85) || // Ctrl+U
-                    (e.ctrlKey && e.shiftKey && e.keyCode === 75) // Ctrl+Shift+K
+                    e.keyCode === 123 || 
+                    (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || 
+                    (e.ctrlKey && e.keyCode === 85)
                 ) {
                     e.preventDefault();
-                    triggerSecurityViolation();
+                    showSecurityWarning();
                     return false;
                 }
-            };
-            
-            // Advanced dev tools detection
-            detectDevTools();
-            
-            // Prevent drag and drop
-            document.addEventListener('dragstart', function(e) {
-                e.preventDefault();
-                triggerSecurityViolation();
             });
             
-            // Prevent selection
-            document.addEventListener('selectstart', function(e) {
-                e.preventDefault();
-            });
-        }
-        
-        // Advanced dev tools detection
-        function detectDevTools() {
-            let devtools = {
-                open: false,
-                orientation: null
-            };
-            
+            // Check for dev tools open
+            let devtools = {open: false, orientation: null};
             const threshold = 160;
             
-            // Method 1: Dimension checking
             setInterval(function() {
-                if (!devToolsDetectionActive) return;
-                
                 if (window.outerHeight - window.innerHeight > threshold || 
                     window.outerWidth - window.innerWidth > threshold) {
                     if (!devtools.open) {
                         devtools.open = true;
-                        triggerSecurityViolation();
+                        showSecurityWarning();
                     }
                 } else {
                     devtools.open = false;
                 }
             }, 500);
             
-            // Method 2: Debugger detection
-            setInterval(function() {
-                if (!devToolsDetectionActive) return;
-                
-                let before = new Date().getTime();
-                debugger;
-                let after = new Date().getTime();
-                
-                if (after - before > 100) {
-                    triggerSecurityViolation();
-                }
-            }, 1000);
-            
-            // Method 3: Console detection
-            let x = document.createElement('div');
-            Object.defineProperty(x, 'id', {
-                get: function() {
-                    triggerSecurityViolation();
-                }
-            });
-            
-            setInterval(function() {
-                if (!devToolsDetectionActive) return;
-                console.log(x);
-            }, 2000);
-        }
-        
-        // Trigger security violation
-        function triggerSecurityViolation() {
-            if (!devToolsDetectionActive) return;
-            
-            devToolsDetectionActive = false;
-            securityOverlay.style.display = 'flex';
-            
-            // Clear all intervals
-            if (timerInterval) {
-                clearInterval(timerInterval);
+            // Function to show security warning and redirect
+            function showSecurityWarning() {
+                document.getElementById('securityWarning').style.display = 'block';
+                setTimeout(function() {
+                    window.location.href = 'https://www.google.com/search?q=security+breach+detected';
+                }, 2000);
             }
             
-            // Mark device as blocked
-            localStorage.setItem('jarvis_blocked', 'true');
+            // Console warning
+            console.clear();
+            console.log("%cNEXUS SECURITY ALERT: Unauthorized access to this system is prohibited.", "color: #00d2ff; font-size: 20px; font-weight: bold;");
+            console.log("%cYour IP address has been logged. All activities on this system are monitored.", "color: #00d2ff; font-size: 16px;");
             
-            // Redirect after delay
-            setTimeout(() => {
-                window.location.href = BLOCKED_REDIRECT;
+            // Disable drag and drop
+            document.addEventListener('dragstart', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            // Disable text selection (partial)
+            document.addEventListener('selectstart', function(e) {
+                if (document.getElementById('vaultContainer').style.display !== 'none') {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        })();
+        
+        // Initialize variables
+        let failedAttempts = parseInt(localStorage.getItem('failedAttempts') || '0');
+        let sessionTimer;
+        let timeRemaining = 30; // 30 seconds in seconds
+        let savedContacts = JSON.parse(localStorage.getItem('savedContacts') || '[]');
+        
+        // Update attempts counter on page load
+        document.getElementById('remainingAttempts').textContent = 2 - failedAttempts;
+        
+        // Show notification
+        function showNotification(title, message) {
+            const notification = document.getElementById('notification');
+            const notificationTitle = document.getElementById('notificationTitle');
+            const notificationMessage = document.getElementById('notificationMessage');
+            
+            notificationTitle.textContent = title;
+            notificationMessage.textContent = message;
+            
+            notification.style.display = 'block';
+            
+            setTimeout(function() {
+                notification.style.display = 'none';
             }, 3000);
         }
         
-        // Start session timer
-        function startSessionTimer() {
-            timerInterval = setInterval(function() {
-                sessionTimer--;
+        // Password validation
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const password = document.getElementById('password').value;
+            
+            if (password === 'justin3237') {
+                // Successful login
+                document.getElementById('authContainer').style.display = 'none';
+                document.getElementById('vaultContainer').style.display = 'block';
+                document.getElementById('timerContainer').style.display = 'block';
                 
-                const minutes = Math.floor(sessionTimer / 60);
-                const seconds = sessionTimer % 60;
-                timeLeft.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                // Reset failed attempts
+                localStorage.setItem('failedAttempts', '0');
                 
-                // Warning when time is low
-                if (sessionTimer <= 10) {
-                    timerDisplay.classList.add('timer-warning');
+                // Start session timer
+                startSessionTimer();
+                
+                // Display saved contacts
+                displaySavedContacts();
+                
+                showNotification('ACCESS GRANTED', 'Vault unlocked successfully.');
+            } else {
+                // Failed login
+                failedAttempts++;
+                localStorage.setItem('failedAttempts', failedAttempts.toString());
+                
+                // Update attempts counter
+                const remaining = 2 - failedAttempts;
+                document.getElementById('remainingAttempts').textContent = remaining;
+                
+                // Clear password field
+                document.getElementById('password').value = '';
+                
+                // Show notification
+                showNotification('ACCESS DENIED', `Invalid access code. ${remaining} attempts remaining.`);
+                
+                // Check if device should be blocked
+                if (failedAttempts >= 2) {
+                    blockDevice();
                 }
+            }
+        });
+        
+        // Toggle password visibility
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        });
+        
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            logout();
+        });
+        
+        // Session timer
+        function startSessionTimer() {
+            updateTimerDisplay();
+            
+            sessionTimer = setInterval(function() {
+                timeRemaining--;
+                updateTimerDisplay();
                 
-                // Auto logout when time expires
-                if (sessionTimer <= 0) {
+                if (timeRemaining <= 0) {
                     logout();
                 }
             }, 1000);
         }
         
-        // Login function
-        function login() {
-            const enteredPassword = passwordInput.value;
-            
-            if (enteredPassword === CORRECT_PASSWORD) {
-                // Successful login
-                loginContainer.style.display = 'none';
-                vaultContent.style.display = 'block';
-                loginAlert.style.display = 'none';
+        function updateTimerDisplay() {
+            const seconds = timeRemaining;
+            document.getElementById('sessionTimer').textContent = 
+                `00:${seconds.toString().padStart(2, '0')}`;
                 
-                // Clear password field
-                passwordInput.value = '';
+            // Change color when time is running out
+            if (timeRemaining <= 10) {
+                document.getElementById('sessionTimer').style.color = '#ff3547';
                 
-                // Reset attempts
-                attemptsRemaining = MAX_ATTEMPTS;
-                localStorage.removeItem('jarvis_blocked');
-                isBlocked = false;
-                
-                // Update status
-                statusText.textContent = 'ACCESS GRANTED';
-                statusText.style.color = '#00ff9d';
-                
-                // Start session timer
-                startSessionTimer();
-                
-                // Start JARVIS simulation
-                startJarvisSimulation();
-            } else {
-                // Failed login
-                attemptsRemaining--;
-                updateAttemptsDisplay();
-                
-                if (attemptsRemaining <= 0) {
-                    // Block device permanently
-                    localStorage.setItem('jarvis_blocked', 'true');
-                    isBlocked = true;
-                    showBlockedScreen();
-                    return;
+                // Show warning notification
+                if (timeRemaining === 10) {
+                    showNotification('SESSION WARNING', 'Session will expire in 10 seconds.');
                 }
-                
-                // Show error
-                loginAlert.style.display = 'block';
-                passwordInput.value = '';
-                passwordInput.focus();
-                
-                // Update status
-                statusText.textContent = 'ACCESS DENIED';
-                statusText.style.color = '#ff4488';
-                
-                // Add shake animation
-                loginContainer.style.animation = 'shake 0.5s';
-                setTimeout(() => {
-                    loginContainer.style.animation = '';
-                }, 500);
             }
         }
         
         // Logout function
         function logout() {
-            vaultContent.style.display = 'none';
-            loginContainer.style.display = 'block';
-            passwordInput.value = '';
+            clearInterval(sessionTimer);
+            timeRemaining = 30; // Reset timer
             
-            // Clear timer
-            if (timerInterval) {
-                clearInterval(timerInterval);
-            }
+            document.getElementById('vaultContainer').style.display = 'none';
+            document.getElementById('timerContainer').style.display = 'none';
+            document.getElementById('authContainer').style.display = 'block';
+            document.getElementById('password').value = '';
             
-            // Reset session timer
-            sessionTimer = SESSION_TIMEOUT;
-            timeLeft.textContent = '00:30';
-            timerDisplay.classList.remove('timer-warning');
+            // Reset timer color
+            document.getElementById('sessionTimer').style.color = '#ff3547';
             
-            // Re-enable security detection
-            devToolsDetectionActive = true;
-            
-            // Update status
-            statusText.textContent = 'AWAITING AUTHORIZATION';
-            statusText.style.color = '#00ccff';
-            
-            // Clear API status
-            apiStatus.innerHTML = '';
-            loadingProgress.style.width = '0%';
+            showNotification('SESSION TERMINATED', 'Security protocols re-engaged.');
         }
         
-        // Call number function
-        function callNumber(elementId) {
-            const number = document.getElementById(elementId).textContent;
-            const cleanNumber = number.replace(/\D/g, '');
-            window.location.href = `tel:${cleanNumber}`;
+        // Block device function
+        function blockDevice() {
+            localStorage.setItem('deviceBlocked', 'true');
+            
+            document.getElementById('authContainer').style.display = 'none';
+            document.getElementById('blockedContainer').style.display = 'block';
         }
         
-        // WhatsApp function
-        function whatsappNumber(elementId) {
-            const number = document.getElementById(elementId).textContent;
-            const cleanNumber = number.replace(/\D/g, '');
-            window.open(`https://wa.me/${cleanNumber}`, '_blank');
+        // Redirect blocked device
+        function redirectBlocked() {
+            window.location.href = 'https://www.google.com/search?q=access+denied';
         }
         
-        // Form submission
-        loginForm.addEventListener('submit', function(e) {
+        // Image upload functionality
+        const imageUpload = document.getElementById('imageUpload');
+        const fileInput = document.getElementById('fileInput');
+        const imagePreview = document.getElementById('imagePreview');
+        const scanBtn = document.getElementById('scanBtn');
+        const scanProgress = document.getElementById('scanProgress');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        
+        imageUpload.addEventListener('click', function() {
+            fileInput.click();
+        });
+        
+        imageUpload.addEventListener('dragover', function(e) {
             e.preventDefault();
-            login();
+            imageUpload.classList.add('dragover');
         });
         
-        // Page visibility API
-        document.addEventListener('visibilitychange', function() {
-            if (document.visibilityState === 'hidden' && vaultContent.style.display === 'block') {
-                // Optional: Auto-logout when tab is hidden
-                // logout();
+        imageUpload.addEventListener('dragleave', function() {
+            imageUpload.classList.remove('dragover');
+        });
+        
+        imageUpload.addEventListener('drop', function(e) {
+            e.preventDefault();
+            imageUpload.classList.remove('dragover');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleImageUpload(files[0]);
             }
         });
         
-        // Initialize system when page loads
-        window.addEventListener('load', function() {
-            initSystem();
+        fileInput.addEventListener('change', function(e) {
+            if (e.target.files.length > 0) {
+                handleImageUpload(e.target.files[0]);
+            }
         });
         
-        // Add shake animation CSS
-        const style = document.createElement('style');
-        style.innerHTML = `
-            @keyframes shake {
-                0%, 100% { transform: translateX(0); }
-                20%, 60% { transform: translateX(-10px); }
-                40%, 80% { transform: translateX(10px); }
+        function handleImageUpload(file) {
+            if (!file.type.match('image.*')) {
+                showNotification('INVALID FILE', 'Please upload an image file.');
+                return;
             }
             
-            @media (prefers-reduced-motion: reduce) {
-                * {
-                    animation-duration: 0.01ms !important;
-                    animation-iteration-count: 1 !important;
-                    transition-duration: 0.01ms !important;
-                }
-            }
-        `;
-        document.head.appendChild(style);
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+                scanBtn.disabled = false;
+            };
+            reader.readAsDataURL(file);
+        }
         
-        // Prevent zoom
-        document.addEventListener('touchstart', function(event) {
-            if (event.touches.length > 1) {
-                event.preventDefault();
+        // Scan image functionality
+        scanBtn.addEventListener('click', function() {
+            if (!imagePreview.src) {
+                showNotification('NO IMAGE', 'Please upload an image first.');
+                return;
             }
+            
+            scanProgress.style.display = 'block';
+            scanBtn.disabled = true;
+            
+            Tesseract.recognize(
+                imagePreview.src,
+                'eng',
+                {
+                    logger: m => {
+                        if (m.status === 'recognizing text') {
+                            const progress = Math.round(m.progress * 100);
+                            progressBar.style.width = `${progress}%`;
+                            progressText.textContent = `${progress}%`;
+                        }
+                    }
+                }
+            ).then(({ data: { text } }) => {
+                scanProgress.style.display = 'none';
+                scanBtn.disabled = false;
+                
+                // Extract contacts from text
+                const contacts = extractContacts(text);
+                
+                if (contacts.length > 0) {
+                    displayExtractedContacts(contacts);
+                    showNotification('SCAN COMPLETE', `Found ${contacts.length} contacts in the image.`);
+                } else {
+                    showNotification('NO CONTACTS', 'No contacts found in the image.');
+                }
+            }).catch(err => {
+                scanProgress.style.display = 'none';
+                scanBtn.disabled = false;
+                showNotification('SCAN FAILED', 'Failed to scan the image. Please try again.');
+                console.error(err);
+            });
         });
         
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', function(event) {
-            const now = (new Date()).getTime();
-            if (now - lastTouchEnd <= 300) {
-                event.preventDefault();
+        // Extract contacts from text
+        function extractContacts(text) {
+            // Common female first names to filter out
+            const femaleNames = [
+                'Mary', 'Patricia', 'Jennifer', 'Linda', 'Elizabeth', 'Barbara', 'Susan', 'Jessica', 
+                'Sarah', 'Karen', 'Nancy', 'Betty', 'Helen', 'Sandra', 'Donna', 'Carol', 'Ruth', 
+                'Sharon', 'Michelle', 'Laura', 'Sarah', 'Kimberly', 'Deborah', 'Dorothy', 'Lisa', 
+                'Nancy', 'Karen', 'Betty', 'Helen', 'Sandra', 'Donna', 'Carol', 'Ruth', 'Sharon', 
+                'Michelle', 'Laura', 'Sarah', 'Kimberly', 'Deborah', 'Dorothy', 'Lisa', 'Nancy', 
+                'Karen', 'Betty', 'Helen', 'Sandra', 'Donna', 'Carol', 'Ruth', 'Sharon', 'Michelle', 
+                'Laura', 'Sarah', 'Kimberly', 'Deborah', 'Dorothy', 'Emily', 'Amanda', 'Melissa', 
+                'Deborah', 'Stephanie', 'Rebecca', 'Sharon', 'Laura', 'Michelle', 'Sarah', 'Kimberly', 
+                'Jessica', 'Nancy', 'Susan', 'Margaret', 'Lisa', 'Betty', 'Dorothy', 'Sandra', 'Ashley', 
+                'Kimberly', 'Donna', 'Carol', 'Michelle', 'Emily', 'Amanda', 'Melissa', 'Deborah', 
+                'Stephanie', 'Rebecca', 'Sharon', 'Laura', 'Michelle', 'Sarah', 'Kimberly', 'Jessica'
+            ];
+            
+            // Extract phone numbers
+            const phoneRegex = /(\+\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/g;
+            const phoneNumbers = text.match(phoneRegex) || [];
+            
+            // Extract potential names (simplified approach)
+            const nameRegex = /\b([A-Z][a-z]+)\s+([A-Z][a-z]+)\b/g;
+            const names = [];
+            let match;
+            while ((match = nameRegex.exec(text)) !== null) {
+                names.push(match[0]);
             }
-            lastTouchEnd = now;
-        }, false);
+            
+            // Create contacts
+            const contacts = [];
+            
+            phoneNumbers.forEach((phone, index) => {
+                // Clean phone number
+                const cleanPhone = phone.replace(/[^\d+]/g, '');
+                
+                // Get name if available
+                let name = `Contact ${index + 1}`;
+                if (index < names.length) {
+                    name = names[index];
+                    
+                    // Check if name is female
+                    const firstName = name.split(' ')[0];
+                    if (femaleNames.includes(firstName)) {
+                        // Skip female contacts
+                        return;
+                    }
+                }
+                
+                contacts.push({
+                    name: name,
+                    phone: cleanPhone
+                });
+            });
+            
+            return contacts;
+        }
+        
+        // Display extracted contacts
+        function displayExtractedContacts(contacts) {
+            const container = document.getElementById('extractedContactsList');
+            
+            if (contacts.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-user-slash"></i>
+                        <p>No contacts found in the image.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = '';
+            
+            contacts.forEach((contact, index) => {
+                const contactCard = document.createElement('div');
+                contactCard.className = 'contact-card';
+                contactCard.innerHTML = `
+                    <h5>${contact.name}</h5>
+                    <div class="number">${contact.phone}</div>
+                    <div class="actions">
+                        <button class="btn btn-success" onclick="makeCall('${contact.phone}')">
+                            <i class="fas fa-phone me-1"></i> CALL
+                        </button>
+                        <button class="btn btn-success" onclick="sendWhatsApp('${contact.phone}')">
+                            <i class="fab fa-whatsapp me-1"></i> WHATSAPP
+                        </button>
+                        <button class="btn btn-primary" onclick="saveContact('${contact.name}', '${contact.phone}')">
+                            <i class="fas fa-save me-1"></i> SAVE
+                        </button>
+                    </div>
+                `;
+                container.appendChild(contactCard);
+            });
+        }
+        
+        // Display saved contacts
+        function displaySavedContacts() {
+            const container = document.getElementById('savedContactsList');
+            
+            if (savedContacts.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-user-shield"></i>
+                        <p>No saved contacts yet. Extract and save contacts to see them here.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = '';
+            
+            savedContacts.forEach((contact, index) => {
+                const contactCard = document.createElement('div');
+                contactCard.className = 'contact-card';
+                contactCard.innerHTML = `
+                    <h5>${contact.name}</h5>
+                    <div class="number">${contact.phone}</div>
+                    <div class="actions">
+                        <button class="btn btn-success" onclick="makeCall('${contact.phone}')">
+                            <i class="fas fa-phone me-1"></i> CALL
+                        </button>
+                        <button class="btn btn-success" onclick="sendWhatsApp('${contact.phone}')">
+                            <i class="fab fa-whatsapp me-1"></i> WHATSAPP
+                        </button>
+                        <button class="btn btn-danger" onclick="removeContact(${index})">
+                            <i class="fas fa-trash me-1"></i> REMOVE
+                        </button>
+                    </div>
+                `;
+                container.appendChild(contactCard);
+            });
+        }
+        
+        // Save contact
+        function saveContact(name, phone) {
+            // Check if contact already exists
+            const exists = savedContacts.some(contact => contact.phone === phone);
+            
+            if (exists) {
+                showNotification('ALREADY SAVED', 'This contact is already in your vault.');
+                return;
+            }
+            
+            savedContacts.push({ name, phone });
+            localStorage.setItem('savedContacts', JSON.stringify(savedContacts));
+            
+            displaySavedContacts();
+            showNotification('CONTACT SAVED', `${name} has been added to your vault.`);
+        }
+        
+        // Remove contact
+        function removeContact(index) {
+            const contact = savedContacts[index];
+            savedContacts.splice(index, 1);
+            localStorage.setItem('savedContacts', JSON.stringify(savedContacts));
+            
+            displaySavedContacts();
+            showNotification('CONTACT REMOVED', `${contact.name} has been removed from your vault.`);
+        }
+        
+        // Make call function
+        function makeCall(number) {
+            showNotification('INITIATING CALL', `Dialing ${number}...`);
+            setTimeout(function() {
+                window.open(`tel:${number}`, '_self');
+            }, 1000);
+        }
+        
+        // Send WhatsApp function
+        function sendWhatsApp(number) {
+            showNotification('OPENING WHATSAPP', `Connecting to ${number}...`);
+            setTimeout(function() {
+                window.open(`https://wa.me/${number.replace(/\D/g, '')}`, '_blank');
+            }, 1000);
+        }
+        
+        // Clear session on page close
+        window.addEventListener('beforeunload', function() {
+            sessionStorage.clear();
+        });
+        
+        // Initialize page
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('loadingOverlay').style.display = 'none';
+            }, 1500);
+        });
     </script>
 </body>
 </html>
