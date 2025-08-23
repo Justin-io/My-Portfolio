@@ -532,7 +532,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.9);
             z-index: 2000;
             display: flex;
             flex-direction: column;
@@ -547,21 +547,19 @@
         }
 
         .pdf-modal-header {
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--glass-border);
-            padding: 1rem;
+            background: white;
+            padding: 1rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 2001;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         .pdf-modal-title {
             font-weight: 600;
-            font-size: 1.2rem;
-            color: var(--text-primary);
+            font-size: 1.1rem;
+            color: #333;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -573,16 +571,63 @@
             gap: 0.5rem;
         }
 
+        .pdf-modal-btn {
+            background: #f3f4f6;
+            border: none;
+            border-radius: 6px;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4b5563;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .pdf-modal-btn:hover {
+            background: #e5e7eb;
+            color: #1f2937;
+        }
+
         .pdf-modal-content {
             flex: 1;
             overflow: hidden;
             position: relative;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .pdf-modal-embed {
             width: 100%;
             height: 100%;
             border: none;
+        }
+
+        .pdf-loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2002;
+        }
+
+        .pdf-loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f4f6;
+            border-top: 4px solid var(--primary-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
         }
 
         /* Loading Spinner */
@@ -835,6 +880,11 @@
                 max-width: 40%;
                 font-size: 1rem;
             }
+            
+            .pdf-modal-btn {
+                width: 32px;
+                height: 32px;
+            }
         }
     </style>
 </head>
@@ -932,19 +982,29 @@
         <div class="pdf-modal-header">
             <div class="pdf-modal-title" id="pdfModalTitle">PDF Viewer</div>
             <div class="pdf-modal-actions">
-                <button id="pdfDownloadBtn" class="btn-primary-custom">
-                    <i class="bi bi-download"></i> Download
+                <button id="pdfDownloadBtn" class="pdf-modal-btn" title="Download">
+                    <i class="bi bi-download"></i>
                 </button>
-                <button id="pdfOpenBtn" class="btn-primary-custom" style="display: none;">
-                    <i class="bi bi-box-arrow-up-right"></i> Open
+                <button id="pdfPrintBtn" class="pdf-modal-btn" title="Print">
+                    <i class="bi bi-printer"></i>
                 </button>
-                <button id="pdfCloseBtn" class="btn-icon">
+                <button id="pdfZoomInBtn" class="pdf-modal-btn" title="Zoom In">
+                    <i class="bi bi-zoom-in"></i>
+                </button>
+                <button id="pdfZoomOutBtn" class="pdf-modal-btn" title="Zoom Out">
+                    <i class="bi bi-zoom-out"></i>
+                </button>
+                <button id="pdfCloseBtn" class="pdf-modal-btn" title="Close">
                     <i class="bi bi-x-lg"></i>
                 </button>
             </div>
         </div>
         <div class="pdf-modal-content">
-            <embed id="pdfEmbed" class="pdf-modal-embed" type="application/pdf">
+            <div class="pdf-loading" id="pdfLoading">
+                <div class="pdf-loading-spinner"></div>
+                <p>Loading PDF...</p>
+            </div>
+            <iframe id="pdfEmbed" class="pdf-modal-embed" style="display: none;"></iframe>
         </div>
     </div>
 
@@ -992,6 +1052,7 @@
         let currentFilter = 'all';
         let searchTerm = '';
         let currentPdfFile = null;
+        let pdfZoomLevel = 100;
 
         // Helper function to determine file type from extension
         function getFileType(extension) {
@@ -1253,31 +1314,36 @@
             const pdfModal = document.getElementById('pdfModal');
             const pdfModalTitle = document.getElementById('pdfModalTitle');
             const pdfEmbed = document.getElementById('pdfEmbed');
+            const pdfLoading = document.getElementById('pdfLoading');
             const pdfDownloadBtn = document.getElementById('pdfDownloadBtn');
-            const pdfOpenBtn = document.getElementById('pdfOpenBtn');
             
             currentPdfFile = file;
+            pdfZoomLevel = 100; // Reset zoom level
             
             // Set modal title
             pdfModalTitle.textContent = file.name;
             
+            // Show loading
+            pdfLoading.style.display = 'flex';
+            pdfEmbed.style.display = 'none';
+            
             // Set PDF source
             pdfEmbed.src = file.url;
             
-            // Check if file has been downloaded
-            const isDownloaded = isFileDownloaded(file.url);
-            
-            // Show/hide buttons based on download status
-            if (isDownloaded) {
-                pdfDownloadBtn.style.display = 'none';
-                pdfOpenBtn.style.display = 'flex';
-            } else {
-                pdfDownloadBtn.style.display = 'flex';
-                pdfOpenBtn.style.display = 'none';
-            }
-            
             // Show modal
             pdfModal.classList.add('active');
+            
+            // Hide loading when PDF is loaded
+            pdfEmbed.onload = function() {
+                pdfLoading.style.display = 'none';
+                pdfEmbed.style.display = 'block';
+            };
+            
+            // Handle loading error
+            pdfEmbed.onerror = function() {
+                pdfLoading.style.display = 'none';
+                showNotification('Failed to load PDF. Please try again.', 'error');
+            };
         }
 
         // Close PDF modal
@@ -1292,6 +1358,47 @@
             pdfEmbed.src = '';
             
             currentPdfFile = null;
+        }
+
+        // Zoom PDF in
+        function zoomInPdf() {
+            if (pdfZoomLevel < 200) {
+                pdfZoomLevel += 10;
+                updatePdfZoom();
+            }
+        }
+
+        // Zoom PDF out
+        function zoomOutPdf() {
+            if (pdfZoomLevel > 50) {
+                pdfZoomLevel -= 10;
+                updatePdfZoom();
+            }
+        }
+
+        // Update PDF zoom
+        function updatePdfZoom() {
+            const pdfEmbed = document.getElementById('pdfEmbed');
+            pdfEmbed.style.transform = `scale(${pdfZoomLevel / 100})`;
+            pdfEmbed.style.transformOrigin = 'top center';
+        }
+
+        // Print PDF
+        function printPdf() {
+            if (currentPdfFile) {
+                // Open PDF in new tab for printing
+                const printWindow = window.open(currentPdfFile.url, '_blank');
+                
+                // Try to trigger print after a short delay
+                setTimeout(() => {
+                    try {
+                        printWindow.print();
+                    } catch (e) {
+                        console.error('Failed to print PDF:', e);
+                        showNotification('Please use the browser\'s print function.', 'warning');
+                    }
+                }, 1000);
+            }
         }
 
         // DOM elements
@@ -1315,7 +1422,9 @@
         const notificationMessage = document.getElementById('notificationMessage');
         const pdfModal = document.getElementById('pdfModal');
         const pdfDownloadBtn = document.getElementById('pdfDownloadBtn');
-        const pdfOpenBtn = document.getElementById('pdfOpenBtn');
+        const pdfPrintBtn = document.getElementById('pdfPrintBtn');
+        const pdfZoomInBtn = document.getElementById('pdfZoomInBtn');
+        const pdfZoomOutBtn = document.getElementById('pdfZoomOutBtn');
         const pdfCloseBtn = document.getElementById('pdfCloseBtn');
 
         // Initialize app
@@ -1533,12 +1642,6 @@
             // Add to downloaded files list
             addDownloadedFile(url);
             
-            // If this is the current PDF in modal, update the modal buttons
-            if (currentPdfFile && currentPdfFile.url === url) {
-                pdfDownloadBtn.style.display = 'none';
-                pdfOpenBtn.style.display = 'flex';
-            }
-            
             // Show success notification
             setTimeout(() => {
                 showNotification(`${filename} download started!`, 'success');
@@ -1640,12 +1743,9 @@
                 }
             });
             
-            pdfOpenBtn.addEventListener('click', () => {
-                if (currentPdfFile) {
-                    openFileInNewTab(currentPdfFile.url);
-                }
-            });
-            
+            pdfPrintBtn.addEventListener('click', printPdf);
+            pdfZoomInBtn.addEventListener('click', zoomInPdf);
+            pdfZoomOutBtn.addEventListener('click', zoomOutPdf);
             pdfCloseBtn.addEventListener('click', closePdfModal);
             
             // Close modal when clicking outside
