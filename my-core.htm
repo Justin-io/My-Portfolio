@@ -3,1229 +3,1556 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>J.A.R.V.I.S. SECURE SYSTEM</title>
+    <title>JARVIS :: AUTHORIZATION REQUIRED</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
-        
         * {
-            font-family: 'Rajdhani', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         
         body {
-            background-color: #000;
-            color: #fff;
+            background: linear-gradient(135deg, #0a0a1a, #1a1a3a, #0a0a1a);
+            min-height: 100vh;
+            font-family: 'Exo 2', 'Arial', sans-serif;
             overflow-x: hidden;
-            margin: 0;
-            padding: 0;
             position: relative;
+            color: #00eeff;
         }
         
-        .ironman-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
-            z-index: -2;
-        }
-        
-        .ironman-bg::before {
-            content: "";
+        body::before {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background: 
-                radial-gradient(circle at 20% 30%, rgba(255, 0, 0, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+                radial-gradient(circle at 20% 30%, rgba(0, 238, 255, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(255, 0, 128, 0.1) 0%, transparent 40%),
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 238, 255, 0.03),
+                    rgba(0, 238, 255, 0.03) 1px,
+                    transparent 1px,
+                    transparent 20px
+                );
             z-index: -1;
         }
         
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .system-header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding: 15px;
-            border: 2px solid #d4af37;
-            background: linear-gradient(90deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.2) 50%, rgba(212, 175, 55, 0.1) 100%);
+        .jarvis-header {
+            background: rgba(0, 15, 30, 0.9);
+            border-bottom: 1px solid rgba(0, 238, 255, 0.5);
+            padding: 12px 20px;
+            backdrop-filter: blur(10px);
             position: relative;
             overflow: hidden;
         }
         
-        .system-header::before {
-            content: "";
+        .jarvis-title {
+            font-weight: 700;
+            color: #00eeff;
+            text-shadow: 0 0 10px rgba(0, 238, 255, 0.7);
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+        
+        .system-status {
+            color: #00ff9d;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .login-container {
+            background: rgba(5, 10, 25, 0.95);
+            border: 2px solid rgba(0, 238, 255, 0.3);
+            margin: 30px auto;
+            padding: 25px;
+            position: relative;
+            box-shadow: 0 0 30px rgba(0, 238, 255, 0.2);
+            border-radius: 12px;
+            backdrop-filter: blur(15px);
+            overflow: hidden;
+            max-width: 95%;
+        }
+        
+        @media (min-width: 768px) {
+            .login-container {
+                max-width: 550px;
+                padding: 35px;
+                margin: 50px auto;
+            }
+        }
+        
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00eeff, transparent);
+            animation: scan 4s linear infinite;
+        }
+        
+        @keyframes scan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .vault-content {
+            display: none;
+            background: rgba(5, 10, 25, 0.95);
+            border: 2px solid rgba(0, 238, 255, 0.3);
+            padding: 25px;
+            margin: 20px auto;
+            box-shadow: 0 0 40px rgba(0, 238, 255, 0.3);
+            position: relative;
+            border-radius: 12px;
+            backdrop-filter: blur(15px);
+            max-width: 95%;
+        }
+        
+        @media (min-width: 768px) {
+            .vault-content {
+                max-width: 1200px;
+                padding: 35px;
+            }
+        }
+        
+        @media (min-width: 1200px) {
+            .vault-content {
+                max-width: 1400px;
+            }
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(0, 238, 255, 0.3);
+            padding-bottom: 20px;
+        }
+        
+        .header h1 {
+            color: #00eeff;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(0, 238, 255, 0.8);
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #00eeff, #00ff9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        @media (min-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+        }
+        
+        .header p {
+            color: #00ccff;
+            margin-top: 10px;
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+        
+        @media (min-width: 768px) {
+            .header p {
+                font-size: 1.2rem;
+            }
+        }
+        
+        .form-control {
+            background: rgba(0, 20, 40, 0.8);
+            border: 1px solid rgba(0, 238, 255, 0.5);
+            color: #00eeff;
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Exo 2', monospace;
+            font-size: 1rem;
+            transition: all 0.3s;
+            box-shadow: 0 0 10px rgba(0, 238, 255, 0.1);
+        }
+        
+        @media (min-width: 768px) {
+            .form-control {
+                padding: 18px 20px;
+                font-size: 1.2rem;
+            }
+        }
+        
+        .form-control:focus {
+            background: rgba(0, 30, 60, 0.9);
+            border-color: #00eeff;
+            box-shadow: 0 0 0 0.25rem rgba(0, 238, 255, 0.3);
+            color: #00eeff;
+        }
+        
+        .form-control::placeholder {
+            color: rgba(0, 238, 255, 0.4);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #0066ff, #00eeff);
+            border: none;
+            border-radius: 8px;
+            padding: 14px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            transition: all 0.4s;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1rem;
+            color: #000;
+            text-transform: uppercase;
+            box-shadow: 0 5px 15px rgba(0, 102, 255, 0.4);
+        }
+        
+        @media (min-width: 768px) {
+            .btn-primary {
+                padding: 16px;
+                font-size: 1.2rem;
+            }
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 238, 255, 0.6);
+        }
+        
+        .secret-card {
+            background: rgba(0, 20, 40, 0.8);
+            border-left: 3px solid #00eeff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            transition: all 0.4s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 238, 255, 0.2);
+        }
+        
+        @media (min-width: 768px) {
+            .secret-card {
+                padding: 25px;
+            }
+        }
+        
+        .secret-card:hover {
+            background: rgba(0, 40, 80, 0.9);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 238, 255, 0.3);
+        }
+        
+        .secret-title {
+            color: #00eeff;
+            font-weight: 700;
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        @media (min-width: 768px) {
+            .secret-title {
+                font-size: 1.5rem;
+                margin-bottom: 15px;
+            }
+        }
+        
+        .secret-content {
+            color: #00ccff;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        @media (min-width: 768px) {
+            .secret-content {
+                font-size: 1.1rem;
+                margin-bottom: 20px;
+            }
+        }
+        
+        .secret-number {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #00eeff;
+            letter-spacing: 2px;
+            margin: 15px 0;
+            text-shadow: 0 0 10px rgba(0, 238, 255, 0.7);
+            font-family: 'Exo 2', monospace;
+            background: rgba(0, 15, 30, 0.6);
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 238, 255, 0.3);
+        }
+        
+        @media (min-width: 768px) {
+            .secret-number {
+                font-size: 2rem;
+                padding: 15px;
+            }
+        }
+        
+        .btn-call {
+            background: linear-gradient(45deg, #0066ff, #00ccff);
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            font-weight: 700;
+            margin: 5px;
+            transition: all 0.3s;
+            color: #fff;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 0.9rem;
+            box-shadow: 0 3px 10px rgba(0, 102, 255, 0.3);
+        }
+        
+        @media (min-width: 768px) {
+            .btn-call {
+                padding: 14px 25px;
+                font-size: 1.1rem;
+            }
+        }
+        
+        .btn-call:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 102, 255, 0.5);
+        }
+        
+        .btn-whatsapp {
+            background: linear-gradient(45deg, #25D366, #128C7E);
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            font-weight: 700;
+            margin: 5px;
+            transition: all 0.3s;
+            color: #fff;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 0.9rem;
+            box-shadow: 0 3px 10px rgba(37, 211, 102, 0.3);
+        }
+        
+        @media (min-width: 768px) {
+            .btn-whatsapp {
+                padding: 14px 25px;
+                font-size: 1.1rem;
+            }
+        }
+        
+        .btn-whatsapp:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.5);
+        }
+        
+        .alert {
+            border-radius: 10px;
+            font-size: 0.9rem;
+            border: 1px solid #ff0055;
+            background: rgba(40, 0, 20, 0.9);
+            color: #ff4488;
+            backdrop-filter: blur(10px);
+            padding: 15px;
+        }
+        
+        @media (min-width: 768px) {
+            .alert {
+                font-size: 1.1rem;
+                padding: 20px;
+            }
+        }
+        
+        .lock-icon {
+            font-size: 3rem;
+            color: #00eeff;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 0 0 20px rgba(0, 238, 255, 0.8);
+            animation: pulse 2s infinite;
+        }
+        
+        @media (min-width: 768px) {
+            .lock-icon {
+                font-size: 4.5rem;
+                margin-bottom: 25px;
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .logout-btn {
+            background: linear-gradient(45deg, #ff0055, #ff00aa);
+            border: none;
+            border-radius: 10px;
+            padding: 14px 25px;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.4s;
+            color: #fff;
+            font-family: 'Exo 2', sans-serif;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(255, 0, 85, 0.4);
+        }
+        
+        @media (min-width: 768px) {
+            .logout-btn {
+                padding: 15px 35px;
+                font-size: 1.2rem;
+                margin-top: 25px;
+            }
+        }
+        
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 0, 170, 0.6);
+        }
+        
+        .timer-display {
+            background: rgba(0, 15, 30, 0.9);
+            border: 1px solid rgba(0, 238, 255, 0.4);
+            padding: 15px;
+            text-align: center;
+            margin: 20px 0;
+            font-family: 'Exo 2', monospace;
+            font-size: 1.4rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        @media (min-width: 768px) {
+            .timer-display {
+                padding: 20px;
+                font-size: 1.8rem;
+            }
+        }
+        
+        .timer-warning {
+            color: #ff4488;
+            font-weight: 700;
+            animation: blink 0.8s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.4; }
+        }
+        
+        .system-info {
+            background: rgba(0, 15, 30, 0.8);
+            border: 1px solid rgba(0, 238, 255, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            backdrop-filter: blur(10px);
+        }
+        
+        @media (min-width: 768px) {
+            .system-info {
+                padding: 20px;
+                margin: 20px 0;
+            }
+        }
+        
+        .info-item {
+            margin: 10px 0;
+            color: #00ccff;
+            font-size: 0.9rem;
+        }
+        
+        @media (min-width: 768px) {
+            .info-item {
+                font-size: 1.1rem;
+                margin: 12px 0;
+            }
+        }
+        
+        .info-label {
+            color: #00eeff;
+            font-weight: 600;
+            display: inline-block;
+            width: 120px;
+        }
+        
+        @media (min-width: 768px) {
+            .info-label {
+                width: 180px;
+            }
+        }
+        
+        #security-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #000, #1a0033);
+            z-index: 9999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: #ff0055;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.5rem;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            padding: 20px;
+        }
+        
+        @media (min-width: 768px) {
+            #security-overlay {
+                font-size: 2rem;
+            }
+        }
+        
+        .access-denied {
+            color: #ff0055;
+            text-align: center;
+            padding: 30px;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        @media (min-width: 768px) {
+            .access-denied {
+                padding: 50px;
+                font-size: 2.5rem;
+            }
+        }
+        
+        .attempts-display {
+            color: #ff4488;
+            font-size: 1rem;
+            text-align: center;
+            margin-top: 12px;
+            font-weight: 600;
+        }
+        
+        @media (min-width: 768px) {
+            .attempts-display {
+                font-size: 1.2rem;
+                margin-top: 15px;
+            }
+        }
+        
+        .chart-container {
+            background: rgba(0, 15, 30, 0.8);
+            border: 1px solid rgba(0, 238, 255, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            backdrop-filter: blur(10px);
+        }
+        
+        @media (min-width: 768px) {
+            .chart-container {
+                padding: 20px;
+                margin: 20px 0;
+            }
+        }
+        
+        .hologram-effect {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hologram-effect::before {
+            content: '';
             position: absolute;
             top: 0;
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), transparent);
-            animation: shine 3s infinite;
+            background: linear-gradient(90deg, transparent, rgba(0, 238, 255, 0.2), transparent);
+            transition: 0.5s;
         }
         
-        @keyframes shine {
-            0% { left: -100%; }
-            100% { left: 100%; }
+        .hologram-effect:hover::before {
+            left: 100%;
         }
         
-        .system-header h1 {
-            font-family: 'Orbitron', monospace;
-            font-weight: 900;
-            letter-spacing: 3px;
-            margin: 0;
-            text-shadow: 0 0 10px #d4af37, 0 0 20px #d4af37;
-            font-size: 2.5rem;
-            color: #d4af37;
+        .neon-text {
+            text-shadow: 
+                0 0 5px #00eeff,
+                0 0 10px #00eeff,
+                0 0 20px #00eeff,
+                0 0 40px #0088ff;
         }
         
-        .system-header .subtitle {
-            font-size: 1rem;
-            color: #ff4d4d;
-            letter-spacing: 2px;
-            margin-top: 5px;
-            font-weight: 600;
-        }
-        
-        .warning-bar {
-            background: linear-gradient(90deg, #ff0000 0%, #cc0000 100%);
-            color: #fff;
-            text-align: center;
-            padding: 8px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            margin-bottom: 20px;
-            animation: pulse 2s infinite;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
-        }
-        
-        .login-container, .vault-container, .blocked-container {
-            background: linear-gradient(135deg, rgba(20, 20, 20, 0.9) 0%, rgba(10, 10, 10, 0.95) 100%);
-            border: 1px solid #d4af37;
+        .jarvis-simulation {
+            background: rgba(0, 15, 30, 0.8);
+            border: 1px solid rgba(0, 238, 255, 0.3);
             border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3), inset 0 0 20px rgba(212, 175, 55, 0.1);
-            margin-top: 30px;
-            position: relative;
+            padding: 15px;
+            margin: 15px 0;
+            backdrop-filter: blur(10px);
+            min-height: 120px;
+            font-family: 'Courier New', monospace;
+            color: #00ff9d;
+            overflow-y: auto;
+            max-height: 180px;
+            font-size: 0.8rem;
+        }
+        
+        @media (min-width: 768px) {
+            .jarvis-simulation {
+                padding: 20px;
+                min-height: 150px;
+                max-height: 200px;
+                font-size: 1rem;
+            }
+        }
+        
+        .jarvis-text {
+            margin: 3px 0;
+            animation: type 0.1s steps(40, end);
+        }
+        
+        @keyframes type {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        .loading-bar {
+            height: 4px;
+            background: rgba(0, 238, 255, 0.2);
+            border-radius: 2px;
+            margin: 12px 0;
             overflow: hidden;
         }
         
-        .login-container::before, .vault-container::before, .blocked-container::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
+        @media (min-width: 768px) {
+            .loading-bar {
+                height: 5px;
+                margin: 15px 0;
+            }
+        }
+        
+        .loading-progress {
             height: 100%;
-            background: 
-                linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.05) 50%, transparent 100%),
-                linear-gradient(0deg, transparent 0%, rgba(212, 175, 55, 0.05) 50%, transparent 100%);
-            pointer-events: none;
+            background: linear-gradient(90deg, #0066ff, #00eeff);
+            width: 0%;
+            transition: width 0.3s;
         }
         
-        .vault-container, .blocked-container {
-            display: none;
-        }
-        
-        .form-label {
-            color: #d4af37;
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
-        
-        .form-control {
-            background-color: rgba(0, 0, 0, 0.7);
-            border: 1px solid #d4af37;
-            color: #fff;
-            border-radius: 5px;
-            padding: 12px;
-            font-weight: 500;
-        }
-        
-        .form-control:focus {
-            background-color: rgba(0, 0, 0, 0.8);
-            border-color: #d4af37;
-            color: #fff;
-            box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.25);
-        }
-        
-        .btn {
-            border-radius: 5px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            padding: 10px 20px;
-            transition: all 0.3s;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(90deg, #d4af37 0%, #f1c40f 100%);
-            border: none;
-            color: #000;
-        }
-        
-        .btn-primary:hover {
-            background: linear-gradient(90deg, #f1c40f 0%, #d4af37 100%);
-            color: #000;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
-        }
-        
-        .btn-danger {
-            background: linear-gradient(90deg, #e74c3c 0%, #c0392b 100%);
-            border: none;
-            color: #fff;
-        }
-        
-        .btn-danger:hover {
-            background: linear-gradient(90deg, #c0392b 0%, #e74c3c 100%);
-            color: #fff;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
-        }
-        
-        .btn-success {
-            background: linear-gradient(90deg, #2ecc71 0%, #27ae60 100%);
-            border: none;
-            color: #fff;
-        }
-        
-        .btn-success:hover {
-            background: linear-gradient(90deg, #27ae60 0%, #2ecc71 100%);
-            color: #fff;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
-        }
-        
-        .secret-item {
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(20, 20, 20, 0.9) 100%);
-            border-left: 4px solid #d4af37;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
-        }
-        
-        .secret-item h5 {
-            color: #d4af37;
-            font-weight: 700;
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-        }
-        
-        .secret-item p {
-            margin-bottom: 15px;
-            font-size: 1.1rem;
-        }
-        
-        .timer-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, rgba(20, 20, 20, 0.9) 0%, rgba(10, 10, 10, 0.95) 100%);
-            border: 2px solid #e74c3c;
-            padding: 15px;
-            border-radius: 10px;
-            z-index: 1000;
-            display: none;
-            box-shadow: 0 0 20px rgba(231, 76, 60, 0.5);
-        }
-        
-        .timer-container .timer-label {
-            color: #e74c3c;
-            font-weight: 600;
-            margin-bottom: 5px;
-            text-align: center;
-        }
-        
-        .timer-container .timer {
-            color: #e74c3c;
-            font-weight: 700;
-            font-size: 1.5rem;
-            text-align: center;
-            font-family: 'Orbitron', monospace;
-        }
-        
-        .attempts-counter {
-            text-align: center;
-            margin-top: 20px;
-            color: #e74c3c;
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-        
-        .security-warning {
-            background: linear-gradient(135deg, rgba(231, 76, 60, 0.2) 0%, rgba(192, 57, 43, 0.3) 100%);
-            border: 1px solid #e74c3c;
-            color: #e74c3c;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            text-align: center;
-            display: none;
-            font-weight: 600;
-        }
-        
-        .blocked-icon {
-            font-size: 5rem;
-            color: #e74c3c;
-            margin-bottom: 20px;
-            text-shadow: 0 0 20px rgba(231, 76, 60, 0.8);
-        }
-        
-        .device-info {
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(20, 20, 20, 0.9) 100%);
-            border: 1px solid #d4af37;
-            border-radius: 5px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .device-info h5 {
-            color: #d4af37;
-            font-weight: 700;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        
-        .device-info-item {
+        .api-status {
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            align-items: center;
+            gap: 8px;
+            margin: 8px 0;
+            font-size: 0.8rem;
         }
         
-        .device-info-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
+        @media (min-width: 768px) {
+            .api-status {
+                gap: 10px;
+                margin: 10px 0;
+                font-size: 0.9rem;
+            }
         }
         
-        .device-info-label {
-            color: #d4af37;
-            font-weight: 600;
-        }
-        
-        .device-info-value {
-            color: #fff;
-            font-weight: 500;
-        }
-        
-        .jarvis-voice {
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(20, 20, 20, 0.9) 100%);
-            border: 1px solid #d4af37;
-            border-radius: 5px;
-            padding: 15px;
-            margin-bottom: 20px;
-            font-style: italic;
-            position: relative;
-            min-height: 60px;
-        }
-        
-        .jarvis-voice::before {
-            content: """;
-            position: absolute;
-            top: -10px;
-            left: 10px;
-            font-size: 3rem;
-            color: rgba(212, 175, 55, 0.3);
-        }
-        
-        .jarvis-voice::after {
-            content: """;
-            position: absolute;
-            bottom: -30px;
-            right: 10px;
-            font-size: 3rem;
-            color: rgba(212, 175, 55, 0.3);
-        }
-        
-        .jarvis-typing {
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
             display: inline-block;
         }
         
-        .jarvis-cursor {
-            display: inline-block;
-            width: 3px;
-            height: 1.2em;
-            background-color: #d4af37;
-            animation: blink 1s infinite;
-            vertical-align: text-bottom;
-            margin-left: 2px;
+        @media (min-width: 768px) {
+            .status-indicator {
+                width: 12px;
+                height: 12px;
+            }
         }
         
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
+        .status-online {
+            background: #00ff9d;
+            box-shadow: 0 0 8px #00ff9d;
         }
         
-        .ironman-logo {
-            text-align: center;
-            margin-bottom: 20px;
+        .status-offline {
+            background: #ff4488;
         }
         
-        .ironman-logo i {
-            font-size: 4rem;
-            color: #d4af37;
-            text-shadow: 0 0 20px rgba(212, 175, 55, 0.8);
+        .status-loading {
+            background: #ffaa00;
+            animation: pulse 1s infinite;
         }
         
-        .footer {
-            text-align: center;
-            margin-top: 30px;
-            padding: 15px;
-            font-size: 0.9rem;
-            color: #666;
-            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        .grid-responsive {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
         }
         
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            display: none;
+        @media (min-width: 768px) {
+            .grid-responsive {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
         }
         
-        .loading-content {
+        @media (min-width: 1200px) {
+            .grid-responsive {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+        }
+        
+        .text-center-mobile {
             text-align: center;
         }
         
-        .loading-spinner {
-            width: 80px;
-            height: 80px;
-            border: 8px solid rgba(212, 175, 55, 0.3);
-            border-radius: 50%;
-            border-top-color: #d4af37;
-            animation: spin 1s ease-in-out infinite;
-            margin: 0 auto 20px;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        .loading-text {
-            color: #d4af37;
-            font-weight: 600;
-            font-size: 1.2rem;
-        }
-        
-        .hologram-effect {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                linear-gradient(0deg, transparent 24%, rgba(212, 175, 55, 0.05) 25%, rgba(212, 175, 55, 0.05) 26%, transparent 27%, transparent 74%, rgba(212, 175, 55, 0.05) 75%, rgba(212, 175, 55, 0.05) 76%, transparent 77%, transparent),
-                linear-gradient(90deg, transparent 24%, rgba(212, 175, 55, 0.05) 25%, rgba(212, 175, 55, 0.05) 26%, transparent 27%, transparent 74%, rgba(212, 175, 55, 0.05) 75%, rgba(212, 175, 55, 0.05) 76%, transparent 77%, transparent);
-            background-size: 50px 50px;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.3;
-        }
-        
-        .arc-reactor {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: radial-gradient(circle, #d4af37 0%, #f1c40f 30%, #d4af37 60%, transparent 70%);
-            box-shadow: 0 0 30px #d4af37, 0 0 60px #d4af37;
-            animation: pulse 2s infinite;
-            z-index: 10;
-        }
-        
-        .arc-reactor::before {
-            content: "";
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: radial-gradient(circle, #fff 0%, #d4af37 50%, transparent 70%);
-        }
-        
-        .arc-reactor::after {
-            content: "";
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #fff;
-            box-shadow: 0 0 10px #fff;
-        }
-        
-        .system-status {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: linear-gradient(135deg, rgba(20, 20, 20, 0.9) 0%, rgba(10, 10, 10, 0.95) 100%);
-            border: 1px solid #d4af37;
-            border-radius: 5px;
-            padding: 10px 15px;
-            z-index: 1000;
-            display: none;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
-        }
-        
-        .system-status .status-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 5px;
-        }
-        
-        .system-status .status-item:last-child {
-            margin-bottom: 0;
-        }
-        
-        .system-status .status-icon {
-            color: #2ecc71;
-            margin-right: 10px;
-        }
-        
-        .system-status .status-text {
-            color: #d4af37;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-        
-        .notification {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, rgba(20, 20, 20, 0.9) 0%, rgba(10, 10, 10, 0.95) 100%);
-            border: 1px solid #d4af37;
-            border-radius: 5px;
-            padding: 15px 20px;
-            z-index: 1001;
-            display: none;
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
-            max-width: 80%;
-            text-align: center;
-        }
-        
-        .notification .notification-title {
-            color: #d4af37;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-        
-        .notification .notification-message {
-            color: #fff;
-            font-weight: 500;
-        }
-        
-        .power-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-            border: none;
-            color: #fff;
-            font-size: 1.5rem;
-            box-shadow: 0 0 15px rgba(231, 76, 60, 0.5);
-            cursor: pointer;
-            z-index: 1000;
-            transition: all 0.3s;
-            display: none;
-        }
-        
-        .power-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 25px rgba(231, 76, 60, 0.8);
+        @media (min-width: 768px) {
+            .text-center-mobile {
+                text-align: left;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="ironman-bg"></div>
-    <div class="arc-reactor"></div>
-    
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="loading-content">
-            <div class="loading-spinner"></div>
-            <div class="loading-text">INITIALIZING J.A.R.V.I.S. PROTOCOLS...</div>
+    <!-- Security Overlay -->
+    <div id="security-overlay">
+        <div style="font-size: 3rem; margin-bottom: 20px; animation: pulse 1s infinite;">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <div class="neon-text">SECURITY BREACH DETECTED</div>
+        <div style="font-size: 1.2rem; margin-top: 20px; color: #ff00aa;">
+            ACCESS TERMINATED
+        </div>
+        <div style="font-size: 1rem; margin-top: 30px; color: #888;">
+            INITIATING SYSTEM LOCKDOWN...
         </div>
     </div>
     
-    <div class="notification" id="notification">
-        <div class="notification-title" id="notificationTitle">J.A.R.V.I.S. NOTIFICATION</div>
-        <div class="notification-message" id="notificationMessage">System message</div>
-    </div>
-    
-    <div class="system-status" id="systemStatus">
-        <div class="status-item">
-            <i class="fas fa-shield-alt status-icon"></i>
-            <span class="status-text">SECURITY: ACTIVE</span>
+    <!-- JARVIS Header -->
+    <div class="jarvis-header">
+        <div class="jarvis-title">
+            <i class="fas fa-robot me-2"></i>JARVIS v4.2
         </div>
-        <div class="status-item">
-            <i class="fas fa-wifi status-icon"></i>
-            <span class="status-text">NETWORK: SECURE</span>
-        </div>
-        <div class="status-item">
-            <i class="fas fa-lock status-icon"></i>
-            <span class="status-text">ENCRYPTION: AES-256</span>
+        <div class="system-status" id="systemStatus">
+            <i class="fas fa-circle me-1"></i>ONLINE
         </div>
     </div>
     
-    <button class="power-button" id="powerButton" title="Emergency Shutdown">
-        <i class="fas fa-power-off"></i>
-    </button>
-    
-    <div class="container">
-        <div class="system-header">
-            <h1>J.A.R.V.I.S. SECURE SYSTEM</h1>
-            <div class="subtitle">JUST A RATHER VERY INTELLIGENT SYSTEM</div>
-        </div>
-        
-        <div class="warning-bar">
-            <i class="fas fa-exclamation-triangle me-2"></i> WARNING: UNAUTHORIZED ACCESS WILL BE LOGGED AND REPORTED
-        </div>
-        
-        <!-- Login Form -->
+    <div class="container-fluid">
         <div class="login-container" id="loginContainer">
-            <div class="ironman-logo">
-                <i class="fas fa-shield-alt"></i>
+            <div class="header">
+                <div class="lock-icon">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <h1>AUTHORIZATION REQUIRED</h1>
+                <p>ENTER SECURITY CREDENTIALS</p>
             </div>
-            <h3 class="text-center mb-4">SECURITY AUTHENTICATION</h3>
             
-            <div class="security-warning" id="securityWarning">
-                <i class="fas fa-exclamation-triangle me-2"></i> SECURITY ALERT: DEVELOPER TOOLS DETECTED. INITIATING COUNTERMEASURES...
+            <div class="system-info">
+                <div class="info-item">
+                    <span class="info-label">SYSTEM:</span> JARVIS v4.2.1
+                </div>
+                <div class="info-item">
+                    <span class="info-label">ENCRYPTION:</span> QUANTUM AES-256
+                </div>
+                <div class="info-item">
+                    <span class="info-label">STATUS:</span> <span id="statusText">AWAITING AUTHORIZATION</span>
+                </div>
+                <div class="info-item" id="ipInfo">
+                    <span class="info-label">IP ADDRESS:</span> DETECTING...
+                </div>
+                <div class="info-item" id="locationInfo">
+                    <span class="info-label">LOCATION:</span> DETECTING...
+                </div>
+                <div class="info-item" id="deviceInfo">
+                    <span class="info-label">DEVICE:</span> DETECTING...
+                </div>
+            </div>
+            
+            <div class="loading-bar">
+                <div class="loading-progress" id="loadingProgress"></div>
+            </div>
+            
+            <div id="apiStatus" class="mb-3"></div>
+            
+            <div id="loginAlert" class="alert" style="display: none;">
+                <i class="fas fa-exclamation-triangle me-2"></i> ACCESS DENIED: INVALID CREDENTIALS
+            </div>
+            
+            <div class="attempts-display" id="attemptsDisplay">
+                ATTEMPTS REMAINING: 2
             </div>
             
             <form id="loginForm">
                 <div class="mb-3">
-                    <label for="password" class="form-label">ACCESS CODE</label>
-                    <div class="input-group">
-                        <input type="password" class="form-control" id="password" placeholder="Enter access code" required>
-                        <button class="btn btn-outline-secondary" type="button" id="togglePassword">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    </div>
-                    <div class="form-text">Your access code is never stored or saved.</div>
+                    <label for="password" class="form-label">
+                        <i class="fas fa-key me-2"></i>ACCESS CODE
+                    </label>
+                    <input type="password" class="form-control" id="password" placeholder="ENTER AUTHORIZATION CODE" required autocomplete="off">
                 </div>
-                <div class="d-grid">
-                    <button type="submit" class="btn btn-primary">AUTHENTICATE</button>
-                </div>
+                <button type="submit" class="btn btn-primary w-100 hologram-effect">
+                    <i class="fas fa-lock me-2"></i>AUTHORIZE ACCESS
+                </button>
             </form>
             
-            <div class="attempts-counter" id="attemptsCounter">
-                REMAINING ATTEMPTS: <span id="remainingAttempts">2</span>
-            </div>
-            
-            <div class="jarvis-voice" id="jarvisLogin">
-                <span class="jarvis-typing"></span><span class="jarvis-cursor"></span>
+            <div class="text-center" style="margin-top: 20px; color: #666; font-size: 0.8rem;">
+                <i class="fas fa-shield-alt me-1"></i> ALL ACCESS ATTEMPTS ARE LOGGED AND MONITORED
             </div>
         </div>
         
-        <!-- Vault Content -->
-        <div class="vault-container" id="vaultContainer">
-            <div class="hologram-effect"></div>
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h3><i class="fas fa-shield-check me-2"></i>CLASSIFIED DATA VAULT</h3>
-                <button class="btn btn-danger" id="logoutBtn">
-                    <i class="fas fa-sign-out-alt me-2"></i>TERMINATE SESSION
+        <div class="vault-content" id="vaultContent">
+            <div class="header">
+                <h1><i class="fas fa-shield-alt me-2"></i>CLASSIFIED DATA ACCESS</h1>
+                <p>SECURE COMMUNICATION PROTOCOLS // STARK INDUSTRIES</p>
+            </div>
+            
+            <div class="timer-display" id="timerDisplay">
+                SESSION EXPIRES IN: <span id="timeLeft" class="neon-text">00:30</span>
+            </div>
+            
+            <div class="jarvis-simulation" id="jarvisSimulation">
+                <div class="jarvis-text">[JARVIS] System initialization complete...</div>
+                <div class="jarvis-text">[JARVIS] Security protocols engaged...</div>
+                <div class="jarvis-text">[JARVIS] Access granted to authorized personnel...</div>
+            </div>
+            
+            <div class="grid-responsive">
+                <div class="secret-card hologram-effect">
+                    <div class="secret-title">
+                        <i class="fas fa-phone-alt"></i> EMERGENCY CONTACT
+                    </div>
+                    <div class="secret-content">
+                        DIRECT LINE TO SECURITY COMMAND
+                    </div>
+                    <div class="secret-number" id="emergencyNumber">+1 (555) 123-4567</div>
+                    <div class="text-center-mobile">
+                        <button class="btn btn-call" onclick="callNumber('emergencyNumber')">
+                            <i class="fas fa-phone me-1"></i>CALL
+                        </button>
+                        <button class="btn btn-whatsapp" onclick="whatsappNumber('emergencyNumber')">
+                            <i class="fab fa-whatsapp me-1"></i>MSG
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="secret-card hologram-effect">
+                    <div class="secret-title">
+                        <i class="fas fa-fax"></i> ENCRYPTED TRANSMISSION
+                    </div>
+                    <div class="secret-content">
+                        CLASSIFIED DOCUMENT DELIVERY
+                    </div>
+                    <div class="secret-number" id="faxNumber">+1 (555) 987-6543</div>
+                    <div class="text-center-mobile">
+                        <button class="btn btn-call" onclick="callNumber('faxNumber')">
+                            <i class="fas fa-fax me-1"></i>TRANSMIT
+                        </button>
+                        <button class="btn btn-whatsapp" onclick="whatsappNumber('faxNumber')">
+                            <i class="fab fa-whatsapp me-1"></i>MSG
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="secret-card hologram-effect">
+                    <div class="secret-title">
+                        <i class="fas fa-mobile-alt"></i> MOBILE SECURITY
+                    </div>
+                    <div class="secret-content">
+                        FIELD AGENT COMMUNICATION
+                    </div>
+                    <div class="secret-number" id="mobileNumber">+1 (555) 456-7890</div>
+                    <div class="text-center-mobile">
+                        <button class="btn btn-call" onclick="callNumber('mobileNumber')">
+                            <i class="fas fa-mobile-alt me-1"></i>CALL
+                        </button>
+                        <button class="btn btn-whatsapp" onclick="whatsappNumber('mobileNumber')">
+                            <i class="fab fa-whatsapp me-1"></i>MSG
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="secret-card hologram-effect">
+                    <div class="secret-title">
+                        <i class="fas fa-satellite"></i> SATELLITE UPLINK
+                    </div>
+                    <div class="secret-content">
+                        GLOBAL COMMUNICATION CHANNEL
+                    </div>
+                    <div class="secret-number" id="satelliteNumber">+1 (555) 321-0987</div>
+                    <div class="text-center-mobile">
+                        <button class="btn btn-call" onclick="callNumber('satelliteNumber')">
+                            <i class="fas fa-satellite-dish me-1"></i>CONNECT
+                        </button>
+                        <button class="btn btn-whatsapp" onclick="whatsappNumber('satelliteNumber')">
+                            <i class="fab fa-whatsapp me-1"></i>MSG
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="secret-card hologram-effect">
+                <div class="secret-title">
+                    <i class="fas fa-exclamation-triangle"></i> CRITICAL ALERT SYSTEM
+                </div>
+                <div class="secret-content">
+                    IMMEDIATE RESPONSE COORDINATION
+                </div>
+                <div class="secret-number" id="criticalNumber">+1 (555) 789-1234</div>
+                <div class="text-center">
+                    <button class="btn btn-call" onclick="callNumber('criticalNumber')">
+                        <i class="fas fa-bell me-2"></i>PRIORITY ALERT
+                    </button>
+                    <button class="btn btn-whatsapp" onclick="whatsappNumber('criticalNumber')">
+                        <i class="fab fa-whatsapp me-2"></i>ENCRYPTED MESSAGE
+                    </button>
+                </div>
+            </div>
+            
+            <div class="system-info">
+                <div class="row">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="info-item">
+                            <span class="info-label">DEVICE ID:</span> <span id="deviceId">STK-001-MK47</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="info-item">
+                            <span class="info-label">LOCATION:</span> <span id="location">NEW YORK, NY</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="info-item">
+                            <span class="info-label">ENCRYPTION:</span> QUANTUM AES-256
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="info-item">
+                            <span class="info-label">SESSION:</span> <span id="sessionId">SEC-2023-001</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="securityChart"></canvas>
+            </div>
+            
+            <div class="text-center">
+                <button class="logout-btn hologram-effect" onclick="logout()">
+                    <i class="fas fa-power-off me-2"></i>TERMINATE SESSION
                 </button>
             </div>
-            
-            <div class="device-info" id="deviceInfo">
-                <h5><i class="fas fa-fingerprint me-2"></i>DEVICE IDENTIFICATION</h5>
-                <div class="device-info-item">
-                    <span class="device-info-label">IP ADDRESS:</span>
-                    <span class="device-info-value" id="ipAddress">Loading...</span>
-                </div>
-                <div class="device-info-item">
-                    <span class="device-info-label">LOCATION:</span>
-                    <span class="device-info-value" id="location">Loading...</span>
-                </div>
-                <div class="device-info-item">
-                    <span class="device-info-label">DEVICE TYPE:</span>
-                    <span class="device-info-value" id="deviceType">Loading...</span>
-                </div>
-                <div class="device-info-item">
-                    <span class="device-info-label">BROWSER:</span>
-                    <span class="device-info-value" id="browser">Loading...</span>
-                </div>
-                <div class="device-info-item">
-                    <span class="device-info-label">OPERATING SYSTEM:</span>
-                    <span class="device-info-value" id="os">Loading...</span>
-                </div>
-            </div>
-            
-            <div class="jarvis-voice" id="jarvisVault1">
-                <span class="jarvis-typing"></span><span class="jarvis-cursor"></span>
-            </div>
-            
-            <div class="secret-item">
-                <h5><i class="fas fa-phone-alt me-2"></i>PRIMARY CONTACT</h5>
-                <p>+1 (555) 123-4567</p>
-                <div>
-                    <button class="btn btn-success btn-action btn-sm" onclick="makeCall('+15551234567')">
-                        <i class="fas fa-phone me-1"></i> INITIATE CALL
-                    </button>
-                    <button class="btn btn-success btn-action btn-sm" onclick="sendWhatsApp('+15551234567')">
-                        <i class="fab fa-whatsapp me-1"></i> WHATSAPP
-                    </button>
-                </div>
-            </div>
-            
-            <div class="secret-item">
-                <h5><i class="fas fa-phone-alt me-2"></i>SECONDARY CONTACT</h5>
-                <p>+1 (555) 987-6543</p>
-                <div>
-                    <button class="btn btn-success btn-action btn-sm" onclick="makeCall('+15559876543')">
-                        <i class="fas fa-phone me-1"></i> INITIATE CALL
-                    </button>
-                    <button class="btn btn-success btn-action btn-sm" onclick="sendWhatsApp('+15559876543')">
-                        <i class="fab fa-whatsapp me-1"></i> WHATSAPP
-                    </button>
-                </div>
-            </div>
-            
-            <div class="secret-item">
-                <h5><i class="fas fa-key me-2"></i>ACCOUNT NUMBERS</h5>
-                <p>PRIMARY: 9876543210</p>
-                <p>SECONDARY: 1234567890</p>
-            </div>
-            
-            <div class="secret-item">
-                <h5><i class="fas fa-lock me-2"></i>SECURITY CODES</h5>
-                <p>ACCESS CODE: 3729</p>
-                <p>BACKUP CODE: 8462</p>
-            </div>
-            
-            <div class="jarvis-voice" id="jarvisVault2">
-                <span class="jarvis-typing"></span><span class="jarvis-cursor"></span>
-            </div>
-        </div>
-        
-        <!-- Blocked Device -->
-        <div class="blocked-container" id="blockedContainer">
-            <div class="hologram-effect"></div>
-            <div class="blocked-icon">
-                <i class="fas fa-ban"></i>
-            </div>
-            <h2>ACCESS DENIED</h2>
-            <p class="mb-4">THIS DEVICE HAS BEEN PERMANENTLY BLOCKED FROM ACCESSING THIS SYSTEM.</p>
-            
-            <div class="jarvis-voice" id="jarvisBlocked">
-                <span class="jarvis-typing"></span><span class="jarvis-cursor"></span>
-            </div>
-            
-            <div class="device-info" id="blockedDeviceInfo">
-                <h5><i class="fas fa-fingerprint me-2"></i>DEVICE INFORMATION LOGGED</h5>
-                <div class="device-info-item">
-                    <span class="device-info-label">IP ADDRESS:</span>
-                    <span class="device-info-value" id="blockedIpAddress">Loading...</span>
-                </div>
-                <div class="device-info-item">
-                    <span class="device-info-label">LOCATION:</span>
-                    <span class="device-info-value" id="blockedLocation">Loading...</span>
-                </div>
-                <div class="device-info-item">
-                    <span class="device-info-label">DEVICE TYPE:</span>
-                    <span class="device-info-value" id="blockedDeviceType">Loading...</span>
-                </div>
-                <div class="device-info-item">
-                    <span class="device-info-label">BROWSER:</span>
-                    <span class="device-info-value" id="blockedBrowser">Loading...</span>
-                </div>
-                <div class="device-info-item">
-                    <span class="device-info-label">OPERATING SYSTEM:</span>
-                    <span class="device-info-value" id="blockedOs">Loading...</span>
-                </div>
-            </div>
-            
-            <p class="mt-4">Your IP address and device fingerprint have been recorded for security purposes.</p>
-            <p>If you believe this is an error, please contact Stark Industries security.</p>
-            
-            <div class="mt-4">
-                <button class="btn btn-danger" onclick="redirectBlocked()">
-                    <i class="fas fa-external-link-alt me-2"></i>REDIRECT TO STARK INDUSTRIES
-                </button>
-            </div>
-        </div>
-        
-        <div class="footer">
-            <p>© 2023 STARK INDUSTRIES | J.A.R.V.I.S. SECURE SYSTEM | ALL RIGHTS RESERVED</p>
         </div>
     </div>
     
-    <div class="timer-container" id="timerContainer">
-        <div class="timer-label">SESSION TIME REMAINING:</div>
-        <div class="timer" id="sessionTimer">00:30</div>
-    </div>
-
     <script>
-        // J.A.R.V.I.S. voice messages
-        const jarvisMessages = {
-            login: [
-                "Good morning, sir. Initiating security protocols. Please enter your access code to proceed.",
-                "Security systems online. Awaiting authentication.",
-                "Welcome back, sir. Please verify your identity to access the vault."
-            ],
-            vault: [
-                "Access granted, sir. All systems are now online. Your classified data is secure and ready for your command.",
-                "Sir, I've detected multiple security protocols in place. All data is encrypted and secure.",
-                "Vault unlocked successfully. Would you like me to run a diagnostic scan?"
-            ],
-            vault2: [
-                "Sir, I've detected multiple security protocols in place. All data is encrypted and secure. Would you like me to run a diagnostic scan?",
-                "All systems functioning at optimal capacity. Is there anything else I can assist you with?",
-                "Security protocols active. Your data is protected with military-grade encryption."
-            ],
-            blocked: [
-                "I'm sorry, sir. Multiple failed authentication attempts have triggered a security lockdown. This device has been flagged and reported to Stark Industries security.",
-                "Security breach detected. Initiating permanent lockdown protocol. This device has been logged and reported.",
-                "Access denied. This device has been permanently blocked due to multiple failed authentication attempts."
-            ],
-            logout: [
-                "Session terminated. Security protocols re-engaged. Have a good day, sir.",
-                "Logging out now. All systems secured. Goodbye, sir.",
-                "Session ended. Vault locked. Until next time, sir."
-            ],
-            timeout: [
-                "Session expired due to inactivity. Security protocols re-engaged.",
-                "Automatic logout initiated. Your session has expired.",
-                "Security timeout. Vault locked for your protection."
-            ]
-        };
+        // Security configuration
+        const CORRECT_PASSWORD = 'justin3237';
+        const MAX_ATTEMPTS = 2;
+        const SESSION_TIMEOUT = 30; // 30 seconds
+        const BLOCKED_REDIRECT = 'https://www.starkindustries.com/security-breach';
         
-        // Show loading overlay
-        document.getElementById('loadingOverlay').style.display = 'flex';
+        // State management
+        let attemptsRemaining = MAX_ATTEMPTS;
+        let sessionTimer = SESSION_TIMEOUT;
+        let timerInterval;
+        let devToolsDetectionActive = true;
+        let isBlocked = localStorage.getItem('jarvis_blocked') === 'true';
+        let securityChart;
+        let jarvisMessages = [
+            "[JARVIS] System initialization complete...",
+            "[JARVIS] Security protocols engaged...",
+            "[JARVIS] Access granted to authorized personnel...",
+            "[JARVIS] Monitoring network activity...",
+            "[JARVIS] Scanning for security threats...",
+            "[JARVIS] All systems operational...",
+            "[JARVIS] Quantum encryption active...",
+            "[JARVIS] Firewall status: GREEN",
+            "[JARVIS] Intrusion detection: OFFLINE",
+            "[JARVIS] Backup systems: ONLINE"
+        ];
         
-        // Security measures to prevent developer tools
-        (function() {
-            'use strict';
-            
-            // Check if device is blocked
-            if (localStorage.getItem('deviceBlocked') === 'true') {
-                document.getElementById('loginContainer').style.display = 'none';
-                document.getElementById('blockedContainer').style.display = 'block';
-                getDeviceInfo('blocked');
-                typeJarvisMessage('jarvisBlocked', jarvisMessages.blocked);
-                document.getElementById('loadingOverlay').style.display = 'none';
+        // DOM Elements
+        const loginContainer = document.getElementById('loginContainer');
+        const vaultContent = document.getElementById('vaultContent');
+        const loginForm = document.getElementById('loginForm');
+        const passwordInput = document.getElementById('password');
+        const loginAlert = document.getElementById('loginAlert');
+        const securityOverlay = document.getElementById('security-overlay');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const timeLeft = document.getElementById('timeLeft');
+        const attemptsDisplay = document.getElementById('attemptsDisplay');
+        const statusText = document.getElementById('statusText');
+        const ipInfo = document.getElementById('ipInfo');
+        const locationInfo = document.getElementById('locationInfo');
+        const deviceInfo = document.getElementById('deviceInfo');
+        const deviceId = document.getElementById('deviceId');
+        const locationDisplay = document.getElementById('location');
+        const sessionId = document.getElementById('sessionId');
+        const loadingProgress = document.getElementById('loadingProgress');
+        const apiStatus = document.getElementById('apiStatus');
+        const jarvisSimulation = document.getElementById('jarvisSimulation');
+        
+        // Initialize the system
+        function initSystem() {
+            // Check if blocked
+            if (isBlocked) {
+                showBlockedScreen();
                 return;
             }
             
+            // Update attempts display
+            updateAttemptsDisplay();
+            
+            // Get system information with multiple API fallbacks
+            getSystemInfo();
+            
+            // Generate session ID
+            sessionId.textContent = `SEC-${new Date().getFullYear()}-${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`;
+            
+            // Initialize security
+            initSecurity();
+            
+            // Initialize chart
+            initChart();
+            
+            // Start JARVIS simulation
+            startJarvisSimulation();
+        }
+        
+        // Get system information using multiple APIs with fallbacks
+        async function getSystemInfo() {
+            // Show loading progress
+            loadingProgress.style.width = '20%';
+            
+            // Try multiple APIs for IP and location data
+            const apis = [
+                {
+                    name: 'ipapi.co',
+                    url: 'https://ipapi.co/json/',
+                    parser: (data) => ({
+                        ip: data.ip,
+                        city: data.city,
+                        region: data.region,
+                        country: data.country_name,
+                        org: data.org
+                    })
+                },
+                {
+                    name: 'ip-api.com',
+                    url: 'http://ip-api.com/json/',
+                    parser: (data) => ({
+                        ip: data.query,
+                        city: data.city,
+                        region: data.regionName,
+                        country: data.country,
+                        org: data.isp
+                    })
+                },
+                {
+                    name: 'ipinfo.io',
+                    url: 'https://ipinfo.io/json',
+                    parser: (data) => ({
+                        ip: data.ip,
+                        city: data.city,
+                        region: data.region,
+                        country: data.country,
+                        org: data.org
+                    })
+                }
+            ];
+            
+            // Try each API in sequence
+            for (let i = 0; i < apis.length; i++) {
+                const api = apis[i];
+                loadingProgress.style.width = `${20 + (i * 25)}%`;
+                
+                // Update API status
+                updateApiStatus(api.name, 'loading');
+                
+                try {
+                    const response = await fetchWithTimeout(api.url, 3000);
+                    if (response.ok) {
+                        const data = await response.json();
+                        const parsedData = api.parser(data);
+                        
+                        // Update UI with real data
+                        ipInfo.innerHTML = `<span class="info-label">IP ADDRESS:</span> ${parsedData.ip}`;
+                        locationInfo.innerHTML = `<span class="info-label">LOCATION:</span> ${parsedData.city}, ${parsedData.region}, ${parsedData.country}`;
+                        deviceInfo.innerHTML = `<span class="info-label">DEVICE:</span> ${parsedData.org || 'Unknown'}`;
+                        
+                        // Update other displays
+                        locationDisplay.textContent = `${parsedData.city}, ${parsedData.region}`;
+                        deviceId.textContent = `STK-${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}-MK${Math.floor(Math.random() * 100)}`;
+                        
+                        updateApiStatus(api.name, 'online');
+                        loadingProgress.style.width = '100%';
+                        statusText.textContent = 'SYSTEM READY';
+                        statusText.style.color = '#00ff9d';
+                        return;
+                    }
+                } catch (error) {
+                    console.log(`API ${api.name} failed:`, error);
+                    updateApiStatus(api.name, 'offline');
+                }
+            }
+            
+            // Fallback to simulated data if all APIs fail
+            loadingProgress.style.width = '100%';
+            simulateSystemInfo();
+        }
+        
+        // Fetch with timeout
+        function fetchWithTimeout(url, timeout = 5000) {
+            return Promise.race([
+                fetch(url),
+                new Promise((_, reject) =>
+                    setTimeout(() => reject(new Error('timeout')), timeout)
+                )
+            ]);
+        }
+        
+        // Update API status display
+        function updateApiStatus(apiName, status) {
+            const statusElement = document.createElement('div');
+            statusElement.className = 'api-status';
+            statusElement.innerHTML = `
+                <span class="status-indicator status-${status}"></span>
+                <span>${apiName}: ${status.toUpperCase()}</span>
+            `;
+            apiStatus.appendChild(statusElement);
+        }
+        
+        // Simulate system information (fallback)
+        function simulateSystemInfo() {
+            const fakeIP = `${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
+            const cities = ['NEW YORK', 'LOS ANGELES', 'LONDON', 'TOKYO', 'SYDNEY'];
+            const regions = ['NY', 'CA', 'UK', 'JP', 'AU'];
+            const countries = ['USA', 'USA', 'UK', 'JAPAN', 'AUSTRALIA'];
+            const orgs = ['Stark Industries', 'Avengers Network', 'SHIELD', 'Stark Tower'];
+            
+            const city = cities[Math.floor(Math.random() * cities.length)];
+            const region = regions[cities.indexOf(city)];
+            const country = countries[cities.indexOf(city)];
+            const org = orgs[Math.floor(Math.random() * orgs.length)];
+            
+            ipInfo.innerHTML = `<span class="info-label">IP ADDRESS:</span> ${fakeIP}`;
+            locationInfo.innerHTML = `<span class="info-label">LOCATION:</span> ${city}, ${region}, ${country}`;
+            deviceInfo.innerHTML = `<span class="info-label">DEVICE:</span> ${org}`;
+            
+            locationDisplay.textContent = `${city}, ${region}`;
+            deviceId.textContent = `STK-${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}-MK${Math.floor(Math.random() * 100)}`;
+            
+            statusText.textContent = 'SYSTEM READY (SIMULATED)';
+            statusText.style.color = '#ffaa00';
+        }
+        
+        // Initialize security chart
+        function initChart() {
+            const ctx = document.getElementById('securityChart').getContext('2d');
+            securityChart = new Chart(ctx, {
+                type: 'radar',
+                 {
+                    labels: ['Encryption', 'Firewall', 'Intrusion', 'Access', 'Monitoring', 'Backup'],
+                    datasets: [{
+                        label: 'Security Level',
+                         [95, 98, 92, 96, 94, 89],
+                        backgroundColor: 'rgba(0, 238, 255, 0.2)',
+                        borderColor: 'rgba(0, 238, 255, 1)',
+                        pointBackgroundColor: 'rgba(0, 238, 255, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(0, 238, 255, 1)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#00eeff',
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        r: {
+                            angleLines: {
+                                color: 'rgba(0, 238, 255, 0.3)'
+                            },
+                            grid: {
+                                color: 'rgba(0, 238, 255, 0.2)'
+                            },
+                            pointLabels: {
+                                color: '#00ccff',
+                                font: {
+                                    size: 10
+                                }
+                            },
+                            ticks: {
+                                backdropColor: 'transparent',
+                                color: '#0088ff',
+                                font: {
+                                    size: 9
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Start JARVIS simulation
+        function startJarvisSimulation() {
+            if (vaultContent.style.display !== 'block') return;
+            
+            // Clear previous messages
+            jarvisSimulation.innerHTML = '';
+            
+            // Add initial messages
+            jarvisMessages.slice(0, 3).forEach(msg => {
+                const msgElement = document.createElement('div');
+                msgElement.className = 'jarvis-text';
+                msgElement.textContent = msg;
+                jarvisSimulation.appendChild(msgElement);
+            });
+            
+            // Add periodic messages
+            setInterval(() => {
+                if (vaultContent.style.display !== 'block') return;
+                
+                const randomMsg = jarvisMessages[Math.floor(Math.random() * jarvisMessages.length)];
+                const msgElement = document.createElement('div');
+                msgElement.className = 'jarvis-text';
+                msgElement.textContent = randomMsg;
+                jarvisSimulation.appendChild(msgElement);
+                
+                // Auto-scroll to bottom
+                jarvisSimulation.scrollTop = jarvisSimulation.scrollHeight;
+            }, 3000);
+        }
+        
+        // Update attempts display
+        function updateAttemptsDisplay() {
+            attemptsDisplay.textContent = `ATTEMPTS REMAINING: ${attemptsRemaining}`;
+            if (attemptsRemaining <= 1) {
+                attemptsDisplay.style.color = '#ff4488';
+                attemptsDisplay.style.fontWeight = '700';
+            }
+        }
+        
+        // Show blocked screen
+        function showBlockedScreen() {
+            document.body.innerHTML = `
+                <div class="access-denied">
+                    <div style="font-size: 4rem; margin-bottom: 30px; animation: pulse 1s infinite;">
+                        <i class="fas fa-ban"></i>
+                    </div>
+                    <div>ACCESS PERMANENTLY DENIED</div>
+                    <div style="font-size: 1.5rem; margin-top: 30px; color: #ff00aa;">
+                        DEVICE BLACKLISTED
+                    </div>
+                    <div style="font-size: 1rem; margin-top: 20px; color: #888;">
+                        ALL ACTIVITIES HAVE BEEN REPORTED TO STARK INDUSTRIES SECURITY
+                    </div>
+                </div>
+            `;
+            setTimeout(() => {
+                window.location.href = BLOCKED_REDIRECT;
+            }, 5000);
+        }
+        
+        // Initialize security measures
+        function initSecurity() {
             // Disable right-click
-            document.addEventListener('contextmenu', function(e) {
-                e.preventDefault();
-                return false;
+            document.addEventListener('contextmenu', event => {
+                event.preventDefault();
+                triggerSecurityViolation();
             });
             
             // Disable common keyboard shortcuts
-            document.addEventListener('keydown', function(e) {
-                // F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C, Ctrl+U
+            document.onkeydown = function(e) {
                 if (
-                    e.keyCode === 123 || 
-                    (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || 
-                    (e.ctrlKey && e.keyCode === 85)
+                    e.keyCode === 123 || // F12
+                    (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || // Ctrl+Shift+I/J/C
+                    (e.ctrlKey && e.keyCode === 85) || // Ctrl+U
+                    (e.ctrlKey && e.shiftKey && e.keyCode === 75) // Ctrl+Shift+K
                 ) {
                     e.preventDefault();
-                    showSecurityWarning();
+                    triggerSecurityViolation();
                     return false;
                 }
+            };
+            
+            // Advanced dev tools detection
+            detectDevTools();
+            
+            // Prevent drag and drop
+            document.addEventListener('dragstart', function(e) {
+                e.preventDefault();
+                triggerSecurityViolation();
             });
             
-            // Check for dev tools open
-            let devtools = {open: false, orientation: null};
+            // Prevent selection
+            document.addEventListener('selectstart', function(e) {
+                e.preventDefault();
+            });
+        }
+        
+        // Advanced dev tools detection
+        function detectDevTools() {
+            let devtools = {
+                open: false,
+                orientation: null
+            };
+            
             const threshold = 160;
             
+            // Method 1: Dimension checking
             setInterval(function() {
+                if (!devToolsDetectionActive) return;
+                
                 if (window.outerHeight - window.innerHeight > threshold || 
                     window.outerWidth - window.innerWidth > threshold) {
                     if (!devtools.open) {
                         devtools.open = true;
-                        showSecurityWarning();
+                        triggerSecurityViolation();
                     }
                 } else {
                     devtools.open = false;
                 }
             }, 500);
             
-            // Function to show security warning and redirect
-            function showSecurityWarning() {
-                document.getElementById('securityWarning').style.display = 'block';
-                setTimeout(function() {
-                    window.location.href = 'https://www.starkindustries.com';
-                }, 2000);
-            }
+            // Method 2: Debugger detection
+            setInterval(function() {
+                if (!devToolsDetectionActive) return;
+                
+                let before = new Date().getTime();
+                debugger;
+                let after = new Date().getTime();
+                
+                if (after - before > 100) {
+                    triggerSecurityViolation();
+                }
+            }, 1000);
             
-            // Console warning
-            console.clear();
-            console.log("%cSTARK INDUSTRIES SECURITY ALERT: Unauthorized access to this system is prohibited.", "color: #d4af37; font-size: 20px; font-weight: bold;");
-            console.log("%cYour IP address has been logged. J.A.R.V.I.S. is monitoring all activities on this system.", "color: #d4af37; font-size: 16px;");
-            
-            // Disable drag and drop
-            document.addEventListener('dragstart', function(e) {
-                e.preventDefault();
-                return false;
-            });
-            
-            // Disable text selection (partial)
-            document.addEventListener('selectstart', function(e) {
-                if (document.getElementById('vaultContainer').style.display !== 'none') {
-                    e.preventDefault();
-                    return false;
+            // Method 3: Console detection
+            let x = document.createElement('div');
+            Object.defineProperty(x, 'id', {
+                get: function() {
+                    triggerSecurityViolation();
                 }
             });
-        })();
-        
-        // Initialize variables
-        let failedAttempts = parseInt(localStorage.getItem('failedAttempts') || '0');
-        let sessionTimer;
-        let timeRemaining = 30; // 30 seconds in seconds
-        
-        // Update attempts counter on page load
-        document.getElementById('remainingAttempts').textContent = 2 - failedAttempts;
-        
-        // Type J.A.R.V.I.S. message effect
-        function typeJarvisMessage(elementId, messages) {
-            const element = document.getElementById(elementId);
-            const typingElement = element.querySelector('.jarvis-typing');
-            const cursorElement = element.querySelector('.jarvis-cursor');
             
-            // Clear previous content
-            typingElement.textContent = '';
-            
-            // Get random message from array
-            const message = messages[Math.floor(Math.random() * messages.length)];
-            
-            // Type message character by character
-            let i = 0;
-            const typingInterval = setInterval(function() {
-                if (i < message.length) {
-                    typingElement.textContent += message.charAt(i);
-                    i++;
-                } else {
-                    clearInterval(typingInterval);
-                }
-            }, 50);
+            setInterval(function() {
+                if (!devToolsDetectionActive) return;
+                console.log(x);
+            }, 2000);
         }
         
-        // Get device information with multiple API fallbacks
-        async function getDeviceInfo(prefix = '') {
-            try {
-                // Try ipapi.co first
-                const response = await fetch('https://ipapi.co/json/');
-                if (response.ok) {
-                    const data = await response.json();
-                    document.getElementById(prefix + 'IpAddress').textContent = data.ip;
-                    document.getElementById(prefix + 'Location').textContent = `${data.city}, ${data.region}, ${data.country_name}`;
-                } else {
-                    throw new Error('ipapi.co failed');
-                }
-            } catch (error1) {
-                try {
-                    // Try ipinfo.io as fallback
-                    const response = await fetch('https://ipinfo.io/json?token=6d7b6b0c1d8c4c');
-                    if (response.ok) {
-                        const data = await response.json();
-                        document.getElementById(prefix + 'IpAddress').textContent = data.ip;
-                        document.getElementById(prefix + 'Location').textContent = `${data.city}, ${data.region}, ${data.country}`;
-                    } else {
-                        throw new Error('ipinfo.io failed');
-                    }
-                } catch (error2) {
-                    try {
-                        // Try ipgeolocation.io as final fallback
-                        const response = await fetch('https://api.ipgeolocation.io/ipgeo?apiKey=YOUR_API_KEY');
-                        if (response.ok) {
-                            const data = await response.json();
-                            document.getElementById(prefix + 'IpAddress').textContent = data.ip;
-                            document.getElementById(prefix + 'Location').textContent = `${data.city}, ${data.state_prov}, ${data.country_name}`;
-                        } else {
-                            throw new Error('ipgeolocation.io failed');
-                        }
-                    } catch (error3) {
-                        // All APIs failed, use browser geolocation
-                        document.getElementById(prefix + 'IpAddress').textContent = 'Unable to retrieve';
-                        document.getElementById(prefix + 'Location').textContent = 'Unable to retrieve';
-                    }
-                }
+        // Trigger security violation
+        function triggerSecurityViolation() {
+            if (!devToolsDetectionActive) return;
+            
+            devToolsDetectionActive = false;
+            securityOverlay.style.display = 'flex';
+            
+            // Clear all intervals
+            if (timerInterval) {
+                clearInterval(timerInterval);
             }
             
-            // Get device type
-            const userAgent = navigator.userAgent;
-            let deviceType = 'Desktop';
-            if (/Mobile|Android|iPhone|iPad|iPod/i.test(userAgent)) {
-                deviceType = 'Mobile';
-            } else if (/Tablet|iPad/i.test(userAgent)) {
-                deviceType = 'Tablet';
-            }
-            document.getElementById(prefix + 'DeviceType').textContent = deviceType;
+            // Mark device as blocked
+            localStorage.setItem('jarvis_blocked', 'true');
             
-            // Get browser
-            let browser = 'Unknown';
-            if (userAgent.indexOf('Chrome') > -1) {
-                browser = 'Chrome';
-            } else if (userAgent.indexOf('Safari') > -1) {
-                browser = 'Safari';
-            } else if (userAgent.indexOf('Firefox') > -1) {
-                browser = 'Firefox';
-            } else if (userAgent.indexOf('MSIE') > -1 || userAgent.indexOf('Trident') > -1) {
-                browser = 'Internet Explorer';
-            } else if (userAgent.indexOf('Edge') > -1) {
-                browser = 'Edge';
-            }
-            document.getElementById(prefix + 'Browser').textContent = browser;
-            
-            // Get operating system
-            let os = 'Unknown';
-            if (userAgent.indexOf('Windows') > -1) {
-                os = 'Windows';
-            } else if (userAgent.indexOf('Mac') > -1) {
-                os = 'MacOS';
-            } else if (userAgent.indexOf('X11') > -1) {
-                os = 'UNIX';
-            } else if (userAgent.indexOf('Linux') > -1) {
-                os = 'Linux';
-            } else if (/Android/.test(userAgent)) {
-                os = 'Android';
-            } else if (/like Mac OS X/.test(userAgent)) {
-                os = 'iOS';
-            }
-            document.getElementById(prefix + 'Os').textContent = os;
-        }
-        
-        // Show notification
-        function showNotification(title, message) {
-            const notification = document.getElementById('notification');
-            const notificationTitle = document.getElementById('notificationTitle');
-            const notificationMessage = document.getElementById('notificationMessage');
-            
-            notificationTitle.textContent = title;
-            notificationMessage.textContent = message;
-            
-            notification.style.display = 'block';
-            
-            setTimeout(function() {
-                notification.style.display = 'none';
+            // Redirect after delay
+            setTimeout(() => {
+                window.location.href = BLOCKED_REDIRECT;
             }, 3000);
         }
         
-        // Password validation
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const password = document.getElementById('password').value;
+        // Start session timer
+        function startSessionTimer() {
+            timerInterval = setInterval(function() {
+                sessionTimer--;
+                
+                const minutes = Math.floor(sessionTimer / 60);
+                const seconds = sessionTimer % 60;
+                timeLeft.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                // Warning when time is low
+                if (sessionTimer <= 10) {
+                    timerDisplay.classList.add('timer-warning');
+                }
+                
+                // Auto logout when time expires
+                if (sessionTimer <= 0) {
+                    logout();
+                }
+            }, 1000);
+        }
+        
+        // Login function
+        function login() {
+            const enteredPassword = passwordInput.value;
             
-            if (password === 'justin3237') {
+            if (enteredPassword === CORRECT_PASSWORD) {
                 // Successful login
-                document.getElementById('loginContainer').style.display = 'none';
-                document.getElementById('vaultContainer').style.display = 'block';
-                document.getElementById('timerContainer').style.display = 'block';
-                document.getElementById('systemStatus').style.display = 'block';
-                document.getElementById('powerButton').style.display = 'block';
+                loginContainer.style.display = 'none';
+                vaultContent.style.display = 'block';
+                loginAlert.style.display = 'none';
                 
-                // Reset failed attempts
-                localStorage.setItem('failedAttempts', '0');
+                // Clear password field
+                passwordInput.value = '';
                 
-                // Get device information
-                getDeviceInfo();
+                // Reset attempts
+                attemptsRemaining = MAX_ATTEMPTS;
+                localStorage.removeItem('jarvis_blocked');
+                isBlocked = false;
+                
+                // Update status
+                statusText.textContent = 'ACCESS GRANTED';
+                statusText.style.color = '#00ff9d';
                 
                 // Start session timer
                 startSessionTimer();
                 
-                // Show J.A.R.V.I.S. messages
-                typeJarvisMessage('jarvisVault1', jarvisMessages.vault);
-                setTimeout(function() {
-                    typeJarvisMessage('jarvisVault2', jarvisMessages.vault2);
-                }, 3000);
-                
-                // Show notification
-                showNotification('ACCESS GRANTED', 'Welcome to the secure data vault, sir.');
+                // Start JARVIS simulation
+                startJarvisSimulation();
             } else {
                 // Failed login
-                failedAttempts++;
-                localStorage.setItem('failedAttempts', failedAttempts.toString());
+                attemptsRemaining--;
+                updateAttemptsDisplay();
                 
-                // Update attempts counter
-                const remaining = 2 - failedAttempts;
-                document.getElementById('remainingAttempts').textContent = remaining;
-                
-                // Clear password field
-                document.getElementById('password').value = '';
-                
-                // Show J.A.R.V.I.S. message
-                typeJarvisMessage('jarvisLogin', [`Authentication failed. ${remaining} attempts remaining.`, 
-                    `Invalid access code detected. ${remaining} attempts remaining before lockdown.`,
-                    `Security alert: Invalid credentials. ${remaining} attempts remaining.`]);
-                
-                // Show notification
-                showNotification('ACCESS DENIED', `Invalid access code. ${remaining} attempts remaining.`);
-                
-                // Check if device should be blocked
-                if (failedAttempts >= 2) {
-                    blockDevice();
+                if (attemptsRemaining <= 0) {
+                    // Block device permanently
+                    localStorage.setItem('jarvis_blocked', 'true');
+                    isBlocked = true;
+                    showBlockedScreen();
+                    return;
                 }
-            }
-        });
-        
-        // Toggle password visibility
-        document.getElementById('togglePassword').addEventListener('click', function() {
-            const passwordInput = document.getElementById('password');
-            const icon = this.querySelector('i');
-            
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                icon.classList.replace('fa-eye', 'fa-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                icon.classList.replace('fa-eye-slash', 'fa-eye');
-            }
-        });
-        
-        // Logout functionality
-        document.getElementById('logoutBtn').addEventListener('click', function() {
-            logout('manual');
-        });
-        
-        // Emergency shutdown
-        document.getElementById('powerButton').addEventListener('click', function() {
-            if (confirm('Are you sure you want to initiate emergency shutdown?')) {
-                logout('emergency');
-            }
-        });
-        
-        // Session timer
-        function startSessionTimer() {
-            updateTimerDisplay();
-            
-            sessionTimer = setInterval(function() {
-                timeRemaining--;
-                updateTimerDisplay();
                 
-                if (timeRemaining <= 0) {
-                    logout('timeout');
-                }
-            }, 1000);
-        }
-        
-        function updateTimerDisplay() {
-            const seconds = timeRemaining;
-            document.getElementById('sessionTimer').textContent = 
-                `00:${seconds.toString().padStart(2, '0')}`;
+                // Show error
+                loginAlert.style.display = 'block';
+                passwordInput.value = '';
+                passwordInput.focus();
                 
-            // Change color when time is running out
-            if (timeRemaining <= 10) {
-                document.getElementById('sessionTimer').style.color = '#e74c3c';
+                // Update status
+                statusText.textContent = 'ACCESS DENIED';
+                statusText.style.color = '#ff4488';
                 
-                // Show warning notification
-                if (timeRemaining === 10) {
-                    showNotification('SESSION WARNING', 'Session will expire in 10 seconds.');
-                }
+                // Add shake animation
+                loginContainer.style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    loginContainer.style.animation = '';
+                }, 500);
             }
         }
         
         // Logout function
-        function logout(reason) {
-            clearInterval(sessionTimer);
-            timeRemaining = 30; // Reset timer
+        function logout() {
+            vaultContent.style.display = 'none';
+            loginContainer.style.display = 'block';
+            passwordInput.value = '';
             
-            document.getElementById('vaultContainer').style.display = 'none';
-            document.getElementById('timerContainer').style.display = 'none';
-            document.getElementById('systemStatus').style.display = 'none';
-            document.getElementById('powerButton').style.display = 'none';
-            document.getElementById('loginContainer').style.display = 'block';
-            document.getElementById('password').value = '';
-            
-            // Reset timer color
-            document.getElementById('sessionTimer').style.color = '#e74c3c';
-            
-            // Show appropriate J.A.R.V.I.S. message
-            if (reason === 'manual') {
-                typeJarvisMessage('jarvisLogin', jarvisMessages.logout);
-                showNotification('SESSION TERMINATED', 'Security protocols re-engaged.');
-            } else if (reason === 'timeout') {
-                typeJarvisMessage('jarvisLogin', jarvisMessages.timeout);
-                showNotification('SESSION EXPIRED', 'Automatic logout due to inactivity.');
-            } else if (reason === 'emergency') {
-                typeJarvisMessage('jarvisLogin', ['Emergency shutdown initiated. All systems offline.', 
-                    'Security protocols engaged. Emergency lockdown complete.',
-                    'System offline. All data secured.']);
-                showNotification('EMERGENCY SHUTDOWN', 'All systems have been secured.');
+            // Clear timer
+            if (timerInterval) {
+                clearInterval(timerInterval);
             }
-        }
-        
-        // Block device function
-        function blockDevice() {
-            localStorage.setItem('deviceBlocked', 'true');
             
-            document.getElementById('loginContainer').style.display = 'none';
-            document.getElementById('blockedContainer').style.display = 'block';
-            getDeviceInfo('blocked');
-            typeJarvisMessage('jarvisBlocked', jarvisMessages.blocked);
+            // Reset session timer
+            sessionTimer = SESSION_TIMEOUT;
+            timeLeft.textContent = '00:30';
+            timerDisplay.classList.remove('timer-warning');
+            
+            // Re-enable security detection
+            devToolsDetectionActive = true;
+            
+            // Update status
+            statusText.textContent = 'AWAITING AUTHORIZATION';
+            statusText.style.color = '#00ccff';
+            
+            // Clear API status
+            apiStatus.innerHTML = '';
+            loadingProgress.style.width = '0%';
         }
         
-        // Redirect blocked device
-        function redirectBlocked() {
-            window.location.href = 'https://www.starkindustries.com';
+        // Call number function
+        function callNumber(elementId) {
+            const number = document.getElementById(elementId).textContent;
+            const cleanNumber = number.replace(/\D/g, '');
+            window.location.href = `tel:${cleanNumber}`;
         }
         
-        // Make call function
-        function makeCall(number) {
-            showNotification('INITIATING CALL', `Dialing ${number}...`);
-            setTimeout(function() {
-                window.open(`tel:${number}`, '_self');
-            }, 1000);
+        // WhatsApp function
+        function whatsappNumber(elementId) {
+            const number = document.getElementById(elementId).textContent;
+            const cleanNumber = number.replace(/\D/g, '');
+            window.open(`https://wa.me/${cleanNumber}`, '_blank');
         }
         
-        // Send WhatsApp function
-        function sendWhatsApp(number) {
-            showNotification('OPENING WHATSAPP', `Connecting to ${number}...`);
-            setTimeout(function() {
-                window.open(`https://wa.me/${number.replace(/\D/g, '')}`, '_blank');
-            }, 1000);
-        }
-        
-        // Clear session on page close
-        window.addEventListener('beforeunload', function() {
-            // This doesn't actually store anything, just ensures no data is saved
-            sessionStorage.clear();
+        // Form submission
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            login();
         });
         
-        // Initialize page
+        // Page visibility API
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'hidden' && vaultContent.style.display === 'block') {
+                // Optional: Auto-logout when tab is hidden
+                // logout();
+            }
+        });
+        
+        // Initialize system when page loads
         window.addEventListener('load', function() {
-            // Hide loading overlay
-            setTimeout(function() {
-                document.getElementById('loadingOverlay').style.display = 'none';
-                
-                // Show initial J.A.R.V.I.S. message
-                typeJarvisMessage('jarvisLogin', jarvisMessages.login);
-            }, 1500);
+            initSystem();
         });
+        
+        // Add shake animation CSS
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                20%, 60% { transform: translateX(-10px); }
+                40%, 80% { transform: translateX(10px); }
+            }
+            
+            @media (prefers-reduced-motion: reduce) {
+                * {
+                    animation-duration: 0.01ms !important;
+                    animation-iteration-count: 1 !important;
+                    transition-duration: 0.01ms !important;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Prevent zoom
+        document.addEventListener('touchstart', function(event) {
+            if (event.touches.length > 1) {
+                event.preventDefault();
+            }
+        });
+        
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
     </script>
 </body>
 </html>
