@@ -83,11 +83,25 @@
             top: 0;
             z-index: 100;
             box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+        }
+
+        .app-header.collapsed {
+            padding: 0.5rem 0;
         }
 
         .app-container {
             flex: 1;
             padding: 2rem 0;
+            transition: padding-top 0.3s ease;
+        }
+
+        .app-container.expanded {
+            padding-top: 2rem;
+        }
+
+        .app-container.collapsed {
+            padding-top: 1rem;
         }
 
         /* Glass Container */
@@ -112,6 +126,11 @@
             margin-bottom: 2rem;
             flex-wrap: wrap;
             gap: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.collapsed {
+            margin-bottom: 1rem;
         }
 
         .logo {
@@ -121,6 +140,11 @@
             font-size: 1.75rem;
             font-weight: 700;
             color: var(--primary-blue);
+            transition: all 0.3s ease;
+        }
+
+        .logo.collapsed {
+            font-size: 1.5rem;
         }
 
         .logo-icon {
@@ -132,12 +156,48 @@
             align-items: center;
             justify-content: center;
             color: white;
+            transition: all 0.3s ease;
+        }
+
+        .logo-icon.collapsed {
+            width: 35px;
+            height: 35px;
         }
 
         .header-actions {
             display: flex;
             gap: 1rem;
             align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .header-actions.collapsed {
+            gap: 0.5rem;
+        }
+
+        .collapse-toggle {
+            position: absolute;
+            top: 0.5rem;
+            right: 1rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            cursor: pointer;
+            z-index: 101;
+            transition: all 0.3s ease;
+        }
+
+        .collapse-toggle:hover {
+            background: var(--primary-blue);
+            color: white;
         }
 
         /* Button Styles */
@@ -181,9 +241,19 @@
             transform: rotate(15deg);
         }
 
+        .btn-icon.collapsed {
+            width: 35px;
+            height: 35px;
+        }
+
         /* Search and Filter Section */
         .search-filter-section {
             margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-filter-section.collapsed {
+            margin-bottom: 1rem;
         }
 
         .search-container {
@@ -455,6 +525,66 @@
             border-radius: 12px;
         }
 
+        /* PDF Modal */
+        .pdf-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .pdf-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .pdf-modal-header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 2001;
+        }
+
+        .pdf-modal-title {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 70%;
+        }
+
+        .pdf-modal-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .pdf-modal-content {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .pdf-modal-embed {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
         /* Loading Spinner */
         .loading-spinner {
             display: inline-block;
@@ -686,6 +816,10 @@
                 left: 10px;
                 font-size: 0.75rem;
             }
+            
+            .pdf-modal-title {
+                max-width: 50%;
+            }
         }
 
         @media (max-width: 480px) {
@@ -696,6 +830,11 @@
             .app-container {
                 padding: 1rem 0;
             }
+            
+            .pdf-modal-title {
+                max-width: 40%;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -705,16 +844,16 @@
 
     <div class="app-wrapper">
         <!-- App Header -->
-        <header class="app-header">
+        <header class="app-header" id="appHeader">
             <div class="container">
-                <div class="main-header">
-                    <div class="logo">
-                        <div class="logo-icon">
+                <div class="main-header" id="mainHeader">
+                    <div class="logo" id="logo">
+                        <div class="logo-icon" id="logoIcon">
                             <i class="bi bi-folder-fill"></i>
                         </div>
                         DS Core
                     </div>
-                    <div class="header-actions">
+                    <div class="header-actions" id="headerActions">
                         <button id="refreshBtn" class="btn-primary-custom">
                             <i class="bi bi-arrow-clockwise"></i> Refresh
                         </button>
@@ -724,10 +863,13 @@
                     </div>
                 </div>
             </div>
+            <button class="collapse-toggle" id="collapseToggle">
+                <i class="bi bi-chevron-up"></i>
+            </button>
         </header>
 
         <!-- Main App Container -->
-        <main class="app-container">
+        <main class="app-container expanded" id="appContainer">
             <div class="container">
                 <!-- Folder View -->
                 <div id="folderView">
@@ -738,7 +880,7 @@
                         </div>
                         
                         <!-- Search and Filter Section -->
-                        <div class="search-filter-section">
+                        <div class="search-filter-section" id="searchFilterSection">
                             <div class="search-container">
                                 <i class="bi bi-search search-icon"></i>
                                 <input type="text" id="searchInput" class="search-input" placeholder="Search files...">
@@ -785,6 +927,27 @@
         </main>
     </div>
 
+    <!-- PDF Modal -->
+    <div class="pdf-modal" id="pdfModal">
+        <div class="pdf-modal-header">
+            <div class="pdf-modal-title" id="pdfModalTitle">PDF Viewer</div>
+            <div class="pdf-modal-actions">
+                <button id="pdfDownloadBtn" class="btn-primary-custom">
+                    <i class="bi bi-download"></i> Download
+                </button>
+                <button id="pdfOpenBtn" class="btn-primary-custom" style="display: none;">
+                    <i class="bi bi-box-arrow-up-right"></i> Open
+                </button>
+                <button id="pdfCloseBtn" class="btn-icon">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+        </div>
+        <div class="pdf-modal-content">
+            <embed id="pdfEmbed" class="pdf-modal-embed" type="application/pdf">
+        </div>
+    </div>
+
     <!-- API Status Indicator -->
     <div class="api-status">
         <div class="status-indicator"></div>
@@ -811,21 +974,24 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
-        // Configuration - replace with actual GitHub username and repo name
+        // Configuration - Updated with your GitHub details
         const GITHUB_CONFIG = {
-            owner: 'justin-io', // Replace with your GitHub username
-            repo: 'Ds-core', // Replace with your repository name
+            owner: 'justin-io',
+            repo: 'Ds-core',
             filesPath: 'files'
         };
 
-        // Cache key for localStorage
+        // Cache keys for localStorage
         const CACHE_KEY = 'dsCore_fileCache';
+        const DOWNLOADED_FILES_KEY = 'dsCore_downloadedFiles';
+        const COLLAPSED_STATE_KEY = 'dsCore_toolbarCollapsed';
 
         // Global state
         let allFiles = [];
         let filteredFiles = [];
         let currentFilter = 'all';
         let searchTerm = '';
+        let currentPdfFile = null;
 
         // Helper function to determine file type from extension
         function getFileType(extension) {
@@ -869,21 +1035,67 @@
             }
         }
 
+        // Get downloaded files from localStorage
+        function getDownloadedFiles() {
+            try {
+                return JSON.parse(localStorage.getItem(DOWNLOADED_FILES_KEY) || '[]');
+            } catch (error) {
+                console.error('Error getting downloaded files:', error);
+                return [];
+            }
+        }
+
+        // Add a file to downloaded files list
+        function addDownloadedFile(fileUrl) {
+            try {
+                const downloadedFiles = getDownloadedFiles();
+                if (!downloadedFiles.includes(fileUrl)) {
+                    downloadedFiles.push(fileUrl);
+                    localStorage.setItem(DOWNLOADED_FILES_KEY, JSON.stringify(downloadedFiles));
+                }
+            } catch (error) {
+                console.error('Error adding downloaded file:', error);
+            }
+        }
+
+        // Check if a file has been downloaded
+        function isFileDownloaded(fileUrl) {
+            return getDownloadedFiles().includes(fileUrl);
+        }
+
         // Fetch file list from GitHub API
         async function fetchFileList() {
             try {
-                const apiUrl = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.filesPath}`;
+                // First try to get files from root directory
+                const rootUrl = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/`;
+                const rootResponse = await fetch(rootUrl);
                 
-                const response = await fetch(apiUrl);
-                
-                if (!response.ok) {
-                    throw new Error(`GitHub API error: ${response.status} ${response.statusText}`);
+                if (!rootResponse.ok) {
+                    throw new Error(`GitHub API error: ${rootResponse.status} ${rootResponse.statusText}`);
                 }
                 
-                const data = await response.json();
+                const rootData = await rootResponse.json();
                 
-                // Filter out only files (not directories)
-                const files = data.filter(item => item.type === 'file');
+                // Check if 'files' directory exists
+                const filesDir = rootData.find(item => item.name === 'files' && item.type === 'dir');
+                
+                let files = [];
+                
+                if (filesDir) {
+                    // If 'files' directory exists, get its contents
+                    const filesUrl = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/files`;
+                    const filesResponse = await fetch(filesUrl);
+                    
+                    if (!filesResponse.ok) {
+                        throw new Error(`GitHub API error: ${filesResponse.status} ${filesResponse.statusText}`);
+                    }
+                    
+                    const filesData = await filesResponse.json();
+                    files = filesData.filter(item => item.type === 'file');
+                } else {
+                    // If no 'files' directory, look for files in root
+                    files = rootData.filter(item => item.type === 'file');
+                }
                 
                 // Transform to clean file objects
                 const fileList = files.map(file => {
@@ -991,6 +1203,97 @@
             }
         }
 
+        // Toggle toolbar collapse state
+        function toggleToolbar() {
+            const appHeader = document.getElementById('appHeader');
+            const mainHeader = document.getElementById('mainHeader');
+            const logo = document.getElementById('logo');
+            const logoIcon = document.getElementById('logoIcon');
+            const headerActions = document.getElementById('headerActions');
+            const appContainer = document.getElementById('appContainer');
+            const searchFilterSection = document.getElementById('searchFilterSection');
+            const collapseToggle = document.getElementById('collapseToggle');
+            const collapseIcon = collapseToggle.querySelector('i');
+            
+            const isCollapsed = appHeader.classList.contains('collapsed');
+            
+            if (isCollapsed) {
+                // Expand toolbar
+                appHeader.classList.remove('collapsed');
+                mainHeader.classList.remove('collapsed');
+                logo.classList.remove('collapsed');
+                logoIcon.classList.remove('collapsed');
+                headerActions.classList.remove('collapsed');
+                appContainer.classList.remove('collapsed');
+                appContainer.classList.add('expanded');
+                searchFilterSection.classList.remove('collapsed');
+                collapseIcon.className = 'bi bi-chevron-up';
+                
+                // Save state
+                localStorage.setItem(COLLAPSED_STATE_KEY, 'false');
+            } else {
+                // Collapse toolbar
+                appHeader.classList.add('collapsed');
+                mainHeader.classList.add('collapsed');
+                logo.classList.add('collapsed');
+                logoIcon.classList.add('collapsed');
+                headerActions.classList.add('collapsed');
+                appContainer.classList.add('collapsed');
+                appContainer.classList.remove('expanded');
+                searchFilterSection.classList.add('collapsed');
+                collapseIcon.className = 'bi bi-chevron-down';
+                
+                // Save state
+                localStorage.setItem(COLLAPSED_STATE_KEY, 'true');
+            }
+        }
+
+        // Show PDF in modal
+        function showPdfModal(file) {
+            const pdfModal = document.getElementById('pdfModal');
+            const pdfModalTitle = document.getElementById('pdfModalTitle');
+            const pdfEmbed = document.getElementById('pdfEmbed');
+            const pdfDownloadBtn = document.getElementById('pdfDownloadBtn');
+            const pdfOpenBtn = document.getElementById('pdfOpenBtn');
+            
+            currentPdfFile = file;
+            
+            // Set modal title
+            pdfModalTitle.textContent = file.name;
+            
+            // Set PDF source
+            pdfEmbed.src = file.url;
+            
+            // Check if file has been downloaded
+            const isDownloaded = isFileDownloaded(file.url);
+            
+            // Show/hide buttons based on download status
+            if (isDownloaded) {
+                pdfDownloadBtn.style.display = 'none';
+                pdfOpenBtn.style.display = 'flex';
+            } else {
+                pdfDownloadBtn.style.display = 'flex';
+                pdfOpenBtn.style.display = 'none';
+            }
+            
+            // Show modal
+            pdfModal.classList.add('active');
+        }
+
+        // Close PDF modal
+        function closePdfModal() {
+            const pdfModal = document.getElementById('pdfModal');
+            const pdfEmbed = document.getElementById('pdfEmbed');
+            
+            // Hide modal
+            pdfModal.classList.remove('active');
+            
+            // Clear PDF source to stop loading
+            pdfEmbed.src = '';
+            
+            currentPdfFile = null;
+        }
+
         // DOM elements
         const folderView = document.getElementById('folderView');
         const detailView = document.getElementById('detailView');
@@ -1001,6 +1304,7 @@
         const refreshBtn = document.getElementById('refreshBtn');
         const themeToggle = document.getElementById('themeToggle');
         const backBtn = document.getElementById('backBtn');
+        const collapseToggle = document.getElementById('collapseToggle');
         const detailIcon = document.getElementById('detailIcon');
         const detailTitle = document.getElementById('detailTitle');
         const detailMeta = document.getElementById('detailMeta');
@@ -1009,10 +1313,20 @@
         const fabBtn = document.getElementById('fabBtn');
         const notification = document.getElementById('notification');
         const notificationMessage = document.getElementById('notificationMessage');
+        const pdfModal = document.getElementById('pdfModal');
+        const pdfDownloadBtn = document.getElementById('pdfDownloadBtn');
+        const pdfOpenBtn = document.getElementById('pdfOpenBtn');
+        const pdfCloseBtn = document.getElementById('pdfCloseBtn');
 
         // Initialize app
         async function init() {
             try {
+                // Check toolbar collapsed state
+                const isCollapsed = localStorage.getItem(COLLAPSED_STATE_KEY) === 'true';
+                if (isCollapsed) {
+                    toggleToolbar();
+                }
+                
                 await loadFiles();
                 setupEventListeners();
                 checkThemePreference();
@@ -1118,6 +1432,12 @@
 
         // Show file detail view
         async function showFileDetail(file) {
+            // For PDF files, show in modal instead of detail view
+            if (file.type === 'PDF') {
+                showPdfModal(file);
+                return;
+            }
+            
             // Set detail content
             detailIcon.className = `detail-icon ${getFileIconClass(file.type)}`;
             detailIcon.innerHTML = `<i class="bi ${getFileIcon(file.type)}"></i>`;
@@ -1134,11 +1454,7 @@
             `;
             
             // Set preview content based on file type
-            if (file.type === 'PDF') {
-                previewContainer.innerHTML = `
-                    <embed src="${file.url}" type="application/pdf" class="pdf-preview" />
-                `;
-            } else if (file.type === 'TXT') {
+            if (file.type === 'TXT') {
                 try {
                     const content = await fetchFileContent(file.url, 'TXT');
                     previewContainer.innerHTML = `
@@ -1214,10 +1530,24 @@
             a.click();
             document.body.removeChild(a);
             
+            // Add to downloaded files list
+            addDownloadedFile(url);
+            
+            // If this is the current PDF in modal, update the modal buttons
+            if (currentPdfFile && currentPdfFile.url === url) {
+                pdfDownloadBtn.style.display = 'none';
+                pdfOpenBtn.style.display = 'flex';
+            }
+            
             // Show success notification
             setTimeout(() => {
                 showNotification(`${filename} download started!`, 'success');
             }, 500);
+        }
+
+        // Open file in new tab
+        function openFileInNewTab(url) {
+            window.open(url, '_blank');
         }
 
         // Show notification
@@ -1299,6 +1629,31 @@
             refreshBtn.addEventListener('click', refreshFiles);
             themeToggle.addEventListener('click', toggleTheme);
             backBtn.addEventListener('click', showFolderView);
+            
+            // Collapse toggle
+            collapseToggle.addEventListener('click', toggleToolbar);
+            
+            // PDF modal buttons
+            pdfDownloadBtn.addEventListener('click', () => {
+                if (currentPdfFile) {
+                    downloadFile(currentPdfFile.url, currentPdfFile.name);
+                }
+            });
+            
+            pdfOpenBtn.addEventListener('click', () => {
+                if (currentPdfFile) {
+                    openFileInNewTab(currentPdfFile.url);
+                }
+            });
+            
+            pdfCloseBtn.addEventListener('click', closePdfModal);
+            
+            // Close modal when clicking outside
+            pdfModal.addEventListener('click', (e) => {
+                if (e.target === pdfModal) {
+                    closePdfModal();
+                }
+            });
             
             // Floating Action Button
             fabBtn.addEventListener('click', () => {
