@@ -3,333 +3,497 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CLASSIFIED DATA SYSTEM</title>
+    <title>J.A.R.V.I.S. SECURE SYSTEM</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
         
         * {
-            font-family: 'Orbitron', monospace;
+            font-family: 'Rajdhani', sans-serif;
         }
         
         body {
-            background-color: #0a0a0a;
-            color: #00ff00;
+            background-color: #000;
+            color: #fff;
             overflow-x: hidden;
+            margin: 0;
+            padding: 0;
             position: relative;
         }
         
-        body::before {
-            content: "";
+        .ironman-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+            z-index: -2;
+        }
+        
+        .ironman-bg::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: 
-                repeating-linear-gradient(
-                    0deg,
-                    rgba(0, 255, 0, 0.03) 0px,
-                    rgba(0, 255, 0, 0.03) 1px,
-                    transparent 1px,
-                    transparent 2px
-                );
+                radial-gradient(circle at 20% 30%, rgba(255, 0, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
             z-index: -1;
-            pointer-events: none;
         }
         
         .container {
             max-width: 900px;
             margin: 0 auto;
             padding: 20px;
+            position: relative;
+            z-index: 1;
         }
         
         .system-header {
             text-align: center;
             margin-bottom: 30px;
             padding: 15px;
-            border: 2px solid #00ff00;
-            background-color: rgba(0, 0, 0, 0.7);
+            border: 2px solid #d4af37;
+            background: linear-gradient(90deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.2) 50%, rgba(212, 175, 55, 0.1) 100%);
             position: relative;
+            overflow: hidden;
+        }
+        
+        .system-header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), transparent);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
         }
         
         .system-header h1 {
+            font-family: 'Orbitron', monospace;
             font-weight: 900;
             letter-spacing: 3px;
             margin: 0;
-            text-shadow: 0 0 10px #00ff00;
+            text-shadow: 0 0 10px #d4af37, 0 0 20px #d4af37;
             font-size: 2.5rem;
+            color: #d4af37;
         }
         
         .system-header .subtitle {
-            font-size: 0.9rem;
-            color: #ff0000;
-            letter-spacing: 1px;
+            font-size: 1rem;
+            color: #ff4d4d;
+            letter-spacing: 2px;
             margin-top: 5px;
+            font-weight: 600;
         }
         
         .warning-bar {
-            background-color: #ff0000;
-            color: #000;
+            background: linear-gradient(90deg, #ff0000 0%, #cc0000 100%);
+            color: #fff;
             text-align: center;
-            padding: 5px;
-            font-weight: bold;
+            padding: 8px;
+            font-weight: 600;
             letter-spacing: 1px;
             margin-bottom: 20px;
-            animation: blink 1s infinite;
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
         }
         
-        @keyframes blink {
+        @keyframes pulse {
             0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+            50% { opacity: 0.8; }
         }
         
-        .login-container {
-            background-color: rgba(0, 20, 0, 0.8);
-            border: 1px solid #00ff00;
-            border-radius: 5px;
+        .login-container, .vault-container, .blocked-container {
+            background: linear-gradient(135deg, rgba(20, 20, 20, 0.9) 0%, rgba(10, 10, 10, 0.95) 100%);
+            border: 1px solid #d4af37;
+            border-radius: 10px;
             padding: 30px;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3), inset 0 0 20px rgba(212, 175, 55, 0.1);
             margin-top: 30px;
+            position: relative;
+            overflow: hidden;
         }
         
-        .vault-container {
-            background-color: rgba(0, 20, 0, 0.8);
-            border: 1px solid #00ff00;
-            border-radius: 5px;
-            padding: 30px;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
-            margin-top: 30px;
-            display: none;
+        .login-container::before, .vault-container::before, .blocked-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.05) 50%, transparent 100%),
+                linear-gradient(0deg, transparent 0%, rgba(212, 175, 55, 0.05) 50%, transparent 100%);
+            pointer-events: none;
         }
         
-        .blocked-container {
-            background-color: rgba(30, 0, 0, 0.8);
-            border: 2px solid #ff0000;
-            border-radius: 5px;
-            padding: 30px;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
-            margin-top: 30px;
-            text-align: center;
+        .vault-container, .blocked-container {
             display: none;
         }
         
         .form-label {
-            color: #00ff00;
-            font-weight: 500;
-        }
-        
-        .form-control {
-            background-color: #000;
-            border: 1px solid #00ff00;
-            color: #00ff00;
-            border-radius: 0;
-        }
-        
-        .form-control:focus {
-            background-color: #000;
-            border-color: #00ff00;
-            color: #00ff00;
-            box-shadow: 0 0 0 0.25rem rgba(0, 255, 0, 0.25);
-        }
-        
-        .btn {
-            border-radius: 0;
-            font-weight: 500;
+            color: #d4af37;
+            font-weight: 600;
             letter-spacing: 1px;
         }
         
+        .form-control {
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 1px solid #d4af37;
+            color: #fff;
+            border-radius: 5px;
+            padding: 12px;
+            font-weight: 500;
+        }
+        
+        .form-control:focus {
+            background-color: rgba(0, 0, 0, 0.8);
+            border-color: #d4af37;
+            color: #fff;
+            box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.25);
+        }
+        
+        .btn {
+            border-radius: 5px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            padding: 10px 20px;
+            transition: all 0.3s;
+        }
+        
         .btn-primary {
-            background-color: #003300;
-            border-color: #00ff00;
-            color: #00ff00;
+            background: linear-gradient(90deg, #d4af37 0%, #f1c40f 100%);
+            border: none;
+            color: #000;
         }
         
         .btn-primary:hover {
-            background-color: #00ff00;
+            background: linear-gradient(90deg, #f1c40f 0%, #d4af37 100%);
             color: #000;
-            border-color: #00ff00;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
         }
         
         .btn-danger {
-            background-color: #330000;
-            border-color: #ff0000;
-            color: #ff0000;
+            background: linear-gradient(90deg, #e74c3c 0%, #c0392b 100%);
+            border: none;
+            color: #fff;
         }
         
         .btn-danger:hover {
-            background-color: #ff0000;
-            color: #000;
-            border-color: #ff0000;
+            background: linear-gradient(90deg, #c0392b 0%, #e74c3c 100%);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
         }
         
         .btn-success {
-            background-color: #003300;
-            border-color: #00ff00;
-            color: #00ff00;
+            background: linear-gradient(90deg, #2ecc71 0%, #27ae60 100%);
+            border: none;
+            color: #fff;
         }
         
         .btn-success:hover {
-            background-color: #00ff00;
-            color: #000;
-            border-color: #00ff00;
+            background: linear-gradient(90deg, #27ae60 0%, #2ecc71 100%);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
         }
         
         .secret-item {
-            background-color: rgba(0, 0, 0, 0.7);
-            border-left: 4px solid #00ff00;
-            padding: 15px;
-            margin-bottom: 15px;
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(20, 20, 20, 0.9) 100%);
+            border-left: 4px solid #d4af37;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
         }
         
         .secret-item h5 {
-            color: #00ff00;
+            color: #d4af37;
             font-weight: 700;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
         }
         
         .secret-item p {
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
         }
         
         .timer-container {
             position: fixed;
             top: 20px;
             right: 20px;
-            background-color: rgba(0, 0, 0, 0.8);
-            border: 2px solid #ff0000;
-            padding: 10px 15px;
-            border-radius: 5px;
+            background: linear-gradient(135deg, rgba(20, 20, 20, 0.9) 0%, rgba(10, 10, 10, 0.95) 100%);
+            border: 2px solid #e74c3c;
+            padding: 15px;
+            border-radius: 10px;
             z-index: 1000;
             display: none;
+            box-shadow: 0 0 20px rgba(231, 76, 60, 0.5);
+        }
+        
+        .timer-container .timer-label {
+            color: #e74c3c;
+            font-weight: 600;
+            margin-bottom: 5px;
+            text-align: center;
         }
         
         .timer-container .timer {
-            color: #ff0000;
+            color: #e74c3c;
             font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 1.5rem;
+            text-align: center;
+            font-family: 'Orbitron', monospace;
         }
         
         .attempts-counter {
             text-align: center;
-            margin-top: 15px;
-            color: #ff0000;
-            font-weight: 500;
+            margin-top: 20px;
+            color: #e74c3c;
+            font-weight: 600;
+            font-size: 1.1rem;
         }
         
         .security-warning {
-            background-color: rgba(255, 0, 0, 0.2);
-            border: 1px solid #ff0000;
-            color: #ff0000;
-            padding: 10px;
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.2) 0%, rgba(192, 57, 43, 0.3) 100%);
+            border: 1px solid #e74c3c;
+            color: #e74c3c;
+            padding: 15px;
             border-radius: 5px;
             margin-bottom: 20px;
             text-align: center;
             display: none;
+            font-weight: 600;
         }
         
         .blocked-icon {
             font-size: 5rem;
-            color: #ff0000;
+            color: #e74c3c;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(231, 76, 60, 0.8);
+        }
+        
+        .device-info {
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(20, 20, 20, 0.9) 100%);
+            border: 1px solid #d4af37;
+            border-radius: 5px;
+            padding: 20px;
             margin-bottom: 20px;
         }
         
-        .fbi-warning {
-            background-color: #000;
-            color: #ff0000;
-            border: 2px solid #ff0000;
-            padding: 20px;
-            margin: 20px 0;
-            text-align: center;
+        .device-info h5 {
+            color: #d4af37;
             font-weight: 700;
-            letter-spacing: 1px;
+            margin-bottom: 15px;
+            text-align: center;
         }
         
-        .glitch {
+        .device-info-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .device-info-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .device-info-label {
+            color: #d4af37;
+            font-weight: 600;
+        }
+        
+        .device-info-value {
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        .jarvis-voice {
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(20, 20, 20, 0.9) 100%);
+            border: 1px solid #d4af37;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-style: italic;
             position: relative;
         }
         
-        .glitch::before,
-        .glitch::after {
-            content: attr(data-text);
+        .jarvis-voice::before {
+            content: """;
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: -10px;
+            left: 10px;
+            font-size: 3rem;
+            color: rgba(212, 175, 55, 0.3);
         }
         
-        .glitch::before {
-            left: 2px;
-            text-shadow: -1px 0 #ff0000;
-            clip: rect(44px, 450px, 56px, 0);
-            animation: glitch-anim 5s infinite linear alternate-reverse;
+        .jarvis-voice::after {
+            content: """;
+            position: absolute;
+            bottom: -30px;
+            right: 10px;
+            font-size: 3rem;
+            color: rgba(212, 175, 55, 0.3);
         }
         
-        .glitch::after {
-            left: -2px;
-            text-shadow: -1px 0 #00ffff;
-            clip: rect(44px, 450px, 56px, 0);
-            animation: glitch-anim2 1s infinite linear alternate-reverse;
+        .ironman-logo {
+            text-align: center;
+            margin-bottom: 20px;
         }
         
-        @keyframes glitch-anim {
-            0% { clip: rect(65px, 450px, 119px, 0); }
-            20% { clip: rect(29px, 450px, 16px, 0); }
-            40% { clip: rect(76px, 450px, 85px, 0); }
-            60% { clip: rect(20px, 450px, 20px, 0); }
-            80% { clip: rect(53px, 450px, 103px, 0); }
-            100% { clip: rect(32px, 450px, 82px, 0); }
-        }
-        
-        @keyframes glitch-anim2 {
-            0% { clip: rect(83px, 450px, 94px, 0); }
-            20% { clip: rect(5px, 450px, 59px, 0); }
-            40% { clip: rect(34px, 450px, 70px, 0); }
-            60% { clip: rect(88px, 450px, 8px, 0); }
-            80% { clip: rect(31px, 450px, 29px, 0); }
-            100% { clip: rect(85px, 450px, 105px, 0); }
-        }
-        
-        .terminal-text {
-            color: #00ff00;
-            font-family: 'Courier New', monospace;
-            background-color: #000;
-            padding: 10px;
-            border: 1px solid #00ff00;
-            margin: 10px 0;
-            overflow: auto;
-            max-height: 100px;
+        .ironman-logo i {
+            font-size: 4rem;
+            color: #d4af37;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.8);
         }
         
         .footer {
             text-align: center;
             margin-top: 30px;
-            padding: 10px;
-            font-size: 0.8rem;
-            color: #555;
-            border-top: 1px solid #333;
+            padding: 15px;
+            font-size: 0.9rem;
+            color: #666;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            display: none;
+        }
+        
+        .loading-content {
+            text-align: center;
+        }
+        
+        .loading-spinner {
+            width: 80px;
+            height: 80px;
+            border: 8px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            border-top-color: #d4af37;
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            color: #d4af37;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        
+        .hologram-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(0deg, transparent 24%, rgba(212, 175, 55, 0.05) 25%, rgba(212, 175, 55, 0.05) 26%, transparent 27%, transparent 74%, rgba(212, 175, 55, 0.05) 75%, rgba(212, 175, 55, 0.05) 76%, transparent 77%, transparent),
+                linear-gradient(90deg, transparent 24%, rgba(212, 175, 55, 0.05) 25%, rgba(212, 175, 55, 0.05) 26%, transparent 27%, transparent 74%, rgba(212, 175, 55, 0.05) 75%, rgba(212, 175, 55, 0.05) 76%, transparent 77%, transparent);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        .arc-reactor {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #d4af37 0%, #f1c40f 30%, #d4af37 60%, transparent 70%);
+            box-shadow: 0 0 30px #d4af37, 0 0 60px #d4af37;
+            animation: pulse 2s infinite;
+            z-index: 10;
+        }
+        
+        .arc-reactor::before {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #fff 0%, #d4af37 50%, transparent 70%);
+        }
+        
+        .arc-reactor::after {
+            content: "";
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 0 10px #fff;
         }
     </style>
 </head>
 <body>
+    <div class="ironman-bg"></div>
+    <div class="arc-reactor"></div>
+    
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">INITIALIZING J.A.R.V.I.S. PROTOCOLS...</div>
+        </div>
+    </div>
+    
     <div class="container">
         <div class="system-header">
-            <h1 class="glitch" data-text="CLASSIFIED DATA SYSTEM">CLASSIFIED DATA SYSTEM</h1>
-            <div class="subtitle">AUTHORIZED PERSONNEL ONLY</div>
+            <h1>J.A.R.V.I.S. SECURE SYSTEM</h1>
+            <div class="subtitle">JUST A RATHER VERY INTELLIGENT SYSTEM</div>
         </div>
         
         <div class="warning-bar">
-            <i class="bi bi-exclamation-triangle-fill me-2"></i> WARNING: UNAUTHORIZED ACCESS IS PROHIBITED AND PUNISHABLE BY LAW
+            <i class="fas fa-exclamation-triangle me-2"></i> WARNING: UNAUTHORIZED ACCESS WILL BE LOGGED AND REPORTED
         </div>
         
         <!-- Login Form -->
         <div class="login-container" id="loginContainer">
+            <div class="ironman-logo">
+                <i class="fas fa-shield-alt"></i>
+            </div>
             <h3 class="text-center mb-4">SECURITY AUTHENTICATION</h3>
             
             <div class="security-warning" id="securityWarning">
-                <i class="bi bi-exclamation-triangle-fill me-2"></i> SECURITY ALERT: DEVELOPER TOOLS DETECTED. REDIRECTING...
+                <i class="fas fa-exclamation-triangle me-2"></i> SECURITY ALERT: DEVELOPER TOOLS DETECTED. INITIATING COUNTERMEASURES...
             </div>
             
             <form id="loginForm">
@@ -338,7 +502,7 @@
                     <div class="input-group">
                         <input type="password" class="form-control" id="password" placeholder="Enter access code" required>
                         <button class="btn btn-outline-secondary" type="button" id="togglePassword">
-                            <i class="bi bi-eye"></i>
+                            <i class="fas fa-eye"></i>
                         </button>
                     </div>
                     <div class="form-text">Your access code is never stored or saved.</div>
@@ -349,107 +513,156 @@
             </form>
             
             <div class="attempts-counter" id="attemptsCounter">
-                REMAINING ATTEMPTS: <span id="remainingAttempts">3</span>
+                REMAINING ATTEMPTS: <span id="remainingAttempts">2</span>
             </div>
             
-            <div class="terminal-text" id="terminalOutput">
-                SYSTEM READY...<br>
-                AWAITING AUTHENTICATION...
+            <div class="jarvis-voice">
+                "Good morning, sir. Initiating security protocols. Please enter your access code to proceed."
             </div>
         </div>
         
         <!-- Vault Content -->
         <div class="vault-container" id="vaultContainer">
+            <div class="hologram-effect"></div>
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h3><i class="bi bi-shield-check me-2"></i>CLASSIFIED DATA VAULT</h3>
+                <h3><i class="fas fa-shield-check me-2"></i>CLASSIFIED DATA VAULT</h3>
                 <button class="btn btn-danger" id="logoutBtn">
-                    <i class="bi bi-box-arrow-right me-2"></i>TERMINATE SESSION
+                    <i class="fas fa-sign-out-alt me-2"></i>TERMINATE SESSION
                 </button>
             </div>
             
-            <div class="terminal-text mb-4">
-                ACCESS GRANTED...<br>
-                LOADING CLASSIFIED DATA...
+            <div class="device-info" id="deviceInfo">
+                <h5><i class="fas fa-fingerprint me-2"></i>DEVICE IDENTIFICATION</h5>
+                <div class="device-info-item">
+                    <span class="device-info-label">IP ADDRESS:</span>
+                    <span class="device-info-value" id="ipAddress">Loading...</span>
+                </div>
+                <div class="device-info-item">
+                    <span class="device-info-label">LOCATION:</span>
+                    <span class="device-info-value" id="location">Loading...</span>
+                </div>
+                <div class="device-info-item">
+                    <span class="device-info-label">DEVICE TYPE:</span>
+                    <span class="device-info-value" id="deviceType">Loading...</span>
+                </div>
+                <div class="device-info-item">
+                    <span class="device-info-label">BROWSER:</span>
+                    <span class="device-info-value" id="browser">Loading...</span>
+                </div>
+                <div class="device-info-item">
+                    <span class="device-info-label">OPERATING SYSTEM:</span>
+                    <span class="device-info-value" id="os">Loading...</span>
+                </div>
+            </div>
+            
+            <div class="jarvis-voice">
+                "Access granted, sir. All systems are now online. Your classified data is secure and ready for your command."
             </div>
             
             <div class="secret-item">
-                <h5><i class="bi bi-telephone-fill me-2"></i>PRIMARY CONTACT</h5>
+                <h5><i class="fas fa-phone-alt me-2"></i>PRIMARY CONTACT</h5>
                 <p>+1 (555) 123-4567</p>
                 <div>
                     <button class="btn btn-success btn-action btn-sm" onclick="makeCall('+15551234567')">
-                        <i class="bi bi-telephone me-1"></i> INITIATE CALL
+                        <i class="fas fa-phone me-1"></i> INITIATE CALL
                     </button>
                     <button class="btn btn-success btn-action btn-sm" onclick="sendWhatsApp('+15551234567')">
-                        <i class="bi bi-whatsapp me-1"></i> WHATSAPP
+                        <i class="fab fa-whatsapp me-1"></i> WHATSAPP
                     </button>
                 </div>
             </div>
             
             <div class="secret-item">
-                <h5><i class="bi bi-telephone-fill me-2"></i>SECONDARY CONTACT</h5>
+                <h5><i class="fas fa-phone-alt me-2"></i>SECONDARY CONTACT</h5>
                 <p>+1 (555) 987-6543</p>
                 <div>
                     <button class="btn btn-success btn-action btn-sm" onclick="makeCall('+15559876543')">
-                        <i class="bi bi-telephone me-1"></i> INITIATE CALL
+                        <i class="fas fa-phone me-1"></i> INITIATE CALL
                     </button>
                     <button class="btn btn-success btn-action btn-sm" onclick="sendWhatsApp('+15559876543')">
-                        <i class="bi bi-whatsapp me-1"></i> WHATSAPP
+                        <i class="fab fa-whatsapp me-1"></i> WHATSAPP
                     </button>
                 </div>
             </div>
             
             <div class="secret-item">
-                <h5><i class="bi bi-key-fill me-2"></i>ACCOUNT NUMBERS</h5>
+                <h5><i class="fas fa-key me-2"></i>ACCOUNT NUMBERS</h5>
                 <p>PRIMARY: 9876543210</p>
                 <p>SECONDARY: 1234567890</p>
             </div>
             
             <div class="secret-item">
-                <h5><i class="bi bi-lock-fill me-2"></i>SECURITY CODES</h5>
+                <h5><i class="fas fa-lock me-2"></i>SECURITY CODES</h5>
                 <p>ACCESS CODE: 3729</p>
                 <p>BACKUP CODE: 8462</p>
             </div>
             
-            <div class="fbi-warning">
-                WARNING: THIS DATA IS CLASSIFIED. UNAUTHORIZED DISSEMINATION IS A FEDERAL OFFENSE.
+            <div class="jarvis-voice">
+                "Sir, I've detected multiple security protocols in place. All data is encrypted and secure. Would you like me to run a diagnostic scan?"
             </div>
         </div>
         
         <!-- Blocked Device -->
         <div class="blocked-container" id="blockedContainer">
+            <div class="hologram-effect"></div>
             <div class="blocked-icon">
-                <i class="bi bi-shield-x"></i>
+                <i class="fas fa-ban"></i>
             </div>
             <h2>ACCESS DENIED</h2>
             <p class="mb-4">THIS DEVICE HAS BEEN PERMANENTLY BLOCKED FROM ACCESSING THIS SYSTEM.</p>
             
-            <div class="fbi-warning">
-                FEDERAL BUREAU OF INVESTIGATION<br>
-                UNAUTHORIZED ACCESS ATTEMPT DETECTED<br>
-                THIS DEVICE IDENTITY HAS BEEN LOGGED AND REPORTED
+            <div class="jarvis-voice">
+                "I'm sorry, sir. Multiple failed authentication attempts have triggered a security lockdown. This device has been flagged and reported to Stark Industries security."
+            </div>
+            
+            <div class="device-info" id="blockedDeviceInfo">
+                <h5><i class="fas fa-fingerprint me-2"></i>DEVICE INFORMATION LOGGED</h5>
+                <div class="device-info-item">
+                    <span class="device-info-label">IP ADDRESS:</span>
+                    <span class="device-info-value" id="blockedIpAddress">Loading...</span>
+                </div>
+                <div class="device-info-item">
+                    <span class="device-info-label">LOCATION:</span>
+                    <span class="device-info-value" id="blockedLocation">Loading...</span>
+                </div>
+                <div class="device-info-item">
+                    <span class="device-info-label">DEVICE TYPE:</span>
+                    <span class="device-info-value" id="blockedDeviceType">Loading...</span>
+                </div>
+                <div class="device-info-item">
+                    <span class="device-info-label">BROWSER:</span>
+                    <span class="device-info-value" id="blockedBrowser">Loading...</span>
+                </div>
+                <div class="device-info-item">
+                    <span class="device-info-label">OPERATING SYSTEM:</span>
+                    <span class="device-info-value" id="blockedOs">Loading...</span>
+                </div>
             </div>
             
             <p class="mt-4">Your IP address and device fingerprint have been recorded for security purposes.</p>
-            <p>If you believe this is an error, please contact system administrator.</p>
+            <p>If you believe this is an error, please contact Stark Industries security.</p>
             
             <div class="mt-4">
                 <button class="btn btn-danger" onclick="redirectBlocked()">
-                    <i class="bi bi-arrow-right-circle me-2"></i>REDIRECT TO FBI.GOV
+                    <i class="fas fa-external-link-alt me-2"></i>REDIRECT TO STARK INDUSTRIES
                 </button>
             </div>
         </div>
         
         <div class="footer">
-            <p>© 2023 CLASSIFIED DATA SYSTEM | ALL RIGHTS RESERVED | UNAUTHORIZED ACCESS IS PROHIBITED</p>
+            <p>© 2023 STARK INDUSTRIES | J.A.R.V.I.S. SECURE SYSTEM | ALL RIGHTS RESERVED</p>
         </div>
     </div>
     
     <div class="timer-container" id="timerContainer">
-        <div>SESSION TIME REMAINING:</div>
-        <div class="timer" id="sessionTimer">05:00</div>
+        <div class="timer-label">SESSION TIME REMAINING:</div>
+        <div class="timer" id="sessionTimer">00:30</div>
     </div>
 
     <script>
+        // Show loading overlay
+        document.getElementById('loadingOverlay').style.display = 'flex';
+        
         // Security measures to prevent developer tools
         (function() {
             'use strict';
@@ -458,6 +671,8 @@
             if (localStorage.getItem('deviceBlocked') === 'true') {
                 document.getElementById('loginContainer').style.display = 'none';
                 document.getElementById('blockedContainer').style.display = 'block';
+                getDeviceInfo('blocked');
+                document.getElementById('loadingOverlay').style.display = 'none';
                 return;
             }
             
@@ -501,14 +716,14 @@
             function showSecurityWarning() {
                 document.getElementById('securityWarning').style.display = 'block';
                 setTimeout(function() {
-                    window.location.href = 'https://www.fbi.gov/investigate/cyber';
+                    window.location.href = 'https://www.starkindustries.com';
                 }, 2000);
             }
             
             // Console warning
             console.clear();
-            console.log("%cFBI WARNING: Unauthorized access to this system is prohibited and subject to criminal prosecution.", "color: red; font-size: 20px; font-weight: bold;");
-            console.log("%cYour IP address has been logged. All activities on this system are monitored.", "color: red; font-size: 16px;");
+            console.log("%cSTARK INDUSTRIES SECURITY ALERT: Unauthorized access to this system is prohibited.", "color: #d4af37; font-size: 20px; font-weight: bold;");
+            console.log("%cYour IP address has been logged. J.A.R.V.I.S. is monitoring all activities on this system.", "color: #d4af37; font-size: 16px;");
             
             // Disable drag and drop
             document.addEventListener('dragstart', function(e) {
@@ -528,10 +743,67 @@
         // Initialize variables
         let failedAttempts = parseInt(localStorage.getItem('failedAttempts') || '0');
         let sessionTimer;
-        let timeRemaining = 300; // 5 minutes in seconds
+        let timeRemaining = 30; // 30 seconds in seconds
         
         // Update attempts counter on page load
-        document.getElementById('remainingAttempts').textContent = 3 - failedAttempts;
+        document.getElementById('remainingAttempts').textContent = 2 - failedAttempts;
+        
+        // Get device information
+        function getDeviceInfo(prefix = '') {
+            // Get IP and location
+            fetch('https://ipapi.co/json/')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById(prefix + 'IpAddress').textContent = data.ip;
+                    document.getElementById(prefix + 'Location').textContent = `${data.city}, ${data.region}, ${data.country_name}`;
+                })
+                .catch(error => {
+                    document.getElementById(prefix + 'IpAddress').textContent = 'Unable to retrieve';
+                    document.getElementById(prefix + 'Location').textContent = 'Unable to retrieve';
+                });
+            
+            // Get device type
+            const userAgent = navigator.userAgent;
+            let deviceType = 'Desktop';
+            if (/Mobile|Android|iPhone|iPad|iPod/i.test(userAgent)) {
+                deviceType = 'Mobile';
+            } else if (/Tablet|iPad/i.test(userAgent)) {
+                deviceType = 'Tablet';
+            }
+            document.getElementById(prefix + 'DeviceType').textContent = deviceType;
+            
+            // Get browser
+            let browser = 'Unknown';
+            if (userAgent.indexOf('Chrome') > -1) {
+                browser = 'Chrome';
+            } else if (userAgent.indexOf('Safari') > -1) {
+                browser = 'Safari';
+            } else if (userAgent.indexOf('Firefox') > -1) {
+                browser = 'Firefox';
+            } else if (userAgent.indexOf('MSIE') > -1 || userAgent.indexOf('Trident') > -1) {
+                browser = 'Internet Explorer';
+            } else if (userAgent.indexOf('Edge') > -1) {
+                browser = 'Edge';
+            }
+            document.getElementById(prefix + 'Browser').textContent = browser;
+            
+            // Get operating system
+            let os = 'Unknown';
+            if (userAgent.indexOf('Windows') > -1) {
+                os = 'Windows';
+            } else if (userAgent.indexOf('Mac') > -1) {
+                os = 'MacOS';
+            } else if (userAgent.indexOf('X11') > -1) {
+                os = 'UNIX';
+            } else if (userAgent.indexOf('Linux') > -1) {
+                os = 'Linux';
+            } else if (/Android/.test(userAgent)) {
+                os = 'Android';
+            } else if (/like Mac OS X/.test(userAgent)) {
+                os = 'iOS';
+            }
+            document.getElementById(prefix + 'Os').textContent = os;
+        }
         
         // Password validation
         document.getElementById('loginForm').addEventListener('submit', function(e) {
@@ -547,35 +819,25 @@
                 // Reset failed attempts
                 localStorage.setItem('failedAttempts', '0');
                 
+                // Get device information
+                getDeviceInfo();
+                
                 // Start session timer
                 startSessionTimer();
-                
-                // Update terminal
-                document.getElementById('terminalOutput').innerHTML = 
-                    'AUTHENTICATION SUCCESSFUL...<br>' +
-                    'ACCESS GRANTED...<br>' +
-                    'LOADING SECURE CONNECTION...';
             } else {
                 // Failed login
                 failedAttempts++;
                 localStorage.setItem('failedAttempts', failedAttempts.toString());
                 
                 // Update attempts counter
-                const remaining = 3 - failedAttempts;
+                const remaining = 2 - failedAttempts;
                 document.getElementById('remainingAttempts').textContent = remaining;
-                
-                // Update terminal
-                document.getElementById('terminalOutput').innerHTML = 
-                    'AUTHENTICATION FAILED...<br>' +
-                    `INVALID ACCESS CODE: ${password}<br>` +
-                    `ATTEMPT ${failedAttempts} OF 3...<br>` +
-                    'SECURITY ALERT TRIGGERED...';
                 
                 // Clear password field
                 document.getElementById('password').value = '';
                 
                 // Check if device should be blocked
-                if (failedAttempts >= 3) {
+                if (failedAttempts >= 2) {
                     blockDevice();
                 }
             }
@@ -588,10 +850,10 @@
             
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
-                icon.classList.replace('bi-eye', 'bi-eye-slash');
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
             } else {
                 passwordInput.type = 'password';
-                icon.classList.replace('bi-eye-slash', 'bi-eye');
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
             }
         });
         
@@ -615,32 +877,28 @@
         }
         
         function updateTimerDisplay() {
-            const minutes = Math.floor(timeRemaining / 60);
-            const seconds = timeRemaining % 60;
+            const seconds = timeRemaining;
             document.getElementById('sessionTimer').textContent = 
-                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                `00:${seconds.toString().padStart(2, '0')}`;
                 
             // Change color when time is running out
-            if (timeRemaining <= 60) {
-                document.getElementById('sessionTimer').style.color = '#ff0000';
+            if (timeRemaining <= 10) {
+                document.getElementById('sessionTimer').style.color = '#e74c3c';
             }
         }
         
         // Logout function
         function logout() {
             clearInterval(sessionTimer);
-            timeRemaining = 300; // Reset timer
+            timeRemaining = 30; // Reset timer
             
             document.getElementById('vaultContainer').style.display = 'none';
             document.getElementById('timerContainer').style.display = 'none';
             document.getElementById('loginContainer').style.display = 'block';
             document.getElementById('password').value = '';
             
-            // Reset terminal
-            document.getElementById('terminalOutput').innerHTML = 
-                'SESSION TERMINATED...<br>' +
-                'SYSTEM SECURED...<br>' +
-                'AWAITING AUTHENTICATION...';
+            // Reset timer color
+            document.getElementById('sessionTimer').style.color = '#e74c3c';
         }
         
         // Block device function
@@ -649,11 +907,12 @@
             
             document.getElementById('loginContainer').style.display = 'none';
             document.getElementById('blockedContainer').style.display = 'block';
+            getDeviceInfo('blocked');
         }
         
         // Redirect blocked device
         function redirectBlocked() {
-            window.location.href = 'https://www.fbi.gov/investigate/cyber';
+            window.location.href = 'https://www.starkindustries.com';
         }
         
         // Make call function
@@ -670,6 +929,13 @@
         window.addEventListener('beforeunload', function() {
             // This doesn't actually store anything, just ensures no data is saved
             sessionStorage.clear();
+        });
+        
+        // Hide loading overlay after page load
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('loadingOverlay').style.display = 'none';
+            }, 1500);
         });
     </script>
 </body>
