@@ -672,446 +672,412 @@
     </div>
 
     <script>
-        // Encrypted contacts data (using a simple XOR cipher for obfuscation)
-        // The encryption key is "IRONVAULT2023"
-        const encryptionKey = "IRONVAULT2023";
-        
-        // Encrypted contacts data
-        const encryptedContacts = [
-            { name: "VGFuYXlLcmlzaG5hQ1U=", phone: "KzgxODI4MTcxNDUyMg==" },
-            { name: "RGhlZXJqUHJhc2Fk", phone: "KzgxODg5MTAwNzAyMQ==" },
-            { name: "U2hhbW1hcw==", phone: "KzgxNzczNjE3NDA1OA==" },
-            { name: "Umluc2hhZA==", phone: "KzgxODcxNDI5NzM0NQ==" },
-            { name: "QWRpdGh5YW4=", phone: "KzgxOTY1NjUxNTg4OQ==" },
-            { name: "TWlsYW5SYXBoeQ==", phone: "KzgxOTIwNzE2NjkyNg==" },
-            { name: "U2hpYmls", phone: "KzgxNzUxMTM4ODI5" },
-            { name: "QWRoZXJzaFBQcmFtb2Q=", phone: "KzgxOTk5NTgyMzEwNw==" },
-            { name: "U3JlZW5hdFNyZWVuYXRo", phone: "KzgxODg5MTYzMzI4MQ==" },
-            { name: "QWxlblNhbnRvc2g=", phone: "KzgxOTc3ODA3NDk2MQ==" },
-            { name: "QWFrYXNo", phone: "KzgxODA3ODQ0OTU1Mg==" },
-            { name: "QW5ha2hh", phone: "KzgxOTA3NDA0MDUzMg==" },
-            { name: "QXNoaWtEZXZpbFRpZ2Vyc01vZHM=", phone: "KzkgODEzOTAgNTA4MTQ=" },
-            { name: "QXRodWxLcmlzaG5h", phone: "OTc4OTAgNTQ2ODM=" },
-            { name: "QXZpblN1bm55", phone: "KzgxODU5MDM1NTAwMw==" },
-            { name: "QmVuKEx1Y2lNb2RzKQ==", phone: "KzkgNjIzODcgMjczMzI=" },
-            { name: "RFIuU2FuZGVlcFNpcg==", phone: "KzkgOTQ0NjggMzQzNDQ=" },
-            { name: "RFNIT0Q=", phone: "OTc0NjggNzEyMDQ=" },
-            { name: "RGhhcmFtZXR0YW5TbWFzYW5hbQ==", phone: "KzkgNzczNjIgNTEwMzI=" },
-            { name: "RHJ1ZGhhbg==", phone: "KzkgNzM1NjQgMjUyMzk=" },
-            { name: "SGFyaWtyaXNobmFuR1I=", phone: "KzgxOTQ0NjYxMDQwNw==" },
-            { name: "SWhzYW4oQnRlY2gp", phone: "KzgxOTg0NjIwNzk3MQ==" },
-            { name: "SmFzaW0oSlptb2RzKQ==", phone: "KzkgODA4OTIgNzYzMDg=" },
-            { name: "Sm9zUEpvbW9u", phone: "KzgxOTc0NjYxNjMzMQ==" },
-            { name: "S2FsaWRzdnJv", phone: "KzkgNzczNjcgNjMyNjk=" },
-            { name: "TmFndWw=", phone: "KzgxODU0Nzg3Mzk5Ng==" },
-            { name: "TmFpdGhpag==", phone: "KzkgODI4MTAgMTA1ODE=" },
-            { name: "TmFqaW0=", phone: "KzgxODcxNDUzMTk3NA==" },
-            { name: "UGhvml4TW9kcw==", phone: "KzkgODE1NzAgNDU3NjQ=" },
-            { name: "UmFpaGFuYXRo", phone: "KzgxNzAzNDE2NjMzMQ==" },
-            { name: "UmFtemFu", phone: "KzgxNjI4MjA3MzgzMA==" },
-            { name: "UmlzaGFk", phone: "KzkgOTk5NTIgNDM1Mzc=" },
-            { name: "U2FmdmFu", phone: "KzgxODcxNDE5NTE5MA==" },
-            { name: "RHIgU2hpa2hpbEhvbWU=", phone: "KzkgNzczNjcgNTk4OTg=" },
-            { name: "U2luYW4=", phone: "KzgxNjIzNTgzNDU3MA==" },
-            { name: "VHJlbmRTdG9yZVJlc2VsbGVy", phone: "KzkgODMzMDggMjQwMzQ=" },
-            { name: "VW1haXI=", phone: "KzgxODcxNDcxNDg4Mw==" },
-            { name: "REtTSVJPRw==", phone: "NjI4MjYzMzQzNw==" }
-        ];
-        
-        // Simple XOR encryption/decryption function
-        function xorEncryptDecrypt(text, key) {
-            let result = '';
-            for (let i = 0; i < text.length; i++) {
-                const charCode = text.charCodeAt(i) ^ key.charCodeAt(i % key.length);
-                result += String.fromCharCode(charCode);
-            }
-            return result;
+    // Only Base64 encoded — no XOR encryption
+    const encryptedContacts = [
+    { name: "VGhhbmF5IEtyaXNobmEgQ1U=", phone: "KzkxODI4MTcxNDUyMg==" },
+    { name: "RGhlZXJhanAgUHJhc2Fk", phone: "KzkxODg5MTAwNzAyMQ==" },
+    { name: "U2hhbW1hcyIs phone: "KzkxNzc2MzYxNzQwNTg=" },
+    { name: "Umluc2hhZA==", phone: "KzkxODcxNDI5NzM0NQ==" },
+    { name: "QWRpdGh5YW4=", phone: "KzkxOTY1NjUxNTg4OQ==" },
+    { name: "TWlsYW4gUmFwaHk=", phone: "KzkxOTIwNzE2NjkyNg==" },
+    { name: "U2hpYmls", phone: "KzkxNzUxMTM4ODI5" },
+    { name: "QWRoZXJzaCBQIFByYW1vZA==", phone: "KzkxOTk5NTgyMzEwNw==" },
+    { name: "U3JlZW5hdCBTcmVlbmF0aA==", phone: "KzkxODg5MTYzMzI4MQ==" },
+    { name: "QWxlbiBTYW50aG9zaA==", phone: "KzkxOTc3ODA3NDk2MQ==" },
+    { name: "SGliYSBBYmR1bCBIYWtlZW0=", phone: "KzkxODcxNDM5NjE5NA==" },
+    { name: "QWFrYXNo", phone: "KzkxODA3ODQ0OTU1Mg==" },
+    { name: "QW5ha2hh", phone: "KzkxOTA3NDA0MDUzMg==" },
+    { name: "QXNoaWsgRGV2aWwgVGlnZXJzIE1vZHM=", phone: "KzkxIDgxMzkwIDUwODE0" },
+    { name: "QXRobHVsIEtyaXNobmE=", phone: "OTc4OTAgNTQ2ODM=" },
+    { name: "QXZpbiBTdW5ueQ==", phone: "KzkxODU5MDM1NTAwMw==" },
+    { name: "QmVuIChMdWNpIE1vZHMp", phone: "KzkxIDYyMzg3IDI3MzMy" },
+    { name: "RFIuIFNhbmRlZXAgU2ly", phone: "KzkxIDk0NDY4IDM0MzQ0" },
+    { name: "RFMgSE9E", phone: "OTc0NjggNzEyMDQ=" },
+    { name: "RGhhcmFtZXR0YW4gU21hc2FuYW0=", phone: "KzkxIDc3MzYyIDUxMDMy" },
+    { name: "RHJ1ZGhhbg==", phone: "KzkxIDczNTY0IDI1MjM5" },
+    { name: "SGFyaWtyaXNobmFuIEcgUg==", phone: "KzkxOTQ0NjYxMDQwNw==" },
+    { name: "SGliYSIgKFNlbmlvcik=", phone: "KzkxNjIzNTg5OTIzOQ==" },
+    { name: "SGliYSBBYmR1bCBIYWtlZW0=", phone: "KzkxOTYzMzkzOTkzMA==" },
+    { name: "SWhzYW4gKEJ0ZWNoKQ==", phone: "KzkxOTg0NjIwNzk3MQ==" },
+    { name: "SmFzaW0gKEpabW9kcyk=", phone: "KzkxIDgwODkyIDc2MzA4" },
+    { name: "Sm9zIFAgSm9tb24=", phone: "KzkxOTc0NjYxNjMzMQ==" },
+    { name: "S2FsaWRzIHZybw==", phone: "KzkxIDc3MzY3IDYzMjY5" },
+    { name: "TmFndWw=", phone: "KzkxODU0Nzg3Mzk5Ng==" },
+    { name: "TmFpdGhpaA==", phone: "KzkxIDgyODEwIDEwNTgx" },
+    { name: "TmFqaW0=", phone: "KzkxODcxNDUzMTk3NA==" },
+    { name: "UGhvIG5p eCBNb2Rz", phone: "KzkxIDgxNTcwIDQ1NzY0" },
+    { name: "UmFpaGFuYXRo", phone: "KzkxNzAzNDE2NjMzMQ==" },
+    { name: "UmFtemFu", phone: "KzkxNjI4MjA3MzgzMA==" },
+    { name: "UmlzaGFk", phone: "KzkxIDk5OTUyIDQzNTM3" },
+    { name: "U2FmdmFu", phone: "KzkxODcxNDE5NTE5MA==" },
+    { name: "RHAgU2hpa2hpbCBIb21l", phone: "KzkxIDc3MzY3IDU5ODk4" },
+    { name: "U2luYW4=", phone: "KzkxNjIzNTgzNDU3MA==" },
+    { name: "VHJlbmRTdG9yZSBSZXNlbGxlcg==", phone: "KzkxIDgzMzA4IDI0MDM0" },
+    { name: "VW1haXI=", phone: "KzkxODcxNDcxNDg4Mw==" },
+    { name: "REsgU0lSIG9n", phone: "NjI4MjYzMzQzNw==" }
+];
+
+    // Base64 decoding only
+    function base64Decode(str) {
+        try {
+            return decodeURIComponent(escape(atob(str.trim())));
+        } catch (e) {
+            console.error("Base64 decode error:", e);
+            return "Invalid Data";
         }
-        
-        // Base64 encoding/decoding functions
-        function base64Encode(str) {
-            return btoa(unescape(encodeURIComponent(str)));
-        }
-        
-        function base64Decode(str) {
-            return decodeURIComponent(escape(atob(str)));
-        }
-        
-        // Decrypt contacts
-        function decryptContacts() {
-            return encryptedContacts.map(contact => {
-                const name = base64Decode(contact.name);
-                const phone = base64Decode(contact.phone);
-                return { name, phone };
-            });
-        }
-        
-        // Show loading overlay
-        document.getElementById('loadingOverlay').style.display = 'flex';
-        
-        // Security measures to prevent developer tools
-        (function() {
-            'use strict';
-            
-            // Check if device is blocked
-            if (localStorage.getItem('deviceBlocked') === 'true') {
-                document.getElementById('authContainer').style.display = 'none';
-                document.getElementById('blockedContainer').style.display = 'block';
-                document.getElementById('loadingOverlay').style.display = 'none';
-                return;
-            }
-            
-            // Disable right-click
-            document.addEventListener('contextmenu', function(e) {
-                e.preventDefault();
-                return false;
-            });
-            
-            // Disable common keyboard shortcuts
-            document.addEventListener('keydown', function(e) {
-                // F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C, Ctrl+U
-                if (
-                    e.keyCode === 123 || 
-                    (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || 
-                    (e.ctrlKey && e.keyCode === 85)
-                ) {
-                    e.preventDefault();
-                    showSecurityWarning();
-                    return false;
-                }
-            });
-            
-            // Check for dev tools open
-            let devtools = {open: false, orientation: null};
-            const threshold = 160;
-            
-            setInterval(function() {
-                if (window.outerHeight - window.innerHeight > threshold || 
-                    window.outerWidth - window.innerWidth > threshold) {
-                    if (!devtools.open) {
-                        devtools.open = true;
-                        showSecurityWarning();
-                    }
-                } else {
-                    devtools.open = false;
-                }
-            }, 500);
-            
-            // Function to show security warning and redirect
-            function showSecurityWarning() {
-                document.getElementById('securityWarning').style.display = 'block';
-                setTimeout(function() {
-                    window.location.href = 'https://www.starkindustries.com';
-                }, 2000);
-            }
-            
-            // Console warning
-            console.clear();
-            console.log("%cIRON VAULT SECURITY ALERT: Unauthorized access to this system is prohibited.", "color: #d4af37; font-size: 20px; font-weight: bold;");
-            console.log("%cYour IP address has been logged. J.A.R.V.I.S. is monitoring all activities on this system.", "color: #d4af37; font-size: 16px;");
-            
-            // Disable drag and drop
-            document.addEventListener('dragstart', function(e) {
-                e.preventDefault();
-                return false;
-            });
-            
-            // Disable text selection (partial)
-            document.addEventListener('selectstart', function(e) {
-                if (document.getElementById('vaultContainer').style.display !== 'none') {
-                    e.preventDefault();
-                    return false;
-                }
-            });
-        })();
-        
-        // Initialize variables
-        let failedAttempts = parseInt(localStorage.getItem('failedAttempts') || '0');
-        let sessionTimer;
-        let timeRemaining = 30; // 30 seconds in seconds
-        let contacts = [];
-        
-        // Update attempts counter on page load
-        document.getElementById('remainingAttempts').textContent = 2 - failedAttempts;
-        
-        // Type J.A.R.V.I.S. message effect
-        function typeJarvisMessage(elementId, message) {
-            const element = document.getElementById(elementId);
-            const typingElement = element.querySelector('.jarvis-typing');
-            const cursorElement = element.querySelector('.jarvis-cursor');
-            
-            // Clear previous content
-            typingElement.textContent = '';
-            
-            // Type message character by character
-            let i = 0;
-            const typingInterval = setInterval(function() {
-                if (i < message.length) {
-                    typingElement.textContent += message.charAt(i);
-                    i++;
-                } else {
-                    clearInterval(typingInterval);
-                }
-            }, 50);
-        }
-        
-        // Show notification
-        function showNotification(title, message) {
-            const notification = document.getElementById('notification');
-            const notificationTitle = document.getElementById('notificationTitle');
-            const notificationMessage = document.getElementById('notificationMessage');
-            
-            notificationTitle.textContent = title;
-            notificationMessage.textContent = message;
-            
-            notification.style.display = 'block';
-            
-            setTimeout(function() {
-                notification.style.display = 'none';
-            }, 3000);
-        }
-        
-        // Display contacts
-        function displayContacts(contactsToDisplay = contacts) {
-            const container = document.getElementById('contactsList');
-            
-            if (contactsToDisplay.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-user-slash"></i>
-                        <p>No contacts found matching your search.</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            container.innerHTML = '';
-            
-            contactsToDisplay.forEach((contact, index) => {
-                const contactCard = document.createElement('div');
-                contactCard.className = 'contact-card';
-                contactCard.innerHTML = `
-                    <h5>${contact.name}</h5>
-                    <div class="number">${contact.phone}</div>
-                    <div class="actions">
-                        <button class="btn btn-success" onclick="makeCall('${contact.phone}')">
-                            <i class="fas fa-phone me-1"></i> CALL
-                        </button>
-                        <button class="btn btn-success" onclick="sendWhatsApp('${contact.phone}')">
-                            <i class="fab fa-whatsapp me-1"></i> WHATSAPP
-                        </button>
-                    </div>
-                `;
-                container.appendChild(contactCard);
-            });
-        }
-        
-        // Search contacts
-        function searchContacts() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            
-            if (searchTerm === '') {
-                displayContacts();
-                return;
-            }
-            
-            const filteredContacts = contacts.filter(contact => 
-                contact.name.toLowerCase().includes(searchTerm) || 
-                contact.phone.includes(searchTerm)
-            );
-            
-            displayContacts(filteredContacts);
-        }
-        
-        // Password validation
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const password = document.getElementById('password').value;
-            
-            if (password === 'justin3237') {
-                // Successful login
-                document.getElementById('authContainer').style.display = 'none';
-                document.getElementById('vaultContainer').style.display = 'block';
-                document.getElementById('timerContainer').style.display = 'block';
-                document.getElementById('systemStatus').style.display = 'block';
-                document.getElementById('powerButton').style.display = 'block';
-                
-                // Reset failed attempts
-                localStorage.setItem('failedAttempts', '0');
-                
-                // Decrypt and display contacts
-                contacts = decryptContacts();
-                displayContacts();
-                
-                // Start session timer
-                startSessionTimer();
-                
-                // Show J.A.R.V.I.S. message
-                typeJarvisMessage('jarvisLogin', 'Access granted, sir. All contacts decrypted and ready for your command.');
-                
-                // Show notification
-                showNotification('ACCESS GRANTED', 'Vault unlocked successfully.');
-            } else {
-                // Failed login
-                failedAttempts++;
-                localStorage.setItem('failedAttempts', failedAttempts.toString());
-                
-                // Update attempts counter
-                const remaining = 2 - failedAttempts;
-                document.getElementById('remainingAttempts').textContent = remaining;
-                
-                // Clear password field
-                document.getElementById('password').value = '';
-                
-                // Show J.A.R.V.I.S. message
-                typeJarvisMessage('jarvisLogin', `Authentication failed. ${remaining} attempts remaining before lockdown.`);
-                
-                // Show notification
-                showNotification('ACCESS DENIED', `Invalid access code. ${remaining} attempts remaining.`);
-                
-                // Check if device should be blocked
-                if (failedAttempts >= 2) {
-                    blockDevice();
-                }
-            }
+    }
+
+    // Decrypt contacts — only Base64 decode
+    function decryptContacts() {
+        return encryptedContacts.map(contact => {
+            const name = base64Decode(contact.name);
+            const phone = base64Decode(contact.phone);
+            return { name, phone };
         });
-        
-        // Toggle password visibility
-        document.getElementById('togglePassword').addEventListener('click', function() {
-            const passwordInput = document.getElementById('password');
-            const icon = this.querySelector('i');
-            
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                icon.classList.replace('fa-eye', 'fa-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                icon.classList.replace('fa-eye-slash', 'fa-eye');
-            }
-        });
-        
-        // Search functionality
-        document.getElementById('searchBtn').addEventListener('click', searchContacts);
-        document.getElementById('searchInput').addEventListener('keyup', function(e) {
-            if (e.key === 'Enter') {
-                searchContacts();
-            }
-        });
-        
-        // Logout functionality
-        document.getElementById('logoutBtn').addEventListener('click', function() {
-            logout('manual');
-        });
-        
-        // Emergency shutdown
-        document.getElementById('powerButton').addEventListener('click', function() {
-            if (confirm('Are you sure you want to initiate emergency shutdown?')) {
-                logout('emergency');
-            }
-        });
-        
-        // Session timer
-        function startSessionTimer() {
-            updateTimerDisplay();
-            
-            sessionTimer = setInterval(function() {
-                timeRemaining--;
-                updateTimerDisplay();
-                
-                if (timeRemaining <= 0) {
-                    logout('timeout');
-                }
-            }, 1000);
-        }
-        
-        function updateTimerDisplay() {
-            const seconds = timeRemaining;
-            document.getElementById('sessionTimer').textContent = 
-                `00:${seconds.toString().padStart(2, '0')}`;
-                
-            // Change color when time is running out
-            if (timeRemaining <= 10) {
-                document.getElementById('sessionTimer').style.color = '#e74c3c';
-                
-                // Show warning notification
-                if (timeRemaining === 10) {
-                    showNotification('SESSION WARNING', 'Session will expire in 10 seconds.');
-                }
-            }
-        }
-        
-        // Logout function
-        function logout(reason) {
-            clearInterval(sessionTimer);
-            timeRemaining = 30; // Reset timer
-            
-            document.getElementById('vaultContainer').style.display = 'none';
-            document.getElementById('timerContainer').style.display = 'none';
-            document.getElementById('systemStatus').style.display = 'none';
-            document.getElementById('powerButton').style.display = 'none';
-            document.getElementById('authContainer').style.display = 'block';
-            document.getElementById('password').value = '';
-            
-            // Reset timer color
-            document.getElementById('sessionTimer').style.color = '#e74c3c';
-            
-            // Show appropriate J.A.R.V.I.S. message
-            if (reason === 'manual') {
-                typeJarvisMessage('jarvisLogin', 'Session terminated. Security protocols re-engaged. Have a good day, sir.');
-                showNotification('SESSION TERMINATED', 'Security protocols re-engaged.');
-            } else if (reason === 'timeout') {
-                typeJarvisMessage('jarvisLogin', 'Session expired due to inactivity. Security protocols re-engaged.');
-                showNotification('SESSION EXPIRED', 'Automatic logout due to inactivity.');
-            } else if (reason === 'emergency') {
-                typeJarvisMessage('jarvisLogin', 'Emergency shutdown initiated. All systems offline.');
-                showNotification('EMERGENCY SHUTDOWN', 'All systems have been secured.');
-            }
-        }
-        
-        // Block device function
-        function blockDevice() {
-            localStorage.setItem('deviceBlocked', 'true');
-            
+    }
+
+    // Show loading overlay
+    document.getElementById('loadingOverlay').style.display = 'flex';
+
+    // Security measures to prevent developer tools
+    (function() {
+        'use strict';
+
+        // Check if device is blocked
+        if (localStorage.getItem('deviceBlocked') === 'true') {
             document.getElementById('authContainer').style.display = 'none';
             document.getElementById('blockedContainer').style.display = 'block';
+            document.getElementById('loadingOverlay').style.display = 'none';
+            return;
         }
-        
-        // Redirect blocked device
-        function redirectBlocked() {
-            window.location.href = 'https://www.starkindustries.com';
-        }
-        
-        // Make call function
-        function makeCall(number) {
-            showNotification('INITIATING CALL', `Dialing ${number}...`);
-            setTimeout(function() {
-                window.open(`tel:${number}`, '_self');
-            }, 1000);
-        }
-        
-        // Send WhatsApp function
-        function sendWhatsApp(number) {
-            showNotification('OPENING WHATSAPP', `Connecting to ${number}...`);
-            setTimeout(function() {
-                window.open(`https://wa.me/${number.replace(/\D/g, '')}`, '_blank');
-            }, 1000);
-        }
-        
-        // Clear session on page close
-        window.addEventListener('beforeunload', function() {
-            sessionStorage.clear();
+
+        // Disable right-click
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
         });
-        
-        // Initialize page
-        window.addEventListener('load', function() {
-            // Hide loading overlay
-            setTimeout(function() {
-                document.getElementById('loadingOverlay').style.display = 'none';
-                
-                // Show initial J.A.R.V.I.S. message
-                typeJarvisMessage('jarvisLogin', 'Good morning, sir. Initiating security protocols. Please enter your access code to proceed.');
-            }, 1500);
+
+        // Disable common keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (
+                e.keyCode === 123 || 
+                (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || 
+                (e.ctrlKey && e.keyCode === 85)
+            ) {
+                e.preventDefault();
+                showSecurityWarning();
+                return false;
+            }
         });
-    </script>
+
+        // Check for dev tools open
+        let devtools = {open: false, orientation: null};
+        const threshold = 160;
+
+        setInterval(function() {
+            if (window.outerHeight - window.innerHeight > threshold || 
+                window.outerWidth - window.innerWidth > threshold) {
+                if (!devtools.open) {
+                    devtools.open = true;
+                    showSecurityWarning();
+                }
+            } else {
+                devtools.open = false;
+            }
+        }, 500);
+
+        // Function to show security warning and redirect
+        function showSecurityWarning() {
+            document.getElementById('securityWarning').style.display = 'block';
+            setTimeout(function() {
+                window.location.href = 'https://www.starkindustries.com'; // Fixed: no extra spaces
+            }, 2000);
+        }
+
+        // Console warning
+        console.clear();
+        console.log("%cIRON VAULT SECURITY ALERT: Unauthorized access to this system is prohibited.", "color: #d4af37; font-size: 20px; font-weight: bold;");
+        console.log("%cYour IP address has been logged. J.A.R.V.I.S. is monitoring all activities on this system.", "color: #d4af37; font-size: 16px;");
+
+        // Disable drag and drop
+        document.addEventListener('dragstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Disable text selection (partial)
+        document.addEventListener('selectstart', function(e) {
+            if (document.getElementById('vaultContainer').style.display !== 'none') {
+                e.preventDefault();
+                return false;
+            }
+        });
+    })();
+
+    // Initialize variables
+    let failedAttempts = parseInt(localStorage.getItem('failedAttempts') || '0');
+    let sessionTimer;
+    let timeRemaining = 30; // Reset to 30s each session
+    let contacts = [];
+
+    // Update attempts counter on page load
+    document.getElementById('remainingAttempts').textContent = 2 - failedAttempts;
+
+    // Type J.A.R.V.I.S. message effect
+    function typeJarvisMessage(elementId, message) {
+        const element = document.getElementById(elementId);
+        const typingElement = element.querySelector('.jarvis-typing');
+        const cursorElement = element.querySelector('.jarvis-cursor');
+
+        typingElement.textContent = '';
+        let i = 0;
+        const typingInterval = setInterval(function() {
+            if (i < message.length) {
+                typingElement.textContent += message.charAt(i);
+                i++;
+            } else {
+                clearInterval(typingInterval);
+            }
+        }, 50);
+    }
+
+    // Show notification
+    function showNotification(title, message) {
+        const notification = document.getElementById('notification');
+        const notificationTitle = document.getElementById('notificationTitle');
+        const notificationMessage = document.getElementById('notificationMessage');
+
+        notificationTitle.textContent = title;
+        notificationMessage.textContent = message;
+
+        notification.style.display = 'block';
+
+        setTimeout(function() {
+            notification.style.display = 'none';
+        }, 3000);
+    }
+
+    // Display contacts
+    function displayContacts(contactsToDisplay = contacts) {
+        const container = document.getElementById('contactsList');
+
+        if (contactsToDisplay.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-user-slash"></i>
+                    <p>No contacts found matching your search.</p>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = '';
+        contactsToDisplay.forEach((contact, index) => {
+            const contactCard = document.createElement('div');
+            contactCard.className = 'contact-card';
+            contactCard.innerHTML = `
+                <h5>${contact.name}</h5>
+                <div class="number">${contact.phone}</div>
+                <div class="actions">
+                    <button class="btn btn-success" onclick="makeCall('${contact.phone}')">
+                        <i class="fas fa-phone me-1"></i> CALL
+                    </button>
+                    <button class="btn btn-success" onclick="sendWhatsApp('${contact.phone}')">
+                        <i class="fab fa-whatsapp me-1"></i> WHATSAPP
+                    </button>
+                </div>
+            `;
+            container.appendChild(contactCard);
+        });
+    }
+
+    // Search contacts
+    function searchContacts() {
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+        if (searchTerm === '') {
+            displayContacts();
+            return;
+        }
+        const filteredContacts = contacts.filter(contact => 
+            contact.name.toLowerCase().includes(searchTerm) || 
+            contact.phone.includes(searchTerm)
+        );
+        displayContacts(filteredContacts);
+    }
+
+    // Password validation
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const password = document.getElementById('password').value;
+
+        if (password === 'justin3237') {
+            // Reset attempts
+            localStorage.setItem('failedAttempts', '0');
+            failedAttempts = 0;
+
+            // Show vault
+            document.getElementById('authContainer').style.display = 'none';
+            document.getElementById('vaultContainer').style.display = 'block';
+            document.getElementById('timerContainer').style.display = 'block';
+            document.getElementById('systemStatus').style.display = 'block';
+            document.getElementById('powerButton').style.display = 'block';
+
+            // Decrypt and display contacts
+            contacts = decryptContacts();
+            displayContacts();
+
+            // Reset and start timer
+            timeRemaining = 30; // Reset time
+            document.getElementById('sessionTimer').style.color = '#e74c3c'; // Reset color
+            startSessionTimer();
+
+            // Messages
+            typeJarvisMessage('jarvisLogin', 'Access granted, sir. All contacts decrypted and ready for your command.');
+            showNotification('ACCESS GRANTED', 'Vault unlocked successfully.');
+        } else {
+            failedAttempts++;
+            localStorage.setItem('failedAttempts', failedAttempts.toString());
+            document.getElementById('remainingAttempts').textContent = 2 - failedAttempts;
+            document.getElementById('password').value = '';
+
+            typeJarvisMessage('jarvisLogin', `Authentication failed. ${2 - failedAttempts} attempts remaining before lockdown.`);
+            showNotification('ACCESS DENIED', `Invalid access code. ${2 - failedAttempts} attempts remaining.`);
+
+            if (failedAttempts >= 2) {
+                blockDevice();
+            }
+        }
+    });
+
+    // Toggle password visibility
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        const passwordInput = document.getElementById('password');
+        const icon = this.querySelector('i');
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.classList.replace('fa-eye', 'fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            icon.classList.replace('fa-eye-slash', 'fa-eye');
+        }
+    });
+
+    // Search functionality
+    document.getElementById('searchBtn').addEventListener('click', searchContacts);
+    document.getElementById('searchInput').addEventListener('keyup', function(e) {
+        if (e.key === 'Enter') {
+            searchContacts();
+        }
+    });
+
+    // Logout functionality
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+        logout('manual');
+    });
+
+    // Emergency shutdown
+    document.getElementById('powerButton').addEventListener('click', function() {
+        if (confirm('Are you sure you want to initiate emergency shutdown?')) {
+            logout('emergency');
+        }
+    });
+
+    // Session timer
+    function startSessionTimer() {
+        updateTimerDisplay();
+        sessionTimer = setInterval(function() {
+            timeRemaining--;
+            updateTimerDisplay();
+            if (timeRemaining <= 0) {
+                logout('timeout');
+            }
+        }, 1000);
+    }
+
+    function updateTimerDisplay() {
+        document.getElementById('sessionTimer').textContent = `00:${timeRemaining.toString().padStart(2, '0')}`;
+        const timerEl = document.getElementById('sessionTimer');
+        if (timeRemaining <= 10) {
+            timerEl.style.color = '#e74c3c';
+            if (timeRemaining === 10) {
+                showNotification('SESSION WARNING', 'Session will expire in 10 seconds.');
+            }
+        } else {
+            timerEl.style.color = '#e74c3c'; // Keep consistent color
+        }
+    }
+
+    // Logout function
+    function logout(reason) {
+        clearInterval(sessionTimer);
+        timeRemaining = 30; // Reset for next login
+
+        document.getElementById('vaultContainer').style.display = 'none';
+        document.getElementById('timerContainer').style.display = 'none';
+        document.getElementById('systemStatus').style.display = 'none';
+        document.getElementById('powerButton').style.display = 'none';
+        document.getElementById('authContainer').style.display = 'block';
+        document.getElementById('password').value = '';
+
+        const timerEl = document.getElementById('sessionTimer');
+        timerEl.style.color = '#e74c3c'; // Reset color
+
+        let message, notificationMsg;
+        if (reason === 'manual') {
+            message = 'Session terminated. Security protocols re-engaged. Have a good day, sir.';
+            notificationMsg = 'SESSION TERMINATED';
+        } else if (reason === 'timeout') {
+            message = 'Session expired due to inactivity. Security protocols re-engaged.';
+            notificationMsg = 'SESSION EXPIRED';
+        } else if (reason === 'emergency') {
+            message = 'Emergency shutdown initiated. All systems offline.';
+            notificationMsg = 'EMERGENCY SHUTDOWN';
+        }
+        typeJarvisMessage('jarvisLogin', message);
+        showNotification(notificationMsg, notificationMsg.includes('SHUTDOWN') ? 'All systems have been secured.' : 'Automatic logout due to inactivity.');
+    }
+
+    // Block device
+    function blockDevice() {
+        localStorage.setItem('deviceBlocked', 'true');
+        document.getElementById('authContainer').style.display = 'none';
+        document.getElementById('blockedContainer').style.display = 'block';
+    }
+
+    // Redirect blocked device
+    function redirectBlocked() {
+        window.location.href = 'https://www.starkindustries.com'; // Fixed: no extra spaces
+    }
+
+    // Make call
+    function makeCall(number) {
+        showNotification('INITIATING CALL', `Dialing ${number}...`);
+        setTimeout(function() {
+            window.open(`tel:${number}`, '_self');
+        }, 1000);
+    }
+
+    // Send WhatsApp
+    function sendWhatsApp(number) {
+        const cleanNumber = number.replace(/\D/g, ''); // Remove non-digits
+        showNotification('OPENING WHATSAPP', `Connecting to ${cleanNumber}...`);
+        setTimeout(function() {
+            window.open(`https://wa.me/${cleanNumber}`, '_blank'); // ✅ Fixed: no extra spaces
+        }, 1000);
+    }
+
+    // Clear session on page close
+    window.addEventListener('beforeunload', function() {
+        sessionStorage.clear();
+    });
+
+    // Initialize page
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            document.getElementById('loadingOverlay').style.display = 'none';
+            typeJarvisMessage('jarvisLogin', 'Good morning, sir. Initiating security protocols. Please enter your access code to proceed.');
+        }, 1500);
+    });
+</script>
 </body>
 </html>
