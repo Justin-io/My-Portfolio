@@ -6,6 +6,8 @@
     <title>IRON VAULT - SECURE CONTACT SYSTEM</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+      <script src="assets/js/main.js"></script>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
         
@@ -672,7 +674,6 @@
     </div>
 
     <script>
-    // Only Base64 encoded — no XOR encryption
     const encryptedContacts = [
     { name: "VGhhbmF5IEtyaXNobmEgQ1U=", phone: "KzkxODI4MTcxNDUyMg==" },
     { name: "RGhlZXJhanAgUHJhc2Fk", phone: "KzkxODg5MTAwNzAyMQ==" },
@@ -717,24 +718,7 @@
     { name: "REsgU0lSIG9n", phone: "NjI4MjYzMzQzNw==" }
 ];
 
-    // Base64 decoding only
-    function base64Decode(str) {
-        try {
-            return decodeURIComponent(escape(atob(str.trim())));
-        } catch (e) {
-            console.error("Base64 decode error:", e);
-            return "Invalid Data";
-        }
-    }
-
-    // Decrypt contacts — only Base64 decode
-    function decryptContacts() {
-        return encryptedContacts.map(contact => {
-            const name = base64Decode(contact.name);
-            const phone = base64Decode(contact.phone);
-            return { name, phone };
-        });
-    }
+    
 
     // Show loading overlay
     document.getElementById('loadingOverlay').style.display = 'flex';

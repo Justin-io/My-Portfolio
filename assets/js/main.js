@@ -319,3 +319,22 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.removeChild(overlay);
     };
   }
+
+  // Base64 decoding only
+    function base64Decode(str) {
+        try {
+            return decodeURIComponent(escape(atob(str.trim())));
+        } catch (e) {
+            console.error("Base64 decode error:", e);
+            return "Invalid Data";
+        }
+    }
+
+    // Decrypt contacts — only Base64 decode
+    function decryptContacts() {
+        return encryptedContacts.map(contact => {
+            const name = base64Decode(contact.name);
+            const phone = base64Decode(contact.phone);
+            return { name, phone };
+        });
+    }
