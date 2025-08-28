@@ -117,6 +117,54 @@
             justify-content: center;
             color: #6b7280;
         }
+        
+        /* Resources section styling */
+        .resource-day {
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .resource-day:hover {
+            background-color: #f3f4f6;
+        }
+        
+        .resource-day.active {
+            background-color: #e0e7ff;
+            border-left: 4px solid #4f46e5;
+        }
+        
+        .resource-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Print styles */
+        @media print {
+            body {
+                background-color: white;
+                color: black;
+            }
+            
+            header, nav, .action-btn, .tab-btn, button {
+                display: none !important;
+            }
+            
+            .content-container {
+                padding-bottom: 0;
+            }
+            
+            .resource-day {
+                break-inside: avoid;
+            }
+            
+            .resource-card {
+                break-inside: avoid;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans">
@@ -720,80 +768,61 @@ git pull origin main</pre>
             <div class="bg-white rounded-xl shadow-md p-6 mb-6">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-2xl font-bold text-indigo-700">Resources</h2>
-                    <button id="backToDashboardFromResources" class="text-gray-500 hover:text-gray-700">
-                        <i class="fas fa-arrow-left mr-2"></i> Back to Dashboard
-                    </button>
+                    <div class="flex space-x-2">
+                        <button id="printResources" class="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300">
+                            <i class="fas fa-print mr-2"></i> Print
+                        </button>
+                        <button id="backToDashboardFromResources" class="text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-arrow-left mr-2"></i> Back
+                        </button>
+                    </div>
                 </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="border border-gray-200 rounded-lg p-4">
-                        <h3 class="text-lg font-bold mb-3 flex items-center">
-                            <i class="fas fa-file-pdf text-red-500 mr-2"></i> Daily PDF Notes
-                        </h3>
-                        <ul class="space-y-2">
-                            <li><a href="#" class="text-indigo-600 hover:text-indigo-800">Day 1: Introduction to Java</a></li>
-                            <li><a href="#" class="text-indigo-600 hover:text-indigo-800">Day 2: Data Types and Variables</a></li>
-                            <li><a href="#" class="text-indigo-600 hover:text-indigo-800">Day 3: Operators and Expressions</a></li>
-                            <li><a href="#" class="text-indigo-600 hover:text-indigo-800">Day 4: Control Statements</a></li>
-                            <li><a href="#" class="text-indigo-600 hover:text-indigo-800">Day 5: Arrays</a></li>
-                        </ul>
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+                    <p class="text-blue-800">
+                        <i class="fas fa-info-circle mr-2"></i>
+                        Note: All resources are free, beginner-friendly, and suitable for mobile learning using AIDE/Dcoder. Print this page for offline reference.
+                    </p>
+                </div>
+                
+                <div class="flex flex-col md:flex-row gap-6">
+                    <!-- Days List -->
+                    <div class="w-full md:w-1/4">
+                        <h3 class="text-lg font-bold mb-3">Select Day</h3>
+                        <div class="space-y-2" id="daysList">
+                            <!-- Days will be populated by JavaScript -->
+                        </div>
                     </div>
                     
-                    <div class="border border-gray-200 rounded-lg p-4">
-                        <h3 class="text-lg font-bold mb-3 flex items-center">
-                            <i class="fas fa-mobile-alt text-blue-500 mr-2"></i> Mobile App Setup
-                        </h3>
-                        <ul class="space-y-2">
-                            <li><a href="#" class="text-indigo-600 hover:text-indigo-800">Installing AIDE on Android</a></li>
-                            <li><a href="#" class="text-indigo-600 hover:text-indigo-800">Setting up Dcoder</a></li>
-                            <li><a href="#" class="text-indigo-600 hover:text-indigo-800">Running your first Java program</a></li>
-                        </ul>
-                    </div>
-                    
-                    <div class="border border-gray-200 rounded-lg p-4">
-                        <h3 class="text-lg font-bold mb-3 flex items-center">
-                            <i class="fas fa-exclamation-triangle text-yellow-500 mr-2"></i> Common Errors & Fixes
-                        </h3>
-                        <ul class="space-y-2">
-                            <li><a href="#" class="text-indigo-600 hover:text-indigo-800">"Class not found" error</a></li>
-                            <li><a href="#" class="text-indigo-600 hover:text-indigo-800">Syntax errors</a></li>
-                            <li><a href="#" class="text-indigo-600 hover:text-indigo-800">Logic errors</a></li>
-                            <li><a href="#" class="text-indigo-600 hover:text-indigo-800">Compilation errors</a></li>
-                        </ul>
-                    </div>
-                    
-                    <div class="border border-gray-200 rounded-lg p-4">
-                        <h3 class="text-lg font-bold mb-3 flex items-center">
-                            <i class="fas fa-book text-green-500 mr-2"></i> KTU Syllabus Mapping
-                        </h3>
-                        <ul class="space-y-2">
-                            <li><a href="#" class="text-indigo-600 hover:text-indigo-800">Module 1: Basics of Java</a></li>
-                            <li><a href="#" class="text-indigo-600 hover:text-indigo-800">Module 2: Object-Oriented Programming</a></li>
-                            <li><a href="#" class="text-indigo-600 hover:text-indigo-800">Module 3: Exception Handling</a></li>
-                            <li><a href="#" class="text-indigo-600 hover:text-indigo-800">Module 4: Collections</a></li>
-                        </ul>
-                    </div>
-                    
-                    <div class="border border-gray-200 rounded-lg p-4 md:col-span-2">
-                        <h3 class="text-lg font-bold mb-3 flex items-center">
-                            <i class="fas fa-brain text-purple-500 mr-2"></i> Mindset Tips
-                        </h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="bg-purple-50 p-3 rounded-lg">
-                                <h4 class="font-bold mb-1">Practice Daily</h4>
-                                <p class="text-sm">Code every day, even if it's just for 15 minutes.</p>
-                            </div>
-                            <div class="bg-purple-50 p-3 rounded-lg">
-                                <h4 class="font-bold mb-1">Break Problems Down</h4>
-                                <p class="text-sm">Divide complex problems into smaller, manageable parts.</p>
-                            </div>
-                            <div class="bg-purple-50 p-3 rounded-lg">
-                                <h4 class="font-bold mb-1">Learn from Mistakes</h4>
-                                <p class="text-sm">Errors are opportunities to learn and improve.</p>
-                            </div>
-                            <div class="bg-purple-50 p-3 rounded-lg">
-                                <h4 class="font-bold mb-1">Collaborate</h4>
-                                <p class="text-sm">Discuss problems with peers and learn together.</p>
+                    <!-- Resources Content -->
+                    <div class="w-full md:w-3/4">
+                        <div id="resourcesContent">
+                            <h3 class="text-xl font-bold mb-4">📄 Printable Java Learning Guide | For KTU BTech (Non-IT) Students | 10-Day Intensive Curriculum</h3>
+                            <p class="mb-4">Select a day from the list to view resources for that day.</p>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="bg-purple-50 p-4 rounded-lg">
+                                    <h4 class="font-bold mb-2 flex items-center">
+                                        <i class="fas fa-lightbulb text-purple-500 mr-2"></i> How to Use These Resources
+                                    </h4>
+                                    <ul class="list-disc pl-5 space-y-1">
+                                        <li>Watch YouTube videos for visual learning</li>
+                                        <li>Download PDFs for offline reference</li>
+                                        <li>Explore GitHub repositories for code examples</li>
+                                        <li>Check Stack Overflow for common issues</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-green-50 p-4 rounded-lg">
+                                    <h4 class="font-bold mb-2 flex items-center">
+                                        <i class="fas fa-mobile-alt text-green-500 mr-2"></i> Mobile Learning Tips
+                                    </h4>
+                                    <ul class="list-disc pl-5 space-y-1">
+                                        <li>Use AIDE or Dcoder to run Java code</li>
+                                        <li>Download PDFs for offline access</li>
+                                        <li>Bookmark important resources</li>
+                                        <li>Take notes in a separate app</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -842,22 +871,187 @@ git pull origin main</pre>
             isLiveClassHappening: true, // Toggle this to show/hide live class banner
             darkMode: false,
             lastScrollTop: 0,
-            navbarVisible: true
+            navbarVisible: true,
+            selectedResourceDay: null
         };
 
         // Days data
         const days = [
-            { id: 1, title: "Introduction to Java", description: "Learn the basics of Java programming" },
-            { id: 2, title: "Data Types and Variables", description: "Understanding different data types in Java" },
-            { id: 3, title: "Operators and Expressions", description: "Working with operators in Java" },
-            { id: 4, title: "Control Statements", description: "Conditional and loop statements" },
-            { id: 5, title: "Arrays", description: "Working with arrays in Java" },
-            { id: 6, title: "String Handling", description: "String manipulation in Java" },
-            { id: 7, title: "Classes and Objects", description: "Introduction to OOP concepts" },
-            { id: 8, title: "Inheritance", description: "Understanding inheritance in Java" },
-            { id: 9, title: "Exception Handling", description: "Handling errors in Java" },
-            { id: 10, title: "Collections Framework", description: "Working with Java collections" }
+            { id: 1, title: "Introduction to Programming and Java Environment", description: "Learn the basics of Java programming" },
+            { id: 2, title: "Variables, Data Types, and Input/Output", description: "Understanding different data types in Java" },
+            { id: 3, title: "Conditional Statements (if-else, switch)", description: "Working with operators in Java" },
+            { id: 4, title: "Loops (for, while, do-while)", description: "Conditional and loop statements" },
+            { id: 5, title: "Arrays and Strings", description: "Working with arrays in Java" },
+            { id: 6, title: "Methods and Reusability", description: "String manipulation in Java" },
+            { id: 7, title: "OOP – Classes and Objects", description: "Introduction to OOP concepts" },
+            { id: 8, title: "Constructors, this, Access Modifiers", description: "Understanding inheritance in Java" },
+            { id: 9, title: "Problem-Solving and Code Tracing", description: "Handling errors in Java" },
+            { id: 10, title: "Mini Project and Version Control", description: "Working with Java collections" }
         ];
+
+        // Resources data
+        const resourcesByDay = {
+            1: {
+                title: "Introduction to Programming and Java Environment",
+                youtube: [
+                    { title: "Java Hello World: Write & Run Your First Java Program in Notepad", url: "#" },
+                    { title: "How to code and compile JAVA using Dcoder in mobile", url: "#" }
+                ],
+                pdf: [
+                    { title: "JVM, JRE, JDK Guide", url: "https://topperworld.in/media/2024/02/JVM-JDK-and-JRE.pdf" }
+                ],
+                github: [
+                    { title: "Simple HelloWorld Java", url: "https://github.com/LuisJoseSanchez/hello-world-java" }
+                ],
+                stackoverflow: [
+                    { title: "Common Hello World Errors", url: "https://stackoverflow.com/questions/52618734/problem-with-hello-world-tutorial-in-dcoder" }
+                ]
+            },
+            2: {
+                title: "Variables, Data Types, and Input/Output",
+                youtube: [
+                    { title: "How to accept user input in Java ⌨️ (8 minutes)", url: "#" },
+                    { title: "How to accept USER INPUT using Java!", url: "#" }
+                ],
+                pdf: [
+                    { title: "Java Data Types Cheat Sheet", url: "https://markfloryan.github.io/dsa1/java/javaCheatSheet/javaCheatSheet.pdf" }
+                ],
+                github: [
+                    { title: "Java Scanner Examples", url: "https://github.com/topics/java-scanner-input" }
+                ],
+                stackoverflow: [
+                    { title: "Fix 'InputMismatchException'", url: "https://stackoverflow.com/questions/13042142/how-to-fix-inputmismatchexception-in-scanner" }
+                ]
+            },
+            3: {
+                title: "Conditional Statements (if-else, switch)",
+                youtube: [
+                    { title: "Java program to find grade of a student using if else", url: "#" },
+                    { title: "Grade Calculator using If-Else + User Input", url: "#" }
+                ],
+                pdf: [
+                    { title: "Decision-Making Flowcharts", url: "https://mppolytechnic.ac.in/mp-staff/notes_upload_photo/CS601Iterationandjump.pdf" }
+                ],
+                github: [
+                    { title: "Java switch-case example", url: "https://github.com/fefong/java_switch" }
+                ],
+                stackoverflow: [
+                    { title: "if-else vs switch comparison", url: "https://softwareengineering.stackexchange.com/questions/154500/..." }
+                ]
+            },
+            4: {
+                title: "Loops (for, while, do-while)",
+                youtube: [
+                    { title: "Generate Multiplication Table in Java using for loop", url: "#" },
+                    { title: "2 easiest ways to print multiplication table in Java", url: "#" }
+                ],
+                pdf: [
+                    { title: "Loop Comparison Table", url: "https://www.scribd.com/document/896046857/Lesson-3-Java-Revision-Sheet-Loops-Comparison-for-while-do-while" }
+                ],
+                github: [
+                    { title: "Loop Exercises", url: "https://github.com/nurulashraf/java-loops-and-conditionals-exercises" }
+                ],
+                stackoverflow: [
+                    { title: "Why is my while loop not stopping?", url: "https://stackoverflow.com/questions/28053766/why-wont-my-while-loop-terminate" }
+                ]
+            },
+            5: {
+                title: "Arrays and Strings",
+                youtube: [
+                    { title: "Java Tutorial for Beginners #8 - Arrays", url: "#" },
+                    { title: "Array & String in java | DSA", url: "#" }
+                ],
+                pdf: [
+                    { title: "String Methods Cheat Sheet", url: "https://www.scribd.com/document/835582925/Java-String-Methods-Cheat-Sheet" }
+                ],
+                github: [
+                    { title: "Array & String Manipulation", url: "https://github.com/topics/array-manipulations?l=java" }
+                ],
+                stackoverflow: [
+                    { title: "Count vowels in a string", url: "https://stackoverflow.com/questions/56732231/count-vowels-in-a-string-in-java" }
+                ]
+            },
+            6: {
+                title: "Methods and Reusability",
+                youtube: [
+                    { title: "Java Methods for Beginners", url: "#" },
+                    { title: "Introduction to Java Methods in 5 minutes", url: "#" }
+                ],
+                pdf: [
+                    { title: "Method Signature Diagram", url: "https://markfloryan.github.io/dsa1/java/javaCheatSheet/javaCheatSheet.pdf" }
+                ],
+                github: [
+                    { title: "Reusable Java Methods", url: "https://github.com/in28minutes/java-tutorial-for-beginners" }
+                ],
+                stackoverflow: [
+                    { title: "'cannot be referenced from a static context'", url: "https://stackoverflow.com/questions/290884/..." }
+                ]
+            },
+            7: {
+                title: "OOP – Classes and Objects",
+                youtube: [
+                    { title: "Java Classes and Objects Explained Simply", url: "#" },
+                    { title: "Introduction to Arrays and ArrayList in Java", url: "#" }
+                ],
+                pdf: [
+                    { title: "OOP Analogy: Car Blueprint vs Car", url: "https://medium.com/@mrugaja3ri/java-classes-and-objects-explained-c4190f80c144" }
+                ],
+                github: [
+                    { title: "Student Class Example", url: "https://ucsb-cs156.github.io/tutorials/student/student_ex01.html" }
+                ],
+                stackoverflow: [
+                    { title: "How to create a class in Java?", url: "https://stackoverflow.com/questions/19941825/purpose-of-a-constructor-in-java" }
+                ]
+            },
+            8: {
+                title: "Constructors, this, Access Modifiers",
+                youtube: [
+                    { title: "Constructors and this keyword | Selenium Java", url: "#" },
+                    { title: "Day 19 - Objects, Classes and Constructors", url: "#" }
+                ],
+                pdf: [
+                    { title: "Access Modifiers Visibility Chart", url: "https://www.cp.eng.chula.ac.th/~chate/2140105/lab8.pdf" }
+                ],
+                github: [
+                    { title: "Student Class with Encapsulation", url: "https://ucsb-cs156.github.io/tutorials/student/student_ex01.html" }
+                ],
+                stackoverflow: [
+                    { title: "When to use 'this' in Java?", url: "https://stackoverflow.com/questions/2411270/when-should-i-use-this-in-a-class" }
+                ]
+            },
+            9: {
+                title: "Problem-Solving and Code Tracing",
+                youtube: [
+                    { title: "Java code tracing example 1", url: "#" },
+                    { title: "Tracing Code Worksheet #1", url: "#" }
+                ],
+                pdf: [
+                    { title: "Code Tracing Worksheet", url: "http://www.minich.com/education/wyo/java/worksheets/tracing%20code%20worksheet%201.pdf" }
+                ],
+                github: [
+                    { title: "Beginner Java Problems", url: "https://github.com/in28minutes/java-tutorial-for-beginners" }
+                ],
+                stackoverflow: [
+                    { title: "Debug Java without IDE", url: "https://stackoverflow.com/questions/61818933/controlling-java-program-excecution-without-debugger" }
+                ]
+            },
+            10: {
+                title: "Mini Project and Version Control",
+                youtube: [
+                    { title: "GitHub for Beginners: Create Repo + First Push in 5 Minutes", url: "#" },
+                    { title: "GitHub Full Course (Playlist)", url: "#" }
+                ],
+                pdf: [
+                    { title: "GitHub Education Cheat Sheet", url: "https://education.github.com/git-cheat-sheet-education.pdf" }
+                ],
+                github: [
+                    { title: "Student Grade Tracker Project", url: "https://github.com/Gaurinavale/StudentGradeTracke" }
+                ],
+                stackoverflow: [
+                    { title: "Push Java code to GitHub from mobile", url: "https://stackoverflow.com/questions/73014590/how-to-push-a-file-to-github-using-an-android-app-java" }
+                ]
+            }
+        };
 
         // Quiz questions for Day 1
         const day1Quiz = [
@@ -995,6 +1189,7 @@ git pull origin main</pre>
             initializeDragDrop();
             renderQuiz();
             setupNavbarAutoHide();
+            renderDaysList();
         });
 
         // Load app state from localStorage
@@ -1056,6 +1251,178 @@ git pull origin main</pre>
                 
                 lastScrollTop = scrollTop;
             });
+        }
+
+        // Render days list in resources view
+        function renderDaysList() {
+            const daysList = document.getElementById('daysList');
+            daysList.innerHTML = '';
+            
+            days.forEach(day => {
+                const dayElement = document.createElement('div');
+                dayElement.className = `resource-day p-3 rounded-lg border ${
+                    app.selectedResourceDay === day.id ? 'active' : 'border-gray-200'
+                }`;
+                dayElement.dataset.day = day.id;
+                dayElement.innerHTML = `
+                    <h4 class="font-medium">Day ${day.id}</h4>
+                    <p class="text-sm text-gray-600 truncate">${day.title}</p>
+                `;
+                
+                dayElement.addEventListener('click', function() {
+                    const dayId = parseInt(this.dataset.day);
+                    selectResourceDay(dayId);
+                });
+                
+                daysList.appendChild(dayElement);
+            });
+            
+            // Select first day by default
+            if (!app.selectedResourceDay) {
+                selectResourceDay(1);
+            }
+        }
+
+        // Select a resource day
+        function selectResourceDay(dayId) {
+            app.selectedResourceDay = dayId;
+            
+            // Update UI
+            document.querySelectorAll('.resource-day').forEach(el => {
+                if (parseInt(el.dataset.day) === dayId) {
+                    el.classList.add('active');
+                } else {
+                    el.classList.remove('active');
+                }
+            });
+            
+            // Render resources for selected day
+            renderDayResources(dayId);
+        }
+
+        // Render resources for a specific day
+        function renderDayResources(dayId) {
+            const resourcesContent = document.getElementById('resourcesContent');
+            const resources = resourcesByDay[dayId];
+            
+            if (!resources) {
+                resourcesContent.innerHTML = '<p>No resources available for this day.</p>';
+                return;
+            }
+            
+            let html = `
+                <h3 class="text-xl font-bold mb-4">Day ${dayId}: ${resources.title}</h3>
+            `;
+            
+            // YouTube resources
+            if (resources.youtube && resources.youtube.length > 0) {
+                html += `
+                    <div class="mb-6">
+                        <h4 class="text-lg font-bold mb-3 flex items-center">
+                            <i class="fab fa-youtube text-red-500 mr-2"></i> YouTube Videos
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                `;
+                
+                resources.youtube.forEach(video => {
+                    html += `
+                        <div class="resource-card bg-white border border-gray-200 rounded-lg p-4">
+                            <h5 class="font-bold mb-2">${video.title}</h5>
+                            <a href="${video.url}" target="_blank" class="text-indigo-600 hover:text-indigo-800 flex items-center">
+                                <i class="fas fa-external-link-alt mr-1"></i> Watch Video
+                            </a>
+                        </div>
+                    `;
+                });
+                
+                html += `
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // PDF resources
+            if (resources.pdf && resources.pdf.length > 0) {
+                html += `
+                    <div class="mb-6">
+                        <h4 class="text-lg font-bold mb-3 flex items-center">
+                            <i class="fas fa-file-pdf text-red-500 mr-2"></i> PDF Resources
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                `;
+                
+                resources.pdf.forEach(pdf => {
+                    html += `
+                        <div class="resource-card bg-white border border-gray-200 rounded-lg p-4">
+                            <h5 class="font-bold mb-2">${pdf.title}</h5>
+                            <a href="${pdf.url}" target="_blank" class="text-indigo-600 hover:text-indigo-800 flex items-center">
+                                <i class="fas fa-download mr-1"></i> Download PDF
+                            </a>
+                        </div>
+                    `;
+                });
+                
+                html += `
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // GitHub resources
+            if (resources.github && resources.github.length > 0) {
+                html += `
+                    <div class="mb-6">
+                        <h4 class="text-lg font-bold mb-3 flex items-center">
+                            <i class="fab fa-github text-gray-800 mr-2"></i> GitHub Repositories
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                `;
+                
+                resources.github.forEach(repo => {
+                    html += `
+                        <div class="resource-card bg-white border border-gray-200 rounded-lg p-4">
+                            <h5 class="font-bold mb-2">${repo.title}</h5>
+                            <a href="${repo.url}" target="_blank" class="text-indigo-600 hover:text-indigo-800 flex items-center">
+                                <i class="fas fa-external-link-alt mr-1"></i> View Repository
+                            </a>
+                        </div>
+                    `;
+                });
+                
+                html += `
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Stack Overflow resources
+            if (resources.stackoverflow && resources.stackoverflow.length > 0) {
+                html += `
+                    <div class="mb-6">
+                        <h4 class="text-lg font-bold mb-3 flex items-center">
+                            <i class="fab fa-stack-overflow text-orange-500 mr-2"></i> Stack Overflow
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                `;
+                
+                resources.stackoverflow.forEach(so => {
+                    html += `
+                        <div class="resource-card bg-white border border-gray-200 rounded-lg p-4">
+                            <h5 class="font-bold mb-2">${so.title}</h5>
+                            <a href="${so.url}" target="_blank" class="text-indigo-600 hover:text-indigo-800 flex items-center">
+                                <i class="fas fa-external-link-alt mr-1"></i> View Question
+                            </a>
+                        </div>
+                    `;
+                });
+                
+                html += `
+                        </div>
+                    </div>
+                `;
+            }
+            
+            resourcesContent.innerHTML = html;
         }
 
         // Setup event listeners
@@ -1177,6 +1544,11 @@ git pull origin main</pre>
                         if (step === '6') this.textContent = 'Show advanced tips →';
                     }
                 });
+            });
+
+            // Print resources button
+            document.getElementById('printResources').addEventListener('click', function() {
+                window.print();
             });
         }
 
