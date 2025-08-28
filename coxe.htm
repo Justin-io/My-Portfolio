@@ -81,6 +81,42 @@
                 padding-bottom: 5rem;
             }
         }
+        
+        /* Navbar auto-hide */
+        .navbar-hidden {
+            transform: translateY(100%);
+        }
+        
+        .navbar-visible {
+            transform: translateY(0);
+        }
+        
+        nav {
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        /* GitHub section enhancements */
+        .github-step-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .github-step-content.expanded {
+            max-height: 1000px;
+            transition: max-height 0.5s ease-in;
+        }
+        
+        .screenshot-placeholder {
+            background: #f3f4f6;
+            border: 2px dashed #d1d5db;
+            border-radius: 0.5rem;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans">
@@ -435,31 +471,158 @@ x = x * 2;</code></pre>
                         <div class="border-l-4 border-indigo-500 pl-4 py-1">
                             <h4 class="font-bold">Step 1: What is GitHub?</h4>
                             <p class="text-gray-600">GitHub is a code hosting platform for version control and collaboration.</p>
-                            <button class="text-indigo-600 hover:text-indigo-800 mt-1 text-sm">Learn more →</button>
+                            <button class="github-expand-btn text-indigo-600 hover:text-indigo-800 mt-1 text-sm" data-step="1">Learn more →</button>
+                            <div id="github-step-1" class="github-step-content mt-3">
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <h5 class="font-bold mb-2">Why Use GitHub?</h5>
+                                    <ul class="list-disc pl-5 space-y-1">
+                                        <li>Version Control: Track changes to your code over time</li>
+                                        <li>Collaboration: Work with other developers on the same project</li>
+                                        <li>Backup: Your code is safely stored in the cloud</li>
+                                        <li>Portfolio: Showcase your projects to potential employers</li>
+                                    </ul>
+                                    <div class="screenshot-placeholder mt-3">
+                                        <span>Screenshot: GitHub homepage</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         
                         <div class="border-l-4 border-indigo-500 pl-4 py-1">
                             <h4 class="font-bold">Step 2: Create your account</h4>
                             <p class="text-gray-600">Sign up for a free GitHub account using your email.</p>
                             <a href="https://github.com/signup" target="_blank" class="text-indigo-600 hover:text-indigo-800 mt-1 text-sm inline-block">Sign up →</a>
+                            <button class="github-expand-btn text-indigo-600 hover:text-indigo-800 mt-1 text-sm ml-3" data-step="2">Show steps →</button>
+                            <div id="github-step-2" class="github-step-content mt-3">
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <h5 class="font-bold mb-2">Account Creation Steps:</h5>
+                                    <ol class="list-decimal pl-5 space-y-2">
+                                        <li>Go to <a href="https://github.com" target="_blank" class="text-indigo-600">github.com</a></li>
+                                        <li>Click "Sign up" in the top right corner</li>
+                                        <li>Enter your email address and click "Continue"</li>
+                                        <li>Create a password (use a strong one!)</li>
+                                        <li>Choose a username (this will be your public identity)</li>
+                                        <li>Complete the CAPTCHA and click "Create account"</li>
+                                        <li>Verify your email address</li>
+                                    </ol>
+                                    <div class="screenshot-placeholder mt-3">
+                                        <span>Screenshot: GitHub signup form</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         
                         <div class="border-l-4 border-indigo-500 pl-4 py-1">
                             <h4 class="font-bold">Step 3: Create your first repo</h4>
                             <p class="text-gray-600">Create a new repository with the name format: <code>oopj-kju-s123</code> (replace s123 with your ID).</p>
-                            <button class="text-indigo-600 hover:text-indigo-800 mt-1 text-sm">Show steps →</button>
+                            <button class="github-expand-btn text-indigo-600 hover:text-indigo-800 mt-1 text-sm" data-step="3">Show steps →</button>
+                            <div id="github-step-3" class="github-step-content mt-3">
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <h5 class="font-bold mb-2">Repository Creation Steps:</h5>
+                                    <ol class="list-decimal pl-5 space-y-2">
+                                        <li>Log in to your GitHub account</li>
+                                        <li>Click the "+" icon in the top right corner</li>
+                                        <li>Select "New repository"</li>
+                                        <li>Enter repository name: <code>oopj-kju-[your-student-id]</code></li>
+                                        <li>Add a description (e.g., "OOPJ Lab Assignments")</li>
+                                        <li>Choose "Public" (so instructors can see it)</li>
+                                        <li>Check "Add a README file"</li>
+                                        <li>Click "Create repository"</li>
+                                    </ol>
+                                    <div class="screenshot-placeholder mt-3">
+                                        <span>Screenshot: Create new repository form</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         
                         <div class="border-l-4 border-indigo-500 pl-4 py-1">
                             <h4 class="font-bold">Step 4: Upload your code</h4>
                             <p class="text-gray-600">Upload your Student Grade Tracker code to your repository.</p>
-                            <button class="text-indigo-600 hover:text-indigo-800 mt-1 text-sm">Show how →</button>
+                            <button class="github-expand-btn text-indigo-600 hover:text-indigo-800 mt-1 text-sm" data-step="4">Show how →</button>
+                            <div id="github-step-4" class="github-step-content mt-3">
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <h5 class="font-bold mb-2">Uploading Code Methods:</h5>
+                                    
+                                    <h6 class="font-bold mt-3 mb-2">Method 1: Using GitHub Web Interface</h6>
+                                    <ol class="list-decimal pl-5 space-y-2">
+                                        <li>Open your repository</li>
+                                        <li>Click "Add file" → "Upload files"</li>
+                                        <li>Drag and drop your Java files or click "choose your files"</li>
+                                        <li>Add a commit message (e.g., "Initial upload of Student Grade Tracker")</li>
+                                        <li>Click "Commit changes"</li>
+                                    </ol>
+                                    
+                                    <h6 class="font-bold mt-3 mb-2">Method 2: Using Git Command Line</h6>
+                                    <div class="bg-gray-800 text-white p-3 rounded text-sm overflow-x-auto">
+                                        <pre>git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin https://github.com/yourusername/oopj-kju-s123.git
+git push -u origin main</pre>
+                                    </div>
+                                    
+                                    <div class="screenshot-placeholder mt-3">
+                                        <span>Screenshot: Upload files interface</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         
                         <div class="border-l-4 border-indigo-500 pl-4 py-1">
                             <h4 class="font-bold">Step 5: Add a README.md</h4>
                             <p class="text-gray-600">Create a README.md file to describe your project.</p>
-                            <button class="text-indigo-600 hover:text-indigo-800 mt-1 text-sm">Get template →</button>
+                            <button class="github-expand-btn text-indigo-600 hover:text-indigo-800 mt-1 text-sm" data-step="5">Get template →</button>
+                            <div id="github-step-5" class="github-step-content mt-3">
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <h5 class="font-bold mb-2">README.md Template:</h5>
+                                    <div class="bg-gray-800 text-white p-3 rounded text-sm overflow-x-auto">
+                                        <pre># OOPJ Lab Assignments
+
+## Student Information
+- **Name**: [Your Name]
+- **Roll Number**: [Your Roll Number]
+- **Branch**: [Your Branch]
+
+## Project Description
+This repository contains all the lab assignments for the Object Oriented Programming with Java (OOPJ) course.
+
+## Structure
+- `Day1/`: Introduction to Java programs
+- `Day2/`: Data Types and Variables
+- `Day3/`: Operators and Expressions
+- ... (add more as you complete)
+
+## How to Run
+1. Clone this repository
+2. Open any Java file in your favorite IDE
+3. Compile and run the program
+
+## Technologies Used
+- Java
+- Git
+- GitHub
+
+## License
+This project is licensed under the MIT License.</pre>
+                                    </div>
+                                    
+                                    <h5 class="font-bold mt-3 mb-2">How to Add README:</h5>
+                                    <ol class="list-decimal pl-5 space-y-2">
+                                        <li>Copy the template above</li>
+                                        <li>In your repository, click "Add file" → "Create new file"</li>
+                                        <li>Name the file: README.md</li>
+                                        <li>Paste the template content</li>
+                                        <li>Edit the information in brackets [ ]</li>
+                                        <li>Add a commit message and click "Commit new file"</li>
+                                    </ol>
+                                    
+                                    <div class="screenshot-placeholder mt-3">
+                                        <span>Screenshot: README.md preview</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         
                         <div class="border-l-4 border-indigo-500 pl-4 py-1">
@@ -482,6 +645,44 @@ x = x * 2;</code></pre>
                                     <input type="checkbox" class="mr-2 github-checklist" data-step="4">
                                     <span>Added README.md file</span>
                                 </label>
+                            </div>
+                            <button class="github-expand-btn text-indigo-600 hover:text-indigo-800 mt-1 text-sm" data-step="6">Show advanced tips →</button>
+                            <div id="github-step-6" class="github-step-content mt-3">
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <h5 class="font-bold mb-2">Advanced GitHub Tips:</h5>
+                                    <ul class="list-disc pl-5 space-y-2">
+                                        <li><strong>Branching:</strong> Create separate branches for different features or assignments</li>
+                                        <li><strong>Issues:</strong> Use GitHub Issues to track bugs or TODOs</li>
+                                        <li><strong>Pull Requests:</strong> Practice creating pull requests for code reviews</li>
+                                        <li><strong>GitHub Pages:</strong> Host your project documentation for free</li>
+                                        <li><strong>GitHub Actions:</strong> Automate testing and deployment (advanced)</li>
+                                    </ul>
+                                    
+                                    <h5 class="font-bold mt-3 mb-2">Common Git Commands:</h5>
+                                    <div class="bg-gray-800 text-white p-3 rounded text-sm overflow-x-auto">
+                                        <pre># Check status
+git status
+
+# Add specific file
+git add filename.java
+
+# Add all files
+git add .
+
+# Commit changes
+git commit -m "Your commit message"
+
+# Push to remote
+git push origin main
+
+# Pull latest changes
+git pull origin main</pre>
+                                    </div>
+                                    
+                                    <div class="screenshot-placeholder mt-3">
+                                        <span>Screenshot: GitHub repository overview</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -602,7 +803,7 @@ x = x * 2;</code></pre>
     </main>
 
     <!-- Bottom Navigation -->
-    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-10">
+    <nav id="bottomNav" class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-10 navbar-visible">
         <div class="container mx-auto">
             <div class="grid grid-cols-5">
                 <button class="nav-btn flex flex-col items-center justify-center p-3 text-indigo-600" data-view="dashboard">
@@ -639,7 +840,9 @@ x = x * 2;</code></pre>
             quizResults: {},
             notes: {},
             isLiveClassHappening: true, // Toggle this to show/hide live class banner
-            darkMode: false
+            darkMode: false,
+            lastScrollTop: 0,
+            navbarVisible: true
         };
 
         // Days data
@@ -791,6 +994,7 @@ x = x * 2;</code></pre>
             checkLiveClass();
             initializeDragDrop();
             renderQuiz();
+            setupNavbarAutoHide();
         });
 
         // Load app state from localStorage
@@ -830,6 +1034,28 @@ x = x * 2;</code></pre>
             } else {
                 banner.classList.add('hidden');
             }
+        }
+
+        // Setup navbar auto-hide
+        function setupNavbarAutoHide() {
+            const bottomNav = document.getElementById('bottomNav');
+            let lastScrollTop = 0;
+            
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (scrollTop > lastScrollTop && scrollTop > 100) {
+                    // Scrolling down
+                    bottomNav.classList.remove('navbar-visible');
+                    bottomNav.classList.add('navbar-hidden');
+                } else {
+                    // Scrolling up or at top
+                    bottomNav.classList.remove('navbar-hidden');
+                    bottomNav.classList.add('navbar-visible');
+                }
+                
+                lastScrollTop = scrollTop;
+            });
         }
 
         // Setup event listeners
@@ -931,6 +1157,26 @@ x = x * 2;</code></pre>
             
             document.querySelectorAll('.github-checklist').forEach(checkbox => {
                 checkbox.addEventListener('change', checkGithubCompletion);
+            });
+
+            // GitHub expand buttons
+            document.querySelectorAll('.github-expand-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const step = this.getAttribute('data-step');
+                    const content = document.getElementById(`github-step-${step}`);
+                    content.classList.toggle('expanded');
+                    
+                    if (content.classList.contains('expanded')) {
+                        this.textContent = 'Show less ↑';
+                    } else {
+                        this.textContent = 'Learn more →';
+                        if (step === '2') this.textContent = 'Show steps →';
+                        if (step === '3') this.textContent = 'Show steps →';
+                        if (step === '4') this.textContent = 'Show how →';
+                        if (step === '5') this.textContent = 'Get template →';
+                        if (step === '6') this.textContent = 'Show advanced tips →';
+                    }
+                });
             });
         }
 
