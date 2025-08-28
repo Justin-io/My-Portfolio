@@ -287,143 +287,29 @@
                     <!-- Notes Tab -->
                     <div id="notesTab" class="tab-content">
                         <div class="prose max-w-none">
-                            <h3 class="text-xl font-bold mb-3">Introduction to Java</h3>
-                            <p class="mb-4">Java is a high-level, class-based, object-oriented programming language designed to have as few implementation dependencies as possible.</p>
-                            
-                            <h4 class="text-lg font-bold mb-2">Key Features of Java</h4>
-                            <ul class="list-disc pl-6 mb-4">
-                                <li>Platform Independence</li>
-                                <li>Object-Oriented</li>
-                                <li>Simple and Secure</li>
-                                <li>Robust and Reliable</li>
-                            </ul>
-                            
-                            <h4 class="text-lg font-bold mb-2">Java Development Kit (JDK)</h4>
-                            <p class="mb-4">JDK is a software development environment used for developing Java applications. It includes JRE (Java Runtime Environment), an interpreter/loader, compiler, archiver, and documentation generator.</p>
-                            
-                            <div class="bg-blue-50 p-4 rounded-lg mb-4">
-                                <p class="text-blue-800"><i class="fas fa-info-circle mr-2"></i> On mobile, you can use apps like AIDE or Dcoder to write and run Java code.</p>
-                            </div>
-                            
-                            <div class="mt-6">
-                                <a href="#" class="inline-flex items-center text-indigo-600 hover:text-indigo-800">
-                                    <i class="fas fa-file-pdf mr-2"></i> Download Day 1 PDF Notes
-                                </a>
-                            </div>
+                            <!-- Content will be populated by JavaScript based on the day -->
                         </div>
                     </div>
                     
                     <!-- Code Tab -->
                     <div id="codeTab" class="tab-content hidden">
                         <h3 class="text-xl font-bold mb-4">Code Examples</h3>
-                        
-                        <div class="mb-6">
-                            <h4 class="text-lg font-bold mb-2">Hello World Program</h4>
-                            <div class="relative">
-                                <pre><code class="language-java">public class HelloWorld {
-    public static void main(String[] args) {
-        System.out.println("Hello, World!");
-    }
-}</code></pre>
-                                <button class="copy-btn absolute top-2 right-2 bg-gray-700 text-white p-2 rounded hover:bg-gray-600">
-                                    <i class="fas fa-copy"></i>
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <div class="mb-6">
-                            <h4 class="text-lg font-bold mb-2">Variables and Data Types</h4>
-                            <div class="relative">
-                                <pre><code class="language-java">public class Variables {
-    public static void main(String[] args) {
-        int number = 10;
-        double decimal = 5.5;
-        char letter = 'A';
-        boolean flag = true;
-        String text = "Hello Java";
-        
-        System.out.println("Number: " + number);
-        System.out.println("Decimal: " + decimal);
-        System.out.println("Letter: " + letter);
-        System.out.println("Flag: " + flag);
-        System.out.println("Text: " + text);
-    }
-}</code></pre>
-                                <button class="copy-btn absolute top-2 right-2 bg-gray-700 text-white p-2 rounded hover:bg-gray-600">
-                                    <i class="fas fa-copy"></i>
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <div class="bg-green-50 p-4 rounded-lg">
-                            <p class="text-green-800"><i class="fas fa-lightbulb mr-2"></i> Copy these code snippets and try running them in your mobile coding app!</p>
+                        <div id="codeExamples">
+                            <!-- Code examples will be populated by JavaScript -->
                         </div>
                     </div>
                     
                     <!-- Tracing Tab -->
                     <div id="tracingTab" class="tab-content hidden">
                         <h3 class="text-xl font-bold mb-4">Code Tracing Exercises</h3>
-                        
-                        <div class="mb-6">
-                            <h4 class="text-lg font-bold mb-2">Exercise 1: Fill in the Blank</h4>
-                            <p class="mb-3">What is the value of <code>x</code> after the following code executes?</p>
-                            
-                            <div class="bg-gray-800 text-white p-4 rounded-lg mb-4">
-                                <pre><code class="language-java">int x = 5;
-x = x + 3;
-x = x * 2;</code></pre>
-                            </div>
-                            
-                            <div class="flex items-center">
-                                <input type="text" id="tracingAnswer1" class="border border-gray-300 rounded p-2 mr-2 w-24" placeholder="Answer">
-                                <button id="checkTracing1" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Check</button>
-                                <span id="tracingResult1" class="ml-2"></span>
-                            </div>
-                        </div>
-                        
-                        <div class="mb-6">
-                            <h4 class="text-lg font-bold mb-2">Exercise 2: Drag and Drop</h4>
-                            <p class="mb-3">Arrange the code blocks in the correct order to create a valid Java program:</p>
-                            
-                            <div id="dragDropContainer" class="space-y-2 mb-4">
-                                <!-- Draggable items will be added by JavaScript -->
-                            </div>
-                            
-                            <button id="checkDragDrop" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Check Order</button>
-                            <span id="dragDropResult" class="ml-2"></span>
-                        </div>
-                        
-                        <div>
-                            <h4 class="text-lg font-bold mb-2">Exercise 3: Multiple Choice</h4>
-                            <p class="mb-3">Which of the following is NOT a valid Java data type?</p>
-                            
-                            <div class="space-y-2">
-                                <label class="flex items-center">
-                                    <input type="radio" name="mcq" value="a" class="mr-2">
-                                    <span>A. int</span>
-                                </label>
-                                <label class="flex items-center">
-                                    <input type="radio" name="mcq" value="b" class="mr-2">
-                                    <span>B. float</span>
-                                </label>
-                                <label class="flex items-center">
-                                    <input type="radio" name="mcq" value="c" class="mr-2">
-                                    <span>C. string</span>
-                                </label>
-                                <label class="flex items-center">
-                                    <input type="radio" name="mcq" value="d" class="mr-2">
-                                    <span>D. boolean</span>
-                                </label>
-                            </div>
-                            
-                            <button id="checkMCQ" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 mt-3">Check Answer</button>
-                            <span id="mcqResult" class="ml-2"></span>
+                        <div id="tracingExercises">
+                            <!-- Tracing exercises will be populated by JavaScript -->
                         </div>
                     </div>
                     
                     <!-- Quiz Tab -->
                     <div id="quizTab" class="tab-content hidden">
-                        <h3 class="text-xl font-bold mb-4">Day 1 Quiz</h3>
+                        <h3 class="text-xl font-bold mb-4" id="quizTitle">Day 1 Quiz</h3>
                         <p class="mb-4">Complete this 5-question quiz to unlock the next day.</p>
                         
                         <div id="quizContainer" class="space-y-6">
@@ -879,15 +765,2902 @@ git pull origin main</pre>
         const days = [
             { id: 1, title: "Introduction to Programming and Java Environment", description: "Learn the basics of Java programming" },
             { id: 2, title: "Variables, Data Types, and Input/Output", description: "Understanding different data types in Java" },
-            { id: 3, title: "Conditional Statements (if-else, switch)", description: "Working with operators in Java" },
-            { id: 4, title: "Loops (for, while, do-while)", description: "Conditional and loop statements" },
-            { id: 5, title: "Arrays and Strings", description: "Working with arrays in Java" },
-            { id: 6, title: "Methods and Reusability", description: "String manipulation in Java" },
-            { id: 7, title: "OOP – Classes and Objects", description: "Introduction to OOP concepts" },
-            { id: 8, title: "Constructors, this, Access Modifiers", description: "Understanding inheritance in Java" },
-            { id: 9, title: "Problem-Solving and Code Tracing", description: "Handling errors in Java" },
-            { id: 10, title: "Mini Project and Version Control", description: "Working with Java collections" }
+            { id: 3, title: "Conditional Statements (if-else, switch)", description: "Working with conditional statements" },
+            { id: 4, title: "Loops (for, while, do-while)", description: "Understanding loop structures" },
+            { id: 5, title: "Arrays and Strings", description: "Working with arrays and strings" },
+            { id: 6, title: "Methods and Reusability", description: "Creating reusable methods" },
+            { id: 7, title: "OOP – Classes and Objects", description: "Introduction to object-oriented programming" },
+            { id: 8, title: "Constructors, this, Access Modifiers", description: "Understanding OOP concepts" },
+            { id: 9, title: "Problem-Solving and Code Tracing", description: "Developing problem-solving skills" },
+            { id: 10, title: "Mini Project and Version Control", description: "Creating a mini project with version control" }
         ];
+
+        // Content for each day
+        const dayContent = {
+            1: {
+                notes: `
+                    <h3 class="text-xl font-bold mb-3">Introduction to Programming and Java Environment</h3>
+                    <p class="mb-4">Programming is the process of creating a set of instructions that tell a computer how to perform a task. Java is a high-level, class-based, object-oriented programming language designed to have as few implementation dependencies as possible.</p>
+                    
+                    <h4 class="text-lg font-bold mb-2">What is Java?</h4>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li>A programming language and computing platform</li>
+                        <li>Released by Sun Microsystems in 1995</li>
+                        <li>Now owned by Oracle Corporation</li>
+                        <li>Used for developing mobile apps, web apps, games, and more</li>
+                    </ul>
+                    
+                    <h4 class="text-lg font-bold mb-2">Java Environment Components</h4>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li><strong>JDK (Java Development Kit):</strong> Contains JRE and development tools</li>
+                        <li><strong>JRE (Java Runtime Environment):</strong> Provides runtime environment</li>
+                        <li><strong>JVM (Java Virtual Machine):</strong> Executes Java bytecode</li>
+                    </ul>
+                    
+                    <h4 class="text-lg font-bold mb-2">Key Features of Java</h4>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li>Platform Independence (Write Once, Run Anywhere)</li>
+                        <li>Object-Oriented</li>
+                        <li>Simple and Easy to Learn</li>
+                        <li>Secure</li>
+                        <li>Robust and Reliable</li>
+                        <li>Portable</li>
+                        <li>High Performance</li>
+                    </ul>
+                    
+                    <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                        <p class="text-blue-800"><i class="fas fa-info-circle mr-2"></i> On mobile, you can use apps like AIDE or Dcoder to write and run Java code.</p>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <a href="#" class="inline-flex items-center text-indigo-600 hover:text-indigo-800">
+                            <i class="fas fa-file-pdf mr-2"></i> Download Day 1 PDF Notes
+                        </a>
+                    </div>
+                `,
+                codeExamples: [
+                    {
+                        title: "Hello World Program",
+                        code: `public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+        System.out.println("Welcome to Java Programming!");
+    }
+}`
+                    },
+                    {
+                        title: "Java Environment Check",
+                        code: `public class JavaVersion {
+    public static void main(String[] args) {
+        System.out.println("Java Version: " + System.getProperty("java.version"));
+        System.out.println("Java Vendor: " + System.getProperty("java.vendor"));
+        System.out.println("OS Name: " + System.getProperty("os.name"));
+    }
+}`
+                    }
+                ],
+                tracingExercises: [
+                    {
+                        type: "fill-blank",
+                        question: "What is the output of the following code?",
+                        code: `public class Test {
+    public static void main(String[] args) {
+        System.out.println("Java");
+        System.out.println("Programming");
+    }
+}`,
+                        answer: "Java\nProgramming"
+                    },
+                    {
+                        type: "drag-drop",
+                        items: [
+                            { id: 1, text: "public class HelloWorld {", order: 1 },
+                            { id: 2, text: "public static void main(String[] args) {", order: 2 },
+                            { id: 3, text: "System.out.println(\"Hello, World!\");", order: 3 },
+                            { id: 4, text: "}", order: 4 },
+                            { id: 5, text: "}", order: 5 }
+                        ]
+                    },
+                    {
+                        type: "mcq",
+                        question: "Which of the following is NOT a Java feature?",
+                        options: [
+                            "Platform Independence",
+                            "Object-Oriented",
+                            "Multiple Inheritance",
+                            "Automatic Memory Management"
+                        ],
+                        correctAnswer: 2
+                    }
+                ],
+                quiz: [
+                    {
+                        question: "What is Java?",
+                        options: [
+                            "A programming language",
+                            "A coffee brand",
+                            "An island in Indonesia",
+                            "A type of computer hardware"
+                        ],
+                        correctAnswer: 0
+                    },
+                    {
+                        question: "Which component contains the compiler and JRE?",
+                        options: [
+                            "JVM",
+                            "JRE",
+                            "JDK",
+                            "API"
+                        ],
+                        correctAnswer: 2
+                    },
+                    {
+                        question: "What does 'Write Once, Run Anywhere' mean in Java?",
+                        options: [
+                            "Java code can run on any platform with JVM",
+                            "Java code runs only on Windows",
+                            "Java code needs to be recompiled for each platform",
+                            "Java code runs without compilation"
+                        ],
+                        correctAnswer: 0
+                    },
+                    {
+                        question: "Which method is the entry point of a Java program?",
+                        options: [
+                            "public void main(String[] args)",
+                            "public static void main(String[] args)",
+                            "public static main(String[] args)",
+                            "static void main(String[] args)"
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        question: "What is the output of System.out.println(10 + 20 + \"J-CODE\");?",
+                        options: [
+                            "30J-CODE",
+                            "1020J-CODE",
+                            "J-CODE30",
+                            "Error"
+                        ],
+                        correctAnswer: 0
+                    }
+                ]
+            },
+            2: {
+                notes: `
+                    <h3 class="text-xl font-bold mb-3">Variables, Data Types, and Input/Output</h3>
+                    <p class="mb-4">Variables are containers for storing data values. In Java, every variable has a type, which determines the size and layout of the variable's memory.</p>
+                    
+                    <h4 class="text-lg font-bold mb-2">Java Data Types</h4>
+                    <p class="mb-2">Java has two categories of data types:</p>
+                    
+                    <h5 class="font-bold mb-2">Primitive Data Types</h5>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li><strong>byte:</strong> 8-bit integer (-128 to 127)</li>
+                        <li><strong>short:</strong> 16-bit integer (-32,768 to 32,767)</li>
+                        <li><strong>int:</strong> 32-bit integer (-2,147,483,648 to 2,147,483,647)</li>
+                        <li><strong>long:</strong> 64-bit integer</li>
+                        <li><strong>float:</strong> 32-bit floating-point number</li>
+                        <li><strong>double:</strong> 64-bit floating-point number</li>
+                        <li><strong>char:</strong> 16-bit Unicode character</li>
+                        <li><strong>boolean:</strong> true or false</li>
+                    </ul>
+                    
+                    <h5 class="font-bold mb-2">Reference Data Types</h5>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li><strong>String:</strong> Sequence of characters</li>
+                        <li><strong>Arrays:</strong> Collection of similar type elements</li>
+                        <li><strong>Classes:</strong> User-defined data types</li>
+                    </ul>
+                    
+                    <h4 class="text-lg font-bold mb-2">Variable Declaration and Initialization</h4>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>// Declaration
+int age;
+double salary;
+char grade;
+String name;
+
+// Initialization
+age = 20;
+salary = 50000.50;
+grade = 'A';
+name = "John Doe";
+
+// Declaration and Initialization
+int marks = 85;
+boolean isPassed = true;</code></pre>
+                    </div>
+                    
+                    <h4 class="text-lg font-bold mb-2">Taking User Input</h4>
+                    <p class="mb-2">Java provides the Scanner class to get user input. You need to import it from java.util package.</p>
+                    
+                    <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                        <p class="text-blue-800"><i class="fas fa-info-circle mr-2"></i> On mobile, the Scanner class works similarly in AIDE/Dcoder apps.</p>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <a href="#" class="inline-flex items-center text-indigo-600 hover:text-indigo-800">
+                            <i class="fas fa-file-pdf mr-2"></i> Download Day 2 PDF Notes
+                        </a>
+                    </div>
+                `,
+                codeExamples: [
+                    {
+                        title: "Variable Declaration and Initialization",
+                        code: `public class VariablesExample {
+    public static void main(String[] args) {
+        // Primitive data types
+        int age = 20;
+        double height = 5.9;
+        char grade = 'A';
+        boolean isStudent = true;
+        
+        // Reference data type
+        String name = "Alice";
+        
+        // Display values
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+        System.out.println("Height: " + height);
+        System.out.println("Grade: " + grade);
+        System.out.println("Is Student: " + isStudent);
+    }
+}`
+                    },
+                    {
+                        title: "User Input Example",
+                        code: `import java.util.Scanner;
+
+public class UserInputExample {
+    public static void main(String[] args) {
+        // Create Scanner object
+        Scanner scanner = new Scanner(System.in);
+        
+        // Get user input
+        System.out.print("Enter your name: ");
+        String name = scanner.nextLine();
+        
+        System.out.print("Enter your age: ");
+        int age = scanner.nextInt();
+        
+        System.out.print("Enter your marks: ");
+        double marks = scanner.nextDouble();
+        
+        // Display input
+        System.out.println("\\n--- Student Details ---");
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+        System.out.println("Marks: " + marks);
+        
+        // Close scanner
+        scanner.close();
+    }
+}`
+                    }
+                ],
+                tracingExercises: [
+                    {
+                        type: "fill-blank",
+                        question: "What is the value of x after the following code executes?",
+                        code: `int x = 10;
+x = x + 5;
+x = x * 2;`,
+                        answer: "30"
+                    },
+                    {
+                        type: "drag-drop",
+                        items: [
+                            { id: 1, text: "import java.util.Scanner;", order: 1 },
+                            { id: 2, text: "public class InputExample {", order: 2 },
+                            { id: 3, text: "public static void main(String[] args) {", order: 3 },
+                            { id: 4, text: "Scanner sc = new Scanner(System.in);", order: 4 },
+                            { id: 5, text: "System.out.print(\"Enter number: \");", order: 5 },
+                            { id: 6, text: "int num = sc.nextInt();", order: 6 },
+                            { id: 7, text: "System.out.println(\"Number: \" + num);", order: 7 },
+                            { id: 8, text: "sc.close();", order: 8 },
+                            { id: 9, text: "}", order: 9 },
+                            { id: 10, text: "}", order: 10 }
+                        ]
+                    },
+                    {
+                        type: "mcq",
+                        question: "Which data type would you use to store a person's name?",
+                        options: [
+                            "int",
+                            "char",
+                            "String",
+                            "boolean"
+                        ],
+                        correctAnswer: 2
+                    }
+                ],
+                quiz: [
+                    {
+                        question: "Which of the following is NOT a primitive data type in Java?",
+                        options: [
+                            "int",
+                            "String",
+                            "double",
+                            "boolean"
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        question: "What is the size of int data type in Java?",
+                        options: [
+                            "8 bits",
+                            "16 bits",
+                            "32 bits",
+                            "64 bits"
+                        ],
+                        correctAnswer: 2
+                    },
+                    {
+                        question: "Which class is used to take user input in Java?",
+                        options: [
+                            "Input",
+                            "Scanner",
+                            "Reader",
+                            "Console"
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        question: "What is the correct way to declare a double variable?",
+                        options: [
+                            "double price = 99.99;",
+                            "double price = 99.99f;",
+                            "double price = \"99.99\";",
+                            "double price = 99;"
+                        ],
+                        correctAnswer: 0
+                    },
+                    {
+                        question: "Which method is used to read a line of text from the user?",
+                        options: [
+                            "nextInt()",
+                            "nextDouble()",
+                            "nextLine()",
+                            "nextBoolean()"
+                        ],
+                        correctAnswer: 2
+                    }
+                ]
+            },
+            3: {
+                notes: `
+                    <h3 class="text-xl font-bold mb-3">Conditional Statements (if-else, switch)</h3>
+                    <p class="mb-4">Conditional statements allow your program to make decisions and execute different code blocks based on certain conditions.</p>
+                    
+                    <h4 class="text-lg font-bold mb-2">if Statement</h4>
+                    <p class="mb-2">The if statement executes a block of code if a specified condition is true.</p>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>if (condition) {
+    // code to execute if condition is true
+}</code></pre>
+                    </div>
+                    
+                    <h4 class="text-lg font-bold mb-2">if-else Statement</h4>
+                    <p class="mb-2">The if-else statement executes one block if the condition is true and another if it's false.</p>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>if (condition) {
+    // code if condition is true
+} else {
+    // code if condition is false
+}</code></pre>
+                    </div>
+                    
+                    <h4 class="text-lg font-bold mb-2">if-else if-else Ladder</h4>
+                    <p class="mb-2">Used when you have multiple conditions to check.</p>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>if (condition1) {
+    // code for condition1
+} else if (condition2) {
+    // code for condition2
+} else {
+    // code if none of the conditions are true
+}</code></pre>
+                    </div>
+                    
+                    <h4 class="text-lg font-bold mb-2">switch Statement</h4>
+                    <p class="mb-2">The switch statement allows a variable to be tested for equality against a list of values.</p>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>switch (expression) {
+    case value1:
+        // code for value1
+        break;
+    case value2:
+        // code for value2
+        break;
+    default:
+        // code if no case matches
+        break;
+}</code></pre>
+                    </div>
+                    
+                    <h4 class="text-lg font-bold mb-2">Comparison Operators</h4>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li><strong>==</strong> equal to</li>
+                        <li><strong>!=</strong> not equal to</li>
+                        <li><strong>></strong> greater than</li>
+                        <li><strong><</strong> less than</li>
+                        <li><strong>>=</strong> greater than or equal to</li>
+                        <li><strong><=</strong> less than or equal to</li>
+                    </ul>
+                    
+                    <h4 class="text-lg font-bold mb-2">Logical Operators</h4>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li><strong>&&</strong> logical AND</li>
+                        <li><strong>||</strong> logical OR</li>
+                        <li><strong>!</strong> logical NOT</li>
+                    </ul>
+                    
+                    <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                        <p class="text-blue-800"><i class="fas fa-info-circle mr-2"></i> Remember to use break statements in switch cases to prevent fall-through!</p>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <a href="#" class="inline-flex items-center text-indigo-600 hover:text-indigo-800">
+                            <i class="fas fa-file-pdf mr-2"></i> Download Day 3 PDF Notes
+                        </a>
+                    </div>
+                `,
+                codeExamples: [
+                    {
+                        title: "Grade Calculator using if-else",
+                        code: `public class GradeCalculator {
+    public static void main(String[] args) {
+        int marks = 85;
+        
+        if (marks >= 90) {
+            System.out.println("Grade: A+");
+        } else if (marks >= 80) {
+            System.out.println("Grade: A");
+        } else if (marks >= 70) {
+            System.out.println("Grade: B+");
+        } else if (marks >= 60) {
+            System.out.println("Grade: B");
+        } else if (marks >= 50) {
+            System.out.println("Grade: C");
+        } else {
+            System.out.println("Grade: F");
+        }
+    }
+}`
+                    },
+                    {
+                        title: "Day of the Week using switch",
+                        code: `public class DayOfWeek {
+    public static void main(String[] args) {
+        int day = 3; // 1=Monday, 2=Tuesday, etc.
+        
+        switch (day) {
+            case 1:
+                System.out.println("Monday");
+                break;
+            case 2:
+                System.out.println("Tuesday");
+                break;
+            case 3:
+                System.out.println("Wednesday");
+                break;
+            case 4:
+                System.out.println("Thursday");
+                break;
+            case 5:
+                System.out.println("Friday");
+                break;
+            case 6:
+                System.out.println("Saturday");
+                break;
+            case 7:
+                System.out.println("Sunday");
+                break;
+            default:
+                System.out.println("Invalid day");
+                break;
+        }
+    }
+}`
+                    }
+                ],
+                tracingExercises: [
+                    {
+                        type: "fill-blank",
+                        question: "What is the output of the following code?",
+                        code: `int x = 10;
+if (x > 5) {
+    System.out.println("Greater than 5");
+} else {
+    System.out.println("Less than or equal to 5");
+}`,
+                        answer: "Greater than 5"
+                    },
+                    {
+                        type: "drag-drop",
+                        items: [
+                            { id: 1, text: "int score = 75;", order: 1 },
+                            { id: 2, text: "if (score >= 90) {", order: 2 },
+                            { id: 3, text: "System.out.println(\"Grade: A\");", order: 3 },
+                            { id: 4, text: "} else if (score >= 80) {", order: 4 },
+                            { id: 5, text: "System.out.println(\"Grade: B\");", order: 5 },
+                            { id: 6, text: "} else {", order: 6 },
+                            { id: 7, text: "System.out.println(\"Grade: C\");", order: 7 },
+                            { id: 8, text: "}", order: 8 }
+                        ]
+                    },
+                    {
+                        type: "mcq",
+                        question: "Which statement is used to exit a switch case?",
+                        options: [
+                            "exit",
+                            "return",
+                            "break",
+                            "continue"
+                        ],
+                        correctAnswer: 2
+                    }
+                ],
+                quiz: [
+                    {
+                        question: "Which operator is used for logical AND in Java?",
+                        options: [
+                            "&&",
+                            "||",
+                            "!",
+                            "&"
+                        ],
+                        correctAnswer: 0
+                    },
+                    {
+                        question: "What is the output of: System.out.println(5 > 3 && 2 < 4);",
+                        options: [
+                            "true",
+                            "false",
+                            "5",
+                            "Error"
+                        ],
+                        correctAnswer: 0
+                    },
+                    {
+                        question: "Which statement is used to handle multiple conditions?",
+                        options: [
+                            "if-else",
+                            "switch",
+                            "Both a and b",
+                            "None of the above"
+                        ],
+                        correctAnswer: 2
+                    },
+                    {
+                        question: "What happens if you forget to put break in a switch case?",
+                        options: [
+                            "Compilation error",
+                            "Runtime error",
+                            "It falls through to the next case",
+                            "Nothing happens"
+                        ],
+                        correctAnswer: 2
+                    },
+                    {
+                        question: "Which of the following is a valid condition?",
+                        options: [
+                            "if (x = 5)",
+                            "if (x == 5)",
+                            "if (x === 5)",
+                            "if (x equals 5)"
+                        ],
+                        correctAnswer: 1
+                    }
+                ]
+            },
+            4: {
+                notes: `
+                    <h3 class="text-xl font-bold mb-3">Loops (for, while, do-while)</h3>
+                    <p class="mb-4">Loops are used to execute a block of code repeatedly as long as a certain condition is true. They are essential for repetitive tasks.</p>
+                    
+                    <h4 class="text-lg font-bold mb-2">for Loop</h4>
+                    <p class="mb-2">The for loop is used when you know exactly how many times you want to loop.</p>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>for (initialization; condition; increment/decrement) {
+    // code to be executed
+}</code></pre>
+                    </div>
+                    
+                    <h4 class="text-lg font-bold mb-2">while Loop</h4>
+                    <p class="mb-2">The while loop repeats as long as a condition is true. It checks the condition before executing the loop body.</p>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>while (condition) {
+    // code to be executed
+}</code></pre>
+                    </div>
+                    
+                    <h4 class="text-lg font-bold mb-2">do-while Loop</h4>
+                    <p class="mb-2">The do-while loop is similar to while loop, but it executes the loop body at least once before checking the condition.</p>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>do {
+    // code to be executed
+} while (condition);</code></pre>
+                    </div>
+                    
+                    <h4 class="text-lg font-bold mb-2">Loop Control Statements</h4>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li><strong>break:</strong> Exits the loop immediately</li>
+                        <li><strong>continue:</strong> Skips the current iteration and continues with the next</li>
+                    </ul>
+                    
+                    <h4 class="text-lg font-bold mb-2">Nested Loops</h4>
+                    <p class="mb-2">You can place loops inside other loops. This is useful for working with multi-dimensional data.</p>
+                    
+                    <h4 class="text-lg font-bold mb-2">Infinite Loops</h4>
+                    <p class="mb-2">Be careful to avoid infinite loops, which occur when the loop condition never becomes false.</p>
+                    
+                    <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                        <p class="text-blue-800"><i class="fas fa-info-circle mr-2"></i> Remember to update loop variables to avoid infinite loops!</p>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <a href="#" class="inline-flex items-center text-indigo-600 hover:text-indigo-800">
+                            <i class="fas fa-file-pdf mr-2"></i> Download Day 4 PDF Notes
+                        </a>
+                    </div>
+                `,
+                codeExamples: [
+                    {
+                        title: "Multiplication Table using for Loop",
+                        code: `public class MultiplicationTable {
+    public static void main(String[] args) {
+        int number = 5;
+        
+        System.out.println("Multiplication Table of " + number);
+        System.out.println("------------------------");
+        
+        for (int i = 1; i <= 10; i++) {
+            System.out.println(number + " x " + i + " = " + (number * i));
+        }
+    }
+}`
+                    },
+                    {
+                        title: "Number Guessing Game using while Loop",
+                        code: `import java.util.Scanner;
+
+public class NumberGuessing {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int secretNumber = 42;
+        int guess;
+        int attempts = 0;
+        
+        System.out.println("Guess the number between 1 and 100");
+        
+        do {
+            System.out.print("Enter your guess: ");
+            guess = scanner.nextInt();
+            attempts++;
+            
+            if (guess < secretNumber) {
+                System.out.println("Too low! Try again.");
+            } else if (guess > secretNumber) {
+                System.out.println("Too high! Try again.");
+            }
+        } while (guess != secretNumber);
+        
+        System.out.println("Congratulations! You guessed it in " + attempts + " attempts.");
+        scanner.close();
+    }
+}`
+                    }
+                ],
+                tracingExercises: [
+                    {
+                        type: "fill-blank",
+                        question: "What is the output of the following code?",
+                        code: `int sum = 0;
+for (int i = 1; i <= 5; i++) {
+    sum += i;
+}
+System.out.println(sum);`,
+                        answer: "15"
+                    },
+                    {
+                        type: "drag-drop",
+                        items: [
+                            { id: 1, text: "int i = 1;", order: 1 },
+                            { id: 2, text: "while (i <= 5) {", order: 2 },
+                            { id: 3, text: "System.out.println(i);", order: 3 },
+                            { id: 4, text: "i++;", order: 4 },
+                            { id: 5, text: "}", order: 5 }
+                        ]
+                    },
+                    {
+                        type: "mcq",
+                        question: "Which loop is guaranteed to execute at least once?",
+                        options: [
+                            "for loop",
+                            "while loop",
+                            "do-while loop",
+                            "None of the above"
+                        ],
+                        correctAnswer: 2
+                    }
+                ],
+                quiz: [
+                    {
+                        question: "How many times will the following loop run? for(int i=0; i<5; i++)",
+                        options: [
+                            "4 times",
+                            "5 times",
+                            "6 times",
+                            "Infinite times"
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        question: "What is the output of: int i=1; while(i<5) { System.out.print(i); i++; }",
+                        options: [
+                            "12345",
+                            "1234",
+                            "01234",
+                            "Error"
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        question: "Which statement is used to skip the current iteration of a loop?",
+                        options: [
+                            "break",
+                            "continue",
+                            "return",
+                            "exit"
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        question: "What is the value of x after: int x=0; for(int i=0;i<3;i++) { x+=i; }",
+                        options: [
+                            "0",
+                            "3",
+                            "6",
+                            "9"
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        question: "Which loop is best when you know the exact number of iterations?",
+                        options: [
+                            "for loop",
+                            "while loop",
+                            "do-while loop",
+                            "All are equally good"
+                        ],
+                        correctAnswer: 0
+                    }
+                ]
+            },
+            5: {
+                notes: `
+                    <h3 class="text-xl font-bold mb-3">Arrays and Strings</h3>
+                    <p class="mb-4">Arrays and Strings are fundamental data structures in Java that allow you to store and manipulate collections of data.</p>
+                    
+                    <h4 class="text-lg font-bold mb-2">Arrays</h4>
+                    <p class="mb-2">An array is a container object that holds a fixed number of values of a single type.</p>
+                    
+                    <h5 class="font-bold mb-2">Declaring Arrays</h5>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>// Declaration
+int[] numbers;
+String[] names;
+
+// Declaration with size
+int[] scores = new int[5];
+
+// Declaration with initialization
+int[] primes = {2, 3, 5, 7, 11};
+String[] days = {"Mon", "Tue", "Wed", "Thu", "Fri"};</code></pre>
+                    </div>
+                    
+                    <h5 class="font-bold mb-2">Accessing Array Elements</h5>
+                    <p class="mb-2">Array elements are accessed using their index (starting from 0).</p>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>int[] numbers = {10, 20, 30, 40, 50};
+System.out.println(numbers[0]); // 10
+System.out.println(numbers[2]); // 30
+numbers[1] = 25; // Change value at index 1</code></pre>
+                    </div>
+                    
+                    <h5 class="font-bold mb-2">Array Length</h5>
+                    <p class="mb-2">The length property gives the size of the array.</p>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>int[] arr = {1, 2, 3, 4, 5};
+System.out.println(arr.length); // 5</code></pre>
+                    </div>
+                    
+                    <h5 class="font-bold mb-2">Multidimensional Arrays</h5>
+                    <p class="mb-2">Arrays can have multiple dimensions, like 2D arrays (matrices).</p>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>int[][] matrix = {
+    {1, 2, 3},
+    {4, 5, 6},
+    {7, 8, 9}
+};</code></pre>
+                    </div>
+                    
+                    <h4 class="text-lg font-bold mb-2">Strings</h4>
+                    <p class="mb-2">String is a sequence of characters. In Java, strings are objects of the String class.</p>
+                    
+                    <h5 class="font-bold mb-2">Creating Strings</h5>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>String str1 = "Hello";
+String str2 = new String("World");
+String str3 = str1 + " " + str2; // "Hello World"</code></pre>
+                    </div>
+                    
+                    <h5 class="font-bold mb-2">Common String Methods</h5>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li><strong>length():</strong> Returns the length of the string</li>
+                        <li><strong>charAt(index):</strong> Returns character at specified index</li>
+                        <li><strong>substring(start, end):</strong> Returns substring</li>
+                        <li><strong>toUpperCase():</strong> Converts to uppercase</li>
+                        <li><strong>toLowerCase():</strong> Converts to lowercase</li>
+                        <li><strong>trim():</strong> Removes whitespace from both ends</li>
+                        <li><strong>equals(str):</strong> Compares two strings</li>
+                        <li><strong>contains(str):</strong> Checks if string contains substring</li>
+                    </ul>
+                    
+                    <h5 class="font-bold mb-2">String Immutability</h5>
+                    <p class="mb-4">Strings in Java are immutable, meaning once created, they cannot be changed. Any modification creates a new string object.</p>
+                    
+                    <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                        <p class="text-blue-800"><i class="fas fa-info-circle mr-2"></i> Remember: Array indices start from 0, not 1!</p>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <a href="#" class="inline-flex items-center text-indigo-600 hover:text-indigo-800">
+                            <i class="fas fa-file-pdf mr-2"></i> Download Day 5 PDF Notes
+                        </a>
+                    </div>
+                `,
+                codeExamples: [
+                    {
+                        title: "Array Operations",
+                        code: `public class ArrayOperations {
+    public static void main(String[] args) {
+        // Create and initialize array
+        int[] numbers = {10, 20, 30, 40, 50};
+        
+        // Print array elements
+        System.out.println("Array elements:");
+        for (int i = 0; i < numbers.length; i++) {
+            System.out.println("Element at index " + i + ": " + numbers[i]);
+        }
+        
+        // Calculate sum
+        int sum = 0;
+        for (int num : numbers) {
+            sum += num;
+        }
+        System.out.println("Sum: " + sum);
+        
+        // Find maximum
+        int max = numbers[0];
+        for (int num : numbers) {
+            if (num > max) {
+                max = num;
+            }
+        }
+        System.out.println("Maximum: " + max);
+    }
+}`
+                    },
+                    {
+                        title: "String Manipulation",
+                        code: `public class StringManipulation {
+    public static void main(String[] args) {
+        String text = "Hello Java Programming";
+        
+        // Length
+        System.out.println("Length: " + text.length());
+        
+        // Character at position
+        System.out.println("Character at index 6: " + text.charAt(6));
+        
+        // Substring
+        System.out.println("Substring: " + text.substring(6, 10));
+        
+        // Case conversion
+        System.out.println("Uppercase: " + text.toUpperCase());
+        System.out.println("Lowercase: " + text.toLowerCase());
+        
+        // Contains
+        System.out.println("Contains 'Java': " + text.contains("Java"));
+        
+        // Split
+        String[] words = text.split(" ");
+        System.out.println("Words: " + java.util.Arrays.toString(words));
+        
+        // Replace
+        String replaced = text.replace("Java", "Python");
+        System.out.println("Replaced: " + replaced);
+    }
+}`
+                    }
+                ],
+                tracingExercises: [
+                    {
+                        type: "fill-blank",
+                        question: "What is the output of the following code?",
+                        code: `int[] arr = {1, 2, 3, 4, 5};
+System.out.println(arr[2]);`,
+                        answer: "3"
+                    },
+                    {
+                        type: "drag-drop",
+                        items: [
+                            { id: 1, text: "String str = \"Hello\";", order: 1 },
+                            { id: 2, text: "System.out.println(str.length());", order: 2 },
+                            { id: 3, text: "System.out.println(str.toUpperCase());", order: 3 },
+                            { id: 4, text: "System.out.println(str.substring(0, 3));", order: 4 }
+                        ]
+                    },
+                    {
+                        type: "mcq",
+                        question: "What is the index of the last character in a string of length n?",
+                        options: [
+                            "n",
+                            "n-1",
+                            "n+1",
+                            "0"
+                        ],
+                        correctAnswer: 1
+                    }
+                ],
+                quiz: [
+                    {
+                        question: "How do you declare an array of integers in Java?",
+                        options: [
+                            "int[] arr;",
+                            "int arr[];",
+                            "Both a and b",
+                            "array int arr;"
+                        ],
+                        correctAnswer: 2
+                    },
+                    {
+                        question: "What is the output of: int[] arr = {1,2,3}; System.out.println(arr.length);",
+                        options: [
+                            "2",
+                            "3",
+                            "4",
+                            "Error"
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        question: "Which method returns the length of a string?",
+                        options: [
+                            "size()",
+                            "length()",
+                            "getLength()",
+                            "count()"
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        question: "What is the result of \"Hello\".substring(1, 4)?",
+                        options: [
+                            "ell",
+                            "Hel",
+                            "lo",
+                            "llo"
+                        ],
+                        correctAnswer: 0
+                    },
+                    {
+                        question: "Which statement is true about strings in Java?",
+                        options: [
+                            "Strings are mutable",
+                            "Strings are primitive types",
+                            "Strings are immutable",
+                            "Strings cannot be concatenated"
+                        ],
+                        correctAnswer: 2
+                    }
+                ]
+            },
+            6: {
+                notes: `
+                    <h3 class="text-xl font-bold mb-3">Methods and Reusability</h3>
+                    <p class="mb-4">Methods (also called functions) are blocks of code that perform a specific task. They promote code reusability and make programs more organized.</p>
+                    
+                    <h4 class="text-lg font-bold mb-2">Why Use Methods?</h4>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li><strong>Reusability:</strong> Write once, use multiple times</li>
+                        <li><strong>Modularity:</strong> Break complex problems into smaller parts</li>
+                        <li><strong>Maintainability:</strong> Easy to debug and modify</li>
+                        <li><strong>Abstraction:</strong> Hide implementation details</li>
+                    </ul>
+                    
+                    <h4 class="text-lg font-bold mb-2">Method Structure</h4>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>returnType methodName(parameter1, parameter2, ...) {
+    // method body
+    return value; // if returnType is not void
+}</code></pre>
+                    </div>
+                    
+                    <h4 class="text-lg font-bold mb-2">Method Components</h4>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li><strong>Return Type:</strong> Type of value the method returns (void if none)</li>
+                        <li><strong>Method Name:</strong> Name used to call the method</li>
+                        <li><strong>Parameters:</strong> Input values the method accepts</li>
+                        <li><strong>Method Body:</strong> Code that performs the task</li>
+                        <li><strong>Return Statement:</strong> Sends value back to caller</li>
+                    </ul>
+                    
+                    <h4 class="text-lg font-bold mb-2">Types of Methods</h4>
+                    
+                    <h5 class="font-bold mb-2">1. Methods with Return Value</h5>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>int add(int a, int b) {
+    return a + b;
+}</code></pre>
+                    </div>
+                    
+                    <h5 class="font-bold mb-2">2. Methods without Return Value (void)</h5>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>void printMessage(String message) {
+    System.out.println(message);
+}</code></pre>
+                    </div>
+                    
+                    <h5 class="font-bold mb-2">3. Methods with Parameters</h5>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>double calculateArea(double radius) {
+    return 3.14159 * radius * radius;
+}</code></pre>
+                    </div>
+                    
+                    <h5 class="font-bold mb-2">4. Methods without Parameters</h5>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>void printGreeting() {
+    System.out.println("Hello, World!");
+}</code></pre>
+                    </div>
+                    
+                    <h4 class="text-lg font-bold mb-2">Method Overloading</h4>
+                    <p class="mb-2">Java allows multiple methods with the same name but different parameters. This is called method overloading.</p>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>int add(int a, int b) {
+    return a + b;
+}
+
+double add(double a, double b) {
+    return a + b;
+}</code></pre>
+                    </div>
+                    
+                    <h4 class="text-lg font-bold mb-2">Static vs Non-Static Methods</h4>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li><strong>Static methods:</strong> Belong to the class, can be called without creating an object</li>
+                        <li><strong>Non-static methods:</strong> Belong to objects, require an object to be called</li>
+                    </ul>
+                    
+                    <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                        <p class="text-blue-800"><i class="fas fa-info-circle mr-2"></i> The main method is always static because it needs to be called by the JVM before any objects are created!</p>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <a href="#" class="inline-flex items-center text-indigo-600 hover:text-indigo-800">
+                            <i class="fas fa-file-pdf mr-2"></i> Download Day 6 PDF Notes
+                        </a>
+                    </div>
+                `,
+                codeExamples: [
+                    {
+                        title: "Method Examples",
+                        code: `public class MethodExamples {
+    
+    // Method with parameters and return value
+    public static int multiply(int a, int b) {
+        return a * b;
+    }
+    
+    // Method without return value
+    public static void printStars(int count) {
+        for (int i = 0; i < count; i++) {
+            System.out.print("*");
+        }
+        System.out.println();
+    }
+    
+    // Method with no parameters
+    public static void sayHello() {
+        System.out.println("Hello, Java!");
+    }
+    
+    // Method overloading example
+    public static double add(int a, int b) {
+        return a + b;
+    }
+    
+    public static double add(double a, double b) {
+        return a + b;
+    }
+    
+    public static void main(String[] args) {
+        // Calling methods
+        int result = multiply(5, 3);
+        System.out.println("5 * 3 = " + result);
+        
+        printStars(10);
+        
+        sayHello();
+        
+        // Using overloaded methods
+        System.out.println("Add int: " + add(5, 3));
+        System.out.println("Add double: " + add(5.5, 3.2));
+    }
+}`
+                    },
+                    {
+                        title: "Utility Methods",
+                        code: `public class UtilityMethods {
+    
+    // Check if a number is prime
+    public static boolean isPrime(int number) {
+        if (number <= 1) {
+            return false;
+        }
+        for (int i = 2; i <= Math.sqrt(number); i++) {
+            if (number % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    // Calculate factorial
+    public static long factorial(int n) {
+        if (n < 0) {
+            return -1; // Error value
+        }
+        long result = 1;
+        for (int i = 1; i <= n; i++) {
+            result *= i;
+        }
+        return result;
+    }
+    
+    // Reverse a string
+    public static String reverseString(String str) {
+        String reversed = "";
+        for (int i = str.length() - 1; i >= 0; i--) {
+            reversed += str.charAt(i);
+        }
+        return reversed;
+    }
+    
+    public static void main(String[] args) {
+        System.out.println("Is 17 prime? " + isPrime(17));
+        System.out.println("Factorial of 5: " + factorial(5));
+        System.out.println("Reverse of 'Java': " + reverseString("Java"));
+    }
+}`
+                    }
+                ],
+                tracingExercises: [
+                    {
+                        type: "fill-blank",
+                        question: "What is the output of the following code?",
+                        code: `public static int add(int a, int b) {
+    return a + b;
+}
+public static void main(String[] args) {
+    System.out.println(add(5, 3));
+}`,
+                        answer: "8"
+                    },
+                    {
+                        type: "drag-drop",
+                        items: [
+                            { id: 1, text: "public static void printNumbers(int n) {", order: 1 },
+                            { id: 2, text: "for (int i = 1; i <= n; i++) {", order: 2 },
+                            { id: 3, text: "System.out.print(i + \" \");", order: 3 },
+                            { id: 4, text: "}", order: 4 },
+                            { id: 5, text: "System.out.println();", order: 5 },
+                            { id: 6, text: "}", order: 6 }
+                        ]
+                    },
+                    {
+                        type: "mcq",
+                        question: "What is the return type of a method that doesn't return any value?",
+                        options: [
+                            "null",
+                            "void",
+                            "empty",
+                            "None"
+                        ],
+                        correctAnswer: 1
+                    }
+                ],
+                quiz: [
+                    {
+                        question: "Which keyword is used to return a value from a method?",
+                        options: [
+                            "return",
+                            "value",
+                            "send",
+                            "output"
+                        ],
+                        correctAnswer: 0
+                    },
+                    {
+                        question: "What is the correct method signature for a method that takes two integers and returns their sum?",
+                        options: [
+                            "int sum(int a, int b)",
+                            "void sum(int a, int b)",
+                            "int sum(a, b)",
+                            "sum(int a, int b) int"
+                        ],
+                        correctAnswer: 0
+                    },
+                    {
+                        question: "Can we have two methods with the same name in the same class?",
+                        options: [
+                            "No, never",
+                            "Yes, if they have different parameters",
+                            "Yes, if they have different return types",
+                            "Yes, always"
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        question: "What is method overloading?",
+                        options: [
+                            "Having multiple methods with same name and parameters",
+                            "Having multiple methods with same name but different parameters",
+                            "Having methods with different names",
+                            "None of the above"
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        question: "Which of the following is a valid method declaration?",
+                        options: [
+                            "void calculate()",
+                            "calculate void()",
+                            "void calculate",
+                            "calculate()"
+                        ],
+                        correctAnswer: 0
+                    }
+                ]
+            },
+            7: {
+                notes: `
+                    <h3 class="text-xl font-bold mb-3">OOP – Classes and Objects</h3>
+                    <p class="mb-4">Object-Oriented Programming (OOP) is a programming paradigm that uses "objects" to design applications and computer programs. Java is an object-oriented language.</p>
+                    
+                    <h4 class="text-lg font-bold mb-2">Key OOP Concepts</h4>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li><strong>Class:</strong> A blueprint or template for creating objects</li>
+                        <li><strong>Object:</strong> An instance of a class</li>
+                        <li><strong>Encapsulation:</strong> Bundling data and methods together</li>
+                        <li><strong>Inheritance:</strong> Creating new classes from existing ones</li>
+                        <li><strong>Polymorphism:</strong> One interface, multiple implementations</li>
+                        <li><strong>Abstraction:</strong> Hiding implementation details</li>
+                    </ul>
+                    
+                    <h4 class="text-lg font-bold mb-2">Class</h4>
+                    <p class="mb-2">A class is a blueprint that defines the properties (attributes) and behaviors (methods) that objects of that type will have.</p>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>class Car {
+    // Attributes (instance variables)
+    String brand;
+    String model;
+    int year;
+    
+    // Constructor
+    public Car(String brand, String model, int year) {
+        this.brand = brand;
+        this.model = model;
+        this.year = year;
+    }
+    
+    // Methods
+    public void start() {
+        System.out.println("Car is starting...");
+    }
+    
+    public void stop() {
+        System.out.println("Car is stopping...");
+    }
+    
+    public void displayInfo() {
+        System.out.println(year + " " + brand + " " + model);
+    }
+}</code></pre>
+                    </div>
+                    
+                    <h4 class="text-lg font-bold mb-2">Object</h4>
+                    <p class="mb-2">An object is an instance of a class. When you create an object, you are creating a specific instance of that class with its own set of attributes.</p>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>public class Main {
+    public static void main(String[] args) {
+        // Creating objects
+        Car car1 = new Car("Toyota", "Camry", 2020);
+        Car car2 = new Car("Honda", "Civic", 2019);
+        
+        // Accessing object methods
+        car1.start();
+        car1.displayInfo();
+        
+        car2.displayInfo();
+        car2.stop();
+    }
+}</code></pre>
+                    </div>
+                    
+                    <h4 class="text-lg font-bold mb-2">Instance Variables</h4>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li>Declared inside a class but outside any method</li>
+                        <li>Each object has its own copy of instance variables</li>
+                        <li>Represent the state of an object</li>
+                        <li>Can be accessed from any method in the class</li>
+                    </ul>
+                    
+                    <h4 class="text-lg font-bold mb-2">Methods</h4>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li>Define the behavior of objects</li>
+                        <li>Can access and modify instance variables</li>
+                        <li>Can be called on objects to perform actions</li>
+                    </ul>
+                    
+                    <h4 class="text-lg font-bold mb-2">Constructor</h4>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li>Special method used to initialize objects</li>
+                        <li>Has the same name as the class</li>
+                        <li>No return type (not even void)</li>
+                        <li>Called automatically when an object is created</li>
+                    </ul>
+                    
+                    <h4 class="text-lg font-bold mb-2">The 'this' Keyword</h4>
+                    <p class="mb-2">The 'this' keyword refers to the current object. It's used to:</p>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li>Distinguish between instance variables and local variables</li>
+                        <li>Call one constructor from another constructor</li>
+                        <li>Pass the current object as a parameter</li>
+                    </ul>
+                    
+                    <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                        <p class="text-blue-800"><i class="fas fa-info-circle mr-2"></i> Think of a class as a blueprint for a house, and objects as the actual houses built from that blueprint!</p>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <a href="#" class="inline-flex items-center text-indigo-600 hover:text-indigo-800">
+                            <i class="fas fa-file-pdf mr-2"></i> Download Day 7 PDF Notes
+                        </a>
+                    </div>
+                `,
+                codeExamples: [
+                    {
+                        title: "Student Class Example",
+                        code: `class Student {
+    // Instance variables
+    private String name;
+    private int rollNumber;
+    private double marks;
+    
+    // Constructor
+    public Student(String name, int rollNumber, double marks) {
+        this.name = name;
+        this.rollNumber = rollNumber;
+        this.marks = marks;
+    }
+    
+    // Method to display student details
+    public void displayDetails() {
+        System.out.println("Name: " + name);
+        System.out.println("Roll Number: " + rollNumber);
+        System.out.println("Marks: " + marks);
+    }
+    
+    // Method to calculate grade
+    public String calculateGrade() {
+        if (marks >= 90) {
+            return "A+";
+        } else if (marks >= 80) {
+            return "A";
+        } else if (marks >= 70) {
+            return "B+";
+        } else if (marks >= 60) {
+            return "B";
+        } else if (marks >= 50) {
+            return "C";
+        } else {
+            return "F";
+        }
+    }
+    
+    // Method to update marks
+    public void updateMarks(double newMarks) {
+        if (newMarks >= 0 && newMarks <= 100) {
+            this.marks = newMarks;
+            System.out.println("Marks updated successfully!");
+        } else {
+            System.out.println("Invalid marks!");
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Creating student objects
+        Student student1 = new Student("Alice", 101, 85.5);
+        Student student2 = new Student("Bob", 102, 92.0);
+        
+        // Displaying student details
+        System.out.println("Student 1 Details:");
+        student1.displayDetails();
+        System.out.println("Grade: " + student1.calculateGrade());
+        
+        System.out.println("\\nStudent 2 Details:");
+        student2.displayDetails();
+        System.out.println("Grade: " + student2.calculateGrade());
+        
+        // Updating marks
+        System.out.println("\\nUpdating marks for Student 1...");
+        student1.updateMarks(88.0);
+        student1.displayDetails();
+        System.out.println("New Grade: " + student1.calculateGrade());
+    }
+}`
+                    },
+                    {
+                        title: "Rectangle Class",
+                        code: `class Rectangle {
+    private double length;
+    private double width;
+    
+    // Constructor
+    public Rectangle(double length, double width) {
+        this.length = length;
+        this.width = width;
+    }
+    
+    // Method to calculate area
+    public double calculateArea() {
+        return length * width;
+    }
+    
+    // Method to calculate perimeter
+    public double calculatePerimeter() {
+        return 2 * (length + width);
+    }
+    
+    // Method to check if square
+    public boolean isSquare() {
+        return length == width;
+    }
+    
+    // Method to display dimensions
+    public void displayDimensions() {
+        System.out.println("Length: " + length);
+        System.out.println("Width: " + width);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Creating rectangle objects
+        Rectangle rect1 = new Rectangle(5.0, 3.0);
+        Rectangle rect2 = new Rectangle(4.0, 4.0);
+        
+        // Rectangle 1
+        System.out.println("Rectangle 1:");
+        rect1.displayDimensions();
+        System.out.println("Area: " + rect1.calculateArea());
+        System.out.println("Perimeter: " + rect1.calculatePerimeter());
+        System.out.println("Is Square: " + rect1.isSquare());
+        
+        System.out.println("\\nRectangle 2:");
+        rect2.displayDimensions();
+        System.out.println("Area: " + rect2.calculateArea());
+        System.out.println("Perimeter: " + rect2.calculatePerimeter());
+        System.out.println("Is Square: " + rect2.isSquare());
+    }
+}`
+                    }
+                ],
+                tracingExercises: [
+                    {
+                        type: "fill-blank",
+                        question: "What is the output of the following code?",
+                        code: `class Test {
+    int x = 10;
+    void display() {
+        System.out.println(x);
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Test t = new Test();
+        t.display();
+    }
+}`,
+                        answer: "10"
+                    },
+                    {
+                        type: "drag-drop",
+                        items: [
+                            { id: 1, text: "class Book {", order: 1 },
+                            { id: 2, text: "private String title;", order: 2 },
+                            { id: 3, text: "public Book(String title) {", order: 3 },
+                            { id: 4, text: "this.title = title;", order: 4 },
+                            { id: 5, text: "}", order: 5 },
+                            { id: 6, text: "public void display() {", order: 6 },
+                            { id: 7, text: "System.out.println(title);", order: 7 },
+                            { id: 8, text: "}", order: 8 },
+                            { id: 9, text: "}", order: 9 }
+                        ]
+                    },
+                    {
+                        type: "mcq",
+                        question: "What is an object in Java?",
+                        options: [
+                            "A blueprint for creating classes",
+                            "An instance of a class",
+                            "A method in a class",
+                            "A variable in a class"
+                        ],
+                        correctAnswer: 1
+                    }
+                ],
+                quiz: [
+                    {
+                        question: "Which of the following is NOT a feature of OOP?",
+                        options: [
+                            "Encapsulation",
+                            "Inheritance",
+                            "Polymorphism",
+                            "Compilation"
+                        ],
+                        correctAnswer: 3
+                    },
+                    {
+                        question: "What is a class in Java?",
+                        options: [
+                            "An object",
+                            "A blueprint for creating objects",
+                            "A method",
+                            "A variable"
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        question: "Which keyword is used to create an object?",
+                        options: [
+                            "class",
+                            "object",
+                            "new",
+                            "create"
+                        ],
+                        correctAnswer: 2
+                    },
+                    {
+                        question: "What is the purpose of a constructor?",
+                        options: [
+                            "To destroy objects",
+                            "To initialize objects",
+                            "To create methods",
+                            "To access private variables"
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        question: "What does 'this' refer to in Java?",
+                        options: [
+                            "The previous object",
+                            "The current object",
+                            "The next object",
+                            "All objects"
+                        ],
+                        correctAnswer: 1
+                    }
+                ]
+            },
+            8: {
+                notes: `
+                    <h3 class="text-xl font-bold mb-3">Constructors, this, Access Modifiers</h3>
+                    <p class="mb-4">In this lesson, we'll dive deeper into object-oriented programming concepts including constructors, the 'this' keyword, and access modifiers.</p>
+                    
+                    <h4 class="text-lg font-bold mb-2">Constructors</h4>
+                    <p class="mb-2">A constructor is a special method that is called when an object is instantiated (created). It has the same name as the class and no return type.</p>
+                    
+                    <h5 class="font-bold mb-2">Types of Constructors</h5>
+                    
+                    <h6 class="font-semibold mb-1">1. Default Constructor</h6>
+                    <p class="mb-2">If you don't define any constructor, Java provides a default constructor with no parameters.</p>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>class Student {
+    // Default constructor provided by Java
+    // Student() {}
+}</code></pre>
+                    </div>
+                    
+                    <h6 class="font-semibold mb-1">2. No-Argument Constructor</h6>
+                    <p class="mb-2">A constructor that takes no parameters but is explicitly defined.</p>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>class Student {
+    Student() {
+        // initialization code
+    }
+}</code></pre>
+                    </div>
+                    
+                    <h6 class="font-semibold mb-1">3. Parameterized Constructor</h6>
+                    <p class="mb-2">A constructor that takes parameters to initialize the object with specific values.</p>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>class Student {
+    String name;
+    int age;
+    
+    Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+}</code></pre>
+                    </div>
+                    
+                    <h6 class="font-semibold mb-1">4. Copy Constructor</h6>
+                    <p class="mb-2">A constructor that creates an object by copying another object of the same class.</p>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>class Student {
+    String name;
+    int age;
+    
+    Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+    
+    // Copy constructor
+    Student(Student other) {
+        this.name = other.name;
+        this.age = other.age;
+    }
+}</code></pre>
+                    </div>
+                    
+                    <h4 class="text-lg font-bold mb-2">Constructor Overloading</h4>
+                    <p class="mb-2">Just like methods, constructors can be overloaded. A class can have multiple constructors with different parameters.</p>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>class Employee {
+    String name;
+    int id;
+    double salary;
+    
+    // No-argument constructor
+    Employee() {
+        name = "Unknown";
+        id = 0;
+        salary = 0.0;
+    }
+    
+    // Parameterized constructor
+    Employee(String name, int id, double salary) {
+        this.name = name;
+        this.id = id;
+        this.salary = salary;
+    }
+    
+    // Constructor with two parameters
+    Employee(String name, int id) {
+        this.name = name;
+        this.id = id;
+        this.salary = 0.0;
+    }
+}</code></pre>
+                    </div>
+                    
+                    <h4 class="text-lg font-bold mb-2">The 'this' Keyword</h4>
+                    <p class="mb-2">The 'this' keyword in Java is a reference variable that refers to the current object. It has several uses:</p>
+                    
+                    <h5 class="font-bold mb-2">1. To Refer to Instance Variables</h5>
+                    <p class="mb-2">When instance variable and local variable have the same name, 'this' is used to distinguish between them.</p>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>class Person {
+    String name;
+    
+    Person(String name) {
+        this.name = name; // this.name refers to instance variable
+    }
+}</code></pre>
+                    </div>
+                    
+                    <h5 class="font-bold mb-2">2. To Invoke Current Class Constructor</h5>
+                    <p class="mb-2">'this()' can be used to call another constructor of the same class.</p>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>class Rectangle {
+    double length, width;
+    
+    Rectangle() {
+        this(1.0, 1.0); // calls parameterized constructor
+    }
+    
+    Rectangle(double length, double width) {
+        this.length = length;
+        this.width = width;
+    }
+}</code></pre>
+                    </div>
+                    
+                    <h5 class="font-bold mb-2">3. To Invoke Current Class Method</h5>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>class Test {
+    void display() {
+        System.out.println("Display method");
+    }
+    
+    void show() {
+        this.display(); // calls display() method
+    }
+}</code></pre>
+                    </div>
+                    
+                    <h5 class="font-bold mb-2">4. To Pass as Argument in Method Call</h5>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>class Test {
+    void method1(Test obj) {
+        System.out.println("Method called");
+    }
+    
+    void method2() {
+        method1(this); // passes current object as argument
+    }
+}</code></pre>
+                    </div>
+                    
+                    <h4 class="text-lg font-bold mb-2">Access Modifiers</h4>
+                    <p class="mb-2">Access modifiers specify the accessibility or scope of classes, variables, methods, and constructors.</p>
+                    
+                    <h5 class="font-bold mb-2">1. Private</h5>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li>Accessible only within the same class</li>
+                        <li>Most restrictive access level</li>
+                        <li>Used for encapsulation</li>
+                    </ul>
+                    
+                    <h5 class="font-bold mb-2">2. Default (Package-Private)</h5>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li>Accessible within the same package</li>
+                        <li>No keyword needed</li>
+                        <li>Also called package-private</li>
+                    </ul>
+                    
+                    <h5 class="font-bold mb-2">3. Protected</h5>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li>Accessible within the same package and subclasses</li>
+                        <li>Used in inheritance</li>
+                    </ul>
+                    
+                    <h5 class="font-bold mb-2">4. Public</h5>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li>Accessible from any other class</li>
+                        <li>Least restrictive access level</li>
+                    </ul>
+                    
+                    <h4 class="text-lg font-bold mb-2">Access Modifiers Summary Table</h4>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>Modifier    | Class | Package | Subclass | World
+-------------------------------------------------
+public      |  Yes  |   Yes   |   Yes    |  Yes
+protected   |  Yes  |   Yes   |   Yes    |  No
+default     |  Yes  |   Yes   |   No     |  No
+private     |  Yes  |   No    |   No     |  No</code></pre>
+                    </div>
+                    
+                    <h4 class="text-lg font-bold mb-2">Encapsulation</h4>
+                    <p class="mb-2">Encapsulation is the bundling of data (variables) and code (methods) together as a single unit. It's achieved by:</p>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li>Declaring variables as private</li>
+                        <li>Providing public getter and setter methods</li>
+                    </ul>
+                    
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>class BankAccount {
+    private double balance;
+    
+    // Getter method
+    public double getBalance() {
+        return balance;
+    }
+    
+    // Setter method
+    public void setBalance(double balance) {
+        if (balance >= 0) {
+            this.balance = balance;
+        }
+    }
+}</code></pre>
+                    </div>
+                    
+                    <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                        <p class="text-blue-800"><i class="fas fa-info-circle mr-2"></i> Remember: The 'this' keyword cannot be used in static methods or static blocks!</p>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <a href="#" class="inline-flex items-center text-indigo-600 hover:text-indigo-800">
+                            <i class="fas fa-file-pdf mr-2"></i> Download Day 8 PDF Notes
+                        </a>
+                    </div>
+                `,
+                codeExamples: [
+                    {
+                        title: "Constructor Overloading Example",
+                        code: `class Student {
+    private String name;
+    private int age;
+    private String grade;
+    
+    // No-argument constructor
+    public Student() {
+        this.name = "Unknown";
+        this.age = 0;
+        this.grade = "Not assigned";
+    }
+    
+    // Parameterized constructor
+    public Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+        this.grade = "Not assigned";
+    }
+    
+    // Full parameterized constructor
+    public Student(String name, int age, String grade) {
+        this.name = name;
+        this.age = age;
+        this.grade = grade;
+    }
+    
+    // Copy constructor
+    public Student(Student other) {
+        this.name = other.name;
+        this.age = other.age;
+        this.grade = other.grade;
+    }
+    
+    // Display method
+    public void display() {
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+        System.out.println("Grade: " + grade);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Using different constructors
+        Student s1 = new Student();
+        Student s2 = new Student("Alice", 20);
+        Student s3 = new Student("Bob", 21, "A");
+        Student s4 = new Student(s3); // Copy constructor
+        
+        System.out.println("Student 1:");
+        s1.display();
+        
+        System.out.println("\\nStudent 2:");
+        s2.display();
+        
+        System.out.println("\\nStudent 3:");
+        s3.display();
+        
+        System.out.println("\\nStudent 4 (Copy of Student 3):");
+        s4.display();
+    }
+}`
+                    },
+                    {
+                        title: "Access Modifiers and Encapsulation",
+                        code: `class Employee {
+    // Private variables
+    private int id;
+    private String name;
+    private double salary;
+    
+    // Public constructor
+    public Employee(int id, String name, double salary) {
+        this.id = id;
+        this.name = name;
+        this.salary = salary;
+    }
+    
+    // Public getter methods
+    public int getId() {
+        return id;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public double getSalary() {
+        return salary;
+    }
+    
+    // Public setter methods with validation
+    public void setSalary(double salary) {
+        if (salary > 0) {
+            this.salary = salary;
+        } else {
+            System.out.println("Invalid salary amount!");
+        }
+    }
+    
+    // Public method to display employee details
+    public void displayDetails() {
+        System.out.println("Employee ID: " + id);
+        System.out.println("Employee Name: " + name);
+        System.out.println("Employee Salary: $" + salary);
+    }
+    
+    // Protected method (can be accessed by subclasses)
+    protected void incrementSalary(double amount) {
+        if (amount > 0) {
+            this.salary += amount;
+            System.out.println("Salary incremented by $" + amount);
+        }
+    }
+}
+
+// Subclass in same package
+class Manager extends Employee {
+    private String department;
+    
+    public Manager(int id, String name, double salary, String department) {
+        super(id, name, salary);
+        this.department = department;
+    }
+    
+    public void displayManagerDetails() {
+        displayDetails(); // Can access public method
+        System.out.println("Department: " + department);
+        incrementSalary(1000); // Can access protected method
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Employee emp = new Employee(101, "John Doe", 50000.0);
+        emp.displayDetails();
+        
+        // Cannot access private variables directly
+        // emp.id = 102; // Compilation error
+        
+        // Using public methods
+        System.out.println("Employee Name: " + emp.getName());
+        emp.setSalary(55000.0);
+        
+        Manager mgr = new Manager(201, "Jane Smith", 80000.0, "IT");
+        mgr.displayManagerDetails();
+    }
+}`
+                    }
+                ],
+                tracingExercises: [
+                    {
+                        type: "fill-blank",
+                        question: "What is the output of the following code?",
+                        code: `class Test {
+    int x = 10;
+    Test() {
+        this(20);
+        System.out.println("Default constructor");
+    }
+    Test(int x) {
+        this.x = x;
+        System.out.println("Parameterized constructor");
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Test t = new Test();
+        System.out.println(t.x);
+    }
+}`,
+                        answer: "Parameterized constructor\nDefault constructor\n20"
+                    },
+                    {
+                        type: "drag-drop",
+                        items: [
+                            { id: 1, text: "class Account {", order: 1 },
+                            { id: 2, text: "private double balance;", order: 2 },
+                            { id: 3, text: "public Account(double balance) {", order: 3 },
+                            { id: 4, text: "this.balance = balance;", order: 4 },
+                            { id: 5, text: "}", order: 5 },
+                            { id: 6, text: "public double getBalance() {", order: 6 },
+                            { id: 7, text: "return balance;", order: 7 },
+                            { id: 8, text: "}", order: 8 },
+                            { id: 9, text: "}", order: 9 }
+                        ]
+                    },
+                    {
+                        type: "mcq",
+                        question: "Which access modifier allows access only within the same class?",
+                        options: [
+                            "public",
+                            "protected",
+                            "default",
+                            "private"
+                        ],
+                        correctAnswer: 3
+                    }
+                ],
+                quiz: [
+                    {
+                        question: "What is a constructor in Java?",
+                        options: [
+                            "A method that destroys objects",
+                            "A special method used to initialize objects",
+                            "A method that returns values",
+                            "A method that accesses private variables"
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        question: "Which keyword is used to call another constructor in the same class?",
+                        options: [
+                            "super",
+                            "this",
+                            "constructor",
+                            "new"
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        question: "What is the default access modifier in Java?",
+                        options: [
+                            "public",
+                            "private",
+                            "protected",
+                            "package-private (no modifier)"
+                        ],
+                        correctAnswer: 3
+                    },
+                    {
+                        question: "Which access modifier provides the most restricted access?",
+                        options: [
+                            "public",
+                            "protected",
+                            "default",
+                            "private"
+                        ],
+                        correctAnswer: 3
+                    },
+                    {
+                        question: "What is encapsulation in OOP?",
+                        options: [
+                            "Inheriting properties from parent class",
+                            "Bundling data and methods together",
+                            "Having multiple forms of a method",
+                            "Hiding implementation details"
+                        ],
+                        correctAnswer: 1
+                    }
+                ]
+            },
+            9: {
+                notes: `
+                    <h3 class="text-xl font-bold mb-3">Problem-Solving and Code Tracing</h3>
+                    <p class="mb-4">Problem-solving is a crucial skill for programmers. It involves understanding the problem, breaking it down into smaller parts, and implementing a solution. Code tracing is the process of manually executing code step by step to understand its behavior.</p>
+                    
+                    <h4 class="text-lg font-bold mb-2">Problem-Solving Approach</h4>
+                    
+                    <h5 class="font-bold mb-2">1. Understand the Problem</h5>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li>Read the problem statement carefully</li>
+                        <li>Identify inputs and expected outputs</li>
+                        <li>Understand constraints and requirements</li>
+                        <li>Ask clarifying questions if needed</li>
+                    </ul>
+                    
+                    <h5 class="font-bold mb-2">2. Break Down the Problem</h5>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li>Divide the problem into smaller sub-problems</li>
+                        <li>Solve each sub-problem independently</li>
+                        <li>Combine solutions to solve the main problem</li>
+                    </ul>
+                    
+                    <h5 class="font-bold mb-2">3. Design the Solution</h5>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li>Choose appropriate data structures</li>
+                        <li>Design algorithms</li>
+                        <li>Consider edge cases</li>
+                        <li>Plan the program structure</li>
+                    </ul>
+                    
+                    <h5 class="font-bold mb-2">4. Implement the Solution</h5>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li>Write clean, readable code</li>
+                        <li>Use meaningful variable names</li>
+                        <li>Add comments for complex logic</li>
+                        <li>Follow coding standards</li>
+                    </ul>
+                    
+                    <h5 class="font-bold mb-2">5. Test and Debug</h5>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li>Test with different inputs</li>
+                        <li>Check edge cases</li>
+                        <li>Debug any errors</li>
+                        <li>Optimize if necessary</li>
+                    </ul>
+                    
+                    <h4 class="text-lg font-bold mb-2">Code Tracing Techniques</h4>
+                    
+                    <h5 class="font-bold mb-2">What is Code Tracing?</h5>
+                    <p class="mb-2">Code tracing is the process of manually executing a program step by step to understand its behavior, track variable values, and identify bugs.</p>
+                    
+                    <h5 class="font-bold mb-2">Steps for Code Tracing</h5>
+                    <ol class="list-decimal pl-6 mb-4">
+                        <li><strong>Initialize variables:</strong> Note the initial values of all variables</li>
+                        <li><strong>Follow execution flow:</strong> Track which lines of code are executed</li>
+                        <li><strong>Update variables:</strong> Record how variable values change</li>
+                        <li><strong>Track method calls:</strong> Note when methods are called and their return values</li>
+                        <li><strong>Handle conditions:</strong> Follow the correct branch based on conditions</li>
+                        <li><strong>Loop iterations:</strong> Track each iteration of loops</li>
+                    </ol>
+                    
+                    <h5 class="font-bold mb-2">Code Tracing Example</h5>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>int x = 5;
+int y = 10;
+int z = x + y;
+if (z > 10) {
+    z = z * 2;
+} else {
+    z = z / 2;
+}
+System.out.println(z);</code></pre>
+                    </div>
+                    
+                    <p class="mb-2">Tracing steps:</p>
+                    <ol class="list-decimal pl-6 mb-4">
+                        <li>x = 5, y = 10</li>
+                        <li>z = 5 + 10 = 15</li>
+                        <li>Check if 15 > 10: true</li>
+                        <li>Execute if block: z = 15 * 2 = 30</li>
+                        <li>Print z: 30</li>
+                    </ol>
+                    
+                    <h4 class="text-lg font-bold mb-2">Common Programming Problems</h4>
+                    
+                    <h5 class="font-bold mb-2">1. Array Problems</h5>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li>Find maximum/minimum element</li>
+                        <li>Search for an element</li>
+                        <li>Sort an array</li>
+                        <li>Reverse an array</li>
+                        <li>Remove duplicates</li>
+                    </ul>
+                    
+                    <h5 class="font-bold mb-2">2. String Problems</h5>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li>Check palindrome</li>
+                        <li>Count characters</li>
+                        <li>Reverse a string</li>
+                        <li>Find substring</li>
+                        <li>Remove whitespace</li>
+                    </ul>
+                    
+                    <h5 class="font-bold mb-2">3. Number Problems</h5>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li>Check prime number</li>
+                        <li>Find factorial</li>
+                        <li>Generate Fibonacci series</li>
+                        <li>Check Armstrong number</li>
+                        <li>Find GCD/LCM</li>
+                    </ul>
+                    
+                    <h5 class="font-bold mb-2">4. Pattern Problems</h5>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li>Print number patterns</li>
+                        <li>Print star patterns</li>
+                        <li>Print pyramid patterns</li>
+                    </ul>
+                    
+                    <h4 class="text-lg font-bold mb-2">Debugging Techniques</h4>
+                    
+                    <h5 class="font-bold mb-2">1. Print Statements</h5>
+                    <p class="mb-2">Add print statements to track variable values and program flow.</p>
+                    
+                    <h5 class="font-bold mb-2">2. Code Tracing</h5>
+                    <p class="mb-2">Manually trace through the code to identify logical errors.</p>
+                    
+                    <h5 class="font-bold mb-2">3. Rubber Duck Debugging</h5>
+                    <p class="mb-2">Explain your code line by line to someone (or a rubber duck) to find errors.</p>
+                    
+                    <h5 class="font-bold mb-2">4. Divide and Conquer</h5>
+                    <p class="mb-2">Comment out sections of code to isolate the problem area.</p>
+                    
+                    <h5 class="font-bold mb-2">5. Check Common Errors</h5>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li>Syntax errors (typos, missing semicolons)</li>
+                        <li>Logic errors (incorrect algorithms)</li>
+                        <li>Runtime errors (division by zero, null pointer)</li>
+                        <li>Off-by-one errors in loops</li>
+                    </ul>
+                    
+                    <h4 class="text-lg font-bold mb-2">Problem-Solving Strategies</h4>
+                    
+                    <h5 class="font-bold mb-2">1. Brute Force</h5>
+                    <p class="mb-2">Try all possible solutions. Simple but may not be efficient for large inputs.</p>
+                    
+                    <h5 class="font-bold mb-2">2. Divide and Conquer</h5>
+                    <p class="mb-2">Break the problem into smaller sub-problems, solve them, and combine results.</p>
+                    
+                    <h5 class="font-bold mb-2">3. Greedy Approach</h5>
+                    <p class="mb-2">Make the locally optimal choice at each step.</p>
+                    
+                    <h5 class="font-bold mb-2">4. Dynamic Programming</h5>
+                    <p class="mb-2">Solve problems by breaking them into overlapping sub-problems.</p>
+                    
+                    <h5 class="font-bold mb-2">5. Recursion</h5>
+                    <p class="mb-2">Solve problems by breaking them down into smaller, similar sub-problems.</p>
+                    
+                    <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                        <p class="text-blue-800"><i class="fas fa-info-circle mr-2"></i> Practice is key to improving problem-solving skills. Start with simple problems and gradually move to more complex ones!</p>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <a href="#" class="inline-flex items-center text-indigo-600 hover:text-indigo-800">
+                            <i class="fas fa-file-pdf mr-2"></i> Download Day 9 PDF Notes
+                        </a>
+                    </div>
+                `,
+                codeExamples: [
+                    {
+                        title: "Code Tracing Example",
+                        code: `public class CodeTracingExample {
+    public static void main(String[] args) {
+        int[] arr = {5, 2, 8, 1, 9};
+        int sum = 0;
+        int max = arr[0];
+        
+        for (int i = 0; i < arr.length; i++) {
+            sum += arr[i];
+            if (arr[i] > max) {
+                max = arr[i];
+            }
+        }
+        
+        double average = (double) sum / arr.length;
+        
+        System.out.println("Sum: " + sum);
+        System.out.println("Max: " + max);
+        System.out.println("Average: " + average);
+    }
+}`
+                    },
+                    {
+                        title: "Problem-Solving: Find Second Largest",
+                        code: `public class SecondLargest {
+    public static void main(String[] args) {
+        int[] arr = {5, 2, 8, 1, 9, 3};
+        
+        if (arr.length < 2) {
+            System.out.println("Array must have at least 2 elements");
+            return;
+        }
+        
+        int first = Integer.MIN_VALUE;
+        int second = Integer.MIN_VALUE;
+        
+        for (int num : arr) {
+            if (num > first) {
+                second = first;
+                first = num;
+            } else if (num > second && num != first) {
+                second = num;
+            }
+        }
+        
+        if (second == Integer.MIN_VALUE) {
+            System.out.println("No second largest element");
+        } else {
+            System.out.println("Second largest: " + second);
+        }
+    }
+}`
+                    }
+                ],
+                tracingExercises: [
+                    {
+                        type: "fill-blank",
+                        question: "What is the output of the following code?",
+                        code: `int x = 1;
+int y = 0;
+while (x <= 5) {
+    y += x;
+    x++;
+}
+System.out.println(y);`,
+                        answer: "15"
+                    },
+                    {
+                        type: "drag-drop",
+                        items: [
+                            { id: 1, text: "int[] arr = {3, 1, 4, 1, 5};", order: 1 },
+                            { id: 2, text: "int sum = 0;", order: 2 },
+                            { id: 3, text: "for (int i = 0; i < arr.length; i++) {", order: 3 },
+                            { id: 4, text: "if (arr[i] % 2 == 0) {", order: 4 },
+                            { id: 5, text: "sum += arr[i];", order: 5 },
+                            { id: 6, text: "}", order: 6 },
+                            { id: 7, text: "}", order: 7 },
+                            { id: 8, text: "System.out.println(sum);", order: 8 }
+                        ]
+                    },
+                    {
+                        type: "mcq",
+                        question: "What is the value of x after: int x=0; for(int i=1;i<=3;i++) { if(i%2==0) x+=i; }",
+                        options: [
+                            "0",
+                            "2",
+                            "3",
+                            "5"
+                        ],
+                        correctAnswer: 1
+                    }
+                ],
+                quiz: [
+                    {
+                        question: "What is the first step in problem-solving?",
+                        options: [
+                            "Write code immediately",
+                            "Understand the problem",
+                            "Test the solution",
+                            "Debug the code"
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        question: "What is code tracing?",
+                        options: [
+                            "Writing code automatically",
+                            "Manually executing code step by step",
+                            "Compiling code",
+                            "Running code with test cases"
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        question: "Which of the following is a common debugging technique?",
+                        options: [
+                            "Adding print statements",
+                            "Deleting all code",
+                            "Writing more code",
+                            "Ignoring errors"
+                        ],
+                        correctAnswer: 0
+                    },
+                    {
+                        question: "What is the output of: int x=0; for(int i=1;i<=3;i++) { x+=i; } System.out.println(x);",
+                        options: [
+                            "3",
+                            "6",
+                            "9",
+                            "12"
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        question: "Which problem-solving approach breaks the problem into smaller sub-problems?",
+                        options: [
+                            "Brute force",
+                            "Divide and conquer",
+                            "Greedy approach",
+                            "Random approach"
+                        ],
+                        correctAnswer: 1
+                    }
+                ]
+            },
+            10: {
+                notes: `
+                    <h3 class="text-xl font-bold mb-3">Mini Project and Version Control</h3>
+                    <p class="mb-4">In this final lesson, you'll create a mini project and learn about version control using Git and GitHub. This will help you apply all the concepts you've learned throughout the course.</p>
+                    
+                    <h4 class="text-lg font-bold mb-2">Mini Project: Student Grade Tracker</h4>
+                    <p class="mb-2">We'll create a simple console-based application to track student grades. This project will incorporate various Java concepts you've learned.</p>
+                    
+                    <h5 class="font-bold mb-2">Project Requirements</h5>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li>Store student information (name, roll number, grades)</li>
+                        <li>Calculate average grade</li>
+                        <li>Determine pass/fail status</li>
+                        <li>Display student reports</li>
+                        <li>Save and load data (optional)</li>
+                    </ul>
+                    
+                    <h5 class="font-bold mb-2">Project Structure</h5>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code>StudentGradeTracker/
+├── Student.java          // Student class
+├── GradeTracker.java     // Main application class
+├── Subject.java          // Subject class (optional)
+└── README.md            // Project documentation</code></pre>
+                    </div>
+                    
+                    <h5 class="font-bold mb-2">Implementation Steps</h5>
+                    <ol class="list-decimal pl-6 mb-4">
+                        <li><strong>Design the Student class:</strong> Create attributes and methods</li>
+                        <li><strong>Create the main application:</strong> Implement user interface and logic</li>
+                        <li><strong>Add functionality:</strong> Implement grade calculation and reporting</li>
+                        <li><strong>Test the application:</strong> Verify all features work correctly</li>
+                        <li><strong>Add documentation:</strong> Create README and comments</li>
+                    </ol>
+                    
+                    <h4 class="text-lg font-bold mb-2">Version Control with Git</h4>
+                    
+                    <h5 class="font-bold mb-2">What is Version Control?</h5>
+                    <p class="mb-2">Version control is a system that records changes to files over time so that you can recall specific versions later. Git is a distributed version control system.</p>
+                    
+                    <h5 class="font-bold mb-2">Why Use Version Control?</h5>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li><strong>Track changes:</strong> See who made what changes and when</li>
+                        <li><strong>Collaborate:</strong> Work with others on the same project</li>
+                        <li><strong>Backup:</strong> Keep your code safe in the cloud</li>
+                        <li><strong>Experiment:</strong> Try new features without fear of breaking things</li>
+                        <li><strong>Rollback:</strong> Revert to previous versions if needed</li>
+                    </ul>
+                    
+                    <h5 class="font-bold mb-2">Basic Git Commands</h5>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code># Initialize a repository
+git init
+
+# Add files to staging area
+git add filename
+git add .        # Add all files
+
+# Commit changes
+git commit -m "Your commit message"
+
+# Check status
+git status
+
+# View commit history
+git log
+
+# Create a new branch
+git branch branch-name
+
+# Switch to a branch
+git checkout branch-name
+
+# Merge branches
+git merge branch-name
+
+# Connect to remote repository
+git remote add origin https://github.com/username/repo.git
+
+# Push to remote
+git push origin main
+
+# Pull from remote
+git pull origin main</code></pre>
+                    </div>
+                    
+                    <h4 class="text-lg font-bold mb-2">GitHub for Project Management</h4>
+                    
+                    <h5 class="font-bold mb-2">Creating a GitHub Repository</h5>
+                    <ol class="list-decimal pl-6 mb-4">
+                        <li>Sign in to GitHub</li>
+                        <li>Click the "+" icon and select "New repository"</li>
+                        <li>Enter repository name (e.g., "student-grade-tracker")</li>
+                        <li>Add description and choose visibility</li>
+                        <li>Click "Create repository"</li>
+                    </ol>
+                    
+                    <h5 class="font-bold mb-2">Uploading Your Project</h5>
+                    <ol class="list-decimal pl-6 mb-4">
+                        <li>Initialize Git in your project folder</li>
+                        <li>Add files and make initial commit</li>
+                        <li>Connect to your GitHub repository</li>
+                        <li>Push your code to GitHub</li>
+                    </ol>
+                    
+                    <h5 class="font-bold mb-2">Best Practices for Version Control</h5>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li><strong>Commit often:</strong> Make small, frequent commits</li>
+                        <li><strong>Write meaningful commit messages:</strong> Describe what changed and why</li>
+                        <li><strong>Use branches:</strong> Create separate branches for features</li>
+                        <li><strong>Keep master stable:</strong> Only merge tested code to master</li>
+                        <li><strong>Review code:</strong> Use pull requests for collaboration</li>
+                    </ul>
+                    
+                    <h4 class="text-lg font-bold mb-2">Project Documentation</h4>
+                    
+                    <h5 class="font-bold mb-2">README.md Template</h5>
+                    <div class="bg-gray-100 p-3 rounded mb-4">
+                        <pre><code># Student Grade Tracker
+
+## Description
+A console-based Java application to track and manage student grades.
+
+## Features
+- Add student information
+- Record grades for different subjects
+- Calculate average grades
+- Generate student reports
+- Determine pass/fail status
+
+## Technologies Used
+- Java
+- Git
+- GitHub
+
+## How to Run
+1. Clone the repository
+2. Compile: javac *.java
+3. Run: java GradeTracker
+
+## Project Structure
+- Student.java: Student class with attributes and methods
+- GradeTracker.java: Main application class
+- Subject.java: Subject class for managing subjects
+
+## Future Enhancements
+- GUI interface
+- Database integration
+- Export reports to PDF
+- Email notifications</code></pre>
+                    </div>
+                    
+                    <h4 class="text-lg font-bold mb-2">Collaboration and Open Source</h4>
+                    
+                    <h5 class="font-bold mb-2">Contributing to Open Source</h5>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li>Find projects that interest you</li>
+                        <li>Fork the repository</li>
+                        <li>Create a new branch for your changes</li>
+                        <li>Make your changes and test</li>
+                        <li>Submit a pull request</li>
+                    </ul>
+                    
+                    <h5 class="font-bold mb-2">Building Your Portfolio</h4>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li>Keep your GitHub profile updated</li>
+                        <li>Add meaningful projects</li>
+                        <li>Write good documentation</li>
+                        <li>Participate in open source</li>
+                        <li>Showcase your skills</li>
+                    </ul>
+                    
+                    <h4 class="text-lg font-bold mb-2">Next Steps in Your Java Journey</h4>
+                    
+                    <h5 class="font-bold mb-2">Advanced Java Topics</h5>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li>Java Collections Framework</li>
+                        <li>Exception Handling</li>
+                        <li>File I/O Operations</li>
+                        <li>Multi-threading</li>
+                        <li>JavaFX for GUI applications</li>
+                        <li>Web Development with Spring</li>
+                        <li>Android Development</li>
+                    </ul>
+                    
+                    <h5 class="font-bold mb-2">Continuous Learning</h5>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li>Practice coding regularly</li>
+                        <li>Work on personal projects</li>
+                        <li>Participate in coding challenges</li>
+                        <li>Join Java communities</li>
+                        <li>Read Java documentation</li>
+                        <li>Follow Java blogs and tutorials</li>
+                    </ul>
+                    
+                    <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                        <p class="text-blue-800"><i class="fas fa-info-circle mr-2"></i> Remember: The best way to learn programming is by building projects and solving real-world problems!</p>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <a href="#" class="inline-flex items-center text-indigo-600 hover:text-indigo-800">
+                            <i class="fas fa-file-pdf mr-2"></i> Download Day 10 PDF Notes
+                        </a>
+                    </div>
+                `,
+                codeExamples: [
+                    {
+                        title: "Student Grade Tracker - Student Class",
+                        code: `public class Student {
+    private String name;
+    private int rollNumber;
+    private int[] grades;
+    private int gradeCount;
+    
+    public Student(String name, int rollNumber, int maxSubjects) {
+        this.name = name;
+        this.rollNumber = rollNumber;
+        this.grades = new int[maxSubjects];
+        this.gradeCount = 0;
+    }
+    
+    public void addGrade(int grade) {
+        if (gradeCount < grades.length) {
+            grades[gradeCount] = grade;
+            gradeCount++;
+        } else {
+            System.out.println("Maximum grades reached for this student");
+        }
+    }
+    
+    public double calculateAverage() {
+        if (gradeCount == 0) return 0.0;
+        
+        int sum = 0;
+        for (int i = 0; i < gradeCount; i++) {
+            sum += grades[i];
+        }
+        return (double) sum / gradeCount;
+    }
+    
+    public String getGradeStatus() {
+        double average = calculateAverage();
+        return average >= 60 ? "Pass" : "Fail";
+    }
+    
+    public void displayReport() {
+        System.out.println("\\n--- Student Report ---");
+        System.out.println("Name: " + name);
+        System.out.println("Roll Number: " + rollNumber);
+        System.out.println("Grades: " + java.util.Arrays.toString(java.util.Arrays.copyOf(grades, gradeCount)));
+        System.out.println("Average: " + String.format("%.2f", calculateAverage()));
+        System.out.println("Status: " + getGradeStatus());
+    }
+    
+    // Getters
+    public String getName() { return name; }
+    public int getRollNumber() { return rollNumber; }
+    public int[] getGrades() { return grades; }
+    public int getGradeCount() { return gradeCount; }
+}`
+                    },
+                    {
+                        title: "Student Grade Tracker - Main Application",
+                        code: `import java.util.ArrayList;
+import java.util.Scanner;
+
+public class GradeTracker {
+    private ArrayList<Student> students;
+    private Scanner scanner;
+    
+    public GradeTracker() {
+        students = new ArrayList<>();
+        scanner = new Scanner(System.in);
+    }
+    
+    public void run() {
+        while (true) {
+            displayMenu();
+            int choice = getIntInput("Enter your choice: ");
+            
+            switch (choice) {
+                case 1:
+                    addStudent();
+                    break;
+                case 2:
+                    addGrade();
+                    break;
+                case 3:
+                    displayAllReports();
+                    break;
+                case 4:
+                    searchStudent();
+                    break;
+                case 5:
+                    System.out.println("Thank you for using Student Grade Tracker!");
+                    return;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+    
+    private void displayMenu() {
+        System.out.println("\\n=== Student Grade Tracker ===");
+        System.out.println("1. Add Student");
+        System.out.println("2. Add Grade");
+        System.out.println("3. Display All Reports");
+        System.out.println("4. Search Student");
+        System.out.println("5. Exit");
+    }
+    
+    private void addStudent() {
+        System.out.print("Enter student name: ");
+        String name = scanner.nextLine();
+        
+        int rollNumber = getIntInput("Enter roll number: ");
+        
+        int maxSubjects = getIntInput("Enter maximum number of subjects: ");
+        
+        Student student = new Student(name, rollNumber, maxSubjects);
+        students.add(student);
+        
+        System.out.println("Student added successfully!");
+    }
+    
+    private void addGrade() {
+        if (students.isEmpty()) {
+            System.out.println("No students available. Please add a student first.");
+            return;
+        }
+        
+        displayStudents();
+        int studentIndex = getIntInput("Enter student number: ") - 1;
+        
+        if (studentIndex < 0 || studentIndex >= students.size()) {
+            System.out.println("Invalid student number.");
+            return;
+        }
+        
+        int grade = getIntInput("Enter grade (0-100): ");
+        if (grade < 0 || grade > 100) {
+            System.out.println("Invalid grade. Grade must be between 0 and 100.");
+            return;
+        }
+        
+        students.get(studentIndex).addGrade(grade);
+        System.out.println("Grade added successfully!");
+    }
+    
+    private void displayAllReports() {
+        if (students.isEmpty()) {
+            System.out.println("No students available.");
+            return;
+        }
+        
+        System.out.println("\\n=== All Student Reports ===");
+        for (Student student : students) {
+            student.displayReport();
+        }
+    }
+    
+    private void searchStudent() {
+        if (students.isEmpty()) {
+            System.out.println("No students available.");
+            return;
+        }
+        
+        System.out.print("Enter student name to search: ");
+        String searchName = scanner.nextLine();
+        
+        boolean found = false;
+        for (Student student : students) {
+            if (student.getName().equalsIgnoreCase(searchName)) {
+                student.displayReport();
+                found = true;
+                break;
+            }
+        }
+        
+        if (!found) {
+            System.out.println("Student not found.");
+        }
+    }
+    
+    private void displayStudents() {
+        System.out.println("\\n=== Students ===");
+        for (int i = 0; i < students.size(); i++) {
+            System.out.println((i + 1) + ". " + students.get(i).getName());
+        }
+    }
+    
+    private int getIntInput(String prompt) {
+        while (true) {
+            try {
+                System.out.print(prompt);
+                return Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a number.");
+            }
+        }
+    }
+    
+    public static void main(String[] args) {
+        GradeTracker tracker = new GradeTracker();
+        tracker.run();
+    }
+}`
+                    }
+                ],
+                tracingExercises: [
+                    {
+                        type: "fill-blank",
+                        question: "What is the output of the following Git command sequence?",
+                        code: `git init
+git add .
+git commit -m "Initial commit"
+git log --oneline`,
+                        answer: "Shows commit history in one line format"
+                    },
+                    {
+                        type: "drag-drop",
+                        items: [
+                            { id: 1, text: "git init", order: 1 },
+                            { id: 2, text: "git add .", order: 2 },
+                            { id: 3, text: "git commit -m \"Add feature\"", order: 3 },
+                            { id: 4, text: "git push origin main", order: 4 }
+                        ]
+                    },
+                    {
+                        type: "mcq",
+                        question: "Which Git command shows the current status of files?",
+                        options: [
+                            "git status",
+                            "git log",
+                            "git diff",
+                            "git show"
+                        ],
+                        correctAnswer: 0
+                    }
+                ],
+                quiz: [
+                    {
+                        question: "What is the purpose of version control?",
+                        options: [
+                            "To make code run faster",
+                            "To track changes to files over time",
+                            "To reduce file size",
+                            "To compile code automatically"
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        question: "Which Git command stages all changes for commit?",
+                        options: [
+                            "git commit",
+                            "git add .",
+                            "git push",
+                            "git status"
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        question: "What is a README file used for?",
+                        options: [
+                            "Storing passwords",
+                            "Documenting the project",
+                            "Compiling code",
+                            "Running tests"
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        question: "Which command creates a new branch in Git?",
+                        options: [
+                            "git checkout -b branch-name",
+                            "git branch branch-name",
+                            "git new-branch branch-name",
+                            "Both a and b"
+                        ],
+                        correctAnswer: 3
+                    },
+                    {
+                        question: "What is the main advantage of using GitHub?",
+                        options: [
+                            "It makes code run faster",
+                            "It provides cloud storage and collaboration features",
+                            "It automatically fixes bugs",
+                            "It reduces the need for testing"
+                        ],
+                        correctAnswer: 1
+                    }
+                ]
+            }
+        };
 
         // Resources data
         const resourcesByDay = {
@@ -1052,60 +3825,6 @@ git pull origin main</pre>
                 ]
             }
         };
-
-        // Quiz questions for Day 1
-        const day1Quiz = [
-            {
-                question: "What is Java?",
-                options: [
-                    "A programming language",
-                    "A coffee brand",
-                    "An island in Indonesia",
-                    "A type of computer hardware"
-                ],
-                correctAnswer: 0
-            },
-            {
-                question: "Which of the following is NOT a Java feature?",
-                options: [
-                    "Platform Independence",
-                    "Object-Oriented",
-                    "Automatic Memory Management",
-                    "Multiple Inheritance"
-                ],
-                correctAnswer: 3
-            },
-            {
-                question: "What is the correct way to declare a variable in Java?",
-                options: [
-                    "variable x = 5;",
-                    "int x = 5;",
-                    "x = 5 int;",
-                    "int x := 5;"
-                ],
-                correctAnswer: 1
-            },
-            {
-                question: "Which method is the entry point of a Java program?",
-                options: [
-                    "public void main(String[] args)",
-                    "public static void main(String[] args)",
-                    "public static main(String[] args)",
-                    "static void main(String[] args)"
-                ],
-                correctAnswer: 1
-            },
-            {
-                question: "What is the output of System.out.println(10 + 20 + \"J-CODE\");?",
-                options: [
-                    "30J-CODE",
-                    "1020J-CODE",
-                    "J-CODE30",
-                    "Error"
-                ],
-                correctAnswer: 0
-            }
-        ];
 
         // Code templates
         const codeTemplates = {
@@ -1605,6 +4324,9 @@ git pull origin main</pre>
             const day = days.find(d => d.id === dayId);
             document.getElementById('dayTitle').textContent = `Day ${day.id}: ${day.title}`;
             
+            // Load day content
+            loadDayContent(dayId);
+            
             // Switch to specified tab
             switchTab(tab);
             
@@ -1620,6 +4342,235 @@ git pull origin main</pre>
             });
             
             app.currentView = 'day';
+        }
+
+        // Load content for a specific day
+        function loadDayContent(dayId) {
+            const content = dayContent[dayId];
+            if (!content) return;
+            
+            // Update notes
+            const notesTab = document.querySelector('#notesTab .prose');
+            notesTab.innerHTML = content.notes;
+            
+            // Update code examples
+            const codeExamplesContainer = document.getElementById('codeExamples');
+            codeExamplesContainer.innerHTML = '';
+            
+            content.codeExamples.forEach(example => {
+                const exampleDiv = document.createElement('div');
+                exampleDiv.className = 'mb-6';
+                exampleDiv.innerHTML = `
+                    <h4 class="text-lg font-bold mb-2">${example.title}</h4>
+                    <div class="relative">
+                        <pre><code class="language-java">${example.code}</code></pre>
+                        <button class="copy-btn absolute top-2 right-2 bg-gray-700 text-white p-2 rounded hover:bg-gray-600">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                `;
+                codeExamplesContainer.appendChild(exampleDiv);
+            });
+            
+            // Update tracing exercises
+            const tracingExercisesContainer = document.getElementById('tracingExercises');
+            tracingExercisesContainer.innerHTML = '';
+            
+            content.tracingExercises.forEach((exercise, index) => {
+                const exerciseDiv = document.createElement('div');
+                exerciseDiv.className = 'mb-6';
+                
+                if (exercise.type === 'fill-blank') {
+                    exerciseDiv.innerHTML = `
+                        <h4 class="text-lg font-bold mb-2">Exercise ${index + 1}: Fill in the Blank</h4>
+                        <p class="mb-3">${exercise.question}</p>
+                        
+                        <div class="bg-gray-800 text-white p-4 rounded-lg mb-4">
+                            <pre><code class="language-java">${exercise.code}</code></pre>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <input type="text" id="tracingAnswer${index}" class="border border-gray-300 rounded p-2 mr-2 w-48" placeholder="Answer">
+                            <button class="check-tracing-btn bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700" data-index="${index}">Check</button>
+                            <span id="tracingResult${index}" class="ml-2"></span>
+                        </div>
+                    `;
+                } else if (exercise.type === 'drag-drop') {
+                    exerciseDiv.innerHTML = `
+                        <h4 class="text-lg font-bold mb-2">Exercise ${index + 1}: Drag and Drop</h4>
+                        <p class="mb-3">Arrange the code blocks in the correct order:</p>
+                        
+                        <div id="dragDropContainer${index}" class="space-y-2 mb-4">
+                            <!-- Draggable items will be added by JavaScript -->
+                        </div>
+                        
+                        <button class="check-drag-drop-btn bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700" data-index="${index}">Check Order</button>
+                        <span id="dragDropResult${index}" class="ml-2"></span>
+                    `;
+                    
+                    // Initialize drag and drop for this exercise
+                    setTimeout(() => initializeDragDropForExercise(index, exercise.items), 100);
+                } else if (exercise.type === 'mcq') {
+                    exerciseDiv.innerHTML = `
+                        <h4 class="text-lg font-bold mb-2">Exercise ${index + 1}: Multiple Choice</h4>
+                        <p class="mb-3">${exercise.question}</p>
+                        
+                        <div class="space-y-2">
+                            ${exercise.options.map((option, i) => `
+                                <label class="flex items-center">
+                                    <input type="radio" name="mcq${index}" value="${i}" class="mr-2">
+                                    <span>${option}</span>
+                                </label>
+                            `).join('')}
+                        </div>
+                        
+                        <button class="check-mcq-btn bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 mt-3" data-index="${index}">Check Answer</button>
+                        <span id="mcqResult${index}" class="ml-2"></span>
+                    `;
+                }
+                
+                tracingExercisesContainer.appendChild(exerciseDiv);
+            });
+            
+            // Update quiz
+            document.getElementById('quizTitle').textContent = `Day ${dayId} Quiz`;
+            renderQuizForDay(dayId);
+            
+            // Add event listeners for tracing exercises
+            document.querySelectorAll('.check-tracing-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = this.getAttribute('data-index');
+                    checkTracingExercise(dayId, index);
+                });
+            });
+            
+            document.querySelectorAll('.check-drag-drop-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = this.getAttribute('data-index');
+                    checkDragDropExercise(dayId, index);
+                });
+            });
+            
+            document.querySelectorAll('.check-mcq-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = this.getAttribute('data-index');
+                    checkMCQExercise(dayId, index);
+                });
+            });
+        }
+
+        // Initialize drag and drop for a specific exercise
+        function initializeDragDropForExercise(exerciseIndex, items) {
+            const container = document.getElementById(`dragDropContainer${exerciseIndex}`);
+            if (!container) return;
+            
+            // Shuffle items for drag and drop
+            const shuffled = [...items].sort(() => Math.random() - 0.5);
+            
+            shuffled.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'bg-gray-100 p-3 rounded border border-gray-300 cursor-move';
+                div.draggable = true;
+                div.dataset.id = item.id;
+                div.dataset.order = item.order;
+                div.textContent = item.text;
+                container.appendChild(div);
+            });
+            
+            // Add drag and drop event listeners
+            let draggedElement = null;
+            
+            container.addEventListener('dragstart', function(e) {
+                if (e.target.classList.contains('cursor-move')) {
+                    draggedElement = e.target;
+                    e.target.style.opacity = '0.5';
+                }
+            });
+            
+            container.addEventListener('dragend', function(e) {
+                if (e.target.classList.contains('cursor-move')) {
+                    e.target.style.opacity = '';
+                }
+            });
+            
+            container.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                const afterElement = getDragAfterElement(container, e.clientY);
+                if (afterElement == null) {
+                    container.appendChild(draggedElement);
+                } else {
+                    container.insertBefore(draggedElement, afterElement);
+                }
+            });
+        }
+
+        // Get element after drag position
+        function getDragAfterElement(container, y) {
+            const draggableElements = [...container.querySelectorAll('.cursor-move:not(.dragging)')];
+            
+            return draggableElements.reduce((closest, child) => {
+                const box = child.getBoundingClientRect();
+                const offset = y - box.top - box.height / 2;
+                
+                if (offset < 0 && offset > closest.offset) {
+                    return { offset: offset, element: child };
+                } else {
+                    return closest;
+                }
+            }, { offset: Number.NEGATIVE_INFINITY }).element;
+        }
+
+        // Check tracing exercise
+        function checkTracingExercise(dayId, exerciseIndex) {
+            const answer = document.getElementById(`tracingAnswer${exerciseIndex}`).value.trim();
+            const result = document.getElementById(`tracingResult${exerciseIndex}`);
+            const exercise = dayContent[dayId].tracingExercises[exerciseIndex];
+            
+            if (answer.toLowerCase() === exercise.answer.toLowerCase()) {
+                result.innerHTML = '<i class="fas fa-check-circle text-green-500"></i> Correct!';
+            } else {
+                result.innerHTML = '<i class="fas fa-times-circle text-red-500"></i> Try again';
+            }
+        }
+
+        // Check drag and drop exercise
+        function checkDragDropExercise(dayId, exerciseIndex) {
+            const container = document.getElementById(`dragDropContainer${exerciseIndex}`);
+            const items = container.querySelectorAll('.cursor-move');
+            const result = document.getElementById(`dragDropResult${exerciseIndex}`);
+            const exercise = dayContent[dayId].tracingExercises[exerciseIndex];
+            let correct = true;
+            
+            items.forEach((item, index) => {
+                const expectedOrder = parseInt(item.dataset.order);
+                if (expectedOrder !== index + 1) {
+                    correct = false;
+                }
+            });
+            
+            if (correct) {
+                result.innerHTML = '<i class="fas fa-check-circle text-green-500"></i> Correct order!';
+            } else {
+                result.innerHTML = '<i class="fas fa-times-circle text-red-500"></i> Incorrect order. Try again.';
+            }
+        }
+
+        // Check MCQ exercise
+        function checkMCQExercise(dayId, exerciseIndex) {
+            const selected = document.querySelector(`input[name="mcq${exerciseIndex}"]:checked`);
+            const result = document.getElementById(`mcqResult${exerciseIndex}`);
+            const exercise = dayContent[dayId].tracingExercises[exerciseIndex];
+            
+            if (!selected) {
+                result.innerHTML = '<i class="fas fa-exclamation-circle text-yellow-500"></i> Please select an answer';
+                return;
+            }
+            
+            if (parseInt(selected.value) === exercise.correctAnswer) {
+                result.innerHTML = '<i class="fas fa-check-circle text-green-500"></i> Correct!';
+            } else {
+                result.innerHTML = '<i class="fas fa-times-circle text-red-500"></i> Incorrect. Try again.';
+            }
         }
 
         // Switch tab in day module
@@ -1722,9 +4673,10 @@ git pull origin main</pre>
             saveAppState();
         }
 
-        // Initialize drag and drop
+        // Initialize drag and drop for the default exercise
         function initializeDragDrop() {
             const container = document.getElementById('dragDropContainer');
+            if (!container) return;
             
             // Shuffle items for drag and drop
             const shuffled = [...dragDropItems].sort(() => Math.random() - 0.5);
@@ -1734,6 +4686,7 @@ git pull origin main</pre>
                 div.className = 'bg-gray-100 p-3 rounded border border-gray-300 cursor-move';
                 div.draggable = true;
                 div.dataset.id = item.id;
+                div.dataset.order = item.order;
                 div.textContent = item.text;
                 container.appendChild(div);
             });
@@ -1763,22 +4716,6 @@ git pull origin main</pre>
                     container.insertBefore(draggedElement, afterElement);
                 }
             });
-        }
-
-        // Get element after drag position
-        function getDragAfterElement(container, y) {
-            const draggableElements = [...container.querySelectorAll('.cursor-move:not(.dragging)')];
-            
-            return draggableElements.reduce((closest, child) => {
-                const box = child.getBoundingClientRect();
-                const offset = y - box.top - box.height / 2;
-                
-                if (offset < 0 && offset > closest.offset) {
-                    return { offset: offset, element: child };
-                } else {
-                    return closest;
-                }
-            }, { offset: Number.NEGATIVE_INFINITY }).element;
         }
 
         // Check tracing exercise 1
@@ -1832,12 +4769,15 @@ git pull origin main</pre>
             }
         }
 
-        // Render quiz
-        function renderQuiz() {
+        // Render quiz for a specific day
+        function renderQuizForDay(dayId) {
             const container = document.getElementById('quizContainer');
+            const quiz = dayContent[dayId].quiz;
+            if (!quiz) return;
+            
             container.innerHTML = '';
             
-            day1Quiz.forEach((q, index) => {
+            quiz.forEach((q, index) => {
                 const questionDiv = document.createElement('div');
                 questionDiv.className = 'mb-6';
                 questionDiv.innerHTML = `
@@ -1855,12 +4795,21 @@ git pull origin main</pre>
             });
         }
 
+        // Render default quiz (Day 1)
+        function renderQuiz() {
+            renderQuizForDay(1);
+        }
+
         // Submit quiz
         function submitQuiz() {
-            let score = 0;
-            const totalQuestions = day1Quiz.length;
+            const dayId = app.currentDay;
+            const quiz = dayContent[dayId].quiz;
+            if (!quiz) return;
             
-            day1Quiz.forEach((q, index) => {
+            let score = 0;
+            const totalQuestions = quiz.length;
+            
+            quiz.forEach((q, index) => {
                 const selected = document.querySelector(`input[name="q${index}"]:checked`);
                 if (selected && parseInt(selected.value) === q.correctAnswer) {
                     score++;
@@ -1882,13 +4831,13 @@ git pull origin main</pre>
                 resultText.innerHTML += ' <i class="fas fa-check-circle text-green-500"></i>';
                 
                 // Mark day as completed
-                if (!app.completedDays.includes(app.currentDay)) {
-                    app.completedDays.push(app.currentDay);
+                if (!app.completedDays.includes(dayId)) {
+                    app.completedDays.push(dayId);
                     saveAppState();
                 }
                 
                 // Show next day button
-                if (app.currentDay < 10) {
+                if (dayId < 10) {
                     const nextBtn = document.createElement('button');
                     nextBtn.className = 'bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 mr-2';
                     nextBtn.textContent = 'Go to Next Day';
@@ -1905,7 +4854,7 @@ git pull origin main</pre>
                 reviewBtn.textContent = 'Review Answers';
                 reviewBtn.addEventListener('click', () => {
                     // Highlight correct answers
-                    day1Quiz.forEach((q, index) => {
+                    quiz.forEach((q, index) => {
                         const options = document.querySelectorAll(`input[name="q${index}"]`);
                         options.forEach((option, i) => {
                             const label = option.parentElement;
@@ -1931,7 +4880,7 @@ git pull origin main</pre>
             }
             
             // Save quiz result
-            app.quizResults[app.currentDay] = {
+            app.quizResults[dayId] = {
                 score: score,
                 total: totalQuestions,
                 percentage: percentage,
@@ -1942,6 +4891,10 @@ git pull origin main</pre>
 
         // Reset quiz
         function resetQuiz() {
+            const dayId = app.currentDay;
+            const quiz = dayContent[dayId].quiz;
+            if (!quiz) return;
+            
             document.querySelectorAll('#quizContainer input[type="radio"]').forEach(radio => {
                 radio.checked = false;
             });
