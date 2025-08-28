@@ -3,693 +3,254 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>J-CODE - Learn Java. Think Like a Coder. Build on Mobile.</title>
+    <title>J-CODE - Learn Java on Mobile</title>
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Prism.js for syntax highlighting -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
+    
+    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Styles -->
     <style>
-        /* Glassmorphism UI Styles */
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-            min-height: 100vh;
-            background-attachment: fixed;
+        /* Custom animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
-        .mobile-container {
-            max-width: 480px;
-            margin: 0 auto;
-            min-height: 100vh;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-left: 1px solid rgba(255, 255, 255, 0.2);
-            border-right: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
         }
         
-        .glass-card {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 4px 16px 0 rgba(31, 38, 135, 0.2);
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
         }
         
-        .glass-button {
-            background: rgba(59, 130, 246, 0.6);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 4px 8px 0 rgba(31, 38, 135, 0.2);
-            transition: all 0.3s ease;
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
         }
         
-        .glass-button:hover {
-            background: rgba(59, 130, 246, 0.8);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px 0 rgba(31, 38, 135, 0.3);
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 3px;
         }
         
-        .glass-input {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
         }
         
-        .glass-input:focus {
-            background: rgba(255, 255, 255, 0.3);
-            border-color: rgba(59, 130, 246, 0.8);
-            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.4);
+        /* Code block styling */
+        pre[class*="language-"] {
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+            font-size: 0.875rem;
         }
         
-        .glass-nav {
-            background: rgba(30, 58, 138, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .glass-header {
-            background: rgba(30, 58, 138, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .glass-banner {
-            background: rgba(245, 158, 11, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .glass-code {
-            background: rgba(30, 41, 59, 0.8);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .glass-notification {
-            background: rgba(254, 240, 138, 0.2);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            border-left: 4px solid rgba(245, 158, 11, 0.8);
-        }
-        
-        .code-container {
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        
-        .day-card {
-            transition: all 0.3s ease;
-        }
-        
-        .day-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .quiz-option {
-            transition: background-color 0.2s;
-        }
-        
-        .quiz-option:hover {
-            background-color: rgba(59, 130, 246, 0.2);
-        }
-        
-        .drag-item {
-            cursor: move;
-            transition: transform 0.2s;
-        }
-        
-        .drag-item.dragging {
-            opacity: 0.5;
-        }
-        
-        .drag-over {
-            background-color: rgba(59, 130, 246, 0.2);
-        }
-        
-        .progress-step {
-            transition: all 0.3s ease;
-        }
-        
-        .progress-step.active {
-            background-color: rgba(59, 130, 246, 0.8);
-            color: white;
-        }
-        
-        .progress-step.completed {
-            background-color: rgba(16, 185, 129, 0.8);
-            color: white;
-        }
-        
+        /* Dark mode toggle */
         .dark-mode {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            background-color: #1a202c;
+            color: #e2e8f0;
         }
         
-        .dark-mode .glass-card {
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(100, 116, 139, 0.3);
-        }
-        
-        .dark-mode .glass-input {
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(100, 116, 139, 0.3);
-        }
-        
-        .dark-mode .glass-input:focus {
-            background: rgba(51, 65, 85, 0.7);
-            border-color: rgba(59, 130, 246, 0.8);
-        }
-        
-        .dark-mode .glass-header {
-            background: rgba(15, 23, 42, 0.8);
-            border-bottom: 1px solid rgba(100, 116, 139, 0.3);
-        }
-        
-        .dark-mode .glass-nav {
-            background: rgba(15, 23, 42, 0.8);
-            border-top: 1px solid rgba(100, 116, 139, 0.3);
-        }
-        
-        .dark-mode .glass-code {
-            background: rgba(15, 23, 42, 0.9);
-            border: 1px solid rgba(100, 116, 139, 0.3);
-        }
-        
-        .dark-mode .glass-notification {
-            background: rgba(30, 41, 59, 0.6);
-            border-left: 4px solid rgba(245, 158, 11, 0.8);
+        .dark-mode .bg-white {
+            background-color: #2d3748;
         }
         
         .dark-mode .text-gray-800 {
-            color: #f1f5f9;
+            color: #e2e8f0;
         }
         
         .dark-mode .text-gray-600 {
-            color: #cbd5e1;
+            color: #cbd5e0;
         }
         
         .dark-mode .border-gray-200 {
-            border-color: rgba(100, 116, 139, 0.3);
+            border-color: #4a5568;
         }
         
-        .dark-mode .bg-blue-50 {
-            background: rgba(30, 58, 138, 0.2);
+        /* Mobile optimizations */
+        @media (max-width: 640px) {
+            .content-container {
+                padding-bottom: 5rem;
+            }
         }
     </style>
 </head>
-<body class="min-h-screen">
-    <div class="mobile-container">
-        <!-- Header -->
-        <header class="glass-header text-white p-4 sticky top-0 z-10">
-            <div class="flex justify-between items-center">
-                <div>
-                    <h1 class="text-xl font-bold">J-CODE</h1>
-                    <p class="text-xs opacity-80">Learn Java. Think Like a Coder.</p>
-                </div>
-                <div class="flex space-x-3">
-                    <button id="darkModeToggle" class="p-2 rounded-full hover:bg-white hover:bg-opacity-20 transition">
-                        <i class="fas fa-moon"></i>
-                    </button>
-                    <button id="menuToggle" class="p-2 rounded-full hover:bg-white hover:bg-opacity-20 transition">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
+<body class="bg-gray-50 text-gray-800 font-sans">
+    <!-- Header -->
+    <header class="bg-indigo-600 text-white p-4 shadow-md sticky top-0 z-10">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-code text-2xl"></i>
+                <h1 class="text-xl font-bold">J-CODE</h1>
             </div>
-        </header>
-
-        <!-- Live Class Notification Banner -->
-        <div id="liveClassBanner" class="glass-banner text-white p-3 text-center hidden">
-            <div class="flex items-center justify-center">
-                <i class="fas fa-bullhorn mr-2"></i>
-                <span>Live class in progress! <a href="#" class="underline font-bold">Join now →</a></span>
+            <div class="flex items-center space-x-4">
+                <span class="text-sm hidden sm:inline">Learn Java. Think Like a Coder.</span>
+                <button id="darkModeToggle" class="p-2 rounded-full hover:bg-indigo-700">
+                    <i class="fas fa-moon"></i>
+                </button>
             </div>
         </div>
+    </header>
 
-        <!-- Main Content -->
-        <main id="mainContent" class="p-4 pb-20 text-white">
-            <!-- Dashboard View -->
-            <div id="dashboardView" class="view">
-                <div class="mb-6">
-                    <h2 class="text-2xl font-bold mb-2">Welcome to J-CODE!</h2>
-                    <p class="text-blue-100 mb-4">Your mobile Java learning companion</p>
-                    
-                    <!-- Progress Bar -->
-                    <div class="mb-6">
-                        <div class="flex justify-between mb-1">
-                            <span class="text-sm font-medium">Your Progress</span>
-                            <span id="progressText" class="text-sm font-medium">Day 1 of 10</span>
-                        </div>
-                        <div class="w-full bg-white bg-opacity-20 rounded-full h-2.5">
-                            <div id="progressBar" class="bg-white h-2.5 rounded-full" style="width: 10%"></div>
-                        </div>
-                    </div>
-                    
-                    <!-- Current Day Card -->
-                    <div class="glass-card rounded-xl p-4 mb-6">
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <h3 class="font-bold text-lg">Today: <span id="currentDayTitle">Day 1: Introduction to Java</span></h3>
-                                <p class="text-blue-100 text-sm mt-1">Continue your learning journey</p>
-                            </div>
-                            <button id="continueBtn" class="glass-button text-white px-4 py-2 rounded-lg font-medium">
-                                Continue
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- Quick Links -->
-                    <div class="grid grid-cols-2 gap-4 mb-6">
-                        <a href="#" id="notesLink" class="glass-card p-4 rounded-xl flex flex-col items-center justify-center">
-                            <i class="fas fa-book text-blue-300 text-2xl mb-2"></i>
-                            <span class="font-medium">Notes</span>
-                        </a>
-                        <a href="#" id="codeLink" class="glass-card p-4 rounded-xl flex flex-col items-center justify-center">
-                            <i class="fas fa-code text-green-300 text-2xl mb-2"></i>
-                            <span class="font-medium">Code</span>
-                        </a>
-                        <a href="#" id="quizLink" class="glass-card p-4 rounded-xl flex flex-col items-center justify-center">
-                            <i class="fas fa-question-circle text-purple-300 text-2xl mb-2"></i>
-                            <span class="font-medium">Quiz</span>
-                        </a>
-                        <a href="#" id="githubLink" class="glass-card p-4 rounded-xl flex flex-col items-center justify-center">
-                            <i class="fab fa-github text-gray-300 text-2xl mb-2"></i>
-                            <span class="font-medium">GitHub</span>
-                        </a>
-                    </div>
-                    
-                    <!-- Days Overview -->
-                    <h3 class="font-bold text-lg mb-3">Learning Path</h3>
-                    <div class="space-y-3" id="daysOverview">
-                        <!-- Days will be populated by JavaScript -->
-                    </div>
-                    
-                    <!-- Warning -->
-                    <div class="mt-6 glass-notification p-4 rounded">
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <i class="fas fa-exclamation-triangle text-yellow-300"></i>
-                            </div>
-                            <div class="ml-3">
-                                <p class="text-sm text-yellow-100">
-                                    Your progress is saved only on this device. If you switch phones, you'll start over.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <!-- Live Class Notification Banner -->
+    <div id="liveClassBanner" class="bg-yellow-500 text-black p-2 text-center hidden">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center">
+                <i class="fas fa-broadcast-tower mr-2"></i>
+                <span>📢 Live class in progress! <a href="#" class="underline font-bold">Join now →</a></span>
             </div>
+            <button id="closeBanner" class="text-black">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
 
-            <!-- Day Module View -->
-            <div id="dayModuleView" class="view hidden">
-                <div class="mb-4">
-                    <button id="backToDashboard" class="text-blue-300 hover:text-white flex items-center">
-                        <i class="fas fa-arrow-left mr-2"></i> Back to Dashboard
-                    </button>
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 content-container">
+        <!-- Dashboard View -->
+        <div id="dashboardView" class="fade-in">
+            <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+                <h2 class="text-2xl font-bold mb-4 text-indigo-700">Your Learning Dashboard</h2>
+                
+                <div class="mb-6">
+                    <div class="flex justify-between mb-2">
+                        <span class="font-medium">Your Progress</span>
+                        <span id="progressText">Day 1 of 10</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-4">
+                        <div id="progressBar" class="bg-indigo-600 h-4 rounded-full" style="width: 10%"></div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="bg-indigo-50 p-4 rounded-lg border border-indigo-100">
+                        <h3 class="font-bold text-indigo-700 mb-2">Current Day</h3>
+                        <p id="currentDay" class="text-xl font-bold">Day 1: Introduction to Java</p>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg border border-green-100">
+                        <h3 class="font-bold text-green-700 mb-2">Next Step</h3>
+                        <p id="nextStep" class="text-xl font-bold">Complete Day 1 Quiz</p>
+                    </div>
                 </div>
                 
                 <div class="mb-6">
-                    <h2 id="dayModuleTitle" class="text-2xl font-bold mb-2">Day 1: Introduction to Java</h2>
-                    <div class="flex space-x-2 mb-4">
-                        <button id="dayNotesTab" class="px-4 py-2 glass-button text-white rounded-lg font-medium">Notes</button>
-                        <button id="dayCodeTab" class="px-4 py-2 glass-card text-white rounded-lg font-medium">Code</button>
-                        <button id="dayTracingTab" class="px-4 py-2 glass-card text-white rounded-lg font-medium">Tracing</button>
-                        <button id="dayQuizTab" class="px-4 py-2 glass-card text-white rounded-lg font-medium">Quiz</button>
-                    </div>
-                </div>
-                
-                <!-- Day Notes Content -->
-                <div id="dayNotesContent" class="day-content">
-                    <div class="mb-4">
-                        <h3 class="text-lg font-bold mb-2">Theory Notes</h3>
-                        <div id="dayNotesText" class="glass-card p-4 rounded-lg">
-                            <!-- Notes will be populated by JavaScript -->
-                        </div>
-                    </div>
-                    
-                    <div class="mb-4">
-                        <h3 class="text-lg font-bold mb-2">PDF Notes</h3>
-                        <a href="#" id="dayPdfLink" class="inline-flex items-center text-blue-300 hover:text-white">
-                            <i class="fas fa-file-pdf mr-2"></i> Download PDF Notes
-                        </a>
-                    </div>
-                    
-                    <div class="mb-4">
-                        <h3 class="text-lg font-bold mb-2">Your Notes</h3>
-                        <textarea id="personalNotes" class="w-full p-3 glass-input rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" rows="4" placeholder="Write your personal notes here..."></textarea>
-                        <button id="saveNotesBtn" class="mt-2 glass-button text-white px-4 py-2 rounded-lg font-medium">
-                            Save Notes
+                    <h3 class="font-bold mb-3">Quick Actions</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                        <button class="action-btn bg-indigo-100 hover:bg-indigo-200 text-indigo-700 p-3 rounded-lg flex flex-col items-center justify-center transition">
+                            <i class="fas fa-book text-xl mb-1"></i>
+                            <span>Notes</span>
+                        </button>
+                        <button class="action-btn bg-indigo-100 hover:bg-indigo-200 text-indigo-700 p-3 rounded-lg flex flex-col items-center justify-center transition">
+                            <i class="fas fa-code text-xl mb-1"></i>
+                            <span>Code</span>
+                        </button>
+                        <button class="action-btn bg-indigo-100 hover:bg-indigo-200 text-indigo-700 p-3 rounded-lg flex flex-col items-center justify-center transition">
+                            <i class="fas fa-question-circle text-xl mb-1"></i>
+                            <span>Quiz</span>
+                        </button>
+                        <button class="action-btn bg-indigo-100 hover:bg-indigo-200 text-indigo-700 p-3 rounded-lg flex flex-col items-center justify-center transition">
+                            <i class="fab fa-github text-xl mb-1"></i>
+                            <span>GitHub</span>
                         </button>
                     </div>
                 </div>
                 
-                <!-- Day Code Content -->
-                <div id="dayCodeContent" class="day-content hidden">
-                    <div class="mb-4">
-                        <h3 class="text-lg font-bold mb-2">Code Examples</h3>
-                        <div id="codeExamples" class="space-y-4">
-                            <!-- Code examples will be populated by JavaScript -->
+                <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-4">
+                    <p class="text-yellow-700">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>
+                        Your progress is saved only on this device. If you switch phones, you'll start over.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <h3 class="text-xl font-bold mb-4 text-indigo-700">Learning Modules</h3>
+                <div class="space-y-3">
+                    <!-- Days will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Day Module View -->
+        <div id="dayModuleView" class="hidden fade-in">
+            <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 id="dayTitle" class="text-2xl font-bold text-indigo-700">Day 1: Introduction to Java</h2>
+                    <button id="backToDashboard" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-arrow-left mr-2"></i> Back to Dashboard
+                    </button>
+                </div>
+                
+                <div class="mb-6">
+                    <div class="flex border-b">
+                        <button class="tab-btn px-4 py-2 font-medium text-indigo-600 border-b-2 border-indigo-600" data-tab="notes">Notes</button>
+                        <button class="tab-btn px-4 py-2 font-medium text-gray-500 hover:text-gray-700" data-tab="code">Code</button>
+                        <button class="tab-btn px-4 py-2 font-medium text-gray-500 hover:text-gray-700" data-tab="tracing">Tracing</button>
+                        <button class="tab-btn px-4 py-2 font-medium text-gray-500 hover:text-gray-700" data-tab="quiz">Quiz</button>
+                    </div>
+                </div>
+                
+                <!-- Tab Content -->
+                <div id="tabContent">
+                    <!-- Notes Tab -->
+                    <div id="notesTab" class="tab-content">
+                        <div class="prose max-w-none">
+                            <h3 class="text-xl font-bold mb-3">Introduction to Java</h3>
+                            <p class="mb-4">Java is a high-level, class-based, object-oriented programming language designed to have as few implementation dependencies as possible.</p>
+                            
+                            <h4 class="text-lg font-bold mb-2">Key Features of Java</h4>
+                            <ul class="list-disc pl-6 mb-4">
+                                <li>Platform Independence</li>
+                                <li>Object-Oriented</li>
+                                <li>Simple and Secure</li>
+                                <li>Robust and Reliable</li>
+                            </ul>
+                            
+                            <h4 class="text-lg font-bold mb-2">Java Development Kit (JDK)</h4>
+                            <p class="mb-4">JDK is a software development environment used for developing Java applications. It includes JRE (Java Runtime Environment), an interpreter/loader, compiler, archiver, and documentation generator.</p>
+                            
+                            <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                                <p class="text-blue-800"><i class="fas fa-info-circle mr-2"></i> On mobile, you can use apps like AIDE or Dcoder to write and run Java code.</p>
+                            </div>
+                            
+                            <div class="mt-6">
+                                <a href="#" class="inline-flex items-center text-indigo-600 hover:text-indigo-800">
+                                    <i class="fas fa-file-pdf mr-2"></i> Download Day 1 PDF Notes
+                                </a>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="mb-4">
-                        <h3 class="text-lg font-bold mb-2">Code Playground</h3>
-                        <div class="glass-code text-white p-4 rounded-lg">
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="font-mono text-sm">HelloWorld.java</span>
-                                <button id="copyCodeBtn" class="text-gray-300 hover:text-white">
-                                    <i class="fas fa-copy"></i> Copy
-                                </button>
-                            </div>
-                            <pre><code id="playgroundCode" class="language-java">public class HelloWorld {
+                    <!-- Code Tab -->
+                    <div id="codeTab" class="tab-content hidden">
+                        <h3 class="text-xl font-bold mb-4">Code Examples</h3>
+                        
+                        <div class="mb-6">
+                            <h4 class="text-lg font-bold mb-2">Hello World Program</h4>
+                            <div class="relative">
+                                <pre><code class="language-java">public class HelloWorld {
     public static void main(String[] args) {
         System.out.println("Hello, World!");
     }
 }</code></pre>
-                        </div>
-                        <p class="text-sm text-blue-100 mt-2">Tip: Paste this code into AIDE/Dcoder to run it!</p>
-                    </div>
-                </div>
-                
-                <!-- Day Tracing Content -->
-                <div id="dayTracingContent" class="day-content hidden">
-                    <div class="mb-4">
-                        <h3 class="text-lg font-bold mb-2">Code Tracing Exercises</h3>
-                        <div id="tracingExercises" class="space-y-6">
-                            <!-- Tracing exercises will be populated by JavaScript -->
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Day Quiz Content -->
-                <div id="dayQuizContent" class="day-content hidden">
-                    <div class="mb-4">
-                        <h3 class="text-lg font-bold mb-2">Daily Quiz</h3>
-                        <p class="text-blue-100 mb-4">Test your understanding of today's concepts</p>
-                        
-                        <div id="quizQuestions" class="space-y-6">
-                            <!-- Quiz questions will be populated by JavaScript -->
-                        </div>
-                        
-                        <div class="mt-6 flex justify-between">
-                            <button id="resetQuizBtn" class="px-4 py-2 glass-card text-white rounded-lg font-medium">
-                                Reset Quiz
-                            </button>
-                            <button id="submitQuizBtn" class="px-4 py-2 glass-button text-white rounded-lg font-medium">
-                                Submit Quiz
-                            </button>
-                        </div>
-                        
-                        <div id="quizResult" class="mt-6 hidden">
-                            <div class="glass-card p-4 rounded">
-                                <p class="font-bold">Quiz Result</p>
-                                <p id="quizResultText" class="mt-2"></p>
-                                <button id="nextDayBtn" class="mt-3 glass-button text-white px-4 py-2 rounded-lg font-medium hidden">
-                                    Unlock Next Day
+                                <button class="copy-btn absolute top-2 right-2 bg-gray-700 text-white p-2 rounded hover:bg-gray-600">
+                                    <i class="fas fa-copy"></i>
                                 </button>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- GitHub Guide View -->
-            <div id="githubView" class="view hidden">
-                <div class="mb-4">
-                    <button id="backToDashboardFromGithub" class="text-blue-300 hover:text-white flex items-center">
-                        <i class="fas fa-arrow-left mr-2"></i> Back to Dashboard
-                    </button>
-                </div>
-                
-                <h2 class="text-2xl font-bold mb-4">GitHub Onboarding Guide</h2>
-                <p class="text-blue-100 mb-6">Follow these steps to set up your GitHub account and repository</p>
-                
-                <div class="space-y-6">
-                    <!-- Step 1 -->
-                    <div class="glass-card p-4 rounded-xl">
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 h-8 w-8 rounded-full bg-blue-500 bg-opacity-30 flex items-center justify-center mr-3">
-                                <span class="text-blue-300 font-bold">1</span>
-                            </div>
-                            <div class="flex-1">
-                                <h3 class="font-bold text-lg mb-2">What is GitHub?</h3>
-                                <p class="text-blue-100 mb-3">GitHub is a platform for hosting and managing code. It's essential for collaboration and version control.</p>
-                                <div class="glass-card p-3 rounded-lg mb-3">
-                                    <p class="text-sm"><i class="fas fa-info-circle text-blue-300 mr-2"></i> GitHub allows you to store your code, track changes, and collaborate with others.</p>
-                                </div>
-                                <div class="flex items-center">
-                                    <input type="checkbox" id="githubStep1" class="h-5 w-5 text-blue-600 rounded">
-                                    <label for="githubStep1" class="ml-2 text-blue-100">I understand what GitHub is</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 2 -->
-                    <div class="glass-card p-4 rounded-xl">
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 h-8 w-8 rounded-full bg-blue-500 bg-opacity-30 flex items-center justify-center mr-3">
-                                <span class="text-blue-300 font-bold">2</span>
-                            </div>
-                            <div class="flex-1">
-                                <h3 class="font-bold text-lg mb-2">Create Your Account</h3>
-                                <p class="text-blue-100 mb-3">Sign up for a free GitHub account using your university email.</p>
-                                <a href="https://github.com/signup" target="_blank" class="inline-flex items-center text-blue-300 hover:text-white mb-3">
-                                    <i class="fas fa-external-link-alt mr-2"></i> Go to GitHub Signup
-                                </a>
-                                <div class="glass-card p-3 rounded-lg mb-3">
-                                    <p class="text-sm"><i class="fas fa-lightbulb text-yellow-300 mr-2"></i> Use your university email for benefits like the GitHub Student Developer Pack.</p>
-                                </div>
-                                <div class="flex items-center">
-                                    <input type="checkbox" id="githubStep2" class="h-5 w-5 text-blue-600 rounded">
-                                    <label for="githubStep2" class="ml-2 text-blue-100">I've created my GitHub account</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 3 -->
-                    <div class="glass-card p-4 rounded-xl">
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 h-8 w-8 rounded-full bg-blue-500 bg-opacity-30 flex items-center justify-center mr-3">
-                                <span class="text-blue-300 font-bold">3</span>
-                            </div>
-                            <div class="flex-1">
-                                <h3 class="font-bold text-lg mb-2">Create Your First Repository</h3>
-                                <p class="text-blue-100 mb-3">Create a new repository with a specific naming convention.</p>
-                                <div class="glass-card p-3 rounded-lg mb-3">
-                                    <p class="text-sm font-mono">Repository name: <span class="bg-blue-900 bg-opacity-50 px-2 py-1 rounded">oopj-kju-s123</span></p>
-                                    <p class="text-sm mt-2">Replace "s123" with your actual student ID.</p>
-                                </div>
-                                <a href="https://github.com/new" target="_blank" class="inline-flex items-center text-blue-300 hover:text-white mb-3">
-                                    <i class="fas fa-external-link-alt mr-2"></i> Create New Repository
-                                </a>
-                                <div class="flex items-center">
-                                    <input type="checkbox" id="githubStep3" class="h-5 w-5 text-blue-600 rounded">
-                                    <label for="githubStep3" class="ml-2 text-blue-100">I've created my repository</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 4 -->
-                    <div class="glass-card p-4 rounded-xl">
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 h-8 w-8 rounded-full bg-blue-500 bg-opacity-30 flex items-center justify-center mr-3">
-                                <span class="text-blue-300 font-bold">4</span>
-                            </div>
-                            <div class="flex-1">
-                                <h3 class="font-bold text-lg mb-2">Upload Your Code</h3>
-                                <p class="text-blue-100 mb-3">Upload your Student Grade Tracker code to the repository.</p>
-                                <div class="glass-card p-3 rounded-lg mb-3">
-                                    <ol class="text-sm list-decimal pl-5 space-y-1">
-                                        <li>Click on "Add file" > "Upload files"</li>
-                                        <li>Drag and drop your Java files</li>
-                                        <li>Add a commit message like "Initial upload"</li>
-                                        <li>Click "Commit changes"</li>
-                                    </ol>
-                                </div>
-                                <div class="flex items-center">
-                                    <input type="checkbox" id="githubStep4" class="h-5 w-5 text-blue-600 rounded">
-                                    <label for="githubStep4" class="ml-2 text-blue-100">I've uploaded my code</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 5 -->
-                    <div class="glass-card p-4 rounded-xl">
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 h-8 w-8 rounded-full bg-blue-500 bg-opacity-30 flex items-center justify-center mr-3">
-                                <span class="text-blue-300 font-bold">5</span>
-                            </div>
-                            <div class="flex-1">
-                                <h3 class="font-bold text-lg mb-2">Add a README.md</h3>
-                                <p class="text-blue-100 mb-3">Create a README.md file to describe your project.</p>
-                                <div class="glass-code p-3 rounded-lg mb-3 overflow-x-auto">
-                                    <pre class="text-sm"><code># OOPJ Project - Student Grade Tracker
-
-## Description
-This project is a simple Student Grade Tracker built with Java.
-
-## Features
-- Add student information
-- Calculate grades
-- Generate reports
-
-## How to Run
-1. Compile: `javac *.java`
-2. Run: `java Main`
-
-## Author
-[Your Name] (s123@kju.edu)</code></pre>
-                                </div>
-                                <div class="flex items-center">
-                                    <input type="checkbox" id="githubStep5" class="h-5 w-5 text-blue-600 rounded">
-                                    <label for="githubStep5" class="ml-2 text-blue-100">I've added a README.md</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Completion -->
-                    <div id="githubCompletion" class="glass-card p-4 rounded hidden">
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <i class="fas fa-check-circle text-green-400 text-xl"></i>
-                            </div>
-                            <div class="ml-3">
-                                <h3 class="text-lg font-bold text-green-300">Congratulations!</h3>
-                                <p class="text-green-100 mt-1">You've completed the GitHub onboarding guide. You're now a GitHub coder!</p>
-                                <div class="mt-3">
-                                    <p class="font-medium">Your repository link:</p>
-                                    <div class="glass-card p-2 rounded mt-1 font-mono text-sm break-all">
-                                        https://github.com/yourusername/oopj-kju-s123
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <button id="saveGithubProgress" class="w-full glass-button text-white px-4 py-3 rounded-lg font-medium">
-                        Save Progress
-                    </button>
-                </div>
-            </div>
-
-            <!-- Resources View -->
-            <div id="resourcesView" class="view hidden">
-                <div class="mb-4">
-                    <button id="backToDashboardFromResources" class="text-blue-300 hover:text-white flex items-center">
-                        <i class="fas fa-arrow-left mr-2"></i> Back to Dashboard
-                    </button>
-                </div>
-                
-                <h2 class="text-2xl font-bold mb-4">Learning Resources</h2>
-                
-                <div class="space-y-4">
-                    <div class="glass-card p-4 rounded-xl">
-                        <h3 class="font-bold text-lg mb-2 flex items-center">
-                            <i class="fas fa-file-pdf text-red-300 mr-2"></i> Daily PDF Notes
-                        </h3>
-                        <p class="text-blue-100 mb-3">Download comprehensive notes for each day</p>
-                        <a href="#" class="text-blue-300 hover:text-white">View all PDFs</a>
-                    </div>
-                    
-                    <div class="glass-card p-4 rounded-xl">
-                        <h3 class="font-bold text-lg mb-2 flex items-center">
-                            <i class="fas fa-mobile-alt text-green-300 mr-2"></i> Mobile App Setup Guide
-                        </h3>
-                        <p class="text-blue-100 mb-3">Learn how to set up coding apps on your phone</p>
-                        <a href="#" class="text-blue-300 hover:text-white">View Guide</a>
-                    </div>
-                    
-                    <div class="glass-card p-4 rounded-xl">
-                        <h3 class="font-bold text-lg mb-2 flex items-center">
-                            <i class="fas fa-exclamation-triangle text-yellow-300 mr-2"></i> Common Errors & Fixes
-                        </h3>
-                        <p class="text-blue-100 mb-3">Solutions to frequent Java programming errors</p>
-                        <a href="#" class="text-blue-300 hover:text-white">View Errors</a>
-                    </div>
-                    
-                    <div class="glass-card p-4 rounded-xl">
-                        <h3 class="font-bold text-lg mb-2 flex items-center">
-                            <i class="fas fa-map text-purple-300 mr-2"></i> KTU Syllabus Mapping
-                        </h3>
-                        <p class="text-blue-100 mb-3">See how this course maps to your KTU syllabus</p>
-                        <a href="#" class="text-blue-300 hover:text-white">View Mapping</a>
-                    </div>
-                    
-                    <div class="glass-card p-4 rounded-xl">
-                        <h3 class="font-bold text-lg mb-2 flex items-center">
-                            <i class="fas fa-brain text-pink-300 mr-2"></i> Mindset Tips
-                        </h3>
-                        <p class="text-blue-100 mb-3">Advice for developing a programmer's mindset</p>
-                        <a href="#" class="text-blue-300 hover:text-white">View Tips</a>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <!-- Navigation Menu -->
-        <nav id="navigationMenu" class="fixed bottom-0 left-0 right-0 glass-nav p-3 hidden">
-            <div class="mobile-container grid grid-cols-5 gap-1">
-                <button class="nav-btn flex flex-col items-center p-2 text-white" data-view="dashboard">
-                    <i class="fas fa-home text-xl mb-1"></i>
-                    <span class="text-xs">Home</span>
-                </button>
-                <button class="nav-btn flex flex-col items-center p-2 text-blue-200" data-view="day">
-                    <i class="fas fa-book-open text-xl mb-1"></i>
-                    <span class="text-xs">Learn</span>
-                </button>
-                <button class="nav-btn flex flex-col items-center p-2 text-blue-200" data-view="playground">
-                    <i class="fas fa-code text-xl mb-1"></i>
-                    <span class="text-xs">Code</span>
-                </button>
-                <button class="nav-btn flex flex-col items-center p-2 text-blue-200" data-view="github">
-                    <i class="fab fa-github text-xl mb-1"></i>
-                    <span class="text-xs">GitHub</span>
-                </button>
-                <button class="nav-btn flex flex-col items-center p-2 text-blue-200" data-view="resources">
-                    <i class="fas fa-folder text-xl mb-1"></i>
-                    <span class="text-xs">Resources</span>
-                </button>
-            </div>
-        </nav>
-    </div>
-
-    <script>
-        // App Data
-        const appData = {
-            // Live class toggle - set to true by instructor when class is happening
-            isLiveClassHappening: false,
-            
-            // Days data
-            days: [
-                {
-                    day: 1,
-                    title: "Introduction to Java",
-                    notes: "Java is a high-level, class-based, object-oriented programming language designed to have as few implementation dependencies as possible. It is a general-purpose programming language intended to let programmers write once, run anywhere (WORA), meaning that compiled Java code can run on all platforms that support Java without the need to recompile.",
-                    pdfLink: "https://example.com/day1.pdf",
-                    codeExamples: [
-                        {
-                            title: "Hello World Program",
-                            code: `public class HelloWorld {
-    public static void main(String[] args) {
-        System.out.println("Hello, World!");
-    }
-}`
-                        },
-                        {
-                            title: "Variables and Data Types",
-                            code: `public class Variables {
+                        
+                        <div class="mb-6">
+                            <h4 class="text-lg font-bold mb-2">Variables and Data Types</h4>
+                            <div class="relative">
+                                <pre><code class="language-java">public class Variables {
     public static void main(String[] args) {
         int number = 10;
         double decimal = 5.5;
@@ -697,1729 +258,1127 @@ This project is a simple Student Grade Tracker built with Java.
         boolean flag = true;
         String text = "Hello Java";
         
-        System.out.println(number);
-        System.out.println(decimal);
-        System.out.println(letter);
-        System.out.println(flag);
-        System.out.println(text);
+        System.out.println("Number: " + number);
+        System.out.println("Decimal: " + decimal);
+        System.out.println("Letter: " + letter);
+        System.out.println("Flag: " + flag);
+        System.out.println("Text: " + text);
     }
-}`
-                        }
-                    ],
-                    tracing: [
-                        {
-                            type: "fill",
-                            question: "What is the value of `x` after line 5?",
-                            code: `int x = 5;
+}</code></pre>
+                                <button class="copy-btn absolute top-2 right-2 bg-gray-700 text-white p-2 rounded hover:bg-gray-600">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <p class="text-green-800"><i class="fas fa-lightbulb mr-2"></i> Copy these code snippets and try running them in your mobile coding app!</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Tracing Tab -->
+                    <div id="tracingTab" class="tab-content hidden">
+                        <h3 class="text-xl font-bold mb-4">Code Tracing Exercises</h3>
+                        
+                        <div class="mb-6">
+                            <h4 class="text-lg font-bold mb-2">Exercise 1: Fill in the Blank</h4>
+                            <p class="mb-3">What is the value of <code>x</code> after the following code executes?</p>
+                            
+                            <div class="bg-gray-800 text-white p-4 rounded-lg mb-4">
+                                <pre><code class="language-java">int x = 5;
 x = x + 3;
-x = x * 2;
-// What is x now?`,
-                            answer: "16"
-                        },
-                        {
-                            type: "mcq",
-                            question: "Which of these is not a Java keyword?",
-                            options: ["class", "public", "int", "main"],
-                            answer: 3
-                        }
-                    ],
-                    quiz: [
-                        {
-                            question: "Java was developed by which company?",
-                            options: ["Microsoft", "Sun Microsystems", "Google", "Apple"],
-                            answer: 1
-                        },
-                        {
-                            question: "Which of these is a valid Java variable name?",
-                            options: ["2variable", "variable_name", "variable-name", "class"],
-                            answer: 1
-                        },
-                        {
-                            question: "What is the output of System.out.println(10 + 5 + \"Java\")?",
-                            options: ["15Java", "10 + 5Java", "105Java", "Error"],
-                            answer: 0
-                        },
-                        {
-                            question: "Which method is the entry point of any Java application?",
-                            options: ["main()", "start()", "run()", "begin()"],
-                            answer: 0
-                        },
-                        {
-                            question: "What is the correct way to declare a constant in Java?",
-                            options: ["const int x = 5;", "final int x = 5;", "constant int x = 5;", "int constant x = 5;"],
-                            answer: 1
-                        }
-                    ]
-                },
-                {
-                    day: 2,
-                    title: "Control Statements",
-                    notes: "Control statements are used to control the flow of execution in a program. Java provides different types of control statements: if-else, switch, loops (for, while, do-while), and branching statements (break, continue, return). These statements allow you to execute specific blocks of code based on certain conditions or repeatedly execute a block of code.",
-                    pdfLink: "https://example.com/day2.pdf",
-                    codeExamples: [
-                        {
-                            title: "If-Else Statement",
-                            code: `public class IfElseExample {
-    public static void main(String[] args) {
-        int number = 10;
-        
-        if (number > 0) {
-            System.out.println("Number is positive");
-        } else if (number < 0) {
-            System.out.println("Number is negative");
-        } else {
-            System.out.println("Number is zero");
-        }
-    }
-}`
-                        },
-                        {
-                            title: "For Loop",
-                            code: `public class ForLoopExample {
-    public static void main(String[] args) {
-        for (int i = 1; i <= 5; i++) {
-            System.out.println("Count: " + i);
-        }
-    }
-}`
-                        }
-                    ],
-                    tracing: [
-                        {
-                            type: "fill",
-                            question: "How many times will the loop run?",
-                            code: `for (int i = 0; i < 5; i++) {
-    System.out.println(i);
-}`,
-                            answer: "5"
-                        },
-                        {
-                            type: "mcq",
-                            question: "Which loop runs at least once?",
-                            options: ["for", "while", "do-while", "All of the above"],
-                            answer: 2
-                        }
-                    ],
-                    quiz: [
-                        {
-                            question: "Which of these is a conditional statement?",
-                            options: ["for", "while", "if", "switch"],
-                            answer: 2
-                        },
-                        {
-                            question: "What is the output of the following code?\nint x = 5;\nif (x > 3) {\n    System.out.println(\"A\");\n} else {\n    System.out.println(\"B\");\n}",
-                            options: ["A", "B", "AB", "Compilation error"],
-                            answer: 0
-                        },
-                        {
-                            question: "How many times will the following loop run?\nfor (int i = 0; i < 10; i += 2) {\n    // loop body\n}",
-                            options: ["5", "10", "9", "Infinite"],
-                            answer: 0
-                        },
-                        {
-                            question: "Which statement is used to exit a loop prematurely?",
-                            options: ["exit", "break", "continue", "return"],
-                            answer: 1
-                        },
-                        {
-                            question: "What is the output of the following code?\nint x = 1;\ndo {\n    System.out.println(x);\n    x++;\n} while (x < 1);",
-                            options: ["1", "0", "Nothing", "Compilation error"],
-                            answer: 0
-                        }
-                    ]
-                },
-                {
-                    day: 3,
-                    title: "Arrays and Strings",
-                    notes: "Arrays in Java are used to store multiple values in a single variable, instead of declaring separate variables for each value. An array is a container object that holds values of a single type. Strings in Java are objects that represent sequences of characters. Java provides a String class to create and manipulate strings.",
-                    pdfLink: "https://example.com/day3.pdf",
-                    codeExamples: [
-                        {
-                            title: "Array Example",
-                            code: `public class ArrayExample {
-    public static void main(String[] args) {
-        // Declare and initialize an array
-        int[] numbers = {10, 20, 30, 40, 50};
-        
-        // Access array elements
-        System.out.println("First element: " + numbers[0]);
-        
-        // Change an array element
-        numbers[0] = 15;
-        
-        // Loop through array elements
-        for (int i = 0; i < numbers.length; i++) {
-            System.out.println("Element at index " + i + ": " + numbers[i]);
-        }
-    }
-}`
-                        },
-                        {
-                            title: "String Methods",
-                            code: `public class StringMethods {
-    public static void main(String[] args) {
-        String text = "Hello Java";
-        
-        // Get length of string
-        System.out.println("Length: " + text.length());
-        
-        // Convert to uppercase
-        System.out.println("Uppercase: " + text.toUpperCase());
-        
-        // Convert to lowercase
-        System.out.println("Lowercase: " + text.toLowerCase());
-        
-        // Get character at index
-        System.out.println("Char at index 4: " + text.charAt(4));
-        
-        // Substring
-        System.out.println("Substring: " + text.substring(6));
-    }
-}`
-                        }
-                    ],
-                    tracing: [
-                        {
-                            type: "fill",
-                            question: "What is the value of `arr[2]` after the code executes?",
-                            code: `int[] arr = {1, 2, 3, 4, 5};
-arr[1] = 10;
-arr[3] = arr[0] + arr[1];`,
-                            answer: "3"
-                        },
-                        {
-                            type: "mcq",
-                            question: "What is the output of \"Hello\".length()?",
-                            options: ["4", "5", "6", "Error"],
-                            answer: 1
-                        }
-                    ],
-                    quiz: [
-                        {
-                            question: "How do you declare an array of integers in Java?",
-                            options: ["int arr[];", "int[] arr;", "Both A and B", "None of the above"],
-                            answer: 2
-                        },
-                        {
-                            question: "What is the index of the last element in an array of size 10?",
-                            options: ["10", "9", "11", "0"],
-                            answer: 1
-                        },
-                        {
-                            question: "Which method returns the length of a string?",
-                            options: ["length()", "size()", "len()", "getLength()"],
-                            answer: 0
-                        },
-                        {
-                            question: "What is the output of the following code?\nString s = \"Java\";\nSystem.out.println(s.charAt(1));",
-                            options: ["J", "a", "v", "Error"],
-                            answer: 1
-                        },
-                        {
-                            question: "Which of these creates a 2D array of integers with 3 rows and 4 columns?",
-                            options: ["int[][] arr = new int[3][4];", "int[][] arr = new int[4][3];", "int arr[][] = new int[3][4];", "Both A and C"],
-                            answer: 3
-                        }
-                    ]
-                },
-                {
-                    day: 4,
-                    title: "Object-Oriented Programming Basics",
-                    notes: "Object-Oriented Programming (OOP) is a programming paradigm based on the concept of 'objects', which can contain data and code. The four main principles of OOP are Encapsulation, Abstraction, Inheritance, and Polymorphism. Java is an object-oriented programming language that supports these principles.",
-                    pdfLink: "https://example.com/day4.pdf",
-                    codeExamples: [
-                        {
-                            title: "Class and Object",
-                            code: `public class Student {
-    // Attributes
-    String name;
-    int age;
-    String studentId;
-    
-    // Method
-    void study() {
-        System.out.println(name + " is studying");
-    }
-    
-    public static void main(String[] args) {
-        // Create an object
-        Student student1 = new Student();
-        
-        // Set attributes
-        student1.name = "John";
-        student1.age = 20;
-        student1.studentId = "S12345";
-        
-        // Call method
-        student1.study();
-    }
-}`
-                        },
-                        {
-                            title: "Constructor",
-                            code: `public class Car {
-    String brand;
-    String model;
-    int year;
-    
-    // Constructor
-    public Car(String brand, String model, int year) {
-        this.brand = brand;
-        this.model = model;
-        this.year = year;
-    }
-    
-    void displayInfo() {
-        System.out.println(year + " " + brand + " " + model);
-    }
-    
-    public static void main(String[] args) {
-        Car myCar = new Car("Toyota", "Corolla", 2022);
-        myCar.displayInfo();
-    }
-}`
-                        }
-                    ],
-                    tracing: [
-                        {
-                            type: "fill",
-                            question: "What is the value of `myCar.model` after the code executes?",
-                            code: `Car myCar = new Car("Honda", "Civic", 2021);
-myCar.model = "Accord";`,
-                            answer: "Accord"
-                        },
-                        {
-                            type: "mcq",
-                            question: "Which keyword is used to create an object in Java?",
-                            options: ["create", "object", "new", "instance"],
-                            answer: 2
-                        }
-                    ],
-                    quiz: [
-                        {
-                            question: "Which of these is not a principle of OOP?",
-                            options: ["Encapsulation", "Inheritance", "Compilation", "Polymorphism"],
-                            answer: 2
-                        },
-                        {
-                            question: "What is a class in Java?",
-                            options: ["A blueprint for creating objects", "An instance of an object", "A method in Java", "A variable in Java"],
-                            answer: 0
-                        },
-                        {
-                            question: "Which keyword is used to refer to the current object in Java?",
-                            options: ["this", "current", "object", "me"],
-                            answer: 0
-                        },
-                        {
-                            question: "What is the output of the following code?\npublic class Test {\n    int x = 10;\n    public static void main(String[] args) {\n        Test t = new Test();\n        System.out.println(t.x);\n    }\n}",
-                            options: ["10", "0", "Error", "null"],
-                            answer: 0
-                        },
-                        {
-                            question: "Which of these is a valid constructor for a class named Person?",
-                            options: ["public void Person()", "public Person()", "public constructor Person()", "public new Person()"],
-                            answer: 1
-                        }
-                    ]
-                },
-                {
-                    day: 5,
-                    title: "Inheritance and Polymorphism",
-                    notes: "Inheritance is a mechanism in which one class acquires the properties and behaviors of another class. It promotes code reusability. Polymorphism allows objects of different classes to be treated as objects of a common superclass. It enables a single interface to represent different underlying forms (data types).",
-                    pdfLink: "https://example.com/day5.pdf",
-                    codeExamples: [
-                        {
-                            title: "Inheritance Example",
-                            code: `// Parent class
-class Animal {
-    void eat() {
-        System.out.println("This animal eats food");
-    }
-}
+x = x * 2;</code></pre>
+                            </div>
+                            
+                            <div class="flex items-center">
+                                <input type="text" id="tracingAnswer1" class="border border-gray-300 rounded p-2 mr-2 w-24" placeholder="Answer">
+                                <button id="checkTracing1" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Check</button>
+                                <span id="tracingResult1" class="ml-2"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h4 class="text-lg font-bold mb-2">Exercise 2: Drag and Drop</h4>
+                            <p class="mb-3">Arrange the code blocks in the correct order to create a valid Java program:</p>
+                            
+                            <div id="dragDropContainer" class="space-y-2 mb-4">
+                                <!-- Draggable items will be added by JavaScript -->
+                            </div>
+                            
+                            <button id="checkDragDrop" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Check Order</button>
+                            <span id="dragDropResult" class="ml-2"></span>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-lg font-bold mb-2">Exercise 3: Multiple Choice</h4>
+                            <p class="mb-3">Which of the following is NOT a valid Java data type?</p>
+                            
+                            <div class="space-y-2">
+                                <label class="flex items-center">
+                                    <input type="radio" name="mcq" value="a" class="mr-2">
+                                    <span>A. int</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="radio" name="mcq" value="b" class="mr-2">
+                                    <span>B. float</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="radio" name="mcq" value="c" class="mr-2">
+                                    <span>C. string</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="radio" name="mcq" value="d" class="mr-2">
+                                    <span>D. boolean</span>
+                                </label>
+                            </div>
+                            
+                            <button id="checkMCQ" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 mt-3">Check Answer</button>
+                            <span id="mcqResult" class="ml-2"></span>
+                        </div>
+                    </div>
+                    
+                    <!-- Quiz Tab -->
+                    <div id="quizTab" class="tab-content hidden">
+                        <h3 class="text-xl font-bold mb-4">Day 1 Quiz</h3>
+                        <p class="mb-4">Complete this 5-question quiz to unlock the next day.</p>
+                        
+                        <div id="quizContainer" class="space-y-6">
+                            <!-- Quiz questions will be populated by JavaScript -->
+                        </div>
+                        
+                        <div class="mt-6 flex justify-between">
+                            <button id="resetQuiz" class="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300">Reset Quiz</button>
+                            <button id="submitQuiz" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Submit Quiz</button>
+                        </div>
+                        
+                        <div id="quizResult" class="mt-6 hidden">
+                            <div class="bg-white border border-gray-200 rounded-lg p-4">
+                                <h4 class="text-lg font-bold mb-2">Quiz Result</h4>
+                                <p id="quizResultText"></p>
+                                <div id="quizActions" class="mt-4">
+                                    <!-- Actions will be added based on result -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-// Child class
-class Dog extends Animal {
-    void bark() {
-        System.out.println("The dog barks");
-    }
-}
+        <!-- Code Playground View -->
+        <div id="playgroundView" class="hidden fade-in">
+            <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold text-indigo-700">Code Playground</h2>
+                    <button id="backToDashboardFromPlayground" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-arrow-left mr-2"></i> Back to Dashboard
+                    </button>
+                </div>
+                
+                <p class="mb-4">Practice your Java code here. Copy the templates and run them in your mobile coding app.</p>
+                
+                <div class="mb-6">
+                    <h3 class="text-lg font-bold mb-3">Code Templates</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 cursor-pointer template-card" data-template="hello">
+                            <h4 class="font-bold mb-2">Hello World</h4>
+                            <p class="text-sm text-gray-600">Basic Java program to print "Hello World"</p>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 cursor-pointer template-card" data-template="variables">
+                            <h4 class="font-bold mb-2">Variables</h4>
+                            <p class="text-sm text-gray-600">Example of different variable types</p>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 cursor-pointer template-card" data-template="conditions">
+                            <h4 class="font-bold mb-2">Conditionals</h4>
+                            <p class="text-sm text-gray-600">If-else statements example</p>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 cursor-pointer template-card" data-template="loops">
+                            <h4 class="font-bold mb-2">Loops</h4>
+                            <p class="text-sm text-gray-600">For and while loop examples</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="codeTemplate" class="mb-6">
+                    <h3 class="text-lg font-bold mb-2">Selected Template</h3>
+                    <div class="relative">
+                        <pre><code id="templateCode" class="language-java">Select a template to view the code</code></pre>
+                        <button id="copyTemplate" class="copy-btn absolute top-2 right-2 bg-gray-700 text-white p-2 rounded hover:bg-gray-600">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="bg-indigo-50 p-4 rounded-lg">
+                    <p class="text-indigo-800"><i class="fas fa-info-circle mr-2"></i> Copy this code and paste it into your mobile coding app (AIDE/Dcoder) to run it!</p>
+                </div>
+            </div>
+        </div>
 
-public class Main {
-    public static void main(String[] args) {
-        Dog myDog = new Dog();
-        myDog.eat();  // Inherited method
-        myDog.bark(); // Own method
-    }
-}`
-                        },
-                        {
-                            title: "Polymorphism Example",
-                            code: `class Shape {
-    void draw() {
-        System.out.println("Drawing a shape");
-    }
-}
+        <!-- GitHub Guide View -->
+        <div id="githubView" class="hidden fade-in">
+            <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold text-indigo-700">GitHub Onboarding Guide</h2>
+                    <button id="backToDashboardFromGithub" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-arrow-left mr-2"></i> Back to Dashboard
+                    </button>
+                </div>
+                
+                <div class="mb-6">
+                    <div class="flex items-center mb-4">
+                        <i class="fab fa-github text-3xl mr-3"></i>
+                        <h3 class="text-xl font-bold">Learn GitHub in 6 Steps</h3>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="border-l-4 border-indigo-500 pl-4 py-1">
+                            <h4 class="font-bold">Step 1: What is GitHub?</h4>
+                            <p class="text-gray-600">GitHub is a code hosting platform for version control and collaboration.</p>
+                            <button class="text-indigo-600 hover:text-indigo-800 mt-1 text-sm">Learn more →</button>
+                        </div>
+                        
+                        <div class="border-l-4 border-indigo-500 pl-4 py-1">
+                            <h4 class="font-bold">Step 2: Create your account</h4>
+                            <p class="text-gray-600">Sign up for a free GitHub account using your email.</p>
+                            <a href="https://github.com/signup" target="_blank" class="text-indigo-600 hover:text-indigo-800 mt-1 text-sm inline-block">Sign up →</a>
+                        </div>
+                        
+                        <div class="border-l-4 border-indigo-500 pl-4 py-1">
+                            <h4 class="font-bold">Step 3: Create your first repo</h4>
+                            <p class="text-gray-600">Create a new repository with the name format: <code>oopj-kju-s123</code> (replace s123 with your ID).</p>
+                            <button class="text-indigo-600 hover:text-indigo-800 mt-1 text-sm">Show steps →</button>
+                        </div>
+                        
+                        <div class="border-l-4 border-indigo-500 pl-4 py-1">
+                            <h4 class="font-bold">Step 4: Upload your code</h4>
+                            <p class="text-gray-600">Upload your Student Grade Tracker code to your repository.</p>
+                            <button class="text-indigo-600 hover:text-indigo-800 mt-1 text-sm">Show how →</button>
+                        </div>
+                        
+                        <div class="border-l-4 border-indigo-500 pl-4 py-1">
+                            <h4 class="font-bold">Step 5: Add a README.md</h4>
+                            <p class="text-gray-600">Create a README.md file to describe your project.</p>
+                            <button class="text-indigo-600 hover:text-indigo-800 mt-1 text-sm">Get template →</button>
+                        </div>
+                        
+                        <div class="border-l-4 border-indigo-500 pl-4 py-1">
+                            <h4 class="font-bold">Step 6: Completion checklist</h4>
+                            <p class="text-gray-600">Verify you've completed all the steps.</p>
+                            <div class="mt-2 space-y-2">
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="mr-2 github-checklist" data-step="1">
+                                    <span>Created GitHub account</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="mr-2 github-checklist" data-step="2">
+                                    <span>Created repository with correct name</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="mr-2 github-checklist" data-step="3">
+                                    <span>Uploaded code files</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="mr-2 github-checklist" data-step="4">
+                                    <span>Added README.md file</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="githubRepoGenerator" class="bg-indigo-50 p-4 rounded-lg">
+                    <h4 class="font-bold mb-2">Generate Your Custom GitHub Repo Link</h4>
+                    <p class="text-sm mb-3">Enter your student ID to generate your personalized repository link:</p>
+                    <div class="flex">
+                        <input type="text" id="studentId" placeholder="e.g., s123" class="border border-gray-300 rounded-l p-2 flex-grow">
+                        <button id="generateRepoLink" class="bg-indigo-600 text-white px-4 py-2 rounded-r hover:bg-indigo-700">Generate</button>
+                    </div>
+                    <div id="repoLinkResult" class="mt-3 hidden">
+                        <p class="font-medium">Your repository link:</p>
+                        <a id="repoLink" href="#" target="_blank" class="text-indigo-600 hover:text-indigo-800 break-all"></a>
+                    </div>
+                </div>
+                
+                <div id="githubCompletion" class="mt-6 hidden">
+                    <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 text-2xl mr-3"></i>
+                            <div>
+                                <h4 class="font-bold text-green-800">Congratulations!</h4>
+                                <p class="text-green-700">You've completed the GitHub onboarding guide. You're now a GitHub coder!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-class Circle extends Shape {
-    @Override
-    void draw() {
-        System.out.println("Drawing a circle");
-    }
-}
+        <!-- Resources View -->
+        <div id="resourcesView" class="hidden fade-in">
+            <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold text-indigo-700">Resources</h2>
+                    <button id="backToDashboardFromResources" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-arrow-left mr-2"></i> Back to Dashboard
+                    </button>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="border border-gray-200 rounded-lg p-4">
+                        <h3 class="text-lg font-bold mb-3 flex items-center">
+                            <i class="fas fa-file-pdf text-red-500 mr-2"></i> Daily PDF Notes
+                        </h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-indigo-600 hover:text-indigo-800">Day 1: Introduction to Java</a></li>
+                            <li><a href="#" class="text-indigo-600 hover:text-indigo-800">Day 2: Data Types and Variables</a></li>
+                            <li><a href="#" class="text-indigo-600 hover:text-indigo-800">Day 3: Operators and Expressions</a></li>
+                            <li><a href="#" class="text-indigo-600 hover:text-indigo-800">Day 4: Control Statements</a></li>
+                            <li><a href="#" class="text-indigo-600 hover:text-indigo-800">Day 5: Arrays</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="border border-gray-200 rounded-lg p-4">
+                        <h3 class="text-lg font-bold mb-3 flex items-center">
+                            <i class="fas fa-mobile-alt text-blue-500 mr-2"></i> Mobile App Setup
+                        </h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-indigo-600 hover:text-indigo-800">Installing AIDE on Android</a></li>
+                            <li><a href="#" class="text-indigo-600 hover:text-indigo-800">Setting up Dcoder</a></li>
+                            <li><a href="#" class="text-indigo-600 hover:text-indigo-800">Running your first Java program</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="border border-gray-200 rounded-lg p-4">
+                        <h3 class="text-lg font-bold mb-3 flex items-center">
+                            <i class="fas fa-exclamation-triangle text-yellow-500 mr-2"></i> Common Errors & Fixes
+                        </h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-indigo-600 hover:text-indigo-800">"Class not found" error</a></li>
+                            <li><a href="#" class="text-indigo-600 hover:text-indigo-800">Syntax errors</a></li>
+                            <li><a href="#" class="text-indigo-600 hover:text-indigo-800">Logic errors</a></li>
+                            <li><a href="#" class="text-indigo-600 hover:text-indigo-800">Compilation errors</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="border border-gray-200 rounded-lg p-4">
+                        <h3 class="text-lg font-bold mb-3 flex items-center">
+                            <i class="fas fa-book text-green-500 mr-2"></i> KTU Syllabus Mapping
+                        </h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-indigo-600 hover:text-indigo-800">Module 1: Basics of Java</a></li>
+                            <li><a href="#" class="text-indigo-600 hover:text-indigo-800">Module 2: Object-Oriented Programming</a></li>
+                            <li><a href="#" class="text-indigo-600 hover:text-indigo-800">Module 3: Exception Handling</a></li>
+                            <li><a href="#" class="text-indigo-600 hover:text-indigo-800">Module 4: Collections</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="border border-gray-200 rounded-lg p-4 md:col-span-2">
+                        <h3 class="text-lg font-bold mb-3 flex items-center">
+                            <i class="fas fa-brain text-purple-500 mr-2"></i> Mindset Tips
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-purple-50 p-3 rounded-lg">
+                                <h4 class="font-bold mb-1">Practice Daily</h4>
+                                <p class="text-sm">Code every day, even if it's just for 15 minutes.</p>
+                            </div>
+                            <div class="bg-purple-50 p-3 rounded-lg">
+                                <h4 class="font-bold mb-1">Break Problems Down</h4>
+                                <p class="text-sm">Divide complex problems into smaller, manageable parts.</p>
+                            </div>
+                            <div class="bg-purple-50 p-3 rounded-lg">
+                                <h4 class="font-bold mb-1">Learn from Mistakes</h4>
+                                <p class="text-sm">Errors are opportunities to learn and improve.</p>
+                            </div>
+                            <div class="bg-purple-50 p-3 rounded-lg">
+                                <h4 class="font-bold mb-1">Collaborate</h4>
+                                <p class="text-sm">Discuss problems with peers and learn together.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
-class Square extends Shape {
-    @Override
-    void draw() {
-        System.out.println("Drawing a square");
-    }
-}
+    <!-- Bottom Navigation -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-10">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-5">
+                <button class="nav-btn flex flex-col items-center justify-center p-3 text-indigo-600" data-view="dashboard">
+                    <i class="fas fa-home text-xl mb-1"></i>
+                    <span class="text-xs">Home</span>
+                </button>
+                <button class="nav-btn flex flex-col items-center justify-center p-3 text-gray-500 hover:text-indigo-600" data-view="day">
+                    <i class="fas fa-book-open text-xl mb-1"></i>
+                    <span class="text-xs">Learn</span>
+                </button>
+                <button class="nav-btn flex flex-col items-center justify-center p-3 text-gray-500 hover:text-indigo-600" data-view="playground">
+                    <i class="fas fa-laptop-code text-xl mb-1"></i>
+                    <span class="text-xs">Code</span>
+                </button>
+                <button class="nav-btn flex flex-col items-center justify-center p-3 text-gray-500 hover:text-indigo-600" data-view="github">
+                    <i class="fab fa-github text-xl mb-1"></i>
+                    <span class="text-xs">GitHub</span>
+                </button>
+                <button class="nav-btn flex flex-col items-center justify-center p-3 text-gray-500 hover:text-indigo-600" data-view="resources">
+                    <i class="fas fa-folder text-xl mb-1"></i>
+                    <span class="text-xs">Resources</span>
+                </button>
+            </div>
+        </div>
+    </nav>
 
-public class Main {
-    public static void main(String[] args) {
-        Shape myShape;
-        
-        myShape = new Circle();
-        myShape.draw(); // Outputs: Drawing a circle
-        
-        myShape = new Square();
-        myShape.draw(); // Outputs: Drawing a square
-    }
-}`
-                        }
-                    ],
-                    tracing: [
-                        {
-                            type: "fill",
-                            question: "What is the output of `myDog.eat()`?",
-                            code: `class Animal {
-    void eat() {
-        System.out.println("Animal eats");
-    }
-}
-
-class Dog extends Animal {
-    void bark() {
-        System.out.println("Dog barks");
-    }
-}
-
-Dog myDog = new Dog();
-myDog.eat();`,
-                            answer: "Animal eats"
-                        },
-                        {
-                            type: "mcq",
-                            question: "Which keyword is used to inherit a class in Java?",
-                            options: ["inherits", "extends", "implements", "inherits from"],
-                            answer: 1
-                        }
-                    ],
-                    quiz: [
-                        {
-                            question: "Which of these best describes inheritance?",
-                            options: ["Creating a new class from an existing class", "Creating multiple objects of a class", "Creating a method in a class", "Creating a variable in a class"],
-                            answer: 0
-                        },
-                        {
-                            question: "What is polymorphism in Java?",
-                            options: ["The ability of an object to take on many forms", "The ability of a class to inherit from multiple classes", "The ability to hide data", "The ability to create objects"],
-                            answer: 0
-                        },
-                        {
-                            question: "Which method is used to prevent method overriding in Java?",
-                            options: ["static", "final", "abstract", "private"],
-                            answer: 1
-                        },
-                        {
-                            question: "What is the output of the following code?\nclass A {\n    void show() { System.out.println(\"A\"); }\n}\nclass B extends A {\n    void show() { System.out.println(\"B\"); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        A obj = new B();\n        obj.show();\n    }\n}",
-                            options: ["A", "B", "AB", "Compilation error"],
-                            answer: 1
-                        },
-                        {
-                            question: "Which of these is not a type of inheritance in Java?",
-                            options: ["Single inheritance", "Multiple inheritance", "Multilevel inheritance", "Hierarchical inheritance"],
-                            answer: 1
-                        }
-                    ]
-                },
-                {
-                    day: 6,
-                    title: "Abstraction and Interfaces",
-                    notes: "Abstraction is a process of hiding the implementation details and showing only functionality to the user. In Java, abstraction is achieved using abstract classes and interfaces. An interface is a reference type in Java, similar to a class, that can contain only constants, method signatures, default methods, static methods, and nested types.",
-                    pdfLink: "https://example.com/day6.pdf",
-                    codeExamples: [
-                        {
-                            title: "Abstract Class",
-                            code: `abstract class Shape {
-    // Abstract method (does not have a body)
-    abstract void draw();
-    
-    // Concrete method
-    void display() {
-        System.out.println("This is a shape");
-    }
-}
-
-class Circle extends Shape {
-    @Override
-    void draw() {
-        System.out.println("Drawing a circle");
-    }
-}
-
-public class Main {
-    public static void main(String[] args) {
-        Circle circle = new Circle();
-        circle.draw();    // Outputs: Drawing a circle
-        circle.display(); // Outputs: This is a shape
-    }
-}`
-                        },
-                        {
-                            title: "Interface",
-                            code: `interface Drawable {
-    void draw(); // By default, public and abstract
-    
-    default void display() {
-        System.out.println("Displaying drawable");
-    }
-}
-
-class Rectangle implements Drawable {
-    @Override
-    public void draw() {
-        System.out.println("Drawing a rectangle");
-    }
-}
-
-public class Main {
-    public static void main(String[] args) {
-        Rectangle rectangle = new Rectangle();
-        rectangle.draw();    // Outputs: Drawing a rectangle
-        rectangle.display(); // Outputs: Displaying drawable
-    }
-}`
-                        }
-                    ],
-                    tracing: [
-                        {
-                            type: "fill",
-                            question: "What is the output of `circle.draw()`?",
-                            code: `abstract class Shape {
-    abstract void draw();
-}
-
-class Circle extends Shape {
-    void draw() {
-        System.out.println("Circle");
-    }
-}
-
-Shape circle = new Circle();
-circle.draw();`,
-                            answer: "Circle"
-                        },
-                        {
-                            type: "mcq",
-                            question: "Which of these is true about interfaces in Java?",
-                            options: ["Interfaces can have constructors", "Interfaces can have instance variables", "Interfaces can have default methods", "Interfaces can extend classes"],
-                            answer: 2
-                        }
-                    ],
-                    quiz: [
-                        {
-                            question: "Which keyword is used to create an abstract class in Java?",
-                            options: ["abstract", "interface", "virtual", "extends"],
-                            answer: 0
-                        },
-                        {
-                            question: "Can an abstract class have a constructor?",
-                            options: ["Yes", "No", "Only if it doesn't have abstract methods", "Only if it extends another class"],
-                            answer: 0
-                        },
-                        {
-                            question: "Which of these is true about interfaces?",
-                            options: ["Interfaces can extend multiple interfaces", "Interfaces can have instance fields", "Interfaces can have private methods", "Interfaces can have constructors"],
-                            answer: 0
-                        },
-                        {
-                            question: "What is the output of the following code?\ninterface A {\n    default void show() { System.out.println(\"A\"); }\n}\ninterface B {\n    default void show() { System.out.println(\"B\"); }\n}\nclass C implements A, B {\n    public void show() { System.out.println(\"C\"); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        C obj = new C();\n        obj.show();\n    }\n}",
-                            options: ["A", "B", "C", "Compilation error"],
-                            answer: 2
-                        },
-                        {
-                            question: "Which of these is not a valid access modifier for interface methods?",
-                            options: ["public", "private", "protected", "default"],
-                            answer: 2
-                        }
-                    ]
-                },
-                {
-                    day: 7,
-                    title: "Exception Handling",
-                    notes: "Exception handling in Java is a mechanism to handle runtime errors so that the normal flow of the application can be maintained. Java provides a robust and object-oriented way to handle exception scenarios known as Java Exception Handling. The core advantage of exception handling is to maintain the normal flow of the application.",
-                    pdfLink: "https://example.com/day7.pdf",
-                    codeExamples: [
-                        {
-                            title: "Try-Catch Block",
-                            code: `public class ExceptionExample {
-    public static void main(String[] args) {
-        try {
-            int[] numbers = {1, 2, 3};
-            System.out.println(numbers[5]); // This will throw ArrayIndexOutOfBoundsException
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Array index is out of bounds!");
-        } finally {
-            System.out.println("This block always executes");
-        }
-    }
-}`
-                        },
-                        {
-                            title: "Custom Exception",
-                            code: `// Custom exception class
-class InvalidAgeException extends Exception {
-    public InvalidAgeException(String message) {
-        super(message);
-    }
-}
-
-public class CustomExceptionExample {
-    static void validateAge(int age) throws InvalidAgeException {
-        if (age < 18) {
-            throw new InvalidAgeException("Age is not valid to vote");
-        } else {
-            System.out.println("Welcome to vote");
-        }
-    }
-    
-    public static void main(String[] args) {
-        try {
-            validateAge(15);
-        } catch (InvalidAgeException e) {
-            System.out.println("Exception occurred: " + e.getMessage());
-        }
-    }
-}`
-                        }
-                    ],
-                    tracing: [
-                        {
-                            type: "fill",
-                            question: "What is the output of the code?",
-                            code: `try {
-    int x = 10 / 0;
-    System.out.println("A");
-} catch (ArithmeticException e) {
-    System.out.println("B");
-} finally {
-    System.out.println("C");
-}`,
-                            answer: "B C"
-                        },
-                        {
-                            type: "mcq",
-                            question: "Which of these is not a type of exception in Java?",
-                            options: ["Checked Exception", "Unchecked Exception", "Fatal Exception", "Runtime Exception"],
-                            answer: 2
-                        }
-                    ],
-                    quiz: [
-                        {
-                            question: "Which block is used to handle exceptions in Java?",
-                            options: ["try", "catch", "finally", "All of the above"],
-                            answer: 3
-                        },
-                        {
-                            question: "Which of these is a checked exception?",
-                            options: ["ArithmeticException", "NullPointerException", "IOException", "ArrayIndexOutOfBoundsException"],
-                            answer: 2
-                        },
-                        {
-                            question: "What is the output of the following code?\ntry {\n    int x = 10 / 2;\n    System.out.println(\"A\");\n} catch (Exception e) {\n    System.out.println(\"B\");\n} finally {\n    System.out.println(\"C\");\n}",
-                            options: ["A C", "B C", "A B C", "C"],
-                            answer: 0
-                        },
-                        {
-                            question: "Which keyword is used to explicitly throw an exception?",
-                            options: ["throw", "throws", "throwable", "exception"],
-                            answer: 0
-                        },
-                        {
-                            question: "What is the parent class of all exceptions in Java?",
-                            options: ["Error", "Exception", "Throwable", "RuntimeException"],
-                            answer: 2
-                        }
-                    ]
-                },
-                {
-                    day: 8,
-                    title: "Collections Framework",
-                    notes: "The Java Collections Framework provides a set of classes and interfaces that implement commonly reusable collection data structures. It includes interfaces like List, Set, and Map, and classes like ArrayList, HashSet, and HashMap. These classes provide efficient ways to store and manipulate groups of objects.",
-                    pdfLink: "https://example.com/day8.pdf",
-                    codeExamples: [
-                        {
-                            title: "ArrayList Example",
-                            code: `import java.util.ArrayList;
-
-public class ArrayListExample {
-    public static void main(String[] args) {
-        // Create an ArrayList
-        ArrayList<String> fruits = new ArrayList<>();
-        
-        // Add elements
-        fruits.add("Apple");
-        fruits.add("Banana");
-        fruits.add("Orange");
-        
-        // Access an element
-        System.out.println("First fruit: " + fruits.get(0));
-        
-        // Modify an element
-        fruits.set(1, "Mango");
-        
-        // Remove an element
-        fruits.remove(2);
-        
-        // Iterate through the list
-        for (String fruit : fruits) {
-            System.out.println(fruit);
-        }
-    }
-}`
-                        },
-                        {
-                            title: "HashMap Example",
-                            code: `import java.util.HashMap;
-
-public class HashMapExample {
-    public static void main(String[] args) {
-        // Create a HashMap
-        HashMap<Integer, String> students = new HashMap<>();
-        
-        // Add key-value pairs
-        students.put(101, "John");
-        students.put(102, "Jane");
-        students.put(103, "Bob");
-        
-        // Access a value by key
-        System.out.println("Student with ID 102: " + students.get(102));
-        
-        // Remove a key-value pair
-        students.remove(103);
-        
-        // Iterate through the map
-        for (Integer id : students.keySet()) {
-            System.out.println("ID: " + id + ", Name: " + students.get(id));
-        }
-    }
-}`
-                        }
-                    ],
-                    tracing: [
-                        {
-                            type: "fill",
-                            question: "What is the size of the list after the operations?",
-                            code: `ArrayList<String> list = new ArrayList<>();
-list.add("A");
-list.add("B");
-list.add("C");
-list.remove(1);
-list.add("D");`,
-                            answer: "3"
-                        },
-                        {
-                            type: "mcq",
-                            question: "Which interface does not allow duplicate elements?",
-                            options: ["List", "Set", "Map", "Collection"],
-                            answer: 1
-                        }
-                    ],
-                    quiz: [
-                        {
-                            question: "Which of these is an ordered collection that allows duplicates?",
-                            options: ["Set", "List", "Map", "Queue"],
-                            answer: 1
-                        },
-                        {
-                            question: "Which class implements the Set interface?",
-                            options: ["ArrayList", "LinkedList", "HashSet", "HashMap"],
-                            answer: 2
-                        },
-                        {
-                            question: "What is the output of the following code?\nArrayList<Integer> list = new ArrayList<>();\nlist.add(10);\nlist.add(20);\nlist.add(30);\nSystem.out.println(list.get(1));",
-                            options: ["10", "20", "30", "Error"],
-                            answer: 1
-                        },
-                        {
-                            question: "Which method is used to get the size of a collection?",
-                            options: ["length()", "size()", "getSize()", "count()"],
-                            answer: 1
-                        },
-                        {
-                            question: "Which of these is a key-value pair collection?",
-                            options: ["ArrayList", "HashSet", "HashMap", "LinkedList"],
-                            answer: 2
-                        }
-                    ]
-                },
-                {
-                    day: 9,
-                    title: "File I/O and Streams",
-                    notes: "Java I/O (Input and Output) is used to process the input and produce the output. Java uses the concept of a stream to make I/O operations fast. The java.io package contains all the classes required for input and output operations. We can perform file handling in Java by using Java I/O API.",
-                    pdfLink: "https://example.com/day9.pdf",
-                    codeExamples: [
-                        {
-                            title: "Writing to a File",
-                            code: `import java.io.FileWriter;
-import java.io.IOException;
-
-public class WriteFile {
-    public static void main(String[] args) {
-        try {
-            FileWriter writer = new FileWriter("output.txt");
-            writer.write("Hello, World!");
-            writer.write("\\nThis is a file writing example.");
-            writer.close();
-            System.out.println("Successfully wrote to the file.");
-        } catch (IOException e) {
-            System.out.println("An error occurred: " + e.getMessage());
-        }
-    }
-}`
-                        },
-                        {
-                            title: "Reading from a File",
-                            code: `import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-
-public class ReadFile {
-    public static void main(String[] args) {
-        try {
-            File file = new File("output.txt");
-            Scanner scanner = new Scanner(file);
-            
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                System.out.println(line);
-            }
-            
-            scanner.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred: " + e.getMessage());
-        }
-    }
-}`
-                        }
-                    ],
-                    tracing: [
-                        {
-                            type: "fill",
-                            question: "What exception is thrown if the file does not exist?",
-                            code: `try {
-    File file = new File("nonexistent.txt");
-    Scanner scanner = new Scanner(file);
-} catch (Exception e) {
-    System.out.println(e.getClass().getSimpleName());
-}`,
-                            answer: "FileNotFoundException"
-                        },
-                        {
-                            type: "mcq",
-                            question: "Which class is used to write characters to a file?",
-                            options: ["FileInputStream", "FileOutputStream", "FileReader", "FileWriter"],
-                            answer: 3
-                        }
-                    ],
-                    quiz: [
-                        {
-                            question: "Which package contains classes for file I/O operations in Java?",
-                            options: ["java.file", "java.io", "java.stream", "java.nio"],
-                            answer: 1
-                        },
-                        {
-                            question: "Which of these is a byte stream class?",
-                            options: ["FileReader", "FileWriter", "FileInputStream", "PrintWriter"],
-                            answer: 2
-                        },
-                        {
-                            question: "What is the output of the following code?\ntry {\n    FileWriter writer = new FileWriter(\"test.txt\");\n    writer.write(\"Java\");\n    writer.close();\n} catch (IOException e) {\n    System.out.println(\"Error\");\n}",
-                            options: ["Java", "Error", "Nothing", "Compilation error"],
-                            answer: 0
-                        },
-                        {
-                            question: "Which method is used to read a line of text using Scanner?",
-                            options: ["read()", "readLine()", "nextLine()", "getLine()"],
-                            answer: 2
-                        },
-                        {
-                            question: "Which of these is used to close a file resource automatically?",
-                            options: ["try-catch", "try-finally", "try-with-resources", "try-catch-finally"],
-                            answer: 2
-                        }
-                    ]
-                },
-                {
-                    day: 10,
-                    title: "GUI Programming with JavaFX",
-                    notes: "JavaFX is a set of graphics and media packages that enables developers to design, create, test, debug, and deploy rich client applications that operate consistently across diverse platforms. JavaFX applications are written using JavaFX Script, a scripting language, or using Java API. JavaFX replaces Swing as the standard GUI library for Java SE.",
-                    pdfLink: "https://example.com/day10.pdf",
-                    codeExamples: [
-                        {
-                            title: "Basic JavaFX Application",
-                            code: `import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
-
-public class HelloWorld extends Application {
-    @Override
-    public void start(Stage primaryStage) {
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(e -> System.out.println("Hello World!"));
-        
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
-        
-        Scene scene = new Scene(root, 300, 250);
-        
-        primaryStage.setTitle("Hello World!");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-    
-    public static void main(String[] args) {
-        launch(args);
-    }
-}`
-                        },
-                        {
-                            title: "JavaFX with Controls",
-                            code: `import javafx.application.Application;
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
-
-public class LoginForm extends Application {
-    @Override
-    public void start(Stage primaryStage) {
-        GridPane grid = new GridPane();
-        grid.setPadding(new Insets(10, 10, 10, 10));
-        grid.setVgap(5);
-        grid.setHgap(5);
-        
-        // Username label
-        Label usernameLabel = new Label("Username:");
-        GridPane.setConstraints(usernameLabel, 0, 0);
-        
-        // Username input
-        TextField usernameInput = new TextField();
-        GridPane.setConstraints(usernameInput, 1, 0);
-        
-        // Password label
-        Label passwordLabel = new Label("Password:");
-        GridPane.setConstraints(passwordLabel, 0, 1);
-        
-        // Password input
-        PasswordField passwordInput = new PasswordField();
-        GridPane.setConstraints(passwordInput, 1, 1);
-        
-        // Login button
-        Button loginButton = new Button("Login");
-        GridPane.setConstraints(loginButton, 1, 2);
-        
-        grid.getChildren().addAll(usernameLabel, usernameInput, passwordLabel, passwordInput, loginButton);
-        
-        Scene scene = new Scene(grid, 300, 200);
-        primaryStage.setTitle("Login Form");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-    
-    public static void main(String[] args) {
-        launch(args);
-    }
-}`
-                        }
-                    ],
-                    tracing: [
-                        {
-                            type: "fill",
-                            question: "What is the purpose of the `start()` method in a JavaFX application?",
-                            code: `public class MyApp extends Application {
-    @Override
-    public void start(Stage primaryStage) {
-        // UI code here
-    }
-}`,
-                            answer: "To set up the user interface and show the primary stage"
-                        },
-                        {
-                            type: "mcq",
-                            question: "Which class is the top-level container for JavaFX content?",
-                            options: ["Panel", "Frame", "Stage", "Window"],
-                            answer: 2
-                        }
-                    ],
-                    quiz: [
-                        {
-                            question: "Which of these is a layout container in JavaFX?",
-                            options: ["GridPane", "BoxLayout", "FlowLayout", "BorderLayout"],
-                            answer: 0
-                        },
-                        {
-                            question: "What is the entry point for a JavaFX application?",
-                            options: ["main()", "start()", "init()", "launch()"],
-                            answer: 1
-                        },
-                        {
-                            question: "Which class is used to create a button in JavaFX?",
-                            options: ["JButton", "Button", "PushButton", "ClickButton"],
-                            answer: 1
-                        },
-                        {
-                            question: "What is the purpose of the `Scene` class in JavaFX?",
-                            options: ["To represent the entire application window", "To hold the UI content to be displayed", "To handle events", "To create animations"],
-                            answer: 1
-                        },
-                        {
-                            question: "Which method is used to display a JavaFX stage?",
-                            options: ["display()", "show()", "render()", "open()"],
-                            answer: 1
-                        }
-                    ]
-                }
-            ]
-        };
-
+    <!-- JavaScript -->
+    <script>
         // App State
-        const appState = {
+        const app = {
             currentView: 'dashboard',
             currentDay: 1,
-            unlockedDays: [1],
             completedDays: [],
             quizResults: {},
-            personalNotes: {},
-            githubSteps: [],
+            notes: {},
+            isLiveClassHappening: true, // Toggle this to show/hide live class banner
             darkMode: false
         };
 
-        // DOM Elements
-        const elements = {
-            liveClassBanner: document.getElementById('liveClassBanner'),
-            dashboardView: document.getElementById('dashboardView'),
-            dayModuleView: document.getElementById('dayModuleView'),
-            githubView: document.getElementById('githubView'),
-            resourcesView: document.getElementById('resourcesView'),
-            mainContent: document.getElementById('mainContent'),
-            navigationMenu: document.getElementById('navigationMenu'),
-            darkModeToggle: document.getElementById('darkModeToggle'),
-            menuToggle: document.getElementById('menuToggle'),
-            progressBar: document.getElementById('progressBar'),
-            progressText: document.getElementById('progressText'),
-            currentDayTitle: document.getElementById('currentDayTitle'),
-            continueBtn: document.getElementById('continueBtn'),
-            daysOverview: document.getElementById('daysOverview'),
-            backToDashboard: document.getElementById('backToDashboard'),
-            dayModuleTitle: document.getElementById('dayModuleTitle'),
-            dayNotesTab: document.getElementById('dayNotesTab'),
-            dayCodeTab: document.getElementById('dayCodeTab'),
-            dayTracingTab: document.getElementById('dayTracingTab'),
-            dayQuizTab: document.getElementById('dayQuizTab'),
-            dayNotesContent: document.getElementById('dayNotesContent'),
-            dayCodeContent: document.getElementById('dayCodeContent'),
-            dayTracingContent: document.getElementById('dayTracingContent'),
-            dayQuizContent: document.getElementById('dayQuizContent'),
-            dayNotesText: document.getElementById('dayNotesText'),
-            dayPdfLink: document.getElementById('dayPdfLink'),
-            personalNotes: document.getElementById('personalNotes'),
-            saveNotesBtn: document.getElementById('saveNotesBtn'),
-            codeExamples: document.getElementById('codeExamples'),
-            playgroundCode: document.getElementById('playgroundCode'),
-            copyCodeBtn: document.getElementById('copyCodeBtn'),
-            tracingExercises: document.getElementById('tracingExercises'),
-            quizQuestions: document.getElementById('quizQuestions'),
-            resetQuizBtn: document.getElementById('resetQuizBtn'),
-            submitQuizBtn: document.getElementById('submitQuizBtn'),
-            quizResult: document.getElementById('quizResult'),
-            quizResultText: document.getElementById('quizResultText'),
-            nextDayBtn: document.getElementById('nextDayBtn'),
-            backToDashboardFromGithub: document.getElementById('backToDashboardFromGithub'),
-            backToDashboardFromResources: document.getElementById('backToDashboardFromResources'),
-            saveGithubProgress: document.getElementById('saveGithubProgress'),
-            githubCompletion: document.getElementById('githubCompletion'),
-            notesLink: document.getElementById('notesLink'),
-            codeLink: document.getElementById('codeLink'),
-            quizLink: document.getElementById('quizLink'),
-            githubLink: document.getElementById('githubLink')
+        // Days data
+        const days = [
+            { id: 1, title: "Introduction to Java", description: "Learn the basics of Java programming" },
+            { id: 2, title: "Data Types and Variables", description: "Understanding different data types in Java" },
+            { id: 3, title: "Operators and Expressions", description: "Working with operators in Java" },
+            { id: 4, title: "Control Statements", description: "Conditional and loop statements" },
+            { id: 5, title: "Arrays", description: "Working with arrays in Java" },
+            { id: 6, title: "String Handling", description: "String manipulation in Java" },
+            { id: 7, title: "Classes and Objects", description: "Introduction to OOP concepts" },
+            { id: 8, title: "Inheritance", description: "Understanding inheritance in Java" },
+            { id: 9, title: "Exception Handling", description: "Handling errors in Java" },
+            { id: 10, title: "Collections Framework", description: "Working with Java collections" }
+        ];
+
+        // Quiz questions for Day 1
+        const day1Quiz = [
+            {
+                question: "What is Java?",
+                options: [
+                    "A programming language",
+                    "A coffee brand",
+                    "An island in Indonesia",
+                    "A type of computer hardware"
+                ],
+                correctAnswer: 0
+            },
+            {
+                question: "Which of the following is NOT a Java feature?",
+                options: [
+                    "Platform Independence",
+                    "Object-Oriented",
+                    "Automatic Memory Management",
+                    "Multiple Inheritance"
+                ],
+                correctAnswer: 3
+            },
+            {
+                question: "What is the correct way to declare a variable in Java?",
+                options: [
+                    "variable x = 5;",
+                    "int x = 5;",
+                    "x = 5 int;",
+                    "int x := 5;"
+                ],
+                correctAnswer: 1
+            },
+            {
+                question: "Which method is the entry point of a Java program?",
+                options: [
+                    "public void main(String[] args)",
+                    "public static void main(String[] args)",
+                    "public static main(String[] args)",
+                    "static void main(String[] args)"
+                ],
+                correctAnswer: 1
+            },
+            {
+                question: "What is the output of System.out.println(10 + 20 + \"J-CODE\");?",
+                options: [
+                    "30J-CODE",
+                    "1020J-CODE",
+                    "J-CODE30",
+                    "Error"
+                ],
+                correctAnswer: 0
+            }
+        ];
+
+        // Code templates
+        const codeTemplates = {
+            hello: `public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}`,
+            variables: `public class Variables {
+    public static void main(String[] args) {
+        int number = 10;
+        double decimal = 5.5;
+        char letter = 'A';
+        boolean flag = true;
+        String text = "Hello Java";
+        
+        System.out.println("Number: " + number);
+        System.out.println("Decimal: " + decimal);
+        System.out.println("Letter: " + letter);
+        System.out.println("Flag: " + flag);
+        System.out.println("Text: " + text);
+    }
+}`,
+            conditions: `public class Conditions {
+    public static void main(String[] args) {
+        int age = 18;
+        
+        if (age >= 18) {
+            System.out.println("You are eligible to vote.");
+        } else {
+            System.out.println("You are not eligible to vote.");
+        }
+        
+        // Ternary operator
+        String result = (age >= 18) ? "Eligible" : "Not Eligible";
+        System.out.println("Result: " + result);
+    }
+}`,
+            loops: `public class Loops {
+    public static void main(String[] args) {
+        // For loop
+        System.out.println("For Loop:");
+        for (int i = 1; i <= 5; i++) {
+            System.out.println("Count: " + i);
+        }
+        
+        // While loop
+        System.out.println("\\nWhile Loop:");
+        int count = 1;
+        while (count <= 5) {
+            System.out.println("Count: " + count);
+            count++;
+        }
+        
+        // Do-while loop
+        System.out.println("\\nDo-While Loop:");
+        int num = 1;
+        do {
+            System.out.println("Number: " + num);
+            num++;
+        } while (num <= 5);
+    }
+}`
         };
 
-        // Initialize the app
-        function initApp() {
-            // Load saved state from localStorage
+        // Drag and drop items
+        const dragDropItems = [
+            { id: 1, text: "public class HelloWorld {", order: 1 },
+            { id: 2, text: "public static void main(String[] args) {", order: 2 },
+            { id: 3, text: "System.out.println(\"Hello, World!\");", order: 3 },
+            { id: 4, text: "}", order: 4 },
+            { id: 5, text: "}", order: 5 }
+        ];
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
             loadAppState();
-            
-            // Set up event listeners
+            renderDashboard();
             setupEventListeners();
-            
-            // Update UI based on current state
-            updateUI();
-            
-            // Show live class banner if enabled
-            if (appData.isLiveClassHappening) {
-                elements.liveClassBanner.classList.remove('hidden');
-            }
-            
-            // Highlight syntax in code blocks
-            Prism.highlightAll();
-        }
+            checkLiveClass();
+            initializeDragDrop();
+            renderQuiz();
+        });
 
         // Load app state from localStorage
         function loadAppState() {
-            const savedState = localStorage.getItem('jcode-state');
+            const savedState = localStorage.getItem('jcodeAppState');
             if (savedState) {
-                const parsedState = JSON.parse(savedState);
-                Object.assign(appState, parsedState);
+                const parsed = JSON.parse(savedState);
+                app.currentDay = parsed.currentDay || 1;
+                app.completedDays = parsed.completedDays || [];
+                app.quizResults = parsed.quizResults || {};
+                app.notes = parsed.notes || {};
+                app.darkMode = parsed.darkMode || false;
+                
+                if (app.darkMode) {
+                    document.body.classList.add('dark-mode');
+                    document.querySelector('#darkModeToggle i').classList.replace('fa-moon', 'fa-sun');
+                }
             }
         }
 
         // Save app state to localStorage
         function saveAppState() {
-            localStorage.setItem('jcode-state', JSON.stringify(appState));
+            localStorage.setItem('jcodeAppState', JSON.stringify({
+                currentDay: app.currentDay,
+                completedDays: app.completedDays,
+                quizResults: app.quizResults,
+                notes: app.notes,
+                darkMode: app.darkMode
+            }));
         }
 
-        // Set up event listeners
+        // Check if live class is happening
+        function checkLiveClass() {
+            const banner = document.getElementById('liveClassBanner');
+            if (app.isLiveClassHappening) {
+                banner.classList.remove('hidden');
+            } else {
+                banner.classList.add('hidden');
+            }
+        }
+
+        // Setup event listeners
         function setupEventListeners() {
-            // Dark mode toggle
-            elements.darkModeToggle.addEventListener('click', toggleDarkMode);
-            
-            // Menu toggle
-            elements.menuToggle.addEventListener('click', toggleNavigationMenu);
-            
-            // Continue button
-            elements.continueBtn.addEventListener('click', () => {
-                showDayModule(appState.currentDay);
-            });
-            
-            // Quick links
-            elements.notesLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                showDayModule(appState.currentDay, 'notes');
-            });
-            
-            elements.codeLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                showDayModule(appState.currentDay, 'code');
-            });
-            
-            elements.quizLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                showDayModule(appState.currentDay, 'quiz');
-            });
-            
-            elements.githubLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                showView('github');
-            });
-            
-            // Back to dashboard buttons
-            elements.backToDashboard.addEventListener('click', () => {
-                showView('dashboard');
-            });
-            
-            elements.backToDashboardFromGithub.addEventListener('click', () => {
-                showView('dashboard');
-            });
-            
-            elements.backToDashboardFromResources.addEventListener('click', () => {
-                showView('dashboard');
-            });
-            
-            // Day module tabs
-            elements.dayNotesTab.addEventListener('click', () => {
-                showDayTab('notes');
-            });
-            
-            elements.dayCodeTab.addEventListener('click', () => {
-                showDayTab('code');
-            });
-            
-            elements.dayTracingTab.addEventListener('click', () => {
-                showDayTab('tracing');
-            });
-            
-            elements.dayQuizTab.addEventListener('click', () => {
-                showDayTab('quiz');
-            });
-            
-            // Save notes button
-            elements.saveNotesBtn.addEventListener('click', savePersonalNotes);
-            
-            // Copy code button
-            elements.copyCodeBtn.addEventListener('click', copyPlaygroundCode);
-            
-            // Quiz buttons
-            elements.resetQuizBtn.addEventListener('click', resetQuiz);
-            elements.submitQuizBtn.addEventListener('click', submitQuiz);
-            elements.nextDayBtn.addEventListener('click', unlockNextDay);
-            
-            // GitHub progress
-            elements.saveGithubProgress.addEventListener('click', saveGithubProgress);
-            
-            // Navigation menu
+            // Navigation buttons
             document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const view = btn.getAttribute('data-view');
-                    if (view === 'day') {
-                        showDayModule(appState.currentDay);
-                    } else if (view === 'playground') {
-                        showDayModule(appState.currentDay, 'code');
-                    } else {
-                        showView(view);
-                    }
-                    toggleNavigationMenu();
+                btn.addEventListener('click', function() {
+                    const view = this.getAttribute('data-view');
+                    navigateToView(view);
                 });
             });
+
+            // Back to dashboard buttons
+            document.getElementById('backToDashboard').addEventListener('click', () => navigateToView('dashboard'));
+            document.getElementById('backToDashboardFromPlayground').addEventListener('click', () => navigateToView('dashboard'));
+            document.getElementById('backToDashboardFromGithub').addEventListener('click', () => navigateToView('dashboard'));
+            document.getElementById('backToDashboardFromResources').addEventListener('click', () => navigateToView('dashboard'));
+
+            // Dark mode toggle
+            document.getElementById('darkModeToggle').addEventListener('click', toggleDarkMode);
+
+            // Close live class banner
+            document.getElementById('closeBanner').addEventListener('click', function() {
+                document.getElementById('liveClassBanner').classList.add('hidden');
+            });
+
+            // Action buttons on dashboard
+            document.querySelectorAll('.action-btn').forEach((btn, index) => {
+                btn.addEventListener('click', function() {
+                    const actions = ['notes', 'code', 'tracing', 'quiz'];
+                    navigateToDayModule(app.currentDay, actions[index]);
+                });
+            });
+
+            // Day module tabs
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tab = this.getAttribute('data-tab');
+                    switchTab(tab);
+                });
+            });
+
+            // Copy buttons
+            document.querySelectorAll('.copy-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const codeBlock = this.parentElement.querySelector('code');
+                    const textArea = document.createElement('textarea');
+                    textArea.value = codeBlock.textContent;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    
+                    // Show feedback
+                    const originalHTML = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-check"></i>';
+                    setTimeout(() => {
+                        this.innerHTML = originalHTML;
+                    }, 2000);
+                });
+            });
+
+            // Tracing exercises
+            document.getElementById('checkTracing1').addEventListener('click', checkTracing1);
+            document.getElementById('checkDragDrop').addEventListener('click', checkDragDrop);
+            document.getElementById('checkMCQ').addEventListener('click', checkMCQ);
+
+            // Quiz
+            document.getElementById('submitQuiz').addEventListener('click', submitQuiz);
+            document.getElementById('resetQuiz').addEventListener('click', resetQuiz);
+
+            // Code playground
+            document.querySelectorAll('.template-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const template = this.getAttribute('data-template');
+                    showCodeTemplate(template);
+                });
+            });
+
+            document.getElementById('copyTemplate').addEventListener('click', function() {
+                const code = document.getElementById('templateCode').textContent;
+                const textArea = document.createElement('textarea');
+                textArea.value = code;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                // Show feedback
+                const originalHTML = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-check"></i>';
+                setTimeout(() => {
+                    this.innerHTML = originalHTML;
+                }, 2000);
+            });
+
+            // GitHub guide
+            document.getElementById('generateRepoLink').addEventListener('click', generateRepoLink);
+            
+            document.querySelectorAll('.github-checklist').forEach(checkbox => {
+                checkbox.addEventListener('change', checkGithubCompletion);
+            });
         }
 
-        // Update UI based on current state
-        function updateUI() {
-            // Update progress bar
-            const progressPercentage = (appState.currentDay / 10) * 100;
-            elements.progressBar.style.width = `${progressPercentage}%`;
-            elements.progressText.textContent = `Day ${appState.currentDay} of 10`;
-            
-            // Update current day title
-            const currentDayData = appData.days.find(day => day.day === appState.currentDay);
-            if (currentDayData) {
-                elements.currentDayTitle.textContent = `Day ${appState.currentDay}: ${currentDayData.title}`;
+        // Navigate to view
+        function navigateToView(view) {
+            // Hide all views
+            document.getElementById('dashboardView').classList.add('hidden');
+            document.getElementById('dayModuleView').classList.add('hidden');
+            document.getElementById('playgroundView').classList.add('hidden');
+            document.getElementById('githubView').classList.add('hidden');
+            document.getElementById('resourcesView').classList.add('hidden');
+
+            // Update nav buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                if (btn.getAttribute('data-view') === view) {
+                    btn.classList.add('text-indigo-600');
+                    btn.classList.remove('text-gray-500');
+                } else {
+                    btn.classList.remove('text-indigo-600');
+                    btn.classList.add('text-gray-500');
+                }
+            });
+
+            // Show selected view
+            switch(view) {
+                case 'dashboard':
+                    document.getElementById('dashboardView').classList.remove('hidden');
+                    renderDashboard();
+                    break;
+                case 'day':
+                    navigateToDayModule(app.currentDay, 'notes');
+                    break;
+                case 'playground':
+                    document.getElementById('playgroundView').classList.remove('hidden');
+                    break;
+                case 'github':
+                    document.getElementById('githubView').classList.remove('hidden');
+                    break;
+                case 'resources':
+                    document.getElementById('resourcesView').classList.remove('hidden');
+                    break;
             }
+
+            app.currentView = view;
+        }
+
+        // Navigate to day module
+        function navigateToDayModule(dayId, tab = 'notes') {
+            app.currentDay = dayId;
+            document.getElementById('dashboardView').classList.add('hidden');
+            document.getElementById('dayModuleView').classList.remove('hidden');
             
-            // Update days overview
-            updateDaysOverview();
+            // Update day title
+            const day = days.find(d => d.id === dayId);
+            document.getElementById('dayTitle').textContent = `Day ${day.id}: ${day.title}`;
             
-            // Update dark mode
-            if (appState.darkMode) {
-                document.body.classList.add('dark-mode');
-                elements.darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            // Switch to specified tab
+            switchTab(tab);
+            
+            // Update nav buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                if (btn.getAttribute('data-view') === 'day') {
+                    btn.classList.add('text-indigo-600');
+                    btn.classList.remove('text-gray-500');
+                } else {
+                    btn.classList.remove('text-indigo-600');
+                    btn.classList.add('text-gray-500');
+                }
+            });
+            
+            app.currentView = 'day';
+        }
+
+        // Switch tab in day module
+        function switchTab(tab) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                if (btn.getAttribute('data-tab') === tab) {
+                    btn.classList.add('text-indigo-600', 'border-b-2', 'border-indigo-600');
+                    btn.classList.remove('text-gray-500');
+                } else {
+                    btn.classList.remove('text-indigo-600', 'border-b-2', 'border-indigo-600');
+                    btn.classList.add('text-gray-500');
+                }
+            });
+
+            // Show tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            document.getElementById(`${tab}Tab`).classList.remove('hidden');
+        }
+
+        // Render dashboard
+        function renderDashboard() {
+            // Update progress
+            const progressPercent = (app.completedDays.length / 10) * 100;
+            document.getElementById('progressBar').style.width = `${progressPercent}%`;
+            document.getElementById('progressText').textContent = `Day ${app.completedDays.length + 1} of 10`;
+            
+            // Update current day
+            const currentDay = days.find(d => d.id === app.currentDay);
+            document.getElementById('currentDay').textContent = `Day ${app.currentDay}: ${currentDay.title}`;
+            
+            // Update next step
+            if (app.completedDays.includes(app.currentDay)) {
+                document.getElementById('nextStep').textContent = 'Move to next day';
             } else {
-                document.body.classList.remove('dark-mode');
-                elements.darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                document.getElementById('nextStep').textContent = 'Complete Day ' + app.currentDay + ' Quiz';
             }
-        }
-
-        // Update days overview
-        function updateDaysOverview() {
-            elements.daysOverview.innerHTML = '';
             
-            appData.days.forEach(day => {
-                const isUnlocked = appState.unlockedDays.includes(day.day);
-                const isCompleted = appState.completedDays.includes(day.day);
+            // Render days list
+            const daysContainer = document.querySelector('#dashboardView .space-y-3');
+            daysContainer.innerHTML = '';
+            
+            days.forEach(day => {
+                const isCompleted = app.completedDays.includes(day.id);
+                const isCurrent = day.id === app.currentDay;
                 
-                const dayCard = document.createElement('div');
-                dayCard.className = `day-card glass-card p-4 rounded-xl ${isUnlocked ? 'cursor-pointer' : 'opacity-70'}`;
+                const dayElement = document.createElement('div');
+                dayElement.className = `flex items-center justify-between p-3 rounded-lg border ${
+                    isCompleted ? 'bg-green-50 border-green-200' : 
+                    isCurrent ? 'bg-indigo-50 border-indigo-200' : 
+                    'bg-white border-gray-200'
+                }`;
                 
-                dayCard.innerHTML = `
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <h3 class="font-bold">Day ${day.day}: ${day.title}</h3>
-                            <div class="flex items-center mt-1">
-                                ${isCompleted ? 
-                                    '<span class="text-xs bg-green-500 bg-opacity-30 text-green-300 px-2 py-1 rounded-full"><i class="fas fa-check mr-1"></i> Completed</span>' : 
-                                    isUnlocked ? 
-                                    '<span class="text-xs bg-blue-500 bg-opacity-30 text-blue-300 px-2 py-1 rounded-full"><i class="fas fa-unlock mr-1"></i> Unlocked</span>' : 
-                                    '<span class="text-xs bg-gray-500 bg-opacity-30 text-gray-300 px-2 py-1 rounded-full"><i class="fas fa-lock mr-1"></i> Locked</span>'
-                                }
-                            </div>
+                dayElement.innerHTML = `
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center mr-3 ${
+                            isCompleted ? 'bg-green-500 text-white' : 
+                            isCurrent ? 'bg-indigo-500 text-white' : 
+                            'bg-gray-200 text-gray-700'
+                        }">
+                            ${isCompleted ? '<i class="fas fa-check"></i>' : day.id}
                         </div>
                         <div>
-                            ${isUnlocked ? 
-                                `<button class="day-select-btn glass-button text-white px-3 py-1 rounded-lg text-sm font-medium" data-day="${day.day}">View</button>` : 
-                                '<i class="fas fa-lock text-gray-400"></i>'
-                            }
+                            <h4 class="font-medium">Day ${day.id}: ${day.title}</h4>
+                            <p class="text-sm text-gray-600">${day.description}</p>
                         </div>
                     </div>
+                    <button class="view-day-btn text-indigo-600 hover:text-indigo-800" data-day="${day.id}">
+                        ${isCompleted ? 'Review' : isCurrent ? 'Continue' : 'Start'}
+                    </button>
                 `;
                 
-                if (isUnlocked) {
-                    dayCard.querySelector('.day-select-btn').addEventListener('click', () => {
-                        showDayModule(day.day);
-                    });
-                }
-                
-                elements.daysOverview.appendChild(dayCard);
+                daysContainer.appendChild(dayElement);
+            });
+            
+            // Add event listeners to day buttons
+            document.querySelectorAll('.view-day-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const dayId = parseInt(this.getAttribute('data-day'));
+                    navigateToDayModule(dayId);
+                });
             });
         }
 
         // Toggle dark mode
         function toggleDarkMode() {
-            appState.darkMode = !appState.darkMode;
-            saveAppState();
-            updateUI();
-        }
-
-        // Toggle navigation menu
-        function toggleNavigationMenu() {
-            elements.navigationMenu.classList.toggle('hidden');
-        }
-
-        // Show a specific view
-        function showView(viewName) {
-            // Hide all views
-            document.querySelectorAll('.view').forEach(view => {
-                view.classList.add('hidden');
-            });
+            app.darkMode = !app.darkMode;
+            document.body.classList.toggle('dark-mode');
             
-            // Show the selected view
-            switch (viewName) {
-                case 'dashboard':
-                    elements.dashboardView.classList.remove('hidden');
-                    break;
-                case 'github':
-                    elements.githubView.classList.remove('hidden');
-                    updateGithubProgress();
-                    break;
-                case 'resources':
-                    elements.resourcesView.classList.remove('hidden');
-                    break;
+            const icon = document.querySelector('#darkModeToggle i');
+            if (app.darkMode) {
+                icon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                icon.classList.replace('fa-sun', 'fa-moon');
             }
             
-            appState.currentView = viewName;
             saveAppState();
+        }
+
+        // Initialize drag and drop
+        function initializeDragDrop() {
+            const container = document.getElementById('dragDropContainer');
             
-            // Update navigation menu active state
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                if (btn.getAttribute('data-view') === viewName) {
-                    btn.classList.add('text-white');
-                    btn.classList.remove('text-blue-200');
+            // Shuffle items for drag and drop
+            const shuffled = [...dragDropItems].sort(() => Math.random() - 0.5);
+            
+            shuffled.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'bg-gray-100 p-3 rounded border border-gray-300 cursor-move';
+                div.draggable = true;
+                div.dataset.id = item.id;
+                div.textContent = item.text;
+                container.appendChild(div);
+            });
+            
+            // Add drag and drop event listeners
+            let draggedElement = null;
+            
+            container.addEventListener('dragstart', function(e) {
+                if (e.target.classList.contains('cursor-move')) {
+                    draggedElement = e.target;
+                    e.target.style.opacity = '0.5';
+                }
+            });
+            
+            container.addEventListener('dragend', function(e) {
+                if (e.target.classList.contains('cursor-move')) {
+                    e.target.style.opacity = '';
+                }
+            });
+            
+            container.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                const afterElement = getDragAfterElement(container, e.clientY);
+                if (afterElement == null) {
+                    container.appendChild(draggedElement);
                 } else {
-                    btn.classList.remove('text-white');
-                    btn.classList.add('text-blue-200');
+                    container.insertBefore(draggedElement, afterElement);
                 }
             });
         }
 
-        // Show day module
-        function showDayModule(dayNumber, tab = 'notes') {
-            // Check if day is unlocked
-            if (!appState.unlockedDays.includes(dayNumber)) {
+        // Get element after drag position
+        function getDragAfterElement(container, y) {
+            const draggableElements = [...container.querySelectorAll('.cursor-move:not(.dragging)')];
+            
+            return draggableElements.reduce((closest, child) => {
+                const box = child.getBoundingClientRect();
+                const offset = y - box.top - box.height / 2;
+                
+                if (offset < 0 && offset > closest.offset) {
+                    return { offset: offset, element: child };
+                } else {
+                    return closest;
+                }
+            }, { offset: Number.NEGATIVE_INFINITY }).element;
+        }
+
+        // Check tracing exercise 1
+        function checkTracing1() {
+            const answer = document.getElementById('tracingAnswer1').value.trim();
+            const result = document.getElementById('tracingResult1');
+            
+            if (answer === '16') {
+                result.innerHTML = '<i class="fas fa-check-circle text-green-500"></i> Correct!';
+            } else {
+                result.innerHTML = '<i class="fas fa-times-circle text-red-500"></i> Try again';
+            }
+        }
+
+        // Check drag and drop exercise
+        function checkDragDrop() {
+            const items = document.querySelectorAll('#dragDropContainer .cursor-move');
+            const result = document.getElementById('dragDropResult');
+            let correct = true;
+            
+            items.forEach((item, index) => {
+                const id = parseInt(item.dataset.id);
+                const expectedOrder = dragDropItems.find(d => d.id === id).order;
+                
+                if (expectedOrder !== index + 1) {
+                    correct = false;
+                }
+            });
+            
+            if (correct) {
+                result.innerHTML = '<i class="fas fa-check-circle text-green-500"></i> Correct order!';
+            } else {
+                result.innerHTML = '<i class="fas fa-times-circle text-red-500"></i> Incorrect order. Try again.';
+            }
+        }
+
+        // Check MCQ exercise
+        function checkMCQ() {
+            const selected = document.querySelector('input[name="mcq"]:checked');
+            const result = document.getElementById('mcqResult');
+            
+            if (!selected) {
+                result.innerHTML = '<i class="fas fa-exclamation-circle text-yellow-500"></i> Please select an answer';
                 return;
             }
             
-            // Set current day
-            appState.currentDay = dayNumber;
-            saveAppState();
-            
-            // Hide all views
-            document.querySelectorAll('.view').forEach(view => {
-                view.classList.add('hidden');
-            });
-            
-            // Show day module view
-            elements.dayModuleView.classList.remove('hidden');
-            
-            // Update day module title
-            const dayData = appData.days.find(day => day.day === dayNumber);
-            if (dayData) {
-                elements.dayModuleTitle.textContent = `Day ${dayNumber}: ${dayData.title}`;
-                
-                // Load day content
-                loadDayContent(dayData);
-                
-                // Show the requested tab
-                showDayTab(tab);
-            }
-            
-            // Update navigation menu active state
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                if (btn.getAttribute('data-view') === 'day') {
-                    btn.classList.add('text-white');
-                    btn.classList.remove('text-blue-200');
-                } else {
-                    btn.classList.remove('text-white');
-                    btn.classList.add('text-blue-200');
-                }
-            });
-        }
-
-        // Load day content
-        function loadDayContent(dayData) {
-            // Load notes
-            elements.dayNotesText.innerHTML = dayData.notes.replace(/\n/g, '<br>');
-            elements.dayPdfLink.href = dayData.pdfLink;
-            
-            // Load personal notes
-            if (appState.personalNotes[dayData.day]) {
-                elements.personalNotes.value = appState.personalNotes[dayData.day];
+            if (selected.value === 'c') {
+                result.innerHTML = '<i class="fas fa-check-circle text-green-500"></i> Correct! string is not a valid Java data type (it should be String with capital S).';
             } else {
-                elements.personalNotes.value = '';
-            }
-            
-            // Load code examples
-            elements.codeExamples.innerHTML = '';
-            dayData.codeExamples.forEach(example => {
-                const exampleDiv = document.createElement('div');
-                exampleDiv.className = 'glass-code text-white p-4 rounded-lg';
-                exampleDiv.innerHTML = `
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="font-mono text-sm">${example.title}</span>
-                        <button class="copy-example-btn text-gray-300 hover:text-white" data-code="${encodeURIComponent(example.code)}">
-                            <i class="fas fa-copy"></i> Copy
-                        </button>
-                    </div>
-                    <pre><code class="language-java">${example.code}</code></pre>
-                `;
-                elements.codeExamples.appendChild(exampleDiv);
-                
-                // Add copy functionality
-                exampleDiv.querySelector('.copy-example-btn').addEventListener('click', function() {
-                    const code = decodeURIComponent(this.getAttribute('data-code'));
-                    copyToClipboard(code);
-                });
-            });
-            
-            // Load tracing exercises
-            elements.tracingExercises.innerHTML = '';
-            dayData.tracing.forEach((exercise, index) => {
-                const exerciseDiv = document.createElement('div');
-                exerciseDiv.className = 'glass-card p-4 rounded-lg';
-                
-                if (exercise.type === 'fill') {
-                    exerciseDiv.innerHTML = `
-                        <h4 class="font-bold mb-2">Exercise ${index + 1}: ${exercise.question}</h4>
-                        <pre class="glass-code p-3 rounded-lg mb-3 overflow-x-auto"><code>${exercise.code}</code></pre>
-                        <div class="flex items-center">
-                            <input type="text" id="tracing-${dayData.day}-${index}" class="flex-1 p-2 glass-input rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Your answer">
-                            <button class="ml-2 check-tracing-btn glass-button text-white px-3 py-2 rounded-lg font-medium" data-day="${dayData.day}" data-index="${index}" data-answer="${exercise.answer}">
-                                Check
-                            </button>
-                        </div>
-                        <div id="tracing-result-${dayData.day}-${index}" class="mt-2 hidden"></div>
-                    `;
-                } else if (exercise.type === 'mcq') {
-                    let optionsHtml = '';
-                    exercise.options.forEach((option, optIndex) => {
-                        optionsHtml += `
-                            <div class="flex items-center mb-2">
-                                <input type="radio" id="mcq-${dayData.day}-${index}-${optIndex}" name="mcq-${dayData.day}-${index}" value="${optIndex}" class="h-4 w-4 text-blue-600">
-                                <label for="mcq-${dayData.day}-${index}-${optIndex}" class="ml-2">${option}</label>
-                            </div>
-                        `;
-                    });
-                    
-                    exerciseDiv.innerHTML = `
-                        <h4 class="font-bold mb-2">Exercise ${index + 1}: ${exercise.question}</h4>
-                        <div class="mb-3">
-                            ${optionsHtml}
-                        </div>
-                        <button class="check-mcq-btn glass-button text-white px-3 py-2 rounded-lg font-medium" data-day="${dayData.day}" data-index="${index}" data-answer="${exercise.answer}">
-                            Check Answer
-                        </button>
-                        <div id="mcq-result-${dayData.day}-${index}" class="mt-2 hidden"></div>
-                    `;
-                }
-                
-                elements.tracingExercises.appendChild(exerciseDiv);
-            });
-            
-            // Add event listeners for tracing exercises
-            document.querySelectorAll('.check-tracing-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const day = parseInt(this.getAttribute('data-day'));
-                    const index = parseInt(this.getAttribute('data-index'));
-                    const answer = this.getAttribute('data-answer');
-                    const userAnswer = document.getElementById(`tracing-${day}-${index}`).value;
-                    
-                    const resultDiv = document.getElementById(`tracing-result-${day}-${index}`);
-                    resultDiv.classList.remove('hidden');
-                    
-                    if (userAnswer.trim().toLowerCase() === answer.toLowerCase()) {
-                        resultDiv.innerHTML = '<div class="text-green-300"><i class="fas fa-check-circle mr-1"></i> Correct!</div>';
-                    } else {
-                        resultDiv.innerHTML = `<div class="text-red-300"><i class="fas fa-times-circle mr-1"></i> Incorrect. The answer is: ${answer}</div>`;
-                    }
-                });
-            });
-            
-            document.querySelectorAll('.check-mcq-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const day = parseInt(this.getAttribute('data-day'));
-                    const index = parseInt(this.getAttribute('data-index'));
-                    const answer = parseInt(this.getAttribute('data-answer'));
-                    
-                    const selectedOption = document.querySelector(`input[name="mcq-${day}-${index}"]:checked`);
-                    const resultDiv = document.getElementById(`mcq-result-${day}-${index}`);
-                    resultDiv.classList.remove('hidden');
-                    
-                    if (selectedOption) {
-                        const userAnswer = parseInt(selectedOption.value);
-                        if (userAnswer === answer) {
-                            resultDiv.innerHTML = '<div class="text-green-300"><i class="fas fa-check-circle mr-1"></i> Correct!</div>';
-                        } else {
-                            resultDiv.innerHTML = `<div class="text-red-300"><i class="fas fa-times-circle mr-1"></i> Incorrect. The correct answer is: ${dayData.tracing[index].options[answer]}</div>`;
-                        }
-                    } else {
-                        resultDiv.innerHTML = '<div class="text-yellow-300"><i class="fas fa-exclamation-circle mr-1"></i> Please select an option</div>';
-                    }
-                });
-            });
-            
-            // Load quiz
-            loadQuiz(dayData);
-            
-            // Highlight syntax
-            Prism.highlightAll();
-        }
-
-        // Show day tab
-        function showDayTab(tabName) {
-            // Hide all day content
-            document.querySelectorAll('.day-content').forEach(content => {
-                content.classList.add('hidden');
-            });
-            
-            // Reset all tab buttons
-            [elements.dayNotesTab, elements.dayCodeTab, elements.dayTracingTab, elements.dayQuizTab].forEach(tab => {
-                tab.classList.remove('glass-button', 'text-white');
-                tab.classList.add('glass-card', 'text-white');
-            });
-            
-            // Show selected content and highlight tab
-            switch (tabName) {
-                case 'notes':
-                    elements.dayNotesContent.classList.remove('hidden');
-                    elements.dayNotesTab.classList.remove('glass-card', 'text-white');
-                    elements.dayNotesTab.classList.add('glass-button', 'text-white');
-                    break;
-                case 'code':
-                    elements.dayCodeContent.classList.remove('hidden');
-                    elements.dayCodeTab.classList.remove('glass-card', 'text-white');
-                    elements.dayCodeTab.classList.add('glass-button', 'text-white');
-                    break;
-                case 'tracing':
-                    elements.dayTracingContent.classList.remove('hidden');
-                    elements.dayTracingTab.classList.remove('glass-card', 'text-white');
-                    elements.dayTracingTab.classList.add('glass-button', 'text-white');
-                    break;
-                case 'quiz':
-                    elements.dayQuizContent.classList.remove('hidden');
-                    elements.dayQuizTab.classList.remove('glass-card', 'text-white');
-                    elements.dayQuizTab.classList.add('glass-button', 'text-white');
-                    break;
+                result.innerHTML = '<i class="fas fa-times-circle text-red-500"></i> Incorrect. Try again.';
             }
         }
 
-        // Save personal notes
-        function savePersonalNotes() {
-            const day = appState.currentDay;
-            const notes = elements.personalNotes.value;
+        // Render quiz
+        function renderQuiz() {
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = '';
             
-            appState.personalNotes[day] = notes;
-            saveAppState();
-            
-            // Show confirmation
-            const originalText = elements.saveNotesBtn.textContent;
-            elements.saveNotesBtn.textContent = 'Saved!';
-            elements.saveNotesBtn.classList.remove('glass-button');
-            elements.saveNotesBtn.classList.add('glass-card');
-            
-            setTimeout(() => {
-                elements.saveNotesBtn.textContent = originalText;
-                elements.saveNotesBtn.classList.remove('glass-card');
-                elements.saveNotesBtn.classList.add('glass-button');
-            }, 2000);
-        }
-
-        // Copy playground code
-        function copyPlaygroundCode() {
-            const code = elements.playgroundCode.textContent;
-            copyToClipboard(code);
-        }
-
-        // Copy text to clipboard
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                // Show confirmation
-                const originalText = elements.copyCodeBtn.innerHTML;
-                elements.copyCodeBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                
-                setTimeout(() => {
-                    elements.copyCodeBtn.innerHTML = originalText;
-                }, 2000);
-            }).catch(err => {
-                console.error('Failed to copy text: ', err);
-            });
-        }
-
-        // Load quiz
-        function loadQuiz(dayData) {
-            elements.quizQuestions.innerHTML = '';
-            
-            dayData.quiz.forEach((question, index) => {
+            day1Quiz.forEach((q, index) => {
                 const questionDiv = document.createElement('div');
-                questionDiv.className = 'glass-card p-4 rounded-lg';
-                
-                let optionsHtml = '';
-                question.options.forEach((option, optIndex) => {
-                    optionsHtml += `
-                        <div class="flex items-center mb-2 quiz-option p-2 rounded-lg">
-                            <input type="radio" id="quiz-${dayData.day}-${index}-${optIndex}" name="quiz-${dayData.day}-${index}" value="${optIndex}" class="h-4 w-4 text-blue-600">
-                            <label for="quiz-${dayData.day}-${index}-${optIndex}" class="ml-2">${option}</label>
-                        </div>
-                    `;
-                });
-                
+                questionDiv.className = 'mb-6';
                 questionDiv.innerHTML = `
-                    <h4 class="font-bold mb-2">Question ${index + 1}: ${question.question}</h4>
-                    <div class="mb-3">
-                        ${optionsHtml}
+                    <h4 class="font-bold mb-2">Question ${index + 1}: ${q.question}</h4>
+                    <div class="space-y-2">
+                        ${q.options.map((option, i) => `
+                            <label class="flex items-center">
+                                <input type="radio" name="q${index}" value="${i}" class="mr-2">
+                                <span>${option}</span>
+                            </label>
+                        `).join('')}
                     </div>
                 `;
-                
-                elements.quizQuestions.appendChild(questionDiv);
+                container.appendChild(questionDiv);
             });
-            
-            // Reset quiz result
-            elements.quizResult.classList.add('hidden');
-        }
-
-        // Reset quiz
-        function resetQuiz() {
-            const day = appState.currentDay;
-            
-            // Clear all selections
-            document.querySelectorAll(`input[name^="quiz-${day}-"]`).forEach(input => {
-                input.checked = false;
-            });
-            
-            // Hide result
-            elements.quizResult.classList.add('hidden');
         }
 
         // Submit quiz
         function submitQuiz() {
-            const day = appState.currentDay;
-            const dayData = appData.days.find(d => d.day === day);
             let score = 0;
-            const totalQuestions = dayData.quiz.length;
-            const userAnswers = [];
+            const totalQuestions = day1Quiz.length;
             
-            // Check answers
-            dayData.quiz.forEach((question, index) => {
-                const selectedOption = document.querySelector(`input[name="quiz-${day}-${index}"]:checked`);
-                
-                if (selectedOption) {
-                    const userAnswer = parseInt(selectedOption.value);
-                    userAnswers.push(userAnswer);
-                    
-                    if (userAnswer === question.answer) {
-                        score++;
-                    }
-                } else {
-                    userAnswers.push(-1); // No answer selected
+            day1Quiz.forEach((q, index) => {
+                const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                if (selected && parseInt(selected.value) === q.correctAnswer) {
+                    score++;
                 }
             });
             
-            // Save quiz result
-            appState.quizResults[day] = {
-                score: score,
-                total: totalQuestions,
-                answers: userAnswers
-            };
-            saveAppState();
+            const percentage = Math.round((score / totalQuestions) * 100);
+            const resultDiv = document.getElementById('quizResult');
+            const resultText = document.getElementById('quizResultText');
+            const actionsDiv = document.getElementById('quizActions');
             
-            // Show result
-            elements.quizResultText.textContent = `You scored ${score} out of ${totalQuestions}.`;
-            elements.quizResult.classList.remove('hidden');
+            resultDiv.classList.remove('hidden');
+            resultText.innerHTML = `You scored ${score} out of ${totalQuestions} (${percentage}%)`;
             
-            // Show next day button if passed (score >= 60%)
-            if (score >= Math.ceil(totalQuestions * 0.6)) {
-                elements.nextDayBtn.classList.remove('hidden');
+            actionsDiv.innerHTML = '';
+            
+            if (percentage >= 60) {
+                // Pass
+                resultText.innerHTML += ' <i class="fas fa-check-circle text-green-500"></i>';
                 
-                // Mark day as completed if not already
-                if (!appState.completedDays.includes(day)) {
-                    appState.completedDays.push(day);
+                // Mark day as completed
+                if (!app.completedDays.includes(app.currentDay)) {
+                    app.completedDays.push(app.currentDay);
                     saveAppState();
                 }
-            } else {
-                elements.nextDayBtn.classList.add('hidden');
-            }
-        }
-
-        // Unlock next day
-        function unlockNextDay() {
-            const currentDay = appState.currentDay;
-            const nextDay = currentDay + 1;
-            
-            if (nextDay <= 10 && !appState.unlockedDays.includes(nextDay)) {
-                appState.unlockedDays.push(nextDay);
-                appState.currentDay = nextDay;
-                saveAppState();
                 
-                // Show next day
-                showDayModule(nextDay);
-                updateUI();
+                // Show next day button
+                if (app.currentDay < 10) {
+                    const nextBtn = document.createElement('button');
+                    nextBtn.className = 'bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 mr-2';
+                    nextBtn.textContent = 'Go to Next Day';
+                    nextBtn.addEventListener('click', () => {
+                        app.currentDay++;
+                        navigateToDayModule(app.currentDay);
+                    });
+                    actionsDiv.appendChild(nextBtn);
+                }
+                
+                // Show review button
+                const reviewBtn = document.createElement('button');
+                reviewBtn.className = 'bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300';
+                reviewBtn.textContent = 'Review Answers';
+                reviewBtn.addEventListener('click', () => {
+                    // Highlight correct answers
+                    day1Quiz.forEach((q, index) => {
+                        const options = document.querySelectorAll(`input[name="q${index}"]`);
+                        options.forEach((option, i) => {
+                            const label = option.parentElement;
+                            if (i === q.correctAnswer) {
+                                label.classList.add('text-green-600', 'font-bold');
+                            } else if (option.checked && i !== q.correctAnswer) {
+                                label.classList.add('text-red-600');
+                            }
+                        });
+                    });
+                });
+                actionsDiv.appendChild(reviewBtn);
+            } else {
+                // Fail
+                resultText.innerHTML += ' <i class="fas fa-times-circle text-red-500"></i>';
+                
+                // Show retry button
+                const retryBtn = document.createElement('button');
+                retryBtn.className = 'bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700';
+                retryBtn.textContent = 'Try Again';
+                retryBtn.addEventListener('click', resetQuiz);
+                actionsDiv.appendChild(retryBtn);
             }
+            
+            // Save quiz result
+            app.quizResults[app.currentDay] = {
+                score: score,
+                total: totalQuestions,
+                percentage: percentage,
+                timestamp: new Date().toISOString()
+            };
+            saveAppState();
         }
 
-        // Update GitHub progress
-        function updateGithubProgress() {
-            // Check completion of all steps
-            const allStepsCompleted = [1, 2, 3, 4, 5].every(step => 
-                appState.githubSteps.includes(step)
-            );
+        // Reset quiz
+        function resetQuiz() {
+            document.querySelectorAll('#quizContainer input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+            });
             
-            if (allStepsCompleted) {
-                elements.githubCompletion.classList.remove('hidden');
-            } else {
-                elements.githubCompletion.classList.add('hidden');
-            }
+            document.getElementById('quizResult').classList.add('hidden');
             
-            // Update checkboxes
-            appState.githubSteps.forEach(step => {
-                const checkbox = document.getElementById(`githubStep${step}`);
-                if (checkbox) {
-                    checkbox.checked = true;
+            // Remove any styling from previous answers
+            document.querySelectorAll('#quizContainer label').forEach(label => {
+                label.classList.remove('text-green-600', 'font-bold', 'text-red-600');
+            });
+        }
+
+        // Show code template
+        function showCodeTemplate(template) {
+            const code = codeTemplates[template];
+            document.getElementById('templateCode').textContent = code;
+            
+            // Re-highlight syntax
+            Prism.highlightElement(document.getElementById('templateCode'));
+            
+            // Update selected card
+            document.querySelectorAll('.template-card').forEach(card => {
+                if (card.getAttribute('data-template') === template) {
+                    card.classList.add('border-indigo-500', 'bg-indigo-50');
+                } else {
+                    card.classList.remove('border-indigo-500', 'bg-indigo-50');
                 }
             });
         }
 
-        // Save GitHub progress
-        function saveGithubProgress() {
-            appState.githubSteps = [];
-            
-            // Check all steps
-            for (let i = 1; i <= 5; i++) {
-                const checkbox = document.getElementById(`githubStep${i}`);
-                if (checkbox && checkbox.checked) {
-                    appState.githubSteps.push(i);
-                }
+        // Generate repo link
+        function generateRepoLink() {
+            const studentId = document.getElementById('studentId').value.trim();
+            if (!studentId) {
+                alert('Please enter your student ID');
+                return;
             }
             
-            saveAppState();
-            updateGithubProgress();
-            
-            // Show confirmation
-            const originalText = elements.saveGithubProgress.textContent;
-            elements.saveGithubProgress.textContent = 'Progress Saved!';
-            elements.saveGithubProgress.classList.remove('glass-button');
-            elements.saveGithubProgress.classList.add('glass-card');
-            
-            setTimeout(() => {
-                elements.saveGithubProgress.textContent = originalText;
-                elements.saveGithubProgress.classList.remove('glass-card');
-                elements.saveGithubProgress.classList.add('glass-button');
-            }, 2000);
+            const repoLink = `https://github.com/yourusername/oopj-kju-${studentId}`;
+            document.getElementById('repoLink').href = repoLink;
+            document.getElementById('repoLink').textContent = repoLink;
+            document.getElementById('repoLinkResult').classList.remove('hidden');
         }
 
-        // Initialize the app when DOM is loaded
-        document.addEventListener('DOMContentLoaded', initApp);
+        // Check GitHub completion
+        function checkGithubCompletion() {
+            const checkboxes = document.querySelectorAll('.github-checklist');
+            const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+            
+            if (allChecked) {
+                document.getElementById('githubCompletion').classList.remove('hidden');
+            } else {
+                document.getElementById('githubCompletion').classList.add('hidden');
+            }
+        }
     </script>
 </body>
 </html>
