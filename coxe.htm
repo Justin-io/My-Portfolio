@@ -94,6 +94,18 @@
         nav {
             transition: transform 0.3s ease-in-out;
         }
+        /* Navbar auto-hide */
+.navbar-hidden {
+    transform: translateY(100%);
+}
+
+.navbar-visible {
+    transform: translateY(0);
+}
+
+nav {
+    transition: transform 0.3s ease-in-out;
+}
         
         /* GitHub section enhancements */
         .github-step-content {
@@ -719,32 +731,31 @@ git pull origin main</pre>
 
     <!-- Bottom Navigation -->
     <nav id="bottomNav" class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-10 navbar-visible">
-        <div class="container mx-auto">
-            <div class="grid grid-cols-5">
-                <button class="nav-btn flex flex-col items-center justify-center p-3 text-indigo-600" data-view="dashboard">
-                    <i class="fas fa-home text-xl mb-1"></i>
-                    <span class="text-xs">Home</span>
-                </button>
-                <button class="nav-btn flex flex-col items-center justify-center p-3 text-gray-500 hover:text-indigo-600" data-view="day">
-                    <i class="fas fa-book-open text-xl mb-1"></i>
-                    <span class="text-xs">Learn</span>
-                </button>
-                <button class="nav-btn flex flex-col items-center justify-center p-3 text-gray-500 hover:text-indigo-600" data-view="playground">
-                    <i class="fas fa-laptop-code text-xl mb-1"></i>
-                    <span class="text-xs">Code</span>
-                </button>
-                <button class="nav-btn flex flex-col items-center justify-center p-3 text-gray-500 hover:text-indigo-600" data-view="github">
-                    <i class="fab fa-github text-xl mb-1"></i>
-                    <span class="text-xs">GitHub</span>
-                </button>
-                <button class="nav-btn flex flex-col items-center justify-center p-3 text-gray-500 hover:text-indigo-600" data-view="resources">
-                    <i class="fas fa-folder text-xl mb-1"></i>
-                    <span class="text-xs">Resources</span>
-                </button>
-            </div>
+    <div class="container mx-auto">
+        <div class="grid grid-cols-5">
+            <button class="nav-btn flex flex-col items-center justify-center p-3 text-indigo-600" data-view="dashboard">
+                <i class="fas fa-home text-xl mb-1"></i>
+                <span class="text-xs">Home</span>
+            </button>
+            <button class="nav-btn flex flex-col items-center justify-center p-3 text-gray-500 hover:text-indigo-600" data-view="day">
+                <i class="fas fa-book-open text-xl mb-1"></i>
+                <span class="text-xs">Learn</span>
+            </button>
+            <button class="nav-btn flex flex-col items-center justify-center p-3 text-gray-500 hover:text-indigo-600" data-view="playground">
+                <i class="fas fa-laptop-code text-xl mb-1"></i>
+                <span class="text-xs">Code</span>
+            </button>
+            <button class="nav-btn flex flex-col items-center justify-center p-3 text-gray-500 hover:text-indigo-600" data-view="github">
+                <i class="fab fa-github text-xl mb-1"></i>
+                <span class="text-xs">GitHub</span>
+            </button>
+            <button class="nav-btn flex flex-col items-center justify-center p-3 text-gray-500 hover:text-indigo-600" data-view="resources">
+                <i class="fas fa-folder text-xl mb-1"></i>
+                <span class="text-xs">Resources</span>
+            </button>
         </div>
-    </nav>
-
+    </div>
+</nav>
     <!-- JavaScript -->
     <script>
         // App State
@@ -4950,6 +4961,50 @@ git log --oneline`,
                 document.getElementById('githubCompletion').classList.add('hidden');
             }
         }
+
+// Add this JavaScript function to your script
+function setupNavbarAutoHide() {
+    const bottomNav = document.getElementById('bottomNav');
+    let lastScrollTop = 0;
+    let isScrolling = false;
+    
+    window.addEventListener('scroll', function() {
+        // If already scrolling, don't trigger again
+        if (isScrolling) return;
+        
+        isScrolling = true;
+        
+        setTimeout(function() {
+            isScrolling = false;
+        }, 100);
+        
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        if (scrollTop > lastScrollTop && scrollTop > 100) {
+            // Scrolling down - hide navbar
+            bottomNav.classList.remove('navbar-visible');
+            bottomNav.classList.add('navbar-hidden');
+        } else {
+            // Scrolling up or at top - show navbar
+            bottomNav.classList.remove('navbar-hidden');
+            bottomNav.classList.add('navbar-visible');
+        }
+        
+        lastScrollTop = scrollTop;
+    });
+}
+
+// Add this to your DOMContentLoaded event listener
+document.addEventListener('DOMContentLoaded', function() {
+    // Your existing initialization code here...
+    
+    // Add this line at the end
+    setupNavbarAutoHide();
+});
+
+        
     </script>
+
+
 </body>
 </html>
