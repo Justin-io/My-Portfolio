@@ -260,7 +260,63 @@ document.addEventListener('DOMContentLoaded', () => {
         <p>Copyright © 2025 Harinandan K.<br>
         This document is the intellectual property of the author. Unauthorized reproduction, distribution, or use without permission is prohibited. The concepts, theories, and mathematical formulations presented in this work are original and protected under applicable copyright laws.</p>
     </section>
-
+<!-- Add this HTML section just before the footer -->
+<section class="multimedia-overview">
+    <div class="overview-header" onclick="toggleOverview()">
+        <h2 class="overview-title">Audio/Video Overview</h2>
+        <span class="toggle-icon" id="toggle-icon">▼</span>
+    </div>
+    
+    <div class="overview-content" id="overview-content">
+        <p class="help-text">If you prefer listening or watching over reading, explore our multimedia summaries in English and Malayalam</p>
+        
+        <div class="language-section">
+            <h3 class="language-title">English Overview</h3>
+            <div class="media-container">
+                <div class="media-item">
+                    <h4 class="media-title">Audio Summary</h4>
+                    <audio controls class="media-player">
+                        <source src="english-overview.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                    <p class="media-description">10-minute audio summary of the Chronon-SQL Model in English</p>
+                </div>
+                
+                <div class="media-item">
+                    <h4 class="media-title">Video Explanation</h4>
+                    <video controls class="media-player" poster="video-thumbnail-en.jpg">
+                        <source src="english-overview.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p class="media-description">15-minute visual explanation with animations in English</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="language-section">
+            <h3 class="language-title">Malayalam Overview</h3>
+            <div class="media-container">
+                <div class="media-item">
+                    <h4 class="media-title">Audio Summary</h4>
+                    <audio controls class="media-player">
+                        <source src="malayalam-overview.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                    <p class="media-description">10-minute audio summary of the Chronon-SQL Model in Malayalam</p>
+                </div>
+                
+                <div class="media-item">
+                    <h4 class="media-title">Video Explanation</h4>
+                    <video controls class="media-player" poster="video-thumbnail-ml.jpg">
+                        <source src="malayalam-overview.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p class="media-description">15-minute visual explanation with animations in Malayalam</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
     <hr>
 
     <section class="abstract">
@@ -2674,63 +2730,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
     </div>
 </section>
-<!-- Add this HTML section just before the footer -->
-<section class="multimedia-overview">
-    <div class="overview-header" onclick="toggleOverview()">
-        <h2 class="overview-title">Audio/Video Overview</h2>
-        <span class="toggle-icon" id="toggle-icon">▼</span>
-    </div>
-    
-    <div class="overview-content" id="overview-content">
-        <p class="help-text">If you prefer listening or watching over reading, explore our multimedia summaries in English and Malayalam</p>
-        
-        <div class="language-section">
-            <h3 class="language-title">English Overview</h3>
-            <div class="media-container">
-                <div class="media-item">
-                    <h4 class="media-title">Audio Summary</h4>
-                    <audio controls class="media-player">
-                        <source src="english-overview.mp3" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>
-                    <p class="media-description">10-minute audio summary of the Chronon-SQL Model in English</p>
-                </div>
-                
-                <div class="media-item">
-                    <h4 class="media-title">Video Explanation</h4>
-                    <video controls class="media-player" poster="video-thumbnail-en.jpg">
-                        <source src="english-overview.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                    <p class="media-description">15-minute visual explanation with animations in English</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="language-section">
-            <h3 class="language-title">Malayalam Overview</h3>
-            <div class="media-container">
-                <div class="media-item">
-                    <h4 class="media-title">Audio Summary</h4>
-                    <audio controls class="media-player">
-                        <source src="malayalam-overview.mp3" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>
-                    <p class="media-description">10-minute audio summary of the Chronon-SQL Model in Malayalam</p>
-                </div>
-                
-                <div class="media-item">
-                    <h4 class="media-title">Video Explanation</h4>
-                    <video controls class="media-player" poster="video-thumbnail-ml.jpg">
-                        <source src="malayalam-overview.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                    <p class="media-description">15-minute visual explanation with animations in Malayalam</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+
     <footer>
         <p>
             &copy; 2025 
