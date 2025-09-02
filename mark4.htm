@@ -2584,7 +2584,452 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
     </div>
 </section>
+<!-- Add this CSS to your existing <style> section -->
+<style>
+    /* FAB and Modal Styles */
+    .fab-container {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 1000;
+    }
 
+    .fab-button {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #3498db, #2980b9);
+        border: none;
+        box-shadow: 
+            0 6px 20px rgba(52, 152, 219, 0.4),
+            0 2px 6px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        outline: none;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .fab-button::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+    }
+
+    .fab-button:hover::before {
+        width: 100%;
+        height: 100%;
+    }
+
+    .fab-button:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 
+            0 8px 25px rgba(52, 152, 219, 0.5),
+            0 3px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .fab-button:active {
+        transform: translateY(-1px) scale(1.02);
+    }
+
+    .fab-icon {
+        font-size: 28px;
+        color: white;
+        position: relative;
+        z-index: 1;
+    }
+
+    /* Modal Overlay - More transparent */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.2); /* More transparent */
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.active {
+        display: flex;
+        opacity: 1;
+    }
+
+    /* Modal Content - Semi-transparent */
+    .modal-content {
+        background: rgba(255, 255, 255, 0.85); /* More transparent */
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: 20px;
+        width: 90%;
+        max-width: 800px;
+        max-height: 90vh;
+        overflow: hidden; /* Hide overflow at content level */
+        box-shadow: 
+            0 20px 60px rgba(0, 0, 0, 0.2),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+        transform: scale(0.9) translateY(20px);
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+    }
+
+    .modal-overlay.active .modal-content {
+        transform: scale(1) translateY(0);
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 25px 30px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        background: rgba(255, 255, 255, 0.4); /* More transparent */
+        border-radius: 20px 20px 0 0;
+    }
+
+    .modal-title {
+        font-size: 1.8em;
+        color: #2c3e50;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        font-weight: 300;
+    }
+
+    .modal-icon {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #3498db, #2980b9);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2em;
+    }
+
+    .close-button {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(0, 0, 0, 0.1);
+        color: #7f8c8d;
+        font-size: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .close-button:hover {
+        background: rgba(231, 76, 60, 0.1);
+        color: #e74c3c;
+        transform: rotate(90deg);
+    }
+
+    .modal-body {
+        padding: 30px;
+        max-height: calc(90vh - 100px); /* Account for header height */
+        overflow-y: auto; /* Enable scrolling */
+        /* Hide scrollbar for all browsers */
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+    }
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .modal-body::-webkit-scrollbar {
+        display: none;
+    }
+
+    .help-text {
+        text-align: center;
+        color: #7f8c8d;
+        font-style: italic;
+        margin-bottom: 30px;
+        font-size: 1.1em;
+    }
+
+    .language-section {
+        margin-bottom: 35px;
+    }
+
+    .language-title {
+        font-size: 1.5em;
+        color: #34495e;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid rgba(52, 152, 219, 0.3);
+        display: inline-block;
+        font-weight: 400;
+    }
+
+    .media-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .media-card {
+        background: rgba(255, 255, 255, 0.6); /* More transparent */
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 
+            0 4px 15px rgba(0, 0, 0, 0.08),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .media-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 
+            0 8px 25px rgba(0, 0, 0, 0.12),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+    }
+
+    .media-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 15px;
+    }
+
+    .media-icon {
+        width: 45px;
+        height: 45px;
+        background: linear-gradient(135deg, #3498db, #2980b9);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.3em;
+    }
+
+    .media-title {
+        font-size: 1.2em;
+        color: #2c3e50;
+        margin: 0;
+        font-weight: 500;
+    }
+
+    .audio-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: linear-gradient(135deg, #3498db, #2980b9);
+        color: white;
+        padding: 12px 20px;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 1em;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        margin: 10px 0;
+    }
+
+    .audio-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+    }
+
+    .media-player {
+        width: 100%;
+        border-radius: 10px;
+        margin: 15px 0;
+    }
+
+    .media-description {
+        color: #7f8c8d;
+        font-style: italic;
+        font-size: 0.9em;
+        margin-top: 10px;
+    }
+
+    .media-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: rgba(52, 152, 219, 0.1);
+        color: #3498db;
+        padding: 4px 10px;
+        border-radius: 15px;
+        font-size: 0.75em;
+        font-weight: 600;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .fab-container {
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .fab-button {
+            width: 56px;
+            height: 56px;
+        }
+
+        .fab-icon {
+            font-size: 24px;
+        }
+
+        .modal-content {
+            width: 95%;
+            border-radius: 15px;
+        }
+
+        .modal-header {
+            padding: 20px;
+        }
+
+        .modal-body {
+            padding: 20px;
+            max-height: calc(90vh - 80px); /* Adjust for smaller header */
+        }
+
+        .media-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<!-- Add this HTML just before the closing </body> tag -->
+<div class="fab-container">
+    <button class="fab-button" onclick="openModal()" aria-label="Open multimedia overview">
+        <span class="fab-icon">🎧</span>
+    </button>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="mediaModal" onclick="closeModalOnOverlay(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h2 class="modal-title">
+                <div class="modal-icon">🎧</div>
+                Audio/Video Overview
+            </h2>
+            <button class="close-button" onclick="closeModal()" aria-label="Close modal">
+                ✕
+            </button>
+        </div>
+        
+        <div class="modal-body">
+            <p class="help-text">Prefer listening or watching? Explore our multimedia summaries in English and Malayalam</p>
+            
+            <div class="language-section">
+                <h3 class="language-title">English Overview</h3>
+                <div class="media-grid">
+                    <div class="media-card">
+                        <div class="media-badge">M4A</div>
+                        <div class="media-header">
+                            <div class="media-icon">🔊</div>
+                            <h4 class="media-title">Audio Summary</h4>
+                        </div>
+                        <a href="english-overview.m4a" class="audio-link" download>
+                            <span>▶</span> Play English Summary
+                        </a>
+                        <p class="media-description">10-minute comprehensive audio explanation of the Chronon-SQL Model in English</p>
+                    </div>
+                    
+                    <div class="media-card">
+                        <div class="media-badge">MP4</div>
+                        <div class="media-header">
+                            <div class="media-icon">🎬</div>
+                            <h4 class="media-title">Video Explanation</h4>
+                        </div>
+                        <video controls class="media-player" poster="video-thumbnail-en.jpg">
+                            <source src="english-overview.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <p class="media-description">15-minute visual presentation with animations and diagrams</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="language-section">
+                <h3 class="language-title">Malayalam Overview</h3>
+                <div class="media-grid">
+                    <div class="media-card">
+                        <div class="media-badge">M4A</div>
+                        <div class="media-header">
+                            <div class="media-icon">🔊</div>
+                            <h4 class="media-title">Audio Summary</h4>
+                        </div>
+                        <a href="malayalam-overview.m4a" class="audio-link" download>
+                            <span>▶</span> Play Malayalam Summary
+                        </a>
+                        <p class="media-description">10-minute detailed audio explanation in Malayalam with native clarity</p>
+                    </div>
+                    
+                    <div class="media-card">
+                        <div class="media-badge">MP4</div>
+                        <div class="media-header">
+                            <div class="media-icon">🎬</div>
+                            <h4 class="media-title">Video Explanation</h4>
+                        </div>
+                        <video controls class="media-player" poster="video-thumbnail-ml.jpg">
+                            <source src="malayalam-overview.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <p class="media-description">15-minute comprehensive video explanation in Malayalam</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add this JavaScript before the closing </body> tag -->
+<script>
+    function openModal() {
+        const modal = document.getElementById('mediaModal');
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('mediaModal');
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    function closeModalOnOverlay(event) {
+        if (event.target === event.currentTarget) {
+            closeModal();
+        }
+    }
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            closeModal();
+        }
+    });
+</script>
     <footer>
         <p>
             &copy; 2025 
