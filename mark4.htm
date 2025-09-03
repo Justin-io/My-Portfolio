@@ -206,6 +206,334 @@ footer {
     font-size: 0.9em;
     color: #777;
 }
+
+/* FAB and Slide Panel Styles — Harmonized with Main CSS */
+
+/* Floating Action Button (FAB) */
+.fab-container {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000; /* Below slide panel, above content */
+}
+
+.fab-button {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    border: none;
+    box-shadow: 
+        0 6px 20px rgba(52, 152, 219, 0.4),
+        0 2px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    outline: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.fab-button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.fab-button:hover::before {
+    width: 100%;
+    height: 100%;
+}
+
+.fab-button:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 
+        0 8px 25px rgba(52, 152, 219, 0.5),
+        0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.fab-button:active {
+    transform: translateY(-1px) scale(1.02);
+}
+
+.fab-icon {
+    font-size: 28px;
+    color: white;
+    position: relative;
+    z-index: 1;
+}
+
+/* Slide Panel */
+.slide-panel {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    max-width: 500px;
+    height: 100%;
+    background: white; /* Match main bg, avoid gradient clash */
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+    transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 1500;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Match main */
+}
+
+.slide-panel.active {
+    right: 0;
+}
+
+.panel-header {
+    background: #2c3e50; /* Primary dark color from main CSS */
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.panel-title {
+    font-size: 1.5em;
+    font-weight: 300;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.panel-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+}
+
+.close-panel {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    transition: all 0.3s ease;
+}
+
+.close-panel:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+}
+
+.panel-body {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    background-color: #f9f9f9;
+}
+
+.panel-body::-webkit-scrollbar {
+    display: none;
+}
+
+/* Language Tabs */
+.language-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.tab-button {
+    background: none;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1em;
+    color: #555;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.tab-button.active {
+    color: #3498db;
+}
+
+.tab-button::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: #3498db;
+    transition: width 0.3s ease;
+}
+
+.tab-button.active::after {
+    width: 100%;
+}
+
+.tab-content {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Media Item */
+.media-item {
+    background: white;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border: 1px solid #eee;
+}
+
+.media-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.media-item-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 12px;
+}
+
+.media-type-icon {
+    width: 40px;
+    height: 40px;
+    background: #3498db;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2em;
+}
+
+.media-item-title {
+    font-size: 1.1em;
+    color: #2c3e50;
+    margin: 0;
+    font-weight: 500;
+}
+
+.audio-player {
+    width: 100%;
+    margin: 12px 0;
+    border-radius: 6px;
+    height: 40px;
+}
+
+.video-player {
+    width: 100%;
+    border-radius: 6px;
+    margin: 12px 0;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
+.media-description {
+    color: #666;
+    font-size: 0.9em;
+    line-height: 1.5;
+    margin-top: 8px;
+}
+
+/* Overlay */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: none;
+    z-index: 1490;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .fab-container {
+        bottom: 20px;
+        right: 20px;
+    }
+
+    .fab-button {
+        width: 56px;
+        height: 56px;
+    }
+
+    .fab-icon {
+        font-size: 24px;
+    }
+
+    .slide-panel {
+        max-width: 100%;
+    }
+
+    .panel-title {
+        font-size: 1.3em;
+    }
+
+    .panel-body {
+        padding: 16px;
+    }
+
+    .media-item {
+        padding: 16px;
+    }
+
+    .media-type-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 1.1em;
+    }
+}
     </style>
 
 
@@ -2681,315 +3009,7 @@ footer {
         </div>
     </div>
 </section>
-<!-- Add this CSS to your existing <style> section -->
-<style>
-    /* FAB and Slide Panel Styles */
-    .fab-container {
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        z-index: 1000;
-    }
 
-    .fab-button {
-        width: 64px;
-        height: 64px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #3498db, #2980b9);
-        border: none;
-        box-shadow: 
-            0 6px 20px rgba(52, 152, 219, 0.4),
-            0 2px 6px rgba(0, 0, 0, 0.1);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        outline: none;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .fab-button::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 0;
-        height: 0;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.3);
-        transform: translate(-50%, -50%);
-        transition: width 0.6s, height 0.6s;
-    }
-
-    .fab-button:hover::before {
-        width: 100%;
-        height: 100%;
-    }
-
-    .fab-button:hover {
-        transform: translateY(-3px) scale(1.05);
-        box-shadow: 
-            0 8px 25px rgba(52, 152, 219, 0.5),
-            0 3px 8px rgba(0, 0, 0, 0.15);
-    }
-
-    .fab-button:active {
-        transform: translateY(-1px) scale(1.02);
-    }
-
-    .fab-icon {
-        font-size: 28px;
-        color: white;
-        position: relative;
-        z-index: 1;
-    }
-
-    /* Slide Panel */
-    .slide-panel {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 100%;
-        max-width: 500px;
-        height: 100%;
-        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-        box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
-        transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        z-index: 2000;
-        overflow-y: auto;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .slide-panel.active {
-        right: 0;
-    }
-
-    .panel-header {
-        background: linear-gradient(135deg, #3498db, #2980b9);
-        color: white;
-        padding: 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .panel-title {
-        font-size: 1.5em;
-        font-weight: 300;
-        margin: 0;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-
-    .panel-icon {
-        width: 40px;
-        height: 40px;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2em;
-    }
-
-    .close-panel {
-        background: rgba(255, 255, 255, 0.2);
-        border: none;
-        color: white;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 20px;
-        transition: all 0.3s ease;
-    }
-
-    .close-panel:hover {
-        background: rgba(255, 255, 255, 0.3);
-        transform: rotate(90deg);
-    }
-
-    .panel-body {
-        flex: 1;
-        padding: 20px;
-        overflow-y: auto;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-    }
-
-    .panel-body::-webkit-scrollbar {
-        display: none;
-    }
-
-    .language-tabs {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 20px;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    }
-
-    .tab-button {
-        background: none;
-        border: none;
-        padding: 12px 20px;
-        font-size: 1em;
-        color: #666;
-        cursor: pointer;
-        position: relative;
-        transition: all 0.3s ease;
-        font-weight: 500;
-    }
-
-    .tab-button.active {
-        color: #3498db;
-    }
-
-    .tab-button::after {
-        content: '';
-        position: absolute;
-        bottom: -1px;
-        left: 0;
-        width: 0;
-        height: 3px;
-        background: #3498db;
-        transition: width 0.3s ease;
-    }
-
-    .tab-button.active::after {
-        width: 100%;
-    }
-
-    .tab-content {
-        display: none;
-        animation: fadeIn 0.3s ease;
-    }
-
-    .tab-content.active {
-        display: block;
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    .media-item {
-        background: white;
-        border-radius: 15px;
-        padding: 20px;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        transition: all 0.3s ease;
-    }
-
-    .media-item:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-    }
-
-    .media-item-header {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        margin-bottom: 15px;
-    }
-
-    .media-type-icon {
-        width: 50px;
-        height: 50px;
-        background: linear-gradient(135deg, #3498db, #2980b9);
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 1.5em;
-    }
-
-    .media-item-title {
-        font-size: 1.2em;
-        color: #2c3e50;
-        margin: 0;
-        font-weight: 500;
-    }
-
-    .audio-player {
-        width: 100%;
-        margin: 15px 0;
-        border-radius: 10px;
-        height: 50px;
-    }
-
-    .video-player {
-        width: 100%;
-        border-radius: 10px;
-        margin: 15px 0;
-    }
-
-    .media-description {
-        color: #666;
-        font-size: 0.9em;
-        line-height: 1.5;
-        margin-top: 10px;
-    }
-
-    .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.3);
-        backdrop-filter: blur(5px);
-        -webkit-backdrop-filter: blur(5px);
-        display: none;
-        z-index: 1500;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-
-    .overlay.active {
-        display: block;
-        opacity: 1;
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-        .fab-container {
-            bottom: 20px;
-            right: 20px;
-        }
-
-        .fab-button {
-            width: 56px;
-            height: 56px;
-        }
-
-        .fab-icon {
-            font-size: 24px;
-        }
-
-        .slide-panel {
-            max-width: 100%;
-        }
-
-        .panel-title {
-            font-size: 1.3em;
-        }
-
-        .media-item {
-            padding: 15px;
-        }
-    }
-</style>
 
 <!-- Add this HTML just before the closing </body> tag -->
 <div class="fab-container">
@@ -3012,43 +3032,16 @@ footer {
             ✕
         </button>
     </div>
-    
+
     <div class="panel-body">
         <div class="language-tabs">
-            <button class="tab-button" onclick="switchTab('malayalam')">Malayalam</button>
-            <button class="tab-button active" onclick="switchTab('english')">English</button>
-            
+            <!-- Malayalam first and active by default -->
+            <button class="tab-button active" onclick="switchTab('malayalam')">Malayalam</button>
+            <button class="tab-button" onclick="switchTab('english')">English</button>
         </div>
-        <!-- Overlay 
 
-        <div id="english" class="tab-content active">
-            <div class="media-item">
-                <div class="media-item-header">
-                    <div class="media-type-icon">🔊</div>
-                    <h3 class="media-item-title">Audio Summary</h3>
-                </div>
-                <audio controls class="audio-player">
-                    <source src="english-overview.m4a" type="audio/mp4">
-                    Your browser does not support the audio element.
-                </audio>
-                <p class="media-description">10-minute comprehensive audio explanation of the Chronon-SQL Model in English. Perfect for on-the-go learning.</p>
-            </div>
-            
-
-            <div class="media-item">
-                <div class="media-item-header">
-                    <div class="media-type-icon">🎬</div>
-                    <h3 class="media-item-title">Video Explanation</h3>
-                </div>
-                <video controls class="video-player" poster="video-thumbnail-en.jpg">
-                    <source src="english-overview.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <p class="media-description">15-minute visual presentation with animations and diagrams illustrating key concepts of the model.</p>
-            </div><!-- Overlay -->
-        </div>
-        
-        <div id="malayalam" class="tab-content">
+        <!-- Tab Contents -->
+        <div id="malayalam" class="tab-content active">
             <div class="media-item">
                 <div class="media-item-header">
                     <div class="media-type-icon">🔊</div>
@@ -3060,7 +3053,6 @@ footer {
                 </audio>
                 <p class="media-description">19-minute detailed audio explanation of the Chronon-SQL Model in Malayalam. Native language clarity.</p>
             </div>
-            <!-- Overlay 
 
             <div class="media-item">
                 <div class="media-item-header">
@@ -3072,49 +3064,86 @@ footer {
                     Your browser does not support the video tag.
                 </video>
                 <p class="media-description">15-minute comprehensive video explanation in Malayalam with visual aids and detailed narration.</p>
-            </div> Overlay -->
+            </div>
+        </div>
 
+        <!-- English tab (inactive by default) -->
+        <div id="english" class="tab-content">
+            <div class="media-item">
+                <div class="media-item-header">
+                    <div class="media-type-icon">🔊</div>
+                    <h3 class="media-item-title">Audio Summary</h3>
+                </div>
+                <audio controls class="audio-player">
+                    <source src="english-overview.m4a" type="audio/mp4">
+                    Your browser does not support the audio element.
+                </audio>
+                <p class="media-description">10-minute comprehensive audio explanation of the Chronon-SQL Model in English. Perfect for on-the-go learning.</p>
+            </div>
+
+            <div class="media-item">
+                <div class="media-item-header">
+                    <div class="media-type-icon">🎬</div>
+                    <h3 class="media-item-title">Video Explanation</h3>
+                </div>
+                <video controls class="video-player" poster="video-thumbnail-en.jpg">
+                    <source src="english-overview.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <p class="media-description">15-minute visual presentation with animations and diagrams illustrating key concepts of the model.</p>
+            </div>
         </div>
     </div>
 </div>
 
 <!-- Add this JavaScript before the closing </body> tag -->
 <script>
+    // Cache DOM elements for performance
+    const slidePanel = document.getElementById('slidePanel');
+    const overlay = document.getElementById('overlay');
+    const body = document.body;
+
+    // Open the panel
     function openPanel() {
-        const panel = document.getElementById('slidePanel');
-        const overlay = document.getElementById('overlay');
-        panel.classList.add('active');
+        slidePanel.classList.add('active');
         overlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
+        body.style.overflow = 'hidden'; // Prevent background scroll
     }
 
+    // Close the panel
     function closePanel() {
-        const panel = document.getElementById('slidePanel');
-        const overlay = document.getElementById('overlay');
-        panel.classList.remove('active');
+        slidePanel.classList.remove('active');
         overlay.classList.remove('active');
-        document.body.style.overflow = 'auto';
+        body.style.overflow = ''; // Reset to default
     }
 
+    // Switch between language tabs
     function switchTab(language) {
-        // Remove active class from all tabs and contents
-        const tabs = document.querySelectorAll('.tab-button');
-        const contents = document.querySelectorAll('.tab-content');
-        
-        tabs.forEach(tab => tab.classList.remove('active'));
-        contents.forEach(content => content.classList.remove('active'));
-        
-        // Add active class to selected tab and content
-        document.querySelector(`[onclick="switchTab('${language}')"]`).classList.add('active');
-        document.getElementById(language).classList.add('active');
+        // Remove active class from all tabs and content
+        document.querySelectorAll('.tab-button').forEach(tab => {
+            tab.classList.remove('active');
+        });
+        document.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.remove('active');
+        });
+
+        // Add active class to selected tab button and content
+        const tabButton = document.querySelector(`.language-tabs .tab-button[onclick="switchTab('${language}')"]`);
+        const tabContent = document.getElementById(language);
+
+        if (tabButton) tabButton.classList.add('active');
+        if (tabContent) tabContent.classList.add('active');
     }
 
     // Close panel with Escape key
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape') {
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
             closePanel();
         }
     });
+
+    // Optional: Close panel when clicking on the overlay (background)
+    overlay.addEventListener('click', closePanel);
 </script>
     <footer>
         <p>
