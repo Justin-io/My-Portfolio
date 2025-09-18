@@ -104,7 +104,7 @@
 
         /* Hero Section */
         .hero {
-            height: 100vh;
+            min-height: 100vh;
             background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 20, 40, 0.8) 100%);
             position: relative;
             display: flex;
@@ -129,10 +129,11 @@
         .hero-content {
             z-index: 2;
             position: relative;
+            padding: 20px;
         }
 
         .hero h1 {
-            font-size: 5rem;
+            font-size: clamp(2.5rem, 8vw, 5rem);
             font-weight: bold;
             margin-bottom: 1rem;
             background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
@@ -153,7 +154,7 @@
         }
 
         .hero p {
-            font-size: 1.5rem;
+            font-size: clamp(1rem, 3vw, 1.5rem);
             margin-bottom: 2rem;
             color: var(--text-secondary);
         }
@@ -162,6 +163,7 @@
             display: flex;
             justify-content: center;
             gap: 20px;
+            flex-wrap: wrap;
         }
 
         .btn-hero {
@@ -172,6 +174,7 @@
             position: relative;
             overflow: hidden;
             z-index: 1;
+            min-width: 200px;
         }
 
         .btn-hero::before {
@@ -222,18 +225,30 @@
 
         /* Section Styling */
         .section {
-            padding: 80px 0;
+            padding: 60px 0;
             position: relative;
+        }
+
+        @media (min-width: 768px) {
+            .section {
+                padding: 80px 0;
+            }
         }
 
         .section-title {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
             position: relative;
         }
 
+        @media (min-width: 768px) {
+            .section-title {
+                margin-bottom: 50px;
+            }
+        }
+
         .section-title h2 {
-            font-size: 2.5rem;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
             font-weight: bold;
             color: var(--text-color);
             margin-bottom: 20px;
@@ -247,7 +262,7 @@
             bottom: -10px;
             left: 50%;
             transform: translateX(-50%);
-            width: 100px;
+            width: 80px;
             height: 4px;
             background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
             border-radius: 2px;
@@ -257,6 +272,7 @@
             color: var(--text-secondary);
             max-width: 600px;
             margin: 0 auto;
+            font-size: 1.1rem;
         }
 
         /* Event Cards */
@@ -271,6 +287,8 @@
             margin-bottom: 30px;
             overflow: hidden;
             height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
         .event-card:hover {
@@ -280,7 +298,7 @@
         }
 
         .event-card-img {
-            height: 200px;
+            height: 180px;
             background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
             display: flex;
             align-items: center;
@@ -289,6 +307,13 @@
             font-size: 3rem;
             position: relative;
             overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        @media (min-width: 768px) {
+            .event-card-img {
+                height: 200px;
+            }
         }
 
         .event-card-img::before {
@@ -303,7 +328,16 @@
         }
 
         .event-card-body {
-            padding: 25px;
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (min-width: 768px) {
+            .event-card-body {
+                padding: 25px;
+            }
         }
 
         .event-category {
@@ -314,16 +348,20 @@
             border-radius: 20px;
             font-size: 0.8rem;
             margin-bottom: 15px;
+            align-self: flex-start;
         }
 
         .event-card h4 {
             color: var(--text-color);
             margin-bottom: 15px;
+            font-size: 1.3rem;
         }
 
         .event-card p {
             color: var(--text-secondary);
             margin-bottom: 15px;
+            flex-grow: 1;
+            font-size: 0.95rem;
         }
 
         .event-card .btn {
@@ -331,6 +369,7 @@
             border: none;
             color: white;
             transition: all 0.3s ease;
+            align-self: flex-start;
         }
 
         .event-card .btn:hover {
@@ -347,7 +386,7 @@
         .timeline::before {
             content: '';
             position: absolute;
-            left: 50%;
+            left: 30px;
             top: 0;
             bottom: 0;
             width: 2px;
@@ -355,19 +394,30 @@
             transform: translateX(-50%);
         }
 
+        @media (min-width: 768px) {
+            .timeline::before {
+                left: 50%;
+            }
+        }
+
         .timeline-item {
             position: relative;
-            margin-bottom: 50px;
+            margin-bottom: 30px;
+            padding-left: 60px;
         }
 
-        .timeline-item:nth-child(odd) {
-            text-align: right;
-            padding-right: 60%;
-        }
-
-        .timeline-item:nth-child(even) {
-            text-align: left;
-            padding-left: 60%;
+        @media (min-width: 768px) {
+            .timeline-item {
+                padding-left: 0;
+            }
+            .timeline-item:nth-child(odd) {
+                text-align: right;
+                padding-right: 60%;
+            }
+            .timeline-item:nth-child(even) {
+                text-align: left;
+                padding-left: 60%;
+            }
         }
 
         .timeline-content {
@@ -385,30 +435,41 @@
             content: '';
             position: absolute;
             top: 20px;
+            left: 30px;
             width: 20px;
             height: 20px;
             background: var(--primary-color);
             border-radius: 50%;
             border: 4px solid rgba(10, 10, 10, 0.8);
             box-shadow: 0 0 0 4px rgba(0, 212, 255, 0.2);
+            transform: translateX(-50%);
         }
 
-        .timeline-item:nth-child(odd)::before {
-            right: 60%;
-        }
-
-        .timeline-item:nth-child(even)::before {
-            left: 60%;
+        @media (min-width: 768px) {
+            .timeline-item::before {
+                left: 50%;
+            }
+            .timeline-item:nth-child(odd)::before {
+                right: 60%;
+                left: auto;
+                transform: translateX(50%);
+            }
+            .timeline-item:nth-child(even)::before {
+                left: 60%;
+                transform: translateX(-50%);
+            }
         }
 
         .timeline-content h5 {
             color: var(--text-color);
             margin-bottom: 10px;
+            font-size: 1.2rem;
         }
 
         .timeline-content p {
             color: var(--text-secondary);
             margin-bottom: 10px;
+            font-size: 0.95rem;
         }
 
         /* Registration Section */
@@ -438,17 +499,27 @@
             background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
             color: white !important;
             border: none;
-            padding: 20px 40px;
-            font-size: 1.3rem;
+            padding: 18px 35px;
+            font-size: 1.2rem;
             font-weight: bold;
             border-radius: 50px;
             transition: all 0.3s ease;
             display: inline-block;
             text-decoration: none;
-            margin: 20px 10px;
+            margin: 15px 8px;
             position: relative;
             overflow: hidden;
             z-index: 1;
+            min-width: 250px;
+        }
+
+        @media (min-width: 768px) {
+            .btn-register {
+                padding: 20px 40px;
+                font-size: 1.3rem;
+                margin: 20px 10px;
+                min-width: 300px;
+            }
         }
 
         .btn-register::before {
@@ -482,6 +553,13 @@
             padding: 20px;
             height: 100%;
             transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .registration-card {
+                margin-bottom: 0;
+            }
         }
 
         .registration-card:hover {
@@ -498,15 +576,24 @@
             border-radius: 16px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 20px;
-            margin: 10px;
+            margin: 10px 5px;
             box-shadow: 0 8px 32px 0 rgba(0, 212, 255, 0.1);
             transition: all 0.3s ease;
-            height: 150px;
+            height: 120px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: var(--text-color);
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            .sponsor-logo {
+                height: 150px;
+                font-size: 1.2rem;
+                margin: 10px;
+            }
         }
 
         .sponsor-logo:hover {
@@ -517,10 +604,16 @@
 
         /* Map */
         #map {
-            height: 400px;
+            height: 300px;
             border-radius: 16px;
             box-shadow: 0 8px 32px 0 rgba(0, 212, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @media (min-width: 768px) {
+            #map {
+                height: 400px;
+            }
         }
 
         /* FAQ */
@@ -533,6 +626,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 16px !important;
             margin-bottom: 10px;
+            font-size: 1.1rem;
         }
 
         .accordion-button:not(.collapsed) {
@@ -548,6 +642,7 @@
             color: var(--text-secondary);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-top: none;
+            font-size: 0.95rem;
         }
 
         .accordion-item {
@@ -561,10 +656,16 @@
             background: rgba(10, 10, 10, 0.6);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            padding: 40px;
+            padding: 30px 20px;
             border-radius: 16px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 8px 32px 0 rgba(0, 212, 255, 0.1);
+        }
+
+        @media (min-width: 768px) {
+            .contact-form {
+                padding: 40px;
+            }
         }
 
         .form-control, .form-select {
@@ -585,6 +686,7 @@
 
         .form-label {
             color: var(--text-secondary);
+            font-weight: 500;
         }
 
         /* Footer */
@@ -662,50 +764,14 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 3rem;
-            }
-            
-            .hero p {
-                font-size: 1.2rem;
-            }
-            
-            .timeline-item:nth-child(odd),
-            .timeline-item:nth-child(even) {
-                text-align: left;
-                padding-left: 40px;
-                padding-right: 0;
-            }
-            
-            .timeline::before {
-                left: 20px;
-            }
-            
-            .timeline-item::before {
-                left: 20px !important;
-                right: auto !important;
-            }
-            
-            .btn-hero {
-                display: block;
-                margin: 10px auto;
-                width: 80%;
-            }
-            
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-
         /* Buttons */
         .btn-primary {
             background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
             border: none;
             color: white;
             transition: all 0.3s ease;
+            border-radius: 8px;
+            padding: 10px 20px;
         }
 
         .btn-primary:hover {
@@ -718,6 +784,8 @@
             color: white !important;
             background: transparent;
             transition: all 0.3s ease;
+            border-radius: 8px;
+            padding: 10px 20px;
         }
 
         .btn-outline-primary:hover {
@@ -732,6 +800,7 @@
             padding: 5px 10px;
             border-radius: 20px;
             font-weight: normal;
+            font-size: 0.8rem;
         }
 
         .badge.bg-primary {
@@ -754,6 +823,7 @@
         /* Tabs */
         .nav-tabs {
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            flex-wrap: wrap;
         }
 
         .nav-tabs .nav-link {
@@ -761,8 +831,15 @@
             border: none;
             border-bottom: 2px solid transparent;
             border-radius: 0;
-            padding: 10px 20px;
+            padding: 10px 15px;
             transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        @media (min-width: 768px) {
+            .nav-tabs .nav-link {
+                padding: 10px 20px;
+            }
         }
 
         .nav-tabs .nav-link:hover {
@@ -797,10 +874,16 @@
             background: rgba(10, 10, 10, 0.6);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            padding: 30px;
+            padding: 25px 20px;
             border-radius: 16px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 8px 32px 0 rgba(0, 212, 255, 0.1);
+        }
+
+        @media (min-width: 768px) {
+            .raffle-terms {
+                padding: 30px;
+            }
         }
 
         .terms-content {
@@ -815,6 +898,7 @@
         .terms-content ol {
             color: var(--text-secondary);
             padding-left: 20px;
+            font-size: 0.95rem;
         }
 
         .terms-content li {
@@ -826,11 +910,17 @@
             background: rgba(10, 10, 10, 0.6);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            padding: 30px;
+            padding: 25px 20px;
             border-radius: 16px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 8px 32px 0 rgba(0, 212, 255, 0.1);
             height: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .contact-info {
+                padding: 30px;
+            }
         }
 
         .contact-item {
@@ -840,6 +930,12 @@
         .contact-item h5 {
             color: var(--text-color);
             margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        .contact-item p {
+            font-size: 0.95rem;
+            margin-bottom: 0;
         }
 
         /* Social Links */
@@ -867,6 +963,13 @@
         }
 
         /* Event Filter Buttons */
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
         .btn-group .btn {
             background: rgba(10, 10, 10, 0.4);
             backdrop-filter: blur(5px);
@@ -874,8 +977,16 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: var(--text-secondary);
             border-radius: 20px;
-            margin: 0 5px;
+            padding: 8px 16px;
+            font-size: 0.9rem;
             transition: all 0.3s ease;
+        }
+
+        @media (min-width: 768px) {
+            .btn-group .btn {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
         }
 
         .btn-group .btn:hover {
@@ -888,6 +999,60 @@
             background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
             color: white;
             border-color: transparent;
+        }
+
+        /* Utility Classes */
+        .text-break {
+            word-break: break-word;
+        }
+
+        .overflow-hidden {
+            overflow: hidden;
+        }
+
+        /* Responsive Spacing */
+        .py-responsive {
+            padding: 40px 0;
+        }
+
+        @media (min-width: 768px) {
+            .py-responsive {
+                padding: 60px 0;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .py-responsive {
+                padding: 80px 0;
+            }
+        }
+
+        /* Responsive Text */
+        .responsive-text {
+            font-size: 0.9rem;
+        }
+
+        @media (min-width: 768px) {
+            .responsive-text {
+                font-size: 1rem;
+            }
+        }
+
+        /* Responsive Icons */
+        .responsive-icon {
+            font-size: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .responsive-icon {
+                font-size: 2rem;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .responsive-icon {
+                font-size: 3rem;
+            }
         }
     </style>
 </head>
@@ -903,8 +1068,9 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#home">
-                <i class="fas fa-rocket"></i> ZENORIX 2025
+            <a class="navbar-brand d-flex align-items-center" href="#home">
+                <i class="fas fa-rocket me-2"></i>
+                <span>ZENORIX 2025</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -950,14 +1116,14 @@
     <section id="home" class="hero">
         <div id="particles-js"></div>
         <div class="hero-content">
-            <h1 data-aos="fade-up">ZENORIX 2025</h1>
-            <p data-aos="fade-up" data-aos-delay="200">A TWO-day EVENT of COMPETITIONS, FUN activities, and workshops</p>
+            <h1 class="text-center" data-aos="fade-up">ZENORIX 2025</h1>
+            <p class="text-center" data-aos="fade-up" data-aos-delay="200">A TWO-day EVENT of COMPETITIONS, FUN activities, and workshops</p>
             <div class="hero-buttons" data-aos="fade-up" data-aos-delay="400">
                 <a href="#events" class="btn btn-hero-primary btn-hero">
-                    <i class="fas fa-calendar-alt"></i> View Events
+                    <i class="fas fa-calendar-alt me-2"></i> View Events
                 </a>
                 <a href="#registration" class="btn btn-hero-warning btn-hero">
-                    <i class="fas fa-user-plus"></i> Register Now
+                    <i class="fas fa-user-plus me-2"></i> Register Now
                 </a>
             </div>
         </div>
@@ -971,61 +1137,61 @@
                 <p class="lead">Experience the future of technology at IES College of Engineering</p>
             </div>
             <div class="row">
-                <div class="col-lg-6" data-aos="fade-right">
-                    <div class="glass p-4">
-                        <h3>Welcome to ZENORIX 2025</h3>
-                        <p>ZENORIX 2025 is a premier technical festival organized by the Department of Computer Science and Engineering (Data Science) at IES College of Engineering, Chittilappilly. This two-day extravaganza brings together the brightest minds in technology for competitions, workshops, and interactive experiences.</p>
-                        <p>Join us on September 26th & 27th, 2025, for an unforgettable journey into the world of innovation, creativity, and technological excellence.</p>
+                <div class="col-lg-6 mb-4" data-aos="fade-right">
+                    <div class="glass p-4 h-100">
+                        <h3 class="mb-4">Welcome to ZENORIX 2025</h3>
+                        <p class="responsive-text">ZENORIX 2025 is a premier technical festival organized by the Department of Computer Science and Engineering (Data Science) at IES College of Engineering, Chittilappilly. This two-day extravaganza brings together the brightest minds in technology for competitions, workshops, and interactive experiences.</p>
+                        <p class="responsive-text">Join us on September 26th & 27th, 2025, for an unforgettable journey into the world of innovation, creativity, and technological excellence.</p>
                         <div class="row mt-4">
-                            <div class="col-md-6">
-                                <div class="d-flex align-items-center mb-3">
-                                    <i class="fas fa-calendar-check fa-2x text-primary me-3"></i>
+                            <div class="col-6">
+                                <div class="d-flex align-items-start mb-3">
+                                    <i class="fas fa-calendar-check responsive-icon text-primary me-3"></i>
                                     <div>
                                         <h5>Date</h5>
-                                        <p>September 26-27, 2025</p>
+                                        <p class="mb-0">September 26-27, 2025</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="d-flex align-items-center mb-3">
-                                    <i class="fas fa-map-marker-alt fa-2x text-primary me-3"></i>
+                            <div class="col-6">
+                                <div class="d-flex align-items-start mb-3">
+                                    <i class="fas fa-map-marker-alt responsive-icon text-primary me-3"></i>
                                     <div>
                                         <h5>Venue</h5>
-                                        <p>IES College of Engineering</p>
+                                        <p class="mb-0">IES College of Engineering</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6" data-aos="fade-left">
-                    <div class="row">
-                        <div class="col-md-6 mb-4">
+                <div class="col-lg-6 mb-4" data-aos="fade-left">
+                    <div class="row g-3">
+                        <div class="col-6">
                             <div class="glass p-4 text-center h-100">
-                                <i class="fas fa-trophy fa-3x text-warning mb-3"></i>
-                                <h4>Competitions</h4>
-                                <p>Test your skills in various technical challenges</p>
+                                <i class="fas fa-trophy responsive-icon text-warning mb-3"></i>
+                                <h5>Competitions</h5>
+                                <p class="responsive-text mb-0">Test your skills in various technical challenges</p>
                             </div>
                         </div>
-                        <div class="col-md-6 mb-4">
+                        <div class="col-6">
                             <div class="glass p-4 text-center h-100">
-                                <i class="fas fa-laptop-code fa-3x text-info mb-3"></i>
-                                <h4>Workshops</h4>
-                                <p>Learn from industry experts and innovators</p>
+                                <i class="fas fa-laptop-code responsive-icon text-info mb-3"></i>
+                                <h5>Workshops</h5>
+                                <p class="responsive-text mb-0">Learn from industry experts and innovators</p>
                             </div>
                         </div>
-                        <div class="col-md-6 mb-4">
+                        <div class="col-6">
                             <div class="glass p-4 text-center h-100">
-                                <i class="fas fa-gamepad fa-3x text-success mb-3"></i>
-                                <h4>Fun Activities</h4>
-                                <p>Enjoy interactive games and experiences</p>
+                                <i class="fas fa-gamepad responsive-icon text-success mb-3"></i>
+                                <h5>Fun Activities</h5>
+                                <p class="responsive-text mb-0">Enjoy interactive games and experiences</p>
                             </div>
                         </div>
-                        <div class="col-md-6 mb-4">
+                        <div class="col-6">
                             <div class="glass p-4 text-center h-100">
-                                <i class="fas fa-network-wired fa-3x text-danger mb-3"></i>
-                                <h4>Networking</h4>
-                                <p>Connect with like-minded individuals</p>
+                                <i class="fas fa-network-wired responsive-icon text-danger mb-3"></i>
+                                <h5>Networking</h5>
+                                <p class="responsive-text mb-0">Connect with like-minded individuals</p>
                             </div>
                         </div>
                     </div>
@@ -1043,9 +1209,9 @@
             </div>
             
             <!-- Event Categories -->
-            <div class="row mb-5" data-aos="fade-up">
+            <div class="row mb-4" data-aos="fade-up">
                 <div class="col-12">
-                    <div class="btn-group justify-content-center flex-wrap" role="group">
+                    <div class="btn-group" role="group">
                         <button type="button" class="btn active" onclick="filterEvents('all')">All Events</button>
                         <button type="button" class="btn" onclick="filterEvents('competitions')">Competitions</button>
                         <button type="button" class="btn" onclick="filterEvents('workshops')">Workshops</button>
@@ -1223,15 +1389,15 @@
             </div>
 
             <!-- Day Tabs -->
-            <ul class="nav nav-tabs justify-content-center mb-5" id="scheduleTabs" role="tablist">
+            <ul class="nav nav-tabs justify-content-center mb-4" id="scheduleTabs" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="day1-tab" data-bs-toggle="tab" data-bs-target="#day1" type="button">
-                        <i class="fas fa-calendar-day"></i> Day 1 - Sept 26
+                        <i class="fas fa-calendar-day me-2"></i> Day 1 - Sept 26
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="day2-tab" data-bs-toggle="tab" data-bs-target="#day2" type="button">
-                        <i class="fas fa-calendar-day"></i> Day 2 - Sept 27
+                        <i class="fas fa-calendar-day me-2"></i> Day 2 - Sept 27
                     </button>
                 </li>
             </ul>
@@ -1348,44 +1514,44 @@
                 <p class="lead text-white">Register for exciting events and workshops</p>
             </div>
             <div class="row">
-                <div class="col-lg-8 mx-auto text-center" data-aos="fade-up">
+                <div class="col-lg-10 mx-auto text-center" data-aos="fade-up">
                     <div class="registration-content">
                         <h3 class="mb-4">Ready to Join ZENORIX 2025?</h3>
-                        <p class="lead mb-5">Register for your favorite events and workshops through our Google Form. It's quick, easy, and secure!</p>
+                        <p class="lead mb-4 responsive-text">Register for your favorite events and workshops through our Google Form. It's quick, easy, and secure!</p>
                         
-                        <div class="row mb-5">
-                            <div class="col-md-6 mb-4">
+                        <div class="row mb-4">
+                            <div class="col-md-6">
                                 <div class="registration-card">
-                                    <i class="fas fa-user-plus fa-3x mb-3"></i>
+                                    <i class="fas fa-user-plus responsive-icon mb-3"></i>
                                     <h5>Individual Registration</h5>
-                                    <p>Register for specific events and workshops of your choice</p>
+                                    <p class="responsive-text">Register for specific events and workshops of your choice</p>
                                 </div>
                             </div>
-                            <div class="col-md-6 mb-4">
+                            <div class="col-md-6">
                                 <div class="registration-card">
-                                    <i class="fas fa-users fa-3x mb-3"></i>
+                                    <i class="fas fa-users responsive-icon mb-3"></i>
                                     <h5>Group Registration</h5>
-                                    <p>Register as a team for competitions and group activities</p>
+                                    <p class="responsive-text">Register as a team for competitions and group activities</p>
                                 </div>
                             </div>
                         </div>
 
                         <div class="registration-buttons">
                             <a href="https://forms.gle/your-google-form-link" target="_blank" class="btn-register">
-                                <i class="fas fa-external-link-alt"></i> Register via Google Form
+                                <i class="fas fa-external-link-alt me-2"></i> Register via Google Form
                             </a>
-                            <a href="#events" class="btn btn-outline-primary btn-lg">
-                                <i class="fas fa-arrow-left"></i> View Events First
+                            <a href="#events" class="btn btn-outline-primary">
+                                <i class="fas fa-arrow-left me-2"></i> View Events First
                             </a>
                         </div>
 
-                        <div class="glass p-4 mt-5">
+                        <div class="glass p-4 mt-4">
                             <h5>Registration Instructions:</h5>
-                            <ul class="list-unstyled">
-                                <li><i class="fas fa-check-circle"></i> Fill out the Google Form with accurate details</li>
-                                <li><i class="fas fa-check-circle"></i> Select all events you wish to participate in</li>
-                                <li><i class="fas fa-check-circle"></i> Submit the form before the registration deadline</li>
-                                <li><i class="fas fa-check-circle"></i> You'll receive a confirmation email</li>
+                            <ul class="list-unstyled text-start">
+                                <li><i class="fas fa-check-circle me-2"></i> Fill out the Google Form with accurate details</li>
+                                <li><i class="fas fa-check-circle me-2"></i> Select all events you wish to participate in</li>
+                                <li><i class="fas fa-check-circle me-2"></i> Submit the form before the registration deadline</li>
+                                <li><i class="fas fa-check-circle me-2"></i> You'll receive a confirmation email</li>
                             </ul>
                         </div>
                     </div>
@@ -1403,52 +1569,52 @@
             </div>
             
             <div class="row" data-aos="fade-up">
-                <div class="col-lg-3 col-md-4 col-6">
+                <div class="col-6 col-md-4 col-lg-3">
                     <div class="sponsor-logo">
-                        <i class="fas fa-building fa-2x"></i>
-                        <div class="mt-2">Tech Corp</div>
+                        <i class="fas fa-building fa-2x mb-2"></i>
+                        <div class="text-break">Tech Corp</div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-4 col-6">
+                <div class="col-6 col-md-4 col-lg-3">
                     <div class="sponsor-logo">
-                        <i class="fas fa-laptop-code fa-2x"></i>
-                        <div class="mt-2">Code Solutions</div>
+                        <i class="fas fa-laptop-code fa-2x mb-2"></i>
+                        <div class="text-break">Code Solutions</div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-4 col-6">
+                <div class="col-6 col-md-4 col-lg-3">
                     <div class="sponsor-logo">
-                        <i class="fas fa-robot fa-2x"></i>
-                        <div class="mt-2">AI Innovations</div>
+                        <i class="fas fa-robot fa-2x mb-2"></i>
+                        <div class="text-break">AI Innovations</div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-4 col-6">
+                <div class="col-6 col-md-4 col-lg-3">
                     <div class="sponsor-logo">
-                        <i class="fas fa-database fa-2x"></i>
-                        <div class="mt-2">Data Systems</div>
+                        <i class="fas fa-database fa-2x mb-2"></i>
+                        <div class="text-break">Data Systems</div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-4 col-6">
+                <div class="col-6 col-md-4 col-lg-3">
                     <div class="sponsor-logo">
-                        <i class="fas fa-cloud fa-2x"></i>
-                        <div class="mt-2">Cloud Tech</div>
+                        <i class="fas fa-cloud fa-2x mb-2"></i>
+                        <div class="text-break">Cloud Tech</div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-4 col-6">
+                <div class="col-6 col-md-4 col-lg-3">
                     <div class="sponsor-logo">
-                        <i class="fas fa-shield-alt fa-2x"></i>
-                        <div class="mt-2">SecureNet</div>
+                        <i class="fas fa-shield-alt fa-2x mb-2"></i>
+                        <div class="text-break">SecureNet</div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-4 col-6">
+                <div class="col-6 col-md-4 col-lg-3">
                     <div class="sponsor-logo">
-                        <i class="fas fa-mobile-alt fa-2x"></i>
-                        <div class="mt-2">Mobile Dev</div>
+                        <i class="fas fa-mobile-alt fa-2x mb-2"></i>
+                        <div class="text-break">Mobile Dev</div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-4 col-6">
+                <div class="col-6 col-md-4 col-lg-3">
                     <div class="sponsor-logo">
-                        <i class="fas fa-globe fa-2x"></i>
-                        <div class="mt-2">Web Solutions</div>
+                        <i class="fas fa-globe fa-2x mb-2"></i>
+                        <div class="text-break">Web Solutions</div>
                     </div>
                 </div>
             </div>
@@ -1457,7 +1623,7 @@
                 <h4>Want to Sponsor ZENORIX 2025?</h4>
                 <p class="lead">Join us in supporting the next generation of tech innovators</p>
                 <a href="#contact" class="btn btn-primary btn-lg">
-                    <i class="fas fa-handshake"></i> Become a Sponsor
+                    <i class="fas fa-handshake me-2"></i> Become a Sponsor
                 </a>
             </div>
         </div>
@@ -1472,44 +1638,44 @@
             </div>
             
             <div class="row">
-                <div class="col-lg-6" data-aos="fade-right">
+                <div class="col-lg-6 mb-4" data-aos="fade-right">
                     <div id="map"></div>
                 </div>
-                <div class="col-lg-6" data-aos="fade-left">
+                <div class="col-lg-6 mb-4" data-aos="fade-left">
                     <div class="contact-info">
                         <h3>Venue Information</h3>
                         <div class="venue-details">
                             <div class="d-flex align-items-start mb-3">
-                                <i class="fas fa-map-marker-alt fa-2x text-primary me-3"></i>
+                                <i class="fas fa-map-marker-alt responsive-icon text-primary me-3"></i>
                                 <div>
                                     <h5>Address</h5>
-                                    <p>Department of CSE (Data Science)<br>
+                                    <p class="responsive-text mb-0">Department of CSE (Data Science)<br>
                                     IES College of Engineering<br>
                                     Chittilappilly, Thrissur, Kerala</p>
                                 </div>
                             </div>
                             <div class="d-flex align-items-start mb-3">
-                                <i class="fas fa-phone fa-2x text-primary me-3"></i>
+                                <i class="fas fa-phone responsive-icon text-primary me-3"></i>
                                 <div>
                                     <h5>Contact Numbers</h5>
-                                    <p>Student Coordinator: 8089913951<br>
+                                    <p class="responsive-text mb-0">Student Coordinator: 8089913951<br>
                                     Faculty Coordinator: 9446090144</p>
                                 </div>
                             </div>
                             <div class="d-flex align-items-start mb-3">
-                                <i class="fas fa-bus fa-2x text-primary me-3"></i>
+                                <i class="fas fa-bus responsive-icon text-primary me-3"></i>
                                 <div>
                                     <h5>Transportation</h5>
-                                    <p>Easy access from Thrissur city<br>
+                                    <p class="responsive-text mb-0">Easy access from Thrissur city<br>
                                     Public transport available<br>
                                     Parking facilities provided</p>
                                 </div>
                             </div>
                             <div class="d-flex align-items-start mb-3">
-                                <i class="fas fa-utensils fa-2x text-primary me-3"></i>
+                                <i class="fas fa-utensils responsive-icon text-primary me-3"></i>
                                 <div>
                                     <h5>Facilities</h5>
-                                    <p>Food court and refreshments<br>
+                                    <p class="responsive-text mb-0">Food court and refreshments<br>
                                     Rest areas<br>
                                     Medical assistance available</p>
                                 </div>
@@ -1530,7 +1696,7 @@
             </div>
             
             <div class="row">
-                <div class="col-lg-8 mx-auto" data-aos="fade-up">
+                <div class="col-lg-10 mx-auto" data-aos="fade-up">
                     <div class="accordion" id="faqAccordion">
                         <div class="accordion-item">
                             <h2 class="accordion-header">
@@ -1619,9 +1785,9 @@
             </div>
             
             <div class="row">
-                <div class="col-lg-6" data-aos="fade-right">
+                <div class="col-lg-6 mb-4" data-aos="fade-right">
                     <div class="contact-form">
-                        <h3>Send us a Message</h3>
+                        <h3 class="mb-4">Send us a Message</h3>
                         <form id="contactForm">
                             <div class="mb-3">
                                 <label for="name" class="form-label">Name</label>
@@ -1639,54 +1805,54 @@
                                 <label for="message" class="form-label">Message</label>
                                 <textarea class="form-control" id="message" rows="5" required></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-lg">
-                                <i class="fas fa-paper-plane"></i> Send Message
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane me-2"></i> Send Message
                             </button>
                         </form>
                     </div>
                 </div>
-                <div class="col-lg-6" data-aos="fade-left">
+                <div class="col-lg-6 mb-4" data-aos="fade-left">
                     <div class="contact-info">
-                        <h3>Get in Touch</h3>
+                        <h3 class="mb-4">Get in Touch</h3>
                         <div class="contact-item">
                             <div class="d-flex align-items-start mb-4">
-                                <i class="fas fa-map-marker-alt fa-2x text-primary me-3"></i>
+                                <i class="fas fa-map-marker-alt responsive-icon text-primary me-3"></i>
                                 <div>
                                     <h5>Address</h5>
-                                    <p>Department of CSE (Data Science)<br>
+                                    <p class="responsive-text mb-0">Department of CSE (Data Science)<br>
                                     IES College of Engineering<br>
                                     Chittilappilly, Thrissur, Kerala</p>
                                 </div>
                             </div>
                             <div class="d-flex align-items-start mb-4">
-                                <i class="fas fa-phone fa-2x text-primary me-3"></i>
+                                <i class="fas fa-phone responsive-icon text-primary me-3"></i>
                                 <div>
                                     <h5>Phone</h5>
-                                    <p>Student Coordinator: 8089913951<br>
+                                    <p class="responsive-text mb-0">Student Coordinator: 8089913951<br>
                                     Faculty Coordinator: 9446090144</p>
                                 </div>
                             </div>
                             <div class="d-flex align-items-start mb-4">
-                                <i class="fas fa-envelope fa-2x text-primary me-3"></i>
+                                <i class="fas fa-envelope responsive-icon text-primary me-3"></i>
                                 <div>
                                     <h5>Email</h5>
-                                    <p>zenorix2025@iesce.ac.in<br>
+                                    <p class="responsive-text mb-0">zenorix2025@iesce.ac.in<br>
                                     info@iesce.ac.in</p>
                                 </div>
                             </div>
                             <div class="d-flex align-items-start mb-4">
-                                <i class="fas fa-clock fa-2x text-primary me-3"></i>
+                                <i class="fas fa-clock responsive-icon text-primary me-3"></i>
                                 <div>
                                     <h5>Office Hours</h5>
-                                    <p>Monday - Friday: 9:00 AM - 5:00 PM<br>
+                                    <p class="responsive-text mb-0">Monday - Friday: 9:00 AM - 5:00 PM<br>
                                     Saturday: 9:00 AM - 1:00 PM</p>
                                 </div>
                             </div>
                         </div>
                         
                         <div class="social-links">
-                            <h5>Follow Us</h5>
-                            <div class="d-flex gap-3">
+                            <h5 class="mb-3">Follow Us</h5>
+                            <div class="d-flex justify-content-center gap-2">
                                 <a href="#" class="btn btn-outline-primary btn-sm">
                                     <i class="fab fa-facebook-f"></i>
                                 </a>
@@ -1722,7 +1888,7 @@
                 <div class="col-lg-10 mx-auto" data-aos="fade-up">
                     <div class="raffle-terms">
                         <div class="alert alert-warning mb-4">
-                            <h4><i class="fas fa-gift"></i> Grand Prize: Gold Coin</h4>
+                            <h4><i class="fas fa-gift me-2"></i> Grand Prize: Gold Coin</h4>
                             <p>Draw Date: September 27, 2025 (Final Day of Techfest)</p>
                         </div>
                         
@@ -1754,7 +1920,7 @@
                         
                         <div class="text-center mt-4">
                             <a href="#contact" class="btn btn-primary">
-                                <i class="fas fa-phone"></i> Contact for Raffle Coupons
+                                <i class="fas fa-phone me-2"></i> Contact for Raffle Coupons
                             </a>
                         </div>
                     </div>
@@ -1767,11 +1933,11 @@
     <footer class="footer">
         <div class="container">
             <div class="row">
-                <div class="col-lg-4 mb-4">
+                <div class="col-md-4 mb-4">
                     <h5>ZENORIX 2025</h5>
-                    <p>A premier technical festival organized by the Department of Computer Science and Engineering (Data Science) at IES College of Engineering.</p>
+                    <p class="responsive-text">A premier technical festival organized by the Department of Computer Science and Engineering (Data Science) at IES College of Engineering.</p>
                 </div>
-                <div class="col-lg-4 mb-4">
+                <div class="col-md-4 mb-4">
                     <h5>Quick Links</h5>
                     <ul class="list-unstyled">
                         <li><a href="#home" class="text-white-50">Home</a></li>
@@ -1781,17 +1947,17 @@
                         <li><a href="#contact" class="text-white-50">Contact</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-4 mb-4">
+                <div class="col-md-4 mb-4">
                     <h5>Connect With Us</h5>
-                    <div class="social-links mb-3">
+                    <div class="social-links mb-3 justify-content-center">
                         <a href="#" class="text-white me-3"><i class="fab fa-facebook-f fa-2x"></i></a>
                         <a href="#" class="text-white me-3"><i class="fab fa-twitter fa-2x"></i></a>
                         <a href="#" class="text-white me-3"><i class="fab fa-instagram fa-2x"></i></a>
                         <a href="#" class="text-white me-3"><i class="fab fa-linkedin-in fa-2x"></i></a>
                         <a href="#" class="text-white"><i class="fab fa-youtube fa-2x"></i></a>
                     </div>
-                    <p>&copy; 2025 ZENORIX. All rights reserved.</p>
-                    <p>Organized by Department of CSE (Data Science), IES College of Engineering</p>
+                    <p class="responsive-text">&copy; 2025 ZENORIX. All rights reserved.</p>
+                    <p class="responsive-text">Organized by Department of CSE (Data Science), IES College of Engineering</p>
                 </div>
             </div>
         </div>
