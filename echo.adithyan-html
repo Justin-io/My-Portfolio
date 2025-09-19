@@ -1,0 +1,3304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Basic Meta Tags -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Join ECHO a hands-on workshop designed to help beginners master prompt engineering and build autonomous AI agents. No prior AI experience required. Learn from experts, build real projects, and unlock the future of AI.">
+
+<meta name="keywords" content="AI Workshop, Prompt Engineering, AI Agents, LLMs, Artificial Intelligence, Machine Learning, AI for Beginners, LangChain, OpenAI, Hugging Face, AI Kerala, Tech Workshop, Online Learning, AI Certification">
+<meta name="author" content="Justin">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph / Facebook Meta Tags -->
+<meta property="og:title" content="ECHO: Mastering Prompt Engineering & AI Agents">
+<meta property="og:description" content="Techfest Registration to A beginner-friendly, project-driven workshop to master prompt engineering and AI agents. Learn, build, and automate with cutting-edge AI tools.">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/texidomeg-v8.appspot.com/o/1754579286.png?alt=media&token=859599ec-8592-412a-962d-5a26df775d8a">
+<meta property="og:url" content="https://justinalexia.vercel.app/echo.htm">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ECHO">
+<meta property="og:locale" content="en_IN">
+
+<!-- Twitter Meta Tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@AIKeralaOfficial">
+<meta name="twitter:creator" content="@AIKeralaOfficial">
+<meta name="twitter:title" content="ECHO: Mastering Prompt Engineering & AI Agents">
+<meta name="twitter:description" content="Dive into AI with hands-on learning in prompt engineering and autonomous agents. Perfect for students and beginners.">
+<meta name="twitter:image" content="https://yoursite.com/echo-workshop-preview.jpg">
+<meta name="twitter:image:alt" content="ECHO Workshop Learn AI through interactive sessions and real-world projects">
+
+<!-- Apple & PWA Meta Tags -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="ECHO Workshop">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+
+<!-- Theme Color for Chrome, Firefox, Safari -->
+<meta name="theme-color" content="#000000">
+<meta name="msapplication-TileColor" content="#000000">
+<script>
+
+// Disable right-click context menu
+document.addEventListener('contextmenu', (event) => event.preventDefault());
+
+// Prevent F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+S
+document.addEventListener('keydown', (event) => {
+    if (
+        event.key === 'F12' || // F12
+        (event.ctrlKey && event.shiftKey && event.key === 'I') || // Ctrl+Shift+I
+        (event.ctrlKey && event.shiftKey && event.key === 'J') || // Ctrl+Shift+J
+        (event.ctrlKey && event.key === 'U') || // Ctrl+U
+        (event.ctrlKey && event.key === 'S') // Ctrl+S
+    ) {
+        event.preventDefault();
+    }
+});
+
+// Detect and block the opening of developer tools
+(function detectDevTools() {
+    const devToolsCheck = new Function('debugger');
+    setInterval(() => {
+        const start = performance.now();
+        devToolsCheck();
+        if (performance.now() - start > 100) {
+            alert('Developer tools are not allowed on this page.');
+            window.close(); // Close the tab
+        }
+    }, 500);
+})();
+
+// Disable drag-and-drop actions
+document.addEventListener('dragstart', (event) => event.preventDefault());
+
+// Disable copying, cutting, or pasting
+document.addEventListener('copy', (event) => event.preventDefault());
+document.addEventListener('cut', (event) => event.preventDefault());
+document.addEventListener('paste', (event) => event.preventDefault());
+
+// Hide the source code
+document.onkeydown = function (e) {
+    if (e.ctrlKey && e.key === 'P') {
+        // Disable Print
+        e.preventDefault();
+    }
+};
+document.addEventListener('DOMContentLoaded', () => {
+    document.body.style.userSelect = 'none';
+    document.body.style.webkitUserSelect = 'none';
+    document.body.style.mozUserSelect = 'none';
+    document.body.style.msUserSelect = 'none';
+});
+
+
+</script>
+<!-- Structured Data (JSON-LD) for SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "ECHO: Mastering Prompt Engineering & AI Agents",
+  "description": "A beginner-friendly workshop to master prompt engineering and build AI agents with real-world projects.",
+  "startDate": "2025-04-05T09:00:00+05:30",
+  "endDate": "2025-04-05T17:00:00+05:30",
+  "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "location": {
+    "@type": "VirtualLocation",
+    "url": "https://zoom.us/j/uniqueid"
+  },
+  "organizer": {
+    "@type": "Organization",
+    "name": "AI Kerala",
+    "url": "https://aikerala.org"
+  },
+  "offers": [
+    {
+      "@type": "Offer",
+      "url": "https://aikerala.org/echo-workshop",
+      "price": "1999",
+      "priceCurrency": "INR",
+      "name": "Standard Ticket"
+    },
+    {
+      "@type": "Offer",
+      "url": "https://aikerala.org/echo-workshop",
+      "price": "2999",
+      "priceCurrency": "INR",
+      "name": "Premium Ticket"
+    }
+  ],
+  "image": [
+    "https://yoursite.com/echo-workshop-preview.jpg"
+  ],
+  "url": "https://aikerala.org/echo-workshop"
+}
+</script>
+    <title>ECHO : Mastering Prompt Engineering & AI Agents - Registration</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #000;
+            --secondary: #fff;
+            --accent: #4a9eff;
+            --accent-glow: rgba(74, 158, 255, 0.5);
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--primary);
+            color: var(--secondary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Neural Network Background */
+        .neural-network {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.15;
+        }
+
+        .neural-network canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Floating 3D Elements */
+        .floating-element {
+            position: fixed;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(74, 158, 255, 0.3), transparent 70%);
+            filter: blur(15px);
+            z-index: -1;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .floating-element:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            width: 120px;
+            height: 120px;
+            animation-duration: 25s;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            top: 70%;
+            right: 10%;
+            width: 150px;
+            height: 150px;
+            animation-duration: 30s;
+            animation-delay: 2s;
+        }
+
+        .floating-element:nth-child(3) {
+            bottom: 20%;
+            left: 15%;
+            width: 100px;
+            height: 100px;
+            animation-duration: 22s;
+            animation-delay: 4s;
+        }
+
+        .floating-element:nth-child(4) {
+            top: 40%;
+            right: 30%;
+            width: 90px;
+            height: 90px;
+            animation-duration: 28s;
+            animation-delay: 1s;
+        }
+
+        .floating-element:nth-child(5) {
+            bottom: 30%;
+            right: 20%;
+            width: 130px;
+            height: 130px;
+            animation-duration: 35s;
+            animation-delay: 3s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(20px, -20px) rotate(90deg);
+            }
+            50% {
+                transform: translate(-10px, 10px) rotate(180deg);
+            }
+            75% {
+                transform: translate(15px, 15px) rotate(270deg);
+            }
+        }
+
+        /* Animated Grid Background */
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -2;
+            animation: grid-move 30s linear infinite;
+        }
+
+        @keyframes grid-move {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(74, 158, 255, 0.3);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(74, 158, 255, 0.5);
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.7);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            padding: 15px 50px;
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+            font-size: 28px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .translate-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--secondary);
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            font-weight: 500;
+        }
+
+        .translate-btn:hover {
+            background: rgba(74, 158, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--primary);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(74, 158, 255, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--secondary);
+            border: 2px solid var(--secondary);
+        }
+
+        .btn-outline:hover {
+            background: var(--secondary);
+            color: var(--primary);
+        }
+
+        /* About Section */
+        .about {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 50px;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .about-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(74, 158, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .about-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .about-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .about-card i {
+            font-size: 40px;
+            color: var(--accent);
+            margin-bottom: 20px;
+            display: block;
+            text-align: center;
+        }
+
+        .about-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .about-card p {
+            opacity: 0.8;
+            text-align: center;
+        }
+
+        .about-card .expand-icon {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            font-size: 1.2rem;
+            color: var(--accent);
+            transition: transform 0.3s ease;
+        }
+
+        .about-card.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .about-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .about-card.expanded .about-details {
+            max-height: 300px;
+        }
+
+        /* Workshop Details */
+        .workshop-details {
+            padding: 100px 20px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .details-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .detail-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .detail-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .detail-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+        }
+
+        .detail-card h3 i {
+            margin-right: 10px;
+        }
+
+        .detail-card ul {
+            list-style-type: none;
+        }
+
+        .detail-card ul li {
+            padding: 8px 0;
+            position: relative;
+            padding-left: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .detail-card ul li:hover {
+            transform: translateX(5px);
+            color: var(--accent);
+        }
+
+        .detail-card ul li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        /* Curriculum Section */
+        .curriculum {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .curriculum-container {
+            margin-top: 50px;
+        }
+
+        .curriculum-item {
+            display: flex;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .curriculum-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--accent);
+            opacity: 0.2;
+            margin-right: 20px;
+            line-height: 1;
+        }
+
+        .curriculum-content {
+            flex: 1;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .curriculum-content:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .curriculum-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .curriculum-content p {
+            opacity: 0.8;
+        }
+
+        .curriculum-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            margin-top: 15px;
+            padding-top: 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .curriculum-item.expanded .curriculum-details {
+            max-height: 300px;
+            padding-top: 15px;
+        }
+
+        /* Benefits Section */
+        .benefits {
+            padding: 100px 20px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .benefits-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .benefit-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefit-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(74, 158, 255, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .benefit-card:hover::after {
+            opacity: 1;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .benefit-card i {
+            font-size: 50px;
+            color: var(--accent);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .benefit-card:hover i {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .benefit-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .benefit-card p {
+            opacity: 0.8;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonials-container {
+            margin-top: 50px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 4rem;
+            color: var(--accent);
+            opacity: 0.2;
+        }
+
+        .testimonial-content {
+            font-style: italic;
+            margin-bottom: 20px;
+            opacity: 0.9;
+            padding-left: 20px;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .author-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .author-info p {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        .testimonial-rating {
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 100px 20px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .faq-question {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: rgba(74, 158, 255, 0.1);
+        }
+
+        .faq-question h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .faq-icon {
+            font-size: 1.2rem;
+            color: var(--accent);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 20px;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            padding: 0 20px 20px;
+        }
+
+        .faq-answer p {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        /* Resources Section */
+        .resources {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .resource-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .resource-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+        }
+
+        .resource-card h3 i {
+            margin-right: 10px;
+        }
+
+        .resource-card ul {
+            list-style-type: none;
+        }
+
+        .resource-card ul li {
+            padding: 8px 0;
+            position: relative;
+            padding-left: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .resource-card ul li:hover {
+            transform: translateX(5px);
+            color: var(--accent);
+        }
+
+        .resource-card ul li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        /* Interactive Demo Section */
+        .interactive-demo {
+            padding: 100px 20px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .demo-box {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            margin-top: 50px;
+        }
+
+        .demo-input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: var(--secondary);
+            font-size: 16px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .demo-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 10px rgba(74, 158, 255, 0.3);
+        }
+
+        .demo-output {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            padding: 20px;
+            min-height: 150px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            margin-bottom: 20px;
+        }
+
+        .demo-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .demo-btn {
+            padding: 10px 20px;
+            background: var(--accent);
+            color: var(--primary);
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .demo-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 158, 255, 0.3);
+        }
+
+        /* Timeline Section */
+        .timeline {
+            padding: 100px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .timeline-container {
+            position: relative;
+            margin-top: 50px;
+        }
+
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: var(--accent);
+            opacity: 0.3;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 50px;
+        }
+
+        .timeline-item:nth-child(odd) {
+            padding-right: 50%;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            padding-left: 50%;
+            text-align: left;
+        }
+
+        .timeline-content {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            width: 90%;
+            margin: 0 auto;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .timeline-dot {
+            position: absolute;
+            top: 30px;
+            width: 20px;
+            height: 20px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(74, 158, 255, 0.5);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-dot {
+            right: 0;
+        }
+
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: 0;
+        }
+
+        .timeline-time {
+            font-size: 0.9rem;
+            color: var(--accent);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .timeline-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .timeline-description {
+            opacity: 0.8;
+        }
+
+        /* Team Section */
+        .team {
+            padding: 100px 20px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .team-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .team-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .team-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .team-name {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+
+        .team-role {
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .team-bio {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .team-social {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .team-social a {
+            width: 35px;
+            height: 35px;
+            background: rgba(74, 158, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--secondary);
+            transition: all 0.3s ease;
+        }
+
+        .team-social a:hover {
+            background: var(--accent);
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Registration Section */
+        .registration {
+            padding: 100px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .registration-container {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 50px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .registration-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(74, 158, 255, 0.05) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .seat-counter {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(74, 158, 255, 0.1);
+            border-radius: 15px;
+            border: 1px solid rgba(74, 158, 255, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .seat-counter h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .seat-counter .seats-left {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .register-btn {
+            display: inline-block;
+            padding: 20px 50px;
+            background: var(--accent);
+            color: var(--primary);
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .register-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(74, 158, 255, 0.4);
+        }
+
+        .register-note {
+            margin-top: 20px;
+            opacity: 0.7;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 100px 20px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .pricing-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .pricing-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .pricing-card.featured {
+            transform: scale(1.05);
+            border-color: var(--accent);
+            box-shadow: 0 0 30px rgba(74, 158, 255, 0.3);
+        }
+
+        .pricing-card.featured::before {
+            content: 'Most Popular';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: var(--primary);
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+
+        .pricing-name {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .pricing-price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .pricing-period {
+            opacity: 0.7;
+            margin-bottom: 30px;
+        }
+
+        .pricing-features {
+            list-style-type: none;
+            margin-bottom: 30px;
+        }
+
+        .pricing-features li {
+            padding: 10px 0;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .pricing-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .pricing-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--accent);
+            color: var(--primary);
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(74, 158, 255, 0.3);
+        }
+
+        /* Gallery Section */
+        .gallery {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            height: 250px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            color: var(--secondary);
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        .gallery-title {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .gallery-description {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 100px 20px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+            margin-top: 50px;
+        }
+
+        .contact-info {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .contact-item i {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-right: 15px;
+            width: 30px;
+            text-align: center;
+        }
+
+        .contact-form {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-form h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: var(--secondary);
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 10px rgba(74, 158, 255, 0.3);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .contact-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--accent);
+            color: var(--primary);
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(74, 158, 255, 0.3);
+        }
+
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--primary);
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(74, 158, 255, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            text-decoration: none;
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(74, 158, 255, 0.6);
+        }
+
+        /* Notification Container */
+        .notification-container {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            width: 300px;
+            z-index: 1000;
+        }
+
+        .notification {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            backdrop-filter: blur(10px);
+            transform: translateX(400px);
+            animation: slideIn 0.5s ease forwards, slideOut 0.5s ease 4.5s forwards;
+        }
+
+        @keyframes slideIn {
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideOut {
+            to {
+                transform: translateX(400px);
+            }
+        }
+
+        .notification-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(74, 158, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+        }
+
+        .notification-icon i {
+            color: var(--accent);
+        }
+
+        .notification-title {
+            font-weight: 600;
+        }
+
+        .notification-message {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        /* Footer */
+        footer {
+            padding: 50px 20px;
+            background: rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .social-links a {
+            width: 50px;
+            height: 50px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--secondary);
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--accent);
+            color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            opacity: 0.6;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .timeline-container::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                padding-left: 50px !important;
+                padding-right: 0 !important;
+                text-align: left !important;
+            }
+
+            .timeline-item .timeline-dot {
+                left: 20px !important;
+            }
+
+            .notification-container {
+                width: calc(100% - 40px);
+                right: 20px;
+                left: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Neural Network Background -->
+    <div class="neural-network">
+        <canvas id="neural-canvas"></canvas>
+    </div>
+
+    <!-- Floating 3D Elements -->
+    <div class="floating-element"></div>
+    <div class="floating-element"></div>
+    <div class="floating-element"></div>
+    <div class="floating-element"></div>
+    <div class="floating-element"></div>
+
+    <!-- Animated Grid Background -->
+    <div class="grid-bg"></div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="logo">
+            <i class="fas fa-brain"></i>
+            <span>ECHO </span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#details">Details</a></li>
+                <li><a href="#curriculum">Curriculum</a></li>
+                <li><a href="#benefits">Benefits</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#team">Team</a></li>
+             <!--    <li><a href="#pricing">Pricing</a></li>-->
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#resources">Resources</a></li>
+                <li><a href="#register">Register</a></li>
+            </ul>
+        </nav>
+        
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+    <div class="hero-content">
+        <h1>ECHO : Empowering Creativity & Human Optimization</h1>
+        <p class="subtitle">Master Prompt Engineering. Design AI Workflows.<br>
+Let your potential Echo across the future.</p>
+        <div class="hero-buttons">
+            <a href="#register" class="btn btn-primary">Register Now</a>
+            <a href="#interactive-demo" class="btn btn-outline">Try Demo</a>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="about" id="about">
+<h2 class="section-title">What You’ll Build in This Demo</h2>
+
+<div class="about-content">
+<div class="about-card" onclick="toggleAbout(this)">
+<i class="fas fa-robot"></i>
+<h3>What is ECHO? (It’s Not What You Think)</h3>
+<p>Forget everything you know about AI. ECHO isn’t a lecture. It’s a live lab where you command AI to think, adapt, and solve problems on its own — using nothing but your words. This is your first step from user to architect.</p>
+<div class="about-details">
+<p>You’ve seen AI chat. Now watch it reason. In this demo, you’ll trigger behaviors no one programmed: self-correction, creative leaps, and step-by-step problem solving. It’s not magic. It’s emergence — and you’re holding the keys.</p>
+<p>We’ll show you how a simple prompt can make AI act like a research assistant, a coder, or a strategist. No theory. Just live, hands-on control. By the end, you’ll know how to make AI anticipate your needs before you even ask.</p>
+<p>This is the future of work. And in 90 minutes, you’ll be building it.</p>
+</div>
+<i class="fas fa-chevron-down expand-icon"></i>
+</div>
+
+<div class="about-card" onclick="toggleAbout(this)">
+<i class="fas fa-code"></i>
+<h3>Prompt Engineering: Your New Superpower</h3>
+<p>This is the one skill that separates AI amateurs from masters. You won’t just ask AI questions. You’ll program its brain — without writing a single line of code.</p>
+<div class="about-details">
+<p>Watch live as we turn vague requests into laser-focused commands. Learn the exact structure to make AI generate flawless code, summarize complex research, or draft a winning project proposal — every time.</p>
+<p>We’ll break down the secret frameworks: Chain-of-Thought, Role Assignment, Prompt Chaining. You’ll see them work in real-time on ChatGPT and Claude. Then, you’ll build your own.</p>
+<p>By the end of this demo, you’ll have a repeatable system to get perfect results from any AI, every time. No more guessing. No more garbage outputs.</p>
+</div>
+<i class="fas fa-chevron-down expand-icon"></i>
+</div>
+
+<div class="about-card" onclick="toggleAbout(this)">
+<i class="fas fa-users-cog"></i>
+<h3>AI Agents: Build Your Own Digital Employee</h3>
+<p>Imagine an AI that doesn’t just answer — it acts. Researches. Writes. Organizes. All by itself. In this demo, you’ll build one live.</p>
+<div class="about-details">
+<p>We’ll show you how to create an AI agent that can plan a project, gather data, and deliver a polished report — triggered by one prompt. No complex setup. No APIs. Just pure, strategic language.</p>
+<p>You’ll see how students are already using these agents to automate their studies, build side projects, and crush deadlines. This isn’t science fiction. It’s a practical skill you’ll leave with today.</p>
+<p>Think of it as hiring a digital intern — one that works 24/7 and costs nothing. The only question is: what will you have it do first?</p>
+</div>
+<i class="fas fa-chevron-down expand-icon"></i>
+</div>
+</div></section>
+
+<!-- Workshop Details -->
+<section class="workshop-details" id="details">
+<div class="details-container">
+<h2 class="section-title">Your Demo Session: What You Need to Know</h2>
+
+<div class="details-grid">
+<div class="detail-card">
+<h3><i class="fas fa-calendar-alt"></i> Date & Time</h3>
+<ul>
+<li><strong>Day 1:</strong> September 28, 2025</li>
+<li><strong>Day 2:</strong> September 29, 2025</li>
+<li><strong>Duration:</strong> 105 Minutes of Pure AI Action</li>
+<li><strong>First Batch:</strong> 9:15 AM - 10:45 AM (Grab the early slot)</li>
+<li><strong>Last Batch:</strong> 3:45 PM (Don’t wait till it’s too late)</li>
+</ul>
+<p>This isn’t a lecture. It’s a live build session. You’ll spend 105 minutes designing, testing, and commanding AI in real-time. Every batch is capped at 30 students — so you get personal attention while you build your first AI agent. Choose your slot before your friends take it.</p>
+</div>
+
+<div class="detail-card">
+<h3><i class="fas fa-map-marker-alt"></i> Venue</h3>
+<ul>
+<li><strong>Where:</strong> IES College of Engineering</li>
+<li><strong>Exactly:</strong> Data Science Lab, P.O. Chittilappilly</li>
+<li><strong>Why Here:</strong> The only lab on campus with zero-latency AI tools</li>
+<li><strong>Setup:</strong> 30 seats, high-speed Wi-Fi, crystal-clear audio</li>
+<li><strong>Vibe:</strong> Where your AI journey begins</li>
+</ul>
+<p>This is the command center. We’ve pre-loaded every machine with ChatGPT, Claude, and Poe. No downloads. No setup. Just walk in, sit down, and start building. This is where you’ll watch AI think for the first time — live, on the big screen.</p>
+</div>
+
+<div class="detail-card">
+<h3><i class="fas fa-user-graduate"></i> Who Should Be Here</h3>
+<ul>
+<li><strong>You:</strong> If you’ve ever used ChatGPT or wondered how AI works</li>
+<li><strong>Your Friend:</strong> The one who’s always asking, “How do I make AI do that?”</li>
+<li><strong>No Experience?</strong> Perfect. We start from zero.</li>
+<li><strong>Know Code?</strong> Great, but you won’t need it.</li>
+<li><strong>Batch Size:</strong> 30 students. No exceptions.</li>
+</ul>
+<p>If you’re curious, you belong here. This is for students who want to stop asking AI questions and start giving it commands. By the end, you’ll be the person your batch turns to for AI help. Don’t let someone else become that person first.</p>
+</div>
+
+<div class="detail-card">
+<h3><i class="fas fa-laptop-code"></i> What to Bring</h3>
+<ul>
+<li><strong>Essential:</strong> Laptop or smartphone. That’s it.</li>
+<li><strong>Optional:</strong> Notebook. You’ll want to write this down.</li>
+<li><strong>Not Needed:</strong> Software, installations, prior knowledge</li>
+<li><strong>You Get:</strong> A working AI project + Certificate</li>
+<li><strong>Dress:</strong> Like you’re about to build the future</li>
+</ul>
+<p>Bring your device. We’ll handle the rest. In 105 minutes, you’ll leave with a live AI workflow you built from scratch — no code, just smart prompts. And yes, you’ll get a certificate to prove it. But the real prize? The ability to make AI do exactly what you want.</p>
+</div>
+</div>
+</div></section>
+
+<!-- Curriculum Section --><section class="curriculum" id="curriculum">
+<h2 class="section-title">What You’ll Build in 90 Minutes</h2>
+<p class="section-subtitle">
+This isn’t a lecture. It’s a live build session. Each module is a hands-on challenge you’ll complete before the clock runs out.
+</p>
+
+<div class="curriculum-container">
+<!-- Module 1 -->
+<div class="curriculum-item" onclick="toggleCurriculum(this)">
+<div class="curriculum-number">01</div>
+<div class="curriculum-content">
+<h3>Crack the AI Code: How It Really Thinks</h3>
+<p>In 10 minutes, you’ll understand exactly how AI generates answers — not through magic, but through patterns. You’ll learn what triggers its “thinking” and how to control it.</p>
+<div class="curriculum-details">
+<p>
+• See how AI evolved from simple rules to complex reasoning<br>
+• Understand the one thing all AI tools have in common: context<br>
+• Learn why AI “hallucinates” and how to stop it in its tracks<br>
+• Discover how to use AI’s limitations to your advantage<br>
+• Real-world examples: How students use this to ace assignments and research
+</p>
+</div>
+</div>
+</div>
+
+<!-- Module 2 -->
+<div class="curriculum-item" onclick="toggleCurriculum(this)">
+<div class="curriculum-number">02</div>
+<div class="curriculum-content">
+<h3>The Prompt Formula: Your First AI Command</h3>
+<p>In 15 minutes, you’ll craft your first precision prompt. No more vague answers. You’ll learn the exact 4-part structure that forces AI to give you exactly what you need.</p>
+<div class="curriculum-details">
+<p>
+• The 4-part prompt: Instruction, Context, Input, Output<br>
+• How to assign AI a role: “Act as a Senior Developer”<br>
+• The secret to eliminating vague, off-topic responses<br>
+• Live demo: Watch a bad prompt get transformed into a perfect one<br>
+• Build your first reusable template for essays, code, or summaries
+</p>
+</div>
+</div>
+</div>
+
+<!-- Module 3 -->
+<div class="curriculum-item" onclick="toggleCurriculum(this)">
+<div class="curriculum-number">03</div>
+<div class="curriculum-content">
+<h3>Make AI Think Step-by-Step (Like a Human)</h3>
+<p>In 15 minutes, you’ll unlock AI’s hidden reasoning power. You’ll use “Chain-of-Thought” to make it break down complex problems — perfect for debugging code or solving logic puzzles.</p>
+<div class="curriculum-details">
+<p>
+• Force AI to “show its work” before giving an answer<br>
+• Use “Few-Shot” learning: Give it examples to copy<br>
+• “Prompt Chaining”: Break big tasks into small, manageable steps<br>
+• Live challenge: Make AI solve a problem it couldn’t solve before<br>
+• Walk away with a technique to tackle any complex assignment
+</p>
+</div>
+</div>
+</div>
+
+<!-- Module 4 -->
+<div class="curriculum-item" onclick="toggleCurriculum(this)">
+<div class="curriculum-number">04</div>
+<div class="curriculum-content">
+<h3>Build Your First AI Agent: It Works While You Sleep</h3>
+<p>In 20 minutes, you’ll create an AI agent that can plan, act, and correct itself. This is the core skill that separates users from builders.</p>
+<div class="curriculum-details">
+<p>
+• Turn a single prompt into a multi-step workflow<br>
+• Simulate memory: Make AI remember your previous commands<br>
+• Add a feedback loop: Make AI review and improve its own work<br>
+• Live build: Create an agent that researches a topic and writes a report<br>
+• This is your digital intern. What will you have it do first?
+</p>
+</div>
+</div>
+</div>
+
+<!-- Module 5 -->
+<div class="curriculum-item" onclick="toggleCurriculum(this)">
+<div class="curriculum-number">05</div>
+<div class="curriculum-content">
+<h3>Live Project: Build Your Personal AI Tool</h3>
+<p>In 20 minutes, you’ll build a custom AI tool live. Choose your mission: Study Buddy, Research Assistant, or Content Creator. This is yours to keep.</p>
+<div class="curriculum-details">
+<p>
+• Option 1: Build a Study Buddy that explains concepts and makes quizzes<br>
+• Option 2: Create a Research Agent that finds and summarizes articles<br>
+• Option 3: Design a Writing Assistant that drafts emails or reports<br>
+• Get live feedback from mentors and peers<br>
+• Save your prompt. Use it tomorrow. Show it off to your friends.
+</p>
+</div>
+</div>
+</div>
+
+<!-- Module 6 -->
+<div class="curriculum-item" onclick="toggleCurriculum(this)">
+<div class="curriculum-number">06</div>
+<div class="curriculum-content">
+<h3>AI Safety: Don’t Get Caught Off Guard</h3>
+<p>In 5 minutes, you’ll learn how to spot AI’s mistakes and protect yourself. This is non-negotiable for anyone using AI in academics or projects.</p>
+<div class="curriculum-details">
+<p>
+• How to fact-check AI’s answers in 10 seconds<br>
+• Spot bias and misinformation before it ruins your work<br>
+• Never put sensitive data in a prompt — here’s why<br>
+• The one question to always ask before trusting AI’s output<br>
+• Build workflows that are reliable, not risky
+</p>
+</div>
+</div>
+</div>
+
+<!-- Module 7 -->
+<div class="curriculum-item" onclick="toggleCurriculum(this)">
+<div class="curriculum-number">07</div>
+<div class="curriculum-content">
+<h3>Your AI Career Starts Now</h3>
+<p>In 5 minutes, you’ll map your next steps. AI isn’t the future — it’s your present. Learn how to turn today’s skills into internships, projects, or a career.</p>
+<div class="curriculum-details">
+<p>
+• The 5 most in-demand AI skills (you now have 3 of them)<br>
+• How to build a portfolio that gets you noticed<br>
+• Where to find your next AI project or collaboration<br>
+• The exact path to HOPE’s 2-month program (if you’re ready to go deeper)<br>
+• You’re no longer an AI user. You’re an AI builder. What’s your first move?
+</p>
+</div>
+</div>
+</div>
+</div></section>
+
+<!-- Benefits Section -->
+<section class="benefits" id="benefits">
+<div class="benefits-container">
+<h2 class="section-title">What You’ll Walk Away With</h2>
+<p class="section-subtitle">
+This isn’t theory. In 90 minutes, you’ll leave with skills, tools, and proof you can use tomorrow.
+</p>
+
+<div class="benefits-grid">
+<!-- 1. Certification -->
+<div class="benefit-card">
+<i class="fas fa-certificate"></i>
+<h3>Official Certificate — Yours to Keep</h3>
+<p>You’ll receive a verifiable certificate from HOPE Int CORE — signed, dated, and ready for LinkedIn or your portfolio. Not just attendance. Proof you built something real.</p>
+</div>
+
+<!-- 2. Networking -->
+<div class="benefit-card">
+<i class="fas fa-network-wired"></i>
+<h3>Connect With Your Future Peers</h3>
+<p>You’re not alone in this. The 30 people in your batch are the same ones who’ll be building AI tools on campus next semester. You’ll meet them. Work with them. And they’ll remember you for it.</p>
+</div>
+
+<!-- 3. Career Advancement -->
+<div class="benefit-card">
+<i class="fas fa-briefcase"></i>
+<h3>Stand Out in Internships & Projects</h3>
+<p>Every resume says “familiar with AI.” Yours will say: “Built an AI research assistant using prompt engineering.” That’s the difference between being noticed — and being hired.</p>
+</div>
+
+<!-- 4. Problem-Solving & Innovation -->
+<div class="benefit-card">
+<i class="fas fa-lightbulb"></i>
+<h3>Solve Any Assignment Faster</h3>
+<p>Summarize 50 pages of research in 3 minutes. Draft project reports without staring at a blank screen. Turn vague instructions into perfect outputs. This isn’t magic — it’s a system you’ll build today.</p>
+</div>
+
+<!-- 5. Expert Mentorship -->
+<div class="benefit-card">
+<i class="fas fa-hands-helping"></i>
+<h3>Get Direct Feedback From Real Builders</h3>
+<p>Hari and Thanay aren’t lecturing. They’re watching you build. And when you get stuck, they’ll show you exactly how to fix it — no jargon, no theory, just what works.</p>
+</div>
+
+<!-- 6. Lifetime Resources -->
+<div class="benefit-card">
+<i class="fas fa-gift"></i>
+<h3>Take Home Everything You Use</h3>
+<p>All prompt templates, workflow structures, and cheat sheets you see live? You get them after. No login. No portal. Just files you can open on your laptop tonight.</p>
+</div>
+
+<!-- 7. Hands-On Experience -->
+<div class="benefit-card">
+<i class="fas fa-vial"></i>
+<h3>Build Something That Works — Today</h3>
+<p>You won’t watch a demo. You’ll make one. A working AI agent that summarizes articles, drafts emails, or explains concepts — built entirely by you, in under two hours.</p>
+</div>
+
+<!-- 8. Skill Validation -->
+<div class="benefit-card">
+<i class="fas fa-award"></i>
+<h3>Prove You Can Do It — Live</h3>
+<p>You’ll present your workflow to peers and mentors. They’ll ask questions. You’ll answer. That moment — when you realize you actually know how to do this — is the point where you stop being a user and become a builder.</p>
+</div>
+
+<!-- 9. Community Access -->
+<div class="benefit-card">
+<i class="fas fa-users"></i>
+<h3>Join the Only AI Group That Matters Here</h3>
+<p>This isn’t a Discord server. It’s the group of IES students already using AI to win hackathons, automate assignments, and build side projects. You’ll be invited in — if you show up today.</p>
+</div>
+
+<!-- 10. Future-Proofing -->
+<div class="benefit-card">
+<i class="fas fa-shield-alt"></i>
+<h3>Be Ahead of Everyone Else in Your Batch</h3>
+<p>By December, half your class will be asking, “How did you get AI to do that?” You’ll already have the answer. And the tool. And the confidence to explain it.</p>
+</div>
+
+<!-- 11. Project Portfolio -->
+<div class="benefit-card">
+<i class="fas fa-folder-open"></i>
+<h3>One Project. Zero Coding. All Impact.</h3>
+<p>You’ll walk out with a functional AI tool — documented, shareable, and ready to add to your resume. No GitHub needed. Just a link. And the ability to say: “I built this.”</p>
+</div>
+
+<!-- 12. Confidence with AI -->
+<div class="benefit-card">
+<i class="fas fa-brain"></i>
+<h3>No More Guessing. Just Results.</h3>
+<p>You’ll stop saying “I don’t know how to ask AI.” Instead, you’ll say: “Here’s my prompt.” Because you’ll know exactly what structure works — and why.</p>
+</div>
+</div>
+</div></section>
+
+    <!-- Testimonials Section -->
+<section class="testimonials" id="testimonials">
+    <h2 class="section-title">What Students Say</h2>
+    <p class="section-subtitle">
+        Don’t just take our word for it hear from learners who’ve transformed their skills, built real AI workflows, and advanced their learning through ECHO and the HOPE ecosystem.
+    </p>
+
+    <div class="testimonials-container">
+        <!-- Testimonial 1 -->
+        <div class="testimonial-card">
+            <div class="testimonial-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+            </div>
+            <div class="testimonial-content">
+                "This workshop completely transformed my understanding of AI beyond chatbots to intelligent workflows that simulate thinking and action. The hands-on approach with browser-based AI tools made concepts like chain-of-thought and contextual memory easy to grasp. I’m now designing AI helpers with classmates one of which we’re refining for academic use. This is practical AI, not just theory."
+            </div>
+            <div class="testimonial-author">
+                <div class="author-avatar">AK</div>
+                <div class="author-info">
+                    <h4>Arya Krishnan</h4>
+                    <p>Computer Science, CUSAT</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Testimonial 2 -->
+        <div class="testimonial-card">
+            <div class="testimonial-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+            </div>
+            <div class="testimonial-content">
+                "The prompt engineering techniques I learned here have been invaluable in both academics and personal projects. I applied tree-of-thought prompting to debug a machine learning concept and used prompt chaining to automate study summaries. The instructors, trained under HOPE Int CORE, broke down advanced topics with clarity. This is the kind of skill you can’t get from generic online tutorials."
+            </div>
+            <div class="testimonial-author">
+                <div class="author-avatar">MF</div>
+                <div class="author-info">
+                    <h4>Muhammed Faisal</h4>
+                    <p>Information Technology, NIT Calicut</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Testimonial 3 -->
+        <div class="testimonial-card">
+            <div class="testimonial-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+            </div>
+            <div class="testimonial-content">
+                "One of the best technical workshops I’ve attended. The curriculum felt like it was designed by someone who actually uses AI in real workflows because it was. Harinandan’s team at HOPE structured the modules to mirror practical problem-solving. I connected with fellow learners, and we’re now collaborating on a research assistant workflow for our final year project."
+            </div>
+            <div class="testimonial-author">
+                <div class="author-avatar">AJ</div>
+                <div class="author-info">
+                    <h4>Anjali Joseph</h4>
+                    <p>Electronics Engineering, TKMCE</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Testimonial 4: Career Switcher -->
+        <div class="testimonial-card">
+            <div class="testimonial-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+            </div>
+            <div class="testimonial-content">
+                "As a senior educator, I was skeptical about AI replacing human teaching. This workshop changed my perspective entirely. I now use prompt engineering to design lesson plans, generate quizzes, and guide students in creating simple AI tools. After presenting my work at a staff meeting, I was invited to lead AI integration training across our district all sparked by one session with HOPE."
+            </div>
+            <div class="testimonial-author">
+                <div class="author-avatar">RS</div>
+                <div class="author-info">
+                    <h4>Rahul S.</h4>
+                    <p>Senior Educator, Trivandrum</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Testimonial 5: Entrepreneur -->
+        <div class="testimonial-card">
+            <div class="testimonial-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+            </div>
+            <div class="testimonial-content">
+                "I joined to understand AI basics. I left with a working prototype for my ed-tech idea. The workflow design module was a game-changer within hours, I had an AI system helping with content drafting, student queries, and feedback analysis. It’s now part of my project plan. This workshop didn’t just teach me AI it accelerated my entire learning journey."
+            </div>
+            <div class="testimonial-author">
+                <div class="author-avatar">SV</div>
+                <div class="author-info">
+                    <h4>Sneha Varma</h4>
+                    <p>Startup Founder, Kochi</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Testimonial 6: Working Professional -->
+        <div class="testimonial-card">
+            <div class="testimonial-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+            </div>
+            <div class="testimonial-content">
+                "As a marketing lead, I needed practical, usable AI skills not theory. This delivered exactly that. I now draft campaign content faster, built a prompt-based assistant for sentiment analysis, and trained my team to use chaining for brainstorming. We’re applying these methods across projects. The impact was immediate, and the support from HOPE’s network has been incredibly helpful."
+            </div>
+            <div class="testimonial-author">
+                <div class="author-avatar">DK</div>
+                <div class="author-info">
+                    <h4>Dinesh Kumar</h4>
+                    <p>Digital Marketing Lead, Ernakulam</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Team Section -->
+<section class="team" id="team">
+    <h2 class="section-title">Meet Our Core Team</h2>
+    
+    <div class="team-container">
+        <div class="team-grid">
+            <div class="team-card">
+                <div class="team-avatar">HN</div>
+                <div class="team-name">Hari</div>
+                <div class="team-role">Founder, HOPE Int CORE | AI & Physics Innovator</div>
+                <div class="team-bio">
+                    Harinandan K is a BTech Data Science student at IES College of Engineering, a theoretical physics researcher, and the founder of HOPE a learning-focused ecosystem that empowers students through AI education and innovation. He is developing the Chronon-Super Quantum Level Model, a conceptual framework exploring structured emergence in complex systems.
+                </div>
+                <div class="team-bio">
+                    As a tech educator and developer, he has led the HOPE Summer AI Workshop, built the IES DS Portal, and founded TexidoMeg, a platform for learning digital skills. His work connects AI, education, and structured thinking, showing how students can harness AI effectively even at the undergraduate level.
+                </div>
+            </div>
+            
+            <div class="team-card">
+                <div class="team-avatar">TK</div>
+                <div class="team-name">Thanay</div>
+                <div class="team-role">AI Systems Architect | HOPE Research Lead</div>
+                <div class="team-bio">
+                    Thanay Krishna C U is a core contributor to HOPE’s AI education initiatives, specializing in prompt frameworks, reasoning patterns, and AI workflow design. He brings technical insight from projects in AI-assisted learning and structured problem-solving.
+                </div>
+                <div class="team-bio">
+                    With a strong foundation in mathematics and logic, he focuses on making AI interactions clear, reliable, and educationally valuable. He mentors students in the HOPE learning lab, guiding them from basic prompts to designing intelligent workflows.
+                </div>
+            </div>
+            
+            <div class="team-card">
+                <div class="team-avatar">AS</div>
+                <div class="team-name">Amna</div>
+                <div class="team-role">Prompt Engineering Lead | HOPE Education</div>
+                <div class="team-bio">
+                    Amna Shareef leads the prompt engineering curriculum within HOPE Education, designing practical frameworks that help students interact with AI effectively. She has developed reusable prompt templates and training modules used in workshops and academic projects.
+                </div>
+                <div class="team-bio">
+                    Her expertise lies in structuring AI responses through chain-of-thought, role prompting, and iterative refinement turning ideas into clear, actionable outputs. She is passionate about making AI approachable and empowering for beginner learners.
+                </div>
+            </div>
+            
+            <div class="team-card">
+                <div class="team-avatar">AP</div>
+                <div class="team-name">Adithyan</div>
+                <div class="team-role">Technical Operations | HOPE IoT</div>
+                <div class="team-bio">
+                    Adithyan P S ensures smooth delivery of all technical aspects in HOPE’s workshops and live demos. With experience in digital systems and cloud-based platforms, he supports the setup and flow of AI learning sessions.
+                </div>
+                <div class="team-bio">
+                    He specializes in optimizing browser-based AI tools and real-time workflows, ensuring zero setup friction for participants. A key member of the HOPE team, he helps students test, refine, and present their AI-powered projects with confidence.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+    <!-- Interactive Demo Section 
+    <section class="interactive-demo" id="interactive-demo">
+        <h2 class="section-title">Try Our AI Demo</h2>
+        
+        <div class="demo-container">
+            <div class="demo-box">
+                <h3>Experience the Power of Prompt Engineering</h3>
+                <p>Enter a prompt below and see how different techniques can improve AI responses. Try experimenting with different approaches!</p>
+                
+            <!--    <input type="text" class="demo-input" id="promptInput" placeholder="Enter your prompt here..."> 
+                <div class="demo-output" id="demoOutput">AI response will appear here...</div>
+                
+                <div class="demo-buttons">
+                    <button class="demo-btn" onclick="generateBasicResponse()">Basic Prompt</button>
+                    <button class="demo-btn" onclick="generateAdvancedResponse()">Advanced Prompt</button>
+                    <button class="demo-btn" onclick="generateChainOfThought()">Chain of Thought</button>
+                    <button class="demo-btn" onclick="generateRoleBased()">Role-Based</button>
+                </div>
+            </div>
+        </div>
+    </section>-->
+                
+
+    <!-- Timeline Section -->
+<section class="timeline" id="timeline">
+    <h2 class="section-title">Workshop Schedule</h2>
+    
+    <div class="timeline-container">
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="timeline-time">9:15 AM - 9:25 AM</div>
+                <div class="timeline-title">Welcome & Vision</div>
+                <div class="timeline-description">
+                    Introduction to ECHO and the HOPE mission: Create. Empower. Evolve. Overview of how prompt engineering and AI workflows are reshaping learning, creativity, and productivity. Meet your facilitators and get oriented to the 90-minute journey ahead.
+                </div>
+            </div>
+        </div>
+        
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="timeline-time">9:25 AM - 9:40 AM</div>
+                <div class="timeline-title">AI Fundamentals & Emergent Intelligence</div>
+                <div class="timeline-description">
+                    Explore how large language models work not just as tools, but as systems capable of emergent behaviors. Learn how simple prompts can trigger complex, intelligent-seeming responses, inspired by cognitive modeling and the Chronon-Super Quantum Level Model.
+                </div>
+            </div>
+        </div>
+        
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="timeline-time">9:40 AM - 9:55 AM</div>
+                <div class="timeline-title">Prompt Engineering Deep Dive</div>
+                <div class="timeline-description">
+                    Master the science of prompting: instruction design, role assignment, and context control. Practice with real AI tools like ChatGPT and Claude. Learn how to guide AI responses a skill used in HOPE’s educational projects and student workflows.
+                </div>
+            </div>
+        </div>
+        
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="timeline-time">9:55 AM - 10:05 AM</div>
+                <div class="timeline-title">Live Demo: AI Thinking Patterns</div>
+                <div class="timeline-description">
+                    See how AI simulates reasoning in real time. Watch chain-of-thought and self-consistency prompting reveal step-by-step logic. A live walkthrough showing how structured prompts lead to smarter, more reliable outputs.
+                </div>
+            </div>
+        </div>
+        
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="timeline-time">10:05 AM - 10:25 AM</div>
+                <div class="timeline-title">Designing AI Workflows Live</div>
+                <div class="timeline-description">
+                    The highlight: a live demonstration of an AI workflow that generates a complete application concept, research summary, or creative project from a single natural language prompt. No templates, no coding just strategic prompting. See how students use this for academic and personal tools.
+                </div>
+            </div>
+        </div>
+        
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="timeline-time">10:25 AM - 10:30 AM</div>
+                <div class="timeline-title">Q&A & Next Steps</div>
+                <div class="timeline-description">
+                    Ask questions, get guidance, and learn how to continue your journey with HOPE’s advanced programs. Discover how to apply today’s learning to your studies, projects, or future career in an AI-driven world.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+    <!-- Pricing Section 
+    <section class="pricing" id="pricing">
+        <h2 class="section-title">Workshop Pricing</h2>
+        
+        <div class="pricing-container">
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-name">Basic</div>
+                    <div class="pricing-price">₹999</div>
+                    <div class="pricing-period">one-time payment</div>
+                    <ul class="pricing-features">
+                        <li>Workshop access</li>
+                        <li>Basic materials</li>
+                        <li>Certificate of completion</li>
+                        <li>1 month community access</li>
+                    </ul>
+                    <button class="pricing-btn">Choose Plan</button>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <div class="pricing-name">Standard</div>
+                    <div class="pricing-price">₹1,999</div>
+                    <div class="pricing-period">one-time payment</div>
+                    <ul class="pricing-features">
+                        <li>Workshop access</li>
+                        <li>Comprehensive materials</li>
+                        <li>Premium certificate</li>
+                        <li>3 months community access</li>
+                        <li>1-on-1 mentoring session</li>
+                        <li>Project review</li>
+                    </ul>
+                    <button class="pricing-btn">Choose Plan</button>
+                </div>
+                  
+                <div class="pricing-card">
+                    <div class="pricing-name">Premium</div>
+                    <div class="pricing-price">₹2,999</div>
+                    <div class="pricing-period">one-time payment</div>
+                    <ul class="pricing-features">
+                        <li>Workshop access</li>
+                        <li>All materials & resources</li>
+                        <li>Elite certificate</li>
+                        <li>Lifetime community access</li>
+                        <li>3 mentoring sessions</li>
+                        <li>Job placement assistance</li>
+                        <li>Ongoing support</li>
+                    </ul>
+                    <button class="pricing-btn">Choose Plan</button>
+                </div> 
+            </div>
+        </div>
+    </section>-->
+
+    <!-- Gallery Section -->
+<section class="gallery" id="gallery">
+    <h2 class="section-title">Workshop Gallery</h2>
+    
+    <div class="gallery-grid">
+        <div class="gallery-item">
+            <img src="assets/img/hopeiot2.jpeg" alt="Workshop Session">
+            <div class="gallery-overlay">
+                <div class="gallery-title">Interactive Session</div>
+                <div class="gallery-description">Hands-on prompt engineering practice</div>
+            </div>
+        </div>
+        
+        <div class="gallery-item">
+            <img src="assets/img/hopeiot3.jpeg" alt="Group Discussion">
+            <div class="gallery-overlay">
+                <div class="gallery-title">Group Discussion</div>
+                <div class="gallery-description">Designing AI workflows together</div>
+            </div>
+        </div>
+        
+        <div class="gallery-item">
+            <img src="assets/img/s1ds1.jpeg" alt="Presentation">
+            <div class="gallery-overlay">
+                <div class="gallery-title">Expert Presentation</div>
+                <div class="gallery-description">Understanding AI behavior and prompting</div>
+            </div>
+        </div>
+        
+        <div class="gallery-item">
+            <img src="assets/img/s1ds3.jpeg" alt="Networking">
+            <div class="gallery-overlay">
+                <div class="gallery-title">Networking</div>
+                <div class="gallery-description">Connecting with AI learners and mentors</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <h2 class="section-title">Contact Us</h2>
+        
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Get in Touch</h3>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <strong>Address:</strong><br>
+                        IES College of Engineering<br>
+                        Poovathur Parappoor Road, P.O. Chittilappilly<br>
+                        Thrissur District, Kerala - 680551 [[2]]
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <strong>Phone:</strong><br>
+                        +91 75102 55646[[3]]
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <strong>Email:</strong><br>
+                        harinandan.ofc@gmail.com [[6]]
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <strong>Office Hours:</strong><br>
+                        Monday - Friday: 9:00 AM - 5:00 PM<br>
+                        Saturday: 10:00 AM - 4:00 PM
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-form">
+    <h3>Send a Message</h3>
+    <form 
+        action="https://getform.io/f/161d40d2-275f-4027-b38d-926c67413486" 
+        method="POST" 
+        id="contactForm"
+    >
+        <!-- Hidden Fields for Automation -->
+        <input type="hidden" name="source" value="ECHO Techfest 2025 - Contact Form">
+        <input type="hidden" name="_next" value="https://hopeintcore.in/thank-you.html">
+        <input type="hidden" name="_gotcha" style="display:none !important">
+
+        <!-- Name Field -->
+        <div class="form-group">
+            <label for="contactName">Name</label>
+            <input type="text" id="contactName" name="name" placeholder="Your full name" required>
+        </div>
+
+        <!-- Email Field -->
+        <div class="form-group">
+            <label for="contactEmail">Email</label>
+            <input type="email" id="contactEmail" name="email" placeholder="your.email@example.com" required>
+        </div>
+
+        <!-- Subject Dropdown (Improved for Intent Capture) -->
+        <div class="form-group">
+            <label for="contactSubject">How Can We Help?</label>
+            <select id="contactSubject" name="subject" required>
+                <option value="" disabled selected>Choose an option</option>
+                <option value="Workshop Inquiry">Workshop Inquiry</option>
+                <option value="Join 2-Month AI Course">Join 2-Month AI Agents Course (₹1499)</option>
+                <option value="Collaborate with HOPE">Collaborate with HOPE Int CORE</option>
+                <option value="Project Mentorship">Seek Project Mentorship</option>
+                <option value="Technical Issue">Report a Technical Issue</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <!-- Message Field -->
+        <div class="form-group">
+            <label for="contactMessage">Message</label>
+            <textarea 
+                id="contactMessage" 
+                name="message" 
+                placeholder="Tell us more about your interest, project, or question..." 
+                rows="5" 
+                required
+            ></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="contact-btn">Send Message</button>
+    </form>
+</div>
+        </div>
+    </section>
+
+
+<!-- FAQ Section --><section class="faq" id="faq">
+<h2 class="section-title">Frequently Asked Questions</h2>
+
+<div class="faq-container">
+
+<!-- FAQ 1 -->
+<div class="faq-item">
+<div class="faq-question" onclick="toggleFAQ(this)">
+<h3>Do I need prior programming experience?</h3>
+<i class="fas fa-plus faq-icon"></i>
+</div>
+<div class="faq-answer">
+<p>No. If you’ve ever typed a question into ChatGPT, you already have what it takes. We start from zero. No code. No jargon. Just clear steps to make AI do what you want — even if you’ve never written a single line.</p>
+</div>
+</div>
+
+<!-- FAQ 2 -->
+<div class="faq-item">
+<div class="faq-question" onclick="toggleFAQ(this)">
+<h3>What tools/software do I need?</h3>
+<i class="fas fa-plus faq-icon"></i>
+</div>
+<div class="faq-answer">
+<p>Your laptop or phone. That’s it. Everything runs in your browser — no downloads, no accounts, no setup. We’ll give you instant access to the exact tools we use live during the session.</p>
+</div>
+</div>
+
+<!-- FAQ 3 -->
+<div class="faq-item">
+<div class="faq-question" onclick="toggleFAQ(this)">
+<h3>Will I receive a certificate?</h3>
+<i class="fas fa-plus faq-icon"></i>
+</div>
+<div class="faq-answer">
+<p>Yes. Everyone who attends gets a certificate — signed, dated, and ready to add to LinkedIn or your resume. It doesn’t say “attended.” It says “built an AI workflow.” That’s the difference.</p>
+</div>
+</div>
+
+<!-- FAQ 4 -->
+<div class="faq-item">
+<div class="faq-question" onclick="toggleFAQ(this)">
+<h3>Is there any post-workshop support?</h3>
+<i class="fas fa-plus faq-icon"></i>
+</div>
+<div class="faq-answer">
+<p>You’ll get all the prompts, templates, and guides we use — instantly. After the session, you’re not left alone. You’ll be invited into the same group where students are already using these tools to automate assignments, build projects, and win challenges.</p>
+</div>
+</div>
+
+<!-- FAQ 5 -->
+<div class="faq-item">
+<div class="faq-question" onclick="toggleFAQ(this)">
+<h3>Can I get a refund if I can't attend?</h3>
+<i class="fas fa-plus faq-icon"></i>
+</div>
+<div class="faq-answer">
+<p>Full refund if you cancel 7 days before. After that, you can transfer your seat to someone else — no questions asked. This isn’t a locked-in commitment. It’s a chance to show up and see if this changes how you work.</p>
+</div>
+</div>
+
+<!-- FAQ 6 -->
+<div class="faq-item">
+<div class="faq-question" onclick="toggleFAQ(this)">
+<h3>How is this workshop different from other AI courses?</h3>
+<i class="fas fa-plus faq-icon"></i>
+</div>
+<div class="faq-answer">
+<p>Most AI courses teach you how AI works. This one teaches you how to control it. You won’t learn theory. You’ll learn how to make AI summarize research, write reports, or explain concepts — by typing the right words. No coding. Just results.</p>
+</div>
+</div>
+
+<!-- FAQ 7 -->
+<div class="faq-item">
+<div class="faq-question" onclick="toggleFAQ(this)">
+<h3>How long is the workshop?</h3>
+<i class="fas fa-plus faq-icon"></i>
+</div>
+<div class="faq-answer">
+<p>105 minutes. From 9:15 AM to 10:45 AM. You’ll walk in as a user. You’ll walk out with a working AI tool you built yourself.</p>
+</div>
+</div>
+
+<!-- FAQ 8 -->
+<div class="faq-item">
+<div class="faq-question" onclick="toggleFAQ(this)">
+<h3>Is there homework or assignments?</h3>
+<i class="fas fa-plus faq-icon"></i>
+</div>
+<div class="faq-answer">
+<p>No. But if you want to go further, we’ll give you optional prompts to try at home — like turning your notes into flashcards or automating email drafts. Do it if you want. Skip it if you don’t. The core skill? Learned in the session.</p>
+</div>
+</div>
+
+<!-- FAQ 9 -->
+<div class="faq-item">
+<div class="faq-question" onclick="toggleFAQ(this)">
+<h3>Are sessions recorded?</h3>
+<i class="fas fa-plus faq-icon"></i>
+</div>
+<div class="faq-answer">
+<p>No. Because the magic happens when you’re doing it live — asking questions, seeing AI react, fixing your prompt on the spot. You’ll get everything we use afterward, but the real value? Only here, in the room, with the clock ticking.</p>
+</div>
+</div>
+
+<!-- FAQ 10 -->
+<div class="faq-item">
+<div class="faq-question" onclick="toggleFAQ(this)">
+<h3>Can students attend?</h3>
+<i class="fas fa-plus faq-icon"></i>
+</div>
+<div class="faq-answer">
+<p>This is made for students. Not engineers. Not researchers. Students. Whether you're in CSE, ECE, or Civil Engineering — if you’ve ever wasted hours writing a report or summarizing notes, this is for you.</p>
+</div>
+</div>
+
+<!-- FAQ 11 -->
+<div class="faq-item">
+<div class="faq-question" onclick="toggleFAQ(this)">
+<h3>Will I work on real projects?</h3>
+<i class="fas fa-plus faq-icon"></i>
+</div>
+<div class="faq-answer">
+<p>You’ll build one — during the session. A real AI assistant that can summarize articles, generate quizzes, or draft emails. Not a demo. Not a simulation. Something you can open tomorrow morning and use to save time on your next assignment.</p>
+</div>
+</div>
+
+<!-- FAQ 12 -->
+<div class="faq-item">
+<div class="faq-question" onclick="toggleFAQ(this)">
+<h3>What if I’m in a different time zone?</h3>
+<i class="fas fa-plus faq-icon"></i>
+</div>
+<div class="faq-answer">
+<p>This is happening at IES College of Engineering, Thrissur — as part of Techfest. It’s a live, in-person event. If you can’t make it, you miss the only chance to build something with us. Materials will be shared later — but the moment you become the person who knows how to make AI work for them? That only happens if you show up.</p>
+</div>
+</div>
+
+</div></section>
+
+    <!-- Resources Section -->
+<section class="resources" id="resources">
+    <h2 class="section-title">Additional Resources</h2>
+    
+    <div class="resources-grid">
+        <!-- Resource 1 -->
+        <div class="resource-card">
+            <h3><i class="fas fa-book"></i> Recommended Reading</h3>
+            <ul>
+                <li>Introduction to Artificial Intelligence Stuart Russell & Peter Norvig</li>
+                <li>Deep Learning with Python François Chollet</li>
+                <li>Hands-On Machine Learning Aurélien Géron</li>
+                <li>Natural Language Processing in Action Language, Reasoning, and Computation</li>
+                <li>Pattern Recognition and Machine Learning Bayesian Approaches and Neural Models</li>
+            </ul>
+            <p>These foundational texts help build understanding of how AI systems process information and generate responses. Within HOPE Education, we reference these works to explore prompt behavior, structured reasoning, and cognitive simulation concepts that inform how we design effective AI workflows and learning experiences for students.</p>
+        </div>
+        
+        <!-- Resource 2 -->
+        <div class="resource-card">
+            <h3><i class="fas fa-video"></i> Video Tutorials</h3>
+            <ul>
+                <li>AI Fundamentals Series Core Concepts in LLMs and Transformers</li>
+                <li>Prompt Engineering Masterclass From Basics to Chain-of-Thought</li>
+                <li>Building with AI Agents Step-by-Step Memory, Tools, and Loops</li>
+                <li>Real-world AI Applications Automation, Research, and Productivity</li>
+                <li>Advanced Neural Network Architectures Attention, Feedback, and Emergence</li>
+            </ul>
+            <p>These curated tutorials reflect the same practical, learner-focused approach used in HOPE workshops. Designed for clarity and real-world relevance, they support the skills taught in ECHO especially prompt design, workflow thinking, and using AI effectively in academic and personal projects.</p>
+        </div>
+        
+        <!-- Resource 3 -->
+        <div class="resource-card">
+            <h3><i class="fas fa-tools"></i> Tools & Platforms</h3>
+            <ul>
+                <li>ChatGPT & Claude Browser-based AI for natural language interaction</li>
+                <li>Hugging Face Spaces Access and test open AI apps without coding</li>
+                <li>Poe by Quora Platform to use multiple AI models with custom prompts</li>
+                <li>Google Keep + AI Tools Simple integration for task automation ideas</li>
+                <li>Notion AI Features Organize and apply AI in note-taking and planning</li>
+            </ul>
+            <p>These accessible, no-code platforms are ideal for practicing prompt engineering and designing AI workflows. Whether simulating agent-like behavior, summarizing research, or organizing tasks, these tools allow learners to experiment and build functional systems quickly all within familiar, browser-based environments.</p>
+        </div>
+        
+        <!-- Resource 4 -->
+        <div class="resource-card">
+            <h3><i class="fas fa-users"></i> Community</h3>
+            <ul>
+                <li>AI Kerala Discord Server Connect with regional learners and educators</li>
+                <li>Monthly Meetups Share ideas, learn from peers, and grow together</li>
+                <li>Project Showcase Platform Highlight your AI workflows and get feedback</li>
+                <li>Mentorship Program Learn from HOPE facilitators and experienced participants</li>
+                <li>Learning Challenges Practice prompting, share results, and stay engaged</li>
+            </ul>
+            <p>Becoming part of a learning community is a key step in your AI journey. HOPE actively supports these networks to encourage collaboration and growth. As a workshop attendee, you’ll receive an invitation to join HOPE’s private learning circle a space for ongoing support, idea exchange, and peer encouragement.</p>
+        </div>
+    </div>
+</section>
+    <!-- Registration Section -->
+    <section class="registration" id="register">
+    <h2 class="section-title">Register Now</h2>
+    
+    <div class="registration-container">
+        <div class="seat-counter">
+            <h3>Limited Seats Available</h3>
+            <div class="seats-left" id="seatsLeft">42</div>
+            <p>seats remaining out of 80</p>
+        </div>
+        
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSflqtHWHhdHfxruK57Gg-a5bKME8Qg0IhgFf0dH0hnxkkYwzQ/viewform?usp=dialog" target="_blank" class="register-btn">
+            <i class="fas fa-external-link-alt"></i> Secure Your Spot
+        </a>
+        
+        <p class="register-note" id="countdown-note">
+            Registration closes on September 24, 2025
+        </p>
+    </div>
+</section>
+
+<script>
+// Dynamic Day Counter for Registration Deadline
+document.addEventListener("DOMContentLoaded", function () {
+    const deadline = new Date("September 24, 2025 23:59:59").getTime();
+    const noteElement = document.getElementById("countdown-note");
+
+    // Update the counter every day (and immediately on load)
+    function updateCounter() {
+        const now = new Date().getTime();
+        const distance = deadline - now;
+
+        if (distance < 0) {
+            noteElement.innerHTML = "Registration has closed. Stay tuned for the next session.";
+            return;
+        }
+
+        // Calculate remaining days
+        const daysLeft = Math.floor(distance / (1000 * 60 * 60 * 24));
+
+        // Update message
+        if (daysLeft === 1) {
+            noteElement.innerHTML = "⏳ Only <strong>1 day</strong> left to register! Don’t miss your chance to join ECHO.";
+        } else {
+            noteElement.innerHTML = "⏳ <strong>" + daysLeft + " days</strong> left to register. Secure your spot before seats fill up.";
+        }
+    }
+
+    // Run immediately
+    updateCounter();
+
+    // Update daily (optional: you can use setInterval for real-time, but once per day is enough)
+    // Here we update every 6 hours for smooth UX
+    setInterval(updateCounter, 6 * 60 * 60 * 1000);
+});
+</script>
+
+    <!-- Floating Action Button -->
+    <a href="#register" target="_blank" class="fab" title="Quick Registration">
+        <i class="fas fa-user-plus"></i>
+    </a>
+
+    <!-- Notification Container -->
+    <div class="notification-container" id="notificationContainer"></div>
+
+    <!-- Footer 
+    <footer>
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p class="copyright">© 2023 HOPE Int Core. All rights reserved. | ECHO  Workshop</p>
+        </div>
+    </footer>-->
+
+    <script>
+        // Neural Network Visualization
+        const canvas = document.getElementById('neural-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Set canvas size
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        
+        // Neural network nodes
+        class Node {
+            constructor(x, y, layer) {
+                this.x = x;
+                this.y = y;
+                this.layer = layer;
+                this.radius = 4;
+                this.pulseRadius = 0;
+                this.pulseSpeed = 0.05;
+                this.pulseLimit = 15;
+                this.active = Math.random() > 0.7;
+                this.activationTimer = Math.random() * 100;
+            }
+            
+            update() {
+                // Random activation
+                this.activationTimer--;
+                if (this.activationTimer <= 0) {
+                    this.active = Math.random() > 0.7;
+                    this.activationTimer = Math.random() * 100 + 50;
+                }
+                
+                // Pulse effect when active
+                if (this.active) {
+                    this.pulseRadius += this.pulseSpeed;
+                    if (this.pulseRadius > this.pulseLimit) {
+                        this.pulseRadius = 0;
+                    }
+                }
+            }
+            
+            draw() {
+                // Draw node
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(74, 158, 255, 0.8)';
+                ctx.fill();
+                
+                // Draw pulse if active
+                if (this.active && this.pulseRadius > 0) {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius + this.pulseRadius, 0, Math.PI * 2);
+                    ctx.strokeStyle = `rgba(74, 158, 255, ${0.5 * (1 - this.pulseRadius / this.pulseLimit)})`;
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+            }
+        }
+        
+        // Neural network connections
+        class Connection {
+            constructor(node1, node2) {
+                this.node1 = node1;
+                this.node2 = node2;
+                this.active = false;
+                this.activationTimer = Math.random() * 100;
+                this.signalPosition = 0;
+                this.signalSpeed = 0.02;
+            }
+            
+            update() {
+                // Activate connection randomly or if either node is active
+                this.activationTimer--;
+                if (this.activationTimer <= 0) {
+                    this.active = (this.node1.active || this.node2.active) && Math.random() > 0.3;
+                    this.activationTimer = Math.random() * 100 + 50;
+                    if (this.active) {
+                        this.signalPosition = 0;
+                    }
+                }
+                
+                // Move signal along connection
+                if (this.active && this.signalPosition < 1) {
+                    this.signalPosition += this.signalSpeed;
+                }
+            }
+            
+            draw() {
+                // Draw connection line
+                ctx.beginPath();
+                ctx.moveTo(this.node1.x, this.node1.y);
+                ctx.lineTo(this.node2.x, this.node2.y);
+                ctx.strokeStyle = 'rgba(74, 158, 255, 0.2)';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+                
+                // Draw signal if active
+                if (this.active && this.signalPosition < 1) {
+                    const x = this.node1.x + (this.node2.x - this.node1.x) * this.signalPosition;
+                    const y = this.node1.y + (this.node2.y - this.node1.y) * this.signalPosition;
+                    
+                    ctx.beginPath();
+                    ctx.arc(x, y, 3, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(74, 158, 255, 0.8)';
+                    ctx.fill();
+                }
+            }
+        }
+        
+        // Create neural network
+        const nodes = [];
+        const connections = [];
+        const layers = 5;
+        const nodesPerLayer = 8;
+        
+        // Create nodes
+        for (let layer = 0; layer < layers; layer++) {
+            for (let i = 0; i < nodesPerLayer; i++) {
+                const x = (canvas.width / (layers + 1)) * (layer + 1);
+                const y = (canvas.height / (nodesPerLayer + 1)) * (i + 1);
+                nodes.push(new Node(x, y, layer));
+            }
+        }
+        
+        // Create connections
+        for (let i = 0; i < nodes.length; i++) {
+            for (let j = 0; j < nodes.length; j++) {
+                if (nodes[i].layer < nodes[j].layer && nodes[j].layer - nodes[i].layer <= 2) {
+                    if (Math.random() > 0.7) { // Don't connect all nodes
+                        connections.push(new Connection(nodes[i], nodes[j]));
+                    }
+                }
+            }
+        }
+        
+        // Animation loop
+        function animateNeuralNetwork() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Update and draw connections
+            connections.forEach(connection => {
+                connection.update();
+                connection.draw();
+            });
+            
+            // Update and draw nodes
+            nodes.forEach(node => {
+                node.update();
+                node.draw();
+            });
+            
+            requestAnimationFrame(animateNeuralNetwork);
+        }
+        
+        animateNeuralNetwork();
+        
+        // Kerala names for notifications
+        const keralaNames = [
+            "Arya Nair", "Muhammed Faisal", "Anjali Joseph", "Arun Kumar P.", "Lijina Das", 
+            "Sooraj M.", "Divya Gopalakrishnan", "Rahul Krishnan", "Sneha Menon", "Vishnu Nair",
+            "Fatima Beevi", "Pranav Suresh", "Amritha Varma", "Sajith Ahmed", "Kavya Mohan",
+            "Abhinav K. Vijayan", "Remya Krishnan", "Firoz Khan", "Gayathri Sreekumar", "Anoop Thomas",
+            "Reshma P.V.", "Jishnu Ravi", "Soumya Rajan", "Nikhil Prakash", "Aparna Pillai",
+            "Rizwan K.A.", "Priya Chandran", "Vivek Gopal", "Meera Nair", "Suresh Babu",
+            "Anitha Krishnan", "Rajesh Kumar", "Deepa Soman", "Manoj Varghese", "Kavitha Nair",
+            "Sathish Kumar", "Radhika Menon", "Vinod P.N.", "Sandhya Rajan", "Pradeep Kumar",
+            "Lakshmi Nair", "Suresh Babu", "Anitha Krishnan", "Rajesh Kumar", "Deepa Soman"
+        ];
+
+        // Track shown names to avoid repetition
+        const shownNames = new Set();
+
+        // Notification messages
+        const notificationMessages = [
+            "just registered for the workshop!",
+            "is excited to join us!",
+            "secured a seat for the workshop!",
+            "is looking forward to learning!",
+            "registered successfully!",
+            "is ready to explore AI!",
+            "joined the AI revolution!",
+            "is excited about prompt engineering!",
+            "secured a spot in the workshop!",
+            "is ready to master AI agents!"
+        ];
+
+        // Create notification
+        function createNotification() {
+            const container = document.getElementById('notificationContainer');
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            
+            // Get a random name that hasn't been shown yet
+            let name;
+            do {
+                name = keralaNames[Math.floor(Math.random() * keralaNames.length)];
+            } while (shownNames.has(name) && shownNames.size < keralaNames.length);
+            
+            // If all names have been shown, reset the set
+            if (shownNames.size >= keralaNames.length) {
+                shownNames.clear();
+            }
+            
+            shownNames.add(name);
+            
+            const message = notificationMessages[Math.floor(Math.random() * notificationMessages.length)];
+            
+            notification.innerHTML = `
+                <div class="notification-header">
+                    <div class="notification-icon">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <div class="notification-title">New Registration</div>
+                </div>
+                <div class="notification-message">
+                    <strong>${name}</strong> ${message}
+                </div>
+            `;
+            
+            container.appendChild(notification);
+            
+            // Remove notification after animation completes
+            setTimeout(() => {
+                notification.remove();
+            }, 5000);
+        }
+
+        // Show notifications at random intervals (3 minutes)
+        function scheduleNotification() {
+            const delay = Math.random() * 60000 + 180000; // Random delay between 3-4 minutes
+            setTimeout(() => {
+                createNotification();
+                scheduleNotification();
+            }, delay);
+        }
+
+        // Start showing notifications after page loads
+        window.addEventListener('load', () => {
+            // Show first notification after 10 seconds
+            setTimeout(createNotification, 10000);
+            scheduleNotification();
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Seat counter
+        let seatsLeft = 42;
+        const seatsLeftElement = document.getElementById('seatsLeft');
+
+        // Toggle About cards
+        function toggleAbout(element) {
+            element.classList.toggle('expanded');
+        }
+
+        // Toggle Curriculum items
+        function toggleCurriculum(element) {
+            element.classList.toggle('expanded');
+        }
+
+        // Toggle FAQ
+        function toggleFAQ(element) {
+            const faqItem = element.parentElement;
+            faqItem.classList.toggle('active');
+        }
+
+        // Interactive Demo
+        function generateBasicResponse() {
+            const prompt = document.getElementById('promptInput').value || "Explain quantum computing";
+            const output = document.getElementById('demoOutput');
+            
+            output.textContent = `Basic Response:
+${prompt}
+
+Quantum computing is a type of computation that harnesses the collective properties of quantum states, such as superposition, interference, and entanglement, to perform calculations. Unlike classical computers that use bits (0 or 1), quantum computers use quantum bits or qubits, which can exist in multiple states simultaneously due to superposition.`;
+        }
+
+        function generateAdvancedResponse() {
+            const prompt = document.getElementById('promptInput').value || "Explain quantum computing";
+            const output = document.getElementById('demoOutput');
+            
+            output.textContent = `Advanced Response:
+${prompt}
+
+Quantum computing represents a paradigm shift in computational capability. At its core, it leverages two fundamental quantum mechanical phenomena:
+
+1. Superposition: Unlike classical bits that exist as either 0 or 1, qubits can exist in a superposition of states, effectively representing both 0 and 1 simultaneously.
+
+2. Entanglement: Qubits can be entangled, meaning the state of one qubit is dependent on the state of another, regardless of the distance between them.
+
+These properties enable quantum computers to solve certain problems exponentially faster than classical computers, particularly in areas like cryptography, optimization, and simulation of quantum systems.`;
+        }
+
+        function generateChainOfThought() {
+            const prompt = document.getElementById('promptInput').value || "Explain quantum computing";
+            const output = document.getElementById('demoOutput');
+            
+            output.textContent = `Chain of Thought Response:
+${prompt}
+
+Let me break down quantum computing step by step:
+
+First, we need to understand what makes quantum computing different from classical computing. Classical computers use bits, which are like switches that can be either on (1) or off (0). Quantum computers use qubits, which are more complex.
+
+Next, we should consider the key quantum mechanical principles that enable this difference. The most important are superposition and entanglement.
+
+Superposition allows a qubit to be in multiple states at once. Think of it like a spinning coin - while it's spinning, it's both heads and tails simultaneously. Only when we measure it does it "collapse" to one state.
+
+Entanglement is when qubits become correlated in such a way that the state of one instantly affects the state of another, no matter how far apart they are.
+
+Finally, these properties allow quantum computers to perform certain calculations much faster than classical computers, especially for problems involving many possibilities or complex systems.`;
+        }
+
+        function generateRoleBased() {
+            const prompt = document.getElementById('promptInput').value || "Explain quantum computing";
+            const output = document.getElementById('demoOutput');
+            
+            output.textContent = `Role-Based Response:
+${prompt}
+
+You are a professor of quantum physics at a leading university. Your student has asked you to explain quantum computing in simple terms. Here's how you would respond:
+
+"Imagine you're standing in front of two doors. In classical computing, you can only be behind one door at a time - either door A or door B. But in quantum computing, you can be behind both doors simultaneously until someone checks.
+
+This is called superposition, and it's one of the key principles that makes quantum computers so powerful. Instead of checking possibilities one by one like a classical computer, a quantum computer can explore many possibilities at once.
+
+Another principle is entanglement, which is like having two coins that are magically connected. No matter how far apart they are, when you flip one, you instantly know what the other will be.
+
+These principles allow quantum computers to solve certain problems that would take classical computers billions of years to solve - like breaking certain types of encryption or simulating complex molecules for drug discovery."
+
+This explanation uses everyday analogies to make complex quantum concepts accessible to someone without a physics background.`;
+        }
+
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show success message
+            const formContainer = document.querySelector('.contact-form');
+            const successMessage = document.createElement('div');
+            successMessage.style.cssText = `
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba(74, 158, 255, 0.9);
+                color: #000;
+                padding: 30px;
+                border-radius: 15px;
+                text-align: center;
+                z-index: 10;
+                font-weight: bold;
+                font-size: 1.2rem;
+            `;
+            successMessage.textContent = 'Message sent successfully! We\'ll get back to you soon.';
+            formContainer.appendChild(successMessage);
+            
+            // Reset form
+            this.reset();
+            
+            // Remove success message after 5 seconds
+            setTimeout(() => {
+                successMessage.remove();
+            }, 5000);
+        });
+
+        // Translation functionality
+        document.getElementById('translateBtn').addEventListener('click', function() {
+            // This is a placeholder for translation functionality
+            // In a real implementation, you would integrate with a translation service
+            alert('Translation feature will be available soon!');
+        });
+    </script>
+</body>
+</html>
