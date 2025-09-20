@@ -3082,34 +3082,67 @@ document.addEventListener("DOMContentLoaded", function () {
         animateNeuralNetwork();
         
         // Kerala names for notifications
-        const keralaNames = [
-            "Arya Nair", "Muhammed Faisal", "Anjali Joseph", "Arun Kumar P.", "Lijina Das", 
-            "Sooraj M.", "Divya Gopalakrishnan", "Rahul Krishnan", "Sneha Menon", "Vishnu Nair",
-            "Fatima Beevi", "Pranav Suresh", "Amritha Varma", "Sajith Ahmed", "Kavya Mohan",
-            "Abhinav K. Vijayan", "Remya Krishnan", "Firoz Khan", "Gayathri Sreekumar", "Anoop Thomas",
-            "Reshma P.V.", "Jishnu Ravi", "Soumya Rajan", "Nikhil Prakash", "Aparna Pillai",
-            "Rizwan K.A.", "Priya Chandran", "Vivek Gopal", "Meera Nair", "Suresh Babu",
-            "Anitha Krishnan", "Rajesh Kumar", "Deepa Soman", "Manoj Varghese", "Kavitha Nair",
-            "Sathish Kumar", "Radhika Menon", "Vinod P.N.", "Sandhya Rajan", "Pradeep Kumar",
-            "Lakshmi Nair", "Suresh Babu", "Anitha Krishnan", "Rajesh Kumar", "Deepa Soman"
-        ];
+        // Kerala names for notifications
+const keralaNames = [
+    "Arya Nair", "Muhammed Faisal", "Anjali Joseph", "Arun Kumar P.", "Lijina Das", 
+    "Sooraj M.", "Divya Gopalakrishnan", "Rahul Krishnan", "Sneha Menon", "Vishnu Nair",
+    "Fatima Beevi", "Pranav Suresh", "Amritha Varma", "Sajith Ahmed", "Kavya Mohan",
+    "Abhinav K. Vijayan", "Remya Krishnan", "Firoz Khan", "Gayathri Sreekumar", "Anoop Thomas",
+    "Reshma P.V.", "Jishnu Ravi", "Soumya Rajan", "Nikhil Prakash", "Aparna Pillai",
+    "Rizwan K.A.", "Priya Chandran", "Vivek Gopal", "Meera Nair", "Suresh Babu",
+    "Anitha Krishnan", "Rajesh Kumar", "Deepa Soman", "Manoj Varghese", "Kavitha Nair",
+    "Sathish Kumar", "Radhika Menon", "Vinod P.N.", "Sandhya Rajan", "Pradeep Kumar",
+    "Lakshmi Nair", "Suresh Babu", "Anitha Krishnan", "Rajesh Kumar", "Deepa Soman",
+    // Additional authentic Malayali names
+    "Nandana P.N.", "Akhil E.P.", "Sreeja Pillai", "Ajith Kumar", "Sindhu Balan",
+    "Roshan C.K.", "Anjana S.", "Sudheesh Nair", "Sangeetha M.", "Rajeev P.V.",
+    "Anjana M.K.", "Shibu K.", "Sreelekha V.", "Rajesh M.", "Sudha R.",
+    "Arunima Pillai", "Bhagya Lakshmi", "Chandran Nair", "Deepak Raj", "Ebin Joseph",
+    "Fathima Rukaya", "Ganesh Menon", "Hema Sankar", "Indu Varma", "Jaison Thomas",
+    "Keerthana Nair", "Lakshmi Devi", "Manu Krishnan", "Nisha Mohan", "Oommen Chandy",
+    "Pramod Kumar", "Queenie Jacob", "Rajeev Pillai", "Sajna Begum", "Thara Mohan",
+    "Uma Devi", "Vinu Mohan", "Wincy Thomas", "Xavier Joseph", "Yamuna Devi",
+    "Zachariah Thomas", "Adithya Menon", "Biju Nair", "Celin Chacko", "Dhanya Balan",
+    "Elvin George", "Firoz Ali", "Girija Nair", "Haritha Pillai", "Irfan Khan",
+    "Jancy Joseph", "Kiran Kumar", "Linta Thomas", "Mohan Das", "Nandu Nair",
+    "Omana Krishnan", "Pooja Menon", "Rajeshwari Devi", "Sajitha Nair", "Thulasi Devi",
+    "Urmila Pillai", "Varghese Thomas", "Sreejith Nair", "Aiswarya Menon", "Bhaskar Nair",
+    "Celine George", "Dinesh Kumar", "Eldhose Thomas", "Fathima Suhra", "Geetha Nair",
+    "Hari Krishnan", "Isha Menon", "Jithin Raj", "Karthika Nair", "Lijoy Joseph"
+];
 
-        // Track shown names to avoid repetition
-        const shownNames = new Set();
+// Track shown names to avoid repetition
+const shownNames = new Set();
 
-        // Notification messages
-        const notificationMessages = [
-            "just registered for the workshop!",
-            "is excited to join us!",
-            "secured a seat for the workshop!",
-            "is looking forward to learning!",
-            "registered successfully!",
-            "is ready to explore AI!",
-            "joined the AI revolution!",
-            "is excited about prompt engineering!",
-            "secured a spot in the workshop!",
-            "is ready to master AI agents!"
-        ];
+// Notification messages with authentic Malayali expressions (no place names)
+const notificationMessages = [
+    // Authentic Malayali expressions without place names
+    "just registered - super aayi!",
+    "is joining us - ente kuruvi!",
+    "just confirmed - enth degree aayi!",
+    "signed up - super aayi da!",
+    "is coming - mone!",
+    "just confirmed - valareyum enth degree!",
+    "joined - kollam mone!",
+    "signed up - sahaya aayi!",
+    "registered - mazhaya aayi!",
+    "just confirmed - kuruvi!",
+    "is joining us - super aayi!",
+    "just booked - ente ponnara!",
+    "is coming - ennikku ishtam aayi!",
+    "just confirmed - kollu da!",
+    "joined - parayan pati!",
+    "is excited - super aayi mone!",
+    "just registered - ente kuttippa!",
+    "is joining us - kollam da!",
+    "just confirmed - sahaya aayi mone!",
+    "signed up - super aayi kutti!",
+    "is coming - valareyum kollam!",
+    "just booked - enth degree mone!",
+    "joined - super aayi kutti!",
+    "is excited - kollam ente kuruvi!",
+    "just registered - sahaya aayi da!"
+];
 
         // Create notification
         function createNotification() {
