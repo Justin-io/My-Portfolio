@@ -2287,7 +2287,19 @@
                 }
             }
             
-            function initAdvancedEarth() {
+function initAOS() {
+    try {
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+    } catch (error) {
+        console.error('Error initializing AOS:', error);
+    }
+}
+
+function initAdvancedEarth() {
     if (state.components.earth) return;
     
     const container = document.getElementById('earth-container');
@@ -3057,6 +3069,7 @@ function debounce(func, wait) {
         timeout = setTimeout(() => func.apply(context, args), wait);
     };
 }
+            
             function initMap() {
                 if (state.components.map) return;
                 
