@@ -2287,17 +2287,6 @@
                 }
             }
             
-            function initAOS() {
-                try {
-                    AOS.init({
-                        duration: 1000,
-                        once: true,
-                        offset: 100
-                    });
-                } catch (error) {
-                    console.error('Error initializing AOS:', error);
-                }
-            }
             function initAdvancedEarth() {
     if (state.components.earth) return;
     
@@ -2555,6 +2544,69 @@
         const bloomPoints = new THREE.Points(pointsGeometry, pointsMaterial);
         scene.add(bloomPoints);
         
+        // ===== NEW MOON IMPLEMENTATION =====
+        // Create Moon
+        const moonGeometry = new THREE.SphereGeometry(0.27, 64, 64); // Moon is ~27% Earth's size
+        let moonTexture;
+        
+        try {
+            moonTexture = textureLoader.load('https://cdn.jsdelivr.net/gh/mrdoob/three.js@r129/examples/textures/planets/moon_1024.jpg');
+        } catch (e) {
+            moonTexture = new THREE.TextureLoader().load(createColorTexture(0xAAAAAA));
+        }
+        
+        const moonMaterial = new THREE.MeshPhongMaterial({
+            map: moonTexture,
+            shininess: 5
+        });
+        
+        const moon = new THREE.Mesh(moonGeometry, moonMaterial);
+        moon.castShadow = true;
+        moon.receiveShadow = true;
+        
+        // Create Moon orbit group
+        const moonOrbitGroup = new THREE.Group();
+        moonOrbitGroup.add(moon);
+        moon.position.set(3, 0, 0); // Position Moon 3 units from Earth
+        scene.add(moonOrbitGroup);
+        
+        // Create Moon satellites
+        const moonSatellites = [];
+        const moonSatelliteOrbits = [];
+        
+        // Lunar Reconnaissance Orbiter
+        const lro = createLunarSatellite();
+        lro.userData = {
+            orbitRadius: 0.35,
+            orbitSpeed: 0.003,
+            angle: Math.random() * Math.PI * 2,
+            inclination: 0.2
+        };
+        moon.add(lro);
+        moonSatellites.push(lro);
+        
+        // Chandrayaan-like orbiter
+        const chandrayaan = createLunarSatellite();
+        chandrayaan.userData = {
+            orbitRadius: 0.4,
+            orbitSpeed: 0.0025,
+            angle: Math.random() * Math.PI * 2,
+            inclination: 0.5
+        };
+        moon.add(chandrayaan);
+        moonSatellites.push(chandrayaan);
+        
+        // Create Moon satellite orbits
+        moonSatellites.forEach(sat => {
+            const orbitPath = createOrbitPath(sat.userData.orbitRadius, sat.userData.inclination);
+            moon.add(orbitPath);
+            moonSatelliteOrbits.push(orbitPath);
+        });
+        
+        // Create Moon orbit path around Earth
+        const moonOrbitPath = createOrbitPath(3, 0);
+        scene.add(moonOrbitPath);
+        
         // Mouse interaction
         let mouseX = 0, mouseY = 0;
         let isDragging = false;
@@ -2579,6 +2631,7 @@
                 clouds.rotation.y += deltaMove.x * 0.01;
                 bloomPoints.rotation.y += deltaMove.x * 0.01;
                 atmosphere.rotation.y += deltaMove.x * 0.01;
+                moonOrbitGroup.rotation.y += deltaMove.x * 0.01;
                 
                 // Rotate satellites and orbits
                 satellites.forEach(sat => {
@@ -2594,6 +2647,7 @@
                 clouds.rotation.x += deltaMove.y * 0.01;
                 bloomPoints.rotation.x += deltaMove.y * 0.01;
                 atmosphere.rotation.x += deltaMove.y * 0.01;
+                moonOrbitGroup.rotation.x += deltaMove.y * 0.01;
             }
             
             previousMousePosition = { x: e.offsetX, y: e.offsetY };
@@ -2621,6 +2675,7 @@
             clouds.rotation.y += deltaX * 0.01;
             bloomPoints.rotation.y += deltaX * 0.01;
             atmosphere.rotation.y += deltaX * 0.01;
+            moonOrbitGroup.rotation.y += deltaX * 0.01;
             
             // Rotate satellites and orbits
             satellites.forEach(sat => {
@@ -2636,6 +2691,7 @@
             clouds.rotation.x += deltaY * 0.01;
             bloomPoints.rotation.x += deltaY * 0.01;
             atmosphere.rotation.x += deltaY * 0.01;
+            moonOrbitGroup.rotation.x += deltaY * 0.01;
             
             touchStartX = touchX;
             touchStartY = touchY;
@@ -2664,6 +2720,12 @@
                 atmosphere.rotation.y += 0.0005;
             }
             
+            // Animate Moon orbit
+            moonOrbitGroup.rotation.y += 0.0002; // Slower orbit than Earth rotation
+            
+            // Animate Moon rotation
+            moon.rotation.y += 0.0005;
+            
             // Animate satellites
             satellites.forEach(sat => {
                 sat.userData.angle += sat.userData.orbitSpeed;
@@ -2674,6 +2736,19 @@
                 sat.position.set(x, y, z);
                 
                 // Rotate satellite to face Earth
+                sat.lookAt(0, 0, 0);
+            });
+            
+            // Animate Moon satellites
+            moonSatellites.forEach(sat => {
+                sat.userData.angle += sat.userData.orbitSpeed;
+                const x = Math.cos(sat.userData.angle) * sat.userData.orbitRadius;
+                const z = Math.sin(sat.userData.angle) * sat.userData.orbitRadius;
+                const y = Math.sin(sat.userData.angle) * Math.sin(sat.userData.inclination) * sat.userData.orbitRadius * 0.3;
+                
+                sat.position.set(x, y, z);
+                
+                // Rotate satellite to face Moon
                 sat.lookAt(0, 0, 0);
             });
             
@@ -2699,7 +2774,7 @@
         // Store references
         state.earth = {
             scene, camera, renderer, earth, clouds, atmosphere, bloomPoints,
-            satellites, satelliteOrbits,
+            satellites, satelliteOrbits, moon, moonOrbitGroup, moonSatellites, moonSatelliteOrbits,
             toggleRotation: () => { earthRotating = !earthRotating; },
             toggleAtmosphere: () => { atmosphere.visible = !atmosphere.visible; },
             toggleClouds: () => { clouds.visible = !clouds.visible; },
@@ -2707,6 +2782,11 @@
             toggleSatellites: () => { 
                 satellites.forEach(sat => sat.visible = !sat.visible);
                 satelliteOrbits.forEach(orbit => orbit.visible = !orbit.visible);
+            },
+            toggleMoon: () => { moonOrbitGroup.visible = !moonOrbitGroup.visible; },
+            toggleMoonSatellites: () => { 
+                moonSatellites.forEach(sat => sat.visible = !sat.visible);
+                moonSatelliteOrbits.forEach(orbit => orbit.visible = !orbit.visible);
             },
             cleanup: () => {
                 window.removeEventListener('resize', handleResize);
@@ -2722,7 +2802,47 @@
     }
 }
 
-// Satellite creation functions
+// NEW: Lunar satellite creation function
+function createLunarSatellite() {
+    const group = new THREE.Group();
+    
+    // Main body
+    const bodyGeometry = new THREE.BoxGeometry(0.01, 0.008, 0.01);
+    const bodyMaterial = new THREE.MeshPhongMaterial({ 
+        color: 0xcccccc,
+        emissive: 0x111111
+    });
+    const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+    group.add(body);
+    
+    // Solar panels
+    const panelGeometry = new THREE.BoxGeometry(0.02, 0.0008, 0.01);
+    const panelMaterial = new THREE.MeshPhongMaterial({ 
+        color: 0x1a1a2e,
+        emissive: 0x0f3460
+    });
+    
+    const panel1 = new THREE.Mesh(panelGeometry, panelMaterial);
+    panel1.position.x = -0.015;
+    group.add(panel1);
+    
+    const panel2 = new THREE.Mesh(panelGeometry, panelMaterial);
+    panel2.position.x = 0.015;
+    group.add(panel2);
+    
+    // Antenna
+    const antennaGeometry = new THREE.CylinderGeometry(0.001, 0.001, 0.02, 8);
+    const antennaMaterial = new THREE.MeshPhongMaterial({ 
+        color: 0xffffff
+    });
+    const antenna = new THREE.Mesh(antennaGeometry, antennaMaterial);
+    antenna.position.y = 0.01;
+    group.add(antenna);
+    
+    return group;
+}
+
+// Satellite creation functions (unchanged)
 function createISS() {
     const group = new THREE.Group();
     
@@ -2928,7 +3048,15 @@ function createSpriteTexture() {
     
     return new THREE.CanvasTexture(canvas);
 }
-            
+
+function debounce(func, wait) {
+    let timeout;
+    return function() {
+        const context = this, args = arguments;
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(context, args), wait);
+    };
+}
             function initMap() {
                 if (state.components.map) return;
                 
