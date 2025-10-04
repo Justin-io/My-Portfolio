@@ -1660,7 +1660,7 @@
         </div>
         
         <div class="text-center mt-4">
-            <button class="btn btn-primary" onclick="app.loadLatestSatelliteImages()" aria-label="Load latest satellite images">
+            <button class="btn btn-primary" onclick="nasaViewer.refreshImagery()" aria-label="Load latest satellite images">
                 <i class="fas fa-satellite-dish me-2" aria-hidden="true"></i>Load Latest Images
             </button>
         </div>
@@ -1668,13 +1668,13 @@
 </section>
 
 <script>
-    // Define the app object if it doesn't exist
-    if (typeof app === 'undefined') {
-        window.app = {};
+    // Define the nasaViewer object if it doesn't exist
+    if (typeof nasaViewer === 'undefined') {
+        window.nasaViewer = {};
     }
 
     // JSON set of 15 satellite images with titles
-    app.satelliteData = [
+    nasaViewer.imageryCollection = [
         {
             image: "https://eoimages.gsfc.nasa.gov/images/imagerecords/145000/145888/br163defores_tmo_amo_2019_th.jpg",
             title: "MODIS: Amazon Rainforest Deforestation Patterns"
@@ -1688,11 +1688,11 @@
             title: "Landsat: European Agricultural Monitoring"
         },
         {
-            image: "https://pub.mdpi-res.com/agriculture/agriculture-14-01282/article_deploy/html/images/agriculture-14-01282-ag.pngttps://picsum.photos/seed/satellite4/600/400.jpg",
+            image: "https://picsum.photos/seed/satellite4/600/400.jpg",
             title: "EMIT: Asian Rice Paddy Phenology"
         },
         {
-            image: "https://mynasadata.larc.nasa.gov/sites/default/files/2019-10/Coccolithophore_bloom.jpgttps://picsum.photos/seed/satellite5/600/400.jpg",
+            image: "https://picsum.photos/seed/satellite5/600/400.jpg",
             title: "PACE: Ocean Bloom Phytoplankton Distribution"
         },
         {
@@ -1738,28 +1738,28 @@
     ];
 
     // Function to load latest satellite images
-    app.loadLatestSatelliteImages = function() {
+    nasaViewer.refreshImagery = function() {
         showToast('📡 Loading latest satellite imagery...', 'info');
         setTimeout(() => {
             // Update satellite images and titles with random data from the JSON set
-            const satelliteContainers = document.querySelectorAll('.satellite-image');
+            const imageElements = document.querySelectorAll('.satellite-image');
             
-            satelliteContainers.forEach((container) => {
-                const img = container.querySelector('img');
-                const caption = container.querySelector('.caption');
+            imageElements.forEach((container) => {
+                const pictureElement = container.querySelector('img');
+                const titleElement = container.querySelector('.caption');
                 
                 // Set initial random image and title
-                const randomIndex = Math.floor(Math.random() * app.satelliteData.length);
-                img.src = app.satelliteData[randomIndex].image;
-                caption.textContent = app.satelliteData[randomIndex].title;
-                img.dataset.currentIndex = randomIndex;
+                const randomId = Math.floor(Math.random() * nasaViewer.imageryCollection.length);
+                pictureElement.src = nasaViewer.imageryCollection[randomId].image;
+                titleElement.textContent = nasaViewer.imageryCollection[randomId].title;
+                pictureElement.dataset.currentIndex = randomId;
                 
                 // Add click event listener to change to a random image when clicked
-                img.addEventListener('click', function() {
-                    const newRandomIndex = Math.floor(Math.random() * app.satelliteData.length);
-                    this.src = app.satelliteData[newRandomIndex].image;
-                    caption.textContent = app.satelliteData[newRandomIndex].title;
-                    this.dataset.currentIndex = newRandomIndex;
+                pictureElement.addEventListener('click', function() {
+                    const newRandomId = Math.floor(Math.random() * nasaViewer.imageryCollection.length);
+                    this.src = nasaViewer.imageryCollection[newRandomId].image;
+                    titleElement.textContent = nasaViewer.imageryCollection[newRandomId].title;
+                    this.dataset.currentIndex = newRandomId;
                 });
             });
             
