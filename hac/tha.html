@@ -4495,14 +4495,12 @@ function init3DSpeciesChart() {
             const nucleotide1 = new THREE.Mesh(nucleotideGeometry, nucleotideMaterials[base]);
             nucleotide1.position.set(x1, y, z1);
             nucleotide1.castShadow = true;
-            nucleotide1.userData = { type: 'nucleotide', base: base, position: i };
             basePairGroup.add(nucleotide1);
             
             const complementaryBase = base === 'A' ? 'T' : base === 'T' ? 'A' : base === 'G' ? 'C' : 'G';
             const nucleotide2 = new THREE.Mesh(nucleotideGeometry, nucleotideMaterials[complementaryBase]);
             nucleotide2.position.set(x2, y, z2);
             nucleotide2.castShadow = true;
-            nucleotide2.userData = { type: 'nucleotide', base: complementaryBase, position: i };
             basePairGroup.add(nucleotide2);
             
             // Connector between nucleotides
@@ -4561,7 +4559,6 @@ function init3DSpeciesChart() {
             const sugar = new THREE.Mesh(sugarGeometry, sugarMaterial);
             sugar.position.set(x, y, z);
             sugar.castShadow = true;
-            sugar.userData = { type: 'sugar', position: i };
             dnaGroup.add(sugar);
             
             // Phosphate group
@@ -4582,7 +4579,6 @@ function init3DSpeciesChart() {
             const phosphate = new THREE.Mesh(phosphateGeometry, phosphateMaterial);
             phosphate.position.set(phosphateX, y, phosphateZ);
             phosphate.castShadow = true;
-            phosphate.userData = { type: 'phosphate', position: i };
             dnaGroup.add(phosphate);
             
             // Connect sugar and phosphate
@@ -4594,63 +4590,6 @@ function init3DSpeciesChart() {
             bond.rotateX(Math.PI / 2);
             dnaGroup.add(bond);
         }
-        
-        // Interactive features
-        const raycaster = new THREE.Raycaster();
-        const mouse = new THREE.Vector2();
-        let hoveredObject = null;
-        let focusedElement = null;
-        let cameraAnimating = false;
-        let cameraProgress = 0;
-        
-        // Camera path for animation
-        const cameraPath = new THREE.CatmullRomCurve3([
-            new THREE.Vector3(0, 0, 8),
-            new THREE.Vector3(8, 0, 0),
-            new THREE.Vector3(0, 0, -8),
-            new THREE.Vector3(-8, 0, 0),
-            new THREE.Vector3(0, 0, 8)
-        ]);
-        
-        function onMouseMove(event) {
-            const rect = renderer.domElement.getBoundingClientRect();
-            mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-            mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-        }
-        
-        function onMouseClick(event) {
-            raycaster.setFromCamera(mouse, camera);
-            const intersects = raycaster.intersectObjects(dnaGroup.children, true);
-            
-            if (intersects.length > 0) {
-                const object = intersects[0].object;
-                if (object.userData.type) {
-                    focusOnElement(object);
-                }
-            }
-        }
-        
-        function focusOnElement(element) {
-            focusedElement = element;
-            cameraAnimating = true;
-            cameraProgress = 0;
-            
-            // Highlight the focused element
-            if (focusedElement) {
-                focusedElement.material.emissiveIntensity = 0.8;
-            }
-        }
-        
-        renderer.domElement.addEventListener('mousemove', onMouseMove);
-        renderer.domElement.addEventListener('click', onMouseClick);
-        
-        // Add controls
-        const controls = new THREE.OrbitControls(camera, renderer.domElement);
-        controls.enableDamping = true;
-        controls.dampingFactor = 0.05;
-        controls.screenSpacePanning = false;
-        controls.minDistance = 3;
-        controls.maxDistance = 20;
         
         // Animation
         const clock = new THREE.Clock();
@@ -4701,57 +4640,7 @@ function init3DSpeciesChart() {
             // Update nebula shader
             nebula.material.uniforms.time.value = elapsedTime;
             
-            // Camera animation
-            if (cameraAnimating) {
-                cameraProgress += 0.02;
-                
-                if (cameraProgress >= 1) {
-                    cameraAnimating = false;
-                    cameraProgress = 1;
-                }
-                
-                if (focusedElement) {
-                    // Focus on specific element
-                    const targetPosition = focusedElement.position.clone();
-                    const offset = new THREE.Vector3(0, 0, 5);
-                    offset.applyQuaternion(camera.quaternion);
-                    
-                    camera.position.lerpVectors(
-                        camera.position,
-                        targetPosition.clone().add(offset),
-                        cameraProgress
-                    );
-                    
-                    controls.target.lerp(targetPosition, cameraProgress);
-                } else {
-                    // Follow camera path
-                    const pathPosition = cameraPath.getPoint(cameraProgress);
-                    camera.position.lerp(pathPosition, 0.1);
-                    
-                    const lookAtPosition = new THREE.Vector3(0, 0, 0);
-                    controls.target.lerp(lookAtPosition, 0.1);
-                }
-            }
-            
-            // Handle hover effects
-            raycaster.setFromCamera(mouse, camera);
-            const intersects = raycaster.intersectObjects(dnaGroup.children, true);
-            
-            if (intersects.length > 0) {
-                const object = intersects[0].object;
-                if (object.userData.type && hoveredObject !== object) {
-                    if (hoveredObject) {
-                        hoveredObject.scale.set(1, 1, 1);
-                    }
-                    hoveredObject = object;
-                    object.scale.set(1.2, 1.2, 1.2);
-                }
-            } else if (hoveredObject) {
-                hoveredObject.scale.set(1, 1, 1);
-                hoveredObject = null;
-            }
-            
-            controls.update();
+            // Render the scene
             renderer.render(scene, camera);
         }
         
@@ -4766,13 +4655,11 @@ function init3DSpeciesChart() {
         
         window.addEventListener('resize', handleResize);
         
-        // Store reference with enhanced cleanup
+        // Store reference with cleanup
         state.charts.species3d = {
-            scene, camera, renderer, controls,
+            scene, camera, renderer,
             cleanup: () => {
                 window.removeEventListener('resize', handleResize);
-                renderer.domElement.removeEventListener('mousemove', onMouseMove);
-                renderer.domElement.removeEventListener('click', onMouseClick);
                 renderer.dispose();
                 container.removeChild(renderer.domElement);
             }
@@ -4794,8 +4681,7 @@ function debounce(func, wait) {
         clearTimeout(timeout);
         timeout = setTimeout(() => func.apply(context, args), wait);
     };
-}
-
+}h
 
 
 
