@@ -4024,13 +4024,13 @@ function init3DSpeciesChart() {
     try {
         document.getElementById('species3d-loading').style.display = 'none';
         
-        // Enhanced scene setup with plant cell environment
+        // Enhanced scene setup for microscopic view
         const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x001a0d);
-        scene.fog = new THREE.FogExp2(0x001a0d, 0.015);
+        scene.background = new THREE.Color(0x0a1f0b);
+        scene.fog = new THREE.FogExp2(0x0a1f0b, 0.015);
         
-        const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-        camera.position.set(0, 0, 8);
+        const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.01, 1000);
+        camera.position.set(0, 0, 60);
         
         const renderer = new THREE.WebGLRenderer({ 
             antialias: true, 
@@ -4042,105 +4042,265 @@ function init3DSpeciesChart() {
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 1.2;
+        renderer.toneMappingExposure = 1.0;
         container.appendChild(renderer.domElement);
         
-        // Advanced lighting setup
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+        // Create mobile controls container
+        const mobileControls = document.createElement('div');
+        mobileControls.className = 'mobile-controls';
+        mobileControls.style.cssText = `
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        `;
+        
+        // Zoom in button
+        const zoomInBtn = document.createElement('button');
+        zoomInBtn.className = 'zoom-btn';
+        zoomInBtn.innerHTML = '+';
+        zoomInBtn.style.cssText = `
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(76, 201, 240, 0.8);
+            border: none;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        `;
+        
+        // Zoom out button
+        const zoomOutBtn = document.createElement('button');
+        zoomOutBtn.className = 'zoom-btn';
+        zoomOutBtn.innerHTML = '-';
+        zoomOutBtn.style.cssText = `
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(247, 37, 133, 0.8);
+            border: none;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        `;
+        
+        // Reset view button
+        const resetBtn = document.createElement('button');
+        resetBtn.className = 'reset-btn';
+        resetBtn.innerHTML = '⟲';
+        resetBtn.style.cssText = `
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(56, 176, 0, 0.8);
+            border: none;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        `;
+        
+        // Add hover effects
+        [zoomInBtn, zoomOutBtn, resetBtn].forEach(btn => {
+            btn.addEventListener('mouseenter', () => {
+                btn.style.transform = 'scale(1.1)';
+                btn.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.4)';
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'scale(1)';
+                btn.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.3)';
+            });
+        });
+        
+        mobileControls.appendChild(zoomInBtn);
+        mobileControls.appendChild(zoomOutBtn);
+        mobileControls.appendChild(resetBtn);
+        container.appendChild(mobileControls);
+        
+        // Microscope lighting setup
+        const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
         scene.add(ambientLight);
         
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
         directionalLight.position.set(5, 10, 7);
         directionalLight.castShadow = true;
-        directionalLight.shadow.camera.near = 0.1;
-        directionalLight.shadow.camera.far = 50;
-        directionalLight.shadow.camera.left = -10;
-        directionalLight.shadow.camera.right = 10;
-        directionalLight.shadow.camera.top = 10;
-        directionalLight.shadow.camera.bottom = -10;
         scene.add(directionalLight);
         
-        // Colored point lights for dramatic effect
-        const pointLight1 = new THREE.PointLight(0x4cc9f0, 1, 20);
-        pointLight1.position.set(-10, 5, 5);
-        scene.add(pointLight1);
+        // Simulate microscope illumination
+        const spotLight = new THREE.SpotLight(0xaaffaa, 1.0);
+        spotLight.position.set(0, 20, 10);
+        spotLight.angle = Math.PI / 6;
+        spotLight.penumbra = 0.3;
+        spotLight.decay = 2;
+        spotLight.distance = 50;
+        spotLight.castShadow = true;
+        scene.add(spotLight);
         
-        const pointLight2 = new THREE.PointLight(0xf72585, 1, 20);
-        pointLight2.position.set(10, -5, 5);
-        scene.add(pointLight2);
-        
-        const pointLight3 = new THREE.PointLight(0x38b000, 0.8, 15);
-        pointLight3.position.set(0, 10, -10);
-        scene.add(pointLight3);
-        
-        // Plant cell environment - more realistic
-        // Cell membrane with lipid bilayer effect
-        const membraneGeometry = new THREE.SphereGeometry(20, 32, 32);
-        const membraneMaterial = new THREE.MeshPhongMaterial({
+        // Create realistic plant cell environment - larger cell
+        // Cell membrane with lipid bilayer
+        const membraneGeometry = new THREE.SphereGeometry(40, 64, 64);
+        const membraneMaterial = new THREE.MeshPhysicalMaterial({
             color: 0x2d5016,
+            metalness: 0.1,
+            roughness: 0.8,
             transparent: true,
             opacity: 0.2,
-            side: THREE.BackSide
+            side: THREE.DoubleSide,
+            clearcoat: 0.3,
+            clearcoatRoughness: 0.2
         });
         const cellMembrane = new THREE.Mesh(membraneGeometry, membraneMaterial);
         scene.add(cellMembrane);
         
-        // Cytoplasm - gel-like substance
-        const cytoplasmGeometry = new THREE.SphereGeometry(19, 32, 32);
-        const cytoplasmMaterial = new THREE.MeshPhongMaterial({
+        // Cytoplasm with granular texture
+        const cytoplasmGeometry = new THREE.SphereGeometry(38, 64, 64);
+        const cytoplasmMaterial = new THREE.MeshPhysicalMaterial({
             color: 0x4a7c59,
+            metalness: 0.0,
+            roughness: 0.9,
             transparent: true,
-            opacity: 0.15,
-            side: THREE.BackSide
+            opacity: 0.4,
+            side: THREE.DoubleSide
         });
         const cytoplasm = new THREE.Mesh(cytoplasmGeometry, cytoplasmMaterial);
         scene.add(cytoplasm);
         
-        // Chloroplasts with detailed structure
+        // Nucleus with nuclear envelope - larger
+        const nucleusGeometry = new THREE.SphereGeometry(12, 32, 32);
+        const nucleusMaterial = new THREE.MeshPhysicalMaterial({
+            color: 0x6b5b95,
+            metalness: 0.1,
+            roughness: 0.3,
+            transparent: true,
+            opacity: 0.6,
+            side: THREE.DoubleSide,
+            clearcoat: 0.5,
+            clearcoatRoughness: 0.1
+        });
+        const nucleus = new THREE.Mesh(nucleusGeometry, nucleusMaterial);
+        nucleus.position.set(0, 0, 0);
+        scene.add(nucleus);
+        
+        // Nuclear envelope with pores
+        const envelopeGeometry = new THREE.SphereGeometry(12.2, 32, 32);
+        const envelopeMaterial = new THREE.MeshPhysicalMaterial({
+            color: 0x8b7ab8,
+            metalness: 0.2,
+            roughness: 0.4,
+            transparent: true,
+            opacity: 0.5,
+            side: THREE.DoubleSide
+        });
+        const nuclearEnvelope = new THREE.Mesh(envelopeGeometry, envelopeMaterial);
+        nuclearEnvelope.position.copy(nucleus.position);
+        scene.add(nuclearEnvelope);
+        
+        // Nuclear pores - more for larger nucleus
+        const poreGroup = new THREE.Group();
+        for (let i = 0; i < 80; i++) {
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.random() * Math.PI;
+            const radius = 12.2;
+            
+            const x = radius * Math.sin(phi) * Math.cos(theta);
+            const y = radius * Math.sin(phi) * Math.sin(theta);
+            const z = radius * Math.cos(phi);
+            
+            const poreGeometry = new THREE.CylinderGeometry(0.4, 0.4, 0.6, 8);
+            const poreMaterial = new THREE.MeshPhysicalMaterial({
+                color: 0x9d8cbf,
+                metalness: 0.3,
+                roughness: 0.2,
+                transparent: true,
+                opacity: 0.8
+            });
+            const pore = new THREE.Mesh(poreGeometry, poreMaterial);
+            pore.position.set(x, y, z);
+            pore.lookAt(0, 0, 0);
+            pore.rotateX(Math.PI / 2);
+            poreGroup.add(pore);
+        }
+        scene.add(poreGroup);
+        
+        // Nucleolus - larger
+        const nucleolusGeometry = new THREE.SphereGeometry(4, 32, 32);
+        const nucleolusMaterial = new THREE.MeshPhysicalMaterial({
+            color: 0x8b7ab8,
+            metalness: 0.2,
+            roughness: 0.3,
+            emissive: 0x8b7ab8,
+            emissiveIntensity: 0.2
+        });
+        const nucleolus = new THREE.Mesh(nucleolusGeometry, nucleolusMaterial);
+        nucleolus.position.set(0, 0, 0);
+        nucleus.add(nucleolus);
+        
+        // Chloroplasts with realistic structure - more and larger
         const chloroplastGroup = new THREE.Group();
-        for (let i = 0; i < 12; i++) {
+        for (let i = 0; i < 15; i++) {
             // Outer membrane
-            const outerGeometry = new THREE.SphereGeometry(1.8, 16, 16);
-            const outerMaterial = new THREE.MeshPhongMaterial({
+            const outerGeometry = new THREE.SphereGeometry(3, 32, 32);
+            const outerMaterial = new THREE.MeshPhysicalMaterial({
                 color: 0x2e8b57,
+                metalness: 0.1,
+                roughness: 0.7,
                 transparent: true,
                 opacity: 0.6
             });
             const outerMembrane = new THREE.Mesh(outerGeometry, outerMaterial);
             
-            // Inner membrane with thylakoids
-            const innerGeometry = new THREE.SphereGeometry(1.5, 16, 16);
-            const innerMaterial = new THREE.MeshPhongMaterial({
+            // Inner membrane
+            const innerGeometry = new THREE.SphereGeometry(2.8, 32, 32);
+            const innerMaterial = new THREE.MeshPhysicalMaterial({
                 color: 0x228b22,
+                metalness: 0.1,
+                roughness: 0.5,
                 transparent: true,
                 opacity: 0.7
             });
             const innerMembrane = new THREE.Mesh(innerGeometry, innerMaterial);
             
-            // Thylakoid stacks
-            const thylakoidGroup = new THREE.Group();
-            for (let j = 0; j < 5; j++) {
-                const thylakoidGeometry = new THREE.CylinderGeometry(0.3, 0.3, 0.1, 8);
-                const thylakoidMaterial = new THREE.MeshPhongMaterial({
+            // Thylakoid stacks (grana)
+            const granaGroup = new THREE.Group();
+            for (let j = 0; j < 10; j++) {
+                const granumGeometry = new THREE.CylinderGeometry(1, 1, 0.4, 16);
+                const granumMaterial = new THREE.MeshPhysicalMaterial({
                     color: 0x006400,
+                    metalness: 0.2,
+                    roughness: 0.3,
                     emissive: 0x006400,
-                    emissiveIntensity: 0.2
+                    emissiveIntensity: 0.3
                 });
-                const thylakoid = new THREE.Mesh(thylakoidGeometry, thylakoidMaterial);
-                thylakoid.position.y = (j - 2) * 0.3;
-                thylakoidGroup.add(thylakoid);
+                const granum = new THREE.Mesh(granumGeometry, granumMaterial);
+                
+                // Position in a stack
+                granum.position.y = (j - 4.5) * 0.5;
+                granum.position.x = (j % 2 === 0) ? 0.7 : -0.7;
+                granaGroup.add(granum);
             }
             
             // Combine into chloroplast
             const chloroplast = new THREE.Group();
             chloroplast.add(outerMembrane);
             chloroplast.add(innerMembrane);
-            chloroplast.add(thylakoidGroup);
+            chloroplast.add(granaGroup);
             
-            // Position randomly
+            // Position randomly in cell
             const theta = Math.random() * Math.PI * 2;
             const phi = Math.random() * Math.PI;
-            const radius = 12 + Math.random() * 5;
+            const radius = 15 + Math.random() * 15;
             
             chloroplast.position.x = radius * Math.sin(phi) * Math.cos(theta);
             chloroplast.position.y = radius * Math.sin(phi) * Math.sin(theta);
@@ -4150,35 +4310,41 @@ function init3DSpeciesChart() {
         }
         scene.add(chloroplastGroup);
         
-        // Mitochondria
+        // Mitochondria with cristae - more and larger
         const mitochondriaGroup = new THREE.Group();
-        for (let i = 0; i < 8; i++) {
-            const mitochondrionGeometry = new THREE.CylinderGeometry(0.8, 0.8, 2, 16);
-            const mitochondrionMaterial = new THREE.MeshPhongMaterial({
+        for (let i = 0; i < 12; i++) {
+            const mitochondrionGeometry = new THREE.CylinderGeometry(1.5, 1.5, 4, 32);
+            const mitochondrionMaterial = new THREE.MeshPhysicalMaterial({
                 color: 0xff6347,
+                metalness: 0.2,
+                roughness: 0.6,
                 transparent: true,
                 opacity: 0.7
             });
             const mitochondrion = new THREE.Mesh(mitochondrionGeometry, mitochondrionMaterial);
             
-            // Add cristae (inner folds)
-            for (let j = 0; j < 4; j++) {
-                const cristaGeometry = new THREE.PlaneGeometry(0.5, 1.5);
-                const cristaMaterial = new THREE.MeshBasicMaterial({
+            // Inner membrane with cristae
+            for (let j = 0; j < 8; j++) {
+                const cristaGeometry = new THREE.PlaneGeometry(1, 3.5);
+                const cristaMaterial = new THREE.MeshPhysicalMaterial({
                     color: 0xcd5c5c,
+                    metalness: 0.3,
+                    roughness: 0.4,
                     transparent: true,
-                    opacity: 0.5,
+                    opacity: 0.8,
                     side: THREE.DoubleSide
                 });
                 const crista = new THREE.Mesh(cristaGeometry, cristaMaterial);
-                crista.rotation.y = (j / 4) * Math.PI * 2;
+                crista.rotation.y = (j / 8) * Math.PI * 2;
+                crista.position.x = Math.cos((j / 8) * Math.PI * 2) * 1.0;
+                crista.position.z = Math.sin((j / 8) * Math.PI * 2) * 1.0;
                 mitochondrion.add(crista);
             }
             
             // Position randomly
             const theta = Math.random() * Math.PI * 2;
             const phi = Math.random() * Math.PI;
-            const radius = 10 + Math.random() * 6;
+            const radius = 12 + Math.random() * 20;
             
             mitochondrion.position.x = radius * Math.sin(phi) * Math.cos(theta);
             mitochondrion.position.y = radius * Math.sin(phi) * Math.sin(theta);
@@ -4191,67 +4357,92 @@ function init3DSpeciesChart() {
         }
         scene.add(mitochondriaGroup);
         
-        // Vacuole with tonoplast
-        const vacuoleGeometry = new THREE.SphereGeometry(6, 32, 32);
-        const vacuoleMaterial = new THREE.MeshPhongMaterial({
+        // Vacuole with tonoplast - larger
+        const vacuoleGeometry = new THREE.SphereGeometry(15, 32, 32);
+        const vacuoleMaterial = new THREE.MeshPhysicalMaterial({
             color: 0x90ee90,
+            metalness: 0.0,
+            roughness: 0.9,
             transparent: true,
             opacity: 0.2,
-            side: THREE.BackSide
+            side: THREE.DoubleSide
         });
         const vacuole = new THREE.Mesh(vacuoleGeometry, vacuoleMaterial);
-        vacuole.position.set(-12, -3, -8);
+        vacuole.position.set(-20, -10, -10);
+        scene.add(vacuole);
         
         // Tonoplast (vacuole membrane)
-        const tonoplastGeometry = new THREE.SphereGeometry(6.1, 32, 32);
-        const tonoplastMaterial = new THREE.MeshPhongMaterial({
+        const tonoplastGeometry = new THREE.SphereGeometry(15.1, 32, 32);
+        const tonoplastMaterial = new THREE.MeshPhysicalMaterial({
             color: 0x228b22,
+            metalness: 0.1,
+            roughness: 0.7,
             transparent: true,
             opacity: 0.3,
             side: THREE.DoubleSide
         });
         const tonoplast = new THREE.Mesh(tonoplastGeometry, tonoplastMaterial);
         tonoplast.position.copy(vacuole.position);
-        
-        scene.add(vacuole);
         scene.add(tonoplast);
         
-        // Endoplasmic reticulum
+        // Endoplasmic reticulum - more extensive
         const erGroup = new THREE.Group();
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 10; i++) {
             const erCurve = new THREE.CatmullRomCurve3([
-                new THREE.Vector3(-5, i * 2 - 4, -5),
-                new THREE.Vector3(0, i * 2 - 4, 0),
-                new THREE.Vector3(5, i * 2 - 4, 5),
-                new THREE.Vector3(0, i * 2 - 4, 0)
+                new THREE.Vector3(-15, i * 4 - 15, -15),
+                new THREE.Vector3(0, i * 4 - 15, 0),
+                new THREE.Vector3(15, i * 4 - 15, 15),
+                new THREE.Vector3(0, i * 4 - 15, 0)
             ]);
             
-            const erGeometry = new THREE.TubeGeometry(erCurve, 50, 0.2, 8, false);
-            const erMaterial = new THREE.MeshPhongMaterial({
+            const erGeometry = new THREE.TubeGeometry(erCurve, 50, 0.4, 8, false);
+            const erMaterial = new THREE.MeshPhysicalMaterial({
                 color: 0x9370db,
+                metalness: 0.2,
+                roughness: 0.5,
                 transparent: true,
-                opacity: 0.5
+                opacity: 0.6
             });
             const er = new THREE.Mesh(erGeometry, erMaterial);
             erGroup.add(er);
         }
         scene.add(erGroup);
         
-        // Ribosomes
+        // Golgi apparatus - new addition
+        const golgiGroup = new THREE.Group();
+        for (let i = 0; i < 5; i++) {
+            const cisternaGeometry = new THREE.CylinderGeometry(3, 3, 0.3, 32);
+            const cisternaMaterial = new THREE.MeshPhysicalMaterial({
+                color: 0xda70d6,
+                metalness: 0.2,
+                roughness: 0.5,
+                transparent: true,
+                opacity: 0.7
+            });
+            const cisterna = new THREE.Mesh(cisternaGeometry, cisternaMaterial);
+            cisterna.position.set(15, i * 0.5 - 1, 0);
+            cisterna.rotation.x = Math.PI / 2;
+            golgiGroup.add(cisterna);
+        }
+        scene.add(golgiGroup);
+        
+        // Ribosomes - more
         const ribosomeGroup = new THREE.Group();
-        for (let i = 0; i < 50; i++) {
-            const ribosomeGeometry = new THREE.SphereGeometry(0.2, 8, 8);
-            const ribosomeMaterial = new THREE.MeshPhongMaterial({
+        for (let i = 0; i < 150; i++) {
+            const ribosomeGeometry = new THREE.SphereGeometry(0.3, 16, 16);
+            const ribosomeMaterial = new THREE.MeshPhysicalMaterial({
                 color: 0xdaa520,
+                metalness: 0.3,
+                roughness: 0.2,
                 emissive: 0xdaa520,
-                emissiveIntensity: 0.3
+                emissiveIntensity: 0.4
             });
             const ribosome = new THREE.Mesh(ribosomeGeometry, ribosomeMaterial);
             
-            // Position randomly
+            // Position randomly in cell
             const theta = Math.random() * Math.PI * 2;
             const phi = Math.random() * Math.PI;
-            const radius = 5 + Math.random() * 12;
+            const radius = 5 + Math.random() * 30;
             
             ribosome.position.x = radius * Math.sin(phi) * Math.cos(theta);
             ribosome.position.y = radius * Math.sin(phi) * Math.sin(theta);
@@ -4261,16 +4452,80 @@ function init3DSpeciesChart() {
         }
         scene.add(ribosomeGroup);
         
-        // Cytoplasmic streaming particles
+        // Peroxisomes - new addition
+        const peroxisomeGroup = new THREE.Group();
+        for (let i = 0; i < 8; i++) {
+            const peroxisomeGeometry = new THREE.SphereGeometry(1.2, 16, 16);
+            const peroxisomeMaterial = new THREE.MeshPhysicalMaterial({
+                color: 0xff8c00,
+                metalness: 0.2,
+                roughness: 0.5,
+                transparent: true,
+                opacity: 0.7
+            });
+            const peroxisome = new THREE.Mesh(peroxisomeGeometry, peroxisomeMaterial);
+            
+            // Position randomly
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.random() * Math.PI;
+            const radius = 10 + Math.random() * 20;
+            
+            peroxisome.position.x = radius * Math.sin(phi) * Math.cos(theta);
+            peroxisome.position.y = radius * Math.sin(phi) * Math.sin(theta);
+            peroxisome.position.z = radius * Math.cos(phi);
+            
+            peroxisomeGroup.add(peroxisome);
+        }
+        scene.add(peroxisomeGroup);
+        
+        // Cytoskeleton - new addition (microtubules)
+        const cytoskeletonGroup = new THREE.Group();
+        for (let i = 0; i < 20; i++) {
+            const startTheta = Math.random() * Math.PI * 2;
+            const startPhi = Math.random() * Math.PI;
+            const startRadius = 5;
+            
+            const startX = startRadius * Math.sin(startPhi) * Math.cos(startTheta);
+            const startY = startRadius * Math.sin(startPhi) * Math.sin(startTheta);
+            const startZ = startRadius * Math.cos(startPhi);
+            
+            const endTheta = startTheta + (Math.random() - 0.5) * Math.PI;
+            const endPhi = startPhi + (Math.random() - 0.5) * Math.PI / 2;
+            const endRadius = 30;
+            
+            const endX = endRadius * Math.sin(endPhi) * Math.cos(endTheta);
+            const endY = endRadius * Math.sin(endPhi) * Math.sin(endTheta);
+            const endZ = endRadius * Math.cos(endPhi);
+            
+            const microtubuleCurve = new THREE.CatmullRomCurve3([
+                new THREE.Vector3(startX, startY, startZ),
+                new THREE.Vector3((startX + endX) / 2, (startY + endY) / 2, (startZ + endZ) / 2),
+                new THREE.Vector3(endX, endY, endZ)
+            ]);
+            
+            const microtubuleGeometry = new THREE.TubeGeometry(microtubuleCurve, 20, 0.05, 4, false);
+            const microtubuleMaterial = new THREE.MeshPhysicalMaterial({
+                color: 0xffffff,
+                metalness: 0.3,
+                roughness: 0.2,
+                transparent: true,
+                opacity: 0.6
+            });
+            const microtubule = new THREE.Mesh(microtubuleGeometry, microtubuleMaterial);
+            cytoskeletonGroup.add(microtubule);
+        }
+        scene.add(cytoskeletonGroup);
+        
+        // Cytoplasmic streaming particles - more
         const streamingGeometry = new THREE.BufferGeometry();
-        const streamingCount = 500;
+        const streamingCount = 1500;
         const streamingPositions = new Float32Array(streamingCount * 3);
         const streamingVelocities = [];
         
         for (let i = 0; i < streamingCount; i++) {
             const theta = Math.random() * Math.PI * 2;
             const phi = Math.random() * Math.PI;
-            const radius = 5 + Math.random() * 10;
+            const radius = 5 + Math.random() * 30;
             
             const x = radius * Math.sin(phi) * Math.cos(theta);
             const y = radius * Math.sin(phi) * Math.sin(theta);
@@ -4282,112 +4537,27 @@ function init3DSpeciesChart() {
             
             // Random velocity for streaming effect
             streamingVelocities.push({
-                x: (Math.random() - 0.5) * 0.02,
-                y: (Math.random() - 0.5) * 0.02,
-                z: (Math.random() - 0.5) * 0.02
+                x: (Math.random() - 0.5) * 0.03,
+                y: (Math.random() - 0.5) * 0.03,
+                z: (Math.random() - 0.5) * 0.03
             });
         }
         
         streamingGeometry.setAttribute('position', new THREE.BufferAttribute(streamingPositions, 3));
         const streamingMaterial = new THREE.PointsMaterial({
             color: 0x90ee90,
-            size: 0.05,
+            size: 0.1,
             transparent: true,
-            opacity: 0.6,
+            opacity: 0.7,
             blending: THREE.AdditiveBlending
         });
         
         const streamingParticles = new THREE.Points(streamingGeometry, streamingMaterial);
         scene.add(streamingParticles);
         
-        // Insane background effects
-        // 1. Dynamic starfield (5000 stars)
-        const starsGeometry = new THREE.BufferGeometry();
-        const starsMaterial = new THREE.PointsMaterial({
-            color: 0xffffff,
-            size: 0.03,
-            transparent: true,
-            opacity: 0.6,
-            blending: THREE.AdditiveBlending
-        });
-        
-        const starsVertices = [];
-        for (let i = 0; i < 5000; i++) {
-            const x = (Math.random() - 0.5) * 50;
-            const y = (Math.random() - 0.5) * 50;
-            const z = (Math.random() - 0.5) * 50;
-            starsVertices.push(x, y, z);
-        }
-        
-        starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starsVertices, 3));
-        const starField = new THREE.Points(starsGeometry, starsMaterial);
-        scene.add(starField);
-        
-        // 2. Energy particles
-        const energyParticlesGeometry = new THREE.BufferGeometry();
-        const energyParticlesMaterial = new THREE.PointsMaterial({
-            color: 0x4cc9f0,
-            size: 0.06,
-            transparent: true,
-            opacity: 0.5,
-            blending: THREE.AdditiveBlending
-        });
-        
-        const energyVertices = [];
-        for (let i = 0; i < 300; i++) {
-            const theta = Math.random() * Math.PI * 2;
-            const phi = Math.random() * Math.PI;
-            const radius = 15 + Math.random() * 10;
-            
-            const x = radius * Math.sin(phi) * Math.cos(theta);
-            const y = radius * Math.sin(phi) * Math.sin(theta);
-            const z = radius * Math.cos(phi);
-            
-            energyVertices.push(x, y, z);
-        }
-        
-        energyParticlesGeometry.setAttribute('position', new THREE.Float32BufferAttribute(energyVertices, 3));
-        const energyParticles = new THREE.Points(energyParticlesGeometry, energyParticlesMaterial);
-        scene.add(energyParticles);
-        
-        // 3. Nebula effect using shader
-        const nebulaGeometry = new THREE.SphereGeometry(30, 32, 32);
-        const nebulaMaterial = new THREE.ShaderMaterial({
-            uniforms: {
-                time: { value: 0 },
-                color1: { value: new THREE.Color(0x38b000) },
-                color2: { value: new THREE.Color(0x4cc9f0) }
-            },
-            vertexShader: `
-                varying vec2 vUv;
-                void main() {
-                    vUv = uv;
-                    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-                }
-            `,
-            fragmentShader: `
-                uniform float time;
-                uniform vec3 color1;
-                uniform vec3 color2;
-                varying vec2 vUv;
-                
-                void main() {
-                    float noise = sin(vUv.x * 10.0 + time) * cos(vUv.y * 10.0 + time);
-                    vec3 color = mix(color1, color2, noise * 0.5 + 0.5);
-                    gl_FragColor = vec4(color, 0.03);
-                }
-            `,
-            blending: THREE.AdditiveBlending,
-            transparent: true,
-            side: THREE.BackSide
-        });
-        
-        const nebula = new THREE.Mesh(nebulaGeometry, nebulaMaterial);
-        scene.add(nebula);
-        
-        // DNA Helix Parameters
+        // DNA Helix Parameters (inside nucleus) - larger
         const basePairs = 40;
-        const helixRadius = 2.5;
+        const helixRadius = 2;
         const helixHeight = 0.3;
         const backboneRadius = 0.1;
         const basePairWidth = 0.15;
@@ -4395,43 +4565,47 @@ function init3DSpeciesChart() {
         
         // Nucleotide materials with advanced properties
         const nucleotideMaterials = {
-            'A': new THREE.MeshPhongMaterial({
+            'A': new THREE.MeshPhysicalMaterial({
                 color: 0xff0000,
-                shininess: 100,
+                metalness: 0.2,
+                roughness: 0.3,
                 transparent: true,
-                opacity: 0.85,
+                opacity: 0.9,
                 emissive: 0x440000,
-                emissiveIntensity: 0.3
+                emissiveIntensity: 0.4
             }),
-            'T': new THREE.MeshPhongMaterial({
+            'T': new THREE.MeshPhysicalMaterial({
                 color: 0x00ff00,
-                shininess: 100,
+                metalness: 0.2,
+                roughness: 0.3,
                 transparent: true,
-                opacity: 0.85,
+                opacity: 0.9,
                 emissive: 0x004400,
-                emissiveIntensity: 0.3
+                emissiveIntensity: 0.4
             }),
-            'G': new THREE.MeshPhongMaterial({
+            'G': new THREE.MeshPhysicalMaterial({
                 color: 0x0000ff,
-                shininess: 100,
+                metalness: 0.2,
+                roughness: 0.3,
                 transparent: true,
-                opacity: 0.85,
+                opacity: 0.9,
                 emissive: 0x000044,
-                emissiveIntensity: 0.3
+                emissiveIntensity: 0.4
             }),
-            'C': new THREE.MeshPhongMaterial({
+            'C': new THREE.MeshPhysicalMaterial({
                 color: 0xffff00,
-                shininess: 100,
+                metalness: 0.2,
+                roughness: 0.3,
                 transparent: true,
-                opacity: 0.85,
+                opacity: 0.9,
                 emissive: 0x444400,
-                emissiveIntensity: 0.3
+                emissiveIntensity: 0.4
             })
         };
         
-        // Create DNA group
+        // Create DNA group inside nucleus
         const dnaGroup = new THREE.Group();
-        scene.add(dnaGroup);
+        nucleus.add(dnaGroup);
         
         // Create DNA backbones with enhanced geometry
         const backboneCurve1 = new THREE.CatmullRomCurve3([]);
@@ -4453,13 +4627,14 @@ function init3DSpeciesChart() {
         const backboneGeometry1 = new THREE.TubeGeometry(backboneCurve1, 200, backboneRadius, 16, false);
         const backboneGeometry2 = new THREE.TubeGeometry(backboneCurve2, 200, backboneRadius, 16, false);
         
-        const backboneMaterial = new THREE.MeshPhongMaterial({
+        const backboneMaterial = new THREE.MeshPhysicalMaterial({
             color: 0xffffff,
-            shininess: 100,
+            metalness: 0.3,
+            roughness: 0.2,
             transparent: true,
             opacity: 0.9,
             emissive: 0x222222,
-            emissiveIntensity: 0.2
+            emissiveIntensity: 0.3
         });
         
         const backbone1 = new THREE.Mesh(backboneGeometry1, backboneMaterial);
@@ -4508,10 +4683,12 @@ function init3DSpeciesChart() {
             // Connector between nucleotides
             const connectorGeometry = new THREE.CylinderGeometry(0.05, 0.05, 
                 Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(z2 - z1, 2)), 16);
-            const connectorMaterial = new THREE.MeshBasicMaterial({
+            const connectorMaterial = new THREE.MeshPhysicalMaterial({
                 color: 0xffffff,
+                metalness: 0.3,
+                roughness: 0.2,
                 transparent: true,
-                opacity: 0.6
+                opacity: 0.8
             });
             
             const connector = new THREE.Mesh(connectorGeometry, connectorMaterial);
@@ -4527,7 +4704,7 @@ function init3DSpeciesChart() {
                 const bondMaterial = new THREE.MeshBasicMaterial({
                     color: 0xffffff,
                     transparent: true,
-                    opacity: 0.4
+                    opacity: 0.5
                 });
                 
                 const bond = new THREE.Mesh(bondGeometry, bondMaterial);
@@ -4549,13 +4726,14 @@ function init3DSpeciesChart() {
             
             // Sugar molecule
             const sugarGeometry = new THREE.IcosahedronGeometry(0.15, 1);
-            const sugarMaterial = new THREE.MeshPhongMaterial({
+            const sugarMaterial = new THREE.MeshPhysicalMaterial({
                 color: 0xffd166,
-                shininess: 90,
+                metalness: 0.3,
+                roughness: 0.2,
                 transparent: true,
                 opacity: 0.9,
                 emissive: 0x443311,
-                emissiveIntensity: 0.3
+                emissiveIntensity: 0.4
             });
             
             const sugar = new THREE.Mesh(sugarGeometry, sugarMaterial);
@@ -4570,13 +4748,14 @@ function init3DSpeciesChart() {
             const phosphateZ = Math.sin(phosphateAngle) * (helixRadius + 0.3);
             
             const phosphateGeometry = new THREE.OctahedronGeometry(0.18, 0);
-            const phosphateMaterial = new THREE.MeshPhongMaterial({
+            const phosphateMaterial = new THREE.MeshPhysicalMaterial({
                 color: 0xef476f,
-                shininess: 100,
+                metalness: 0.3,
+                roughness: 0.2,
                 transparent: true,
                 opacity: 0.9,
                 emissive: 0x441122,
-                emissiveIntensity: 0.4
+                emissiveIntensity: 0.5
             });
             
             const phosphate = new THREE.Mesh(phosphateGeometry, phosphateMaterial);
@@ -4587,7 +4766,13 @@ function init3DSpeciesChart() {
             
             // Connect sugar and phosphate
             const bondGeometry = new THREE.CylinderGeometry(0.05, 0.05, 0.5, 8);
-            const bondMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+            const bondMaterial = new THREE.MeshPhysicalMaterial({
+                color: 0xffffff,
+                metalness: 0.3,
+                roughness: 0.2,
+                transparent: true,
+                opacity: 0.8
+            });
             const bond = new THREE.Mesh(bondGeometry, bondMaterial);
             bond.position.set((x + phosphateX) / 2, y, (z + phosphateZ) / 2);
             bond.lookAt(phosphateX, y, phosphateZ);
@@ -4603,13 +4788,13 @@ function init3DSpeciesChart() {
         let cameraAnimating = false;
         let cameraProgress = 0;
         
-        // Camera path for animation
+        // Camera path for animation - further out
         const cameraPath = new THREE.CatmullRomCurve3([
-            new THREE.Vector3(0, 0, 8),
-            new THREE.Vector3(8, 0, 0),
-            new THREE.Vector3(0, 0, -8),
-            new THREE.Vector3(-8, 0, 0),
-            new THREE.Vector3(0, 0, 8)
+            new THREE.Vector3(0, 0, 60),
+            new THREE.Vector3(40, 20, 40),
+            new THREE.Vector3(0, 40, 30),
+            new THREE.Vector3(-40, 20, 40),
+            new THREE.Vector3(0, 0, 60)
         ]);
         
         function onMouseMove(event) {
@@ -4637,20 +4822,78 @@ function init3DSpeciesChart() {
             
             // Highlight the focused element
             if (focusedElement) {
-                focusedElement.material.emissiveIntensity = 0.8;
+                focusedElement.material.emissiveIntensity = 1.0;
             }
         }
         
         renderer.domElement.addEventListener('mousemove', onMouseMove);
         renderer.domElement.addEventListener('click', onMouseClick);
         
-        // Add controls
+        // Add controls with extended zoom range
         const controls = new THREE.OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
         controls.dampingFactor = 0.05;
         controls.screenSpacePanning = false;
-        controls.minDistance = 3;
-        controls.maxDistance = 20;
+        controls.minDistance = 0.01; // No zoom-in limit
+        controls.maxDistance = 100; // Increased zoom-out limit
+        
+        // Mobile zoom controls
+        const zoomSpeed = 5;
+        
+        zoomInBtn.addEventListener('click', () => {
+            const direction = new THREE.Vector3();
+            camera.getWorldDirection(direction);
+            camera.position.addScaledVector(direction, -zoomSpeed);
+        });
+        
+        zoomOutBtn.addEventListener('click', () => {
+            const direction = new THREE.Vector3();
+            camera.getWorldDirection(direction);
+            camera.position.addScaledVector(direction, zoomSpeed);
+        });
+        
+        resetBtn.addEventListener('click', () => {
+            camera.position.set(0, 0, 60);
+            controls.target.set(0, 0, 0);
+            controls.update();
+        });
+        
+        // Touch controls for mobile
+        let touchStartDistance = 0;
+        
+        renderer.domElement.addEventListener('touchstart', (event) => {
+            if (event.touches.length === 2) {
+                const dx = event.touches[0].clientX - event.touches[1].clientX;
+                const dy = event.touches[0].clientY - event.touches[1].clientY;
+                touchStartDistance = Math.sqrt(dx * dx + dy * dy);
+            }
+        });
+        
+        renderer.domElement.addEventListener('touchmove', (event) => {
+            if (event.touches.length === 2) {
+                event.preventDefault();
+                
+                const dx = event.touches[0].clientX - event.touches[1].clientX;
+                const dy = event.touches[0].clientY - event.touches[1].clientY;
+                const touchDistance = Math.sqrt(dx * dx + dy * dy);
+                
+                if (touchStartDistance > 0) {
+                    const scale = touchDistance / touchStartDistance;
+                    const direction = new THREE.Vector3();
+                    camera.getWorldDirection(direction);
+                    
+                    if (scale < 1) {
+                        // Zoom in
+                        camera.position.addScaledVector(direction, -zoomSpeed * (1 - scale));
+                    } else {
+                        // Zoom out
+                        camera.position.addScaledVector(direction, zoomSpeed * (scale - 1));
+                    }
+                    
+                    touchStartDistance = touchDistance;
+                }
+            }
+        });
         
         // Animation
         const clock = new THREE.Clock();
@@ -4660,19 +4903,15 @@ function init3DSpeciesChart() {
             const elapsedTime = clock.getElapsedTime();
             
             // Rotate DNA structure
-            dnaGroup.rotation.y = elapsedTime * 0.3;
-            
-            // Animate background elements
-            starField.rotation.y = elapsedTime * 0.01;
-            starField.rotation.x = elapsedTime * 0.005;
-            
-            energyParticles.rotation.y = elapsedTime * 0.02;
-            energyParticles.rotation.x = elapsedTime * 0.01;
+            dnaGroup.rotation.y = elapsedTime * 0.5;
             
             // Animate organelles
-            chloroplastGroup.rotation.y = elapsedTime * 0.05;
+            chloroplastGroup.rotation.y = elapsedTime * 0.02;
             mitochondriaGroup.rotation.y = elapsedTime * 0.03;
-            erGroup.rotation.y = elapsedTime * 0.02;
+            erGroup.rotation.y = elapsedTime * 0.01;
+            ribosomeGroup.rotation.y = elapsedTime * 0.005;
+            peroxisomeGroup.rotation.y = elapsedTime * 0.015;
+            cytoskeletonGroup.rotation.y = elapsedTime * 0.008;
             
             // Animate cytoplasmic streaming
             const positions = streamingParticles.geometry.attributes.position.array;
@@ -4689,7 +4928,7 @@ function init3DSpeciesChart() {
                     positions[idx + 2] * positions[idx + 2]
                 );
                 
-                if (dist > 18) {
+                if (dist > 38) {
                     // Reverse direction if hitting boundary
                     streamingVelocities[i].x *= -1;
                     streamingVelocities[i].y *= -1;
@@ -4697,9 +4936,6 @@ function init3DSpeciesChart() {
                 }
             }
             streamingParticles.geometry.attributes.position.needsUpdate = true;
-            
-            // Update nebula shader
-            nebula.material.uniforms.time.value = elapsedTime;
             
             // Camera animation
             if (cameraAnimating) {
@@ -4712,8 +4948,8 @@ function init3DSpeciesChart() {
                 
                 if (focusedElement) {
                     // Focus on specific element
-                    const targetPosition = focusedElement.position.clone();
-                    const offset = new THREE.Vector3(0, 0, 5);
+                    const targetPosition = focusedElement.getWorldPosition(new THREE.Vector3());
+                    const offset = new THREE.Vector3(0, 0, 3);
                     offset.applyQuaternion(camera.quaternion);
                     
                     camera.position.lerpVectors(
@@ -4744,7 +4980,7 @@ function init3DSpeciesChart() {
                         hoveredObject.scale.set(1, 1, 1);
                     }
                     hoveredObject = object;
-                    object.scale.set(1.2, 1.2, 1.2);
+                    object.scale.set(1.3, 1.3, 1.3);
                 }
             } else if (hoveredObject) {
                 hoveredObject.scale.set(1, 1, 1);
@@ -4773,6 +5009,7 @@ function init3DSpeciesChart() {
                 window.removeEventListener('resize', handleResize);
                 renderer.domElement.removeEventListener('mousemove', onMouseMove);
                 renderer.domElement.removeEventListener('click', onMouseClick);
+                container.removeChild(mobileControls);
                 renderer.dispose();
                 container.removeChild(renderer.domElement);
             }
@@ -4803,7 +5040,6 @@ if (document.readyState === 'loading') {
     // DOM already loaded, run immediately
     init3DSpeciesChart();
 }
-
 
 
 
