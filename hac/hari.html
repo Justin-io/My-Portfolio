@@ -4891,47 +4891,7 @@
                 }, 1500);
             }
             
-            function loadLatestSatelliteImages() {
-    // JSON set of 15 different satellite images
-    const satelliteImages = [
-        "/hac/images/first-img.png",
-        "https://example.com/satellite2.jpg",
-        "https://example.com/satellite3.jpg",
-        "https://example.com/satellite4.jpg",
-        "https://example.com/satellite5.jpg",
-        "https://example.com/satellite6.jpg",
-        "https://example.com/satellite7.jpg",
-        "https://example.com/satellite8.jpg",
-        "https://example.com/satellite9.jpg",
-        "https://example.com/satellite10.jpg",
-        "https://example.com/satellite11.jpg",
-        "https://example.com/satellite12.jpg",
-        "https://example.com/satellite13.jpg",
-        "https://example.com/satellite14.jpg",
-        "https://example.com/satellite15.jpg"
-    ];
-    
-    showToast('📡 Loading latest satellite imagery...', 'info');
-    setTimeout(() => {
-        // Update satellite images with random images from the JSON set
-        const images = document.querySelectorAll('#satellite-gallery img');
-        images.forEach((img, index) => {
-            // Set initial random image
-            const randomIndex = Math.floor(Math.random() * satelliteImages.length);
-            img.src = satelliteImages[randomIndex];
-            img.dataset.currentIndex = randomIndex;
-            
-            // Add click event listener to change to a random image when clicked
-            img.addEventListener('click', function() {
-                const newRandomIndex = Math.floor(Math.random() * satelliteImages.length);
-                this.src = satelliteImages[newRandomIndex];
-                this.dataset.currentIndex = newRandomIndex;
-            });
-        });
-        showToast('✅ Latest satellite images loaded!', 'success');
-    }, 2000);
-}
-            
+           // have a chnaged js code and send that into the separaTE FILE
             // Search and filter functions
             function performSearch() {
                 const searchInput = document.getElementById('search-input');
