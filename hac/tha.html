@@ -4800,6 +4800,10 @@ function debounce(func, wait) {
 
 
 
+
+
+
+
 function init3DSpeciesChart() {
     if (state.components.charts.species3d) return;
     
@@ -4815,7 +4819,7 @@ function init3DSpeciesChart() {
         scene.fog = new THREE.FogExp2(0x0a1f0b, 0.015);
         
         const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.01, 1000);
-        camera.position.set(0, 0, 60); // Further out to see more of the cell
+        camera.position.set(0, 0, 60);
         
         const renderer = new THREE.WebGLRenderer({ 
             antialias: true, 
@@ -4829,6 +4833,90 @@ function init3DSpeciesChart() {
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
         renderer.toneMappingExposure = 1.0;
         container.appendChild(renderer.domElement);
+        
+        // Create mobile controls container
+        const mobileControls = document.createElement('div');
+        mobileControls.className = 'mobile-controls';
+        mobileControls.style.cssText = `
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        `;
+        
+        // Zoom in button
+        const zoomInBtn = document.createElement('button');
+        zoomInBtn.className = 'zoom-btn';
+        zoomInBtn.innerHTML = '+';
+        zoomInBtn.style.cssText = `
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(76, 201, 240, 0.8);
+            border: none;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        `;
+        
+        // Zoom out button
+        const zoomOutBtn = document.createElement('button');
+        zoomOutBtn.className = 'zoom-btn';
+        zoomOutBtn.innerHTML = '-';
+        zoomOutBtn.style.cssText = `
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(247, 37, 133, 0.8);
+            border: none;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        `;
+        
+        // Reset view button
+        const resetBtn = document.createElement('button');
+        resetBtn.className = 'reset-btn';
+        resetBtn.innerHTML = '⟲';
+        resetBtn.style.cssText = `
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(56, 176, 0, 0.8);
+            border: none;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        `;
+        
+        // Add hover effects
+        [zoomInBtn, zoomOutBtn, resetBtn].forEach(btn => {
+            btn.addEventListener('mouseenter', () => {
+                btn.style.transform = 'scale(1.1)';
+                btn.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.4)';
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'scale(1)';
+                btn.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.3)';
+            });
+        });
+        
+        mobileControls.appendChild(zoomInBtn);
+        mobileControls.appendChild(zoomOutBtn);
+        mobileControls.appendChild(resetBtn);
+        container.appendChild(mobileControls);
         
         // Microscope lighting setup
         const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
@@ -5538,6 +5626,64 @@ function init3DSpeciesChart() {
         controls.minDistance = 0.01; // No zoom-in limit
         controls.maxDistance = 100; // Increased zoom-out limit
         
+        // Mobile zoom controls
+        const zoomSpeed = 5;
+        
+        zoomInBtn.addEventListener('click', () => {
+            const direction = new THREE.Vector3();
+            camera.getWorldDirection(direction);
+            camera.position.addScaledVector(direction, -zoomSpeed);
+        });
+        
+        zoomOutBtn.addEventListener('click', () => {
+            const direction = new THREE.Vector3();
+            camera.getWorldDirection(direction);
+            camera.position.addScaledVector(direction, zoomSpeed);
+        });
+        
+        resetBtn.addEventListener('click', () => {
+            camera.position.set(0, 0, 60);
+            controls.target.set(0, 0, 0);
+            controls.update();
+        });
+        
+        // Touch controls for mobile
+        let touchStartDistance = 0;
+        
+        renderer.domElement.addEventListener('touchstart', (event) => {
+            if (event.touches.length === 2) {
+                const dx = event.touches[0].clientX - event.touches[1].clientX;
+                const dy = event.touches[0].clientY - event.touches[1].clientY;
+                touchStartDistance = Math.sqrt(dx * dx + dy * dy);
+            }
+        });
+        
+        renderer.domElement.addEventListener('touchmove', (event) => {
+            if (event.touches.length === 2) {
+                event.preventDefault();
+                
+                const dx = event.touches[0].clientX - event.touches[1].clientX;
+                const dy = event.touches[0].clientY - event.touches[1].clientY;
+                const touchDistance = Math.sqrt(dx * dx + dy * dy);
+                
+                if (touchStartDistance > 0) {
+                    const scale = touchDistance / touchStartDistance;
+                    const direction = new THREE.Vector3();
+                    camera.getWorldDirection(direction);
+                    
+                    if (scale < 1) {
+                        // Zoom in
+                        camera.position.addScaledVector(direction, -zoomSpeed * (1 - scale));
+                    } else {
+                        // Zoom out
+                        camera.position.addScaledVector(direction, zoomSpeed * (scale - 1));
+                    }
+                    
+                    touchStartDistance = touchDistance;
+                }
+            }
+        });
+        
         // Animation
         const clock = new THREE.Clock();
         function animate() {
@@ -5652,6 +5798,7 @@ function init3DSpeciesChart() {
                 window.removeEventListener('resize', handleResize);
                 renderer.domElement.removeEventListener('mousemove', onMouseMove);
                 renderer.domElement.removeEventListener('click', onMouseClick);
+                container.removeChild(mobileControls);
                 renderer.dispose();
                 container.removeChild(renderer.domElement);
             }
@@ -5673,13 +5820,15 @@ function debounce(func, wait) {
         clearTimeout(timeout);
         timeout = setTimeout(() => func.apply(context, args), wait);
     };
-}      
+}         
             
             
             
             
             
-            
+
+
+
             
             
             
