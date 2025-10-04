@@ -3504,7 +3504,7 @@
                 };
             }
             
-            function initMap() {
+           function initMap() {
     if (state.components.map) return;
     
     const mapContainer = document.getElementById('map');
@@ -3516,10 +3516,12 @@
         // Create map
         state.map = L.map('map').setView([20, 0], 2);
         
-        // Add realistic tile layer (replaced dark theme with OpenStreetMap)
+        // Add watercolor tile layer
         L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg', {
-    attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(state.map);
+            attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            subdomains: 'abcd',
+            maxZoom: 19
+        }).addTo(state.map);
         
         // Initialize marker cluster
         const markerClusterGroup = L.markerClusterGroup({
@@ -3598,7 +3600,18 @@
         document.getElementById('map-loading').innerHTML = '<div class="text-center p-4">Error loading map. Please refresh the page.</div>';
     }
 }
-            function getStageColor(stage) {
+
+// Helper function to get color based on flowering stage
+function getStageColor(stage) {
+    const colors = {
+        'buds': '#9370DB',    // MediumPurple
+        'early': '#00BFFF',   // DeepSkyBlue
+        'peak': '#32CD32',    // LimeGreen
+        'late': '#FF8C00'     // DarkOrange
+    };
+    return colors[stage] || '#808080'; // Default gray
+}
+function getStageColor(stage) {
                 const colors = {
                     'buds': '#8BC34A',
                     'early': '#FFEB3B',
