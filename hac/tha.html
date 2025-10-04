@@ -2098,7 +2098,7 @@
                         </div>
                     </div>
                     <div class="tab-pane fade show active" id="species-distribution" role="tabpanel" aria-labelledby="species-distribution-tab">
-                        <h3 class="text-center mb-4">3D Species Distribution</h3>
+                        <h3 class="text-center mb-4">Molecular Threshold Alert System</h3>
                             <div class="chart-3d-container" id="species3dChart" style="height: 700px !important;">
                                 <div class="loading-overlay" id="species3d-loading">
                                     <div class="loader" role="status" aria-label="Loading 3D chart">
@@ -6145,66 +6145,72 @@ function updateCameraPreset(camera, preset) {
 
             
             
-            
             function initPredictionMap() {
-                if (state.components.predictionMap) return;
-                
-                const container = document.getElementById('prediction-map-container');
-                if (!container) return;
-                
-                try {
-                    document.getElementById('prediction-map-loading').style.display = 'none';
-                    
-                    // Create a simple Leaflet map
-                    const map = L.map(container.id).setView([20, 0], 2);
-                    
-                    // Add dark tile layer
-                    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-                        subdomains: 'abcd',
-                        maxZoom: 19
-                    }).addTo(map);
-                    
-                    // Create prediction data
-                    const predictionData = [];
-                    
-                    // Generate random prediction points
-                    for (let i = 0; i < 100; i++) {
-                        const lat = Math.random() * 180 - 90;
-                        const lng = Math.random() * 360 - 180;
-                        const intensity = Math.random();
-                        
-                        predictionData.push([lat, lng, intensity]);
-                    }
-                    
-                    // Create heatmap
-                    const heat = L.heatLayer(predictionData, {
-                        radius: 25,
-                        blur: 15,
-                        maxZoom: 17,
-                        max: 1.0,
-                        gradient: {
-                            0.0: 'blue',
-                            0.5: 'yellow',
-                            1.0: 'red'
-                        }
-                    }).addTo(map);
-                    
-                    // Store reference
-                    state.predictionMap = {
-                        map, heat,
-                        cleanup: () => {
-                            map.remove();
-                        }
-                    };
-                    
-                    state.components.predictionMap = true;
-                } catch (error) {
-                    console.error('Error initializing prediction map:', error);
-                    document.getElementById('prediction-map-loading').innerHTML = '<div class="text-center p-4">Error loading prediction map. Please refresh the page.</div>';
-                }
-            }
+    if (state.components.predictionMap) return;
+    
+    const container = document.getElementById('prediction-map-container');
+    if (!container) return;
+    
+    try {
+        document.getElementById('prediction-map-loading').style.display = 'none';
+        
+        // Create a simple Leaflet map
+        const map = L.map(container.id).setView([20, 0], 2);
+        
+        // Add dark tile layer
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            subdomains: 'abcd',
+            maxZoom: 19
+        }).addTo(map);
+        
+        // Create prediction data
+        const predictionData = [];
+        
+        // Generate random prediction points
+        for (let i = 0; i < 100; i++) {
+            const lat = Math.random() * 180 - 90;
+            const lng = Math.random() * 360 - 180;
+            const intensity = Math.random();
             
+            predictionData.push([lat, lng, intensity]);
+        }
+        
+        // Create heatmap
+        const heat = L.heatLayer(predictionData, {
+            radius: 25,
+            blur: 15,
+            maxZoom: 17,
+            max: 1.0,
+            gradient: {
+                0.0: 'blue',
+                0.5: 'yellow',
+                1.0: 'red'
+            }
+        }).addTo(map);
+        
+        // Store reference
+        state.predictionMap = {
+            map, heat,
+            cleanup: () => {
+                map.remove();
+            }
+        };
+        
+        state.components.predictionMap = true;
+    } catch (error) {
+        console.error('Error initializing prediction map:', error);
+        document.getElementById('prediction-map-loading').innerHTML = '<div class="text-center p-4">Error loading prediction map. Please refresh the page.</div>';
+    }
+}
+
+// Auto-initialize when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPredictionMap);
+} else {
+    // DOM already loaded, run immediately
+    initPredictionMap();
+}
             function animateStats() {
                 try {
                     const countUpOptions = {
