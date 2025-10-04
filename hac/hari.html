@@ -3505,102 +3505,100 @@
             }
             
             function initMap() {
-                if (state.components.map) return;
+    if (state.components.map) return;
+    
+    const mapContainer = document.getElementById('map');
+    if (!mapContainer) return;
+    
+    try {
+        document.getElementById('map-loading').style.display = 'none';
+        
+        // Create map
+        state.map = L.map('map').setView([20, 0], 2);
+        
+        // Add realistic tile layer (replaced dark theme with OpenStreetMap)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            maxZoom: 19
+        }).addTo(state.map);
+        
+        // Initialize marker cluster
+        const markerClusterGroup = L.markerClusterGroup({
+            iconCreateFunction: function(cluster) {
+                const count = cluster.getChildCount();
+                let size = 'small';
+                if (count > 50) size = 'large';
+                else if (count > 10) size = 'medium';
                 
-                const mapContainer = document.getElementById('map');
-                if (!mapContainer) return;
-                
-                try {
-                    document.getElementById('map-loading').style.display = 'none';
-                    
-                    // Create map
-                    state.map = L.map('map').setView([20, 0], 2);
-                    
-                    // Add dark tile layer
-                    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-                        subdomains: 'abcd',
-                        maxZoom: 19
-                    }).addTo(state.map);
-                    
-                    // Initialize marker cluster
-                    const markerClusterGroup = L.markerClusterGroup({
-                        iconCreateFunction: function(cluster) {
-                            const count = cluster.getChildCount();
-                            let size = 'small';
-                            if (count > 50) size = 'large';
-                            else if (count > 10) size = 'medium';
-                            
-                            return L.divIcon({
-                                html: `<div style="background: linear-gradient(135deg, #00ff00, #adff2f); color: white; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-weight: bold;">${count}</div>`,
-                                className: 'custom-cluster-icon',
-                                iconSize: L.point(40, 40)
-                            });
-                        }
-                    });
-                    
-                    state.map.addLayer(markerClusterGroup);
-                    
-                    // Add sample data points from multiple sources
-                    const flowerLocations = [
-                        // USA-NPN data
-                        { lat: 40.7128, lng: -74.0060, name: "New York", species: "Cherry Blossom", stage: "peak", source: "USA-NPN" },
-                        { lat: 41.8781, lng: -87.6298, name: "Chicago", species: "Tulip", stage: "early", source: "USA-NPN" },
-                        { lat: 34.0522, lng: -118.2437, name: "Los Angeles", species: "California Poppy", stage: "peak", source: "USA-NPN" },
-                        
-                        // GLOBE Observer data
-                        { lat: 51.5074, lng: -0.1278, name: "London", species: "Bluebell", stage: "early", source: "GLOBE Observer" },
-                        { lat: 48.8566, lng: 2.3522, name: "Paris", species: "Lilac", stage: "early", source: "GLOBE Observer" },
-                        { lat: 52.5200, lng: 13.4050, name: "Berlin", species: "Cherry Blossom", stage: "peak", source: "GLOBE Observer" },
-                        
-                        // GBIF data
-                        { lat: 35.6895, lng: 139.6917, name: "Tokyo", species: "Sakura", stage: "late", source: "GBIF" },
-                        { lat: -33.8688, lng: 151.2093, name: "Sydney", species: "Golden Wattle", stage: "peak", source: "GBIF" },
-                        { lat: -37.8136, lng: 144.9631, name: "Melbourne", species: "Eucalyptus", stage: "peak", source: "GBIF" },
-                        
-                        // iNaturalist data
-                        { lat: 55.7558, lng: 37.6173, name: "Moscow", species: "Lily of the Valley", stage: "buds", source: "iNaturalist" },
-                        { lat: -22.9068, lng: -43.1729, name: "Rio de Janeiro", species: "Ipê", stage: "peak", source: "iNaturalist" },
-                        { lat: 1.3521, lng: 103.8198, name: "Singapore", species: "Orchid", stage: "peak", source: "iNaturalist" },
-                        
-                        // Additional data points
-                        { lat: 37.7749, lng: -122.4194, name: "San Francisco", species: "California Poppy", stage: "early", source: "USA-NPN" },
-                        { lat: -26.2041, lng: 28.0473, name: "Johannesburg", species: "Protea", stage: "peak", source: "GBIF" },
-                        { lat: 19.4326, lng: -99.1332, name: "Mexico City", species: "Dahlia", stage: "late", source: "iNaturalist" },
-                        { lat: 28.6139, lng: 77.2090, name: "New Delhi", species: "Lotus", stage: "peak", source: "GBIF" }
-                    ];
-                    
-                    flowerLocations.forEach(location => {
-                        const color = getStageColor(location.stage);
-                        const marker = L.circleMarker([location.lat, location.lng], {
-                            radius: 10,
-                            fillColor: color,
-                            color: '#fff',
-                            weight: 2,
-                            opacity: 1,
-                            fillOpacity: 0.8
-                        });
-                        
-                        marker.bindPopup(`
-                            <div style="text-align: center;">
-                                <h4>${location.name}</h4>
-                                <p><strong>Species:</strong> ${location.species}</p>
-                                <p><strong>Stage:</strong> ${location.stage}</p>
-                                <p><strong>Source:</strong> ${location.source}</p>
-                            </div>
-                        `);
-                        
-                        markerClusterGroup.addLayer(marker);
-                    });
-                    
-                    state.map.markerClusterGroup = markerClusterGroup;
-                    state.components.map = true;
-                } catch (error) {
-                    console.error('Error initializing map:', error);
-                    document.getElementById('map-loading').innerHTML = '<div class="text-center p-4">Error loading map. Please refresh the page.</div>';
-                }
+                return L.divIcon({
+                    html: `<div style="background: linear-gradient(135deg, #00ff00, #adff2f); color: white; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-weight: bold;">${count}</div>`,
+                    className: 'custom-cluster-icon',
+                    iconSize: L.point(40, 40)
+                });
             }
+        });
+        
+        state.map.addLayer(markerClusterGroup);
+        
+        // Add sample data points from multiple sources
+        const flowerLocations = [
+            // USA-NPN data
+            { lat: 40.7128, lng: -74.0060, name: "New York", species: "Cherry Blossom", stage: "peak", source: "USA-NPN" },
+            { lat: 41.8781, lng: -87.6298, name: "Chicago", species: "Tulip", stage: "early", source: "USA-NPN" },
+            { lat: 34.0522, lng: -118.2437, name: "Los Angeles", species: "California Poppy", stage: "peak", source: "USA-NPN" },
             
+            // GLOBE Observer data
+            { lat: 51.5074, lng: -0.1278, name: "London", species: "Bluebell", stage: "early", source: "GLOBE Observer" },
+            { lat: 48.8566, lng: 2.3522, name: "Paris", species: "Lilac", stage: "early", source: "GLOBE Observer" },
+            { lat: 52.5200, lng: 13.4050, name: "Berlin", species: "Cherry Blossom", stage: "peak", source: "GLOBE Observer" },
+            
+            // GBIF data
+            { lat: 35.6895, lng: 139.6917, name: "Tokyo", species: "Sakura", stage: "late", source: "GBIF" },
+            { lat: -33.8688, lng: 151.2093, name: "Sydney", species: "Golden Wattle", stage: "peak", source: "GBIF" },
+            { lat: -37.8136, lng: 144.9631, name: "Melbourne", species: "Eucalyptus", stage: "peak", source: "GBIF" },
+            
+            // iNaturalist data
+            { lat: 55.7558, lng: 37.6173, name: "Moscow", species: "Lily of the Valley", stage: "buds", source: "iNaturalist" },
+            { lat: -22.9068, lng: -43.1729, name: "Rio de Janeiro", species: "Ipê", stage: "peak", source: "iNaturalist" },
+            { lat: 1.3521, lng: 103.8198, name: "Singapore", species: "Orchid", stage: "peak", source: "iNaturalist" },
+            
+            // Additional data points
+            { lat: 37.7749, lng: -122.4194, name: "San Francisco", species: "California Poppy", stage: "early", source: "USA-NPN" },
+            { lat: -26.2041, lng: 28.0473, name: "Johannesburg", species: "Protea", stage: "peak", source: "GBIF" },
+            { lat: 19.4326, lng: -99.1332, name: "Mexico City", species: "Dahlia", stage: "late", source: "iNaturalist" },
+            { lat: 28.6139, lng: 77.2090, name: "New Delhi", species: "Lotus", stage: "peak", source: "GBIF" }
+        ];
+        
+        flowerLocations.forEach(location => {
+            const color = getStageColor(location.stage);
+            const marker = L.circleMarker([location.lat, location.lng], {
+                radius: 10,
+                fillColor: color,
+                color: '#fff',
+                weight: 2,
+                opacity: 1,
+                fillOpacity: 0.8
+            });
+            
+            marker.bindPopup(`
+                <div style="text-align: center;">
+                    <h4>${location.name}</h4>
+                    <p><strong>Species:</strong> ${location.species}</p>
+                    <p><strong>Stage:</strong> ${location.stage}</p>
+                    <p><strong>Source:</strong> ${location.source}</p>
+                </div>
+            `);
+            
+            markerClusterGroup.addLayer(marker);
+        });
+        
+        state.map.markerClusterGroup = markerClusterGroup;
+        state.components.map = true;
+    } catch (error) {
+        console.error('Error initializing map:', error);
+        document.getElementById('map-loading').innerHTML = '<div class="text-center p-4">Error loading map. Please refresh the page.</div>';
+    }
+}
             function getStageColor(stage) {
                 const colors = {
                     'buds': '#8BC34A',
