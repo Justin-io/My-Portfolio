@@ -1634,38 +1634,139 @@
 
         <!-- Satellite Imagery Section -->
         <section class="container my-5">
-            <div class="glass p-4" data-aos="fade-up" data-aos-duration="1000">
-                <h2 class="text-center mb-4">NASA Satellite Imagery</h2>
-                <p class="text-center mb-4">Real-time satellite data from MODIS, VIIRS, and Landsat showing vegetation health and flowering patterns</p>
-                
-                <div class="row" id="satellite-gallery">
-                    <div class="col-md-4" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
-                        <div class="satellite-image">
-                            <img src="/hac/images/nasa-img1.jpeg" alt="MODIS/VIIRS satellite image showing North America vegetation index" loading="lazy">
-                            <div class="caption">MODIS/VIIRS: North America Vegetation Index</div>
-                        </div>
-                    </div>
-                    <div class="col-md-4" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
-                        <div class="satellite-image">
-                            <img src="/hac/images/nasa-img2.jpeg" alt="Landsat/EMIT satellite image showing Europe flowering patterns" loading="lazy">
-                            <div class="caption">Landsat/EMIT: Europe Flowering Patterns</div>
-                        </div>
-                    </div>
-                    <div class="col-md-4" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
-                        <div class="satellite-image">
-                            <img src="/hac/images/nasa-img3.jpeg" alt="PACE/AVIRIS satellite image showing Asia phenology changes" loading="lazy">
-                            <div class="caption">PACE/AVIRIS: Asia Phenology Changes</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="text-center mt-4">
-                    <button class="btn btn-primary" onclick="app.loadLatestSatelliteImages()" aria-label="Load latest satellite images">
-                        <i class="fas fa-satellite-dish me-2" aria-hidden="true"></i>Load Latest Images
-                    </button>
+    <div class="glass p-4" data-aos="fade-up" data-aos-duration="1000">
+        <h2 class="text-center mb-4">NASA Satellite Imagery</h2>
+        <p class="text-center mb-4">Real-time satellite data from MODIS, VIIRS, and Landsat showing vegetation health and flowering patterns</p>
+        
+        <div class="row" id="satellite-gallery">
+            <div class="col-md-4" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
+                <div class="satellite-image">
+                    <img src="/hac/images/nasa-img1.jpeg" alt="MODIS/VIIRS satellite image showing North America vegetation index" loading="lazy">
+                    <div class="caption">MODIS/VIIRS: North America Vegetation Index</div>
                 </div>
             </div>
-        </section>
+            <div class="col-md-4" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                <div class="satellite-image">
+                    <img src="/hac/images/nasa-img2.jpeg" alt="Landsat/EMIT satellite image showing Europe flowering patterns" loading="lazy">
+                    <div class="caption">Landsat/EMIT: Europe Flowering Patterns</div>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
+                <div class="satellite-image">
+                    <img src="/hac/images/nasa-img3.jpeg" alt="PACE/AVIRIS satellite image showing Asia phenology changes" loading="lazy">
+                    <div class="caption">PACE/AVIRIS: Asia Phenology Changes</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <button class="btn btn-primary" onclick="app.loadLatestSatelliteImages()" aria-label="Load latest satellite images">
+                <i class="fas fa-satellite-dish me-2" aria-hidden="true"></i>Load Latest Images
+            </button>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Define the app object if it doesn't exist
+    if (typeof app === 'undefined') {
+        window.app = {};
+    }
+
+    // JSON set of 15 satellite images with titles
+    app.satelliteData = [
+        {
+            image: "https://picsum.photos/seed/satellite1/600/400.jpg",
+            title: "MODIS: Amazon Rainforest Deforestation Patterns"
+        },
+        {
+            image: "https://picsum.photos/seed/satellite2/600/400.jpg",
+            title: "VIIRS: North America Vegetation Health Index"
+        },
+        {
+            image: "https://picsum.photos/seed/satellite3/600/400.jpg",
+            title: "Landsat: European Agricultural Monitoring"
+        },
+        {
+            image: "https://picsum.photos/seed/satellite4/600/400.jpg",
+            title: "EMIT: Asian Rice Paddy Phenology"
+        },
+        {
+            image: "https://picsum.photos/seed/satellite5/600/400.jpg",
+            title: "PACE: Ocean Bloom Phytoplankton Distribution"
+        },
+        {
+            image: "https://picsum.photos/seed/satellite6/600/400.jpg",
+            title: "AVIRIS: California Wildfire Impact Assessment"
+        },
+        {
+            image: "https://picsum.photos/seed/satellite7/600/400.jpg",
+            title: "MODIS: African Sahel Vegetation Trends"
+        },
+        {
+            image: "https://picsum.photos/seed/satellite8/600/400.jpg",
+            title: "VIIRS: Arctic Ice Melt Patterns"
+        },
+        {
+            image: "https://picsum.photos/seed/satellite9/600/400.jpg",
+            title: "Landsat: Australian Great Barrier Reef Health"
+        },
+        {
+            image: "https://picsum.photos/seed/satellite10/600/400.jpg",
+            title: "EMIT: Himalayan Glacier Changes"
+        },
+        {
+            image: "https://picsum.photos/seed/satellite11/600/400.jpg",
+            title: "PACE: Amazon River Basin Hydrology"
+        },
+        {
+            image: "https://picsum.photos/seed/satellite12/600/400.jpg",
+            title: "AVIRIS: Urban Heat Island Analysis"
+        },
+        {
+            image: "https://picsum.photos/seed/satellite13/600/400.jpg",
+            title: "MODIS: Global Carbon Flux Monitoring"
+        },
+        {
+            image: "https://picsum.photos/seed/satellite14/600/400.jpg",
+            title: "VIIRS: Nighttime Light Pollution Patterns"
+        },
+        {
+            image: "https://picsum.photos/seed/satellite15/600/400.jpg",
+            title: "Landsat: Desertification in the Sahel"
+        }
+    ];
+
+    // Function to load latest satellite images
+    app.loadLatestSatelliteImages = function() {
+        showToast('📡 Loading latest satellite imagery...', 'info');
+        setTimeout(() => {
+            // Update satellite images and titles with random data from the JSON set
+            const satelliteContainers = document.querySelectorAll('.satellite-image');
+            
+            satelliteContainers.forEach((container) => {
+                const img = container.querySelector('img');
+                const caption = container.querySelector('.caption');
+                
+                // Set initial random image and title
+                const randomIndex = Math.floor(Math.random() * app.satelliteData.length);
+                img.src = app.satelliteData[randomIndex].image;
+                caption.textContent = app.satelliteData[randomIndex].title;
+                img.dataset.currentIndex = randomIndex;
+                
+                // Add click event listener to change to a random image when clicked
+                img.addEventListener('click', function() {
+                    const newRandomIndex = Math.floor(Math.random() * app.satelliteData.length);
+                    this.src = app.satelliteData[newRandomIndex].image;
+                    caption.textContent = app.satelliteData[newRandomIndex].title;
+                    this.dataset.currentIndex = newRandomIndex;
+                });
+            });
+            
+            showToast('✅ Latest satellite images loaded!', 'success');
+        }, 2000);
+    };
+</script>
 
         <!-- Data Sources Section -->
         <section id="data-sources" class="container my-5">
