@@ -1667,7 +1667,43 @@
     </div>
 </section>
 
+<!-- Toast container -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">NASA Satellite Viewer</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            <!-- Toast message will be inserted here -->
+        </div>
+    </div>
+</div>
+
 <script>
+    // Simple toast notification function
+    function showToast(message, type = 'info') {
+        const toastEl = document.getElementById('liveToast');
+        const toastBody = toastEl.querySelector('.toast-body');
+        const toastHeader = toastEl.querySelector('.toast-header strong');
+        
+        // Set message
+        toastBody.textContent = message;
+        
+        // Set header style based on type
+        if (type === 'success') {
+            toastHeader.style.color = 'green';
+        } else if (type === 'error') {
+            toastHeader.style.color = 'red';
+        } else {
+            toastHeader.style.color = '#0d6efd'; // Default blue for info
+        }
+        
+        // Show the toast
+        const toast = new bootstrap.Toast(toastEl);
+        toast.show();
+    }
+
     // Create the satelliteViewer object
     const satelliteViewer = {
         // JSON set of 15 satellite images with titles
@@ -1736,6 +1772,7 @@
         
         // Function to load latest satellite images
         refreshImagery: function() {
+            console.log('Button clicked');
             showToast('📡 Loading latest satellite imagery...', 'info');
             
             setTimeout(() => {
@@ -1750,32 +1787,48 @@
                     captions[index].textContent = this.imageDatabase[randomIndex].title;
                     img.dataset.currentIndex = randomIndex;
                     
+                    // Remove existing event listener to prevent duplicates
+                    img.removeEventListener('click', this.handleImageClick);
+                    
                     // Add click event listener to change to a random image when clicked
-                    img.addEventListener('click', function() {
-                        const newRandomIndex = Math.floor(Math.random() * satelliteViewer.imageDatabase.length);
-                        this.src = satelliteViewer.imageDatabase[newRandomIndex].image;
-                        captions[index].textContent = satelliteViewer.imageDatabase[newRandomIndex].title;
-                        this.dataset.currentIndex = newRandomIndex;
-                    });
+                    img.addEventListener('click', this.handleImageClick.bind(this, img, captions[index]));
                 });
                 
                 showToast('✅ Latest satellite images loaded!', 'success');
             }, 2000);
         },
         
+        // Handle image click event
+        handleImageClick: function(img, caption) {
+            const newRandomIndex = Math.floor(Math.random() * this.imageDatabase.length);
+            img.src = this.imageDatabase[newRandomIndex].image;
+            caption.textContent = this.imageDatabase[newRandomIndex].title;
+            img.dataset.currentIndex = newRandomIndex;
+        },
+        
         // Initialize function to set up event listeners
         init: function() {
             const loadButton = document.getElementById('load-images-btn');
             if (loadButton) {
+                console.log('Button found, attaching event listener');
                 loadButton.addEventListener('click', this.refreshImagery.bind(this));
+            } else {
+                console.error('Load button not found');
             }
         }
     };
     
     // Initialize the satellite viewer when DOM is ready
     document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM loaded, initializing satellite viewer');
         satelliteViewer.init();
     });
+    
+    // Fallback initialization if DOMContentLoaded already fired
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        console.log('DOM already loaded, initializing satellite viewer');
+        satelliteViewer.init();
+    }
 </script>
 
         <!-- Data Sources Section -->
