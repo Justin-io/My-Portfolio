@@ -1633,7 +1633,7 @@
         </section>  
 
         <!-- Satellite Imagery Section -->
-        <section class="container my-5">
+      <section class="container my-5">
     <div class="glass p-4" data-aos="fade-up" data-aos-duration="1000">
         <h2 class="text-center mb-4">NASA Satellite Imagery</h2>
         <p class="text-center mb-4">Real-time satellite data from MODIS, VIIRS, and Landsat showing vegetation health and flowering patterns</p>
@@ -1736,31 +1736,31 @@
         
         // Function to load latest satellite images
         refreshImagery: function() {
-            console.log('📡 Loading latest satellite imagery...');
+            showToast('📡 Loading latest satellite imagery...', 'info');
             
-            // Update satellite images and titles with random data from the JSON set
-            const imageContainers = document.querySelectorAll('.satellite-image');
-            
-            imageContainers.forEach((container) => {
-                const imgElement = container.querySelector('img');
-                const captionElement = container.querySelector('.caption');
+            setTimeout(() => {
+                // Update satellite images with random images from the JSON set
+                const images = document.querySelectorAll('#satellite-gallery img');
+                const captions = document.querySelectorAll('#satellite-gallery .caption');
                 
-                // Set initial random image and title
-                const randomIndex = Math.floor(Math.random() * this.imageDatabase.length);
-                imgElement.src = this.imageDatabase[randomIndex].image;
-                captionElement.textContent = this.imageDatabase[randomIndex].title;
-                imgElement.dataset.currentIndex = randomIndex;
-                
-                // Add click event listener to change to a random image when clicked
-                imgElement.addEventListener('click', function() {
-                    const newRandomIndex = Math.floor(Math.random() * satelliteViewer.imageDatabase.length);
-                    this.src = satelliteViewer.imageDatabase[newRandomIndex].image;
-                    captionElement.textContent = satelliteViewer.imageDatabase[newRandomIndex].title;
-                    this.dataset.currentIndex = newRandomIndex;
+                images.forEach((img, index) => {
+                    // Set initial random image
+                    const randomIndex = Math.floor(Math.random() * this.imageDatabase.length);
+                    img.src = this.imageDatabase[randomIndex].image;
+                    captions[index].textContent = this.imageDatabase[randomIndex].title;
+                    img.dataset.currentIndex = randomIndex;
+                    
+                    // Add click event listener to change to a random image when clicked
+                    img.addEventListener('click', function() {
+                        const newRandomIndex = Math.floor(Math.random() * satelliteViewer.imageDatabase.length);
+                        this.src = satelliteViewer.imageDatabase[newRandomIndex].image;
+                        captions[index].textContent = satelliteViewer.imageDatabase[newRandomIndex].title;
+                        this.dataset.currentIndex = newRandomIndex;
+                    });
                 });
-            });
-            
-            console.log('✅ Latest satellite images loaded!');
+                
+                showToast('✅ Latest satellite images loaded!', 'success');
+            }, 2000);
         },
         
         // Initialize function to set up event listeners
