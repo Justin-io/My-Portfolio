@@ -4022,11 +4022,7 @@ function init3DSpeciesChart() {
     if (!container) return;
     
     try {
-        // Hide loading indicator immediately
-        const loadingElement = document.getElementById('species3d-loading');
-        if (loadingElement) {
-            loadingElement.style.display = 'none';
-        }
+        document.getElementById('species3d-loading').style.display = 'none';
         
         // Enhanced scene setup with plant cell environment
         const scene = new THREE.Scene();
@@ -4785,10 +4781,7 @@ function init3DSpeciesChart() {
         state.components.charts.species3d = true;
     } catch (error) {
         console.error('Error initializing 3D species chart:', error);
-        const loadingElement = document.getElementById('species3d-loading');
-        if (loadingElement) {
-            loadingElement.innerHTML = '<div class="text-center p-4">Error loading 3D chart. Please refresh the page.</div>';
-        }
+        document.getElementById('species3d-loading').innerHTML = '<div class="text-center p-4">Error loading 3D chart. Please refresh the page.</div>';
     }
 }
 
@@ -4804,24 +4797,12 @@ function debounce(func, wait) {
 }
 
 // Auto-initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize state if it doesn't exist
-    if (!window.state) {
-        window.state = {
-            components: {
-                charts: {}
-            },
-            charts: {}
-        };
-    }
-    
-    // Check if the container exists
-    const container = document.getElementById('species3dChart');
-    if (container) {
-        // Initialize the chart
-        init3DSpeciesChart();
-    }
-});
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init3DSpeciesChart);
+} else {
+    // DOM already loaded, run immediately
+    init3DSpeciesChart();
+}
 
 
 
