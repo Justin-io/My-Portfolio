@@ -4011,330 +4011,99 @@ function getStageColor(stage) {
                 }
             }
             
-            function initDNAHelix() {
-    if (state.components.charts.dnaHelix) return;
-    
-    const container = document.getElementById('dnaHelixContainer');
-    if (!container) return;
-    
-    try {
-        document.getElementById('dna-loading').style.display = 'none';
-        
-        // Scene setup with enhanced environment
-        const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x000814);
-        scene.fog = new THREE.Fog(0x000814, 10, 50);
-        
-        const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-        camera.position.set(0, 5, 15);
-        
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        renderer.setSize(container.clientWidth, container.clientHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.shadowMap.enabled = true;
-        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-        container.appendChild(renderer.domElement);
-        
-        // Enhanced lighting setup
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-        scene.add(ambientLight);
-        
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-        directionalLight.position.set(5, 10, 7);
-        directionalLight.castShadow = true;
-        directionalLight.shadow.mapSize.width = 2048;
-        directionalLight.shadow.mapSize.height = 2048;
-        scene.add(directionalLight);
-        
-        const pointLight1 = new THREE.PointLight(0x4cc9f0, 0.5);
-        pointLight1.position.set(-10, 5, 5);
-        scene.add(pointLight1);
-        
-        const pointLight2 = new THREE.PointLight(0xf72585, 0.5);
-        pointLight2.position.set(10, -5, 5);
-        scene.add(pointLight2);
-        
-        // DNA structure parameters
-        const basePairs = 40;
-        const helixRadius = 3;
-        const helixHeight = 0.8;
-        const backboneRadius = 0.15;
-        const basePairWidth = 0.2;
-        const basePairHeight = 0.1;
-        const rotationSpeed = 0.002;
-        
-        // Nucleotide colors
-        const nucleotideColors = {
-            'A': 0x4361ee,    // Adenine - Blue
-            'T': 0xf72585,    // Thymine - Pink
-            'G': 0x4cc9f0,    // Guanine - Cyan
-            'C': 0x7209b7     // Cytosine - Purple
-        };
-        
-        // Create DNA group
-        const dnaGroup = new THREE.Group();
-        scene.add(dnaGroup);
-        
-        // Generate random DNA sequence
-        const bases = ['A', 'T', 'G', 'C'];
-        const sequence = [];
-        for (let i = 0; i < basePairs; i++) {
-            const base = bases[Math.floor(Math.random() * bases.length)];
-            sequence.push(base);
-        }
-        
-        // Create DNA backbones
-        const backboneCurve1 = new THREE.CatmullRomCurve3([]);
-        const backboneCurve2 = new THREE.CatmullRomCurve3([]);
-        
-        for (let i = 0; i <= basePairs; i++) {
-            const angle = (i / basePairs) * Math.PI * 4;
-            const y = (i - basePairs / 2) * helixHeight;
-            
-            // First backbone
-            const x1 = Math.cos(angle) * helixRadius;
-            const z1 = Math.sin(angle) * helixRadius;
-            backboneCurve1.points.push(new THREE.Vector3(x1, y, z1));
-            
-            // Second backbone (opposite side)
-            const x2 = Math.cos(angle + Math.PI) * helixRadius;
-            const z2 = Math.sin(angle + Math.PI) * helixRadius;
-            backboneCurve2.points.push(new THREE.Vector3(x2, y, z2));
-        }
-        
-        // Create backbone tubes
-        const backboneGeometry1 = new THREE.TubeGeometry(backboneCurve1, 100, backboneRadius, 16, false);
-        const backboneGeometry2 = new THREE.TubeGeometry(backboneCurve2, 100, backboneRadius, 16, false);
-        
-        const backboneMaterial = new THREE.MeshPhongMaterial({
-            color: 0xffffff,
-            shininess: 100,
-            transparent: true,
-            opacity: 0.9
-        });
-        
-        const backbone1 = new THREE.Mesh(backboneGeometry1, backboneMaterial);
-        const backbone2 = new THREE.Mesh(backboneGeometry2, backboneMaterial);
-        backbone1.castShadow = true;
-        backbone2.castShadow = true;
-        dnaGroup.add(backbone1, backbone2);
-        
-        // Create base pairs
-        for (let i = 0; i < basePairs; i++) {
-            const angle = (i / basePairs) * Math.PI * 4;
-            const y = (i - basePairs / 2) * helixHeight;
-            
-            // Calculate positions
-            const x1 = Math.cos(angle) * helixRadius;
-            const z1 = Math.sin(angle) * helixRadius;
-            const x2 = Math.cos(angle + Math.PI) * helixRadius;
-            const z2 = Math.sin(angle + Math.PI) * helixRadius;
-            
-            // Create base pair
-            const basePairGeometry = new THREE.BoxGeometry(
-                Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(z2 - z1, 2)),
-                basePairHeight,
-                basePairWidth
-            );
-            
-            const base = sequence[i];
-            const basePairMaterial = new THREE.MeshPhongMaterial({
-                color: nucleotideColors[base],
-                shininess: 80,
-                transparent: true,
-                opacity: 0.85
-            });
-            
-            const basePair = new THREE.Mesh(basePairGeometry, basePairMaterial);
-            basePair.position.set((x1 + x2) / 2, y, (z1 + z2) / 2);
-            basePair.rotation.y = Math.atan2(z2 - z1, x2 - x1);
-            basePair.castShadow = true;
-            basePair.receiveShadow = true;
-            basePair.userData = { base: base, position: i };
-            
-            dnaGroup.add(basePair);
-            
-            // Create hydrogen bonds between bases
-            if (i % 3 === 0) { // Show every 3rd bond for clarity
-                const bondGeometry = new THREE.CylinderGeometry(0.02, 0.02, 
-                    Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(z2 - z1, 2)), 8);
-                const bondMaterial = new THREE.MeshBasicMaterial({
-                    color: 0xffffff,
-                    transparent: true,
-                    opacity: 0.6
-                });
+
+
+            function init3DSpeciesChart() {
+                if (state.components.charts.species3d) return;
                 
-                const bond = new THREE.Mesh(bondGeometry, bondMaterial);
-                bond.position.set((x1 + x2) / 2, y, (z1 + z2) / 2);
-                bond.rotation.z = Math.PI / 2;
-                bond.rotation.y = Math.atan2(z2 - z1, x2 - x1);
-                dnaGroup.add(bond);
+                const container = document.getElementById('species3dChart');
+                if (!container) return;
+                
+                try {
+                    document.getElementById('species3d-loading').style.display = 'none';
+                    
+                    // Create a simple 3D visualization using Three.js
+                    const scene = new THREE.Scene();
+                    const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+                    camera.position.z = 5;
+                    
+                    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+                    renderer.setSize(container.clientWidth, container.clientHeight);
+                    container.appendChild(renderer.domElement);
+                    
+                    // Add lights
+                    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+                    scene.add(ambientLight);
+                    
+                    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+                    directionalLight.position.set(1, 1, 1);
+                    scene.add(directionalLight);
+                    
+                    // Create data points for different regions
+                    const regions = [
+                        { name: 'Tropical', color: 0xff0000, count: 4500, position: { x: -2, y: 1, z: 0 } },
+                        { name: 'Temperate', color: 0x00ff00, count: 2000, position: { x: 0, y: 0, z: 0 } },
+                        { name: 'Mountain', color: 0x0000ff, count: 3000, position: { x: 2, y: -1, z: 0 } },
+                        { name: 'Mediterranean', color: 0xffff00, count: 1500, position: { x: 0, y: 2, z: 0 } }
+                    ];
+                    
+                    regions.forEach(region => {
+                        const geometry = new THREE.SphereGeometry(region.count / 1000, 32, 32);
+                        const material = new THREE.MeshPhongMaterial({ 
+                            color: region.color,
+                            transparent: true,
+                            opacity: 0.7
+                        });
+                        const sphere = new THREE.Mesh(geometry, material);
+                        sphere.position.set(region.position.x, region.position.y, region.position.z);
+                        scene.add(sphere);
+                        
+                        // Add label
+                        // Note: In a real implementation, you would use a library like three-spritetext
+                    });
+                    
+                    // Add controls
+                    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+                    controls.enableDamping = true;
+                    controls.dampingFactor = 0.05;
+                    
+                    // Animation
+                    function animate() {
+                        requestAnimationFrame(animate);
+                        controls.update();
+                        renderer.render(scene, camera);
+                    }
+                    
+                    animate();
+                    
+                    // Handle resize
+                    const handleResize = debounce(() => {
+                        camera.aspect = container.clientWidth / container.clientHeight;
+                        camera.updateProjectionMatrix();
+                        renderer.setSize(container.clientWidth, container.clientHeight);
+                    }, 250);
+                    
+                    window.addEventListener('resize', handleResize);
+                    
+                    // Store reference
+                    state.charts.species3d = {
+                        scene, camera, renderer, controls,
+                        cleanup: () => {
+                            window.removeEventListener('resize', handleResize);
+                            renderer.dispose();
+                            container.removeChild(renderer.domElement);
+                        }
+                    };
+                    
+                    state.components.charts.species3d = true;
+                } catch (error) {
+                    console.error('Error initializing 3D species chart:', error);
+                    document.getElementById('species3d-loading').innerHTML = '<div class="text-center p-4">Error loading 3D chart. Please refresh the page.</div>';
+                }
             }
-        }
-        
-        // Add nucleotide labels
-        const loader = new THREE.FontLoader();
-        loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', (font) => {
-            for (let i = 0; i < basePairs; i += 5) { // Label every 5th base
-                const angle = (i / basePairs) * Math.PI * 4;
-                const y = (i - basePairs / 2) * helixHeight;
-                const x = Math.cos(angle) * (helixRadius + 0.5);
-                const z = Math.sin(angle) * (helixRadius + 0.5);
-                
-                const base = sequence[i];
-                const textGeometry = new THREE.TextGeometry(base, {
-                    font: font,
-                    size: 0.3,
-                    height: 0.05,
-                    curveSegments: 12,
-                    bevelEnabled: true,
-                    bevelThickness: 0.01,
-                    bevelSize: 0.02,
-                    bevelOffset: 0,
-                    bevelSegments: 5
-                });
-                
-                const textMaterial = new THREE.MeshPhongMaterial({ 
-                    color: nucleotideColors[base],
-                    shininess: 100
-                });
-                
-                const textMesh = new THREE.Mesh(textGeometry, textMaterial);
-                textMesh.position.set(x, y, z);
-                textMesh.rotation.y = -angle + Math.PI / 2;
-                textMesh.lookAt(camera.position);
-                dnaGroup.add(textMesh);
-            }
-        });
-        
-        // Add molecular components
-        const addMolecule = (position, radius, color, element) => {
-            const geometry = new THREE.SphereGeometry(radius, 16, 16);
-            const material = new THREE.MeshPhongMaterial({
-                color: color,
-                shininess: 90,
-                transparent: true,
-                opacity: 0.9
-            });
-            const molecule = new THREE.Mesh(geometry, material);
-            molecule.position.copy(position);
-            molecule.castShadow = true;
-            molecule.userData = { element: element };
-            return molecule;
-        };
-        
-        // Add sugar molecules (deoxyribose) along backbone
-        for (let i = 0; i < basePairs; i += 2) {
-            const angle = (i / basePairs) * Math.PI * 4;
-            const y = (i - basePairs / 2) * helixHeight;
-            const x = Math.cos(angle) * helixRadius;
-            const z = Math.sin(angle) * helixRadius;
             
-            const sugar = addMolecule(
-                new THREE.Vector3(x, y, z),
-                0.25,
-                0xffd166,
-                "Sugar"
-            );
-            dnaGroup.add(sugar);
             
-            // Add phosphate groups
-            const phosphateAngle = angle + Math.PI / 8;
-            const phosphateX = Math.cos(phosphateAngle) * (helixRadius + 0.3);
-            const phosphateZ = Math.sin(phosphateAngle) * (helixRadius + 0.3);
             
-            const phosphate = addMolecule(
-                new THREE.Vector3(phosphateX, y, phosphateZ),
-                0.3,
-                0xef476f,
-                "Phosphate"
-            );
-            dnaGroup.add(phosphate);
-            
-            // Connect sugar and phosphate
-            const bondGeometry = new THREE.CylinderGeometry(0.05, 0.05, 0.5, 8);
-            const bondMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
-            const bond = new THREE.Mesh(bondGeometry, bondMaterial);
-            bond.position.set((x + phosphateX) / 2, y, (z + phosphateZ) / 2);
-            bond.lookAt(phosphateX, y, phosphateZ);
-            bond.rotateX(Math.PI / 2);
-            dnaGroup.add(bond);
-        }
-        
-        // Add particles for atmosphere
-        const particlesGeometry = new THREE.BufferGeometry();
-        const particlesCount = 1000;
-        const posArray = new Float32Array(particlesCount * 3);
-        
-        for (let i = 0; i < particlesCount * 3; i++) {
-            posArray[i] = (Math.random() - 0.5) * 30;
-        }
-        
-        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-        const particlesMaterial = new THREE.PointsMaterial({
-            size: 0.03,
-            color: 0x4cc9f0,
-            transparent: true,
-            opacity: 0.8,
-            blending: THREE.AdditiveBlending
-        });
-        
-        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-        scene.add(particlesMesh);
-        
-        // Add controls
-        const controls = new THREE.OrbitControls(camera, renderer.domElement);
-        controls.enableDamping = true;
-        controls.dampingFactor = 0.05;
-        controls.screenSpacePanning = false;
-        controls.minDistance = 5;
-        controls.maxDistance = 30;
-        
-        // Animation
-        const clock = new THREE.Clock();
-        function animate() {
-            requestAnimationFrame(animate);
-            
-            const elapsedTime = clock.getElapsedTime();
-            
-            // Rotate DNA structure
-            dnaGroup.rotation.y = elapsedTime * rotationSpeed;
-            
-            // Animate particles
-            particlesMesh.rotation.y = elapsedTime * 0.05;
-            particlesMesh.rotation.x = elapsedTime * 0.02;
-            
-            controls.update();
-            renderer.render(scene, camera);
-        }
-        
-        animate();
-        
-        // Handle resize
-        const handleResize = debounce(() => {
-            camera.aspect = container.clientWidth / container.clientHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(container.clientWidth, container.clientHeight);
-        }, 250);
-        
-        window.addEventListener('resize', handleResize);
-        
-        // Store reference
-        state.charts.dnaHelix = {
-            scene, camera, renderer, controls, dnaGroup,
-            cleanup: () => {
-                window.removeEventListener('resize', handleResize);
-                renderer.dispose();
-                container.removeChild(renderer.domElement);
-            }
-        };
-        
-        state.components.charts.dnaHelix = true;
-    } catch (error) {
-        console.error('Error initializing DNA helix:', error);
-        document.getElementById('dna-loading').innerHTML = '<div class="text-center p-4">Error loading DNA structure. Please refresh the page.</div>';
-    }
-}
             function init3DSpeciesModel() {
                 if (state.components.species3dModel) return;
                 
