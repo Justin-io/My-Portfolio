@@ -4027,7 +4027,7 @@ function init3DSpeciesChart() {
         // Enhanced scene setup with plant cell environment
         const scene = new THREE.Scene();
         scene.background = new THREE.Color(0x001a0d);
-        scene.fog = new THREE.FogExp2(0x001a0d, 0.02);
+        scene.fog = new THREE.FogExp2(0x001a0d, 0.015);
         
         const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
         camera.position.set(0, 0, 8);
@@ -4073,36 +4073,74 @@ function init3DSpeciesChart() {
         pointLight3.position.set(0, 10, -10);
         scene.add(pointLight3);
         
-        // Plant cell environment
-        // Cell wall
-        const cellWallGeometry = new THREE.CylinderGeometry(25, 25, 40, 32, 1, true);
-        const cellWallMaterial = new THREE.MeshPhongMaterial({
-            color: 0x8fbc8f,
+        // Plant cell environment - more realistic
+        // Cell membrane with lipid bilayer effect
+        const membraneGeometry = new THREE.SphereGeometry(20, 32, 32);
+        const membraneMaterial = new THREE.MeshPhongMaterial({
+            color: 0x2d5016,
             transparent: true,
-            opacity: 0.1,
+            opacity: 0.2,
             side: THREE.BackSide
         });
-        const cellWall = new THREE.Mesh(cellWallGeometry, cellWallMaterial);
-        cellWall.rotation.x = Math.PI / 2;
-        scene.add(cellWall);
+        const cellMembrane = new THREE.Mesh(membraneGeometry, membraneMaterial);
+        scene.add(cellMembrane);
         
-        // Chloroplasts
+        // Cytoplasm - gel-like substance
+        const cytoplasmGeometry = new THREE.SphereGeometry(19, 32, 32);
+        const cytoplasmMaterial = new THREE.MeshPhongMaterial({
+            color: 0x4a7c59,
+            transparent: true,
+            opacity: 0.15,
+            side: THREE.BackSide
+        });
+        const cytoplasm = new THREE.Mesh(cytoplasmGeometry, cytoplasmMaterial);
+        scene.add(cytoplasm);
+        
+        // Chloroplasts with detailed structure
         const chloroplastGroup = new THREE.Group();
-        for (let i = 0; i < 15; i++) {
-            const chloroplastGeometry = new THREE.SphereGeometry(1.5, 16, 16);
-            const chloroplastMaterial = new THREE.MeshPhongMaterial({
+        for (let i = 0; i < 12; i++) {
+            // Outer membrane
+            const outerGeometry = new THREE.SphereGeometry(1.8, 16, 16);
+            const outerMaterial = new THREE.MeshPhongMaterial({
                 color: 0x2e8b57,
                 transparent: true,
-                opacity: 0.6,
-                emissive: 0x2e8b57,
-                emissiveIntensity: 0.2
+                opacity: 0.6
             });
-            const chloroplast = new THREE.Mesh(chloroplastGeometry, chloroplastMaterial);
+            const outerMembrane = new THREE.Mesh(outerGeometry, outerMaterial);
             
-            // Position randomly around the scene
+            // Inner membrane with thylakoids
+            const innerGeometry = new THREE.SphereGeometry(1.5, 16, 16);
+            const innerMaterial = new THREE.MeshPhongMaterial({
+                color: 0x228b22,
+                transparent: true,
+                opacity: 0.7
+            });
+            const innerMembrane = new THREE.Mesh(innerGeometry, innerMaterial);
+            
+            // Thylakoid stacks
+            const thylakoidGroup = new THREE.Group();
+            for (let j = 0; j < 5; j++) {
+                const thylakoidGeometry = new THREE.CylinderGeometry(0.3, 0.3, 0.1, 8);
+                const thylakoidMaterial = new THREE.MeshPhongMaterial({
+                    color: 0x006400,
+                    emissive: 0x006400,
+                    emissiveIntensity: 0.2
+                });
+                const thylakoid = new THREE.Mesh(thylakoidGeometry, thylakoidMaterial);
+                thylakoid.position.y = (j - 2) * 0.3;
+                thylakoidGroup.add(thylakoid);
+            }
+            
+            // Combine into chloroplast
+            const chloroplast = new THREE.Group();
+            chloroplast.add(outerMembrane);
+            chloroplast.add(innerMembrane);
+            chloroplast.add(thylakoidGroup);
+            
+            // Position randomly
             const theta = Math.random() * Math.PI * 2;
             const phi = Math.random() * Math.PI;
-            const radius = 15 + Math.random() * 5;
+            const radius = 12 + Math.random() * 5;
             
             chloroplast.position.x = radius * Math.sin(phi) * Math.cos(theta);
             chloroplast.position.y = radius * Math.sin(phi) * Math.sin(theta);
@@ -4112,26 +4150,164 @@ function init3DSpeciesChart() {
         }
         scene.add(chloroplastGroup);
         
-        // Vacuole
-        const vacuoleGeometry = new THREE.SphereGeometry(8, 32, 32);
+        // Mitochondria
+        const mitochondriaGroup = new THREE.Group();
+        for (let i = 0; i < 8; i++) {
+            const mitochondrionGeometry = new THREE.CylinderGeometry(0.8, 0.8, 2, 16);
+            const mitochondrionMaterial = new THREE.MeshPhongMaterial({
+                color: 0xff6347,
+                transparent: true,
+                opacity: 0.7
+            });
+            const mitochondrion = new THREE.Mesh(mitochondrionGeometry, mitochondrionMaterial);
+            
+            // Add cristae (inner folds)
+            for (let j = 0; j < 4; j++) {
+                const cristaGeometry = new THREE.PlaneGeometry(0.5, 1.5);
+                const cristaMaterial = new THREE.MeshBasicMaterial({
+                    color: 0xcd5c5c,
+                    transparent: true,
+                    opacity: 0.5,
+                    side: THREE.DoubleSide
+                });
+                const crista = new THREE.Mesh(cristaGeometry, cristaMaterial);
+                crista.rotation.y = (j / 4) * Math.PI * 2;
+                mitochondrion.add(crista);
+            }
+            
+            // Position randomly
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.random() * Math.PI;
+            const radius = 10 + Math.random() * 6;
+            
+            mitochondrion.position.x = radius * Math.sin(phi) * Math.cos(theta);
+            mitochondrion.position.y = radius * Math.sin(phi) * Math.sin(theta);
+            mitochondrion.position.z = radius * Math.cos(phi);
+            
+            mitochondrion.rotation.x = Math.random() * Math.PI;
+            mitochondrion.rotation.y = Math.random() * Math.PI;
+            
+            mitochondriaGroup.add(mitochondrion);
+        }
+        scene.add(mitochondriaGroup);
+        
+        // Vacuole with tonoplast
+        const vacuoleGeometry = new THREE.SphereGeometry(6, 32, 32);
         const vacuoleMaterial = new THREE.MeshPhongMaterial({
             color: 0x90ee90,
             transparent: true,
-            opacity: 0.15,
+            opacity: 0.2,
             side: THREE.BackSide
         });
         const vacuole = new THREE.Mesh(vacuoleGeometry, vacuoleMaterial);
-        vacuole.position.set(-15, -5, -10);
+        vacuole.position.set(-12, -3, -8);
+        
+        // Tonoplast (vacuole membrane)
+        const tonoplastGeometry = new THREE.SphereGeometry(6.1, 32, 32);
+        const tonoplastMaterial = new THREE.MeshPhongMaterial({
+            color: 0x228b22,
+            transparent: true,
+            opacity: 0.3,
+            side: THREE.DoubleSide
+        });
+        const tonoplast = new THREE.Mesh(tonoplastGeometry, tonoplastMaterial);
+        tonoplast.position.copy(vacuole.position);
+        
         scene.add(vacuole);
+        scene.add(tonoplast);
+        
+        // Endoplasmic reticulum
+        const erGroup = new THREE.Group();
+        for (let i = 0; i < 5; i++) {
+            const erCurve = new THREE.CatmullRomCurve3([
+                new THREE.Vector3(-5, i * 2 - 4, -5),
+                new THREE.Vector3(0, i * 2 - 4, 0),
+                new THREE.Vector3(5, i * 2 - 4, 5),
+                new THREE.Vector3(0, i * 2 - 4, 0)
+            ]);
+            
+            const erGeometry = new THREE.TubeGeometry(erCurve, 50, 0.2, 8, false);
+            const erMaterial = new THREE.MeshPhongMaterial({
+                color: 0x9370db,
+                transparent: true,
+                opacity: 0.5
+            });
+            const er = new THREE.Mesh(erGeometry, erMaterial);
+            erGroup.add(er);
+        }
+        scene.add(erGroup);
+        
+        // Ribosomes
+        const ribosomeGroup = new THREE.Group();
+        for (let i = 0; i < 50; i++) {
+            const ribosomeGeometry = new THREE.SphereGeometry(0.2, 8, 8);
+            const ribosomeMaterial = new THREE.MeshPhongMaterial({
+                color: 0xdaa520,
+                emissive: 0xdaa520,
+                emissiveIntensity: 0.3
+            });
+            const ribosome = new THREE.Mesh(ribosomeGeometry, ribosomeMaterial);
+            
+            // Position randomly
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.random() * Math.PI;
+            const radius = 5 + Math.random() * 12;
+            
+            ribosome.position.x = radius * Math.sin(phi) * Math.cos(theta);
+            ribosome.position.y = radius * Math.sin(phi) * Math.sin(theta);
+            ribosome.position.z = radius * Math.cos(phi);
+            
+            ribosomeGroup.add(ribosome);
+        }
+        scene.add(ribosomeGroup);
+        
+        // Cytoplasmic streaming particles
+        const streamingGeometry = new THREE.BufferGeometry();
+        const streamingCount = 500;
+        const streamingPositions = new Float32Array(streamingCount * 3);
+        const streamingVelocities = [];
+        
+        for (let i = 0; i < streamingCount; i++) {
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.random() * Math.PI;
+            const radius = 5 + Math.random() * 10;
+            
+            const x = radius * Math.sin(phi) * Math.cos(theta);
+            const y = radius * Math.sin(phi) * Math.sin(theta);
+            const z = radius * Math.cos(phi);
+            
+            streamingPositions[i * 3] = x;
+            streamingPositions[i * 3 + 1] = y;
+            streamingPositions[i * 3 + 2] = z;
+            
+            // Random velocity for streaming effect
+            streamingVelocities.push({
+                x: (Math.random() - 0.5) * 0.02,
+                y: (Math.random() - 0.5) * 0.02,
+                z: (Math.random() - 0.5) * 0.02
+            });
+        }
+        
+        streamingGeometry.setAttribute('position', new THREE.BufferAttribute(streamingPositions, 3));
+        const streamingMaterial = new THREE.PointsMaterial({
+            color: 0x90ee90,
+            size: 0.05,
+            transparent: true,
+            opacity: 0.6,
+            blending: THREE.AdditiveBlending
+        });
+        
+        const streamingParticles = new THREE.Points(streamingGeometry, streamingMaterial);
+        scene.add(streamingParticles);
         
         // Insane background effects
         // 1. Dynamic starfield (5000 stars)
         const starsGeometry = new THREE.BufferGeometry();
         const starsMaterial = new THREE.PointsMaterial({
             color: 0xffffff,
-            size: 0.05,
+            size: 0.03,
             transparent: true,
-            opacity: 0.8,
+            opacity: 0.6,
             blending: THREE.AdditiveBlending
         });
         
@@ -4151,9 +4327,9 @@ function init3DSpeciesChart() {
         const energyParticlesGeometry = new THREE.BufferGeometry();
         const energyParticlesMaterial = new THREE.PointsMaterial({
             color: 0x4cc9f0,
-            size: 0.08,
+            size: 0.06,
             transparent: true,
-            opacity: 0.7,
+            opacity: 0.5,
             blending: THREE.AdditiveBlending
         });
         
@@ -4198,7 +4374,7 @@ function init3DSpeciesChart() {
                 void main() {
                     float noise = sin(vUv.x * 10.0 + time) * cos(vUv.y * 10.0 + time);
                     vec3 color = mix(color1, color2, noise * 0.5 + 0.5);
-                    gl_FragColor = vec4(color, 0.05);
+                    gl_FragColor = vec4(color, 0.03);
                 }
             `,
             blending: THREE.AdditiveBlending,
@@ -4493,8 +4669,34 @@ function init3DSpeciesChart() {
             energyParticles.rotation.y = elapsedTime * 0.02;
             energyParticles.rotation.x = elapsedTime * 0.01;
             
-            // Animate chloroplasts
+            // Animate organelles
             chloroplastGroup.rotation.y = elapsedTime * 0.05;
+            mitochondriaGroup.rotation.y = elapsedTime * 0.03;
+            erGroup.rotation.y = elapsedTime * 0.02;
+            
+            // Animate cytoplasmic streaming
+            const positions = streamingParticles.geometry.attributes.position.array;
+            for (let i = 0; i < streamingCount; i++) {
+                const idx = i * 3;
+                positions[idx] += streamingVelocities[i].x;
+                positions[idx + 1] += streamingVelocities[i].y;
+                positions[idx + 2] += streamingVelocities[i].z;
+                
+                // Boundary check - keep particles within cell
+                const dist = Math.sqrt(
+                    positions[idx] * positions[idx] + 
+                    positions[idx + 1] * positions[idx + 1] + 
+                    positions[idx + 2] * positions[idx + 2]
+                );
+                
+                if (dist > 18) {
+                    // Reverse direction if hitting boundary
+                    streamingVelocities[i].x *= -1;
+                    streamingVelocities[i].y *= -1;
+                    streamingVelocities[i].z *= -1;
+                }
+            }
+            streamingParticles.geometry.attributes.position.needsUpdate = true;
             
             // Update nebula shader
             nebula.material.uniforms.time.value = elapsedTime;
@@ -4581,9 +4783,18 @@ function init3DSpeciesChart() {
         console.error('Error initializing 3D species chart:', error);
         document.getElementById('species3d-loading').innerHTML = '<div class="text-center p-4">Error loading 3D chart. Please refresh the page.</div>';
     }
-}          
-            
+}
 
+// Simple debounce function
+function debounce(func, wait) {
+    let timeout;
+    return function() {
+        const context = this;
+        const args = arguments;
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(context, args), wait);
+    };
+}
 
 
 
