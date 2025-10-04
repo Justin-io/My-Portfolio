@@ -1704,76 +1704,76 @@
         toast.show();
     }
 
-    // JSON set of 15 satellite images with titles
-    app.satelliteData = [
-        {
-            image: "https://eoimages.gsfc.nasa.gov/images/imagerecords/145000/145888/br163defores_tmo_amo_2019_th.jpg",
-            title: "MODIS: Amazon Rainforest Deforestation Patterns"
-        },
-        {
-            image: "https://www.mdpi.com/remotesensing/remotesensing-16-03973/article_deploy/html/images/remotesensing-16-03973-g001-550.jpg",
-            title: "VIIRS: North America Vegetation Health Index"
-        },
-        {
-            image: "https://www.copernicus.eu/sites/default/files/styles/large/public/2020-03/CGLOPS_UC_JRC-MARS_I1.00.png",
-            title: "Landsat: European Agricultural Monitoring"
-        },
-        {
-            image: "https://pub.mdpi-res.com/agriculture/agriculture-14-01282/article_deploy/html/images/agriculture-14-01282-ag.pngttps://picsum.photos/seed/satellite4/600/400.jpg",
-            title: "EMIT: Asian Rice Paddy Phenology"
-        },
-        {
-            image: "https://mynasadata.larc.nasa.gov/sites/default/files/2019-10/Coccolithophore_bloom.jpgttps://picsum.photos/seed/satellite5/600/400.jpg",
-            title: "PACE: Ocean Bloom Phytoplankton Distribution"
-        },
-        {
-            image: "https://www.nasa.gov/wp-content/uploads/2025/04/1-pia26497-castleberry.jpg",
-            title: "AVIRIS: California Wildfire Impact Assessment"
-        },
-        {
-            image: "hhttps://www.frontiersin.org/files/Articles/1416373/ffgc-07-1416373-HTML/image_m/ffgc-07-1416373-g001.jpg",
-            title: "MODIS: African Sahel Vegetation Trends"
-        },
-        {
-            image: "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005583/sea_ice_2025_min_2160p60.2820_print.jpg",
-            title: "VIIRS: Arctic Ice Melt Patterns"
-        },
-        {
-            image: "https://picsum.photos/seed/satellite9/600/400.jpg",
-            title: "Landsat: Australian Great Barrier Reef Health"
-        },
-        {
-            image: "https://picsum.photos/seed/satellite10/600/400.jpg",
-            title: "EMIT: Himalayan Glacier Changes"
-        },
-        {
-            image: "https://picsum.photos/seed/satellite11/600/400.jpg",
-            title: "PACE: Amazon River Basin Hydrology"
-        },
-        {
-            image: "https://picsum.photos/seed/satellite12/600/400.jpg",
-            title: "AVIRIS: Urban Heat Island Analysis"
-        },
-        {
-            image: "https://picsum.photos/seed/satellite13/600/400.jpg",
-            title: "MODIS: Global Carbon Flux Monitoring"
-        },
-        {
-            image: "https://picsum.photos/seed/satellite14/600/400.jpg",
-            title: "VIIRS: Nighttime Light Pollution Patterns"
-        },
-        {
-            image: "https://picsum.photos/seed/satellite15/600/400.jpg",
-            title: "Landsat: Desertification in the Sahel"
-        }
-    ];
-
-    // Function to load latest satellite images
-    app.loadLatestSatelliteImages = function() {
-        showToast('📡 Loading latest satellite imagery...', 'info');
-        setTimeout(() => {
-            // Update satellite images and titles with random data from the JSON set
-            const satelliteContainers = document.querySelectorAll('.satellite-image');
+    // Create the satelliteViewer object
+    const satelliteViewer = {
+        // JSON set of 15 satellite images with titles
+        imageDatabase: [
+            {
+                image: "https://eoimages.gsfc.nasa.gov/images/imagerecords/145000/145888/br163defores_tmo_amo_2019_th.jpg",
+                title: "MODIS: Amazon Rainforest Deforestation Patterns"
+            },
+            {
+                image: "https://www.mdpi.com/remotesensing/remotesensing-16-03973/article_deploy/html/images/remotesensing-16-03973-g001-550.jpg",
+                title: "VIIRS: North America Vegetation Health Index"
+            },
+            {
+                image: "https://www.copernicus.eu/sites/default/files/styles/large/public/2020-03/CGLOPS_UC_JRC-MARS_I1.00.png",
+                title: "Landsat: European Agricultural Monitoring"
+            },
+            {
+                image: "https://picsum.photos/seed/satellite4/600/400.jpg",
+                title: "EMIT: Asian Rice Paddy Phenology"
+            },
+            {
+                image: "https://picsum.photos/seed/satellite5/600/400.jpg",
+                title: "PACE: Ocean Bloom Phytoplankton Distribution"
+            },
+            {
+                image: "https://picsum.photos/seed/satellite6/600/400.jpg",
+                title: "AVIRIS: California Wildfire Impact Assessment"
+            },
+            {
+                image: "https://picsum.photos/seed/satellite7/600/400.jpg",
+                title: "MODIS: African Sahel Vegetation Trends"
+            },
+            {
+                image: "https://picsum.photos/seed/satellite8/600/400.jpg",
+                title: "VIIRS: Arctic Ice Melt Patterns"
+            },
+            {
+                image: "https://picsum.photos/seed/satellite9/600/400.jpg",
+                title: "Landsat: Australian Great Barrier Reef Health"
+            },
+            {
+                image: "https://picsum.photos/seed/satellite10/600/400.jpg",
+                title: "EMIT: Himalayan Glacier Changes"
+            },
+            {
+                image: "https://picsum.photos/seed/satellite11/600/400.jpg",
+                title: "PACE: Amazon River Basin Hydrology"
+            },
+            {
+                image: "https://picsum.photos/seed/satellite12/600/400.jpg",
+                title: "AVIRIS: Urban Heat Island Analysis"
+            },
+            {
+                image: "https://picsum.photos/seed/satellite13/600/400.jpg",
+                title: "MODIS: Global Carbon Flux Monitoring"
+            },
+            {
+                image: "https://picsum.photos/seed/satellite14/600/400.jpg",
+                title: "VIIRS: Nighttime Light Pollution Patterns"
+            },
+            {
+                image: "https://picsum.photos/seed/satellite15/600/400.jpg",
+                title: "Landsat: Desertification in the Sahel"
+            }
+        ],
+        
+        // Function to load latest satellite images
+        refreshImagery: function() {
+            console.log('Button clicked');
+            showToast('📡 Loading latest satellite imagery...', 'info');
             
             setTimeout(() => {
                 // Update satellite images with random images from the JSON set
