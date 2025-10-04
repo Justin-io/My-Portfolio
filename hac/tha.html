@@ -5046,122 +5046,875 @@ if (document.readyState === 'loading') {
 
 
 
-  
-            function init3DSpeciesModel() {
-                if (state.components.species3dModel) return;
+  function init3DSpeciesModel() {
+    if (state.components.species3dModel) return;
+    
+    const container = document.getElementById('species3dModel');
+    if (!container) return;
+    
+    try {
+        document.getElementById('species3d-model-loading').style.display = 'none';
+        
+        // Create advanced 3D scene with insane details
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.Fog(0x87CEEB, 5, 50); // Sky blue fog
+        
+        // Advanced camera setup
+        const camera = new THREE.PerspectiveCamera(
+            75, 
+            container.clientWidth / container.clientHeight, 
+            0.1, 
+            1000
+        );
+        camera.position.set(0, 2, 8);
+        camera.lookAt(0, 1, 0);
+        
+        // Ultra HD renderer with advanced settings
+        const renderer = new THREE.WebGLRenderer({ 
+            antialias: true, 
+            alpha: true,
+            powerPreference: "high-performance"
+        });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.2;
+        container.appendChild(renderer.domElement);
+        
+        // Advanced lighting system
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+        scene.add(ambientLight);
+        
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(5, 10, 7);
+        directionalLight.castShadow = true;
+        directionalLight.shadow.camera.near = 0.1;
+        directionalLight.shadow.camera.far = 50;
+        directionalLight.shadow.camera.left = -10;
+        directionalLight.shadow.camera.right = 10;
+        directionalLight.shadow.camera.top = 10;
+        directionalLight.shadow.camera.bottom = -10;
+        directionalLight.shadow.mapSize.width = 2048;
+        directionalLight.shadow.mapSize.height = 2048;
+        scene.add(directionalLight);
+        
+        // Add hemisphere light for natural outdoor lighting
+        const hemiLight = new THREE.HemisphereLight(0x87CEEB, 0x2E8B57, 0.6);
+        scene.add(hemiLight);
+        
+        // Add point light for dramatic effect
+        const pointLight = new THREE.PointLight(0xffaa77, 0.5, 20);
+        pointLight.position.set(-3, 5, 3);
+        scene.add(pointLight);
+        
+        // Create realistic environment
+        createEnvironment(scene);
+        
+        // Create ultra-detailed flower model
+        const flowerGroup = createDetailedFlower(scene);
+        scene.add(flowerGroup);
+        
+        // Add particle effects
+        const particleSystem = createParticleSystem(scene);
+        scene.add(particleSystem);
+        
+        // Add advanced controls
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.screenSpacePanning = false;
+        controls.minDistance = 3;
+        controls.maxDistance = 20;
+        controls.maxPolarAngle = Math.PI / 2;
+        
+        // Animation system
+        const clock = new THREE.Clock();
+        let windStrength = 0;
+        let time = 0;
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            const delta = clock.getDelta();
+            time += delta;
+            
+            // Dynamic wind simulation
+            windStrength = Math.sin(time * 0.2) * 0.5 + 0.5;
+            
+            // Animate flower with wind effect
+            animateFlower(flowerGroup, time, windStrength);
+            
+            // Animate particles
+            animateParticles(particleSystem, time);
+            
+            // Update controls
+            controls.update();
+            
+            // Render scene
+            renderer.render(scene, camera);
+        }
+        
+        animate();
+        
+        // Handle resize with advanced responsiveness
+        const handleResize = debounce(() => {
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        }, 250);
+        
+        window.addEventListener('resize', handleResize);
+        
+        // Interactive species changing
+        let currentSpecies = 'rose';
+        
+        // Store reference with advanced capabilities
+        state.species3dModel = {
+            scene, camera, renderer, controls, flowerGroup, particleSystem,
+            cleanup: () => {
+                window.removeEventListener('resize', handleResize);
+                renderer.dispose();
+                container.removeChild(renderer.domElement);
+            },
+            loadModel: (species) => {
+                // Ultra-realistic species loading
+                showToast(`Loading ultra-detailed ${species} model...`, 'info');
                 
-                const container = document.getElementById('species3dModel');
-                if (!container) return;
+                // Update species
+                currentSpecies = species;
                 
-                try {
-                    document.getElementById('species3d-model-loading').style.display = 'none';
-                    
-                    // Create a simple 3D scene
-                    const scene = new THREE.Scene();
-                    const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-                    camera.position.z = 5;
-                    
-                    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-                    renderer.setSize(container.clientWidth, container.clientHeight);
-                    container.appendChild(renderer.domElement);
-                    
-                    // Add lights
-                    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-                    scene.add(ambientLight);
-                    
-                    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-                    directionalLight.position.set(1, 1, 1);
-                    scene.add(directionalLight);
-                    
-                    // Create a simple flower model using basic geometries
-                    const group = new THREE.Group();
-                    
-                    // Stem
-                    const stemGeometry = new THREE.CylinderGeometry(0.05, 0.1, 2, 8);
-                    const stemMaterial = new THREE.MeshPhongMaterial({ color: 0x2e7d32 });
-                    const stem = new THREE.Mesh(stemGeometry, stemMaterial);
-                    stem.position.y = -1;
-                    group.add(stem);
-                    
-                    // Petals
-                    const petalGeometry = new THREE.SphereGeometry(0.5, 8, 6);
-                    const petalMaterial = new THREE.MeshPhongMaterial({ color: 0xe91e63 });
-                    
-                    for (let i = 0; i < 6; i++) {
-                        const petal = new THREE.Mesh(petalGeometry, petalMaterial);
-                        petal.position.y = 0.5;
-                        petal.position.x = Math.cos(i * Math.PI / 3) * 0.5;
-                        petal.position.z = Math.sin(i * Math.PI / 3) * 0.5;
-                        petal.scale.set(0.8, 0.3, 0.8);
-                        group.add(petal);
-                    }
-                    
-                    // Center
-                    const centerGeometry = new THREE.SphereGeometry(0.3, 8, 6);
-                    const centerMaterial = new THREE.MeshPhongMaterial({ color: 0xffeb3b });
-                    const center = new THREE.Mesh(centerGeometry, centerMaterial);
-                    center.position.y = 0.5;
-                    group.add(center);
-                    
-                    scene.add(group);
-                    
-                    // Add controls
-                    const controls = new THREE.OrbitControls(camera, renderer.domElement);
-                    controls.enableDamping = true;
-                    controls.dampingFactor = 0.05;
-                    
-                    // Animation
-                    function animate() {
-                        requestAnimationFrame(animate);
-                        group.rotation.y += 0.005;
-                        controls.update();
-                        renderer.render(scene, camera);
-                    }
-                    
-                    animate();
-                    
-                    // Handle resize
-                    const handleResize = debounce(() => {
-                        camera.aspect = container.clientWidth / container.clientHeight;
-                        camera.updateProjectionMatrix();
-                        renderer.setSize(container.clientWidth, container.clientHeight);
-                    }, 250);
-                    
-                    window.addEventListener('resize', handleResize);
-                    
-                    // Store reference
-                    state.species3dModel = {
-                        scene, camera, renderer, controls, group,
-                        cleanup: () => {
-                            window.removeEventListener('resize', handleResize);
-                            renderer.dispose();
-                            container.removeChild(renderer.domElement);
-                        },
-                        loadModel: (species) => {
-                            // In a real implementation, you would load actual 3D models
-                            showToast(`Loading ${species} model...`, 'info');
-                            
-                            // Change color based on species
-                            const colors = {
-                                'rose': 0xe91e63,
-                                'tulip': 0x9c27b0,
-                                'orchid': 0x673ab7,
-                                'sunflower': 0xffeb3b
-                            };
-                            
-                            if (colors[species]) {
-                                petalMaterial.color.setHex(colors[species]);
-                            }
-                        }
-                    };
-                    
-                    state.components.species3dModel = true;
-                } catch (error) {
-                    console.error('Error initializing 3D species model:', error);
-                    document.getElementById('species3d-model-loading').innerHTML = '<div class="text-center p-4">Error loading 3D model. Please refresh the page.</div>';
-                }
+                // Change flower appearance based on species
+                updateFlowerSpecies(flowerGroup, species);
+                
+                // Update environment based on species
+                updateEnvironment(scene, species);
+                
+                // Update particles based on species
+                updateParticles(particleSystem, species);
+            },
+            // New advanced methods
+            setWindStrength: (strength) => {
+                windStrength = Math.max(0, Math.min(1, strength));
+            },
+            setTimeOfDay: (timeOfDay) => {
+                // 'dawn', 'day', 'dusk', 'night'
+                updateTimeOfDay(scene, timeOfDay);
+            },
+            setSeason: (season) => {
+                // 'spring', 'summer', 'autumn', 'winter'
+                updateSeason(scene, season);
             }
-                       
+        };
+        
+        state.components.species3dModel = true;
+    } catch (error) {
+        console.error('Error initializing advanced 3D species model:', error);
+        document.getElementById('species3d-model-loading').innerHTML = 
+            '<div class="text-center p-4">Error loading ultra-detailed 3D model. Please refresh the page.</div>';
+    }
+}
+
+// Helper function to create realistic environment
+function createEnvironment(scene) {
+    // Create ground with realistic grass
+    const groundGeometry = new THREE.PlaneGeometry(50, 50, 50, 50);
+    const groundMaterial = new THREE.MeshStandardMaterial({
+        color: 0x2E8B57,
+        roughness: 0.8,
+        metalness: 0.2,
+        side: THREE.DoubleSide
+    });
+    
+    // Add height variation to ground
+    const vertices = groundGeometry.attributes.position.array;
+    for (let i = 0; i < vertices.length; i += 3) {
+        vertices[i + 2] = Math.random() * 0.5;
+    }
+    groundGeometry.computeVertexNormals();
+    
+    const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+    ground.rotation.x = -Math.PI / 2;
+    ground.position.y = -1.5;
+    ground.receiveShadow = true;
+    scene.add(ground);
+    
+    // Add sky with gradient
+    const skyGeometry = new THREE.SphereGeometry(100, 32, 32);
+    const skyMaterial = new THREE.ShaderMaterial({
+        uniforms: {
+            topColor: { value: new THREE.Color(0x0077ff) },
+            bottomColor: { value: new THREE.Color(0xffffff) },
+            offset: { value: 33 },
+            exponent: { value: 0.6 }
+        },
+        vertexShader: `
+            varying vec3 vWorldPosition;
+            void main() {
+                vec4 worldPosition = modelMatrix * vec4(position, 1.0);
+                vWorldPosition = worldPosition.xyz;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+        `,
+        fragmentShader: `
+            uniform vec3 topColor;
+            uniform vec3 bottomColor;
+            uniform float offset;
+            uniform float exponent;
+            varying vec3 vWorldPosition;
+            void main() {
+                float h = normalize(vWorldPosition + offset).y;
+                gl_FragColor = vec4(mix(bottomColor, topColor, max(pow(max(h, 0.0), exponent), 0.0)), 1.0);
+            }
+        `,
+        side: THREE.BackSide
+    });
+    const sky = new THREE.Mesh(skyGeometry, skyMaterial);
+    scene.add(sky);
+    
+    // Add detailed trees in background
+    for (let i = 0; i < 15; i++) {
+        const tree = createDetailedTree();
+        tree.position.set(
+            Math.random() * 40 - 20,
+            -1.5,
+            Math.random() * 40 - 20
+        );
+        tree.scale.set(
+            0.5 + Math.random() * 1.5,
+            0.5 + Math.random() * 1.5,
+            0.5 + Math.random() * 1.5
+        );
+        scene.add(tree);
+    }
+    
+    // Add rocks
+    for (let i = 0; i < 20; i++) {
+        const rock = createRock();
+        rock.position.set(
+            Math.random() * 30 - 15,
+            -1.4,
+            Math.random() * 30 - 15
+        );
+        rock.scale.set(
+            0.2 + Math.random() * 0.5,
+            0.2 + Math.random() * 0.5,
+            0.2 + Math.random() * 0.5
+        );
+        scene.add(rock);
+    }
+}
+
+// Helper function to create ultra-detailed flower
+function createDetailedFlower(scene) {
+    const flowerGroup = new THREE.Group();
+    
+    // Create detailed stem with organic shape
+    const stemCurve = new THREE.CatmullRomCurve3([
+        new THREE.Vector3(0, -1.5, 0),
+        new THREE.Vector3(0.1, -1, 0),
+        new THREE.Vector3(-0.1, -0.5, 0),
+        new THREE.Vector3(0, 0, 0)
+    ]);
+    
+    const stemGeometry = new THREE.TubeGeometry(stemCurve, 20, 0.08, 8, false);
+    const stemMaterial = new THREE.MeshStandardMaterial({
+        color: 0x2E8B57,
+        roughness: 0.7,
+        metalness: 0.1
+    });
+    const stem = new THREE.Mesh(stemGeometry, stemMaterial);
+    stem.castShadow = true;
+    flowerGroup.add(stem);
+    
+    // Add leaves to stem
+    for (let i = 0; i < 5; i++) {
+        const leaf = createLeaf();
+        const t = i / 5;
+        const point = stemCurve.getPoint(t);
+        leaf.position.copy(point);
+        leaf.rotation.z = Math.PI / 4 + (i % 2 === 0 ? 0.5 : -0.5);
+        leaf.scale.set(0.3, 0.3, 0.3);
+        flowerGroup.add(leaf);
+    }
+    
+    // Create ultra-detailed petals
+    const petalGroup = new THREE.Group();
+    
+    // Inner petals
+    for (let i = 0; i < 8; i++) {
+        const petal = createDetailedPetal(0.8, 0xE91E63);
+        const angle = (i / 8) * Math.PI * 2;
+        petal.position.set(
+            Math.cos(angle) * 0.6,
+            0.5,
+            Math.sin(angle) * 0.6
+        );
+        petal.rotation.y = angle;
+        petal.rotation.z = Math.PI / 6;
+        petalGroup.add(petal);
+    }
+    
+    // Outer petals
+    for (let i = 0; i < 12; i++) {
+        const petal = createDetailedPetal(1.0, 0xF48FB1);
+        const angle = (i / 12) * Math.PI * 2;
+        petal.position.set(
+            Math.cos(angle) * 1.0,
+            0.5,
+            Math.sin(angle) * 1.0
+        );
+        petal.rotation.y = angle;
+        petal.rotation.z = Math.PI / 8;
+        petalGroup.add(petal);
+    }
+    
+    flowerGroup.add(petalGroup);
+    
+    // Create ultra-detailed center
+    const centerGroup = new THREE.Group();
+    
+    // Main center
+    const centerGeometry = new THREE.SphereGeometry(0.4, 32, 32);
+    const centerMaterial = new THREE.MeshStandardMaterial({
+        color: 0xFFEB3B,
+        roughness: 0.3,
+        metalness: 0.2,
+        emissive: 0xFFEB3B,
+        emissiveIntensity: 0.2
+    });
+    const center = new THREE.Mesh(centerGeometry, centerMaterial);
+    center.position.y = 0.5;
+    center.castShadow = true;
+    centerGroup.add(center);
+    
+    // Add pollen grains
+    for (let i = 0; i < 200; i++) {
+        const pollenGeometry = new THREE.SphereGeometry(0.02, 8, 8);
+        const pollenMaterial = new THREE.MeshStandardMaterial({
+            color: 0xFFA000,
+            roughness: 0.8,
+            metalness: 0.1
+        });
+        const pollen = new THREE.Mesh(pollenGeometry, pollenMaterial);
+        
+        // Position pollen on center surface
+        const phi = Math.random() * Math.PI;
+        const theta = Math.random() * Math.PI * 2;
+        const radius = 0.4;
+        
+        pollen.position.set(
+            radius * Math.sin(phi) * Math.cos(theta),
+            radius * Math.cos(phi) + 0.5,
+            radius * Math.sin(phi) * Math.sin(theta)
+        );
+        
+        centerGroup.add(pollen);
+    }
+    
+    flowerGroup.add(centerGroup);
+    
+    // Add water droplets on petals
+    for (let i = 0; i < 30; i++) {
+        const droplet = createWaterDroplet();
+        droplet.position.set(
+            (Math.random() - 0.5) * 2,
+            0.5 + Math.random() * 0.2,
+            (Math.random() - 0.5) * 2
+        );
+        flowerGroup.add(droplet);
+    }
+    
+    return flowerGroup;
+}
+
+// Helper function to create detailed petal
+function createDetailedPetal(size, color) {
+    const petalGroup = new THREE.Group();
+    
+    // Create petal shape
+    const petalShape = new THREE.Shape();
+    petalShape.moveTo(0, 0);
+    petalShape.bezierCurveTo(0.2, 0.2, 0.4, 0.8, 0, 1.2);
+    petalShape.bezierCurveTo(-0.4, 0.8, -0.2, 0.2, 0, 0);
+    
+    // Extrude petal shape
+    const extrudeSettings = {
+        depth: 0.05,
+        bevelEnabled: true,
+        bevelThickness: 0.02,
+        bevelSize: 0.02,
+        bevelSegments: 3
+    };
+    
+    const petalGeometry = new THREE.ExtrudeGeometry(petalShape, extrudeSettings);
+    const petalMaterial = new THREE.MeshStandardMaterial({
+        color: color,
+        roughness: 0.4,
+        metalness: 0.1,
+        side: THREE.DoubleSide
+    });
+    
+    const petal = new THREE.Mesh(petalGeometry, petalMaterial);
+    petal.scale.set(size, size, size);
+    petal.castShadow = true;
+    petal.receiveShadow = true;
+    petalGroup.add(petal);
+    
+    // Add petal veins
+    for (let i = 0; i < 5; i++) {
+        const veinGeometry = new THREE.CylinderGeometry(0.005, 0.005, 0.8, 4);
+        const veinMaterial = new THREE.MeshStandardMaterial({
+            color: 0xC2185B,
+            roughness: 0.7,
+            metalness: 0.1
+        });
+        const vein = new THREE.Mesh(veinGeometry, veinMaterial);
+        vein.rotation.z = Math.PI / 2;
+        vein.position.y = 0.2 + i * 0.15;
+        vein.scale.set(size, size, size);
+        petalGroup.add(vein);
+    }
+    
+    return petalGroup;
+}
+
+// Helper function to create leaf
+function createLeaf() {
+    const leafGroup = new THREE.Group();
+    
+    // Create leaf shape
+    const leafShape = new THREE.Shape();
+    leafShape.moveTo(0, 0);
+    leafShape.bezierCurveTo(0.2, 0.3, 0.5, 0.8, 0, 1.5);
+    leafShape.bezierCurveTo(-0.5, 0.8, -0.2, 0.3, 0, 0);
+    
+    // Extrude leaf shape
+    const extrudeSettings = {
+        depth: 0.02,
+        bevelEnabled: true,
+        bevelThickness: 0.01,
+        bevelSize: 0.01,
+        bevelSegments: 2
+    };
+    
+    const leafGeometry = new THREE.ExtrudeGeometry(leafShape, extrudeSettings);
+    const leafMaterial = new THREE.MeshStandardMaterial({
+        color: 0x2E7D32,
+        roughness: 0.6,
+        metalness: 0.1,
+        side: THREE.DoubleSide
+    });
+    
+    const leaf = new THREE.Mesh(leafGeometry, leafMaterial);
+    leaf.castShadow = true;
+    leaf.receiveShadow = true;
+    leafGroup.add(leaf);
+    
+    // Add leaf veins
+    for (let i = 0; i < 3; i++) {
+        const veinGeometry = new THREE.CylinderGeometry(0.005, 0.005, 1.0, 4);
+        const veinMaterial = new THREE.MeshStandardMaterial({
+            color: 0x1B5E20,
+            roughness: 0.7,
+            metalness: 0.1
+        });
+        const vein = new THREE.Mesh(veinGeometry, veinMaterial);
+        vein.rotation.z = Math.PI / 2;
+        vein.position.y = 0.3 + i * 0.3;
+        leafGroup.add(vein);
+    }
+    
+    return leafGroup;
+}
+
+// Helper function to create detailed tree
+function createDetailedTree() {
+    const treeGroup = new THREE.Group();
+    
+    // Trunk
+    const trunkGeometry = new THREE.CylinderGeometry(0.3, 0.5, 4, 8);
+    const trunkMaterial = new THREE.MeshStandardMaterial({
+        color: 0x5D4037,
+        roughness: 0.8,
+        metalness: 0.1
+    });
+    const trunk = new THREE.Mesh(trunkGeometry, trunkMaterial);
+    trunk.position.y = 1;
+    trunk.castShadow = true;
+    treeGroup.add(trunk);
+    
+    // Foliage
+    const foliageGeometry = new THREE.SphereGeometry(2, 16, 16);
+    const foliageMaterial = new THREE.MeshStandardMaterial({
+        color: 0x2E7D32,
+        roughness: 0.7,
+        metalness: 0.1
+    });
+    const foliage = new THREE.Mesh(foliageGeometry, foliageMaterial);
+    foliage.position.y = 4;
+    foliage.castShadow = true;
+    treeGroup.add(foliage);
+    
+    return treeGroup;
+}
+
+// Helper function to create rock
+function createRock() {
+    const rockGeometry = new THREE.DodecahedronGeometry(1, 0);
+    const rockMaterial = new THREE.MeshStandardMaterial({
+        color: 0x757575,
+        roughness: 0.9,
+        metalness: 0.1
+    });
+    const rock = new THREE.Mesh(rockGeometry, rockMaterial);
+    rock.castShadow = true;
+    rock.receiveShadow = true;
+    
+    // Randomize rock shape
+    for (let i = 0; i < rockGeometry.attributes.position.count; i++) {
+        const x = rockGeometry.attributes.position.getX(i);
+        const y = rockGeometry.attributes.position.getY(i);
+        const z = rockGeometry.attributes.position.getZ(i);
+        
+        rockGeometry.attributes.position.setXYZ(
+            i,
+            x * (0.8 + Math.random() * 0.4),
+            y * (0.8 + Math.random() * 0.4),
+            z * (0.8 + Math.random() * 0.4)
+        );
+    }
+    rockGeometry.computeVertexNormals();
+    
+    return rock;
+}
+
+// Helper function to create water droplet
+function createWaterDroplet() {
+    const dropletGeometry = new THREE.SphereGeometry(0.05, 16, 16);
+    const dropletMaterial = new THREE.MeshPhysicalMaterial({
+        color: 0xE3F2FD,
+        metalness: 0.1,
+        roughness: 0.1,
+        transmission: 0.9,
+        transparent: true,
+        opacity: 0.8,
+        ior: 1.33
+    });
+    const droplet = new THREE.Mesh(dropletGeometry, dropletMaterial);
+    droplet.scale.set(1, 0.7, 1);
+    return droplet;
+}
+
+// Helper function to create particle system
+function createParticleSystem(scene) {
+    const particleCount = 1000;
+    const particles = new THREE.BufferGeometry();
+    const posArray = new Float32Array(particleCount * 3);
+    const colorArray = new Float32Array(particleCount * 3);
+    
+    for (let i = 0; i < particleCount * 3; i += 3) {
+        // Position
+        posArray[i] = (Math.random() - 0.5) * 20;
+        posArray[i + 1] = Math.random() * 10;
+        posArray[i + 2] = (Math.random() - 0.5) * 20;
+        
+        // Color (yellow/orange for pollen)
+        colorArray[i] = 1;
+        colorArray[i + 1] = 0.7 + Math.random() * 0.3;
+        colorArray[i + 2] = 0;
+    }
+    
+    particles.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+    particles.setAttribute('color', new THREE.BufferAttribute(colorArray, 3));
+    
+    const particleMaterial = new THREE.PointsMaterial({
+        size: 0.05,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.8,
+        blending: THREE.AdditiveBlending
+    });
+    
+    const particleSystem = new THREE.Points(particles, particleMaterial);
+    return particleSystem;
+}
+
+// Helper function to animate flower
+function animateFlower(flowerGroup, time, windStrength) {
+    // Gentle swaying in wind
+    flowerGroup.rotation.z = Math.sin(time * 0.5) * 0.05 * windStrength;
+    flowerGroup.rotation.x = Math.cos(time * 0.3) * 0.03 * windStrength;
+    
+    // Animate petals
+    const petalGroup = flowerGroup.children[1]; // Assuming petal group is second child
+    if (petalGroup) {
+        petalGroup.children.forEach((petal, i) => {
+            petal.rotation.z += Math.sin(time + i) * 0.001 * windStrength;
+        });
+    }
+    
+    // Animate center
+    const centerGroup = flowerGroup.children[2]; // Assuming center group is third child
+    if (centerGroup) {
+        centerGroup.rotation.y += 0.002;
+        
+        // Animate pollen
+        centerGroup.children.forEach((pollen, i) => {
+            if (i > 0) { // Skip main center
+                pollen.scale.setScalar(1 + Math.sin(time * 2 + i) * 0.05);
+            }
+        });
+    }
+}
+
+// Helper function to animate particles
+function animateParticles(particleSystem, time) {
+    const positions = particleSystem.geometry.attributes.position.array;
+    
+    for (let i = 0; i < positions.length; i += 3) {
+        // Float particles upward
+        positions[i + 1] += 0.01;
+        
+        // Add some drift
+        positions[i] += Math.sin(time + i) * 0.002;
+        positions[i + 2] += Math.cos(time + i) * 0.002;
+        
+        // Reset particles that go too high
+        if (positions[i + 1] > 10) {
+            positions[i + 1] = 0;
+        }
+    }
+    
+    particleSystem.geometry.attributes.position.needsUpdate = true;
+}
+
+// Helper function to update flower species
+function updateFlowerSpecies(flowerGroup, species) {
+    const speciesConfig = {
+        'rose': {
+            petalColor: 0xE91E63,
+            petalCount: 20,
+            centerColor: 0xFFEB3B
+        },
+        'tulip': {
+            petalColor: 0x9C27B0,
+            petalCount: 6,
+            centerColor: 0x000000
+        },
+        'orchid': {
+            petalColor: 0x673AB7,
+            petalCount: 5,
+            centerColor: 0xFFFFFF
+        },
+        'sunflower': {
+            petalColor: 0xFFEB3B,
+            petalCount: 30,
+            centerColor: 0x795548
+        }
+    };
+    
+    const config = speciesConfig[species] || speciesConfig['rose'];
+    
+    // Update petals
+    const petalGroup = flowerGroup.children[1];
+    if (petalGroup) {
+        petalGroup.children.forEach(petal => {
+            petal.children[0].material.color.setHex(config.petalColor);
+        });
+    }
+    
+    // Update center
+    const centerGroup = flowerGroup.children[2];
+    if (centerGroup) {
+        centerGroup.children[0].material.color.setHex(config.centerColor);
+    }
+}
+
+// Helper function to update environment
+function updateEnvironment(scene, species) {
+    // Update environment based on species
+    const environmentConfig = {
+        'rose': {
+            fogColor: 0xFFC0CB,
+            groundColor: 0x2E8B57
+        },
+        'tulip': {
+            fogColor: 0xE1BEE7,
+            groundColor: 0x388E3C
+        },
+        'orchid': {
+            fogColor: 0xD1C4E9,
+            groundColor: 0x1B5E20
+        },
+        'sunflower': {
+            fogColor: 0xFFF9C4,
+            groundColor: 0x689F38
+        }
+    };
+    
+    const config = environmentConfig[species] || environmentConfig['rose'];
+    
+    // Update fog
+    scene.fog.color.setHex(config.fogColor);
+    
+    // Update ground
+    scene.children.forEach(child => {
+        if (child.material && child.material.color && child.geometry instanceof THREE.PlaneGeometry) {
+            child.material.color.setHex(config.groundColor);
+        }
+    });
+}
+
+// Helper function to update particles
+function updateParticles(particleSystem, species) {
+    const particleConfig = {
+        'rose': {
+            color: [1, 0.8, 0.9],
+            size: 0.05
+        },
+        'tulip': {
+            color: [0.9, 0.6, 0.9],
+            size: 0.04
+        },
+        'orchid': {
+            color: [0.8, 0.6, 1],
+            size: 0.03
+        },
+        'sunflower': {
+            color: [1, 0.9, 0.4],
+            size: 0.06
+        }
+    };
+    
+    const config = particleConfig[species] || particleConfig['rose'];
+    
+    // Update particle color
+    const colors = particleSystem.geometry.attributes.color.array;
+    for (let i = 0; i < colors.length; i += 3) {
+        colors[i] = config.color[0];
+        colors[i + 1] = config.color[1];
+        colors[i + 2] = config.color[2];
+    }
+    particleSystem.geometry.attributes.color.needsUpdate = true;
+    
+    // Update particle size
+    particleSystem.material.size = config.size;
+}
+
+// Helper function to update time of day
+function updateTimeOfDay(scene, timeOfDay) {
+    const timeConfig = {
+        'dawn': {
+            skyTop: 0xFF9E80,
+            skyBottom: 0xFFE0B2,
+            ambient: 0x424242,
+            directional: 0xFFAB00,
+            intensity: 0.5
+        },
+        'day': {
+            skyTop: 0x0077ff,
+            skyBottom: 0xffffff,
+            ambient: 0xffffff,
+            directional: 0xffffff,
+            intensity: 1.0
+        },
+        'dusk': {
+            skyTop: 0x4A148C,
+            skyBottom: 0xFFCC80,
+            ambient: 0x424242,
+            directional: 0xFF6F00,
+            intensity: 0.6
+        },
+        'night': {
+            skyTop: 0x000033,
+            skyBottom: 0x000000,
+            ambient: 0x212121,
+            directional: 0xFFFFFF,
+            intensity: 0.2
+        }
+    };
+    
+    const config = timeConfig[timeOfDay] || timeConfig['day'];
+    
+    // Update sky
+    const sky = scene.children.find(child => child.material && child.material.uniforms);
+    if (sky) {
+        sky.material.uniforms.topColor.value.setHex(config.skyTop);
+        sky.material.uniforms.bottomColor.value.setHex(config.skyBottom);
+    }
+    
+    // Update lights
+    scene.children.forEach(child => {
+        if (child instanceof THREE.AmbientLight) {
+            child.color.setHex(config.ambient);
+        }
+        if (child instanceof THREE.DirectionalLight) {
+            child.color.setHex(config.directional);
+            child.intensity = config.intensity;
+        }
+    });
+}
+
+// Helper function to update season
+function updateSeason(scene, season) {
+    const seasonConfig = {
+        'spring': {
+            groundColor: 0x2E8B57,
+            treeColor: 0x4CAF50,
+            particleColor: [0.9, 0.9, 0.4],
+            particleCount: 1000
+        },
+        'summer': {
+            groundColor: 0x1B5E20,
+            treeColor: 0x2E7D32,
+            particleColor: [1, 0.9, 0.4],
+            particleCount: 500
+        },
+        'autumn': {
+            groundColor: 0x8D6E63,
+            treeColor: 0xD84315,
+            particleColor: [1, 0.5, 0],
+            particleCount: 2000
+        },
+        'winter': {
+            groundColor: 0xECEFF1,
+            treeColor: 0x78909C,
+            particleColor: [1, 1, 1],
+            particleCount: 3000
+        }
+    };
+    
+    const config = seasonConfig[season] || seasonConfig['summer'];
+    
+    // Update ground
+    scene.children.forEach(child => {
+        if (child.material && child.material.color && child.geometry instanceof THREE.PlaneGeometry) {
+            child.material.color.setHex(config.groundColor);
+        }
+    });
+    
+    // Update trees
+    scene.children.forEach(child => {
+        if (child.children && child.children[1] && child.children[1].material) {
+            child.children[1].material.color.setHex(config.treeColor);
+        }
+    });
+    
+    // Update particles (would need to recreate particle system for count change)
+    // This is a simplified version - in a real app you'd recreate the system
+    const particleSystem = scene.children.find(child => child instanceof THREE.Points);
+    if (particleSystem) {
+        const colors = particleSystem.geometry.attributes.color.array;
+        for (let i = 0; i < colors.length; i += 3) {
+            colors[i] = config.particleColor[0];
+            colors[i + 1] = config.particleColor[1];
+            colors[i + 2] = config.particleColor[2];
+        }
+        particleSystem.geometry.attributes.color.needsUpdate = true;
+    }
+}        
             
             
             
