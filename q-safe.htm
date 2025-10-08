@@ -6,308 +6,615 @@
     <title>Research Paper</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-/* Updated CSS with Three.js integration and improved UI */
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --accent-color: #9b59b6;
+            --dark-bg: #0a0e27;
+            --light-bg: #f9f9f9;
+            --text-color: #333;
+            --text-light: #777;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
 
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    margin: 0 auto;
-    padding: 20px;
-    max-width: 960px;
-    background-color: transparent; /* Changed for Three.js background */
-    color: #f0f0f0; /* Lighter text for better contrast */
-    position: relative;
-    z-index: 1;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-/* Three.js canvas background */
-#three-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-}
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+            overflow-x: hidden;
+        }
 
-/* Enhanced header with Three.js effect */
-header {
-    text-align: center;
-    margin-bottom: 2em;
-    padding-bottom: 1em;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(15, 23, 42, 0.7);
-    backdrop-filter: blur(10px);
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-}
+        /* Quantum Background Canvas */
+        #quantum-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+        }
 
-h1, h2, h3, h4 {
-    color: #60a5fa; /* Lighter blue for better contrast */
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
 
-h1 {
-    font-size: 2.2em;
-    margin-bottom: 0.5em;
-    background: linear-gradient(135deg, #60a5fa, #a78bfa);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
 
-/* Enhanced abstract section */
-.abstract {
-    background: rgba(30, 41, 59, 0.8);
-    backdrop-filter: blur(10px);
-    padding: 20px;
-    border-left: 5px solid #60a5fa;
-    margin: 2em 0;
-    border-radius: 8px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-}
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-/* Enhanced sections */
-section {
-    margin-bottom: 2em;
-    background: rgba(15, 23, 42, 0.7);
-    backdrop-filter: blur(10px);
-    border-radius: 12px;
-    padding: 25px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-}
+        .logo i {
+            color: var(--primary-color);
+        }
 
-/* Enhanced subsections */
-.subsection {
-    margin-left: 20px;
-    margin-bottom: 1.5em;
-    background: rgba(30, 41, 59, 0.5);
-    border-radius: 8px;
-    padding: 15px;
-    border-left: 3px solid #60a5fa;
-}
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
 
-/* Enhanced equations */
-.equation {
-    text-align: center;
-    padding: 15px;
-    background: rgba(30, 41, 59, 0.6);
-    margin: 1em 0;
-    border-radius: 8px;
-    font-family: 'Courier New', monospace;
-    border: 1px solid rgba(96, 165, 250, 0.3);
-}
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
 
-.boxed-equation {
-    border: 2px solid #60a5fa;
-    border-radius: 8px;
-    box-shadow: 0 0 15px rgba(96, 165, 250, 0.3);
-}
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
 
-/* Enhanced tables */
-table {
-    width:100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    background: rgba(30, 41, 59, 0.6);
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
 
-thead tr {
-    background: rgba(51, 65, 85, 0.8);
-    color: #60a5fa;
-}
+        .nav-links a:hover::after {
+            width: 100%;
+        }
 
-th, td {
-    border: 1px solid rgba(96, 165, 250, 0.3);
-    padding: 12px;
-    text-align: left;
-}
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            color: white;
+            text-align: center;
+            padding: 0 20px;
+        }
 
-tbody tr:nth-child(even) {
-    background: rgba(30, 41, 59, 0.4);
-}
+        .hero-content {
+            max-width: 900px;
+            z-index: 2;
+        }
 
-tbody tr:hover {
-    background: rgba(51, 65, 85, 0.6);
-}
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            background: linear-gradient(90deg, #fff, var(--primary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: fadeInUp 1s ease;
+        }
 
-/* Enhanced pre blocks */
-pre {
-    background: rgba(30, 41, 59, 0.8);
-    padding: 15px;
-    overflow-x: auto;
-    border-radius: 8px;
-    border: 1px solid rgba(96, 165, 250, 0.3);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
 
-/* Enhanced FAB */
-.fab-container {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    z-index: 1000;
-}
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
 
-.fab-button {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #60a5fa, #8b5cf6);
-    border: none;
-    box-shadow: 
-        0 6px 20px rgba(96, 165, 250, 0.4),
-        0 2px 6px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    outline: none;
-    position: relative;
-    overflow: hidden;
-}
+        .btn {
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
 
-.fab-button:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 
-        0 8px 25px rgba(96, 165, 250, 0.5),
-        0 3px 8px rgba(0, 0, 0, 0.15);
-}
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+        }
 
-/* Enhanced slide panel */
-.slide-panel {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 100%;
-    max-width: 500px;
-    height: 100%;
-    background: rgba(15, 23, 42, 0.95);
-    backdrop-filter: blur(20px);
-    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.3);
-    transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    z-index: 1500;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    border-left: 1px solid rgba(96, 165, 250, 0.3);
-}
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.6);
+        }
 
-.panel-header {
-    background: linear-gradient(135deg, #1e293b, #334155);
-    color: white;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    border-bottom: 1px solid rgba(96, 165, 250, 0.3);
-}
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
 
-.panel-body {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    background: rgba(15, 23, 42, 0.8);
-}
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: white;
+        }
 
-/* Enhanced media items */
-.media-item {
-    background: rgba(30, 41, 59, 0.7);
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(96, 165, 250, 0.2);
-    transition: all 0.3s ease;
-}
+        /* Content Sections */
+        .content-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            position: relative;
+        }
 
-.media-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 40px rgba(96, 165, 250, 0.3);
-    border-color: rgba(96, 165, 250, 0.5);
-}
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: var(--dark-bg);
+            position: relative;
+            display: inline-block;
+        }
 
-/* Enhanced overlay */
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    display: none;
-    z-index: 1490;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 2px;
+        }
 
-/* Enhanced tabs */
-.language-tabs {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 25px;
-    border-bottom: 1px solid rgba(96, 165, 250, 0.3);
-}
+        /* Abstract Card */
+        .abstract-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
 
-.tab-button {
-    background: none;
-    border: none;
-    padding: 12px 20px;
-    font-size: 1em;
-    color: #94a3b8;
-    cursor: pointer;
-    position: relative;
-    transition: all 0.3s ease;
-    font-weight: 500;
-    border-radius: 8px 8px 0 0;
-}
+        .abstract-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+        }
 
-.tab-button.active {
-    color: #60a5fa;
-    background: rgba(30, 41, 59, 0.7);
-}
+        .abstract-card h3 {
+            color: var(--dark-bg);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
 
-/* Enhanced footer */
-footer {
-    margin-top: 3em;
-    padding-top: 1em;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    text-align: center;
-    font-size: 0.9em;
-    color: #94a3b8;
-    background: rgba(15, 23, 42, 0.7);
-    backdrop-filter: blur(10px);
-    border-radius: 12px;
-    padding: 25px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-}
+        /* Framework Visualization */
+        .framework-viz {
+            height: 500px;
+            margin: 50px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            position: relative;
+        }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    body {
-        font-size: 14px;
-        padding: 10px;
-    }
-    h1 {
-        font-size: 1.8em;
-    }
-    .abstract, .subsection {
-        padding: 15px;
-    }
-    section {
-        padding: 15px;
-    }
-}
+        /* Content Cards */
+        .content-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .content-card h3 {
+            color: var(--dark-bg);
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+
+        .content-card h4 {
+            color: var(--primary-color);
+            margin: 20px 0 10px;
+            font-size: 1.3rem;
+        }
+
+        /* Results Table */
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+
+        .results-table th, .results-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .results-table th {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            font-weight: 600;
+        }
+
+        .results-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .results-table tr:hover {
+            background: rgba(52, 152, 219, 0.05);
+        }
+
+        /* Author Section */
+        .author-section {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 50px 0;
+            box-shadow: var(--card-shadow);
+            text-align: center;
+        }
+
+        .author-profile {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .author-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary-color);
+        }
+
+        .author-info h3 {
+            color: var(--dark-bg);
+            margin-bottom: 5px;
+            font-size: 1.5rem;
+        }
+
+        .author-info p {
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+
+        .author-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .author-links a {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .author-links a:hover {
+            transform: scale(1.2);
+        }
+
+        /* FAB and Slide Panel Styles */
+        .fab-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .fab-button {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .fab-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.6);
+        }
+
+        .fab-icon {
+            font-size: 28px;
+            color: white;
+        }
+
+        .slide-panel {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            max-width: 500px;
+            height: 100%;
+            background: white;
+            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+            transition: right 0.4s ease;
+            z-index: 1500;
+            overflow-y: auto;
+        }
+
+        .slide-panel.active {
+            right: 0;
+        }
+
+        .panel-header {
+            background: var(--dark-bg);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .panel-title {
+            font-size: 1.5rem;
+            font-weight: 300;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .close-panel {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .close-panel:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .panel-body {
+            padding: 20px;
+        }
+
+        .language-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .tab-button {
+            background: none;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1rem;
+            color: var(--text-light);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button.active {
+            color: var(--primary-color);
+        }
+
+        .tab-button::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .tab-button.active::after {
+            width: 100%;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .media-item {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .media-item-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .media-type-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .media-item-title {
+            font-size: 1.2rem;
+            color: var(--dark-bg);
+            margin: 0;
+        }
+
+        .audio-player, .video-player {
+            width: 100%;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        .media-description {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            display: none;
+            z-index: 1490;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .author-profile {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 200px;
+                justify-content: center;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1792,140 +2099,209 @@ Output: Anomaly probability p_anom
     <!-- Overlay -->
     <div class="overlay" id="overlay"></div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-// Updated JavaScript with Three.js integration
-
-// Get DOM elements
-const fabButton = document.getElementById('fabButton');
-const slidePanel = document.getElementById('slidePanel');
-const closePanel = document.getElementById('closePanel');
-const overlay = document.getElementById('overlay');
-const tabButtons = document.querySelectorAll('.tab-button');
-const tabContents = document.querySelectorAll('.tab-content');
-
-// Three.js setup
-function initThreeJS() {
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
-    document.getElementById('three-canvas').appendChild(renderer.domElement);
-    
-    // Create particle system
-    const particlesGeometry = new THREE.BufferGeometry();
-    const particlesCount = 2000;
-    const posArray = new Float32Array(particlesCount * 3);
-    
-    for(let i = 0; i < particlesCount * 3; i++) {
-        posArray[i] = (Math.random() - 0.5) * 20;
-    }
-    
-    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-    
-    // Material
-    const particlesMaterial = new THREE.PointsMaterial({
-        size: 0.02,
-        color: 0x60a5fa,
-        transparent: true,
-        opacity: 0.8,
-        blending: THREE.AdditiveBlending
-    });
-    
-    // Mesh
-    const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-    scene.add(particlesMesh);
-    
-    // Add a torus
-    const torusGeometry = new THREE.TorusGeometry(5, 1, 16, 100);
-    const torusMaterial = new THREE.MeshStandardMaterial({
-        color: 0x8b5cf6,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.7
-    });
-    const torus = new THREE.Mesh(torusGeometry, torusMaterial);
-    scene.add(torus);
-    
-    // Add lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-    scene.add(ambientLight);
-    
-    const pointLight = new THREE.PointLight(0x60a5fa, 1);
-    pointLight.position.set(5, 5, 5);
-    scene.add(pointLight);
-    
-    // Position camera
-    camera.position.z = 15;
-    
-    // Animation
-    const animate = () => {
-        requestAnimationFrame(animate);
+        // Quantum Background Animation
+        const canvas = document.getElementById('quantum-canvas');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
         
-        // Rotate particles
-        particlesMesh.rotation.x += 0.0005;
-        particlesMesh.rotation.y += 0.001;
-        
-        // Rotate torus
-        torus.rotation.x += 0.005;
-        torus.rotation.y += 0.005;
-        
-        renderer.render(scene, camera);
-    };
-    
-    animate();
-    
-    // Handle window resize
-    window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-}
-
-// Initialize Three.js when DOM is loaded
-document.addEventListener('DOMContentLoaded', initThreeJS);
-
-// Open slide panel when FAB is clicked
-fabButton.addEventListener('click', () => {
-    slidePanel.classList.add('active');
-    overlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-});
-
-// Close slide panel when close button is clicked
-closePanel.addEventListener('click', closePanelFunc);
-
-// Close slide panel when overlay is clicked
-overlay.addEventListener('click', closePanelFunc);
-
-function closePanelFunc() {
-    slidePanel.classList.remove('active');
-    overlay.classList.remove('active');
-    document.body.style.overflow = '';
-}
-
-// Tab functionality
-tabButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        // Remove active class from all buttons and contents
-        tabButtons.forEach(btn => btn.classList.remove('active'));
-        tabContents.forEach(content => content.classList.remove('active'));
+        renderer.setPixelRatio(window.devicePixelRatio);
         
-        // Add active class to clicked button and corresponding content
-        button.classList.add('active');
-        const tabId = button.getAttribute('data-tab');
-        document.getElementById(tabId).classList.add('active');
-    });
-});
-
-// Keyboard navigation
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && slidePanel.classList.contains('active')) {
-        closePanelFunc();
-    }
-});
+        // Create particles
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 5000;
+        const posArray = new Float32Array(particlesCount * 3);
+        
+        for (let i = 0; i < particlesCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 10;
+        }
+        
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        
+        // Particle material
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.02,
+            color: 0x4a90e2,
+            transparent: true,
+            opacity: 0.8,
+            blending: THREE.AdditiveBlending
+        });
+        
+        // Create particle mesh
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
+        
+        // Create quantum connections
+        const connectionsGeometry = new THREE.BufferGeometry();
+        const connectionsMaterial = new THREE.LineBasicMaterial({
+            color: 0x9b59b6,
+            transparent: true,
+            opacity: 0.3
+        });
+        
+        const connectionsCount = 100;
+        const connectionsPositions = new Float32Array(connectionsCount * 6);
+        
+        for (let i = 0; i < connectionsCount; i++) {
+            const startX = (Math.random() - 0.5) * 10;
+            const startY = (Math.random() - 0.5) * 10;
+            const startZ = (Math.random() - 0.5) * 10;
+            
+            const endX = (Math.random() - 0.5) * 10;
+            const endY = (Math.random() - 0.5) * 10;
+            const endZ = (Math.random() - 0.5) * 10;
+            
+            connectionsPositions[i * 6] = startX;
+            connectionsPositions[i * 6 + 1] = startY;
+            connectionsPositions[i * 6 + 2] = startZ;
+            connectionsPositions[i * 6 + 3] = endX;
+            connectionsPositions[i * 6 + 4] = endY;
+            connectionsPositions[i * 6 + 5] = endZ;
+        }
+        
+        connectionsGeometry.setAttribute('position', new THREE.BufferAttribute(connectionsPositions, 3));
+        const connectionsMesh = new THREE.LineSegments(connectionsGeometry, connectionsMaterial);
+        scene.add(connectionsMesh);
+        
+        camera.position.z = 5;
+        
+        // Animation
+        const animate = () => {
+            requestAnimationFrame(animate);
+            
+            particlesMesh.rotation.x += 0.0005;
+            particlesMesh.rotation.y += 0.0005;
+            
+            connectionsMesh.rotation.x += 0.0003;
+            connectionsMesh.rotation.y += 0.0003;
+            
+            renderer.render(scene, camera);
+        };
+        
+        animate();
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+        
+        // Framework Visualization
+        const frameworkViz = document.getElementById('framework-viz');
+        const frameworkScene = new THREE.Scene();
+        const frameworkCamera = new THREE.PerspectiveCamera(75, frameworkViz.offsetWidth / frameworkViz.offsetHeight, 0.1, 1000);
+        const frameworkRenderer = new THREE.WebGLRenderer({ alpha: true });
+        
+        frameworkRenderer.setSize(frameworkViz.offsetWidth, frameworkViz.offsetHeight);
+        frameworkViz.appendChild(frameworkRenderer.domElement);
+        
+        // Create layers for framework visualization
+        const layers = [];
+        const layerColors = [0x3498db, 0x9b59b6, 0x2ecc71, 0xe74c3c];
+        const layerNames = ['Data Processing', 'Quantum Processing', 'AI/ML Integration', 'Security Applications'];
+        
+        for (let i = 0; i < 4; i++) {
+            const geometry = new THREE.BoxGeometry(3, 0.5, 2);
+            const material = new THREE.MeshBasicMaterial({ 
+                color: layerColors[i],
+                transparent: true,
+                opacity: 0.8
+            });
+            const layer = new THREE.Mesh(geometry, material);
+            layer.position.y = 2 - i * 1.2;
+            layers.push(layer);
+            frameworkScene.add(layer);
+        }
+        
+        // Add connections between layers
+        for (let i = 0; i < 3; i++) {
+            const geometry = new THREE.CylinderGeometry(0.1, 0.1, 0.7, 8);
+            const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+            const connection = new THREE.Mesh(geometry, material);
+            connection.position.y = 1.4 - i * 1.2;
+            frameworkScene.add(connection);
+        }
+        
+        frameworkCamera.position.z = 5;
+        frameworkCamera.position.y = 1;
+        
+        // Framework animation
+        const animateFramework = () => {
+            requestAnimationFrame(animateFramework);
+            
+            layers.forEach((layer, index) => {
+                layer.rotation.y += 0.005 * (index + 1);
+            });
+            
+            frameworkRenderer.render(frameworkScene, frameworkCamera);
+        };
+        
+        animateFramework();
+        
+        // FAB and Slide Panel functionality
+        const fabButton = document.getElementById('fabButton');
+        const slidePanel = document.getElementById('slidePanel');
+        const closePanel = document.getElementById('closePanel');
+        const overlay = document.getElementById('overlay');
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        // Open slide panel when FAB is clicked
+        fabButton.addEventListener('click', () => {
+            slidePanel.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        // Close slide panel
+        function closePanelFunc() {
+            slidePanel.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        closePanel.addEventListener('click', closePanelFunc);
+        overlay.addEventListener('click', closePanelFunc);
+        
+        // Tab functionality
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                button.classList.add('active');
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(10, 14, 39, 0.98)';
+            } else {
+                navbar.style.background = 'rgba(10, 14, 39, 0.95)';
+            }
+        });
     </script>
 </body>
 </html>
