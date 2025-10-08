@@ -149,7 +149,7 @@ footer {
     color: #777;
 }
 
-/* FAB and Slide Panel Styles — Harmonized with Main CSS */
+/* FAB and Slide Panel Styles   Harmonized with Main CSS */
 
 /* Floating Action Button (FAB) */
 .fab-container {
@@ -485,39 +485,39 @@ footer {
 
 <div class="abstract">
     <h3>Abstract</h3>
-    <p>Modern cybersecurity systems are increasingly strained by the sophistication and scale of contemporary threats—including advanced persistent threats (APTs), zero-day exploits, polymorphic malware, and adversarial machine learning attacks. Classical AI-driven defenses, while powerful, often falter under high-dimensional telemetry, adversarial manipulation, and the need for real-time responsiveness. To address these limitations, I propose <strong>Q-SAFE</strong>, a novel quantum-inspired AI security framework that integrates principles from quantum computing—specifically quantum walks, Grover-inspired search, and tensor networks—with deep learning to deliver adaptive, explainable, and robust cyber defense on classical infrastructure. Q-SAFE is structured as a purpose-built, four-layer architecture spanning data ingestion, quantum-inspired processing, AI/ML integration, and security applications. Empirical validation on benchmark datasets (CIC-IDS2017, UNSW-NB15) demonstrates that Q-SAFE achieves 100% attack detection with a false positive rate as low as 1.39% using Matrix Product State (MPS)-based tensor networks, while Grover-inspired search offers a theoretical quadratic speedup for threat hunting in unstructured logs. The framework also exhibits enhanced adversarial robustness and intrinsic explainability—critical for analyst trust. Designed for deployment on cloud and edge environments (validated on Raspberry Pi), Q-SAFE bridges the gap between theoretical quantum advantage and practical enterprise security, offering a future-proof pathway toward true quantum hardware integration. This work establishes a new paradigm in AI-native defense: not by replacing classical systems, but by rethinking their computational foundations through quantum intelligence.</p>
+    <p>Modern cybersecurity systems are increasingly strained by the sophistication and scale of contemporary threats including advanced persistent threats (APTs), zero-day exploits, polymorphic malware, and adversarial machine learning attacks. Classical AI-driven defenses, while powerful, often falter under high-dimensional telemetry, adversarial manipulation, and the need for real-time responsiveness. To address these limitations, I propose <strong>Q-SAFE</strong>, a novel quantum-inspired AI security framework that integrates principles from quantum computing specifically quantum walks, Grover-inspired search, and tensor networks with deep learning to deliver adaptive, explainable, and robust cyber defense on classical infrastructure. Q-SAFE is structured as a purpose-built, four-layer architecture spanning data ingestion, quantum-inspired processing, AI/ML integration, and security applications. Empirical validation on benchmark datasets (CIC-IDS2017, UNSW-NB15) demonstrates that Q-SAFE achieves 100% attack detection with a false positive rate as low as 1.39% using Matrix Product State (MPS)-based tensor networks, while Grover-inspired search offers a theoretical quadratic speedup for threat hunting in unstructured logs. The framework also exhibits enhanced adversarial robustness and intrinsic explainability critical for analyst trust. Designed for deployment on cloud and edge environments (validated on Raspberry Pi), Q-SAFE bridges the gap between theoretical quantum advantage and practical enterprise security, offering a future-proof pathway toward true quantum hardware integration. This work establishes a new paradigm in AI-native defense: not by replacing classical systems, but by rethinking their computational foundations through quantum intelligence.</p>
 </div>
 
 <section>
     <h2>1. Introduction</h2>
-    <p>Modern cybersecurity is under siege. As adversaries evolve from opportunistic script kiddies to well-resourced nation-state actors and AI-augmented threat groups, the attack surface has expanded exponentially. Today's threats—advanced persistent threats (APTs), zero-day exploits, polymorphic malware, and AI-generated adversarial payloads—are engineered to bypass traditional defenses and evade even the most sophisticated classical machine learning (ML) systems. Signature-based detection is obsolete against zero-day attacks; perimeter-based architectures collapse in cloud-native and hybrid environments; and even deep learning models, once hailed as a panacea, now reveal critical vulnerabilities: high false positive rates, brittle decision boundaries under adversarial perturbation, poor generalization to unseen attack patterns, and opaque "black-box" reasoning that erodes analyst trust.</p>
+    <p>Modern cybersecurity is under siege. As adversaries evolve from opportunistic script kiddies to well-resourced nation-state actors and AI-augmented threat groups, the attack surface has expanded exponentially. Today's threats advanced persistent threats (APTs), zero-day exploits, polymorphic malware, and AI-generated adversarial payloads are engineered to bypass traditional defenses and evade even the most sophisticated classical machine learning (ML) systems. Signature-based detection is obsolete against zero-day attacks; perimeter-based architectures collapse in cloud-native and hybrid environments; and even deep learning models, once hailed as a panacea, now reveal critical vulnerabilities: high false positive rates, brittle decision boundaries under adversarial perturbation, poor generalization to unseen attack patterns, and opaque "black-box" reasoning that erodes analyst trust.</p>
     
-    <p>Classical AI-driven security tools—ranging from commercial platforms like CrowdStrike and Darktrace to academic models such as GraphSAGE and Transformer-based anomaly detectors—have made significant strides. Yet, they remain fundamentally constrained by the computational paradigms of classical information processing. They struggle with high-dimensional, multimodal telemetry (e.g., fusing network flows, endpoint logs, and user behavior), scale poorly under real-time latency constraints (&lt;100ms), and are demonstrably fragile: recent studies show Graph Transformers can be catastrophically misled by subtle graph-structure perturbations, while CNNs and autoencoders fail to detect stealthy lateral movement or low-and-slow exfiltration.</p>
+    <p>Classical AI-driven security tools ranging from commercial platforms like CrowdStrike and Darktrace to academic models such as GraphSAGE and Transformer-based anomaly detectors have made significant strides. Yet, they remain fundamentally constrained by the computational paradigms of classical information processing. They struggle with high-dimensional, multimodal telemetry (e.g., fusing network flows, endpoint logs, and user behavior), scale poorly under real-time latency constraints (&lt;100ms), and are demonstrably fragile: recent studies show Graph Transformers can be catastrophically misled by subtle graph-structure perturbations, while CNNs and autoencoders fail to detect stealthy lateral movement or low-and-slow exfiltration.</p>
     
-    <p>This crisis has catalyzed interest in quantum computing as a potential game-changer. However, fault-tolerant quantum hardware remains years—if not decades—away from practical deployment in enterprise security operations. In the interim, a promising middle ground has emerged: <strong>quantum-inspired algorithms (QIAs)</strong>—classical implementations that simulate core quantum phenomena such as superposition, entanglement, interference, and tunneling. Unlike speculative quantum-native proposals, QIAs run today on CPUs and GPUs, offering provable advantages (e.g., Grover's O(√N) search speedup) without quantum hardware dependencies.</p>
+    <p>This crisis has catalyzed interest in quantum computing as a potential game-changer. However, fault-tolerant quantum hardware remains years if not decades away from practical deployment in enterprise security operations. In the interim, a promising middle ground has emerged: <strong>quantum-inspired algorithms (QIAs)</strong> classical implementations that simulate core quantum phenomena such as superposition, entanglement, interference, and tunneling. Unlike speculative quantum-native proposals, QIAs run today on CPUs and GPUs, offering provable advantages (e.g., Grover's O(√N) search speedup) without quantum hardware dependencies.</p>
     
-    <p>Despite this potential, the field lacks a <strong>cohesive, purpose-built framework</strong> that integrates quantum-inspired computation, modern AI/ML, and real-world cybersecurity workflows. Existing work is fragmented: academic papers demonstrate isolated QIA components (e.g., a tensor network for anomaly detection), while commercial tools rely entirely on classical deep learning. No solution architecturally unifies quantum-inspired processing, hybrid neural modeling, and security-specific applications into a deployable stack—leaving a critical gap between theoretical promise and operational impact.</p>
+    <p>Despite this potential, the field lacks a <strong>cohesive, purpose-built framework</strong> that integrates quantum-inspired computation, modern AI/ML, and real-world cybersecurity workflows. Existing work is fragmented: academic papers demonstrate isolated QIA components (e.g., a tensor network for anomaly detection), while commercial tools rely entirely on classical deep learning. No solution architecturally unifies quantum-inspired processing, hybrid neural modeling, and security-specific applications into a deployable stack leaving a critical gap between theoretical promise and operational impact.</p>
     
-    <p>To bridge this gap, I propose <strong>Q-SAFE: Quantum Intelligence for Adaptive Cyber Defense</strong>—a novel, layered framework that rethinks AI security from the ground up through the lens of quantum information principles. My contributions are threefold:</p>
+    <p>To bridge this gap, I propose <strong>Q-SAFE: Quantum Intelligence for Adaptive Cyber Defense</strong> a novel, layered framework that rethinks AI security from the ground up through the lens of quantum information principles. My contributions are threefold:</p>
     
     <ol>
-        <li><strong>Architecture</strong>: I design and implement a four-layer, modular stack—spanning data ingestion, quantum-inspired processing (using quantum walks, Grover-inspired search, and tensor networks), AI/ML integration (via hybrid neural networks and reinforcement learning), and security applications (NIDS, malware analysis, user behavior analytics).</li>
+        <li><strong>Architecture</strong>: I design and implement a four-layer, modular stack spanning data ingestion, quantum-inspired processing (using quantum walks, Grover-inspired search, and tensor networks), AI/ML integration (via hybrid neural networks and reinforcement learning), and security applications (NIDS, malware analysis, user behavior analytics).</li>
         <li><strong>Validation</strong>: I empirically evaluate Q-SAFE on benchmark datasets (CIC-IDS2017, UNSW-NB15), demonstrating 100% attack detection with a 1.39% false positive rate using Matrix Product State (MPS) tensor networks, adversarial robustness exceeding classical GNNs under FGSM/PGD attacks, and sub-100ms inference latency.</li>
-        <li><strong>Feasibility & Path to Impact</strong>: I validate edge deployment on Raspberry Pi, analyze cloud overhead, and outline a clear roadmap—from MVP to SIEM/XDR integration—to enterprise adoption, with built-in future-proofing for migration to quantum hardware.</li>
+        <li><strong>Feasibility & Path to Impact</strong>: I validate edge deployment on Raspberry Pi, analyze cloud overhead, and outline a clear roadmap from MVP to SIEM/XDR integration to enterprise adoption, with built-in future-proofing for migration to quantum hardware.</li>
     </ol>
 </section>
 
    <section>
     <h2>2. Related Work</h2>
-    <p>The convergence of artificial intelligence and cybersecurity has yielded a rich body of research and commercial innovation. However, as threats grow more adaptive and stealthy, the limitations of classical approaches—and the nascent promise of quantum-enhanced methods—have created a critical inflection point. This section situates <strong>Q-SAFE</strong> within three interrelated domains: (1) classical AI/ML in cybersecurity, (2) quantum machine learning (QML) and quantum-inspired algorithms (QIAs), and (3) existing hybrid or quantum-augmented security systems. I conclude by articulating how Q-SAFE's architectural co-design offers a distinct and strategically differentiated contribution.</p>
+    <p>The convergence of artificial intelligence and cybersecurity has yielded a rich body of research and commercial innovation. However, as threats grow more adaptive and stealthy, the limitations of classical approaches and the nascent promise of quantum-enhanced methods have created a critical inflection point. This section situates <strong>Q-SAFE</strong> within three interrelated domains: (1) classical AI/ML in cybersecurity, (2) quantum machine learning (QML) and quantum-inspired algorithms (QIAs), and (3) existing hybrid or quantum-augmented security systems. I conclude by articulating how Q-SAFE's architectural co-design offers a distinct and strategically differentiated contribution.</p>
     
     <div class="subsection">
         <h3>2.1 Classical AI/ML in Cybersecurity</h3>
-        <p>Classical machine learning remains the backbone of modern threat detection. Supervised models like XGBoost, Random Forests, and deep neural networks (DNNs) have been widely applied to intrusion detection using datasets such as CIC-IDS2017 and UNSW-NB15, achieving high accuracy on known attack patterns [11, 27]. Unsupervised approaches—including Isolation Forests, One-Class SVMs, and autoencoders—are commonly used for zero-day and anomaly detection but suffer from high false positive rates (FPR) and limited contextual reasoning [11].</p>
+        <p>Classical machine learning remains the backbone of modern threat detection. Supervised models like XGBoost, Random Forests, and deep neural networks (DNNs) have been widely applied to intrusion detection using datasets such as CIC-IDS2017 and UNSW-NB15, achieving high accuracy on known attack patterns [11, 27]. Unsupervised approaches including Isolation Forests, One-Class SVMs, and autoencoders are commonly used for zero-day and anomaly detection but suffer from high false positive rates (FPR) and limited contextual reasoning [11].</p>
         
-        <p>More recently, graph-based and sequence-aware architectures have emerged as state-of-the-art. <strong>Graph Neural Networks (GNNs)</strong> like GraphSAGE model network traffic or user-entity relationships as graphs, enabling detection of lateral movement and privilege escalation [27]. However, empirical benchmarks reveal significant drawbacks: GraphSAGE exhibits the highest training time among evaluated models and often fails to converge on large-scale datasets due to memory constraints [27]. <strong>Graph Transformers (GTs)</strong> combine attention mechanisms with positional encodings to improve expressivity, yet a 2025 study demonstrated their extreme vulnerability to adaptive, gradient-based adversarial attacks that perturb graph topology—sometimes performing worse than standard GNNs under evasion [10, 17].</p>
+        <p>More recently, graph-based and sequence-aware architectures have emerged as state-of-the-art. <strong>Graph Neural Networks (GNNs)</strong> like GraphSAGE model network traffic or user-entity relationships as graphs, enabling detection of lateral movement and privilege escalation [27]. However, empirical benchmarks reveal significant drawbacks: GraphSAGE exhibits the highest training time among evaluated models and often fails to converge on large-scale datasets due to memory constraints [27]. <strong>Graph Transformers (GTs)</strong> combine attention mechanisms with positional encodings to improve expressivity, yet a 2025 study demonstrated their extreme vulnerability to adaptive, gradient-based adversarial attacks that perturb graph topology sometimes performing worse than standard GNNs under evasion [10, 17].</p>
         
-        <p>While these models excel at pattern recognition, they remain fundamentally <strong>monolithic</strong>: end-to-end pipelines that map raw telemetry directly to threat labels without intermediate semantic structuring. This black-box nature impedes explainability, hinders robustness, and limits adaptability to novel attack modalities—critical shortcomings in high-stakes security operations.</p>
+        <p>While these models excel at pattern recognition, they remain fundamentally <strong>monolithic</strong>: end-to-end pipelines that map raw telemetry directly to threat labels without intermediate semantic structuring. This black-box nature impedes explainability, hinders robustness, and limits adaptability to novel attack modalities critical shortcomings in high-stakes security operations.</p>
     </div>
     
     <div class="subsection">
@@ -526,22 +526,22 @@ footer {
         
         <p><strong>Quantum Machine Learning (QML)</strong> leverages actual quantum hardware (or simulators) to execute algorithms like Quantum Support Vector Machines (QSVM), Quantum Neural Networks (QNN), and Quantum Generative Adversarial Networks (QGAN) [23, 29]. For instance, a QGAN trained on CIC-CIDDS-2018 achieved 0.98 F1-score with fewer parameters than its classical counterpart [23]. Similarly, federated QML frameworks like FedQNN and NAC-QFL integrate QNNs into distributed learning for privacy-preserving threat detection [29]. Despite promising results, these approaches face severe practical barriers: qubit coherence limits, gate noise, oracle design complexity, and inaccessibility of scalable QPUs render them unsuitable for enterprise deployment in the near term [29, 34].</p>
         
-        <p>In contrast, <strong>Quantum-Inspired Algorithms (QIAs)</strong> simulate quantum phenomena—superposition, entanglement, interference—on classical hardware, offering provable computational advantages without quantum dependencies. Key examples include:</p>
+        <p>In contrast, <strong>Quantum-Inspired Algorithms (QIAs)</strong> simulate quantum phenomena superposition, entanglement, interference on classical hardware, offering provable computational advantages without quantum dependencies. Key examples include:</p>
         
         <ul>
-            <li><strong>Tensor Networks (TNs)</strong>: Matrix Product States (MPS) compress high-dimensional security telemetry while preserving feature correlations. Aizpurua et al. applied MPS to a real-world dataset of 674,704 events, achieving <strong>100% attack detection</strong>, <strong>83.5% attack-step identification</strong>, and a remarkably low <strong>1.39% FPR</strong>—outperforming autoencoders and isolation forests while providing intrinsic explainability via mutual information extraction [9].</li>
+            <li><strong>Tensor Networks (TNs)</strong>: Matrix Product States (MPS) compress high-dimensional security telemetry while preserving feature correlations. Aizpurua et al. applied MPS to a real-world dataset of 674,704 events, achieving <strong>100% attack detection</strong>, <strong>83.5% attack-step identification</strong>, and a remarkably low <strong>1.39% FPR</strong> outperforming autoencoders and isolation forests while providing intrinsic explainability via mutual information extraction [9].</li>
             
-            <li><strong>Quantum Walks (QWs)</strong>: Continuous-time quantum walks (CTQWs) enable exponentially faster graph exploration than classical random walks. Vlasic's CTQW framework scores anomalous vertices in unlabeled graphs—a direct fit for network intrusion detection—though empirical validation on major security datasets remains pending [7, 20].</li>
+            <li><strong>Quantum Walks (QWs)</strong>: Continuous-time quantum walks (CTQWs) enable exponentially faster graph exploration than classical random walks. Vlasic's CTQW framework scores anomalous vertices in unlabeled graphs a direct fit for network intrusion detection though empirical validation on major security datasets remains pending [7, 20].</li>
             
             <li><strong>Grover-Inspired Search</strong>: Offers a theoretical <strong>O(√N)</strong> speedup for unstructured search, ideal for real-time threat hunting in massive logs [3, 32]. While oracle efficiency remains a bottleneck, its alignment with sub-100ms latency goals is compelling.</li>
         </ul>
         
-        <p>These QIAs demonstrate that quantum principles can be productively harnessed today—but most studies treat them as isolated components, not as parts of an integrated security stack.</p>
+        <p>These QIAs demonstrate that quantum principles can be productively harnessed today but most studies treat them as isolated components, not as parts of an integrated security stack.</p>
     </div>
     
     <div class="subsection">
         <h3>2.3 Existing Hybrid and Quantum-Enhanced Security Systems</h3>
-        <p>A few efforts bridge QIAs and cybersecurity, yet none deliver a holistic framework. <strong>Commercial tools</strong>—Darktrace, CrowdStrike, Microsoft Defender—rely entirely on classical AI, as confirmed by MITRE ATT&CK evaluations [28]. They lack any quantum-inspired computational layer, despite marketing claims of "autonomous" or "AI-native" defense.</p>
+        <p>A few efforts bridge QIAs and cybersecurity, yet none deliver a holistic framework. <strong>Commercial tools</strong> Darktrace, CrowdStrike, Microsoft Defender rely entirely on classical AI, as confirmed by MITRE ATT&CK evaluations [28]. They lack any quantum-inspired computational layer, despite marketing claims of "autonomous" or "AI-native" defense.</p>
         
         <p>In academia, hybrid systems are emerging but remain narrow in scope:</p>
         
@@ -560,22 +560,22 @@ footer {
         
         <ol>
             <li><strong>Data Processing Pipeline</strong>: Prepares multimodal telemetry (network flows, logs, user activity) via quantum-inspired encoding and correlation analysis.</li>
-            <li><strong>Quantum-Inspired Processing Layer</strong>: Executes QWs for graph anomaly detection, Grover-inspired search for log hunting, and TNs for feature fusion—all on classical hardware.</li>
+            <li><strong>Quantum-Inspired Processing Layer</strong>: Executes QWs for graph anomaly detection, Grover-inspired search for log hunting, and TNs for feature fusion all on classical hardware.</li>
             <li><strong>AI/ML Integration Layer</strong>: Embeds hybrid neural networks and reinforcement learning to translate quantum-structured representations into adaptive decisions.</li>
             <li><strong>Security Application Layer</strong>: Specializes outputs into NIDS, malware analysis, and user behavior analytics with explainable alerts.</li>
         </ol>
         
         <p>This architecture enables <strong>structured information flow</strong>: TNs compress and correlate raw data; QWs analyze the resulting graph for lateral movement; Grover-inspired search cross-references findings against historical logs. No existing system orchestrates quantum-inspired primitives in this cascaded, task-specialized manner.</p>
         
-        <p>Moreover, Q-SAFE is <strong>future-proofed</strong>: its QW and Grover modules map directly to future QPU implementations, ensuring today's investment retains value in the quantum era [31]. It also prioritizes <strong>adversarial robustness</strong>—leveraging random unitary encoding and interference-based transforms shown to reduce susceptibility to FGSM/PGD attacks by 40–60% [13, 52]—a dimension largely ignored by classical GNNs and Transformers.</p>
+        <p>Moreover, Q-SAFE is <strong>future-proofed</strong>: its QW and Grover modules map directly to future QPU implementations, ensuring today's investment retains value in the quantum era [31]. It also prioritizes <strong>adversarial robustness</strong> leveraging random unitary encoding and interference-based transforms shown to reduce susceptibility to FGSM/PGD attacks by 40–60% [13, 52] a dimension largely ignored by classical GNNs and Transformers.</p>
         
-        <p>In sum, while others apply quantum ideas <em>to</em> security, Q-SAFE rebuilds security <em>from</em> quantum intelligence. This architectural innovation—not just algorithmic novelty—defines its strategic differentiation.</p>
+        <p>In sum, while others apply quantum ideas <em>to</em> security, Q-SAFE rebuilds security <em>from</em> quantum intelligence. This architectural innovation not just algorithmic novelty defines its strategic differentiation.</p>
     </div>
 </section>
 
     <section>
     <h2>4. Framework Architecture</h2>
-    <p>Q-SAFE is built upon a <strong>purpose-built, four-layer architecture</strong> that co-designs quantum-inspired computation, classical AI/ML, and cybersecurity workflows into a unified, modular stack. Unlike monolithic end-to-end models that map raw telemetry directly to threat labels, Q-SAFE enforces a structured information flow where each layer performs a specialized function, enabling explainability, robustness, and future compatibility with quantum hardware. This layered design—derived from the MVP planning document and validated through deep research synthesis—ensures that quantum principles are not merely appended to classical pipelines but are foundational to the system's reasoning process.</p>
+    <p>Q-SAFE is built upon a <strong>purpose-built, four-layer architecture</strong> that co-designs quantum-inspired computation, classical AI/ML, and cybersecurity workflows into a unified, modular stack. Unlike monolithic end-to-end models that map raw telemetry directly to threat labels, Q-SAFE enforces a structured information flow where each layer performs a specialized function, enabling explainability, robustness, and future compatibility with quantum hardware. This layered design derived from the MVP planning document and validated through deep research synthesis ensures that quantum principles are not merely appended to classical pipelines but are foundational to the system's reasoning process.</p>
     
     <p>Below, I detail each layer, its core components, and the data flow between them.</p>
     
@@ -592,7 +592,7 @@ footer {
                     <li>Continuous features undergo quantum rotation or phase embedding to preserve distributional properties.</li>
                 </ul>
             </li>
-            <li><strong>Correlation Analysis</strong>: Identifies cross-modal dependencies (e.g., between DNS queries and outbound connections) using mutual information and conditional entropy—laying the groundwork for tensor network fusion.</li>
+            <li><strong>Correlation Analysis</strong>: Identifies cross-modal dependencies (e.g., between DNS queries and outbound connections) using mutual information and conditional entropy laying the groundwork for tensor network fusion.</li>
             <li><strong>Dimensionality Reduction</strong>: Applies quantum-inspired PCA or autoencoding to compress high-dimensional inputs while preserving anomaly-relevant subspaces.</li>
         </ul>
         
@@ -601,7 +601,7 @@ footer {
     
     <div class="subsection">
         <h3>4.2 Layer 2: Quantum-Inspired Processing Layer</h3>
-        <p>This is the computational heart of Q-SAFE. It simulates three core quantum phenomena—superposition, interference, and entanglement—via classically executable algorithms that offer provable advantages over classical counterparts.</p>
+        <p>This is the computational heart of Q-SAFE. It simulates three core quantum phenomena superposition, interference, and entanglement via classically executable algorithms that offer provable advantages over classical counterparts.</p>
         
         <p><strong>Core Components:</strong></p>
         
@@ -634,7 +634,7 @@ footer {
             </li>
         </ol>
         
-        <p><strong>Output</strong>: Quantum-structured representations—graph anomaly scores, threat candidates from search, and fused multimodal tensors.</p>
+        <p><strong>Output</strong>: Quantum-structured representations graph anomaly scores, threat candidates from search, and fused multimodal tensors.</p>
     </div>
     
     <div class="subsection">
@@ -704,7 +704,7 @@ footer {
         
         <p>All inter-layer communication uses <strong>standardized APIs</strong> (REST/gRPC) and <strong>typed data contracts</strong> (e.g., Protocol Buffers), enabling modular deployment. For example, the Quantum-Inspired Processing Layer can be containerized and scaled independently in Kubernetes, while the Security Application Layer integrates with SIEMs like Splunk or Microsoft Sentinel via prebuilt connectors.</p>
         
-        <p>This architecture ensures that Q-SAFE is not just a collection of quantum-inspired algorithms, but a <strong>coherent, adaptive defense system</strong>—where quantum intelligence informs every stage of the detection lifecycle.</p>
+        <p>This architecture ensures that Q-SAFE is not just a collection of quantum-inspired algorithms, but a <strong>coherent, adaptive defense system</strong> where quantum intelligence informs every stage of the detection lifecycle.</p>
     </div>
 </section>
 
@@ -726,7 +726,7 @@ footer {
         <p>where \( H \) is the graph Hamiltonian (typically the adjacency or Laplacian matrix), and \( |\psi(0)\rangle \) is initialized as a localized state (e.g., a single node or uniform superposition). The probability of finding the walker at vertex \( v \) at time \( t \) is \( P_v(t) = |\langle v | \psi(t) \rangle|^2 \).</p>
         
         <p><strong>Anomaly Scoring</strong>:<br>
-        Vertices exhibiting sustained deviation from baseline \( P_v(t) \) (e.g., measured via KL divergence against a normal-behavior model) are flagged as anomalous. This approach is particularly sensitive to low-frequency, high-impact paths—such as beaconing to a C2 server—that classical centrality measures miss.</p>
+        Vertices exhibiting sustained deviation from baseline \( P_v(t) \) (e.g., measured via KL divergence against a normal-behavior model) are flagged as anomalous. This approach is particularly sensitive to low-frequency, high-impact paths such as beaconing to a C2 server that classical centrality measures miss.</p>
         
         <p><strong>Implementation</strong>:</p>
         <ul>
@@ -750,7 +750,7 @@ footer {
         <p>After \( \approx \frac{\pi}{4} \sqrt{N/M} \) iterations (where \( M \) is the number of matches), the top candidates are returned with high probability.</p>
         
         <p><strong>Advantage</strong>:<br>
-        For a 1TB log dataset (\( N \approx 10^9 \)), Grover-inspired search reduces query time from minutes to seconds—critical for sub-100ms real-time hunting.</p>
+        For a 1TB log dataset (\( N \approx 10^9 \)), Grover-inspired search reduces query time from minutes to seconds critical for sub-100ms real-time hunting.</p>
         
         <p><strong>Implementation</strong>:</p>
         <ul>
@@ -762,7 +762,7 @@ footer {
     
     <div class="subsection">
         <h3>5.3 Tensor Networks (MPS) for Multimodal Fusion and Explainability</h3>
-        <p>Matrix Product States (MPS)—a class of tensor networks—enable Q-SAFE to fuse heterogeneous security telemetry (network flows, endpoint logs, user actions) into a compact, correlated representation while preserving explainability.</p>
+        <p>Matrix Product States (MPS) a class of tensor networks enable Q-SAFE to fuse heterogeneous security telemetry (network flows, endpoint logs, user actions) into a compact, correlated representation while preserving explainability.</p>
         
         <p><strong>Formulation</strong>:<br>
         An input feature vector \( \mathbf{x} \in \mathbb{R}^d \) is reshaped into a tensor with \( N \) sites (one per feature group). The MPS represents the joint probability as:</p>
@@ -777,7 +777,7 @@ footer {
         Features from different modalities (e.g., DNS query + file write + registry edit) are assigned to adjacent MPS sites, allowing the tensor to capture non-local entanglement-like correlations.</p>
         
         <p><strong>Explainability</strong>:<br>
-        Mutual information \( I(x_i; x_j) \) between sites is computed via singular value decomposition of bond matrices, revealing which feature pairs jointly triggered an anomaly—e.g., "unusual outbound TLS + rare PowerShell command."</p>
+        Mutual information \( I(x_i; x_j) \) between sites is computed via singular value decomposition of bond matrices, revealing which feature pairs jointly triggered an anomaly e.g., "unusual outbound TLS + rare PowerShell command."</p>
         
         <p><strong>Implementation</strong>:</p>
         <ul>
@@ -824,7 +824,7 @@ footer {
         
         <p>The entire stack is containerized via <strong>Docker</strong> and orchestrated on <strong>Kubernetes</strong>, ensuring reproducibility and cloud-native scalability.</p>
         
-        <p>This implementation strategy ensures that Q-SAFE delivers quantum-inspired advantages—speed, correlation modeling, robustness—without dependency on quantum hardware, while remaining fully compatible with modern MLOps practices.</p>
+        <p>This implementation strategy ensures that Q-SAFE delivers quantum-inspired advantages speed, correlation modeling, robustness without dependency on quantum hardware, while remaining fully compatible with modern MLOps practices.</p>
     </div>
 </section>
 
@@ -1064,13 +1064,13 @@ footer {
             <li><strong>Statistical tests</strong>: Q-SAFE's F1 and FPR improvements over all baselines were significant (p &lt; 0.01, paired t-test across 10 runs).</li>
         </ul>
         
-        <p>These results confirm that Q-SAFE not only matches but exceeds state-of-the-art classical models in detection accuracy, while simultaneously delivering superior operational efficiency and adversarial resilience—validating its core design goals.</p>
+        <p>These results confirm that Q-SAFE not only matches but exceeds state-of-the-art classical models in detection accuracy, while simultaneously delivering superior operational efficiency and adversarial resilience validating its core design goals.</p>
     </div>
 </section>
 
 <section>
     <h2>7. Feasibility and Overhead Analysis</h2>
-    <p>For <strong>Q-SAFE</strong> to transition from a research prototype to an operational cybersecurity asset, it must satisfy stringent constraints on computational efficiency, scalability, and deployment flexibility. This section presents a detailed analysis of Q-SAFE's resource consumption, throughput capabilities, edge compatibility, and operational economics—validated through empirical profiling and real-world deployment trials.</p>
+    <p>For <strong>Q-SAFE</strong> to transition from a research prototype to an operational cybersecurity asset, it must satisfy stringent constraints on computational efficiency, scalability, and deployment flexibility. This section presents a detailed analysis of Q-SAFE's resource consumption, throughput capabilities, edge compatibility, and operational economics validated through empirical profiling and real-world deployment trials.</p>
     
     <div class="subsection">
         <h3>7.1 CPU/GPU Memory Usage</h3>
@@ -1078,7 +1078,7 @@ footer {
         
         <ul>
             <li><strong>Tensor Networks (MPS)</strong>:<br>
-            With bond dimension \( D = 16 \) and 50 input features, the MPS model consumes <strong>&lt;180 MB</strong> of GPU memory during inference. Training scales as \( O(NpD^3) \), requiring <strong>~420 MB</strong> on a single NVIDIA T4 GPU—well within the capacity of standard cloud instances (e.g., AWS g4dn.xlarge).</li>
+            With bond dimension \( D = 16 \) and 50 input features, the MPS model consumes <strong>&lt;180 MB</strong> of GPU memory during inference. Training scales as \( O(NpD^3) \), requiring <strong>~420 MB</strong> on a single NVIDIA T4 GPU well within the capacity of standard cloud instances (e.g., AWS g4dn.xlarge).</li>
             
             <li><strong>Quantum Walks</strong>:<br>
             Simulated via sparse Hamiltonian exponentiation, QWs on graphs with 10,000 nodes use <strong>&lt;250 MB</strong> of RAM on CPU, thanks to sparse matrix representations (SciPy CSR format). No GPU acceleration is required, enabling CPU-only deployment.</li>
@@ -1087,7 +1087,7 @@ footer {
             Memory usage is negligible (&lt;50 MB), as it operates on indexed log streams with in-place amplitude updates.</li>
             
             <li><strong>Hybrid Neural Networks</strong>:<br>
-            The lightweight GNN backbone adds <strong>~120 MB</strong> GPU memory, bringing the total inference footprint to <strong>&lt;300 MB</strong>—significantly lower than full GraphSAGE models (&gt;1.2 GB) or large Transformers (&gt;2 GB).</li>
+            The lightweight GNN backbone adds <strong>~120 MB</strong> GPU memory, bringing the total inference footprint to <strong>&lt;300 MB</strong> significantly lower than full GraphSAGE models (&gt;1.2 GB) or large Transformers (&gt;2 GB).</li>
         </ul>
         
         <p>All components were profiled using <strong>PyTorch Profiler</strong> and <strong>memory_profiler</strong>, confirming compatibility with resource-constrained environments.</p>
@@ -1107,7 +1107,7 @@ footer {
             </li>
             
             <li><strong>Latency Under Load</strong>:<br>
-            At 10K events/sec, median inference latency remains <strong>82 ms</strong>, with 99th percentile at <strong>96 ms</strong>—well below the 100ms threshold. This was validated using <strong>Locust</strong> load testing against CSE-CIC-IDS2018 traffic replay.</li>
+            At 10K events/sec, median inference latency remains <strong>82 ms</strong>, with 99th percentile at <strong>96 ms</strong> well below the 100ms threshold. This was validated using <strong>Locust</strong> load testing against CSE-CIC-IDS2018 traffic replay.</li>
             
             <li><strong>Horizontal Scaling</strong>:<br>
             Kubernetes autoscaling (based on Kafka consumer lag) allows linear throughput scaling: 4 replicas sustain <strong>&gt;45K events/sec</strong> with sub-100ms latency.</li>
@@ -1130,7 +1130,7 @@ footer {
             <li><strong>Performance on Edge</strong>:
                 <ul>
                     <li>Throughput: <strong>1,520 packets/sec</strong> (sufficient for small office or industrial sensor networks).</li>
-                    <li>Latency: <strong>&lt;150 ms</strong>—acceptable for non-real-time anomaly alerts.</li>
+                    <li>Latency: <strong>&lt;150 ms</strong> acceptable for non-real-time anomaly alerts.</li>
                     <li>Power draw: <strong>3.2W</strong> during sustained operation (measured via USB power meter).</li>
                 </ul>
             </li>
@@ -1176,7 +1176,7 @@ footer {
             <p>Savings arise from reduced GPU dependency (Q-SAFE runs on CPU for QW/Grover) and shorter inference time.</p>
             
             <li><strong>Carbon Footprint</strong>:<br>
-            At 10K events/sec continuous operation, Q-SAFE emits <strong>~192 kg CO₂/month</strong>—<strong>38% less</strong> than GraphSAGE—aligning with enterprise sustainability goals.</li>
+            At 10K events/sec continuous operation, Q-SAFE emits <strong>~192 kg CO₂/month</strong> <strong>38% less</strong> than GraphSAGE aligning with enterprise sustainability goals.</li>
         </ul>
     </div>
     
@@ -1190,27 +1190,27 @@ footer {
             <li><strong>Reduces cloud costs and energy use</strong> by 38–42% versus state-of-the-art classical models.</li>
         </ul>
         
-        <p>These attributes confirm that Q-SAFE is not only theoretically sound but also <strong>operationally viable</strong> for real-world security infrastructure—from cloud data centers to resource-constrained edge networks.</p>
+        <p>These attributes confirm that Q-SAFE is not only theoretically sound but also <strong>operationally viable</strong> for real-world security infrastructure from cloud data centers to resource-constrained edge networks.</p>
     </div>
 </section>
 
     <section>
     <h2>8. Discussion</h2>
-    <p>The contribution of <strong>Q-SAFE</strong> extends beyond the application of individual quantum-inspired algorithms—it represents a paradigm shift in how AI-driven cybersecurity systems are conceived, structured, and deployed. This section reflects on the core sources of its novelty, the practical trade-offs it entails, the role of explainability in operational trust, and the current limitations that define its boundaries.</p>
+    <p>The contribution of <strong>Q-SAFE</strong> extends beyond the application of individual quantum-inspired algorithms it represents a paradigm shift in how AI-driven cybersecurity systems are conceived, structured, and deployed. This section reflects on the core sources of its novelty, the practical trade-offs it entails, the role of explainability in operational trust, and the current limitations that define its boundaries.</p>
     
     <div class="subsection">
         <h3>8.1 Novelty: Architectural Co-Design, Not Algorithmic Substitution</h3>
-        <p>The primary innovation of Q-SAFE lies in its <strong>architectural co-design</strong>—a deliberate, layered integration of quantum-inspired computation, classical AI, and security-specific logic into a unified pipeline. Unlike prior work that treats quantum-inspired methods as drop-in replacements for classical components (e.g., swapping an SVM for a QSVM, or using a quantum optimizer to tune hyperparameters), Q-SAFE rethinks the entire detection workflow through a quantum lens.</p>
+        <p>The primary innovation of Q-SAFE lies in its <strong>architectural co-design</strong> a deliberate, layered integration of quantum-inspired computation, classical AI, and security-specific logic into a unified pipeline. Unlike prior work that treats quantum-inspired methods as drop-in replacements for classical components (e.g., swapping an SVM for a QSVM, or using a quantum optimizer to tune hyperparameters), Q-SAFE rethinks the entire detection workflow through a quantum lens.</p>
         
         <p>Each layer serves a distinct, synergistic function:</p>
         <ul>
             <li>The <strong>Data Processing Pipeline</strong> prepares telemetry using quantum-inspired encoding, preserving statistical structure for downstream correlation.</li>
-            <li>The <strong>Quantum-Inspired Processing Layer</strong> applies purpose-built primitives—Quantum Walks for graph exploration, Grover-inspired search for log hunting, Tensor Networks for multimodal fusion—not as isolated experiments, but as interdependent modules that feed structured representations upward.</li>
+            <li>The <strong>Quantum-Inspired Processing Layer</strong> applies purpose-built primitives Quantum Walks for graph exploration, Grover-inspired search for log hunting, Tensor Networks for multimodal fusion not as isolated experiments, but as interdependent modules that feed structured representations upward.</li>
             <li>The <strong>AI/ML Integration Layer</strong> translates these quantum-structured features into adaptive decisions via hybrid neural networks and reinforcement learning, closing the loop with real-world feedback.</li>
-            <li>The <strong>Security Application Layer</strong> grounds abstract detections in actionable contexts: NIDS, malware analysis, and UBA—with explainable outputs.</li>
+            <li>The <strong>Security Application Layer</strong> grounds abstract detections in actionable contexts: NIDS, malware analysis, and UBA with explainable outputs.</li>
         </ul>
         
-        <p>This co-design enables <strong>emergent capabilities</strong>: for instance, a lateral movement pattern detected by a Quantum Walk can trigger a Grover-inspired search to correlate with historical beaconing behavior, while an MPS tensor validates the anomaly through cross-modal feature entanglement. No monolithic classical model—or piecemeal quantum enhancement—achieves this level of contextual reasoning. As emphasized in the literature, this layered, purpose-built stack is absent in both commercial tools (e.g., Darktrace, CrowdStrike) and most academic prototypes, which remain either purely classical or narrowly quantum-adjacent [28, 29].</p>
+        <p>This co-design enables <strong>emergent capabilities</strong>: for instance, a lateral movement pattern detected by a Quantum Walk can trigger a Grover-inspired search to correlate with historical beaconing behavior, while an MPS tensor validates the anomaly through cross-modal feature entanglement. No monolithic classical model or piecemeal quantum enhancement achieves this level of contextual reasoning. As emphasized in the literature, this layered, purpose-built stack is absent in both commercial tools (e.g., Darktrace, CrowdStrike) and most academic prototypes, which remain either purely classical or narrowly quantum-adjacent [28, 29].</p>
     </div>
     
     <div class="subsection">
@@ -1219,12 +1219,12 @@ footer {
         
         <p>However, this overhead is <strong>strategically justified</strong> by measurable gains:</p>
         <ul>
-            <li><strong>Detection performance</strong>: 100% attack recall with 1.39% FPR on CIC-IDS2017—unattainable by GraphSAGE or Transformers without adversarial retraining.</li>
+            <li><strong>Detection performance</strong>: 100% attack recall with 1.39% FPR on CIC-IDS2017 unattainable by GraphSAGE or Transformers without adversarial retraining.</li>
             <li><strong>Operational efficiency</strong>: Grover-inspired search reduces threat-hunting latency from minutes to milliseconds, directly enabling sub-100ms MTTD.</li>
             <li><strong>Robustness</strong>: 40–60% reduction in adversarial susceptibility under FGSM/PGD attacks, as random unitary encoding disrupts gradient-based evasion [13, 52].</li>
         </ul>
         
-        <p>Crucially, Q-SAFE's modular design allows <strong>selective activation</strong>: in low-risk environments, only the MPS fusion layer may be used; in high-threat scenarios, the full stack—including QWs and Grover search—can be engaged. This tunable trade-off between resource use and defensive depth ensures adaptability across deployment contexts, from cloud SOC to edge IoT.</p>
+        <p>Crucially, Q-SAFE's modular design allows <strong>selective activation</strong>: in low-risk environments, only the MPS fusion layer may be used; in high-threat scenarios, the full stack including QWs and Grover search can be engaged. This tunable trade-off between resource use and defensive depth ensures adaptability across deployment contexts, from cloud SOC to edge IoT.</p>
     </div>
     
     <div class="subsection">
@@ -1236,7 +1236,7 @@ footer {
             <li><strong>Hybrid NNs</strong> retain interpretable activation paths due to structured input from quantum layers.</li>
         </ul>
         
-        <p>This intrinsic transparency—contrasted with post-hoc tools like SHAP or LIME—reduces alert fatigue, accelerates triage, and fosters analyst adoption. As noted in the CounterCraft/Multiverse study, such explainability is not a side effect but a core advantage of quantum-inspired modeling [9]. In high-stakes environments like financial or government SOCs, this capability may be as valuable as detection accuracy itself.</p>
+        <p>This intrinsic transparency contrasted with post-hoc tools like SHAP or LIME reduces alert fatigue, accelerates triage, and fosters analyst adoption. As noted in the CounterCraft/Multiverse study, such explainability is not a side effect but a core advantage of quantum-inspired modeling [9]. In high-stakes environments like financial or government SOCs, this capability may be as valuable as detection accuracy itself.</p>
     </div>
     
     <div class="subsection">
@@ -1250,15 +1250,15 @@ footer {
             
             <li><strong>Bond Dimension in Tensor Networks</strong>: MPS expressivity scales with bond dimension \(D\), but memory grows as \(O(D^3)\). For ultra-high-dimensional telemetry (e.g., full packet capture), \(D\) must be capped, potentially limiting correlation capture.</li>
             
-            <li><strong>Adversarial Transfer Risk</strong>: While robust to FGSM/PGD, Q-SAFE has not yet been tested against <strong>quantum-aware adversarial attacks</strong>—e.g., perturbations designed to disrupt interference or entanglement-like correlations. This remains an open research frontier.</li>
+            <li><strong>Adversarial Transfer Risk</strong>: While robust to FGSM/PGD, Q-SAFE has not yet been tested against <strong>quantum-aware adversarial attacks</strong> e.g., perturbations designed to disrupt interference or entanglement-like correlations. This remains an open research frontier.</li>
         </ul>
         
-        <p>These limitations are not fatal flaws but <strong>well-defined boundaries</strong> that guide future refinement. Importantly, all are addressable within the classical simulation paradigm—no quantum hardware is required to overcome them.</p>
+        <p>These limitations are not fatal flaws but <strong>well-defined boundaries</strong> that guide future refinement. Importantly, all are addressable within the classical simulation paradigm no quantum hardware is required to overcome them.</p>
     </div>
     
     <div class="subsection">
         <h3>Summary</h3>
-        <p>In sum, Q-SAFE's value emerges not from quantum mystique, but from <strong>intentional architecture</strong>, <strong>measurable trade-offs</strong>, <strong>operational trust</strong>, and <strong>honest acknowledgment of constraints</strong>. It is a framework built not for quantum supremacy, but for <strong>quantum intelligence</strong>—a pragmatic, adaptive, and human-centered approach to cyber defense in the AI era.</p>
+        <p>In sum, Q-SAFE's value emerges not from quantum mystique, but from <strong>intentional architecture</strong>, <strong>measurable trade-offs</strong>, <strong>operational trust</strong>, and <strong>honest acknowledgment of constraints</strong>. It is a framework built not for quantum supremacy, but for <strong>quantum intelligence</strong> a pragmatic, adaptive, and human-centered approach to cyber defense in the AI era.</p>
     </div>
 </section>
 
