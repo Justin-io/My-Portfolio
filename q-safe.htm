@@ -1959,7 +1959,248 @@ Output: Anomaly probability p_anom
 
     <!-- Overlay -->
     <div class="overlay" id="overlay"></div>
+    <!-- Import Three.js -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
 
+    <script type="module">
+        import * as THREE from 'three';
+
+        // 1. Initialize Three.js Scene, Camera, Renderer
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x0a0a1a); // Dark blue-black background
+
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 15;
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        document.body.appendChild(renderer.domElement);
+
+        // 2. Create Visual Elements
+        // --- Architecture Stack (Layered Cubes) ---
+        const stackGroup = new THREE.Group();
+        const colors = [0x2ecc71, 0x3498db, 0xe67e22, 0x9b59b6]; // Green, Blue, Orange, Purple
+        const layerNames = ['Security Apps', 'AI/ML Integration', 'Quantum Processing', 'Data Ingestion'];
+        for (let i = 0; i < 4; i++) {
+            const geometry = new THREE.BoxGeometry(5, 1, 3);
+            const material = new THREE.MeshPhongMaterial({ color: colors[i], emissive: colors[i], emissiveIntensity: 0.1 });
+            const cube = new THREE.Mesh(geometry, material);
+            cube.position.y = i * 1.5 - 2.25; // Stacked vertically
+            cube.userData = { name: layerNames[i] }; // Store name for interaction
+            stackGroup.add(cube);
+        }
+        stackGroup.visible = false; // Initially hidden
+        scene.add(stackGroup);
+
+        // --- Network Graph (Nodes and Edges) ---
+        const graphGroup = new THREE.Group();
+        const nodeGeometry = new THREE.SphereGeometry(0.3, 16, 16);
+        const nodeMaterial = new THREE.MeshPhongMaterial({ color: 0x1abc9c });
+        const edgeMaterial = new THREE.LineBasicMaterial({ color: 0x16a085, opacity: 0.6, transparent: true });
+
+        const nodes = [];
+        const edges = [];
+        const nodePositions = [];
+        const numNodes = 15;
+        for (let i = 0; i < numNodes; i++) {
+            // Generate random positions in a sphere
+            const phi = Math.random() * Math.PI;
+            const theta = Math.random() * 2 * Math.PI;
+            const radius = 5;
+            const x = radius * Math.sin(phi) * Math.cos(theta);
+            const y = radius * Math.sin(phi) * Math.sin(theta);
+            const z = radius * Math.cos(phi);
+            nodePositions.push(new THREE.Vector3(x, y, z));
+        }
+
+        for (let i = 0; i < numNodes; i++) {
+            const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
+            node.position.copy(nodePositions[i]);
+            node.userData = { name: `Node ${i}` };
+            graphGroup.add(node);
+            nodes.push(node);
+
+            // Create random edges
+            if (i > 0 && Math.random() > 0.5) { // Simple random connection logic
+                const sourceIndex = i;
+                const targetIndex = Math.floor(Math.random() * i); // Connect to a previous node
+                const points = [nodes[sourceIndex].position, nodes[targetIndex].position];
+                const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
+                const line = new THREE.Line(lineGeometry, edgeMaterial);
+                graphGroup.add(line);
+                edges.push(line);
+            }
+        }
+        graphGroup.visible = false; // Initially hidden
+        scene.add(graphGroup);
+
+        // --- Data Flow (Animated Particles) ---
+        const dataFlowGroup = new THREE.Group();
+        const particleCount = 1000;
+        const particlePositions = new Float32Array(particleCount * 3);
+        const particleVelocities = []; // Store velocity vectors
+
+        for (let i = 0; i < particleCount; i++) {
+            // Start particles at the origin
+            particlePositions[i * 3] = 0; // x
+            particlePositions[i * 3 + 1] = 0; // y
+            particlePositions[i * 3 + 2] = 0; // z
+
+            // Random velocity vector
+            const speed = 0.05 + Math.random() * 0.1;
+            const angle = Math.random() * Math.PI * 2;
+            const elevation = Math.random() * Math.PI - Math.PI / 2;
+            particleVelocities.push(
+                new THREE.Vector3(
+                    Math.cos(elevation) * Math.cos(angle) * speed,
+                    Math.sin(elevation) * speed,
+                    Math.cos(elevation) * Math.sin(angle) * speed
+                )
+            );
+        }
+
+        const particleGeometry = new THREE.BufferGeometry();
+        particleGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+        const particleMaterial = new THREE.PointsMaterial({ color: 0x00ff00, size: 0.05, transparent: true, opacity: 0.7 });
+        const particleSystem = new THREE.Points(particleGeometry, particleMaterial);
+        dataFlowGroup.add(particleSystem);
+        dataFlowGroup.visible = false; // Initially hidden
+        scene.add(dataFlowGroup);
+
+        // Add lights
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(1, 1, 1);
+        scene.add(directionalLight);
+        const pointLight = new THREE.PointLight(0x3498db, 1, 100);
+        pointLight.position.set(10, 10, 10);
+        scene.add(pointLight);
+
+        // 3. Add Interactivity (Mouse/Raycasting)
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+
+        function onPointerMove(event) {
+            // Calculate mouse position in normalized device coordinates (-1 to +1)
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        }
+
+        function onPointerClick() {
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(scene.children, true);
+
+            if (intersects.length > 0) {
+                const object = intersects[0].object;
+                if (object.userData && object.userData.name) {
+                    document.getElementById('info').textContent = `Selected: ${object.userData.name}`;
+                    // Optional: Animate the selected object
+                    // new TWEEN.Tween(object.scale).to({x: 1.2, y: 1.2, z: 1.2}, 200).yoyo(true).repeat(1).start();
+                }
+            }
+        }
+
+        window.addEventListener('mousemove', onPointerMove);
+        window.addEventListener('click', onPointerClick);
+
+        // 4. Handle Window Resize
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+        window.addEventListener('resize', onWindowResize);
+
+        // 5. Button Event Listeners
+        document.getElementById('viewStack').addEventListener('click', () => {
+            stackGroup.visible = true;
+            graphGroup.visible = false;
+            dataFlowGroup.visible = false;
+            document.getElementById('info').textContent = 'Viewing: Architecture Stack';
+        });
+
+        document.getElementById('viewGraph').addEventListener('click', () => {
+            stackGroup.visible = false;
+            graphGroup.visible = true;
+            dataFlowGroup.visible = false;
+            document.getElementById('info').textContent = 'Viewing: Network Graph';
+        });
+
+        document.getElementById('viewDataFlow').addEventListener('click', () => {
+            stackGroup.visible = false;
+            graphGroup.visible = false;
+            dataFlowGroup.visible = true;
+            document.getElementById('info').textContent = 'Viewing: Data Flow (Particles)';
+        });
+
+        document.getElementById('showPaper').addEventListener('click', () => {
+            document.getElementById('paperContent').style.display = 'block';
+        });
+
+        document.getElementById('closePaper').addEventListener('click', () => {
+            document.getElementById('paperContent').style.display = 'none';
+        });
+
+        // 6. Animation Loop
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Rotate the stack group slowly
+            if (stackGroup.visible) {
+                stackGroup.rotation.y += 0.002;
+            }
+
+            // Rotate the graph group slowly
+            if (graphGroup.visible) {
+                graphGroup.rotation.y -= 0.001;
+                graphGroup.rotation.x += 0.0005;
+            }
+
+            // Animate data flow particles
+            if (dataFlowGroup.visible) {
+                const positions = particleSystem.geometry.attributes.position.array;
+                for (let i = 0; i < particleCount; i++) {
+                    const i3 = i * 3;
+                    positions[i3] += particleVelocities[i].x;
+                    positions[i3 + 1] += particleVelocities[i].y;
+                    positions[i3 + 2] += particleVelocities[i].z;
+
+                    // Reset particles that go too far out
+                    if (positions[i3] > 10 || positions[i3] < -10 ||
+                        positions[i3 + 1] > 10 || positions[i3 + 1] < -10 ||
+                        positions[i3 + 2] > 10 || positions[i3 + 2] < -10) {
+                        positions[i3] = 0;
+                        positions[i3 + 1] = 0;
+                        positions[i3 + 2] = 0;
+                        // Re-randomize velocity
+                        const speed = 0.05 + Math.random() * 0.1;
+                        const angle = Math.random() * Math.PI * 2;
+                        const elevation = Math.random() * Math.PI - Math.PI / 2;
+                        particleVelocities[i].set(
+                            Math.cos(elevation) * Math.cos(angle) * speed,
+                            Math.sin(elevation) * speed,
+                            Math.cos(elevation) * Math.sin(angle) * speed
+                        );
+                    }
+                }
+                particleSystem.geometry.attributes.position.needsUpdate = true;
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+    </script>
     <script>
         // Get DOM elements
         const fabButton = document.getElementById('fabButton');
