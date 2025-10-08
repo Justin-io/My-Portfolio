@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Paper</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 960px;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* Responsive typography */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+        padding: 10px;
+    }
+    h1 {
+        font-size: 1.7em;
+    }
+    .abstract, .subsection {
+        padding: 10px;
+    }
+}
+
+header {
+    text-align: center;
+    margin-bottom: 2em;
+    padding-bottom: 1em;
+    border-bottom: 1px solid #ddd;
+}
+
+h1, h2, h3, h4 {
+    color: #2c3e50;
+}
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 0.5em;
+}
+
+.author-info {
+    font-style: italic;
+    color: #555;
+    margin-bottom: 0.5em;
+}
+
+.abstract {
+    background-color: #eef7ff;
+    padding: 15px 20px;
+    border-left: 5px solid #3498db;
+    margin: 2em 0;
+}
+
+.abstract h3 {
+    margin-top: 0;
+}
+
+section {
+    margin-bottom: 2em;
+}
+
+.subsection {
+    margin-left: 20px;
+    margin-bottom: 1.5em;
+}
+
+.sub-subsection {
+    margin-left: 40px;
+    margin-bottom: 1em;
+}
+
+ul, ol {
+    padding-left: 20px;
+}
+
+/* Ensure long text and URLs wrap properly */
+.subsection ol li {
+    word-wrap: break-word;
+    hyphens: auto;
+    line-height: 1.7;
+    margin-bottom: 12px;
+}
+
+/* Style links as block elements for clarity and tap targets on mobile */
+.subsection ol li a {
+    display: inline-block;
+    margin: 5px 0;
+    color: #1a73e8;
+    text-decoration: none;
+    font-family: monospace;
+    font-size: 0.95em;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+.subsection ol li a:hover {
+    text-decoration: underline;
+}
+
+/* Rationale styling for visual distinction */
+.subsection ol li strong {
+    display: block;
+    margin-top: 8px;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.equation {
+    text-align: center;
+    padding: 10px;
+    background-color: #f0f0f0;
+    margin: 1em 0;
+    overflow-x: auto;
+}
+
+.boxed-equation {
+    border: 2px solid #3498db;
+    border-radius: 5px;
+}
+
+pre {
+    background-color: #eee;
+    padding: 10px;
+    overflow-x: auto;
+    border-radius: 5px;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #ccc;
+    margin: 2em 0;
+}
+
+footer {
+    margin-top: 3em;
+    padding-top: 1em;
+    border-top: 1px solid #ddd;
+    text-align: center;
+    font-size: 0.9em;
+    color: #777;
+}
+
+/* FAB and Slide Panel Styles — Harmonized with Main CSS */
+
+/* Floating Action Button (FAB) */
+.fab-container {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000; /* Below slide panel, above content */
+}
+
+.fab-button {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    border: none;
+    box-shadow: 
+        0 6px 20px rgba(52, 152, 219, 0.4),
+        0 2px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    outline: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.fab-button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.fab-button:hover::before {
+    width: 100%;
+    height: 100%;
+}
+
+.fab-button:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 
+        0 8px 25px rgba(52, 152, 219, 0.5),
+        0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.fab-button:active {
+    transform: translateY(-1px) scale(1.02);
+}
+
+.fab-icon {
+    font-size: 28px;
+    color: white;
+    position: relative;
+    z-index: 1;
+}
+
+/* Slide Panel */
+.slide-panel {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    max-width: 500px;
+    height: 100%;
+    background: white; /* Match main bg, avoid gradient clash */
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+    transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 1500;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Match main */
+}
+
+.slide-panel.active {
+    right: 0;
+}
+
+.panel-header {
+    background: #2c3e50; /* Primary dark color from main CSS */
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.panel-title {
+    font-size: 1.5em;
+    font-weight: 300;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.panel-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+}
+
+.close-panel {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    transition: all 0.3s ease;
+}
+
+.close-panel:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+}
+
+.panel-body {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    background-color: #f9f9f9;
+}
+
+.panel-body::-webkit-scrollbar {
+    display: none;
+}
+
+/* Language Tabs */
+.language-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.tab-button {
+    background: none;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1em;
+    color: #555;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.tab-button.active {
+    color: #3498db;
+}
+
+.tab-button::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: #3498db;
+    transition: width 0.3s ease;
+}
+
+.tab-button.active::after {
+    width: 100%;
+}
+
+.tab-content {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Media Item */
+.media-item {
+    background: white;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border: 1px solid #eee;
+}
+
+.media-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.media-item-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 12px;
+}
+
+.media-type-icon {
+    width: 40px;
+    height: 40px;
+    background: #3498db;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2em;
+}
+
+.media-item-title {
+    font-size: 1.1em;
+    color: #2c3e50;
+    margin: 0;
+    font-weight: 500;
+}
+
+.audio-player {
+    width: 100%;
+    margin: 12px 0;
+    border-radius: 6px;
+    height: 40px;
+}
+
+.video-player {
+    width: 100%;
+    border-radius: 6px;
+    margin: 12px 0;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
+.media-description {
+    color: #666;
+    font-size: 0.9em;
+    line-height: 1.5;
+    margin-top: 8px;
+}
+
+/* Overlay */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: none;
+    z-index: 1490;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .fab-container {
+        bottom: 20px;
+        right: 20px;
+    }
+
+    .fab-button {
+        width: 56px;
+        height: 56px;
+    }
+
+    .fab-icon {
+        font-size: 24px;
+    }
+
+    .slide-panel {
+        max-width: 100%;
+    }
+
+    .panel-title {
+        font-size: 1.3em;
+    }
+
+    .panel-body {
+        padding: 16px;
+    }
+
+    .media-item {
+        padding: 16px;
+    }
+
+    .media-type-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 1.1em;
+    }
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Advanced Machine Learning Techniques for Natural Language Processing</h1>
+        <p class="author-info">John Doe, Jane Smith, and Robert Johnson</p>
+        <p class="author-info">Department of Computer Science, University of Technology</p>
+        <p class="author-info">Published: June 15, 2023</p>
+    </header>
+
+    <div class="abstract">
+        <h3>Abstract</h3>
+        <p>This paper presents a comprehensive study of advanced machine learning techniques applied to natural language processing (NLP) tasks. We explore the effectiveness of transformer-based models, attention mechanisms, and transfer learning approaches in various NLP applications. Our experimental results demonstrate significant improvements over traditional methods, with our proposed model achieving state-of-the-art performance on multiple benchmark datasets. We also discuss the ethical implications and potential societal impacts of these advanced NLP systems.</p>
+    </div>
+
+    <section>
+        <h2>1. Introduction</h2>
+        <p>Natural Language Processing has evolved dramatically in recent years, largely driven by advances in deep learning and the availability of large-scale datasets. This section provides an overview of the current state of NLP and outlines the contributions of our work.</p>
+        
+        <div class="subsection">
+            <h3>1.1 Background</h3>
+            <p>Traditional NLP approaches relied heavily on rule-based systems and statistical methods. While these techniques achieved moderate success, they were limited by their inability to capture the complex patterns and nuances of human language.</p>
+            
+            <div class="sub-subsection">
+                <h4>1.1.1 Rule-based Systems</h4>
+                <p>Early NLP systems were primarily rule-based, requiring linguists to manually encode grammatical rules and patterns. These systems were brittle and struggled with ambiguity and variation in language use.</p>
+            </div>
+            
+            <div class="sub-subsection">
+                <h4>1.1.2 Statistical Methods</h4>
+                <p>The introduction of statistical methods in the 1990s marked a significant shift in NLP research. Models like n-grams and Hidden Markov Models could learn patterns from data, reducing the need for manual rule creation.</p>
+            </div>
+        </div>
+        
+        <div class="subsection">
+            <h3>1.2 Problem Statement</h3>
+            <p>Despite recent advances, several challenges remain in NLP, including handling low-resource languages, understanding context and nuance, and ensuring fairness and bias mitigation in language models.</p>
+        </div>
+        
+        <div class="subsection">
+            <h3>1.3 Our Contributions</h3>
+            <p>The main contributions of this paper are:</p>
+            <ol>
+                <li>A novel transformer-based architecture that improves efficiency and performance on multiple NLP tasks.</li>
+                <li>A comprehensive evaluation of our approach on 15 benchmark datasets across 5 languages.</li>
+                <li>An analysis of the ethical implications and potential biases in advanced NLP systems.</li>
+                <li>Open-source release of our models and code to facilitate reproducibility and further research.</li>
+            </ol>
+        </div>
+    </section>
+
+    <section>
+        <h2>2. Related Work</h2>
+        <p>This section reviews previous research relevant to our work, including traditional NLP approaches, early neural models, and recent advances in transformer architectures.</p>
+        
+        <div class="subsection">
+            <h3>2.1 Traditional NLP Approaches</h3>
+            <p>Before the deep learning revolution, NLP relied on various linguistic and statistical techniques. These approaches, while limited, established many foundational concepts still in use today.</p>
+        </div>
+        
+        <div class="subsection">
+            <h3>2.2 Neural Network Models</h3>
+            <p>The introduction of neural networks to NLP represented a paradigm shift. Word embeddings, recurrent neural networks, and convolutional neural networks enabled models to learn representations directly from data.</p>
+            
+            <div class="equation">
+                <p>Word2Vec objective function:</p>
+                <div class="boxed-equation">
+                    <p>J = -log P(w<sub>o</sub> | w<sub>c</sub>) = -log P(w<sub>o</sub> | w<sub>c</sub>) = -log σ(u<sub>o</sub><sup>T</sup>v<sub>c</sub>)</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="subsection">
+            <h3>2.3 Transformer Models</h3>
+            <p>The introduction of the Transformer architecture by Vaswani et al. (2017) revolutionized NLP. By replacing recurrent layers with self-attention mechanisms, Transformers enabled parallelization and captured long-range dependencies more effectively.</p>
+            
+            <pre>
+# Self-attention mechanism
+def self_attention(query, key, value):
+    scores = torch.matmul(query, key.transpose(-2, -1)) 
+    scores = scores / math.sqrt(d_k)
+    weights = F.softmax(scores, dim=-1)
+    return torch.matmul(weights, value)
+            </pre>
+        </div>
+    </section>
+
+    <section>
+        <h2>3. Methodology</h2>
+        <p>This section details our proposed approach, including model architecture, training procedures, and experimental setup.</p>
+        
+        <div class="subsection">
+            <h3>3.1 Model Architecture</h3>
+            <p>Our model builds upon the Transformer architecture with several key innovations. We introduce a multi-scale attention mechanism that operates at different levels of granularity, allowing the model to capture both local and global context.</p>
+            
+            <div class="equation">
+                <p>Multi-scale attention formula:</p>
+                <div class="boxed-equation">
+                    <p>Attention(Q, K, V) = softmax(QK<sup>T</sup>/√d<sub>k</sub>)V</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="subsection">
+            <h3>3.2 Training Procedure</h3>
+            <p>We employ a two-stage training approach. First, we pre-train our model on a large corpus of unlabeled text using a combination of masked language modeling and next sentence prediction objectives. Second, we fine-tune the model on specific downstream tasks.</p>
+        </div>
+        
+        <div class="subsection">
+            <h3>3.3 Experimental Setup</h3>
+            <p>We evaluate our model on 15 benchmark datasets covering a range of NLP tasks including text classification, question answering, named entity recognition, and machine translation.</p>
+            
+            <ol>
+                <li>
+                    <a href="https://gluebenchmark.com">GLUE Benchmark</a>
+                    <strong>Rationale: The GLUE benchmark provides a comprehensive evaluation of language understanding across multiple tasks.</strong>
+                </li>
+                <li>
+                    <a href="https://super.gluebenchmark.com">SuperGLUE Benchmark</a>
+                    <strong>Rationale: SuperGLUE offers more challenging tasks that require advanced reasoning capabilities.</strong>
+                </li>
+                <li>
+                    <a href="https://squad.ai/">SQuAD (Stanford Question Answering Dataset)</a>
+                    <strong>Rationale: SQuAD is a widely used benchmark for evaluating reading comprehension abilities.</strong>
+                </li>
+            </ol>
+        </div>
+    </section>
+
+    <section>
+        <h2>4. Results</h2>
+        <p>In this section, we present the results of our experiments and compare our approach with existing state-of-the-art methods.</p>
+        
+        <div class="subsection">
+            <h3>4.1 Quantitative Results</h3>
+            <p>Our model achieves state-of-the-art performance on 12 out of 15 benchmark datasets. On average, we observe a 3.7% improvement over previous best results.</p>
+        </div>
+        
+        <div class="subsection">
+            <h3>4.2 Qualitative Analysis</h3>
+            <p>Beyond quantitative metrics, we conducted a qualitative analysis of our model's outputs. Our approach demonstrates better handling of complex linguistic phenomena such as negation, coreference resolution, and semantic ambiguity.</p>
+        </div>
+        
+        <div class="subsection">
+            <h3>4.3 Ablation Studies</h3>
+            <p>To understand the contribution of different components of our model, we conducted extensive ablation studies. These experiments confirm the importance of our proposed multi-scale attention mechanism.</p>
+        </div>
+    </section>
+
+    <section>
+        <h2>5. Discussion</h2>
+        <p>This section discusses the implications of our findings, limitations of our approach, and directions for future research.</p>
+        
+        <div class="subsection">
+            <h3>5.1 Implications</h3>
+            <p>Our results demonstrate that the proposed architecture significantly advances the state of the art in NLP. The improvements are particularly pronounced for tasks requiring complex reasoning and understanding of long-range dependencies.</p>
+        </div>
+        
+        <div class="subsection">
+            <h3>5.2 Limitations</h3>
+            <p>Despite its strong performance, our approach has several limitations. The model requires substantial computational resources for training, and its performance on low-resource languages lags behind that on high-resource languages.</p>
+        </div>
+        
+        <div class="subsection">
+            <h3>5.3 Future Work</h3>
+            <p>Future research directions include exploring more efficient architectures, improving performance on low-resource languages, and developing better techniques for bias detection and mitigation.</p>
+        </div>
+    </section>
+
+    <section>
+        <h2>6. Conclusion</h2>
+        <p>In this paper, we presented a novel transformer-based architecture for NLP tasks. Our experimental results demonstrate significant improvements over previous approaches across a wide range of benchmarks. We also discussed the ethical implications of our work and identified promising directions for future research.</p>
+        
+        <div class="subsection">
+            <h3>6.1 Summary</h3>
+            <p>We introduced a multi-scale attention mechanism that enables models to capture both local and global context more effectively. Our approach achieves state-of-the-art performance on multiple NLP tasks while maintaining reasonable computational efficiency.</p>
+        </div>
+        
+        <div class="subsection">
+            <h3>6.2 Final Remarks</h3>
+            <p>As NLP systems become more powerful, it is crucial to consider their societal impacts. We believe that responsible development and deployment of these technologies will be essential to realizing their full potential while minimizing potential harms.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2023 John Doe, Jane Smith, and Robert Johnson. All rights reserved.</p>
+        <p>This work is licensed under a Creative Commons Attribution 4.0 International License.</p>
+    </footer>
+
+    <!-- Floating Action Button -->
+    <div class="fab-container">
+        <button class="fab-button" id="fabButton">
+            <i class="fas fa-play fab-icon"></i>
+        </button>
+    </div>
+
+    <!-- Slide Panel -->
+    <div class="slide-panel" id="slidePanel">
+        <div class="panel-header">
+            <h2 class="panel-title">
+                <div class="panel-icon">
+                    <i class="fas fa-photo-video"></i>
+                </div>
+                Multimedia Resources
+            </h2>
+            <button class="close-panel" id="closePanel">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="panel-body">
+            <div class="language-tabs">
+                <button class="tab-button active" data-tab="english">English</button>
+                <button class="tab-button" data-tab="spanish">Spanish</button>
+                <button class="tab-button" data-tab="french">French</button>
+            </div>
+            
+            <div class="tab-content active" id="english">
+                <div class="media-item">
+                    <div class="media-item-header">
+                        <div class="media-type-icon">
+                            <i class="fas fa-podcast"></i>
+                        </div>
+                        <h3 class="media-item-title">Research Overview Podcast</h3>
+                    </div>
+                    <audio class="audio-player" controls>
+                        <source src="https://example.com/audio/research_overview.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                    <p class="media-description">A 15-minute podcast summarizing the key findings of our research paper.</p>
+                </div>
+                
+                <div class="media-item">
+                    <div class="media-item-header">
+                        <div class="media-type-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <h3 class="media-item-title">Methodology Explained</h3>
+                    </div>
+                    <video class="video-player" controls>
+                        <source src="https://example.com/video/methodology.mp4" type="video/mp4">
+                        Your browser does not support the video element.
+                    </video>
+                    <p class="media-description">A detailed explanation of our proposed methodology with visualizations.</p>
+                </div>
+                
+                <div class="media-item">
+                    <div class="media-item-header">
+                        <div class="media-type-icon">
+                            <i class="fas fa-podcast"></i>
+                        </div>
+                        <h3 class="media-item-title">Interview with Lead Author</h3>
+                    </div>
+                    <audio class="audio-player" controls>
+                        <source src="https://example.com/audio/author_interview.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                    <p class="media-description">An in-depth interview discussing the inspiration behind the research and future directions.</p>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="spanish">
+                <div class="media-item">
+                    <div class="media-item-header">
+                        <div class="media-type-icon">
+                            <i class="fas fa-podcast"></i>
+                        </div>
+                        <h3 class="media-item-title">Resumen de la Investigación</h3>
+                    </div>
+                    <audio class="audio-player" controls>
+                        <source src="https://example.com/audio/resumen_investigacion.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                    <p class="media-description">Un podcast de 15 minutos resumiendo los hallazgos clave de nuestro artículo de investigación.</p>
+                </div>
+                
+                <div class="media-item">
+                    <div class="media-item-header">
+                        <div class="media-type-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <h3 class="media-item-title">Metodología Explicada</h3>
+                    </div>
+                    <video class="video-player" controls>
+                        <source src="https://example.com/video/metodologia.mp4" type="video/mp4">
+                        Your browser does not support the video element.
+                    </video>
+                    <p class="media-description">Una explicación detallada de nuestra metodología propuesta con visualizaciones.</p>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="french">
+                <div class="media-item">
+                    <div class="media-item-header">
+                        <div class="media-type-icon">
+                            <i class="fas fa-podcast"></i>
+                        </div>
+                        <h3 class="media-item-title">Aperçu de la Recherche</h3>
+                    </div>
+                    <audio class="audio-player" controls>
+                        <source src="https://example.com/audio/apercu_recherche.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                    <p class="media-description">Un podcast de 15 minutes résumant les principales conclusions de notre article de recherche.</p>
+                </div>
+                
+                <div class="media-item">
+                    <div class="media-item-header">
+                        <div class="media-type-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <h3 class="media-item-title">Méthodologie Expliquée</h3>
+                    </div>
+                    <video class="video-player" controls>
+                        <source src="https://example.com/video/methodologie.mp4" type="video/mp4">
+                        Your browser does not support the video element.
+                    </video>
+                    <p class="media-description">Une explication détaillée de notre méthodologie proposée avec des visualisations.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <script>
+        // Get DOM elements
+        const fabButton = document.getElementById('fabButton');
+        const slidePanel = document.getElementById('slidePanel');
+        const closePanel = document.getElementById('closePanel');
+        const overlay = document.getElementById('overlay');
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        // Open slide panel when FAB is clicked
+        fabButton.addEventListener('click', () => {
+            slidePanel.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when panel is open
+        });
+
+        // Close slide panel when close button is clicked
+        closePanel.addEventListener('click', closePanelFunc);
+
+        // Close slide panel when overlay is clicked
+        overlay.addEventListener('click', closePanelFunc);
+
+        function closePanelFunc() {
+            slidePanel.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+
+        // Tab functionality
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons and contents
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked button and corresponding content
+                button.classList.add('active');
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && slidePanel.classList.contains('active')) {
+                closePanelFunc();
+            }
+        });
+    </script>
+</body>
+</html>
