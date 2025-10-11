@@ -2945,6 +2945,3019 @@ Actual   +   TP      FN
 </section>
 
 
+<section class="section">
+    <h2 class="section-title">Deep Learning</h2>
+    <div class="content">
+        <p><em>Advanced Neural Network Architectures and Training Methods</em></p>
+        
+        <h3>Convolutional Neural Networks (CNNs)</h3>
+        <h4>Core Idea</h4>
+        <ul>
+            <li>Designed for <strong>grid-like data</strong> (e.g., images, audio spectrograms).</li>
+            <li>Exploit <strong>spatial locality</strong> and <strong>translation invariance</strong> via <strong>convolutional layers</strong>.</li>
+        </ul>
+        
+        <h4>Key Components</h4>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Layer</th>
+                        <th>Function</th>
+                        <th>Parameters</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Convolutional</strong></td>
+                        <td>Apply learnable filters (kernels) to detect local features (edges, textures)</td>
+                        <td>Filter size (e.g., 3×3), #filters, stride, padding</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Activation</strong></td>
+                        <td>Introduce non-linearity (e.g., ReLU: \( \max(0, x) \))</td>
+                        <td>None</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pooling</strong></td>
+                        <td>Downsample feature maps (reduce spatial size, retain key info)</td>
+                        <td>Max-pooling (most common), average-pooling</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fully Connected (FC)</strong></td>
+                        <td>Final layers for classification/regression</td>
+                        <td>Standard dense layers</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h4>Why CNNs Work</h4>
+        <ul>
+            <li><strong>Parameter sharing</strong>: Same filter applied across entire input → fewer parameters.</li>
+            <li><strong>Hierarchical feature learning</strong>:<br>
+            Early layers → edges → mid layers → shapes → late layers → objects.</li>
+            <li><strong>Translation equivariance</strong>: Shift in input → shift in feature map (not output class).</li>
+        </ul>
+        
+        <h4>Common Architectures</h4>
+        <ul>
+            <li><strong>LeNet-5</strong> (1998): First CNN for digit recognition.</li>
+            <li><strong>AlexNet</strong> (2012): Deep CNN with ReLU, dropout; won ImageNet.</li>
+            <li><strong>VGG</strong>: Uniform 3×3 convolutions; deeper = better.</li>
+            <li><strong>ResNet</strong>: Uses <strong>skip connections</strong> to solve vanishing gradients → trains 1000+ layers.</li>
+        </ul>
+        
+        <div class="definition">
+            ✅ <strong>Best for</strong>: Image classification, object detection, segmentation, medical imaging.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Recurrent Neural Networks (RNNs) and LSTMs</h2>
+    <div class="content">
+        <h3>RNNs: Processing Sequences</h3>
+        <ul>
+            <li><strong>Idea</strong>: Maintain a <strong>hidden state</strong> \( h_t \) that captures information from past inputs.</li>
+            <li><strong>Update rule</strong>:<br>
+            \[ h_t = \sigma(W_h h_{t-1} + W_x x_t + b) \]
+            \( y_t = W_y h_t + b_y \)</li>
+            
+            <li><strong>Pros</strong>: Handles variable-length sequences; shares parameters across time.</li>
+            <li><strong>Cons</strong>:
+            <ul>
+                <li><strong>Vanishing/exploding gradients</strong> → struggles with long-term dependencies.</li>
+                <li>Sequential computation → not parallelizable.</li>
+            </ul>
+            </li>
+        </ul>
+        
+        <h3>LSTM (Long Short-Term Memory)</h3>
+        <ul>
+            <li>Solves vanishing gradient with <strong>gating mechanisms</strong>:
+            <ul>
+                <li><strong>Forget gate</strong> \( f_t \): Decide what to discard from cell state.</li>
+                <li><strong>Input gate</strong> \( i_t \): Decide what new info to store.</li>
+                <li><strong>Output gate</strong> \( o_t \): Decide what to output.</li>
+            </ul>
+            </li>
+            
+            <li><strong>Cell state update</strong>:<br>
+            \[ C_t = f_t \odot C_{t-1} + i_t \odot \tilde{C}_t, \quad h_t = o_t \odot \tanh(C_t) \]</li>
+            
+            <li><strong>GRU (Gated Recurrent Unit)</strong>: Simpler variant (2 gates); often comparable to LSTM.</li>
+        </ul>
+        
+        <div class="definition">
+            ✅ <strong>Best for</strong>: Time series forecasting, speech recognition, machine translation (pre-Transformer).
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Transformer Architectures and Attention Mechanisms</h2>
+    <div class="content">
+        <h3>Limitations of RNNs/CNNs for Sequences</h3>
+        <ul>
+            <li>RNNs: Not parallelizable; slow training.</li>
+            <li>CNNs: Fixed receptive field; need stacking for long-range dependencies.</li>
+        </ul>
+        
+        <h3>Attention Mechanism (Core Idea)</h3>
+        <ul>
+            <li>Compute <strong>weighted sum</strong> of values, where weights are based on <strong>compatibility</strong> between query and keys.</li>
+            <li><strong>Scaled Dot-Product Attention</strong>:<br>
+            \[ \text{Attention}(Q, K, V) = \text{softmax}\left( \frac{QK^\top}{\sqrt{d_k}} \right) V \]
+            <ul>
+                <li>\( Q \): queries, \( K \): keys, \( V \): values</li>
+                <li>\( d_k \): dimension of keys (scaling prevents softmax saturation)</li>
+            </ul>
+            </li>
+        </ul>
+        
+        <h3>Transformer Architecture (Vaswani et al., 2017)</h3>
+        <ul>
+            <li><strong>Encoder-Decoder</strong> structure (for seq2seq tasks like translation).</li>
+            <li><strong>Each block contains</strong>:
+            <ul>
+                <li><strong>Multi-Head Attention</strong>: Concatenate attention from multiple subspaces → captures different relationships.</li>
+                <li><strong>Position-wise Feed-Forward Network</strong>: Two linear layers with ReLU.</li>
+                <li><strong>Residual connections + LayerNorm</strong>: Stabilize training.</li>
+            </ul>
+            </li>
+            
+            <li><strong>Positional Encoding</strong>: Inject sequence order info (since no recurrence):<br>
+            \[ PE_{(pos, 2i)} = \sin\left(\frac{pos}{10000^{2i/d}}\right), \quad
+            PE_{(pos, 2i+1)} = \cos\left(\frac{pos}{10000^{2i/d}}\right) \]</li>
+        </ul>
+        
+        <h3>Impact</h3>
+        <ul>
+            <li><strong>Parallelizable</strong>: All tokens processed simultaneously → faster training.</li>
+            <li><strong>State-of-the-art</strong>: Foundation of BERT, GPT, T5, and most modern NLP models.</li>
+            <li><strong>Beyond NLP</strong>: Vision Transformers (ViT), speech, protein folding (AlphaFold).</li>
+        </ul>
+        
+        <div class="definition">
+            ✅ <strong>Best for</strong>: NLP, multimodal learning, any task with long-range dependencies.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Deep Learning Optimization Techniques</h2>
+    <div class="content">
+        <p>Training deep networks is challenging due to non-convexity, saddle points, and ill-conditioning.</p>
+        
+        <h3>Gradient Descent Variants</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Optimizer</th>
+                        <th>Update Rule</th>
+                        <th>Advantages</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>SGD</strong></td>
+                        <td>\( \theta \leftarrow \theta - \eta \nabla_\theta \mathcal{L} \)</td>
+                        <td>Simple, but oscillates</td>
+                    </tr>
+                    <tr>
+                        <td><strong>SGD + Momentum</strong></td>
+                        <td>\( v \leftarrow \beta v + \nabla \mathcal{L},\ \theta \leftarrow \theta - \eta v \)</td>
+                        <td>Smoother convergence</td>
+                    </tr>
+                    <tr>
+                        <td><strong>RMSProp</strong></td>
+                        <td>\( s \leftarrow \beta s + (1-\beta)(\nabla \mathcal{L})^2,\ \theta \leftarrow \theta - \eta \frac{\nabla \mathcal{L}}{\sqrt{s} + \epsilon} \)</td>
+                        <td>Adapts per-parameter learning rate</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Adam</strong></td>
+                        <td>Combines momentum + RMSProp</td>
+                        <td>Most popular; robust default</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3>Learning Rate Scheduling</h3>
+        <ul>
+            <li><strong>Step decay</strong>: Reduce LR at fixed epochs.</li>
+            <li><strong>Cosine annealing</strong>: Smoothly decrease LR to 0.</li>
+            <li><strong>Warmup</strong>: Gradually increase LR at start (critical for Transformers).</li>
+        </ul>
+        
+        <h3>Gradient Clipping</h3>
+        <p>Cap gradient norm to prevent exploding gradients (essential for RNNs).</p>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Regularization Methods</h2>
+    <div class="content">
+        <p>Prevent overfitting in high-capacity deep networks.</p>
+        
+        <h3>(a) Dropout</h3>
+        <ul>
+            <li><strong>Idea</strong>: Randomly set a fraction \( p \) of activations to zero during training.</li>
+            <li><strong>Effect</strong>: Forces network to not rely on specific neurons → ensemble-like behavior.</li>
+            <li><strong>At test time</strong>: Scale activations by \( (1 - p) \) (or use inverted dropout).</li>
+            <li><strong>Typical rates</strong>: 0.2–0.5 in hidden layers; not used in RNN hidden states (use <strong>variational dropout</strong> instead).</li>
+        </ul>
+        
+        <h3>(b) Batch Normalization (BatchNorm)</h3>
+        <ul>
+            <li><strong>Idea</strong>: Normalize layer inputs to have zero mean and unit variance <strong>per batch</strong>:<br>
+            \[ \hat{x} = \frac{x - \mu_B}{\sqrt{\sigma_B^2 + \epsilon}}, \quad y = \gamma \hat{x} + \beta \]
+            where \( \gamma, \beta \) are learnable scale/shift parameters.</li>
+            
+            <li><strong>Benefits</strong>:
+            <ul>
+                <li>Reduces internal covariate shift.</li>
+                <li>Allows higher learning rates.</li>
+                <li>Acts as a regularizer (due to batch noise).</li>
+            </ul>
+            </li>
+            
+            <li><strong>Placement</strong>: After linear layer, before activation (common in CNNs).</li>
+            <li><strong>Alternatives</strong>:
+            <ul>
+                <li><strong>LayerNorm</strong>: Normalize across features (used in Transformers).</li>
+                <li><strong>GroupNorm</strong>: Between BatchNorm and LayerNorm; works well for small batches.</li>
+            </ul>
+            </li>
+        </ul>
+        
+        <h3>Other Regularization Techniques</h3>
+        <ul>
+            <li><strong>Weight decay (L2 regularization)</strong>: Penalize large weights.</li>
+            <li><strong>Data augmentation</strong>: Artificially expand training set (e.g., rotate/flipping images).</li>
+            <li><strong>Early stopping</strong>: Halt training when validation loss stops improving.</li>
+        </ul>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Summary Table</h2>
+    <div class="content">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Key Innovation</th>
+                        <th>Primary Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>CNN</strong></td>
+                        <td>Local receptive fields, weight sharing</td>
+                        <td>Images, spatial data</td>
+                    </tr>
+                    <tr>
+                        <td><strong>RNN/LSTM</strong></td>
+                        <td>Hidden state for memory</td>
+                        <td>Sequential data (time series, text)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Transformer</strong></td>
+                        <td>Self-attention, parallelization</td>
+                        <td>NLP, long-range dependencies</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Adam</strong></td>
+                        <td>Adaptive per-parameter learning rates</td>
+                        <td>Default optimizer for most tasks</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Dropout</strong></td>
+                        <td>Random neuron deactivation</td>
+                        <td>General-purpose regularization</td>
+                    </tr>
+                    <tr>
+                        <td><strong>BatchNorm</strong></td>
+                        <td>Normalize per batch</td>
+                        <td>Stabilize and accelerate CNN training</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Key Takeaways</h2>
+    <div class="content">
+        <ul>
+            <li><strong>CNNs</strong> dominate <strong>spatial data</strong>; <strong>Transformers</strong> dominate <strong>sequential data</strong> (replacing RNNs).</li>
+            <li><strong>Attention</strong> is a universal mechanism—now used in vision, audio, and biology.</li>
+            <li><strong>Optimization</strong> is as important as architecture: Adam + learning rate scheduling is standard.</li>
+            <li><strong>Regularization</strong> is essential: Combine dropout, BatchNorm, and data augmentation.</li>
+            <li><strong>Modern deep learning</strong> = <strong>modular design</strong>: Mix and match components (e.g., CNN + Transformer for video).</li>
+        </ul>
+        
+        <div class="definition">
+            💡 <strong>Pro Tip</strong>: For new projects, start with a <strong>Transformer</strong> (for sequences) or <strong>ResNet/ViT</strong> (for images)—they are strong baselines.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Graph Neural Networks</h2>
+    <div class="content">
+        <h3>Graph Representation Learning</h3>
+        <div class="definition">
+            <strong>Goal</strong>: Learn low-dimensional, continuous vector representations (<strong>embeddings</strong>) of nodes, edges, or entire graphs that preserve structural and feature information for downstream tasks (e.g., classification, link prediction, clustering).
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Graph Theory Fundamentals</h2>
+    <div class="content">
+        <h3>Basic Definitions</h3>
+        <ul>
+            <li><strong>Graph</strong> \( G = (V, E) \):
+            <ul>
+                <li>\( V \): Set of <strong>nodes</strong> (vertices), \( |V| = n \)</li>
+                <li>\( E \subseteq V \times V \): Set of <strong>edges</strong> (links)</li>
+            </ul>
+            </li>
+            <li><strong>Types</strong>:
+            <ul>
+                <li><strong>Undirected</strong>: \( (u,v) \in E \Rightarrow (v,u) \in E \)</li>
+                <li><strong>Directed</strong>: Edges have direction (e.g., web graphs)</li>
+                <li><strong>Weighted</strong>: Edges have weights \( w_{uv} \)</li>
+                <li><strong>Attributed</strong>: Nodes/edges have features \( \mathbf{x}_v \in \mathbb{R}^d \)</li>
+            </ul>
+            </li>
+        </ul>
+        
+        <h3>Key Concepts</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Term</th>
+                        <th>Definition</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Adjacency matrix</strong> \( A \)</td>
+                        <td>\( A_{ij} = 1 \) if edge between \( i,j \); 0 otherwise</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Degree matrix</strong> \( D \)</td>
+                        <td>Diagonal matrix: \( D_{ii} = \sum_j A_{ij} \)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Laplacian</strong> \( L \)</td>
+                        <td>\( L = D - A \) (captures smoothness on graphs)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Path / Walk</strong></td>
+                        <td>Sequence of connected nodes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Neighborhood</strong> \( \mathcal{N}(v) \)</td>
+                        <td>Set of nodes adjacent to \( v \)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Connected component</strong></td>
+                        <td>Maximal subgraph where all nodes are reachable</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3>Why Graphs Matter</h3>
+        <ul>
+            <li>Model relational data: social networks, molecules, knowledge graphs, traffic systems.</li>
+            <li>Structure encodes semantics: “You are who your friends are” (homophily).</li>
+        </ul>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Graph Embeddings and Node Representations</h2>
+    <div class="content">
+        <h3>What is a Graph Embedding?</h3>
+        <p>Map each node \( v \) to a vector \( \mathbf{z}_v \in \mathbb{R}^k \) (\( k \ll n \)) such that <strong>graph proximity ≈ vector similarity</strong>.</p>
+        
+        <h3>Desired Properties</h3>
+        <ol>
+            <li><strong>Structural equivalence</strong>: Nodes with similar roles (e.g., hubs) have similar embeddings.</li>
+            <li><strong>Homophily</strong>: Connected nodes have similar embeddings.</li>
+            <li><strong>Scalability</strong>: Efficient for large graphs.</li>
+            <li><strong>Inductive capability</strong>: Generalize to unseen nodes.</li>
+        </ol>
+        
+        <h3>Categories of Methods</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Approach</th>
+                        <th>Examples</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Matrix factorization</strong></td>
+                        <td>Factorize graph matrices (e.g., \( A \), \( L \))</td>
+                        <td>Laplacian Eigenmaps, GraRep</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Random walk-based</strong></td>
+                        <td>Use walk statistics as context</td>
+                        <td>DeepWalk, node2vec</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Neural network-based</strong></td>
+                        <td>Learn via message passing</td>
+                        <td>GCN, GAT, GraphSAGE</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Random Walk Techniques on Graphs</h2>
+    <div class="content">
+        <h3>Core Idea</h3>
+        <p>Treat node neighborhoods as “sentences” and use <strong>language modeling</strong> (e.g., Word2Vec) to learn embeddings.</p>
+        
+        <h3>(a) DeepWalk (2014)</h3>
+        <ul>
+            <li><strong>Steps</strong>:
+            <ol>
+                <li>Generate <strong>random walks</strong> (length \( l \)) from each node.</li>
+                <li>Treat each walk as a “sentence” of nodes.</li>
+                <li>Apply <strong>Skip-gram</strong> to predict context nodes given center node.</li>
+            </ol>
+            </li>
+            <li><strong>Optimization</strong>:<br>
+            \[ \max_{\mathbf{Z}} \sum_{v \in V} \sum_{u \in \mathcal{N}_R(v)} \log P(u | v; \mathbf{Z}) \]
+            where \( \mathcal{N}_R(v) \) = nodes in random walks starting at \( v \).</li>
+        </ul>
+        
+        <h3>(b) node2vec (2016)</h3>
+        <ul>
+            <li><strong>Improvement</strong>: Biased random walks controlled by two parameters:
+            <ul>
+                <li><strong>Return parameter \( p \)</strong>: Likelihood to return to previous node.</li>
+                <li><strong>In-out parameter \( q \)</strong>: Explore locally (\( q < 1 \)) vs. globally (\( q > 1 \)).</li>
+            </ul>
+            </li>
+            <li><strong>Flexible</strong>: Interpolates between <strong>BFS</strong> (structural equivalence) and <strong>DFS</strong> (homophily).</li>
+        </ul>
+        
+        <h3>Pros & Cons</h3>
+        <ul>
+            <li>✅ Simple, scalable, no node features needed.</li>
+            <li>❌ Transductive only (can't embed new nodes without retraining).</li>
+            <li>❌ Ignores edge weights/direction in basic form.</li>
+        </ul>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Graph Kernels and Similarity Measures</h2>
+    <div class="content">
+        <h3>What is a Graph Kernel?</h3>
+        <p>A function \( \kappa(G_1, G_2) \) that measures similarity between two <strong>entire graphs</strong> by comparing substructures.</p>
+        
+        <h3>Common Graph Kernels</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Kernel</th>
+                        <th>Substructure Compared</th>
+                        <th>Complexity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Random Walk Kernel</strong></td>
+                        <td>Counts matching walks</td>
+                        <td>\( O(n^3) \); may diverge</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Shortest-Path Kernel</strong></td>
+                        <td>Distribution of shortest-path lengths</td>
+                        <td>\( O(n^2) \)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Graphlet Kernel</strong></td>
+                        <td>Counts of small connected subgraphs (e.g., triangles)</td>
+                        <td>Exponential in graphlet size</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Weisfeiler-Lehman (WL) Kernel</strong></td>
+                        <td>Refines node labels via neighborhood aggregation</td>
+                        <td>\( O(h n) \), \( h \)=iterations</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3>WL Kernel (Most Practical)</h3>
+        <ul>
+            <li>Simulates <strong>WL graph isomorphism test</strong>:
+            <ol>
+                <li>Initialize node labels (e.g., degree).</li>
+                <li>Iteratively update label of \( v \):<br>
+                \( l_v^{(k)} = \text{hash}(l_v^{(k-1)}, \{l_u^{(k-1)} : u \in \mathcal{N}(v)\}) \)</li>
+                <li>Compare label distributions between graphs.</li>
+            </ol>
+            </li>
+        </ul>
+        
+        <div class="definition">
+            🔑 <strong>Connection to GNNs</strong>: WL test ≈ 1-layer GNN; expressive power of GNNs bounded by WL test.
+        </div>
+        
+        <h3>Limitations</h3>
+        <ul>
+            <li>Kernels are <strong>computationally expensive</strong> for large graphs.</li>
+            <li>Not end-to-end trainable with neural networks (unlike GNNs).</li>
+        </ul>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Applications of Graph Representation Learning</h2>
+    <div class="content">
+        <h3>(a) Node-Level Tasks</h3>
+        <ul>
+            <li><strong>Node classification</strong>: Predict labels (e.g., user interests in social networks).
+            <ul>
+                <li><em>Methods</em>: GCN, GAT, GraphSAGE.</li>
+            </ul>
+            </li>
+            <li><strong>Link prediction</strong>: Predict missing/future edges (e.g., friend recommendation).
+            <ul>
+                <li><em>Approach</em>: Embed nodes → score pairs via dot product or MLP.</li>
+            </ul>
+            </li>
+            <li><strong>Anomaly detection</strong>: Identify unusual nodes (e.g., fraud in transaction graphs).</li>
+        </ul>
+        
+        <h3>(b) Graph-Level Tasks</h3>
+        <ul>
+            <li><strong>Graph classification</strong>: Predict property of entire graph (e.g., molecule toxicity).
+            <ul>
+                <li><em>Methods</em>: Graph kernels, GNNs with <strong>readout</strong> (e.g., sum/mean pooling).</li>
+            </ul>
+            </li>
+            <li><strong>Graph similarity</strong>: Measure similarity between graphs (e.g., chemical compounds).</li>
+        </ul>
+        
+        <h3>(c) Real-World Domains</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Domain</th>
+                        <th>Application</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Social Networks</strong></td>
+                        <td>Community detection, recommendation</td>
+                        <td>Facebook friend suggestions</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bioinformatics</strong></td>
+                        <td>Protein function prediction, drug discovery</td>
+                        <td>Predicting protein-protein interactions</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Knowledge Graphs</strong></td>
+                        <td>Entity linking, question answering</td>
+                        <td>Google Knowledge Graph</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Computer Vision</strong></td>
+                        <td>Scene graph generation</td>
+                        <td>Understanding object relationships in images</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Traffic/Transport</strong></td>
+                        <td>Traffic forecasting</td>
+                        <td>Predicting congestion using road networks</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3>(d) Emerging Trends</h3>
+        <ul>
+            <li><strong>Heterogeneous graphs</strong>: Multiple node/edge types (e.g., academic graphs: authors, papers, venues).</li>
+            <li><strong>Dynamic graphs</strong>: Evolving structure over time (e.g., Twitter retweets).</li>
+            <li><strong>Large-scale GNNs</strong>: Scaling to billion-edge graphs (e.g., PinSage at Pinterest).</li>
+        </ul>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Summary Table</h2>
+    <div class="content">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Concept</th>
+                        <th>Key Idea</th>
+                        <th>Strengths</th>
+                        <th>Limitations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Random Walks (DeepWalk/node2vec)</strong></td>
+                        <td>Use walk context + Skip-gram</td>
+                        <td>Scalable, no features needed</td>
+                        <td>Transductive, ignores features</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Graph Kernels</strong></td>
+                        <td>Compare substructures via kernel function</td>
+                        <td>Theoretically grounded</td>
+                        <td>Not differentiable, slow</td>
+                    </tr>
+                    <tr>
+                        <td><strong>GNNs (e.g., GCN)</strong></td>
+                        <td>Message passing + neural networks</td>
+                        <td>Inductive, uses features, end-to-end</td>
+                        <td>Over-smoothing, scalability</td>
+                    </tr>
+                    <tr>
+                        <td><strong>WL Kernel</strong></td>
+                        <td>Simulate graph isomorphism test</td>
+                        <td>Strong theoretical link to GNNs</td>
+                        <td>Fixed representation</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Key Takeaways</h2>
+    <div class="content">
+        <ul>
+            <li><strong>Graph representation learning</strong> bridges graph theory and deep learning.</li>
+            <li><strong>Random walks</strong> enable NLP-inspired embedding methods for graphs.</li>
+            <li><strong>Graph kernels</strong> provide powerful similarity measures but lack trainability.</li>
+            <li><strong>GNNs</strong> unify structure and features in an end-to-end framework—dominant in modern applications.</li>
+            <li><strong>Applications span</strong> social science, biology, recommendation, and AI reasoning.</li>
+        </ul>
+        
+        <div class="definition">
+            💡 <strong>Rule of Thumb</strong>:<br>
+            - Use <strong>node2vec</strong> for quick, feature-free embeddings.<br>
+            - Use <strong>GNNs</strong> when node features exist or inductive learning is needed.<br>
+            - Use <strong>graph kernels</strong> for small graphs with strong theoretical guarantees.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Graph Neural Network Architectures</h2>
+    <div class="content">
+        <p><em>Message-Passing Frameworks for Relational Data</em></p>
+        
+        <div class="definition">
+            <strong>Core Paradigm</strong>: <strong>Message Passing</strong><br>
+            Each node aggregates information from its neighbors to update its representation:<br>
+            \[ \mathbf{h}_v^{(k)} = \text{UPDATE}^{(k)} \left( \mathbf{h}_v^{(k-1)}, \, \text{AGGREGATE}^{(k)} \left( \{ \mathbf{h}_u^{(k-1)} : u \in \mathcal{N}(v) \} \right) \right) \]
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Graph Convolutional Networks (GCNs)</h2>
+    <div class="content">
+        <p><em>(Kipf & Welling, ICLR 2017)</em></p>
+        
+        <h3>Key Idea</h3>
+        <p>Generalize <strong>convolution</strong> from grids (images) to <strong>arbitrary graphs</strong> using <strong>spectral graph theory</strong> (simplified to spatial domain).</p>
+        
+        <h3>Layer-wise Propagation Rule</h3>
+        <div class="equation">
+            \[ \mathbf{H}^{(l+1)} = \sigma \left( \tilde{\mathbf{D}}^{-1/2} \tilde{\mathbf{A}} \tilde{\mathbf{D}}^{-1/2} \mathbf{H}^{(l)} \mathbf{W}^{(l)} \right) \]
+        </div>
+        <ul>
+            <li>\( \tilde{\mathbf{A}} = \mathbf{A} + \mathbf{I} \): Adjacency matrix with self-loops</li>
+            <li>\( \tilde{\mathbf{D}} \): Degree matrix of \( \tilde{\mathbf{A}} \)</li>
+            <li>\( \mathbf{W}^{(l)} \): Learnable weight matrix</li>
+            <li>\( \sigma \): Non-linearity (e.g., ReLU)</li>
+        </ul>
+        
+        <h3>Intuition</h3>
+        <ul>
+            <li><strong>Normalized adjacency</strong>: \( \tilde{\mathbf{D}}^{-1/2} \tilde{\mathbf{A}} \tilde{\mathbf{D}}^{-1/2} \) ensures stable aggregation (avoids numerical instability).</li>
+            <li>Each node takes a <strong>weighted average</strong> of its own and neighbors' features.</li>
+        </ul>
+        
+        <h3>Strengths</h3>
+        <ul>
+            <li>Simple, effective, end-to-end trainable.</li>
+            <li>Works well on <strong>homophilic graphs</strong> (connected nodes are similar).</li>
+        </ul>
+        
+        <h3>Limitations</h3>
+        <ul>
+            <li><strong>Transductive</strong>: Requires full graph at training (can't generalize to unseen nodes).</li>
+            <li><strong>Fixed aggregation</strong>: All neighbors weighted equally (no attention).</li>
+            <li><strong>Over-smoothing</strong>: Node representations become indistinguishable after many layers.</li>
+        </ul>
+        
+        <div class="definition">
+            ✅ <strong>Best for</strong>: Semi-supervised node classification on citation networks (e.g., Cora, PubMed).
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Graph Attention Networks (GATs)</h2>
+    <div class="content">
+        <p><em>(Veličković et al., ICLR 2018)</em></p>
+        
+        <h3>Key Idea</h3>
+        <p>Replace fixed aggregation in GCN with <strong>attention mechanisms</strong> → learn <strong>importance weights</strong> for neighbors.</p>
+        
+        <h3>Attention Mechanism</h3>
+        <ol>
+            <li><strong>Compute attention coefficients</strong> between node \(i\) and neighbor \(j\):<br>
+            \[ e_{ij} = \mathbf{a}^\top [\mathbf{W} \mathbf{h}_i \, \| \, \mathbf{W} \mathbf{h}_j] \]
+            where \( \| \) = concatenation, \( \mathbf{a} \) = attention vector.</li>
+            
+            <li><strong>Apply softmax</strong> over neighbors:<br>
+            \[ \alpha_{ij} = \text{softmax}_j(e_{ij}) = \frac{\exp(\text{LeakyReLU}(e_{ij}))}{\sum_{k \in \mathcal{N}(i)} \exp(\text{LeakyReLU}(e_{ik}))} \]</li>
+            
+            <li><strong>Aggregate</strong>:<br>
+            \[ \mathbf{h}_i' = \sigma \left( \sum_{j \in \mathcal{N}(i)} \alpha_{ij} \mathbf{W} \mathbf{h}_j \right) \]</li>
+        </ol>
+        
+        <h3>Multi-Head Attention</h3>
+        <p>Use \( K \) independent attention heads → concatenate or average outputs:<br>
+        \[ \mathbf{h}_i' = \underset{k=1}{\overset{K}{\|}} \sigma \left( \sum_{j \in \mathcal{N}(i)} \alpha_{ij}^k \mathbf{W}^k \mathbf{h}_j \right) \]</p>
+        
+        <h3>Strengths</h3>
+        <ul>
+            <li><strong>Inductive</strong>: Can generalize to unseen graphs/nodes.</li>
+            <li><strong>Interpretable</strong>: Attention weights reveal important neighbors.</li>
+            <li>Handles <strong>heterophilic graphs</strong> better than GCN (not all neighbors are equal).</li>
+        </ul>
+        
+        <h3>Limitations</h3>
+        <ul>
+            <li>Computationally heavier than GCN (due to attention computation).</li>
+            <li>May overfit on small graphs.</li>
+        </ul>
+        
+        <div class="definition">
+            ✅ <strong>Best for</strong>: Tasks requiring interpretability or handling diverse neighbor importance (e.g., recommendation, knowledge graphs).
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">GraphSAGE and Inductive Learning</h2>
+    <div class="content">
+        <p><em>(Hamilton et al., NeurIPS 2017)</em></p>
+        
+        <h3>Key Idea</h3>
+        <p><strong>Inductive framework</strong>: Learn <strong>aggregator functions</strong> that generalize to <strong>unseen nodes</strong> (no need for full graph at training).</p>
+        
+        <h3>Algorithm</h3>
+        <ol>
+            <li>Sample fixed-size neighborhood \( \mathcal{N}(v) \) (e.g., 10 neighbors).</li>
+            <li><strong>Aggregate</strong> neighbor features using a learnable function:
+            <ul>
+                <li><strong>Mean</strong>: \( \text{AGG} = \text{mean}(\{ \mathbf{h}_u : u \in \mathcal{N}(v) \}) \)</li>
+                <li><strong>LSTM</strong>: Order-sensitive aggregation</li>
+                <li><strong>Pooling</strong>: \( \text{AGG} = \max( \{ \sigma(\mathbf{W} \mathbf{h}_u + \mathbf{b}) \} ) \)</li>
+            </ul>
+            </li>
+            <li><strong>Combine</strong> with node's own features:<br>
+            \[ \mathbf{h}_v^{(k)} = \sigma \left( \mathbf{W}^{(k)} \cdot \text{CONCAT}( \mathbf{h}_v^{(k-1)}, \, \text{AGG}^{(k)} ) \right) \]</li>
+        </ol>
+        
+        <h3>Why Inductive?</h3>
+        <p>Aggregators are <strong>parameterized functions</strong>, not graph-dependent → can embed <strong>new nodes</strong> at inference.</p>
+        
+        <h3>Strengths</h3>
+        <ul>
+            <li>Scales to <strong>large graphs</strong> (via neighbor sampling).</li>
+            <li>Truly <strong>inductive</strong>: Works on dynamic or evolving graphs.</li>
+            <li>Flexible aggregator design.</li>
+        </ul>
+        
+        <h3>Limitations</h3>
+        <ul>
+            <li>Sampling introduces stochasticity → higher variance.</li>
+            <li>Fixed neighborhood size may miss long-range dependencies.</li>
+        </ul>
+        
+        <div class="definition">
+            ✅ <strong>Best for</strong>: Large-scale industrial applications (e.g., PinSage at Pinterest for recommendation).
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Graph Isomorphism Networks (GINs)</h2>
+    <div class="content">
+        <p><em>(Xu et al., ICLR 2019)</em></p>
+        
+        <h3>Key Idea</h3>
+        <p>Design a GNN as <strong>powerful as the Weisfeiler-Lehman (WL) graph isomorphism test</strong>—the theoretical upper bound for message-passing GNNs.</p>
+        
+        <h3>WL Test Recap</h3>
+        <p>Iteratively refines node labels based on multiset of neighbor labels.</p>
+        <p>If two graphs have different label distributions → not isomorphic.</p>
+        
+        <h3>GIN Layer</h3>
+        <div class="equation">
+            \[ \mathbf{h}_v^{(k)} = \text{MLP}^{(k)} \left( (1 + \epsilon^{(k)}) \cdot \mathbf{h}_v^{(k-1)} + \sum_{u \in \mathcal{N}(v)} \mathbf{h}_u^{(k-1)} \right) \]
+        </div>
+        <ul>
+            <li>\( \epsilon^{(k)} \): Learnable scalar (or fixed)</li>
+            <li><strong>Sum aggregation</strong> (not mean/max) → injective over multisets</li>
+            <li><strong>MLP</strong> ensures universal approximation</li>
+        </ul>
+        
+        <h3>Why Sum Aggregation?</h3>
+        <ul>
+            <li>Mean/max are <strong>not injective</strong>: Different multisets can yield same mean/max.</li>
+            <li><strong>Sum</strong> preserves full multiset information → matches WL test expressivity.</li>
+        </ul>
+        
+        <h3>Strengths</h3>
+        <ul>
+            <li><strong>Maximally expressive</strong> among standard GNNs.</li>
+            <li>Excellent for <strong>graph-level tasks</strong> (e.g., molecular property prediction).</li>
+        </ul>
+        
+        <h3>Limitations</h3>
+        <ul>
+            <li>Overkill for simple node classification.</li>
+            <li>Still limited by WL test (can't distinguish some non-isomorphic graphs).</li>
+        </ul>
+        
+        <div class="definition">
+            ✅ <strong>Best for</strong>: Graph classification where structural fidelity is critical (e.g., quantum chemistry, molecule property prediction).
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Temporal Graph Neural Networks (TGNNs)</h2>
+    <div class="content">
+        <h3>Problem Setting</h3>
+        <ul>
+            <li>Graph evolves over time: edges/nodes appear/disappear, features change.</li>
+            <li><strong>Goal</strong>: Predict future links, node states, or graph properties.</li>
+        </ul>
+        
+        <h3>Key Challenges</h3>
+        <ul>
+            <li><strong>Temporal dynamics</strong>: How to model time?</li>
+            <li><strong>Causality</strong>: Future cannot influence past.</li>
+            <li><strong>Irregular timestamps</strong>: Events occur at arbitrary times.</li>
+        </ul>
+        
+        <h3>Architectures</h3>
+        <h4>(a) Discrete-Time TGNNs</h4>
+        <ul>
+            <li><strong>Assumption</strong>: Time is divided into fixed intervals (e.g., days).</li>
+            <li><strong>Approach</strong>: Stack GNNs over time slices + RNNs (e.g., GRU) to propagate state:<br>
+            \[ \mathbf{h}_v^{(t)} = \text{GRU} \left( \mathbf{h}_v^{(t-1)}, \, \text{GNN}(\mathbf{X}^{(t)}, \mathbf{A}^{(t)}) \right) \]</li>
+            <li><strong>Examples</strong>: DySAT, EvolveGCN.</li>
+        </ul>
+        
+        <h4>(b) Continuous-Time TGNNs</h4>
+        <ul>
+            <li><strong>Model events</strong> (e.g., edge creation) at exact timestamps.</li>
+            <li><strong>Approach</strong>: Use <strong>temporal point processes</strong> or <strong>ODEs</strong>.</li>
+            <li><strong>Key model</strong>: <strong>TGAT</strong> (Temporal Graph Attention Network):
+            <ul>
+                <li>Embed time via <strong>time encodings</strong> (like Transformers).</li>
+                <li>Use attention over <strong>temporal neighbors</strong> (past interactions).</li>
+            </ul>
+            </li>
+            <li><strong>Other models</strong>: CAW (Causal Anonymous Walks), TGN (Temporal Graph Network).</li>
+        </ul>
+        
+        <h3>Temporal Embedding Techniques</h3>
+        <ul>
+            <li><strong>Time encoding</strong>: \( \phi(\Delta t) = [\cos(\omega_1 \Delta t), \sin(\omega_1 \Delta t), \dots] \)</li>
+            <li><strong>Memory modules</strong>: Store node state in external memory (e.g., TGN).</li>
+        </ul>
+        
+        <h3>Applications</h3>
+        <ul>
+            <li>Fraud detection (transaction graphs)</li>
+            <li>Epidemic forecasting</li>
+            <li>Social network evolution</li>
+            <li>Traffic prediction</li>
+        </ul>
+        
+        <div class="definition">
+            ✅ <strong>Best for</strong>: Dynamic systems where timing matters (e.g., financial transactions, communication logs).
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Summary Table</h2>
+    <div class="content">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Architecture</th>
+                        <th>Key Innovation</th>
+                        <th>Inductive?</th>
+                        <th>Best For</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>GCN</strong></td>
+                        <td>Spectral convolution simplified</td>
+                        <td>❌ (transductive)</td>
+                        <td>Homophilic node classification</td>
+                    </tr>
+                    <tr>
+                        <td><strong>GAT</strong></td>
+                        <td>Attention-based neighbor weighting</td>
+                        <td>✅</td>
+                        <td>Interpretable, heterophilic graphs</td>
+                    </tr>
+                    <tr>
+                        <td><strong>GraphSAGE</strong></td>
+                        <td>Neighbor sampling + learnable aggregators</td>
+                        <td>✅</td>
+                        <td>Large-scale, dynamic graphs</td>
+                    </tr>
+                    <tr>
+                        <td><strong>GIN</strong></td>
+                        <td>Maximally expressive (WL-equivalent)</td>
+                        <td>✅</td>
+                        <td>Graph classification, molecules</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Temporal GNNs</strong></td>
+                        <td>Model time + structure jointly</td>
+                        <td>✅</td>
+                        <td>Evolving graphs, event prediction</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Key Takeaways</h2>
+    <div class="content">
+        <ul>
+            <li><strong>GCN</strong> is the foundational spatial GNN—but limited by fixed aggregation.</li>
+            <li><strong>GAT</strong> adds flexibility and interpretability via attention.</li>
+            <li><strong>GraphSAGE</strong> enables <strong>scalable inductive learning</strong>—critical for real-world systems.</li>
+            <li><strong>GIN</strong> sets the <strong>theoretical expressivity limit</strong> for message-passing GNNs.</li>
+            <li><strong>Temporal GNNs</strong> extend GNNs to <strong>dynamic settings</strong>—essential for real-world applications.</li>
+        </ul>
+        
+        <div class="definition">
+            💡 <strong>Design Tip</strong>:<br>
+            - For <strong>static, small graphs</strong>: GCN or GAT.<br>
+            - For <strong>large or evolving graphs</strong>: GraphSAGE or Temporal GNNs.<br>
+            - For <strong>graph-level prediction</strong>: GIN.
+        </div>
+    </div>
+</section>
+
+
+<section class="section">
+    <h2 class="section-title">Graph Learning Applications</h2>
+    <div class="content">
+        <p><em>From Prediction to Generation on Relational Data</em></p>
+        
+        <h3>Node Classification and Link Prediction</h3>
+        <h4>Node Classification</h4>
+        <ul>
+            <li><strong>Goal</strong>: Predict labels for <strong>unlabeled nodes</strong> in a graph (e.g., user interests, protein functions).</li>
+            <li><strong>Assumption</strong>: <strong>Homophily</strong> — connected nodes tend to share labels.</li>
+            <li><strong>Input</strong>: Graph \( G = (V, E) \), node features \( \mathbf{X} \), labels for a subset \( V_{\text{train}} \subset V \).</li>
+            <li><strong>Output</strong>: Labels for \( V \setminus V_{\text{train}} \).</li>
+        </ul>
+        
+        <h4>Approaches</h4>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Type</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>GNNs (GCN, GAT, GraphSAGE)</strong></td>
+                        <td>End-to-end</td>
+                        <td>State-of-the-art; use both structure and features</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Label Propagation</strong></td>
+                        <td>Classical</td>
+                        <td>Iteratively smooth labels over edges; no features needed</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Random Walks (node2vec + classifier)</strong></td>
+                        <td>Embedding-based</td>
+                        <td>Transductive; ignores node features</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="definition">
+            ✅ <strong>Use cases</strong>:<br>
+            - Social networks: User profiling<br>
+            - Biology: Protein function annotation<br>
+            - Fraud detection: Flag suspicious accounts
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Link Prediction</h2>
+    <div class="content">
+        <ul>
+            <li><strong>Goal</strong>: Predict <strong>missing or future edges</strong> (e.g., "Will these two users connect?").</li>
+            <li><strong>Input</strong>: Observed graph \( G \); possibly node features.</li>
+            <li><strong>Output</strong>: Probability of edge existence for node pairs \( (u, v) \notin E \).</li>
+        </ul>
+        
+        <h3>Scoring Functions</h3>
+        <p>Given node embeddings \( \mathbf{z}_u, \mathbf{z}_v \):</p>
+        <ul>
+            <li><strong>Dot product</strong>: \( s(u,v) = \mathbf{z}_u^\top \mathbf{z}_v \)</li>
+            <li><strong>Cosine similarity</strong>: \( s(u,v) = \frac{\mathbf{z}_u^\top \mathbf{z}_v}{\|\mathbf{z}_u\| \|\mathbf{z}_v\|} \)</li>
+            <li><strong>MLP</strong>: \( s(u,v) = \text{MLP}([\mathbf{z}_u \| \mathbf{z}_v]) \)</li>
+        </ul>
+        
+        <h3>Methods</h3>
+        <ul>
+            <li><strong>GNN-based</strong>: Use GNN to get embeddings → score pairs.</li>
+            <li><strong>Matrix factorization</strong>: Factorize adjacency matrix \( A \approx Z Z^\top \).</li>
+            <li><strong>Heuristics</strong>: Common neighbors, Jaccard index, Adamic-Adar.</li>
+        </ul>
+        
+        <div class="definition">
+            ✅ <strong>Use cases</strong>:<br>
+            - Recommendation systems (e.g., "People you may know")<br>
+            - Knowledge graph completion (e.g., predicting missing facts)<br>
+            - Drug-target interaction prediction
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Graph Classification and Regression</h2>
+    <div class="content">
+        <h3>Graph Classification</h3>
+        <ul>
+            <li><strong>Goal</strong>: Assign a label to an <strong>entire graph</strong> (e.g., "Is this molecule toxic?").</li>
+            <li><strong>Input</strong>: Set of graphs \( \{G_1, G_2, \dots, G_N\} \), each with node/edge features.</li>
+            <li><strong>Output</strong>: Class label per graph.</li>
+        </ul>
+        
+        <h4>Pipeline</h4>
+        <ol>
+            <li><strong>Node representation</strong>: Use GNN layers to get \( \mathbf{h}_v \) for all \( v \in G \).</li>
+            <li><strong>Readout (graph pooling)</strong>: Aggregate node embeddings into graph-level vector \( \mathbf{h}_G \):
+            <ul>
+                <li><strong>Mean/sum pooling</strong>: \( \mathbf{h}_G = \sum_{v \in V} \mathbf{h}_v \)</li>
+                <li><strong>Set2Set</strong>, <strong>DiffPool</strong>, <strong>SAGPool</strong>: Learnable pooling</li>
+            </ul>
+            </li>
+            <li><strong>Classifier</strong>: MLP on \( \mathbf{h}_G \) → output label.</li>
+        </ol>
+        
+        <h4>Key Models</h4>
+        <ul>
+            <li><strong>GIN</strong>: Maximally expressive for graph classification.</li>
+            <li><strong>DGCNN</strong>: Sorts node embeddings before pooling.</li>
+            <li><strong>Graph kernels</strong>: WL kernel for small graphs.</li>
+        </ul>
+        
+        <div class="definition">
+            ✅ <strong>Use cases</strong>:<br>
+            - Chemistry: Molecular property prediction (e.g., solubility, toxicity)<br>
+            - Program analysis: Detecting malware in code graphs<br>
+            - Social network analysis: Identifying community types
+        </div>
+        
+        <h3>Graph Regression</h3>
+        <ul>
+            <li>Same as classification, but output is <strong>continuous</strong> (e.g., molecular energy, graph diameter).</li>
+            <li>Replace final classifier with <strong>regressor</strong> (e.g., linear layer).</li>
+            <li>Loss: Mean Squared Error (MSE) or MAE.</li>
+        </ul>
+        
+        <div class="definition">
+            ✅ <strong>Use cases</strong>:<br>
+            - Quantum chemistry: Predicting molecular energy (QM9 dataset)<br>
+            - Traffic: Estimating total congestion in a road network
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Graph Generation and Synthesis</h2>
+    <div class="content">
+        <h3>Goal</h3>
+        <p>Learn distribution \( p(G) \) over graphs → generate <strong>new, realistic graphs</strong>.</p>
+        
+        <h3>Applications</h3>
+        <ul>
+            <li>Drug discovery: Generate novel molecules with desired properties.</li>
+            <li>Circuit design: Create efficient chip layouts.</li>
+            <li>Privacy: Synthesize anonymized social networks.</li>
+        </ul>
+        
+        <h3>Approaches</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Idea</th>
+                        <th>Strengths/Limitations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>VAE-based (GraphVAE)</strong></td>
+                        <td>Encode graph → latent vector → decode to adjacency matrix</td>
+                        <td>Handles small graphs; struggles with discreteness</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Autoregressive (GraphRNN)</strong></td>
+                        <td>Generate nodes/edges sequentially using RNNs</td>
+                        <td>Captures structure; slow, order-dependent</td>
+                    </tr>
+                    <tr>
+                        <td><strong>GAN-based (MolGAN)</strong></td>
+                        <td>Generator creates graphs; discriminator critiques</td>
+                        <td>Mode collapse; hard to train</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Score-based / Diffusion</strong></td>
+                        <td>Learn gradient of log-density → sample via Langevin dynamics</td>
+                        <td>State-of-the-art quality; computationally heavy</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Rule-based (GrammarVAE)</strong></td>
+                        <td>Use formal grammars (e.g., SMILES for molecules)</td>
+                        <td>Valid structures guaranteed; limited expressivity</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3>Challenges</h3>
+        <ul>
+            <li><strong>Discrete structure</strong>: Gradients don't flow through adjacency matrices.</li>
+            <li><strong>Validity</strong>: Generated graphs must obey domain constraints (e.g., chemical valency).</li>
+            <li><strong>Evaluation</strong>: No standard metric; use <strong>MMD</strong> (Maximum Mean Discrepancy) on graph statistics.</li>
+        </ul>
+        
+        <div class="definition">
+            🔬 <strong>Cutting-edge</strong>: <strong>3D molecular generation</strong> (e.g., GeoDiff) combines graph + geometry.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Dynamic Graph Learning</h2>
+    <div class="content">
+        <h3>Problem Setting</h3>
+        <ul>
+            <li>Graph changes over time: nodes/edges appear/disappear, features evolve.</li>
+            <li><strong>Two types</strong>:
+            <ul>
+                <li><strong>Discrete-time</strong>: Snapshots at fixed intervals (e.g., daily social network).</li>
+                <li><strong>Continuous-time</strong>: Events at arbitrary timestamps (e.g., financial transactions).</li>
+            </ul>
+            </li>
+        </ul>
+        
+        <h3>Tasks</h3>
+        <ul>
+            <li><strong>Temporal node classification</strong>: Predict node label at time \( t \).</li>
+            <li><strong>Dynamic link prediction</strong>: Predict future edges.</li>
+            <li><strong>Anomaly detection</strong>: Spot unusual activity (e.g., fraud bursts).</li>
+        </ul>
+        
+        <h3>Key Architectures</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Model</th>
+                        <th>Mechanism</th>
+                        <th>Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>TGAT</strong></td>
+                        <td>Temporal self-attention + time encoding</td>
+                        <td>Continuous-time event prediction</td>
+                    </tr>
+                    <tr>
+                        <td><strong>TGN</strong></td>
+                        <td>Memory module + message passing</td>
+                        <td>Streaming graphs</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DySAT</strong></td>
+                        <td>Self-attention over time + structure</td>
+                        <td>Discrete snapshots</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CAW</strong></td>
+                        <td>Causal anonymous walks</td>
+                        <td>Irregular timestamps</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3>Temporal Encoding</h3>
+        <p>Inject time into embeddings:</p>
+        <div class="equation">
+            \[ \phi(\Delta t) = [\cos(\omega_1 \Delta t), \sin(\omega_1 \Delta t), \dots, \cos(\omega_d \Delta t), \sin(\omega_d \Delta t)] \]
+        </div>
+        <p>(similar to Transformer positional encoding)</p>
+        
+        <div class="definition">
+            🌐 <strong>Use cases</strong>:<br>
+            - Cybersecurity: Detecting attack patterns in network traffic<br>
+            - E-commerce: Real-time recommendation on evolving user-item graphs<br>
+            - Epidemiology: Modeling disease spread
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Scalability Challenges in Graph Learning</h2>
+    <div class="content">
+        <h3>Why Graphs Don't Scale Easily</h3>
+        <ul>
+            <li><strong>Irregular structure</strong>: No fixed grid → hard to batch.</li>
+            <li><strong>Neighborhood explosion</strong>: \( k \)-hop neighborhood grows exponentially.</li>
+            <li><strong>Memory bottleneck</strong>: Storing full adjacency matrix is \( O(n^2) \).</li>
+        </ul>
+        
+        <h3>Key Challenges</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Challenge</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Full-batch training</strong></td>
+                        <td>GCN requires full graph → infeasible for large graphs (e.g., >1M nodes)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Neighbor explosion</strong></td>
+                        <td>Aggregating 2-hop neighbors of a node may include entire graph</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Heterogeneous hardware</strong></td>
+                        <td>Sparse operations don't leverage GPUs efficiently</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Dynamic graphs</strong></td>
+                        <td>Continual updates require online learning</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3>Scalability Solutions</h3>
+        <h4>(a) Sampling-Based Methods</h4>
+        <ul>
+            <li><strong>Neighbor sampling</strong> (GraphSAGE): Sample fixed number of neighbors per layer.</li>
+            <li><strong>Layer sampling</strong> (FastGCN): Sample nodes per layer independently.</li>
+            <li><strong>Subgraph sampling</strong> (Cluster-GCN): Train on graph partitions.</li>
+        </ul>
+        
+        <h4>(b) Precomputation & Compression</h4>
+        <ul>
+            <li><strong>Precompute embeddings</strong>: Use unsupervised methods (e.g., node2vec) → train classifier separately.</li>
+            <li><strong>Graph coarsening</strong>: Merge nodes to create hierarchy (e.g., METIS).</li>
+        </ul>
+        
+        <h4>(c) System Optimizations</h4>
+        <ul>
+            <li><strong>Sparse tensor libraries</strong>: DGL, PyG optimize sparse-dense ops.</li>
+            <li><strong>In-memory graph stores</strong>: Use CSR/CSC formats for fast access.</li>
+            <li><strong>Distributed training</strong>: Partition graph across machines (e.g., AliGraph, Euler).</li>
+        </ul>
+        
+        <h4>(d) Inductive Architectures</h4>
+        <p>Models like <strong>GraphSAGE</strong> and <strong>GAT</strong> avoid full-graph dependency → naturally scalable.</p>
+        
+        <div class="definition">
+            📊 <strong>Scalability Benchmarks</strong>:<br>
+            - <strong>OGB-Large</strong>: Datasets with 100M+ edges.<br>
+            - <strong>Twitter Graph</strong>: 1.5B nodes, 35B edges → requires distributed GNNs.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Summary Table</h2>
+    <div class="content">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Application</th>
+                        <th>Key Task</th>
+                        <th>Representative Models</th>
+                        <th>Real-World Use</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Node Classification</strong></td>
+                        <td>Label nodes</td>
+                        <td>GCN, GAT, GraphSAGE</td>
+                        <td>User profiling, fraud detection</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Link Prediction</strong></td>
+                        <td>Predict edges</td>
+                        <td>SEAL, GNN + MLP</td>
+                        <td>Recommendation, KG completion</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Graph Classification</strong></td>
+                        <td>Label graphs</td>
+                        <td>GIN, DiffPool</td>
+                        <td>Drug discovery, program analysis</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Graph Generation</strong></td>
+                        <td>Create new graphs</td>
+                        <td>GraphRNN, MolGAN, Diffusion</td>
+                        <td>Molecule design, synthetic data</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Dynamic Learning</strong></td>
+                        <td>Model time + graph</td>
+                        <td>TGAT, TGN, CAW</td>
+                        <td>Financial fraud, traffic forecasting</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Scalability</strong></td>
+                        <td>Handle large graphs</td>
+                        <td>GraphSAGE, Cluster-GCN</td>
+                        <td>Web-scale recommendation</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Key Takeaways</h2>
+    <div class="content">
+        <ul>
+            <li><strong>Node/link tasks</strong> dominate industrial applications (e.g., recommendation).</li>
+            <li><strong>Graph classification</strong> is crucial in scientific domains (e.g., chemistry).</li>
+            <li><strong>Graph generation</strong> is emerging but faces validity and evaluation hurdles.</li>
+            <li><strong>Dynamic graphs</strong> require specialized architectures that respect causality.</li>
+            <li><strong>Scalability</strong> is the #1 barrier to real-world deployment—sampling and system co-design are essential.</li>
+        </ul>
+        
+        <div class="definition">
+            💡 <strong>Future Directions</strong>:<br>
+            - <strong>Foundation models for graphs</strong> (e.g., pre-trained GNNs)<br>
+            - <strong>3D+temporal graph learning</strong> (e.g., protein folding over time)<br>
+            - <strong>Privacy-preserving graph learning</strong> (federated GNNs)
+        </div>
+    </div>
+</section>
+
+
+<section class="section">
+    <h2 class="section-title">Cybersecurity Fundamentals</h2>
+    <div class="content">
+        <h3>Network Security</h3>
+        <div class="definition">
+            <strong>Goal</strong>: Protect the <strong>confidentiality, integrity, and availability (CIA triad)</strong> of data and resources as they traverse networks.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Network Protocols and Vulnerabilities</h2>
+    <div class="content">
+        <h3>Key Protocols & Associated Risks</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Protocol</th>
+                        <th>Purpose</th>
+                        <th>Common Vulnerabilities</th>
+                        <th>Mitigations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>TCP/IP</strong></td>
+                        <td>Core internet protocol suite</td>
+                        <td>IP spoofing, SYN flood (DoS), session hijacking</td>
+                        <td>Ingress/egress filtering, SYN cookies</td>
+                    </tr>
+                    <tr>
+                        <td><strong>HTTP</strong></td>
+                        <td>Web communication</td>
+                        <td>Eavesdropping, cookie theft, XSS</td>
+                        <td>Use <strong>HTTPS</strong> (HTTP over TLS)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DNS</strong></td>
+                        <td>Domain name resolution</td>
+                        <td>DNS spoofing, cache poisoning, DDoS on DNS servers</td>
+                        <td>DNSSEC, DoH (DNS over HTTPS), Anycast DNS</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ARP</strong></td>
+                        <td>Map IP → MAC address</td>
+                        <td><strong>ARP spoofing</strong> (Man-in-the-Middle)</td>
+                        <td>Static ARP entries, DHCP snooping, port security</td>
+                    </tr>
+                    <tr>
+                        <td><strong>SMTP/POP3/IMAP</strong></td>
+                        <td>Email transfer/retrieval</td>
+                        <td>Credential sniffing, email spoofing</td>
+                        <td>Enforce <strong>STARTTLS</strong>, SPF/DKIM/DMARC</td>
+                    </tr>
+                    <tr>
+                        <td><strong>SNMP</strong></td>
+                        <td>Network device monitoring</td>
+                        <td>Default community strings (e.g., "public"), info leakage</td>
+                        <td>Disable v1/v2; use SNMPv3 with auth/encryption</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3>Common Attack Vectors</h3>
+        <ul>
+            <li><strong>Man-in-the-Middle (MitM)</strong>: Attacker intercepts/modifies traffic (e.g., via ARP spoofing).</li>
+            <li><strong>Denial-of-Service (DoS/DDoS)</strong>: Overwhelm network resources (e.g., SYN flood, UDP flood).</li>
+            <li><strong>Reconnaissance</strong>: Scanning (Nmap), banner grabbing → map network for weaknesses.</li>
+        </ul>
+        
+        <div class="definition">
+            🔍 <strong>Defense Principle</strong>: <strong>Encrypt everything</strong> (TLS 1.2+), disable legacy protocols (SSLv3, Telnet), and apply least privilege.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Firewall Principles and Configurations</h2>
+    <div class="content">
+        <h3>What is a Firewall?</h3>
+        <p>A <strong>network security device</strong> that monitors and filters incoming/outgoing traffic based on <strong>predefined rules</strong>.</p>
+        
+        <h3>Types of Firewalls</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>How It Works</th>
+                        <th>Pros</th>
+                        <th>Cons</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Packet-Filtering</strong></td>
+                        <td>Filters based on IP, port, protocol</td>
+                        <td>Fast, low overhead</td>
+                        <td>No state awareness; easily bypassed</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Stateful Inspection</strong></td>
+                        <td>Tracks active connections (state table)</td>
+                        <td>Blocks unsolicited traffic; more secure</td>
+                        <td>Higher resource use</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Proxy Firewall (Application-Level)</strong></td>
+                        <td>Acts as intermediary; inspects Layer 7 (app data)</td>
+                        <td>Deep inspection; hides internal IPs</td>
+                        <td>Latency; app-specific</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Next-Generation Firewall (NGFW)</strong></td>
+                        <td>Combines stateful + app awareness + IPS + identity</td>
+                        <td>Granular control (user/app-based policies)</td>
+                        <td>Complex; expensive</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3>Firewall Configuration Best Practices</h3>
+        <ul>
+            <li><strong>Default-deny policy</strong>: Block all traffic unless explicitly allowed.</li>
+            <li><strong>Least privilege</strong>: Only open necessary ports (e.g., 443 for HTTPS, not 80).</li>
+            <li><strong>Rule ordering</strong>: Place specific rules before general ones.</li>
+            <li><strong>Logging & monitoring</strong>: Enable logs for denied/allowed traffic.</li>
+            <li><strong>Regular audits</strong>: Remove obsolete rules ("rule bloat" increases risk).</li>
+        </ul>
+        
+        <div class="definition">
+            🛡️ <strong>Example Rule</strong>:<br>
+            <code>ALLOW TCP 192.168.1.0/24 → ANY on port 443</code><br>
+            <code>DENY ALL</code>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Intrusion Detection/Prevention Systems (IDS/IPS)</h2>
+    <div class="content">
+        <h3>IDS vs. IPS</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>IDS (Intrusion Detection System)</th>
+                        <th>IPS (Intrusion Prevention System)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Action</strong></td>
+                        <td><strong>Detects</strong> and alerts</td>
+                        <td><strong>Detects + blocks</strong> malicious traffic</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Placement</strong></td>
+                        <td>Passive (SPAN/mirror port)</td>
+                        <td>Inline (in traffic path)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk</strong></td>
+                        <td>No impact on traffic if fails</td>
+                        <td>Failure = network downtime</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Use Case</strong></td>
+                        <td>Monitoring, forensics</td>
+                        <td>Real-time threat blocking</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3>Detection Methods</h3>
+        <ul>
+            <li><strong>Signature-Based</strong>: Matches known attack patterns (e.g., Snort rules).<br>
+            → Fast, low false positives; misses zero-days.</li>
+            <li><strong>Anomaly-Based</strong>: Learns "normal" behavior; flags deviations.<br>
+            → Catches novel attacks; high false positives.</li>
+            <li><strong>Heuristic/Behavioral</strong>: Analyzes code behavior (e.g., sandboxing).</li>
+        </ul>
+        
+        <h3>Deployment Modes</h3>
+        <ul>
+            <li><strong>Network-based (NIDS/NIPS)</strong>: Monitors entire network segment.</li>
+            <li><strong>Host-based (HIDS/HIPS)</strong>: Installed on endpoints (e.g., OSSEC, CrowdStrike).</li>
+        </ul>
+        
+        <div class="definition">
+            🚨 <strong>Best Practice</strong>: Use <strong>IDS + IPS in tandem</strong>—IDS for visibility, IPS for enforcement.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Virtual Private Networks (VPNs)</h2>
+    <div class="content">
+        <h3>Purpose</h3>
+        <p>Create a <strong>secure, encrypted tunnel</strong> over public networks (e.g., internet) to protect data in transit.</p>
+        
+        <h3>Types of VPNs</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Use Case</th>
+                        <th>Protocols</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Remote Access VPN</strong></td>
+                        <td>Individual users → corporate network</td>
+                        <td>SSL/TLS (e.g., OpenVPN), IPsec</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Site-to-Site VPN</strong></td>
+                        <td>Connect two networks (e.g., branch office ↔ HQ)</td>
+                        <td>IPsec (IKEv2), GRE over IPsec</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3>Key Protocols</h3>
+        <ul>
+            <li><strong>IPsec</strong>: Suite of protocols (AH, ESP, IKE) for secure IP communication.
+            <ul>
+                <li><strong>Transport mode</strong>: Encrypts payload only (host-to-host).</li>
+                <li><strong>Tunnel mode</strong>: Encrypts entire IP packet (network-to-network).</li>
+            </ul>
+            </li>
+            <li><strong>SSL/TLS VPN</strong>: Uses web browser; no client install needed (e.g., Cisco AnyConnect).</li>
+            <li><strong>WireGuard</strong>: Modern, lightweight, high-performance (uses Curve25519, ChaCha20).</li>
+        </ul>
+        
+        <h3>Security Considerations</h3>
+        <ul>
+            <li><strong>Strong authentication</strong>: Use certificates or MFA (not just passwords).</li>
+            <li><strong>Perfect Forward Secrecy (PFS)</strong>: Ensure session keys aren't compromised if master key is.</li>
+            <li><strong>Avoid PPTP/L2TP without IPsec</strong>: Broken encryption (e.g., MS-CHAPv2).</li>
+        </ul>
+        
+        <div class="definition">
+            🔐 <strong>Zero Trust Note</strong>: Traditional VPNs grant broad network access → modern trend is <strong>Zero Trust Network Access (ZTNA)</strong> (e.g., Cloudflare Access, Zscaler).
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Network Segmentation and Micro-Segmentation</h2>
+    <div class="content">
+        <h3>Why Segment?</h3>
+        <ul>
+            <li>Limit lateral movement during breaches ("assume breach" model).</li>
+            <li>Contain threats (e.g., ransomware).</li>
+            <li>Enforce least privilege.</li>
+        </ul>
+        
+        <h3>Network Segmentation</h3>
+        <ul>
+            <li><strong>Definition</strong>: Divide network into <strong>subnets/VLANs</strong> based on function (e.g., HR, Finance, IoT).</li>
+            <li><strong>Tools</strong>: Routers, VLANs, firewalls.</li>
+            <li><strong>Example</strong>:
+            <ul>
+                <li>VLAN 10: Users</li>
+                <li>VLAN 20: Servers</li>
+                <li>VLAN 30: Guest Wi-Fi</li>
+                <li>→ Firewall rules restrict inter-VLAN traffic.</li>
+            </ul>
+            </li>
+        </ul>
+        
+        <h3>Micro-Segmentation</h3>
+        <ul>
+            <li><strong>Definition</strong>: Apply security policies at <strong>individual workload level</strong> (e.g., per VM, container, app).</li>
+            <li><strong>Granularity</strong>: "East-west" traffic (within data center) is controlled as tightly as "north-south".</li>
+            <li><strong>Implementation</strong>:
+            <ul>
+                <li><strong>Software-defined</strong>: VMware NSX, Illumio, AWS Security Groups.</li>
+                <li><strong>Policy example</strong>: "Web server can talk to DB on port 3306, but nothing else."</li>
+            </ul>
+            </li>
+        </ul>
+        
+        <h3>Benefits</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Approach</th>
+                        <th>Scope</th>
+                        <th>Flexibility</th>
+                        <th>Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Network Segmentation</strong></td>
+                        <td>Subnet/VLAN level</td>
+                        <td>Moderate</td>
+                        <td>Traditional data centers</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Micro-Segmentation</strong></td>
+                        <td>Per-workload</td>
+                        <td>High</td>
+                        <td>Cloud, containers, Zero Trust</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="definition">
+            🌐 <strong>Zero Trust Alignment</strong>: Micro-segmentation enforces "never trust, always verify" for internal traffic.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Summary Table</h2>
+    <div class="content">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Concept</th>
+                        <th>Core Purpose</th>
+                        <th>Key Tools/Protocols</th>
+                        <th>Best Practice</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Network Protocols</strong></td>
+                        <td>Enable communication</td>
+                        <td>TCP/IP, DNS, HTTP</td>
+                        <td>Disable insecure protocols; enforce encryption</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Firewalls</strong></td>
+                        <td>Filter traffic</td>
+                        <td>NGFW, iptables, Palo Alto</td>
+                        <td>Default-deny; least privilege</td>
+                    </tr>
+                    <tr>
+                        <td><strong>IDS/IPS</strong></td>
+                        <td>Detect/block attacks</td>
+                        <td>Snort (IDS), Suricata (IPS)</td>
+                        <td>Combine signature + anomaly detection</td>
+                    </tr>
+                    <tr>
+                        <td><strong>VPNs</strong></td>
+                        <td>Secure remote access</td>
+                        <td>IPsec, WireGuard, OpenVPN</td>
+                        <td>Use MFA; prefer ZTNA for new deployments</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Segmentation</strong></td>
+                        <td>Limit breach impact</td>
+                        <td>VLANs, NSX, Security Groups</td>
+                        <td>Start with coarse segmentation → refine to micro</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Key Takeaways</h2>
+    <div class="content">
+        <ul>
+            <li><strong>Defense in depth</strong>: Combine firewalls, IDS/IPS, segmentation, and encryption.</li>
+            <li><strong>Assume breach</strong>: Segment networks to contain attackers.</li>
+            <li><strong>Modern shift</strong>: From perimeter-based (firewall + VPN) to <strong>Zero Trust</strong> (micro-segmentation + ZTNA).</li>
+            <li><strong>Visibility is critical</strong>: Log and monitor all network traffic.</li>
+            <li><strong>Patch and harden</strong>: Keep network devices (routers, switches) updated.</li>
+        </ul>
+        
+        <div class="definition">
+            💡 <strong>Pro Tip</strong>: Always test firewall/IPS rules in <strong>monitor mode</strong> before enforcing to avoid outages.
+        </div>
+    </div>
+</section>
+
+
+<section class="section">
+    <h2 class="section-title">Threat Landscape</h2>
+    <div class="content">
+        <p><em>Understanding Modern Cyber Threats and Attack Vectors</em></p>
+        
+        <div class="definition">
+            <strong>Goal</strong>: Identify, classify, and defend against evolving cyber threats that target individuals, organizations, and critical infrastructure.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Malware Types and Characteristics</h2>
+    <div class="content">
+        <p><strong>Malware</strong> (malicious software) is designed to disrupt, damage, or gain unauthorized access to systems.</p>
+        
+        <h3>Common Malware Types</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Behavior</th>
+                        <th>Delivery Method</th>
+                        <th>Example/Notable Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Virus</strong></td>
+                        <td>Attaches to legitimate files; requires user execution</td>
+                        <td>Email attachments, infected USBs</td>
+                        <td>ILOVEYOU (2000)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Worm</strong></td>
+                        <td>Self-replicating; spreads without user interaction</td>
+                        <td>Network vulnerabilities, email</td>
+                        <td>WannaCry (used EternalBlue exploit)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Trojan</strong></td>
+                        <td>Disguised as legitimate software; creates backdoors</td>
+                        <td>Fake installers, pirated software</td>
+                        <td>Emotet, Zeus</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ransomware</strong></td>
+                        <td>Encrypts files/data; demands payment for decryption</td>
+                        <td>Phishing, RDP brute-force</td>
+                        <td>LockBit, REvil, Colonial Pipeline attack (2021)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Spyware</strong></td>
+                        <td>Secretly monitors user activity (keystrokes, browsing)</td>
+                        <td>Bundled software, drive-by downloads</td>
+                        <td>Pegasus (NSO Group)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Adware</strong></td>
+                        <td>Displays unwanted ads; may track behavior</td>
+                        <td>Free software bundles</td>
+                        <td>Not always malicious, but privacy-invasive</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Rootkit</strong></td>
+                        <td>Hides presence of malware; gains privileged access</td>
+                        <td>Exploits, Trojans</td>
+                        <td>Sony BMG rootkit (2005)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fileless Malware</strong></td>
+                        <td>Resides in memory (RAM); uses legitimate tools (e.g., PowerShell)</td>
+                        <td>Phishing, macros</td>
+                        <td>Used in APT attacks; evades disk-based AV</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3>Key Characteristics</h3>
+        <ul>
+            <li><strong>Persistence</strong>: Survives reboots (e.g., via registry keys, scheduled tasks).</li>
+            <li><strong>Evasion</strong>: Uses packing, obfuscation, or polymorphism to avoid detection.</li>
+            <li><strong>Command & Control (C2)</strong>: Communicates with attacker-controlled server for instructions.</li>
+        </ul>
+        
+        <div class="definition">
+            🛡️ <strong>Defense</strong>:<br>
+            - Keep systems patched<br>
+            - Use EDR (Endpoint Detection & Response)<br>
+            - Apply principle of least privilege<br>
+            - Regular backups (for ransomware recovery)
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Advanced Persistent Threats (APTs)</h2>
+    <div class="content">
+        <h3>What is an APT?</h3>
+        <p><strong>Sophisticated, long-term cyber campaigns</strong> conducted by <strong>well-resourced actors</strong> (nation-states, organized crime).</p>
+        <p><strong>Goals</strong>: Espionage, data theft, sabotage (not quick financial gain).</p>
+        
+        <h3>APT Lifecycle (Kill Chain)</h3>
+        <ol>
+            <li><strong>Reconnaissance</strong>: Gather intel on target (employees, tech stack).</li>
+            <li><strong>Initial Access</strong>: Phishing, zero-day exploit, or supply chain compromise.</li>
+            <li><strong>Execution</strong>: Run malware (often fileless).</li>
+            <li><strong>Persistence</strong>: Establish backdoors, create accounts.</li>
+            <li><strong>Privilege Escalation</strong>: Gain admin/root access.</li>
+            <li><strong>Defense Evasion</strong>: Disable logging, AV, use living-off-the-land (LOTL) techniques.</li>
+            <li><strong>Lateral Movement</strong>: Move across network (e.g., via Pass-the-Hash).</li>
+            <li><strong>Exfiltration</strong>: Steal data slowly to avoid detection.</li>
+        </ol>
+        
+        <h3>Notable APT Groups</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Group</th>
+                        <th>Attribution</th>
+                        <th>Targets</th>
+                        <th>Tactics</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>APT29 (Cozy Bear)</strong></td>
+                        <td>Russia (SVR)</td>
+                        <td>Government, healthcare</td>
+                        <td>Spear-phishing, ZeroLogon exploit</td>
+                    </tr>
+                    <tr>
+                        <td><strong>APT28 (Fancy Bear)</strong></td>
+                        <td>Russia (GRU)</td>
+                        <td>Political orgs, Olympics</td>
+                        <td>Credential theft, fake domains</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Lazarus Group</strong></td>
+                        <td>North Korea</td>
+                        <td>Financial, crypto</td>
+                        <td>SWIFT banking attacks, ransomware</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Equation Group</strong></td>
+                        <td>USA (NSA-linked)</td>
+                        <td>Global telecoms, hard drive firmware</td>
+                        <td>Firmware-level rootkits</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="definition">
+            🔍 <strong>Detection Challenges</strong>:<br>
+            - Operate slowly ("low and slow")<br>
+            - Use custom, undetected tools<br>
+            - Blend with normal traffic
+        </div>
+        
+        <div class="definition">
+            🛡️ <strong>Mitigation</strong>:<br>
+            - Network segmentation<br>
+            - User behavior analytics (UEBA)<br>
+            - Threat intelligence sharing<br>
+            - Assume breach; hunt for anomalies
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Zero-Day Exploits and Mitigation</h2>
+    <div class="content">
+        <h3>What is a Zero-Day?</h3>
+        <p>A <strong>previously unknown vulnerability</strong> with <strong>no patch available</strong>.</p>
+        <p>"Zero-day" = 0 days between discovery by attacker and vendor awareness.</p>
+        
+        <h3>Why Dangerous?</h3>
+        <ul>
+            <li>No signature-based detection possible.</li>
+            <li>High success rate (no defenses in place).</li>
+            <li>Often sold on dark web for $100K–$2M (e.g., iOS zero-days).</li>
+        </ul>
+        
+        <h3>Famous Examples</h3>
+        <ul>
+            <li><strong>Stuxnet (2010)</strong>: Used 4 zero-days to sabotage Iranian centrifuges.</li>
+            <li><strong>SolarWinds (2020)</strong>: Supply chain attack via compromised update (zero-day in build system).</li>
+            <li><strong>Log4Shell (2021)</strong>: Critical RCE in Log4j (CVE-2021-44228); exploited within hours.</li>
+        </ul>
+        
+        <h3>Mitigation Strategies</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Approach</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Virtual Patching</strong></td>
+                        <td>Use WAF/IPS to block exploit patterns before patch is applied</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Attack Surface Reduction</strong></td>
+                        <td>Disable unused features (e.g., macros, scripting)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Memory Protections</strong></td>
+                        <td>DEP, ASLR, stack canaries to prevent code execution</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sandboxing</strong></td>
+                        <td>Run untrusted code in isolated environments</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Threat Hunting</strong></td>
+                        <td>Proactively search for indicators of compromise (IOCs)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="definition">
+            💡 <strong>Best Practice</strong>:<br>
+            - Subscribe to vulnerability feeds (CISA KEV, NVD)<br>
+            - Prioritize patching based on exploitability (EPSS score)
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Phishing and Social Engineering</h2>
+    <div class="content">
+        <h3>Phishing</h3>
+        <p><strong>Definition</strong>: Fraudulent attempt to steal credentials/data via <strong>deceptive communication</strong>.</p>
+        
+        <h4>Types</h4>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Method</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Email Phishing</strong></td>
+                        <td>Mass emails with fake login pages</td>
+                        <td>"Your account is locked—click here"</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Spear Phishing</strong></td>
+                        <td>Targeted at specific individual/org</td>
+                        <td>Fake HR email to CFO with "invoice"</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Whaling</strong></td>
+                        <td>Targets executives (CEO, CFO)</td>
+                        <td>Fake legal subpoena</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Smishing/Vishing</strong></td>
+                        <td>SMS or voice calls</td>
+                        <td>"Your package is delayed—press 1"</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Clone Phishing</strong></td>
+                        <td>Copy legitimate email; replace link with malicious one</td>
+                        <td>Duplicate PayPal receipt</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3>Social Engineering</h3>
+        <p><strong>Broader manipulation</strong> of human psychology to bypass security.</p>
+        <p><strong>Principles</strong>: Authority, urgency, scarcity, trust.</p>
+        
+        <h4>Common Tactics</h4>
+        <ul>
+            <li><strong>Pretexting</strong>: Create false scenario (e.g., "IT support" calling for password reset).</li>
+            <li><strong>Baiting</strong>: Offer something enticing (e.g., free USB drive labeled "Salary Info").</li>
+            <li><strong>Tailgating</strong>: Follow authorized person into secure facility.</li>
+        </ul>
+        
+        <div class="definition">
+            🛡️ <strong>Defenses</strong>:<br>
+            - <strong>Security awareness training</strong> (simulate phishing)<br>
+            - <strong>Multi-factor authentication (MFA)</strong> — renders stolen passwords useless<br>
+            - <strong>Email authentication</strong>: SPF, DKIM, DMARC<br>
+            - <strong>Verify requests</strong> via secondary channel (e.g., call back on official number)
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Distributed Denial of Service (DDoS) Attacks</h2>
+    <div class="content">
+        <h3>What is a DDoS?</h3>
+        <p>Overwhelm target (server, network, app) with <strong>flood of traffic</strong> from <strong>multiple sources</strong> (botnet), causing service unavailability.</p>
+        
+        <h3>Attack Types</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Mechanism</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Volumetric</strong></td>
+                        <td>Saturate bandwidth</td>
+                        <td>UDP flood, DNS amplification</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Protocol</strong></td>
+                        <td>Exhaust server resources</td>
+                        <td>SYN flood, Ping of Death</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Application Layer</strong></td>
+                        <td>Target app logic (Layer 7)</td>
+                        <td>HTTP flood, Slowloris</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3>Botnets Used in DDoS</h3>
+        <ul>
+            <li><strong>Mirai</strong>: Infected IoT devices (cameras, routers); used in 2016 Dyn attack (took down Twitter, Netflix).</li>
+            <li><strong>Meris</strong>: Exploited MikroTik routers; generated 2.4 Tbps attack (2021).</li>
+        </ul>
+        
+        <h3>Mitigation Strategies</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Layer</th>
+                        <th>Technique</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>On-Premise</strong></td>
+                        <td>Rate limiting, blackholing, ACLs</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cloud/ISP</strong></td>
+                        <td>Scrubbing centers (e.g., Cloudflare, AWS Shield)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Architectural</strong></td>
+                        <td>Auto-scaling, CDN, load balancing</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Proactive</strong></td>
+                        <td>DDoS protection services with Anycast network</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="definition">
+            📉 <strong>Key Metric</strong>: <strong>Attack size</strong> (Gbps/Tbps) and <strong>requests per second (RPS)</strong>.
+        </div>
+        
+        <div class="definition">
+            💡 <strong>Note</strong>: DDoS is often a <strong>smokescreen</strong> for data theft or ransomware deployment.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Summary Table</h2>
+    <div class="content">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Threat</th>
+                        <th>Primary Goal</th>
+                        <th>Key Defense</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Malware</strong></td>
+                        <td>Data theft, disruption</td>
+                        <td>EDR, patching, backups</td>
+                    </tr>
+                    <tr>
+                        <td><strong>APTs</strong></td>
+                        <td>Long-term espionage</td>
+                        <td>Network segmentation, UEBA, threat hunting</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Zero-Day</strong></td>
+                        <td>Exploit unknown flaws</td>
+                        <td>Virtual patching, attack surface reduction</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phishing</strong></td>
+                        <td>Credential theft</td>
+                        <td>MFA, user training, email auth (DMARC)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DDoS</strong></td>
+                        <td>Service disruption</td>
+                        <td>Cloud scrubbing, rate limiting, CDN</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Key Takeaways</h2>
+    <div class="content">
+        <ul>
+            <li><strong>Humans are the weakest link</strong>: Phishing and social engineering remain top initial access vectors.</li>
+            <li><strong>APTs are patient</strong>: Detection requires behavioral analytics, not just signatures.</li>
+            <li><strong>Zero-days are inevitable</strong>: Focus on <strong>resilience</strong> (assume breach) and <strong>rapid response</strong>.</li>
+            <li><strong>DDoS is weaponized</strong>: Often used for extortion or distraction.</li>
+            <li><strong>Defense is layered</strong>: No single tool stops all threats—combine people, process, and technology.</li>
+        </ul>
+        
+        <div class="definition">
+            🔐 <strong>Golden Rule</strong>:<br>
+            <strong>"Trust, but verify. Assume breach. Encrypt everything. Patch relentlessly."</strong>
+        </div>
+    </div>
+</section>
+
+
+<section class="section">
+    <h2 class="section-title">Security Operations</h2>
+    <div class="content">
+        <p><em>Detect, Analyze, Respond, and Recover from Cyber Threats</em></p>
+        
+        <div class="definition">
+            <strong>Goal</strong>: Establish a proactive, efficient, and repeatable process to <strong>identify, contain, eradicate, and learn from security incidents</strong>.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Security Information and Event Management (SIEM)</h2>
+    <div class="content">
+        <h3>What is SIEM?</h3>
+        <p>A centralized platform that <strong>collects, correlates, and analyzes log data</strong> from across an organization's IT infrastructure (networks, servers, endpoints, cloud, apps).</p>
+        
+        <h3>Core Functions</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Function</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Log Aggregation</strong></td>
+                        <td>Ingest logs from diverse sources (firewalls, IDS, Windows Event Logs, etc.)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Normalization</strong></td>
+                        <td>Convert logs to common schema (e.g., CEF, LEEF)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Correlation</strong></td>
+                        <td>Link related events across sources (e.g., failed login + firewall block)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Alerting</strong></td>
+                        <td>Generate high-fidelity alerts based on rules or ML</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Dashboards & Reporting</strong></td>
+                        <td>Visualize threats, compliance status (e.g., PCI DSS, HIPAA)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Retention</strong></td>
+                        <td>Store logs for forensic and compliance purposes (often 6–12 months)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3>Popular SIEM Solutions</h3>
+        <ul>
+            <li><strong>Commercial</strong>: Splunk Enterprise Security, IBM QRadar, Microsoft Sentinel, LogRhythm</li>
+            <li><strong>Open-source</strong>: ELK Stack (Elasticsearch, Logstash, Kibana), Wazuh, Apache Metron</li>
+        </ul>
+        
+        <h3>Use Cases</h3>
+        <ul>
+            <li>Detect brute-force attacks</li>
+            <li>Identify data exfiltration patterns</li>
+            <li>Monitor privileged user activity</li>
+            <li>Meet regulatory audit requirements</li>
+        </ul>
+        
+        <div class="definition">
+            ⚠️ <strong>Challenges</strong>:<br>
+            - High false-positive rates<br>
+            - Log source coverage gaps<br>
+            - Scalability and cost (storage/compute)
+        </div>
+        
+        <div class="definition">
+            ✅ <strong>Best Practice</strong>: Tune correlation rules regularly; integrate threat intelligence feeds.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Threat Intelligence and Analysis</h2>
+    <div class="content">
+        <h3>What is Threat Intelligence?</h3>
+        <p><strong>Evidence-based knowledge</strong> about existing or emerging threats (actors, TTPs, IOCs) used to <strong>inform security decisions</strong>.</p>
+        
+        <h3>Types of Threat Intelligence</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Audience</th>
+                        <th>Format</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Strategic</strong></td>
+                        <td>Executives, risk managers</td>
+                        <td>Reports, trends</td>
+                        <td>"Nation-state A is targeting energy sector"</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tactical</strong></td>
+                        <td>SOC, threat hunters</td>
+                        <td>TTPs, malware analysis</td>
+                        <td>"APT29 uses PowerShell for lateral movement"</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Operational</strong></td>
+                        <td>Incident responders</td>
+                        <td>IOCs, attack timelines</td>
+                        <td>"Malware hash: a1b2c3...; C2 IP: 185.143.x.x"</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Technical</strong></td>
+                        <td>Analysts, engineers</td>
+                        <td>IPs, domains, file hashes</td>
+                        <td>"Block domain evil[.]com"</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3>Threat Intelligence Lifecycle</h3>
+        <ol>
+            <li><strong>Planning</strong>: Define requirements (e.g., "What threats target our industry?")</li>
+            <li><strong>Collection</strong>: Gather data from open (OSINT), commercial, and internal sources</li>
+            <li><strong>Processing</strong>: Normalize and enrich data (e.g., geolocate IPs, tag malware families)</li>
+            <li><strong>Analysis</strong>: Contextualize—turn data into actionable insights</li>
+            <li><strong>Dissemination</strong>: Share via reports, APIs, or SIEM integrations</li>
+            <li><strong>Feedback</strong>: Refine based on analyst input</li>
+        </ol>
+        
+        <h3>Key Frameworks & Sources</h3>
+        <ul>
+            <li><strong>MITRE ATT&CK</strong>: Knowledge base of adversary TTPs (tactics, techniques, procedures)</li>
+            <li><strong>STIX/TAXII</strong>: Standard formats for sharing threat intel (Structured Threat Info eXpression / Trusted Automated eXchange)</li>
+            <li><strong>OSINT Sources</strong>: AlienVault OTX, VirusTotal, AbuseIPDB, CISA alerts</li>
+        </ul>
+        
+        <div class="definition">
+            🔍 <strong>Actionable Intel</strong>: Intelligence is only valuable if it leads to <strong>blocking, detection, or mitigation</strong>.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Incident Response Procedures</h2>
+    <div class="content">
+        <h3>Incident Response Lifecycle (NIST SP 800-61)</h3>
+        <p>A structured approach to handling security breaches:</p>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Phase</th>
+                        <th>Key Activities</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>1. Preparation</strong></td>
+                        <td>Develop IR plan, train team, deploy monitoring (SIEM, EDR), establish comms</td>
+                    </tr>
+                    <tr>
+                        <td><strong>2. Identification</strong></td>
+                        <td>Detect anomaly → validate as incident → classify (malware, DDoS, data breach)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>3. Containment</strong></td>
+                        <td><strong>Short-term</strong>: Isolate affected systems (e.g., disable account, block IP)<br><strong>Long-term</strong>: Apply patches, remove backdoors</td>
+                    </tr>
+                    <tr>
+                        <td><strong>4. Eradication</strong></td>
+                        <td>Remove root cause (malware, attacker accounts); harden systems</td>
+                    </tr>
+                    <tr>
+                        <td><strong>5. Recovery</strong></td>
+                        <td>Restore systems from clean backups; monitor for reinfection</td>
+                    </tr>
+                    <tr>
+                        <td><strong>6. Lessons Learned</strong></td>
+                        <td>Post-mortem meeting; update IR plan, policies, and controls</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3>Incident Classification</h3>
+        <ul>
+            <li><strong>Low</strong>: Spam, port scans</li>
+            <li><strong>Medium</strong>: Malware infection, policy violation</li>
+            <li><strong>High</strong>: Data breach, ransomware, APT activity</li>
+        </ul>
+        
+        <h3>Communication Plan</h3>
+        <ul>
+            <li><strong>Internal</strong>: Legal, PR, executives</li>
+            <li><strong>External</strong>: Customers (if data breached), regulators (GDPR, CCPA), law enforcement (FBI, CISA)</li>
+        </ul>
+        
+        <div class="definition">
+            🚨 <strong>Golden Hour</strong>: First 60 minutes post-detection are critical for containment.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Digital Forensics Fundamentals</h2>
+    <div class="content">
+        <h3>Goal</h3>
+        <p><strong>Preserve, identify, extract, and document</strong> digital evidence in a <strong>forensically sound</strong> manner (admissible in court).</p>
+        
+        <h3>Core Principles (ACPO Guidelines)</h3>
+        <ol>
+            <li><strong>Do not alter</strong> original evidence.</li>
+            <li><strong>Document all actions</strong> (chain of custody).</li>
+            <li><strong>Competence</strong>: Only qualified personnel handle evidence.</li>
+            <li><strong>Audit trail</strong>: All processes must be verifiable.</li>
+        </ol>
+        
+        <h3>Forensic Process</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Step</th>
+                        <th>Tools & Techniques</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Acquisition</strong></td>
+                        <td>Create bit-for-bit copy (disk image) using write-blockers<br>Tools: FTK Imager, dd, Guymager</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Preservation</strong></td>
+                        <td>Hash verification (SHA-256/MD5) to ensure integrity</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Analysis</strong></td>
+                        <td>Examine file system, registry, logs, memory dumps<br>Tools: Autopsy, Volatility (memory), Wireshark (network)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Timeline Reconstruction</strong></td>
+                        <td>Correlate file MAC times (Modified, Accessed, Created)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Reporting</strong></td>
+                        <td>Clear, factual report for legal/technical audiences</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3>Types of Forensics</h3>
+        <ul>
+            <li><strong>Disk Forensics</strong>: Analyze hard drives/SSDs</li>
+            <li><strong>Memory Forensics</strong>: Extract running processes, network connections, encryption keys</li>
+            <li><strong>Network Forensics</strong>: Reconstruct attacks from PCAPs</li>
+            <li><strong>Mobile Forensics</strong>: Extract data from iOS/Android devices</li>
+        </ul>
+        
+        <div class="definition">
+            ⚖️ <strong>Legal Note</strong>: Evidence must follow <strong>chain of custody</strong>—document who handled it, when, and why.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Security Automation and Orchestration</h2>
+    <div class="content">
+        <h3>Why Automate?</h3>
+        <ul>
+            <li>Reduce <strong>mean time to respond (MTTR)</strong></li>
+            <li>Handle high-volume, repetitive tasks</li>
+            <li>Free analysts for complex investigations</li>
+        </ul>
+        
+        <h3>Key Concepts</h3>
+        <ul>
+            <li><strong>SOAR (Security Orchestration, Automation, and Response)</strong>: Platform that integrates SIEM, threat intel, and security tools to automate workflows.</li>
+            <li><strong>Playbooks</strong>: Predefined response procedures (e.g., "If phishing email detected → quarantine, block sender, notify user").</li>
+        </ul>
+        
+        <h3>Common Automation Use Cases</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>Manual Time</th>
+                        <th>Automated Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Enrich IP with threat intel</td>
+                        <td>5–10 min</td>
+                        <td>< 10 sec</td>
+                    </tr>
+                    <tr>
+                        <td>Isolate infected endpoint</td>
+                        <td>15 min</td>
+                        <td>< 1 min</td>
+                    </tr>
+                    <tr>
+                        <td>Reset user password after compromise</td>
+                        <td>10 min</td>
+                        <td>Instant</td>
+                    </tr>
+                    <tr>
+                        <td>Block malicious domain at firewall</td>
+                        <td>20 min</td>
+                        <td>< 30 sec</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3>SOAR Platforms</h3>
+        <ul>
+            <li>Palo Alto Cortex XSOAR</li>
+            <li>Splunk SOAR (formerly Phantom)</li>
+            <li>IBM Resilient</li>
+            <li>Microsoft Sentinel (with Logic Apps)</li>
+        </ul>
+        
+        <h3>Automation Risks & Mitigations</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Risk</th>
+                        <th>Mitigation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>False positives trigger harmful actions</td>
+                        <td>Use human-in-the-loop for critical actions</td>
+                    </tr>
+                    <tr>
+                        <td>Over-automation reduces analyst skills</td>
+                        <td>Balance automation with human oversight</td>
+                    </tr>
+                    <tr>
+                        <td>Tool integration complexity</td>
+                        <td>Use standardized APIs (REST, STIX/TAXII)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="definition">
+            🤖 <strong>Future Trend</strong>: AI-driven SOAR—predictive response, autonomous threat hunting.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Summary Table</h2>
+    <div class="content">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Primary Purpose</th>
+                        <th>Key Tools/Frameworks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>SIEM</strong></td>
+                        <td>Centralized log analysis & alerting</td>
+                        <td>Splunk, QRadar, Sentinel</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Threat Intel</strong></td>
+                        <td>Contextualize threats</td>
+                        <td>MITRE ATT&CK, STIX/TAXII, OTX</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Incident Response</strong></td>
+                        <td>Structured breach handling</td>
+                        <td>NIST SP 800-61, IR playbooks</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Digital Forensics</strong></td>
+                        <td>Preserve & analyze evidence</td>
+                        <td>FTK, Autopsy, Volatility</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Automation (SOAR)</strong></td>
+                        <td>Accelerate response</td>
+                        <td>Cortex XSOAR, Splunk SOAR</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Key Takeaways</h2>
+    <div class="content">
+        <ul>
+            <li><strong>SIEM is the SOC's central nervous system</strong>—but requires tuning to avoid alert fatigue.</li>
+            <li><strong>Threat intelligence must be operationalized</strong>—not just collected.</li>
+            <li><strong>Incident response is a team sport</strong>: Legal, PR, IT, and execs must coordinate.</li>
+            <li><strong>Forensics = science + law</strong>: Integrity and documentation are non-negotiable.</li>
+            <li><strong>Automation is force multiplier</strong>—but never fully replace human judgment.</li>
+        </ul>
+        
+        <div class="definition">
+            💡 <strong>Pro Tip</strong>:<br>
+            Build <strong>runbooks</strong> for common incidents (phishing, ransomware, DDoS) and <strong>test them quarterly</strong> via tabletop exercises.
+        </div>
+    </div>
+</section>
+
+
+<section class="section">
+    <h2 class="section-title">Adversarial Machine Learning</h2>
+    <div class="content">
+        <h3>Adversarial Attacks</h3>
+        <div class="definition">
+            <strong>Core Idea</strong>:<br>
+            Slightly perturb input data in a way that is <strong>imperceptible to humans</strong> but causes a <strong>machine learning model to misclassify</strong> it with high confidence.
+        </div>
+        
+        <div class="definition">
+            <strong>Threat Model</strong>:<br>
+            - <strong>Goal</strong>: Misclassification (targeted or untargeted)<br>
+            - <strong>Knowledge</strong>: Varies (white-box vs. black-box)<br>
+            - <strong>Constraint</strong>: Perturbation must be small (e.g., \( \|\delta\|_p \leq \epsilon \))
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">White-Box vs. Black-Box Attacks</h2>
+    <div class="content">
+        <h3>White-Box Attacks</h3>
+        <ul>
+            <li><strong>Assumption</strong>: Attacker has <strong>full knowledge</strong> of the target model:
+            <ul>
+                <li>Architecture</li>
+                <li>Parameters (weights)</li>
+                <li>Gradients</li>
+            </ul>
+            </li>
+            <li><strong>Advantage</strong>: Can compute exact gradients → highly effective.</li>
+            <li><strong>Use Case</strong>: Evaluating model robustness during development.</li>
+        </ul>
+        
+        <h3>Black-Box Attacks</h3>
+        <ul>
+            <li><strong>Assumption</strong>: Attacker has <strong>no access</strong> to model internals.
+            <ul>
+                <li>Can only query the model (input → output).</li>
+                <li>May only see final prediction (hard-label) or class probabilities (soft-label).</li>
+            </ul>
+            </li>
+            <li><strong>Strategies</strong>:
+            <ul>
+                <li><strong>Transfer-based</strong>: Craft adversarial examples on a <strong>surrogate model</strong>, then attack target.</li>
+                <li><strong>Query-based</strong>: Estimate gradients via finite differences (e.g., <strong>ZOO</strong>, <strong>Bandits</strong>).</li>
+            </ul>
+            </li>
+            <li><strong>Use Case</strong>: Real-world attacks on APIs (e.g., Google Vision, AWS Rekognition).</li>
+        </ul>
+        
+        <div class="definition">
+            🔑 <strong>Key Insight</strong>:<br>
+            Adversarial examples often <strong>transfer</strong> across models—enabling black-box attacks without direct access.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Fast Gradient Sign Method (FGSM)</h2>
+    <div class="content">
+        <p><em>(Goodfellow et al., 2015)</em></p>
+        
+        <h3>Idea</h3>
+        <p>Use <strong>gradient of loss w.r.t. input</strong> to find direction of maximal increase in loss.</p>
+        <p>Take a <strong>single step</strong> in that direction with fixed step size \( \epsilon \).</p>
+        
+        <h3>Mathematical Formulation</h3>
+        <p>For input \( \mathbf{x} \), true label \( y \), and model loss \( \mathcal{L} \):</p>
+        <div class="equation">
+            \[ \mathbf{x}_{\text{adv}} = \mathbf{x} + \epsilon \cdot \text{sign}\left( \nabla_{\mathbf{x}} \mathcal{L}(\mathbf{x}, y) \right) \]
+        </div>
+        <ul>
+            <li>\( \epsilon \): Perturbation budget (e.g., 8/255 for pixel values in [0,1])</li>
+            <li>\( \text{sign}(\cdot) \): Ensures perturbation is applied uniformly across pixels</li>
+        </ul>
+        
+        <h3>Properties</h3>
+        <ul>
+            <li><strong>Fast</strong>: One forward + one backward pass.</li>
+            <li><strong>Untargeted</strong>: Maximizes loss for true class.</li>
+            <li><strong>Weak</strong>: Often outperformed by iterative methods.</li>
+        </ul>
+        
+        <div class="definition">
+            ✅ <strong>Use Case</strong>: Baseline attack for robustness testing.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Projected Gradient Descent (PGD)</h2>
+    <div class="content">
+        <p><em>(Madry et al., 2018)</em></p>
+        
+        <h3>Idea</h3>
+        <p><strong>Iterative refinement</strong> of FGSM: Take multiple small steps, projecting back into \( \epsilon \)-ball after each step.</p>
+        <p>Considered the <strong>strongest first-order white-box attack</strong>.</p>
+        
+        <h3>Algorithm</h3>
+        <ol>
+            <li>Initialize: \( \mathbf{x}_0^{\text{adv}} = \mathbf{x} + \text{random noise within } \epsilon\text{-ball} \)</li>
+            <li>For \( t = 1 \) to \( T \):
+            \[ \mathbf{x}_t^{\text{adv}} = \Pi_{\mathcal{B}_\epsilon(\mathbf{x})} \left( \mathbf{x}_{t-1}^{\text{adv}} + \alpha \cdot \text{sign}\left( \nabla_{\mathbf{x}} \mathcal{L}(\mathbf{x}_{t-1}^{\text{adv}}, y) \right) \right) \]
+            <ul>
+                <li>\( \alpha \): Step size (e.g., \( \epsilon / 4 \))</li>
+                <li>\( \Pi \): Projection operator (clips to valid input range and \( \epsilon \)-ball)</li>
+            </ul>
+            </li>
+        </ol>
+        
+        <h3>Why PGD is Stronger</h3>
+        <ul>
+            <li>Explores local maxima more thoroughly.</li>
+            <li>Random initialization avoids poor local optima.</li>
+            <li><strong>Gold standard</strong> for evaluating adversarial robustness.</li>
+        </ul>
+        
+        <div class="definition">
+            🛡️ <strong>Defense Benchmark</strong>: A model robust to PGD is likely robust to many other attacks.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Carlini-Wagner (C&W) Attacks</h2>
+    <div class="content">
+        <p><em>(Carlini & Wagner, 2017)</em></p>
+        
+        <h3>Idea</h3>
+        <p>Formulate attack as <strong>optimization problem</strong> that minimizes perturbation while ensuring misclassification.</p>
+        <p>Bypasses <strong>defensive distillation</strong> and other gradient-masking defenses.</p>
+        
+        <h3>Optimization Objective</h3>
+        <p>Minimize \( \|\delta\|_p + c \cdot f(\mathbf{x} + \delta) \)<br>
+        subject to \( \mathbf{x} + \delta \in [0,1]^n \)</p>
+        <ul>
+            <li>\( \delta \): Perturbation</li>
+            <li>\( f(\cdot) \): Custom loss function ensuring misclassification:
+            <ul>
+                <li><strong>Untargeted</strong>: \( f(\mathbf{z}) = \max(Z_{y} - \max_{i \neq y} Z_i, -\kappa) \)</li>
+                <li><strong>Targeted</strong>: \( f(\mathbf{z}) = \max(\max_{i \ne t} Z_i - Z_t, -\kappa) \)</li>
+                <li>\( Z \): Logits; \( \kappa \): Confidence parameter</li>
+            </ul>
+            </li>
+            <li>\( c \): Trade-off constant (found via binary search)</li>
+        </ul>
+        
+        <h3>Norms Supported</h3>
+        <ul>
+            <li>\( L_2 \): Most common (minimal Euclidean distortion)</li>
+            <li>\( L_0 \): Minimize number of modified pixels</li>
+            <li>\( L_\infty \): Bounded per-pixel change</li>
+        </ul>
+        
+        <h3>Strengths</h3>
+        <ul>
+            <li><strong>High success rate</strong> even against defended models.</li>
+            <li>Produces <strong>less perceptible</strong> perturbations than FGSM/PGD.</li>
+            <li><strong>Adaptive</strong>: Can be tuned for any norm or confidence level.</li>
+        </ul>
+        
+        <h3>Weaknesses</h3>
+        <ul>
+            <li>Computationally expensive (requires many iterations).</li>
+            <li>Not as fast as PGD for large-scale evaluation.</li>
+        </ul>
+        
+        <div class="definition">
+            🎯 <strong>Use Case</strong>: Breaking state-of-the-art defenses; generating high-quality adversarial examples.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Transfer Attacks and Evasion Techniques</h2>
+    <div class="content">
+        <h3>Transferability Phenomenon</h3>
+        <p>Adversarial examples crafted on <strong>Model A</strong> often fool <strong>Model B</strong>—even if architectures differ.</p>
+        <p><strong>Cause</strong>: Models learn similar decision boundaries; adversarial directions generalize.</p>
+        
+        <h3>Transfer Attack Workflow</h3>
+        <ol>
+            <li>Train or obtain a <strong>surrogate model</strong> (similar to target).</li>
+            <li>Generate adversarial examples using white-box methods (FGSM, PGD).</li>
+            <li>Submit to <strong>black-box target API</strong> → high success rate (~50–80% in practice).</li>
+        </ol>
+        
+        <h3>Enhancing Transferability</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Technique</th>
+                        <th>How It Works</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Input Diversity</strong></td>
+                        <td>Apply random transformations (resize, padding) during attack generation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Momentum Iterative FGSM (MI-FGSM)</strong></td>
+                        <td>Incorporate momentum into gradients to stabilize updates</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ensemble Attacks</strong></td>
+                        <td>Craft examples against <strong>multiple models</strong> simultaneously</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Feature-Level Attacks</strong></td>
+                        <td>Perturb intermediate features instead of input</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3>Evasion in Real-World Systems</h3>
+        <ul>
+            <li><strong>APIs</strong>: Attack cloud ML services (e.g., fool facial recognition to bypass authentication).</li>
+            <li><strong>Malware Detection</strong>: Perturb binary files to evade AV scanners (e.g., adding dead code).</li>
+            <li><strong>Autonomous Vehicles</strong>: Trick object detectors with adversarial patches on road signs.</li>
+        </ul>
+        
+        <div class="definition">
+            ⚠️ <strong>Limitation</strong>: Transferability drops with <strong>defensive ensembles</strong> or <strong>input transformations</strong> (e.g., JPEG compression).
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Summary Table: Adversarial Attacks Compared</h2>
+    <div class="content">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Attack</th>
+                        <th>Type</th>
+                        <th>Iterations</th>
+                        <th>Strength</th>
+                        <th>Speed</th>
+                        <th>Best For</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>FGSM</strong></td>
+                        <td>White-box</td>
+                        <td>1</td>
+                        <td>Low</td>
+                        <td>⚡ Very Fast</td>
+                        <td>Baseline testing</td>
+                    </tr>
+                    <tr>
+                        <td><strong>PGD</strong></td>
+                        <td>White-box</td>
+                        <td>10–100</td>
+                        <td>🔥 Very High</td>
+                        <td>Medium</td>
+                        <td>Robustness benchmark</td>
+                    </tr>
+                    <tr>
+                        <td><strong>C&W</strong></td>
+                        <td>White-box</td>
+                        <td>1000+</td>
+                        <td>🔥 High (stealthy)</td>
+                        <td>Slow</td>
+                        <td>Breaking defenses</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Transfer</strong></td>
+                        <td>Black-box</td>
+                        <td>Varies</td>
+                        <td>Medium-High</td>
+                        <td>Fast (after surrogate training)</td>
+                        <td>Real-world API attacks</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Key Takeaways</h2>
+    <div class="content">
+        <ul>
+            <li><strong>White-box attacks</strong> (PGD, C&W) are the strongest but require model access.</li>
+            <li><strong>Black-box attacks</strong> rely on <strong>transferability</strong> or <strong>query-based gradient estimation</strong>.</li>
+            <li><strong>FGSM</strong> is simple but weak; <strong>PGD</strong> is the gold standard for robustness evaluation.</li>
+            <li><strong>C&W</strong> produces high-quality, minimal-perturbation examples—ideal for research.</li>
+            <li><strong>Transfer attacks</strong> make adversarial ML a real-world threat to deployed systems.</li>
+        </ul>
+        
+        <div class="definition">
+            💡 <strong>Defense Insight</strong>:<br>
+            No single defense is perfect. <strong>Adversarial training</strong> (training on PGD examples) is the most effective known method—but increases cost and may not generalize to unseen attacks.
+        </div>
+    </div>
+</section>
+
+
+
+
 
 
 
