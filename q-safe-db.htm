@@ -1304,7 +1304,913 @@ q1: ─────⊕──H──</pre>
     </div>
 </section>
 
+<section class="section">
+    <h2 class="section-title">Quantum-Inspired Algorithms</h2>
+    <div class="content">
+        <p><em>Classical Simulation of Quantum Phenomena</em></p>
+        
+        <h3>Simulating Quantum Phenomena: Overview</h3>
+        <h4>What Are Quantum-Inspired Algorithms?</h4>
+        <p><strong>Definition</strong>: Classical algorithms that borrow ideas from quantum mechanics (e.g., superposition, interference, entanglement) to solve problems more efficiently—<strong>without requiring a quantum computer</strong>.</p>
+        <p><strong>Goal</strong>: Leverage quantum-like structures to gain speedups or new insights on classical hardware.</p>
+        <p><strong>Important distinction</strong>:</p>
+        <ul>
+            <li><strong>Quantum simulation</strong>: Simulating a quantum system <em>on a classical computer</em>.</li>
+            <li><strong>Quantum-inspired</strong>: Using quantum concepts to design <em>better classical algorithms</em>.</li>
+        </ul>
+        
+        <div class="definition">
+            ⚠️ <strong>Note</strong>: True quantum advantage (e.g., exponential speedup) generally <strong>cannot</strong> be replicated classically for arbitrary quantum systems—due to the exponential cost of representing quantum states.
+        </div>
+    </div>
+</section>
 
+<section class="section">
+    <h2 class="section-title">Classical Simulation of Superposition</h2>
+    <div class="content">
+        <h3>How Superposition Is Represented Classically</h3>
+        <p>A single qubit in superposition:</p>
+        <div class="equation">
+            \[ |\psi\rangle = \alpha|0\rangle + \beta|1\rangle, \quad |\alpha|^2 + |\beta|^2 = 1 \]
+        </div>
+        <p><strong>Classical representation</strong>: Store complex amplitudes \(\alpha, \beta\) as floating-point numbers → <strong>2 complex numbers</strong> per qubit.</p>
+        
+        <h3>Scaling Challenge</h3>
+        <ul>
+            <li>For \(n\) qubits, the state vector has \(2^n\) complex amplitudes.</li>
+            <li><strong>Memory requirement</strong>: \(O(2^n)\) → becomes infeasible beyond ~45–50 qubits on supercomputers.</li>
+        </ul>
+        
+        <h3>Simulation Techniques</h3>
+        <ol>
+            <li><strong>State-vector simulation</strong>:
+            <ul>
+                <li>Exact simulation using full \(2^n\)-dimensional vector.</li>
+                <li>Used in simulators like Qiskit Aer, QuTiP.</li>
+            </ul>
+            </li>
+            <li><strong>Sparse state representation</strong>:
+            <ul>
+                <li>If the state has few non-zero amplitudes (e.g., after few gates), store only non-zero entries.</li>
+            </ul>
+            </li>
+            <li><strong>Tensor network methods</strong> (see Section 5): Avoid full state vector when entanglement is limited.</li>
+        </ol>
+        
+        <div class="definition">
+            ✅ <strong>Feasible for</strong>: Small circuits, educational purposes, verification of quantum hardware.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Simulating Entanglement on Classical Hardware</h2>
+    <div class="content">
+        <h3>The Core Challenge</h3>
+        <ul>
+            <li>Entanglement implies <strong>non-separability</strong>: The full \(2^n\)-dimensional state cannot be factored.</li>
+            <li>Classical simulation must track <strong>global correlations</strong>, which grow exponentially with qubit count.</li>
+        </ul>
+        
+        <h3>Approaches to Simulate Entanglement</h3>
+        <h4>(a) Full State-Vector Simulation</h4>
+        <ul>
+            <li>Stores entire wavefunction → captures all entanglement exactly.</li>
+            <li><strong>Cost</strong>: \(O(2^n)\) memory and \(O(2^n)\) time per gate (for dense gates like CNOT).</li>
+        </ul>
+        
+        <h4>(b) Stabilizer Formalism (Gottesman-Knill Theorem)</h4>
+        <ul>
+            <li>Efficiently simulates circuits using only <strong>Clifford gates</strong> (H, S, CNOT).</li>
+            <li>Represents state via <strong>stabilizer generators</strong> (not amplitudes).</li>
+            <li><strong>Complexity</strong>: \(O(n^2)\) per gate for \(n\) qubits.</li>
+            <li><strong>Limitation</strong>: Cannot simulate non-Clifford gates (e.g., T gate) efficiently → not universal.</li>
+        </ul>
+        
+        <h4>(c) Matrix Product States (MPS) / Tensor Networks</h4>
+        <p>Represents state as a chain of tensors:</p>
+        <div class="equation">
+            \[ |\psi\rangle = \sum_{i_1,\dots,i_n} A^{[1]}_{i_1} A^{[2]}_{i_2} \cdots A^{[n]}_{i_n} |i_1 i_2 \dots i_n\rangle \]
+        </div>
+        <ul>
+            <li><strong>Efficient when entanglement is low</strong> (e.g., 1D systems with area law).</li>
+            <li><strong>Bond dimension \(\chi\)</strong> controls accuracy and cost: memory = \(O(n \chi^2)\).</li>
+            <li>Used in DMRG (Density Matrix Renormalization Group) for condensed matter physics.</li>
+        </ul>
+        
+        <div class="definition">
+            🔑 <strong>Key Insight</strong>: Entanglement entropy limits classical simulability. High entanglement → classical simulation becomes intractable.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Quantum Interference Simulation Techniques</h2>
+    <div class="content">
+        <h3>What Is Quantum Interference?</h3>
+        <p>Amplitudes (complex numbers) can <strong>constructively or destructively interfere</strong>.</p>
+        <p>Critical for quantum speedups (e.g., in Grover's or Shor's algorithms).</p>
+        
+        <h3>Classical Simulation Methods</h3>
+        <ol>
+            <li><strong>Path Integral / Sum-over-Paths</strong>:
+            <ul>
+                <li>Compute final amplitude as sum over all computational paths.</li>
+                <li>Each path contributes a complex phase.</li>
+                <li><strong>Problem</strong>: \(2^{\text{#gates}}\) paths → exponential in circuit depth.</li>
+            </ul>
+            </li>
+            <li><strong>Feynman's Path Simulator</strong>:
+            <ul>
+                <li>For a circuit with \(m\) gates, simulate by summing over all possible intermediate measurement outcomes.</li>
+                <li>Time complexity: \(O(4^m)\) → only feasible for shallow circuits.</li>
+            </ul>
+            </li>
+            <li><strong>Monte Carlo with Sign Problem</strong>:
+            <ul>
+                <li>Sample paths probabilistically.</li>
+                <li><strong>Obstacle</strong>: Negative/complex weights → <strong>sign problem</strong> → high variance, inefficient.</li>
+            </ul>
+            </li>
+            <li><strong>Stabilizer Rank Decomposition</strong> (for non-Clifford circuits):
+            <ul>
+                <li>Approximate a state as sum of \(R\) stabilizer states:<br>
+                \[ |\psi\rangle \approx \sum_{k=1}^R c_k |\phi_k\rangle \]
+                </li>
+                <li>Simulate each \(|\phi_k\rangle\) efficiently (via Gottesman-Knill), then combine.</li>
+                <li>Cost scales with <strong>stabilizer rank \(R\)</strong> (e.g., \(R = 2^t\) for \(t\) T-gates).</li>
+            </ul>
+            </li>
+        </ol>
+        
+        <div class="definition">
+            🌊 <strong>Interference is hard to simulate classically</strong> because it requires tracking <strong>global phase relationships</strong> across exponentially many states.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Approximation Methods for Quantum States</h2>
+    <div class="content">
+        <p>Exact simulation is often impossible → use <strong>approximations</strong>.</p>
+        
+        <h3>(a) Tensor Networks</h3>
+        <ul>
+            <li><strong>MPS (1D)</strong>, <strong>PEPS (2D)</strong>, <strong>MERA</strong>: Represent states with limited entanglement.</li>
+            <li><strong>Accuracy controlled by bond dimension</strong>.</li>
+            <li>Widely used in quantum chemistry and condensed matter.</li>
+        </ul>
+        
+        <h3>(b) Variational Methods</h3>
+        <ul>
+            <li><strong>Quantum-inspired classical ansatz</strong>: Use parameterized classical models (e.g., neural networks) to approximate quantum states.
+            <ul>
+                <li>Example: <strong>Restricted Boltzmann Machines (RBMs)</strong> to represent wavefunctions.</li>
+            </ul>
+            </li>
+            <li>Train via energy minimization (e.g., for ground states).</li>
+        </ul>
+        
+        <h3>(c) Low-Rank Approximations</h3>
+        <ul>
+            <li>Assume density matrix \(\rho\) has low rank → store via SVD.</li>
+            <li>Useful for <strong>mixed states</strong> with limited entanglement.</li>
+        </ul>
+        
+        <h3>(d) Clifford+T Approximation</h3>
+        <ul>
+            <li>Decompose arbitrary gates into Clifford + T.</li>
+            <li>Simulate using <strong>stabilizer decomposition</strong> (as above).</li>
+            <li>Error controlled by number of T gates.</li>
+        </ul>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Computational Trade-offs in Simulation</h2>
+    <div class="content">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Memory</th>
+                        <th>Time</th>
+                        <th>Accuracy</th>
+                        <th>Best For</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>State-vector</strong></td>
+                        <td>\(O(2^n)\)</td>
+                        <td>\(O(2^n)\)/gate</td>
+                        <td>Exact</td>
+                        <td>Small \(n\) (< 45 qubits)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Stabilizer (Clifford)</strong></td>
+                        <td>\(O(n^2)\)</td>
+                        <td>\(O(n^2)\)/gate</td>
+                        <td>Exact (Clifford only)</td>
+                        <td>Clifford circuits</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tensor Networks (MPS)</strong></td>
+                        <td>\(O(n \chi^2)\)</td>
+                        <td>\(O(n \chi^3)\)</td>
+                        <td>Approximate</td>
+                        <td>Low-entanglement 1D systems</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Path Integral</strong></td>
+                        <td>\(O(1)\)</td>
+                        <td>\(O(4^m)\)</td>
+                        <td>Exact</td>
+                        <td>Shallow circuits (small \(m\))</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Stabilizer Rank</strong></td>
+                        <td>\(O(R n^2)\)</td>
+                        <td>\(O(R n^2)\)</td>
+                        <td>Approximate</td>
+                        <td>Circuits with few T gates</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Neural Quantum States</strong></td>
+                        <td>\(O(\text{params})\)</td>
+                        <td>Training cost</td>
+                        <td>Approximate</td>
+                        <td>Ground states, optimization</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3>Key Trade-offs</h3>
+        <ul>
+            <li><strong>Accuracy vs. Scalability</strong>: Exact methods don't scale; approximations introduce error.</li>
+            <li><strong>Entanglement vs. Efficiency</strong>: High entanglement → tensor networks fail; state-vector needed.</li>
+            <li><strong>Circuit Depth vs. Path Methods</strong>: Deep circuits → path integral infeasible.</li>
+            <li><strong>Hardware Limits</strong>: Even with compression, simulating 50+ qubits with high entanglement requires exascale computing.</li>
+        </ul>
+        
+        <div class="definition">
+            💡 <strong>Rule of Thumb</strong>:<br>
+            If a quantum circuit can be simulated efficiently classically, it likely <strong>does not provide quantum advantage</strong>.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Summary</h2>
+    <div class="content">
+        <ul>
+            <li><strong>Superposition</strong> and <strong>interference</strong> require tracking complex amplitudes → exponential classical cost.</li>
+            <li><strong>Entanglement</strong> is the main barrier to efficient classical simulation.</li>
+            <li><strong>Special cases</strong> (Clifford circuits, low entanglement) can be simulated efficiently.</li>
+            <li><strong>Approximation methods</strong> (tensor networks, stabilizer decompositions) enable simulation of larger systems at the cost of accuracy.</li>
+            <li><strong>Quantum-inspired algorithms</strong> may offer practical speedups for specific problems (e.g., linear algebra, optimization), but <strong>do not replicate exponential quantum advantage</strong>.</li>
+        </ul>
+        
+        <div class="definition">
+            🌐 <strong>Reality Check</strong>: Classical simulation is crucial for <strong>verifying quantum hardware</strong>, <strong>developing algorithms</strong>, and <strong>exploring quantum-classical boundaries</strong>—but it cannot replace scalable, fault-tolerant quantum computers for truly hard problems.
+        </div>
+    </div>
+</section>
+
+
+
+<section class="section">
+    <h2 class="section-title">Tensor Networks</h2>
+    <div class="content">
+        <p><em>Study Notes for Quantum Simulation and High-Dimensional Data Representation</em></p>
+        
+        <h3>Tensor Algebra Fundamentals</h3>
+        <h4>What is a Tensor?</h4>
+        <p>A <strong>tensor</strong> is a multi-dimensional array of numbers that generalizes scalars (0D), vectors (1D), and matrices (2D).</p>
+        <ul>
+            <li><strong>Order (or rank)</strong>: Number of indices (e.g., a 3D tensor \(T_{ijk}\) has order 3).</li>
+            <li><strong>Dimensions (modes)</strong>: Size along each index (e.g., \(T \in \mathbb{C}^{d_1 \times d_2 \times \cdots \times d_n}\)).</li>
+        </ul>
+        
+        <h4>Key Operations</h4>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Operation</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Tensor product</strong> (\(\otimes\))</td>
+                        <td>Combines tensors: \((A \otimes B)_{i,j,k,l} = A_{i,j} B_{k,l}\)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Contraction</strong></td>
+                        <td>Sum over shared indices (generalizes matrix multiplication).<br>Example: \(C_{ik} = \sum_j A_{ij} B_{jk}\)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Reshaping</strong></td>
+                        <td>Reinterpret tensor as different shape (e.g., vector ↔ matrix) without changing data.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Trace</strong></td>
+                        <td>Contraction of a tensor with itself over one or more pairs of indices.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h4>Einstein Notation (Implicit Summation)</h4>
+        <p>Repeated indices are summed over:<br>
+        \(C_{ik} = A_{ij} B_{jk}\) means \(\sum_j A_{ij} B_{jk}\).</p>
+        <p><strong>Crucial for tensor network diagrams</strong>.</p>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Tensor Decomposition Methods</h2>
+    <div class="content">
+        <p>Decomposing high-order tensors into simpler components reduces storage and enables efficient computation.</p>
+        
+        <h3>(a) CANDECOMP/PARAFAC (CP) Decomposition</h3>
+        <p>Expresses a tensor as a <strong>sum of rank-1 tensors</strong>:</p>
+        <div class="equation">
+            \[ \mathcal{T} \approx \sum_{r=1}^R \lambda_r \, a^{(1)}_r \circ a^{(2)}_r \circ \cdots \circ a^{(N)}_r \]
+        </div>
+        <p>where \(\circ\) denotes outer product.</p>
+        <ul>
+            <li><strong>Parameters</strong>: \(R \cdot \sum_{n=1}^N d_n\) (vs. \(\prod d_n\) for full tensor).</li>
+            <li><strong>Pros</strong>: Compact, interpretable.</li>
+            <li><strong>Cons</strong>: Rank \(R\) hard to choose; decomposition not always unique; ill-conditioned.</li>
+        </ul>
+        
+        <div class="definition">
+            📌 Used in chemometrics, signal processing.
+        </div>
+        
+        <h3>(b) Tucker Decomposition</h3>
+        <p>Generalization of SVD to higher orders:</p>
+        <div class="equation">
+            \[ \mathcal{T} \approx \mathcal{G} \times_1 A^{(1)} \times_2 A^{(2)} \cdots \times_N A^{(N)} \]
+        </div>
+        <ul>
+            <li>\(\mathcal{G}\): <strong>Core tensor</strong> (size \(r_1 \times r_2 \times \cdots \times r_N\))</li>
+            <li>\(A^{(n)}\): Factor matrices (\(d_n \times r_n\))</li>
+        </ul>
+        <ul>
+            <li><strong>Storage</strong>: \(\prod r_n + \sum d_n r_n\)</li>
+            <li><strong>Pros</strong>: Flexible; captures multi-linear structure.</li>
+            <li><strong>Cons</strong>: Core tensor still exponential in \(N\) if all \(r_n\) large → <strong>curse of dimensionality</strong>.</li>
+        </ul>
+        
+        <div class="definition">
+            📌 Basis for <strong>Higher-Order SVD (HOSVD)</strong>.
+        </div>
+        
+        <h3>(c) Tensor Train (TT) / Matrix Product State (MPS)</h3>
+        <p><strong>Decomposes tensor into a chain of 3D cores</strong>:</p>
+        <div class="equation">
+            \[ \mathcal{T}_{i_1 i_2 \dots i_N} = \sum_{\alpha_1,\dots,\alpha_{N-1}} 
+            G^{(1)}_{i_1,\alpha_1} 
+            G^{(2)}_{\alpha_1,i_2,\alpha_2} 
+            \cdots 
+            G^{(N)}_{\alpha_{N-1},i_N} \]
+        </div>
+        <ul>
+            <li><strong>Bond dimensions</strong> \(\{\alpha_k\}\) control approximation rank.</li>
+            <li><strong>Storage</strong>: \(O(N d r^2)\) for uniform physical dimension \(d\) and bond dimension \(r\).</li>
+            <li><strong>Avoids exponential scaling</strong> if \(r\) is small (e.g., for weakly entangled states).</li>
+        </ul>
+        
+        <div class="definition">
+            ✅ <strong>Key insight</strong>: TT/MPS is <strong>exact</strong> for any tensor (with \(r\) up to \(d^{N/2}\)), but <strong>efficient</strong> only when \(r \ll d^{N/2}\).
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Matrix Product States (MPS) Representation</h2>
+    <div class="content">
+        <h3>Origin</h3>
+        <p>MPS is the <strong>tensor network form of a quantum many-body wavefunction</strong>:</p>
+        <div class="equation">
+            \[ |\psi\rangle = \sum_{s_1,\dots,s_N} c_{s_1 \dots s_N} |s_1 s_2 \dots s_N\rangle \]
+        </div>
+        <p>where \(c_{s_1 \dots s_N}\) is represented as a <strong>Tensor Train</strong>.</p>
+        
+        <h3>MPS Structure</h3>
+        <p>Each site \(k\) has a <strong>core tensor</strong> \(A^{[k]}_{s_k}\) of shape \((\chi_{k-1}, d, \chi_k)\), where:</p>
+        <ul>
+            <li>\(d\): local Hilbert space dimension (e.g., \(d=2\) for qubits)</li>
+            <li>\(\chi_k\): <strong>bond dimension</strong> (entanglement capacity)</li>
+        </ul>
+        <p><strong>Boundary conditions</strong>: \(\chi_0 = \chi_N = 1\) (open boundary)</p>
+        
+        <h3>Gauge Freedom</h3>
+        <ul>
+            <li>MPS is <strong>not unique</strong>: Can insert \(X X^{-1} = I\) between cores.</li>
+            <li>Common gauges:
+            <ul>
+                <li><strong>Left-canonical</strong>: \(\sum_{s_k} (A^{[k]}_{s_k})^\dagger A^{[k]}_{s_k} = I\)</li>
+                <li><strong>Right-canonical</strong>: \(\sum_{s_k} A^{[k]}_{s_k} (A^{[k]}_{s_k})^\dagger = I\)</li>
+            </ul>
+            </li>
+            <li>Enables efficient local operations (e.g., in DMRG).</li>
+        </ul>
+        
+        <h3>Entanglement and Bond Dimension</h3>
+        <ul>
+            <li>For a bipartition at bond \(k\), <strong>entanglement entropy</strong> \(S \leq \log_2 \chi_k\).</li>
+            <li><strong>Area law</strong>: Ground states of 1D gapped Hamiltonians have <strong>constant</strong> \(\chi\) → MPS is efficient.</li>
+        </ul>
+        
+        <div class="definition">
+            🌟 MPS is the foundation of <strong>Density Matrix Renormalization Group (DMRG)</strong>.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Tensor Network Diagrams and Notation</h2>
+    <div class="content">
+        <h3>Diagrammatic Rules</h3>
+        <ul>
+            <li><strong>Node</strong>: Tensor (shape indicates order).</li>
+            <li><strong>Edge</strong>: Index (labeled or unlabeled).</li>
+            <li><strong>Connected edges</strong>: Contracted (summed over).</li>
+            <li><strong>Open edges</strong>: Free indices (output of network).</li>
+        </ul>
+        
+        <h3>Examples</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Object</th>
+                        <th>Diagram</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Vector \(v_i\)</td>
+                        <td>○——</td>
+                    </tr>
+                    <tr>
+                        <td>Matrix \(M_{ij}\)</td>
+                        <td>○——○</td>
+                    </tr>
+                    <tr>
+                        <td>Order-3 tensor \(T_{ijk}\)</td>
+                        <td>○ with 3 legs</td>
+                    </tr>
+                    <tr>
+                        <td>Matrix multiplication \(C = AB\)</td>
+                        <td>○——○——○ ⇒ ○————○</td>
+                    </tr>
+                    <tr>
+                        <td>MPS (4 sites)</td>
+                        <td>○—○—○—○ (each node has one physical leg down, bonds horizontal)</td>
+                    </tr>
+                    <tr>
+                        <td>Contraction of two tensors</td>
+                        <td>Two nodes connected by an edge</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3>Advantages of Diagrams</h3>
+        <ul>
+            <li>Visualize complex contractions.</li>
+            <li>Reveal computational structure (e.g., sequential vs. parallel).</li>
+            <li>Simplify derivation of algorithms (e.g., DMRG, TEBD).</li>
+        </ul>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Contraction Algorithms and Complexity</h2>
+    <div class="content">
+        <h3>What is Contraction?</h3>
+        <p>Evaluate a tensor network by summing over all internal (bond) indices.</p>
+        <p>Goal: Compute scalar (e.g., \(\langle \psi | \phi \rangle\)) or reduced tensor (e.g., reduced density matrix).</p>
+        
+        <h3>Challenges</h3>
+        <ul>
+            <li><strong>Order matters</strong>: Different contraction sequences have vastly different costs.</li>
+            <li><strong>Optimal contraction is NP-hard</strong> (equivalent to graph partitioning).</li>
+        </ul>
+        
+        <h3>Contraction Strategies</h3>
+        <h4>(a) Sequential (Naive) Contraction</h4>
+        <ul>
+            <li>Contract one pair at a time.</li>
+            <li><strong>Cost</strong>: Can be exponential if done poorly.</li>
+        </ul>
+        
+        <h4>(b) Optimal Tree Contraction (for Trees)</h4>
+        <ul>
+            <li>For <strong>tree-structured networks</strong> (no cycles), optimal order is linear in size.</li>
+            <li>Use dynamic programming to find min-cost order.</li>
+        </ul>
+        
+        <h4>(c) Heuristic Methods (for General Networks)</h4>
+        <ul>
+            <li><strong>Greedy</strong>: At each step, contract pair minimizing cost (e.g., `opt_einsum` in Python).</li>
+            <li><strong>Graph-based</strong>: Model as <strong>line graph</strong>; use graph partitioning (e.g., METIS).</li>
+            <li><strong>Tree decomposition</strong>: For networks with small <strong>treewidth</strong>.</li>
+        </ul>
+        
+        <h3>Complexity Example: MPS Overlap</h3>
+        <p>Compute \(\langle \psi | \phi \rangle\) for two MPS with bond dimensions \(\chi_\psi, \chi_\phi\).</p>
+        <p>Contract from left to right:</p>
+        <ul>
+            <li>Each step: matrix multiplication of size \(\chi \times \chi\)</li>
+            <li><strong>Total cost</strong>: \(O(N d \chi^3)\)</li>
+        </ul>
+        
+        <h3>Memory vs. Time Trade-off</h3>
+        <p><strong>Intermediate tensors</strong> can be large.</p>
+        <p><strong>Slicing (index splitting)</strong>: Fix some indices to reduce memory at cost of repeated contractions.</p>
+        
+        <div class="definition">
+            💡 <strong>Rule of thumb</strong>:<br>
+            Contraction cost ≈ \(O(\chi^k)\), where \(k\) = number of bonds meeting at a vertex in the contraction tree.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Summary Table</h2>
+    <div class="content">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Concept</th>
+                        <th>Key Idea</th>
+                        <th>Complexity/Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>CP Decomposition</strong></td>
+                        <td>Sum of rank-1 tensors</td>
+                        <td>Compact but unstable</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tucker</strong></td>
+                        <td>Core + factor matrices</td>
+                        <td>Flexible; core still large</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tensor Train (MPS)</strong></td>
+                        <td>Chain of cores; bond dimensions control entanglement</td>
+                        <td>\(O(N d r^2)\); ideal for 1D quantum states</td>
+                    </tr>
+                    <tr>
+                        <td><strong>MPS Gauge</strong></td>
+                        <td>Left/right canonical forms enable local updates</td>
+                        <td>Essential for DMRG</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tensor Diagrams</strong></td>
+                        <td>Visual language for indices and contractions</td>
+                        <td>Intuitive algorithm design</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Contraction</strong></td>
+                        <td>Order drastically affects cost; optimal is NP-hard</td>
+                        <td>Heuristics used in practice (e.g., `opt_einsum`)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Key Takeaways</h2>
+    <div class="content">
+        <ul>
+            <li>Tensor networks <strong>tame the curse of dimensionality</strong> by exploiting <strong>structure</strong> (e.g., limited entanglement).</li>
+            <li><strong>MPS</strong> is the workhorse for 1D quantum systems and underlies <strong>DMRG</strong>.</li>
+            <li><strong>Contraction order</strong> is critical—small networks can be evaluated exactly; large ones require smart heuristics.</li>
+            <li>Diagrams are not just illustrative—they are <strong>computational tools</strong>.</li>
+            <li>Applications span <strong>quantum physics</strong>, <strong>machine learning</strong> (e.g., tensor completion), and <strong>data compression</strong>.</li>
+        </ul>
+    </div>
+</section>
+
+
+<section class="section">
+    <h2 class="section-title">Quantum-Inspired Search</h2>
+    <div class="content">
+        <p><em>Classical Approximations and Applications of Grover-like Techniques</em></p>
+        
+        <h3>Classical Approximations of Grover's Algorithm</h3>
+        <h4>Can Grover's Algorithm Be Simulated Classically?</h4>
+        <p><strong>Yes—but not efficiently</strong> for large unstructured search spaces.</p>
+        <p>The <strong>quadratic speedup</strong> (\(O(\sqrt{N})\) vs. \(O(N)\)) arises from <strong>quantum parallelism + interference</strong>, which classical systems cannot replicate <em>exactly</em> without exponential overhead.</p>
+        
+        <h4>Why Exact Simulation Fails at Scale</h4>
+        <ul>
+            <li>To simulate Grover's state evolution, a classical computer must store and update a <strong>superposition of \(N = 2^n\) amplitudes</strong>.</li>
+            <li><strong>Memory and time cost</strong>: \(O(N)\)—same as brute-force search.</li>
+            <li>Thus, <strong>no asymptotic speedup</strong> from exact simulation.</li>
+        </ul>
+        
+        <h4>Approximate Classical Emulations</h4>
+        <p>Instead of simulating the full quantum state, classical algorithms borrow <strong>structural ideas</strong> from Grover:</p>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Approach</th>
+                        <th>Idea</th>
+                        <th>Limitation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Random sampling with boosting</strong></td>
+                        <td>Repeatedly sample and "boost" likelihood of promising candidates</td>
+                        <td>No guaranteed speedup; heuristic</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Amplitude-inspired weighting</strong></td>
+                        <td>Assign weights to items; iteratively increase weight of marked items</td>
+                        <td>Requires oracle feedback per iteration</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Monte Carlo with bias</strong></td>
+                        <td>Bias random walks toward marked elements using oracle hints</td>
+                        <td>Still \(O(N)\) in worst case</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="definition">
+            ✅ <strong>Key insight</strong>: Classical systems can <strong>mimic the iterative refinement</strong> of Grover, but <strong>without interference</strong>, they cannot achieve true \(O(\sqrt{N})\) scaling.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Amplitude Amplification Techniques (Classical Analogues)</h2>
+    <div class="content">
+        <h3>What is Amplitude Amplification? (Quantum)</h3>
+        <p>Generalization of Grover's algorithm.</p>
+        <p>Given a subspace of "good" states, it <strong>rotates</strong> the state vector toward that subspace using:</p>
+        <ul>
+            <li>An <strong>oracle</strong> \(O\) that marks good states.</li>
+            <li>A <strong>diffusion operator</strong> \(D = 2|\psi\rangle\langle\psi| - I\) that inverts amplitudes about the mean.</li>
+        </ul>
+        
+        <h3>Classical Analogues</h3>
+        <p>While true amplitude amplification is quantum, classical algorithms use <strong>similar iterative boosting</strong>:</p>
+        
+        <h4>(a) Multiplicative Weight Updates (MWU)</h4>
+        <ul>
+            <li>Maintain a probability distribution over items.</li>
+            <li>After querying the oracle, <strong>increase weight</strong> of marked items, <strong>decrease</strong> others.</li>
+            <li>Normalize to form new distribution.</li>
+            <li>After \(O(\sqrt{N})\) rounds, marked item dominates <strong>in expectation</strong>—but <strong>not guaranteed</strong>.</li>
+        </ul>
+        
+        <h4>(b) Boosting in Machine Learning</h4>
+        <ul>
+            <li>Algorithms like <strong>AdaBoost</strong> iteratively adjust weights of misclassified samples.</li>
+            <li><strong>Analogy</strong>: Oracle = weak learner; amplification = focusing on hard examples.</li>
+            <li>Not a search algorithm per se, but shares the <strong>iterative refinement</strong> philosophy.</li>
+        </ul>
+        
+        <h4>(c) Stochastic Search with Feedback</h4>
+        <ul>
+            <li>Use oracle to guide a <strong>biased random search</strong>:
+            <ul>
+                <li>Start with uniform distribution.</li>
+                <li>After each query, update probabilities using Bayesian inference or reinforcement learning.</li>
+            </ul>
+            </li>
+            <li>Can reduce expected queries—but worst-case remains \(O(N)\).</li>
+        </ul>
+        
+        <div class="definition">
+            ⚠️ <strong>Critical difference</strong>: Quantum amplitude amplification uses <strong>coherent interference</strong> to <em>cancel</em> bad paths; classical methods only <em>reweight</em>—no destructive interference.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Oracle Design for Classical Search</h2>
+    <div class="content">
+        <h3>What is an Oracle?</h3>
+        <p>A <strong>black-box function</strong> \(f: \{0,1\}^n \to \{0,1\}\) such that \(f(x) = 1\) iff \(x\) is a solution.</p>
+        <p>In quantum algorithms, the oracle is applied <strong>coherently</strong> to superpositions.</p>
+        
+        <h3>Classical Oracle Usage</h3>
+        <p>In classical search, the oracle is simply a <strong>predicate function</strong> called on individual inputs.</p>
+        <p><strong>Design considerations</strong>:</p>
+        <ul>
+            <li><strong>Cost per query</strong>: Should be \(O(1)\) or low for speedup to matter.</li>
+            <li><strong>Side information</strong>: Can the oracle return more than yes/no? (e.g., gradient, distance)</li>
+            <li><strong>Parallelizability</strong>: Can multiple queries be made simultaneously?</li>
+        </ul>
+        
+        <h3>Quantum-Inspired Oracle Strategies</h3>
+        <ol>
+            <li><strong>Batch querying</strong>: Evaluate oracle on a <strong>subset</strong> of candidates in parallel (e.g., GPU).</li>
+            <li><strong>Probabilistic oracles</strong>: Return approximate answers (e.g., in noisy settings).</li>
+            <li><strong>Structured oracles</strong>: Exploit partial structure (e.g., locality, smoothness) to guide search—blurring line between structured and unstructured search.</li>
+        </ol>
+        
+        <div class="definition">
+            🔍 <strong>Note</strong>: True unstructured search assumes <strong>no side information</strong>—only yes/no answers. Most real-world problems have <em>some</em> structure, enabling better-than-Grover classical heuristics.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Quadratic Speedup Approximations</h2>
+    <div class="content">
+        <h3>Can Classical Algorithms Achieve \(O(\sqrt{N})\) Queries?</h3>
+        <p><strong>No—not in the worst case for unstructured search</strong> (proven by Bennett et al., 1997).</p>
+        <p><strong>Lower bound</strong>: Any classical randomized algorithm requires \(\Omega(N)\) queries to find a unique marked item with constant success probability.</p>
+        
+        <h3>When Can We *Approximate* Quadratic Speedup?</h3>
+        <p>Only under <strong>relaxed assumptions</strong>:</p>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Scenario</th>
+                        <th>Approximate Speedup</th>
+                        <th>Mechanism</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Multiple solutions</strong> (\(M\) marked items)</td>
+                        <td>\(O(N/M)\) classically vs. \(O(\sqrt{N/M})\) quantum</td>
+                        <td>Classical: random sampling finds solution in \(O(N/M)\)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Approximate search</strong></td>
+                        <td>Find <em>near</em>-solution faster</td>
+                        <td>Use locality, embeddings, or hashing (e.g., LSH)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Parallel classical queries</strong></td>
+                        <td>\(O(\sqrt{N})\) time with \(O(\sqrt{N})\) processors</td>
+                        <td>Not query-efficient; trades time for hardware</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Probabilistic success</strong></td>
+                        <td>High probability in fewer than \(N\) steps</td>
+                        <td>Still \(\Omega(N)\) expected queries</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3>Quantum-Inspired Heuristics with Empirical Speedup</h3>
+        <ul>
+            <li><strong>Grover-inspired local search</strong>: Use amplitude-like weighting in combinatorial optimization.</li>
+            <li><strong>Quantum walk-inspired search</strong>: Classical random walks with memory or restarts mimic hitting-time improvements.</li>
+            <li><strong>Amplitude estimation via Monte Carlo</strong>: Estimate \(M/N\) (fraction of solutions) using classical sampling—used in finance, but with \(O(1/\epsilon^2)\) vs. quantum \(O(1/\epsilon)\).</li>
+        </ul>
+        
+        <div class="definition">
+            📉 <strong>Bottom line</strong>: Classical algorithms <strong>cannot match</strong> Grover's asymptotic query complexity for unstructured search—but can <strong>approach it</strong> in practice for structured or noisy variants.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Applications to Unstructured Search Problems</h2>
+    <div class="content">
+        <p>While true unstructured search is rare, many real-world problems <strong>approximate</strong> it:</p>
+        
+        <h3>(a) Cryptanalysis</h3>
+        <ul>
+            <li><strong>Brute-force key search</strong>: Find key \(k\) such that \(\text{Decrypt}_k(c) = m\).
+            <ul>
+                <li>Classical: \(O(2^n)\)</li>
+                <li>Grover: \(O(2^{n/2})\) → reduces AES-128 security to ~64 bits.</li>
+                <li><strong>Classical approximation</strong>: Use rainbow tables, side-channel info, or partial key guesses—<strong>not unstructured</strong>.</li>
+            </ul>
+            </li>
+        </ul>
+        
+        <h3>(b) Database Search</h3>
+        <ul>
+            <li><strong>Idealized</strong>: Find record with property \(P\).
+            <ul>
+                <li>Quantum: \(O(\sqrt{N})\) with quantum RAM (QRAM)—<strong>not yet feasible</strong>.</li>
+                <li>Classical: Indexing (e.g., B-trees) makes it <strong>structured</strong> → \(O(\log N)\).</li>
+                <li><strong>Unindexed databases</strong>: Linear scan = \(O(N)\); no classical quadratic speedup.</li>
+            </ul>
+            </li>
+        </ul>
+        
+        <h3>(c) NP Problem Solving</h3>
+        <ul>
+            <li><strong>SAT, Graph Coloring, etc.</strong>: Search space is unstructured in worst case.
+            <ul>
+                <li>Quantum: Grover gives \(O(\sqrt{2^n}) = O(1.414^n)\) vs. classical \(O(2^n)\).</li>
+                <li>Classical heuristics (DPLL, CDCL): Exploit <strong>problem structure</strong> → often much faster than \(O(2^n)\), but <strong>exponential in worst case</strong>.</li>
+                <li><strong>Quantum-inspired SAT solvers</strong>: Use amplitude-like scoring to prioritize variable assignments—modest empirical gains.</li>
+            </ul>
+            </li>
+        </ul>
+        
+        <h3>(d) Machine Learning & Optimization</h3>
+        <ul>
+            <li><strong>Finding optimal parameters</strong> in high-dimensional space.
+            <ul>
+                <li>Quantum: Amplitude amplification for minimization.</li>
+                <li>Classical: <strong>Simulated annealing</strong>, <strong>genetic algorithms</strong>, <strong>Bayesian optimization</strong>—use feedback to guide search.</li>
+                <li><strong>Quantum-inspired</strong>: Use Grover-like iteration in <strong>combinatorial optimization</strong> (e.g., MaxSAT), but no proven speedup.</li>
+            </ul>
+            </li>
+        </ul>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Summary Table</h2>
+    <div class="content">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Concept</th>
+                        <th>Quantum (Grover)</th>
+                        <th>Classical Approximation</th>
+                        <th>Achievable Speedup?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Query complexity</strong></td>
+                        <td>\(O(\sqrt{N})\)</td>
+                        <td>\(\Omega(N)\) (worst-case lower bound)</td>
+                        <td>❌ No</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Amplitude amplification</strong></td>
+                        <td>Coherent interference</td>
+                        <td>Weighted sampling / boosting</td>
+                        <td>❌ (No interference)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Oracle usage</strong></td>
+                        <td>Applied to superposition</td>
+                        <td>Applied to single inputs</td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Multiple solutions (\(M\))</strong></td>
+                        <td>\(O(\sqrt{N/M})\)</td>
+                        <td>\(O(N/M)\) (random sampling)</td>
+                        <td>✅ Quadratic gap remains</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Real-world applicability</strong></td>
+                        <td>Limited by QRAM, noise</td>
+                        <td>Widely used heuristics</td>
+                        <td>✅ Practical gains</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Key Takeaways</h2>
+    <div class="content">
+        <ul>
+            <li><strong>True quadratic speedup is uniquely quantum</strong> for unstructured search—<strong>not replicable classically</strong>.</li>
+            <li><strong>Quantum-inspired classical algorithms</strong> borrow <em>ideas</em> (iterative boosting, weighting) but <strong>lack interference</strong>.</li>
+            <li><strong>Oracle design</strong> and <strong>problem structure</strong> dominate real-world performance—pure unstructured search is rare.</li>
+            <li><strong>Applications</strong> benefit more from <strong>hybrid approaches</strong> (e.g., classical pre-processing + quantum search) than pure emulation.</li>
+            <li><strong>No free lunch</strong>: Classical methods can't beat information-theoretic lower bounds—but can exploit structure Grover ignores.</li>
+        </ul>
+        
+        <div class="definition">
+            💡 <strong>Final Thought</strong>: Quantum-inspired search is valuable for <strong>algorithm design intuition</strong> and <strong>heuristic development</strong>, but it does <strong>not challenge the fundamental quantum advantage</strong> of Grover's algorithm in its native setting.
+        </div>
+    </div>
+</section>
 
 
 
