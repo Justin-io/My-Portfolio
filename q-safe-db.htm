@@ -230,6 +230,147 @@
     </div>
 </div>
     
+
+
+<h2>3. Quantum Gates and Circuits</h2>
+<div class="concept-box">
+    <div class="concept-title">Single-Qubit Gates</div>
+    <div class="concept-content">
+        <ul>
+            <li><strong>Pauli gates (X, Y, Z)</strong>: Fundamental unitary operators representing 180° rotations about x, y, z axes on Bloch sphere</li>
+            <li><strong>Hadamard gate (H)</strong>: Creates superposition states |+⟩ and |-⟩ from basis states, enables basis change between Z and X</li>
+            <li><strong>Phase gates (S, T)</strong>: Add complex phases to |1⟩ state; S gate adds +90° phase, T gate adds +45° phase</li>
+            <li>All single-qubit gates correspond to <strong>rotations on the Bloch sphere</strong> and are represented by 2×2 unitary matrices</li>
+            <li>Single-qubit gates alone are <strong>not sufficient for universal quantum computation</strong> - require multi-qubit gates</li>
+        </ul>
+    </div>
+</div>
+
+<div class="concept-box">
+    <div class="concept-title">Multi-Qubit Gates</div>
+    <div class="concept-content">
+        <ul>
+            <li><strong>CNOT gate</strong>: Controlled-NOT operation that flips target qubit if control is |1⟩, essential for creating entanglement</li>
+            <li><strong>Toffoli gate (CCNOT)</strong>: 3-qubit gate that flips target if both controls are |1⟩, universal for classical reversible computing</li>
+            <li><strong>SWAP gate</strong>: Exchanges states of two qubits, can be implemented using three CNOT gates</li>
+            <li>Multi-qubit gates enable <strong>conditional operations</strong> and <strong>entanglement generation</strong> between qubits</li>
+            <li>Multi-qubit gates are represented by larger unitary matrices (e.g., CNOT is 4×4 matrix for two-qubit system)</li>
+        </ul>
+    </div>
+</div>
+
+<div class="concept-box">
+    <div class="concept-title">Universal Gate Sets</div>
+    <div class="concept-content">
+        <ul>
+            <li><strong>Universal set</strong>: A set of gates that can approximate any unitary operation to arbitrary precision</li>
+            <li><strong>Common universal sets</strong>: {CNOT, H, T}, {CNOT, single-qubit rotations}, {Toffoli, Hadamard}</li>
+            <li><strong>Non-Clifford gates</strong>: At least one non-Clifford gate (like T) is required for universality</li>
+            <li><strong>Gottesman-Knill theorem</strong>: Clifford group alone (H, S, CNOT) is not universal for quantum computation</li>
+            <li><strong>Solovay-Kitaev theorem</strong>: Guarantees efficient approximation of arbitrary unitaries using universal gate sets</li>
+        </ul>
+    </div>
+</div>
+
+<div class="concept-box">
+    <div class="concept-title">Quantum Circuit Diagrams and Notation</div>
+    <div class="concept-content">
+        <ul>
+            <li><strong>Visual representation</strong>: Horizontal lines represent qubits, time flows left to right</li>
+            <li><strong>Gate notation</strong>: Boxes or symbols applied to qubit lines, multi-qubit gates connect control and target with dots and ⊕</li>
+            <li><strong>Standard symbols</strong>: H for Hadamard, ● for control, ⊕ for target (NOT), M for measurement</li>
+            <li><strong>Example circuits</strong>: CNOT shown with control and target qubits connected vertically, Toffoli with two controls</li>
+            <li><strong>Classical bits</strong>: Often shown as double lines after measurement operations</li>
+        </ul>
+    </div>
+</div>
+
+<div class="concept-box">
+    <div class="concept-title">Quantum Circuit Depth and Complexity</div>
+    <div class="concept-content">
+        <ul>
+            <li><strong>Circuit depth</strong>: Longest path from input to output, correlates with execution time and noise susceptibility</li>
+            <li><strong>Circuit size</strong>: Total number of gates, often counting CNOTs separately due to higher error rates</li>
+            <li><strong>Complexity classes</strong>: BQP (Bounded-error Quantum Polynomial time) defines problems solvable with polynomial-size circuits</li>
+            <li><strong>Optimization goals</strong>: Minimize CNOT count, reduce depth to stay within coherence time, use gate decomposition</li>
+            <li><strong>Quantum advantage</strong>: Often achieved through exponentially smaller depth/size compared to classical algorithms</li>
+        </ul>
+    </div>
+</div>
+
+
+
+<h2>4. Quantum Algorithms and Complexity</h2>
+<div class="concept-box">
+    <div class="concept-title">Grover's Search Algorithm</div>
+    <div class="concept-content">
+        <ul>
+            <li>Provides <strong>quadratic speedup</strong> for unstructured search problems, reducing O(N) classical queries to O(√N)</li>
+            <li>Based on <strong>amplitude amplification</strong> using Grover iteration G = (2|ψ⟩⟨ψ| - I)·O<sub>f</sub></li>
+            <li>Starts with uniform superposition and repeatedly applies oracle and diffusion operators</li>
+            <li>Optimal number of iterations is approximately π/4 √N for maximum success probability</li>
+            <li>Applications include database search, optimization problems, and cryptanalysis (reducing effective key length)</li>
+        </ul>
+    </div>
+</div>
+
+<div class="concept-box">
+    <div class="concept-title">Quantum Fourier Transform (QFT)</div>
+    <div class="concept-content">
+        <ul>
+            <li>Quantum analog of classical Discrete Fourier Transform, mapping |j⟩ to (1/√N) Σ e<sup>2πijk/N</sup> |k⟩</li>
+            <li>Efficiently implemented using <strong>Hadamard and controlled-phase gates</strong> with O(n²) circuit depth</li>
+            <li>Key properties: unitary operation with QFT<sup>-1</sup> = QFT<sup>†</sup></li>
+            <li>Provides exponential speedup for <strong>preparing Fourier states</strong> but not for extracting all coefficients</li>
+            <li>Core subroutine in Shor's algorithm, phase estimation, and quantum simulation algorithms</li>
+        </ul>
+    </div>
+</div>
+
+<div class="concept-box">
+    <div class="concept-title">Shor's Algorithm for Integer Factorization</div>
+    <div class="concept-content">
+        <ul>
+            <li>Solves integer factorization in <strong>polynomial time</strong> O((log N)³), providing exponential speedup over classical algorithms</li>
+            <li>Combines classical reduction with <strong>quantum period finding</strong> subroutine using QFT</li>
+            <li>Factors N by finding order r of random a modulo N, then computing gcd(a<sup>r/2</sup> ± 1, N)</li>
+            <li>Uses quantum phase estimation to extract period r from superposition state</li>
+            <li>Significance: breaks RSA cryptography, motivating development of post-quantum cryptography</li>
+        </ul>
+    </div>
+</div>
+
+<div class="concept-box">
+    <div class="concept-title">Quantum Walks</div>
+    <div class="concept-content">
+        <ul>
+            <li>Quantum analog of classical random walks with two main types: <strong>discrete-time (DTQW)</strong> and continuous-time (CTQW)</li>
+            <li>DTQW uses coin and position registers with evolution: |ψ(t+1)⟩ = S·(C⊗I)|ψ(t)⟩</li>
+            <li>Provides <strong>quadratic speedup</strong> in hitting time compared to classical walks (spreads as t vs. √t)</li>
+            <li>Leverages quantum interference and entanglement between coin and position states</li>
+            <li>Applications include graph search algorithms, graph isomorphism, and quantum simulation of physical processes</li>
+        </ul>
+    </div>
+</div>
+
+<div class="concept-box">
+    <div class="concept-title">Quantum Complexity Classes</div>
+    <div class="concept-content">
+        <ul>
+            <li><strong>BQP</strong> (Bounded-error Quantum Polynomial Time): problems solvable by quantum computers in polynomial time with error ≤ 1/3</li>
+            <li>BQP contains P and BPP, is contained in PSPACE, and includes factoring and discrete log problems</li>
+            <li><strong>QMA</strong> (Quantum Merlin-Arthur): quantum analog of NP where Merlin sends quantum proof to Arthur for verification</li>
+            <li>QMA-complete problem: k-local Hamiltonian problem (quantum analog of SAT)</li>
+            <li>Relationship: BQP ⊆ QMA ⊆ PP, with QMA capturing complexity of quantum many-body problems</li>
+        </ul>
+    </div>
+</div>
+
+
+
+
+
+
     <div class="page-break"></div>
     
     <h2>2. Second Major Section</h2>
