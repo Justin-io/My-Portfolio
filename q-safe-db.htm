@@ -2212,6 +2212,739 @@ q1: ─────⊕──H──</pre>
     </div>
 </section>
 
+<section class="section">
+    <h2 class="section-title">Machine Learning Fundamentals</h2>
+    <div class="content">
+        <h3>Supervised Learning</h3>
+        <div class="definition">
+            <strong>Definition</strong>: Learning a mapping from input features \( \mathbf{x} \in \mathbb{R}^d \) to output labels \( y \) using a <strong>labeled training dataset</strong> \( \{(\mathbf{x}^{(i)}, y^{(i)})\}_{i=1}^n \).
+        </div>
+        
+        <p>Two main types:</p>
+        <ul>
+            <li><strong>Classification</strong>: \( y \) is <strong>categorical</strong> (e.g., spam/not spam).</li>
+            <li><strong>Regression</strong>: \( y \) is <strong>continuous</strong> (e.g., house price).</li>
+        </ul>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Classification and Regression Principles</h2>
+    <div class="content">
+        <h3>Goal</h3>
+        <ul>
+            <li>Learn a <strong>hypothesis function</strong> \( h_\theta(\mathbf{x}) \) that approximates the true relationship \( y \approx f(\mathbf{x}) \).</li>
+            <li>Minimize <strong>prediction error</strong> on unseen data (<strong>generalization</strong>).</li>
+        </ul>
+        
+        <h3>Loss Functions</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>Common Loss Function</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Regression</strong></td>
+                        <td>Mean Squared Error (MSE): \( \frac{1}{n}\sum (y_i - \hat{y}_i)^2 \)</td>
+                        <td>Penalizes large errors quadratically</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Classification</strong></td>
+                        <td>Cross-Entropy Loss: \( -\sum y_i \log(\hat{y}_i) \)</td>
+                        <td>Measures divergence between true and predicted probabilities</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3>Bias-Variance Tradeoff</h3>
+        <ul>
+            <li><strong>High bias</strong> → underfitting (model too simple).</li>
+            <li><strong>High variance</strong> → overfitting (model too complex).</li>
+            <li>Goal: Find model complexity that balances both.</li>
+        </ul>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Decision Trees and Ensemble Methods</h2>
+    <div class="content">
+        <h3>Decision Trees</h3>
+        <ul>
+            <li><strong>Structure</strong>: Tree of <strong>if-else rules</strong> based on feature thresholds.</li>
+            <li><strong>Splitting criterion</strong>:
+            <ul>
+                <li><strong>Classification</strong>: Information gain (based on entropy) or Gini impurity.<br>
+                \[ \text{Gini} = 1 - \sum_{k} p_k^2 \]</li>
+                <li><strong>Regression</strong>: Minimize MSE after split.</li>
+            </ul>
+            </li>
+            <li><strong>Pros</strong>: Interpretable, handles mixed data types, no feature scaling needed.</li>
+            <li><strong>Cons</strong>: Prone to overfitting, unstable to data changes.</li>
+        </ul>
+        
+        <h3>Ensemble Methods</h3>
+        <p>Combine multiple models to improve performance and robustness.</p>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Idea</th>
+                        <th>Key Properties</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Bagging</strong> (e.g., <strong>Random Forest</strong>)</td>
+                        <td>Train many trees on <strong>bootstrap samples</strong>; average predictions (regression) or vote (classification)</td>
+                        <td>Reduces variance; decorrelates trees by random feature subsets</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Boosting</strong> (e.g., <strong>AdaBoost, XGBoost</strong>)</td>
+                        <td>Sequentially train weak learners; each focuses on <strong>previous errors</strong></td>
+                        <td>Reduces bias; highly accurate; sensitive to noise</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Stacking</strong></td>
+                        <td>Use predictions of base models as input to a <strong>meta-learner</strong></td>
+                        <td>Leverages strengths of diverse models</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="definition">
+            ✅ <strong>Random Forest</strong>: Often a strong baseline—robust, parallelizable, handles missing data.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Support Vector Machines (SVM)</h2>
+    <div class="content">
+        <h3>Core Idea</h3>
+        <p>Find the <strong>optimal separating hyperplane</strong> that maximizes the <strong>margin</strong> (distance to nearest points).</p>
+        
+        <h3>Mathematical Formulation</h3>
+        <p>For linearly separable data:</p>
+        <div class="equation">
+            \[ \min_{\mathbf{w}, b} \frac{1}{2} \|\mathbf{w}\|^2 \quad \text{subject to} \quad y_i(\mathbf{w}^\top \mathbf{x}_i + b) \geq 1 \]
+        </div>
+        <p><strong>Support vectors</strong>: Data points on the margin (only these affect the solution).</p>
+        
+        <h3>Non-linear SVM: Kernel Trick</h3>
+        <ul>
+            <li>Map data to higher-dimensional space via <strong>kernel function</strong> \( K(\mathbf{x}_i, \mathbf{x}_j) = \phi(\mathbf{x}_i)^\top \phi(\mathbf{x}_j) \).</li>
+            <li>Common kernels:
+            <ul>
+                <li><strong>Linear</strong>: \( K = \mathbf{x}_i^\top \mathbf{x}_j \)</li>
+                <li><strong>Polynomial</strong>: \( K = (\gamma \mathbf{x}_i^\top \mathbf{x}_j + r)^d \)</li>
+                <li><strong>RBF (Gaussian)</strong>: \( K = \exp(-\gamma \|\mathbf{x}_i - \mathbf{x}_j\|^2) \)</li>
+            </ul>
+            </li>
+        </ul>
+        
+        <h3>Soft Margin (for noisy data)</h3>
+        <ul>
+            <li>Introduce <strong>slack variables</strong> \( \xi_i \) to allow misclassifications.</li>
+            <li>Controlled by <strong>regularization parameter \( C \)</strong>:
+            <ul>
+                <li>Large \( C \) → hard margin (low bias, high variance)</li>
+                <li>Small \( C \) → soft margin (high bias, low variance)</li>
+            </ul>
+            </li>
+        </ul>
+        
+        <h3>Pros & Cons</h3>
+        <ul>
+            <li>✅ Effective in high dimensions, memory efficient (uses support vectors only).</li>
+            <li>❌ Poor performance on large datasets; requires careful kernel and \( C \) tuning.</li>
+        </ul>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Neural Networks and Backpropagation</h2>
+    <div class="content">
+        <h3>Neural Network Structure</h3>
+        <ul>
+            <li><strong>Layers</strong>: Input → hidden layers → output.</li>
+            <li><strong>Neuron</strong>: \( z = \mathbf{w}^\top \mathbf{x} + b \), \( a = \sigma(z) \)</li>
+            <li><strong>Activation functions</strong>:
+            <ul>
+                <li><strong>Sigmoid</strong>: \( \sigma(z) = \frac{1}{1 + e^{-z}} \) → outputs probabilities (classification)</li>
+                <li><strong>ReLU</strong>: \( \max(0, z) \) → avoids vanishing gradient; standard in hidden layers</li>
+                <li><strong>Softmax</strong>: For multi-class output: \( \text{softmax}(z_i) = \frac{e^{z_i}}{\sum_j e^{z_j}} \)</li>
+            </ul>
+            </li>
+        </ul>
+        
+        <h3>Backpropagation</h3>
+        <ul>
+            <li><strong>Goal</strong>: Compute gradients of loss \( \mathcal{L} \) w.r.t. all weights for gradient descent.</li>
+            <li><strong>Algorithm</strong>:
+            <ol>
+                <li><strong>Forward pass</strong>: Compute predictions \( \hat{y} \).</li>
+                <li><strong>Compute loss</strong> \( \mathcal{L}(y, \hat{y}) \).</li>
+                <li><strong>Backward pass</strong>: Apply chain rule from output to input:<br>
+                \[ \frac{\partial \mathcal{L}}{\partial w_{ij}^{(l)}} = \frac{\partial \mathcal{L}}{\partial a_j^{(l)}} \cdot \frac{\partial a_j^{(l)}}{\partial z_j^{(l)}} \cdot \frac{\partial z_j^{(l)}}{\partial w_{ij}^{(l)}} \]</li>
+                <li>Update weights: \( w \leftarrow w - \eta \nabla_w \mathcal{L} \) (\(\eta\) = learning rate)</li>
+            </ol>
+            </li>
+        </ul>
+        
+        <h3>Key Concepts</h3>
+        <ul>
+            <li><strong>Universal approximation theorem</strong>: A NN with 1 hidden layer can approximate any continuous function (given enough neurons).</li>
+            <li><strong>Deep learning</strong>: Multiple hidden layers learn hierarchical features (e.g., edges → shapes → objects in images).</li>
+        </ul>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Model Evaluation Metrics</h2>
+    <div class="content">
+        <h3>For Classification</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Formula</th>
+                        <th>When to Use</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Accuracy</strong></td>
+                        <td>\( \frac{TP + TN}{TP + TN + FP + FN} \)</td>
+                        <td>Balanced datasets</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Precision</strong></td>
+                        <td>\( \frac{TP}{TP + FP} \)</td>
+                        <td>Minimize false positives (e.g., spam detection)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Recall (Sensitivity)</strong></td>
+                        <td>\( \frac{TP}{TP + FN} \)</td>
+                        <td>Minimize false negatives (e.g., disease screening)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>F1-Score</strong></td>
+                        <td>\( 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}} \)</td>
+                        <td>Imbalanced datasets; harmonic mean of P & R</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ROC-AUC</strong></td>
+                        <td>Area under ROC curve (TPR vs. FPR)</td>
+                        <td>Threshold-invariant performance</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="definition">
+            <strong>Confusion Matrix</strong>:<br>
+            <pre>               Predicted
+              +       -
+Actual   +   TP      FN
+         -   FP      TN</pre>
+        </div>
+        
+        <h3>For Regression</h3>
+        <ul>
+            <li><strong>Mean Absolute Error (MAE)</strong>: \( \frac{1}{n}\sum |y_i - \hat{y}_i| \) → robust to outliers.</li>
+            <li><strong>Mean Squared Error (MSE)</strong>: \( \frac{1}{n}\sum (y_i - \hat{y}_i)^2 \) → penalizes large errors.</li>
+            <li><strong>R² (Coefficient of Determination)</strong>:<br>
+            \[ R^2 = 1 - \frac{\text{SS}_{\text{res}}}{\text{SS}_{\text{tot}}} \]
+            <ul>
+                <li>\( R^2 = 1 \): perfect fit; \( R^2 = 0 \): no better than mean predictor.</li>
+            </ul>
+            </li>
+        </ul>
+        
+        <h3>Cross-Validation</h3>
+        <ul>
+            <li><strong>k-Fold CV</strong>: Split data into \(k\) folds; train on \(k-1\), validate on 1; repeat \(k\) times.</li>
+            <li>Provides <strong>unbiased estimate</strong> of generalization performance.</li>
+        </ul>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Summary Table: Supervised Learning Algorithms</h2>
+    <div class="content">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Algorithm</th>
+                        <th>Type</th>
+                        <th>Strengths</th>
+                        <th>Weaknesses</th>
+                        <th>Best For</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Decision Tree</strong></td>
+                        <td>Both</td>
+                        <td>Interpretable, fast</td>
+                        <td>Overfits</td>
+                        <td>Baseline, explainability</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Random Forest</strong></td>
+                        <td>Both</td>
+                        <td>Robust, handles noise</td>
+                        <td>Less interpretable</td>
+                        <td>General-purpose</td>
+                    </tr>
+                    <tr>
+                        <td><strong>SVM</strong></td>
+                        <td>Both</td>
+                        <td>Effective in high-D, memory efficient</td>
+                        <td>Slow on large data</td>
+                        <td>Text classification, small/medium datasets</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Neural Network</strong></td>
+                        <td>Both</td>
+                        <td>Learns complex patterns</td>
+                        <td>Data-hungry, black-box</td>
+                        <td>Images, speech, large datasets</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Key Takeaways</h2>
+    <div class="content">
+        <ul>
+            <li><strong>Supervised learning</strong> requires labeled data and aims to generalize from examples.</li>
+            <li><strong>No free lunch</strong>: Algorithm choice depends on data size, dimensionality, noise, and interpretability needs.</li>
+            <li><strong>Evaluation metrics must match the problem</strong>: Accuracy fails on imbalanced data; use F1 or AUC instead.</li>
+            <li><strong>Ensembles</strong> (e.g., Random Forest, XGBoost) often outperform single models.</li>
+            <li><strong>Neural networks</strong> excel with large data but require careful tuning and validation.</li>
+        </ul>
+    </div>
+</section>
+
+
+
+<section class="section">
+    <h2 class="section-title">Unsupervised Learning</h2>
+    <div class="content">
+        <p><em>Learning patterns from unlabeled data</em></p>
+        
+        <div class="definition">
+            <strong>Definition</strong>: Discover hidden structures, patterns, or relationships in data <strong>without labeled outputs</strong>.<br>
+            <strong>Goal</strong>: Summarize, compress, or reveal intrinsic properties of the data.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Clustering Algorithms</h2>
+    <div class="content">
+        <p>Clustering groups similar data points together based on feature similarity.</p>
+        
+        <h3>(a) K-Means Clustering</h3>
+        <ul>
+            <li><strong>Objective</strong>: Partition \(n\) points into \(k\) clusters to minimize <strong>within-cluster sum of squares (WCSS)</strong>:<br>
+            \[ \min_{C_1,\dots,C_k} \sum_{i=1}^k \sum_{\mathbf{x} \in C_i} \|\mathbf{x} - \boldsymbol{\mu}_i\|^2 \]
+            where \(\boldsymbol{\mu}_i\) = centroid of cluster \(i\).</li>
+            
+            <li><strong>Algorithm</strong> (Lloyd's):
+            <ol>
+                <li>Initialize \(k\) centroids randomly.</li>
+                <li><strong>Assign</strong>: Assign each point to nearest centroid.</li>
+                <li><strong>Update</strong>: Recompute centroids as mean of assigned points.</li>
+                <li>Repeat until convergence.</li>
+            </ol>
+            </li>
+            
+            <li><strong>Pros</strong>: Simple, fast, scalable.</li>
+            <li><strong>Cons</strong>:
+            <ul>
+                <li>Requires pre-specifying \(k\).</li>
+                <li>Sensitive to initialization and outliers.</li>
+                <li>Assumes spherical, equally sized clusters.</li>
+            </ul>
+            </li>
+            
+            <li><strong>Choosing \(k\)</strong>: Use <strong>elbow method</strong> (plot WCSS vs. \(k\)) or <strong>silhouette score</strong>.</li>
+        </ul>
+        
+        <h3>(b) Hierarchical Clustering</h3>
+        <ul>
+            <li>Builds a <strong>tree of clusters</strong> (dendrogram).</li>
+            <li>Two approaches:
+            <ul>
+                <li><strong>Agglomerative</strong> (bottom-up): Start with each point as a cluster; merge closest pairs.</li>
+                <li><strong>Divisive</strong> (top-down): Start with one cluster; recursively split.</li>
+            </ul>
+            </li>
+            
+            <li><strong>Linkage criteria</strong> (define distance between clusters):
+            <ul>
+                <li><strong>Single</strong>: min distance → chaining effect.</li>
+                <li><strong>Complete</strong>: max distance → compact clusters.</li>
+                <li><strong>Average</strong>: mean distance → balanced.</li>
+                <li><strong>Ward</strong>: minimizes WCSS → similar to K-means.</li>
+            </ul>
+            </li>
+            
+            <li><strong>Pros</strong>: No need to specify \(k\); dendrogram gives full hierarchy.</li>
+            <li><strong>Cons</strong>: \(O(n^3)\) time; not scalable to large datasets.</li>
+        </ul>
+        
+        <h3>(c) DBSCAN (Density-Based Spatial Clustering of Applications with Noise)</h3>
+        <ul>
+            <li><strong>Core idea</strong>: Cluster points in <strong>dense regions</strong>, mark sparse points as <strong>noise</strong>.</li>
+            <li><strong>Parameters</strong>:
+            <ul>
+                <li>\(\varepsilon\): Radius of neighborhood.</li>
+                <li>MinPts: Minimum points in \(\varepsilon\)-neighborhood to be a <strong>core point</strong>.</li>
+            </ul>
+            </li>
+            
+            <li><strong>Point types</strong>:
+            <ul>
+                <li><strong>Core</strong>: ≥ MinPts in \(\varepsilon\)-neighborhood.</li>
+                <li><strong>Border</strong>: In neighborhood of core, but not core itself.</li>
+                <li><strong>Noise</strong>: Neither core nor border.</li>
+            </ul>
+            </li>
+            
+            <li><strong>Pros</strong>:
+            <ul>
+                <li>Finds arbitrarily shaped clusters.</li>
+                <li>Robust to outliers.</li>
+                <li>No need to specify \(k\).</li>
+            </ul>
+            </li>
+            <li><strong>Cons</strong>: Struggles with varying densities; sensitive to \(\varepsilon\) and MinPts.</li>
+        </ul>
+        
+        <div class="definition">
+            ✅ <strong>Best for</strong>: Spatial data, anomaly detection, irregular cluster shapes.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Dimensionality Reduction</h2>
+    <div class="content">
+        <p>Reduce number of features while preserving essential structure.</p>
+        
+        <h3>(a) Principal Component Analysis (PCA)</h3>
+        <ul>
+            <li><strong>Goal</strong>: Project data onto orthogonal axes (<strong>principal components</strong>) that capture <strong>maximum variance</strong>.</li>
+            <li><strong>Steps</strong>:
+            <ol>
+                <li>Standardize data (zero mean, unit variance).</li>
+                <li>Compute covariance matrix.</li>
+                <li>Eigendecomposition: Find eigenvectors (PCs) and eigenvalues (variance explained).</li>
+                <li>Project data onto top \(k\) PCs.</li>
+            </ol>
+            </li>
+            
+            <li><strong>Mathematically</strong>:<br>
+            \[ \mathbf{Z} = \mathbf{X} \mathbf{W}_k \]
+            where \(\mathbf{W}_k\) = top \(k\) eigenvectors.</li>
+            
+            <li><strong>Pros</strong>: Linear, fast, removes multicollinearity.</li>
+            <li><strong>Cons</strong>: Only captures linear relationships; global structure only.</li>
+            <li><strong>Use cases</strong>: Visualization (2D/3D), noise reduction, preprocessing for ML.</li>
+        </ul>
+        
+        <h3>(b) t-SNE (t-Distributed Stochastic Neighbor Embedding)</h3>
+        <ul>
+            <li><strong>Goal</strong>: Preserve <strong>local similarities</strong> in low-dimensional embedding (typically 2D/3D).</li>
+            <li><strong>Key idea</strong>:
+            <ul>
+                <li>Convert high-D Euclidean distances to <strong>probabilities</strong> (similar points → high probability).</li>
+                <li>Minimize <strong>KL divergence</strong> between high-D and low-D probability distributions.</li>
+            </ul>
+            </li>
+            
+            <li><strong>Pros</strong>: Excellent for <strong>visualization</strong>; reveals clusters and manifolds.</li>
+            <li><strong>Cons</strong>:
+            <ul>
+                <li>Not linear; <strong>not for preprocessing</strong> (distorts global structure).</li>
+                <li>Computationally expensive (\(O(n^2)\)).</li>
+                <li>Results vary with perplexity (key hyperparameter).</li>
+            </ul>
+            </li>
+        </ul>
+        
+        <div class="definition">
+            📌 <strong>Rule</strong>: Use <strong>PCA first</strong> (to reduce to 50D), then <strong>t-SNE</strong> for visualization.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Anomaly Detection Methods</h2>
+    <div class="content">
+        <p>Identify rare items, events, or observations that differ significantly from the majority.</p>
+        
+        <h3>Common Approaches</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Idea</th>
+                        <th>Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Statistical</strong></td>
+                        <td>Assume data follows distribution (e.g., Gaussian); flag points with low likelihood</td>
+                        <td>Univariate data, known distribution</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Distance-based</strong></td>
+                        <td>Points far from neighbors are anomalies (e.g., k-NN distance)</td>
+                        <td>Multivariate, no distribution assumption</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Density-based</strong></td>
+                        <td>Low-density regions = anomalies (e.g., LOF: Local Outlier Factor)</td>
+                        <td>Varying densities</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Clustering-based</strong></td>
+                        <td>Points not in any cluster (or in small clusters) are anomalies</td>
+                        <td>Works with DBSCAN, K-means</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Reconstruction-based</strong></td>
+                        <td>Use autoencoders (see below); high reconstruction error = anomaly</td>
+                        <td>High-dimensional, complex data</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3>Evaluation</h3>
+        <ul>
+            <li>Often <strong>semi-supervised</strong>: Assume most data is normal.</li>
+            <li>Metrics: Precision@K, ROC-AUC (if labels available).</li>
+        </ul>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Autoencoders and Their Variants</h2>
+    <div class="content">
+        <p>Neural networks that learn efficient data <strong>encodings</strong> in an unsupervised manner.</p>
+        
+        <h3>Basic Autoencoder</h3>
+        <ul>
+            <li><strong>Architecture</strong>:<br>
+            <strong>Encoder</strong>: \( \mathbf{z} = f(\mathbf{x}) = \sigma(\mathbf{W}_e \mathbf{x} + \mathbf{b}_e) \)<br>
+            <strong>Decoder</strong>: \( \hat{\mathbf{x}} = g(\mathbf{z}) = \sigma(\mathbf{W}_d \mathbf{z} + \mathbf{b}_d) \)</li>
+            <li><strong>Loss</strong>: Reconstruction error (e.g., MSE): \( \mathcal{L} = \|\mathbf{x} - \hat{\mathbf{x}}\|^2 \)</li>
+            <li><strong>Bottleneck</strong>: Latent dimension \( < \) input dimension → forces compression.</li>
+        </ul>
+        
+        <h3>Key Variants</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Variant</th>
+                        <th>Modification</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Denoising Autoencoder (DAE)</strong></td>
+                        <td>Input: corrupted \(\tilde{\mathbf{x}}\); target: clean \(\mathbf{x}\)</td>
+                        <td>Learn robust features; prevent identity mapping</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sparse Autoencoder</strong></td>
+                        <td>Add sparsity penalty on latent code (e.g., KL divergence on activations)</td>
+                        <td>Learn part-based representations</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Variational Autoencoder (VAE)</strong></td>
+                        <td>Latent code sampled from learned distribution \(q(z|x)\); regularized via KL divergence to prior \(p(z)\)</td>
+                        <td>Generative model; smooth latent space</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Convolutional Autoencoder</strong></td>
+                        <td>Use CNN layers in encoder/decoder</td>
+                        <td>Handle image data; preserve spatial structure</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3>Applications</h3>
+        <ul>
+            <li>Dimensionality reduction (non-linear alternative to PCA)</li>
+            <li>Anomaly detection (high reconstruction error = anomaly)</li>
+            <li>Denoising, image inpainting</li>
+            <li>Pretraining for deep networks</li>
+        </ul>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Association Rule Learning</h2>
+    <div class="content">
+        <p>Discover <strong>interesting relationships</strong> between variables in large datasets (e.g., market basket analysis).</p>
+        
+        <h3>Key Concepts</h3>
+        <ul>
+            <li><strong>Itemset</strong>: Collection of items (e.g., {milk, bread}).</li>
+            <li><strong>Transaction</strong>: A single record (e.g., customer purchase).</li>
+            <li><strong>Rule</strong>: \( X \Rightarrow Y \) (e.g., {milk} ⇒ {bread})</li>
+        </ul>
+        
+        <h3>Metrics</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Formula</th>
+                        <th>Interpretation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Support</strong></td>
+                        <td>\( \frac{\text{# transactions containing } X \cup Y}{\text{total transactions}} \)</td>
+                        <td>How frequent is the rule?</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Confidence</strong></td>
+                        <td>\( \frac{\text{support}(X \cup Y)}{\text{support}(X)} \)</td>
+                        <td>How often does Y occur when X occurs?</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Lift</strong></td>
+                        <td>\( \frac{\text{confidence}(X \Rightarrow Y)}{\text{support}(Y)} \)</td>
+                        <td>>1: positive correlation; =1: independent; <1: negative</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3>Apriori Algorithm</h3>
+        <ul>
+            <li><strong>Principle</strong>: If an itemset is frequent, all its subsets are frequent (<strong>anti-monotonicity</strong>).</li>
+            <li><strong>Steps</strong>:
+            <ol>
+                <li>Find all frequent 1-itemsets (support ≥ min_support).</li>
+                <li>Generate candidate \(k\)-itemsets from frequent \((k-1)\)-itemsets.</li>
+                <li>Prune candidates with infrequent subsets.</li>
+                <li>Repeat until no more frequent itemsets.</li>
+            </ol>
+            </li>
+            <li><strong>Pros</strong>: Simple, guarantees completeness.</li>
+            <li><strong>Cons</strong>: Computationally expensive for large itemsets.</li>
+        </ul>
+        
+        <div class="definition">
+            💡 <strong>Modern alternatives</strong>: FP-Growth (uses frequent pattern tree; faster, no candidate generation).
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Summary Table</h2>
+    <div class="content">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Technique</th>
+                        <th>Type</th>
+                        <th>Key Strength</th>
+                        <th>Limitation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>K-Means</strong></td>
+                        <td>Clustering</td>
+                        <td>Fast, simple</td>
+                        <td>Spherical clusters only</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DBSCAN</strong></td>
+                        <td>Clustering</td>
+                        <td>Finds arbitrary shapes, handles noise</td>
+                        <td>Struggles with density variation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>PCA</strong></td>
+                        <td>Dim. Reduction</td>
+                        <td>Linear, fast, interpretable</td>
+                        <td>Misses non-linear structure</td>
+                    </tr>
+                    <tr>
+                        <td><strong>t-SNE</strong></td>
+                        <td>Dim. Reduction</td>
+                        <td>Excellent visualization</td>
+                        <td>Not for preprocessing; slow</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Autoencoder</strong></td>
+                        <td>Representation</td>
+                        <td>Non-linear, flexible</td>
+                        <td>Requires tuning; black-box</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Association Rules</strong></td>
+                        <td>Pattern Mining</td>
+                        <td>Interpretable business rules</td>
+                        <td>Combinatorial explosion</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Key Takeaways</h2>
+    <div class="content">
+        <ul>
+            <li><strong>Clustering</strong> reveals group structure; choose algorithm based on shape, noise, and scalability.</li>
+            <li><strong>Dimensionality reduction</strong>: Use <strong>PCA</strong> for linear/global structure, <strong>t-SNE</strong> for visualization.</li>
+            <li><strong>Anomaly detection</strong> is critical in fraud, security, and quality control—method depends on data assumptions.</li>
+            <li><strong>Autoencoders</strong> provide powerful non-linear compression and are foundational for deep generative models.</li>
+            <li><strong>Association rules</strong> uncover actionable insights in transactional data—but require careful thresholding.</li>
+        </ul>
+        
+        <div class="definition">
+            🔍 <strong>Remember</strong>: Unsupervised learning is <strong>exploratory</strong>—results must be validated with domain knowledge!
+        </div>
+    </div>
+</section>
+
+
 
 
 
