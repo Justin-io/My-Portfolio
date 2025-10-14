@@ -2181,6 +2181,151 @@
             }
         `;
         document.head.appendChild(waveStyle);
+
+
+        // Friendly Loader Text Animation
+document.addEventListener('DOMContentLoaded', function() {
+    const loaderText = document.querySelector('.loader-text');
+    
+    // Array of friendly, conversational messages
+    const friendlyMessages = [
+        "Hey, how's it going? Getting things ready...",
+        "Just a moment, preparing your experience...",
+        "Almost there, thanks for your patience...",
+        "Hey! Setting up something amazing for you...",
+        "How are you doing? Just loading up...",
+        "Thanks for waiting! Nearly ready...",
+        "Hey there! Getting everything in place...",
+        "Just a sec, making it perfect for you..."
+    ];
+    
+    let currentMessageIndex = 0;
+    
+    // Function to update loader text with fade effect
+    function updateLoaderText() {
+        // Fade out
+        loaderText.style.opacity = '0';
+        loaderText.style.transition = 'opacity 0.5s ease-in-out';
+        
+        setTimeout(() => {
+            // Update text
+            loaderText.textContent = friendlyMessages[currentMessageIndex];
+            
+            // Fade in
+            loaderText.style.opacity = '1';
+            
+            // Move to next message
+            currentMessageIndex = (currentMessageIndex + 1) % friendlyMessages.length;
+        }, 500);
+    }
+    
+    // Start the animation
+    updateLoaderText();
+    
+    // Change message every 3 seconds
+    setInterval(updateLoaderText, 3000);
+    
+    // Add a subtle typewriter effect to the first message
+    function typeWriterEffect(element, text, speed = 50) {
+        element.textContent = '';
+        let i = 0;
+        
+        function type() {
+            if (i < text.length) {
+                element.textContent += text.charAt(i);
+                i++;
+                setTimeout(type, speed);
+            }
+        }
+        
+        type();
+    }
+    
+    // Apply typewriter effect to initial message
+    setTimeout(() => {
+        typeWriterEffect(loaderText, friendlyMessages[0]);
+    }, 500);
+});
+
+// Enhanced loader interactions
+document.addEventListener('DOMContentLoaded', function() {
+    const loader = document.getElementById('loader');
+    const loaderText = document.querySelector('.loader-text');
+    
+    // Add hover effect for extra friendliness
+    loader.addEventListener('mouseenter', function() {
+        const hoverMessages = [
+            "Thanks for hanging out! 😊",
+            "You're awesome for waiting! ⭐",
+            "Great things coming your way! 🚀",
+            "Almost ready, promise! ✨"
+        ];
+        
+        const randomMessage = hoverMessages[Math.floor(Math.random() * hoverMessages.length)];
+        const originalText = loaderText.textContent;
+        
+        loaderText.textContent = randomMessage;
+        loaderText.style.transform = 'scale(1.1)';
+        loaderText.style.transition = 'all 0.3s ease';
+        
+        setTimeout(() => {
+            loaderText.textContent = originalText;
+            loaderText.style.transform = 'scale(1)';
+        }, 2000);
+    });
+    
+    // Add click interaction for fun
+    loader.addEventListener('click', function() {
+        const clickMessages = [
+            "Clicked! Loading even faster now! ⚡",
+            "Nice click! Speeding things up! 🎯",
+            "You clicked! Magic happening! ✨",
+            "Click detected! Boosting load speed! 🚀"
+        ];
+        
+        const randomMessage = clickMessages[Math.floor(Math.random() * clickMessages.length)];
+        loaderText.textContent = randomMessage;
+        loaderText.style.color = '#4CAF50';
+        
+        setTimeout(() => {
+            loaderText.style.color = '';
+        }, 1500);
+    });
+});
+
+// Add some fun CSS transitions via JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+    const style = document.createElement('style');
+    style.textContent = `
+        .loader-text {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center;
+        }
+        
+        .loader-text:hover {
+            transform: scale(1.05);
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .loader-text.pulse {
+            animation: pulse 2s infinite;
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // Add pulse effect periodically
+    const loaderText = document.querySelector('.loader-text');
+    setInterval(() => {
+        loaderText.classList.add('pulse');
+        setTimeout(() => {
+            loaderText.classList.remove('pulse');
+        }, 2000);
+    }, 8000);
+});
     </script>
 </body>
 </html>
