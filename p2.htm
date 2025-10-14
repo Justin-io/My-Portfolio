@@ -1974,7 +1974,7 @@
         `;
         document.head.appendChild(style);
 
-        // Friendly Loader Text Animation
+// Enhanced Loader Text Animation - No Repeats Until All Shown
 document.addEventListener('DOMContentLoaded', function() {
     const loaderText = document.querySelector('.loader-text');
     
@@ -1990,7 +1990,31 @@ document.addEventListener('DOMContentLoaded', function() {
         "Just a sec, making it perfect for you..."
     ];
     
+    // Array to track shown messages
+    let availableMessages = [...friendlyMessages];
     let currentMessageIndex = 0;
+    
+    // Function to shuffle array
+    function shuffleArray(array) {
+        const newArray = [...array];
+        for (let i = newArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+        }
+        return newArray;
+    }
+    
+    // Initialize shuffled messages
+    let shuffledMessages = shuffleArray(availableMessages);
+    
+    // Function to get next unique message
+    function getNextMessage() {
+        if (shuffledMessages.length === 0) {
+            // Reshuffle when all messages are shown
+            shuffledMessages = shuffleArray(friendlyMessages);
+        }
+        return shuffledMessages.shift();
+    }
     
     // Function to update loader text with fade effect
     function updateLoaderText() {
@@ -1999,14 +2023,14 @@ document.addEventListener('DOMContentLoaded', function() {
         loaderText.style.transition = 'opacity 0.5s ease-in-out';
         
         setTimeout(() => {
+            // Get next unique message
+            const nextMessage = getNextMessage();
+            
             // Update text
-            loaderText.textContent = friendlyMessages[currentMessageIndex];
+            loaderText.textContent = nextMessage;
             
             // Fade in
             loaderText.style.opacity = '1';
-            
-            // Move to next message
-            currentMessageIndex = (currentMessageIndex + 1) % friendlyMessages.length;
         }, 500);
     }
     
@@ -2043,16 +2067,28 @@ document.addEventListener('DOMContentLoaded', function() {
     const loader = document.getElementById('loader');
     const loaderText = document.querySelector('.loader-text');
     
+    // Array of unique hover messages
+    const hoverMessages = [
+        "Thanks for hanging out! 😊",
+        "You're awesome for waiting! ⭐",
+        "Great things coming your way! 🚀",
+        "Almost ready, promise! ✨"
+    ];
+    
+    let availableHoverMessages = [...hoverMessages];
+    let shuffledHoverMessages = shuffleArray(availableHoverMessages);
+    
+    // Function to get next unique hover message
+    function getNextHoverMessage() {
+        if (shuffledHoverMessages.length === 0) {
+            shuffledHoverMessages = shuffleArray(hoverMessages);
+        }
+        return shuffledHoverMessages.shift();
+    }
+    
     // Add hover effect for extra friendliness
     loader.addEventListener('mouseenter', function() {
-        const hoverMessages = [
-            "Thanks for hanging out! 😊",
-            "You're awesome for waiting! ⭐",
-            "Great things coming your way! 🚀",
-            "Almost ready, promise! ✨"
-        ];
-        
-        const randomMessage = hoverMessages[Math.floor(Math.random() * hoverMessages.length)];
+        const randomMessage = getNextHoverMessage();
         const originalText = loaderText.textContent;
         
         loaderText.textContent = randomMessage;
@@ -2065,16 +2101,28 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 2000);
     });
     
+    // Array of unique click messages
+    const clickMessages = [
+        "Clicked! Loading even faster now! ⚡",
+        "Nice click! Speeding things up! 🎯",
+        "You clicked! Magic happening! ✨",
+        "Click detected! Boosting load speed! 🚀"
+    ];
+    
+    let availableClickMessages = [...clickMessages];
+    let shuffledClickMessages = shuffleArray(availableClickMessages);
+    
+    // Function to get next unique click message
+    function getNextClickMessage() {
+        if (shuffledClickMessages.length === 0) {
+            shuffledClickMessages = shuffleArray(clickMessages);
+        }
+        return shuffledClickMessages.shift();
+    }
+    
     // Add click interaction for fun
     loader.addEventListener('click', function() {
-        const clickMessages = [
-            "Clicked! Loading even faster now! ⚡",
-            "Nice click! Speeding things up! 🎯",
-            "You clicked! Magic happening! ✨",
-            "Click detected! Boosting load speed! 🚀"
-        ];
-        
-        const randomMessage = clickMessages[Math.floor(Math.random() * clickMessages.length)];
+        const randomMessage = getNextClickMessage();
         loaderText.textContent = randomMessage;
         loaderText.style.color = '#4CAF50';
         
@@ -2117,6 +2165,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 2000);
     }, 8000);
 });
+
+// Utility function to shuffle array
+function shuffleArray(array) {
+    const newArray = [...array];
+    for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
+    return newArray;
+}
     </script>
 </body>
 </html>
