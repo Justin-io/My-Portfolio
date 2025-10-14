@@ -1498,7 +1498,7 @@
     { text: "Developer",          effect: "build",      duration: 2000 },
     { text: "Quantum Researcher", effect: "entangle",   duration: 2200 },
     { text: "AI Engineer",        effect: "learn",      duration: 2000 },
-    { text: "Cybersecurity Specialist", effect: "harden", duration: 2400 },
+    { text: "Cybersecurity Specialist", effect: "matrix", duration: 2400 },
     { text: "Systems Theorist",   effect: "converge",   duration: 2200 }
   ];
 
@@ -1506,76 +1506,98 @@
   let index = 0;
 
   function runEffect(effect, text) {
-    el.innerText = text;
-
-    switch (effect) {
-      case "build":
-        // Clean entrance: slight scale-up
-        el.style.transform = "scale(0.97)";
-        setTimeout(() => { el.style.transform = "scale(1)"; }, 200);
-        break;
-
-      case "entangle":
-        // Gentle blur → focus (like quantum decoherence resolving)
-        el.style.filter = "blur(1.5px)";
-        setTimeout(() => { el.style.filter = "blur(0px)"; }, 300);
-        break;
-
-      case "learn":
-        // Typewriter — but smooth and fast (intelligence forming)
-        el.innerText = "";
-        let i = 0;
-        const interval = setInterval(() => {
-          if (i <= text.length) {
-            el.innerText = text.substring(0, i);
-            i++;
-          } else {
-            clearInterval(interval);
-          }
-        }, 50);
-        break;
-
-      case "harden":
-        // Subtle compression + release (like armor locking)
-        el.style.transform = "scale(1.02)";
-        setTimeout(() => {
-          el.style.transform = "scale(0.99)";
-          setTimeout(() => {
-            el.style.transform = "scale(1)";
-          }, 150);
-        }, 100);
-        break;
-
-      case "converge":
-        // Micro-oscillation that settles (complexity → clarity)
-        let step = 0;
-        const converge = () => {
-          if (step < 6) {
-            const offset = Math.sin(step) * (4 - step * 0.6);
-            el.style.transform = `translateX(${offset}px)`;
-            step++;
-            setTimeout(converge, 80);
-          } else {
-            el.style.transform = "translateX(0)";
-          }
-        };
-        converge();
-        break;
-    }
-  }
-
-  function cycle() {
-    // Fade out
+    // Fade out + scale transition for all
     el.style.opacity = "0";
+    el.style.transform = "scale(0.95)";
+    
     setTimeout(() => {
-      runEffect(roles[index].effect, roles[index].text);
-      el.style.opacity = "1";
-      index = (index + 1) % roles.length;
-      setTimeout(cycle, roles[index].duration);
+      el.innerText = text;
+
+      switch (effect) {
+        case "matrix":
+          // Matrix-style drop effect for Cybersecurity Specialist
+          const original = text;
+          const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
+          let iteration = 0;
+          const interval = setInterval(() => {
+            let scrambled = '';
+            for (let i = 0; i < original.length; i++) {
+              if (i < iteration) {
+                scrambled += original[i];
+              } else {
+                scrambled += chars.charAt(Math.floor(Math.random() * chars.length));
+              }
+            }
+            el.innerText = scrambled;
+            if (iteration >= original.length) clearInterval(interval);
+            iteration += 1 / 3;
+          }, 60);
+          break;
+
+        case "entangle":
+          el.style.filter = "blur(1.5px)";
+          setTimeout(() => { el.style.filter = "blur(0px)"; }, 300);
+          break;
+
+        case "learn":
+          el.innerText = "";
+          let i = 0;
+          const typeInterval = setInterval(() => {
+            if (i <= text.length) {
+              el.innerText = text.substring(0, i);
+              i++;
+            } else {
+              clearInterval(typeInterval);
+            }
+          }, 50);
+          break;
+
+        case "harden":
+          el.style.transform = "scale(1.02)";
+          setTimeout(() => {
+            el.style.transform = "scale(0.99)";
+            setTimeout(() => {
+              el.style.transform = "scale(1)";
+            }, 150);
+          }, 100);
+          break;
+
+        case "converge":
+          let step = 0;
+          const converge = () => {
+            if (step < 6) {
+              const offset = Math.sin(step) * (4 - step * 0.6);
+              el.style.transform = `translateX(${offset}px)`;
+              step++;
+              setTimeout(converge, 80);
+            } else {
+              el.style.transform = "translateX(0)";
+            }
+          };
+          converge();
+          break;
+
+        case "build":
+        default:
+          el.style.transform = "scale(0.97)";
+          setTimeout(() => { el.style.transform = "scale(1)"; }, 200);
+          break;
+      }
+
+      // Fade in + scale transition for all
+      setTimeout(() => {
+        el.style.opacity = "1";
+        el.style.transform = "scale(1)";
+      }, 50);
     }, 300);
   }
 
-  // Start after a brief pause
+  function cycle() {
+    runEffect(roles[index].effect, roles[index].text);
+    index = (index + 1) % roles.length;
+    setTimeout(cycle, roles[index].duration);
+  }
+
   setTimeout(cycle, 1200);
 </script>
             <a href="#about" class="hero-cta">Explore My Universe</a>
