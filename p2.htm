@@ -1495,11 +1495,21 @@
 
 <script>
   const roles = [
-    { text: "Developer",          effect: "build",      duration: 2000 },
-    { text: "Quantum Researcher", effect: "entangle",   duration: 2200 },
-    { text: "AI Engineer",        effect: "learn",      duration: 2000 },
-    { text: "Cybersecurity Specialist", effect: "matrix", duration: 2400 },
-    { text: "Systems Theorist",   effect: "converge",   duration: 2200 }
+    { text: "Developer",                      effect: "build",      duration: 2000 },
+    { text: "Quantum Researcher",             effect: "entangle",   duration: 2200 },
+    { text: "AI/ML Engineer",                 effect: "learn",      duration: 2000 },
+    { text: "Cybersecurity Specialist",       effect: "matrix",     duration: 2400 },
+    { text: "IoT Innovator",                  effect: "connect",    duration: 2000 },
+    { text: "Theoretical Physicist",          effect: "collapse",   duration: 2200 },
+    { text: "Systems Architect",              effect: "structure",  duration: 2000 },
+    { text: "R&D Specialist",                 effect: "explore",    duration: 2000 },
+    { text: "Open Innovation Lead",           effect: "expand",     duration: 2200 },
+    { text: "Policy-Aware Technologist",      effect: "align",      duration: 2400 },
+    { text: "GUI Lead",                       effect: "render",     duration: 2000 },
+    { text: "Data Science Engineer",          effect: "analyze",    duration: 2200 },
+    { text: "Entrepreneur",                   effect: "launch",     duration: 2000 },
+    { text: "Mentor",                         effect: "guide",      duration: 2000 },
+    { text: "Systems Theorist",               effect: "converge",   duration: 2200 }
   ];
 
   const el = document.getElementById("dynamic-title");
@@ -1552,23 +1562,95 @@
           }, 50);
           break;
 
-        case "harden":
-          el.style.transform = "scale(1.02)";
+        case "connect":
+          // Rapid flicker between dots and letters (IoT network)
+          let dotCount = 0;
+          const dotInterval = setInterval(() => {
+            let dots = ".".repeat(dotCount % 4);
+            el.innerText = text.substring(0, text.length - 3) + dots;
+            dotCount++;
+            if (dotCount > 8) {
+              clearInterval(dotInterval);
+              el.innerText = text;
+            }
+          }, 150);
+          break;
+
+        case "collapse":
+          el.style.transform = "scale(1.1)";
           setTimeout(() => {
-            el.style.transform = "scale(0.99)";
-            setTimeout(() => {
-              el.style.transform = "scale(1)";
-            }, 150);
-          }, 100);
+            el.style.transform = "scale(1)";
+          }, 200);
+          break;
+
+        case "structure":
+          el.style.transform = "scale(0.98)";
+          setTimeout(() => {
+            el.style.transform = "scale(1)";
+          }, 200);
+          break;
+
+        case "explore":
+          el.style.filter = "hue-rotate(10deg)";
+          setTimeout(() => { el.style.filter = "hue-rotate(0deg)"; }, 400);
+          break;
+
+        case "expand":
+          el.style.transform = "scale(1.03)";
+          setTimeout(() => {
+            el.style.transform = "scale(1)";
+          }, 300);
+          break;
+
+        case "align":
+          let step = 0;
+          const align = () => {
+            if (step < 4) {
+              const offset = Math.sin(step) * 1.5;
+              el.style.transform = `translateX(${offset}px)`;
+              step++;
+              setTimeout(align, 100);
+            } else {
+              el.style.transform = "translateX(0)";
+            }
+          };
+          align();
+          break;
+
+        case "render":
+          el.style.opacity = "0.8";
+          setTimeout(() => { el.style.opacity = "1"; }, 200);
+          break;
+
+        case "analyze":
+          let bar = 0;
+          const barInterval = setInterval(() => {
+            el.innerText = text + " " + "█".repeat(bar % 4);
+            bar++;
+            if (bar > 10) {
+              clearInterval(barInterval);
+              el.innerText = text;
+            }
+          }, 200);
+          break;
+
+        case "launch":
+          el.style.transform = "translateY(-3px)";
+          setTimeout(() => { el.style.transform = "translateY(0)"; }, 200);
+          break;
+
+        case "guide":
+          el.style.opacity = "0.9";
+          setTimeout(() => { el.style.opacity = "1"; }, 150);
           break;
 
         case "converge":
-          let step = 0;
+          let cStep = 0;
           const converge = () => {
-            if (step < 6) {
-              const offset = Math.sin(step) * (4 - step * 0.6);
+            if (cStep < 6) {
+              const offset = Math.sin(cStep) * (4 - cStep * 0.6);
               el.style.transform = `translateX(${offset}px)`;
-              step++;
+              cStep++;
               setTimeout(converge, 80);
             } else {
               el.style.transform = "translateX(0)";
