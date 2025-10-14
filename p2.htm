@@ -168,8 +168,8 @@
             }
         }
         
-        /* Advanced Loader */
-        .advanced-loader {
+        /* Ultra Advanced Loader */
+        .ultra-loader {
             position: fixed;
             top: 0;
             left: 0;
@@ -177,79 +177,92 @@
             height: 100%;
             background: linear-gradient(135deg, #ffffff, #f5f5f5);
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 9999;
             transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
         }
         
-        .advanced-loader.hidden {
+        .ultra-loader.hidden {
             opacity: 0;
             visibility: hidden;
         }
         
-        .fluid-loader {
+        .ultra-loader-content {
             position: relative;
-            width: 200px;
-            height: 200px;
+            width: 300px;
+            height: 300px;
         }
         
-        .fluid-circle {
+        .loader-ring {
             position: absolute;
             width: 100%;
             height: 100%;
+            border: 3px solid transparent;
             border-radius: 50%;
-            border: 2px solid;
-            border-color: transparent;
-            animation: fluidRotate 3s infinite linear;
+            animation: ringRotate 3s infinite linear;
         }
         
-        .fluid-circle:nth-child(1) {
+        .loader-ring:nth-child(1) {
             border-top-color: #000000;
             animation-duration: 3s;
         }
         
-        .fluid-circle:nth-child(2) {
+        .loader-ring:nth-child(2) {
             border-right-color: #333333;
             animation-duration: 4s;
             animation-direction: reverse;
         }
         
-        .fluid-circle:nth-child(3) {
+        .loader-ring:nth-child(3) {
             border-bottom-color: #666666;
             animation-duration: 5s;
         }
         
-        .fluid-circle:nth-child(4) {
+        .loader-ring:nth-child(4) {
             border-left-color: #999999;
             animation-duration: 6s;
             animation-direction: reverse;
         }
         
-        .fluid-core {
+        .loader-core {
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 60px;
-            height: 60px;
+            width: 80px;
+            height: 80px;
             background: linear-gradient(45deg, #000000, #ffffff);
             border-radius: 50%;
             transform: translate(-50%, -50%);
             animation: corePulse 2s infinite ease-in-out;
         }
         
-        .loader-text {
+        .loader-particles {
             position: absolute;
-            bottom: -50px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            animation: textPulse 1.5s infinite ease-in-out;
+            width: 100%;
+            height: 100%;
         }
         
-        @keyframes fluidRotate {
+        .loader-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--text-primary);
+            border-radius: 50%;
+            animation: orbitParticle 4s infinite linear;
+        }
+        
+        .loader-particle:nth-child(1) { animation-delay: 0s; }
+        .loader-particle:nth-child(2) { animation-delay: 0.5s; }
+        .loader-particle:nth-child(3) { animation-delay: 1s; }
+        .loader-particle:nth-child(4) { animation-delay: 1.5s; }
+        .loader-particle:nth-child(5) { animation-delay: 2s; }
+        .loader-particle:nth-child(6) { animation-delay: 2.5s; }
+        .loader-particle:nth-child(7) { animation-delay: 3s; }
+        .loader-particle:nth-child(8) { animation-delay: 3.5s; }
+        
+        @keyframes ringRotate {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
@@ -257,6 +270,52 @@
         @keyframes corePulse {
             0%, 100% { transform: translate(-50%, -50%) scale(1); }
             50% { transform: translate(-50%, -50%) scale(1.2); }
+        }
+        
+        @keyframes orbitParticle {
+            0% {
+                transform: rotate(0deg) translateX(150px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: rotate(360deg) translateX(150px) rotate(-360deg);
+                opacity: 0;
+            }
+        }
+        
+        .loader-text {
+            margin-top: 2rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            animation: textPulse 1.5s infinite ease-in-out;
+        }
+        
+        .loader-progress {
+            margin-top: 1rem;
+            width: 200px;
+            height: 4px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .loader-progress-bar {
+            height: 100%;
+            background: var(--accent-gradient);
+            border-radius: 2px;
+            animation: progressLoad 2.5s ease-out forwards;
+        }
+        
+        @keyframes progressLoad {
+            0% { width: 0%; }
+            100% { width: 100%; }
         }
         
         @keyframes textPulse {
@@ -1371,15 +1430,28 @@
     </div>
     
     <!-- Advanced Loader -->
-    <div class="advanced-loader" id="loader">
-        <div class="fluid-loader">
-            <div class="fluid-circle"></div>
-            <div class="fluid-circle"></div>
-            <div class="fluid-circle"></div>
-            <div class="fluid-circle"></div>
-            <div class="fluid-core"></div>
+    <div class="ultra-loader" id="loader">
+        <div class="ultra-loader-content">
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+            <div class="loader-core"></div>
+            <div class="loader-particles">
+                <div class="loader-particle"></div>
+                <div class="loader-particle"></div>
+                <div class="loader-particle"></div>
+                <div class="loader-particle"></div>
+                <div class="loader-particle"></div>
+                <div class="loader-particle"></div>
+                <div class="loader-particle"></div>
+                <div class="loader-particle"></div>
+            </div>
         </div>
         <div class="loader-text">Initializing Quantum Experience...</div>
+        <div class="loader-progress">
+            <div class="loader-progress-bar"></div>
+        </div>
     </div>
     
     <!-- Navigation -->
