@@ -1496,11 +1496,11 @@
 <script>
   const titles = [
     { text: "Developer", effect: "zoomIn", duration: 2000 },
-    { text: "Hacker", effect: "glitch", duration: 1500 },
     { text: "Quantum Researcher", effect: "fadeBlur", duration: 2000 },
     { text: "AI Engineer", effect: "typewriter", duration: 2000 },
-    { text: "Cybersecurity Specialist", effect: "shake", duration: 2000 },
-    { text: "Systems Architect", effect: "pulse", duration: 2000 }
+    { text: "Hacker", effect: "glitch", duration: 1500 },
+    { text: "Cyber Sec", effect: "pulse", duration: 2000 },
+    { text: "Systems Theorist", effect: "shake", duration: 2000 }
   ];
 
   const el = document.getElementById("dynamic-title");
@@ -1586,17 +1586,11 @@
 
   function next() {
     const current = titles[i];
-    
-    // Fade out
     el.style.opacity = "0";
     el.style.transform = "scale(0.95)";
-
     setTimeout(() => {
       applyEffect(current.effect, current.text);
-      
-      // Fade in
       el.style.opacity = "1";
-      
       i = (i + 1) % titles.length;
       setTimeout(next, current.duration);
     }, 400);
