@@ -1489,116 +1489,94 @@
                 <span style="animation-delay: 1.2s">i</span>
                 <span style="animation-delay: 1.3s">a</span>
             </h1>
-            <p class="hero-subtitle" id="dynamic-title" style="font-family: monospace; font-weight: 500; letter-spacing: 1px; transition: opacity 0.4s ease, transform 0.3s ease, filter 0.2s ease;">
+            <p class="hero-subtitle" id="dynamic-title" style="font-family: monospace; font-weight: 500; letter-spacing: 0.5px; opacity: 1; transform: scale(1);">
   Developer
 </p>
 
 <script>
-  const titles = [
-    { text: "Developer", effect: "zoomIn", duration: 2000 },
-    { text: "Quantum Researcher", effect: "fadeBlur", duration: 2000 },
-    { text: "AI Engineer", effect: "typewriter", duration: 2000 },
-    { text: "Hacker", effect: "glitch", duration: 1500 },
-    { text: "Cyber Sec", effect: "pulse", duration: 2000 },
-    { text: "Systems Theorist", effect: "shake", duration: 2000 }
+  const roles = [
+    { text: "Developer",          effect: "build",      duration: 2000 },
+    { text: "Quantum Researcher", effect: "entangle",   duration: 2200 },
+    { text: "AI Engineer",        effect: "learn",      duration: 2000 },
+    { text: "Cybersecurity Specialist", effect: "harden", duration: 2400 },
+    { text: "Systems Theorist",   effect: "converge",   duration: 2200 }
   ];
 
   const el = document.getElementById("dynamic-title");
-  let i = 0;
+  let index = 0;
 
-  function applyEffect(effect, text) {
+  function runEffect(effect, text) {
     el.innerText = text;
-    el.style.transform = "scale(1)";
-    el.style.filter = "blur(0px)";
-    el.style.opacity = "1";
 
     switch (effect) {
-      case "glitch":
-        let glitchCount = 0;
-        const chars = "!@#$%^&*()_+-=[]{}|;:,.<>?";
-        const glitchInterval = setInterval(() => {
-          let glitched = "";
-          for (let j = 0; j < text.length; j++) {
-            glitched += Math.random() > 0.7 ? chars.charAt(Math.floor(Math.random() * chars.length)) : text[j];
-          }
-          el.innerText = glitched;
-          el.style.transform = `translateX(${Math.random() > 0.5 ? 2 : -2}px)`;
-          glitchCount++;
-          if (glitchCount > 6) {
-            clearInterval(glitchInterval);
-            el.innerText = text;
-            el.style.transform = "scale(1)";
-          }
-        }, 80);
+      case "build":
+        // Clean entrance: slight scale-up
+        el.style.transform = "scale(0.97)";
+        setTimeout(() => { el.style.transform = "scale(1)"; }, 200);
         break;
 
-      case "fadeBlur":
-        el.style.filter = "blur(2px)";
-        setTimeout(() => {
-          el.style.filter = "blur(0px)";
-        }, 300);
+      case "entangle":
+        // Gentle blur → focus (like quantum decoherence resolving)
+        el.style.filter = "blur(1.5px)";
+        setTimeout(() => { el.style.filter = "blur(0px)"; }, 300);
         break;
 
-      case "typewriter":
+      case "learn":
+        // Typewriter — but smooth and fast (intelligence forming)
         el.innerText = "";
-        let index = 0;
-        const typeInterval = setInterval(() => {
-          if (index <= text.length) {
-            el.innerText = text.slice(0, index);
-            index++;
+        let i = 0;
+        const interval = setInterval(() => {
+          if (i <= text.length) {
+            el.innerText = text.substring(0, i);
+            i++;
           } else {
-            clearInterval(typeInterval);
+            clearInterval(interval);
           }
-        }, 70);
-        break;
-
-      case "shake":
-        el.style.transform = "translateX(0)";
-        setTimeout(() => {
-          el.style.transform = "translateX(-2px)";
-          setTimeout(() => {
-            el.style.transform = "translateX(2px)";
-            setTimeout(() => {
-              el.style.transform = "translateX(-2px)";
-              setTimeout(() => {
-                el.style.transform = "translateX(0)";
-              }, 50);
-            }, 50);
-          }, 50);
         }, 50);
         break;
 
-      case "pulse":
-        el.style.transform = "scale(1.05)";
+      case "harden":
+        // Subtle compression + release (like armor locking)
+        el.style.transform = "scale(1.02)";
         setTimeout(() => {
-          el.style.transform = "scale(1)";
-        }, 200);
+          el.style.transform = "scale(0.99)";
+          setTimeout(() => {
+            el.style.transform = "scale(1)";
+          }, 150);
+        }, 100);
         break;
 
-      case "zoomIn":
-        el.style.transform = "scale(0.95)";
-        setTimeout(() => {
-          el.style.transform = "scale(1)";
-        }, 200);
+      case "converge":
+        // Micro-oscillation that settles (complexity → clarity)
+        let step = 0;
+        const converge = () => {
+          if (step < 6) {
+            const offset = Math.sin(step) * (4 - step * 0.6);
+            el.style.transform = `translateX(${offset}px)`;
+            step++;
+            setTimeout(converge, 80);
+          } else {
+            el.style.transform = "translateX(0)";
+          }
+        };
+        converge();
         break;
     }
   }
 
-  function next() {
-    const current = titles[i];
+  function cycle() {
+    // Fade out
     el.style.opacity = "0";
-    el.style.transform = "scale(0.95)";
     setTimeout(() => {
-      applyEffect(current.effect, current.text);
+      runEffect(roles[index].effect, roles[index].text);
       el.style.opacity = "1";
-      i = (i + 1) % titles.length;
-      setTimeout(next, current.duration);
-    }, 400);
+      index = (index + 1) % roles.length;
+      setTimeout(cycle, roles[index].duration);
+    }, 300);
   }
 
-  window.addEventListener('load', () => {
-    setTimeout(next, 1000);
-  });
+  // Start after a brief pause
+  setTimeout(cycle, 1200);
 </script>
             <a href="#about" class="hero-cta">Explore My Universe</a>
         </div>
