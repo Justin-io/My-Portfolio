@@ -1489,32 +1489,99 @@
                 <span style="animation-delay: 1.2s">i</span>
                 <span style="animation-delay: 1.3s">a</span>
             </h1>
-            <p class="hero-subtitle" id="dynamic-title" style="font-family: monospace; color: #00ffcc; transition: opacity 0.4s;">
+            <p class="hero-subtitle" id="dynamic-title" style="font-family: monospace; font-weight: 500; letter-spacing: 1px; transition: opacity 0.4s ease, transform 0.3s ease, filter 0.2s ease;">
   Developer
 </p>
 
 <script>
   const titles = [
-    { text: "Developer", color: "#00ffcc", duration: 2000 },
-    { text: "Hacker", color: "#ff0044", glitch: true, duration: 1500 },
-    { text: "Quantum Researcher", color: "#00ccff", duration: 2000 },
-    { text: "AI/ML Engineer", color: "#ffcc00", duration: 2000 },
-    { text: "Cybersecurity Specialist", color: "#ff55aa", duration: 2000 },
-    { text: "IoT Innovator", color: "#00ff99", duration: 2000 }
+    { text: "Developer", effect: "zoomIn", duration: 2000 },
+    { text: "Hacker", effect: "glitch", duration: 1500 },
+    { text: "Quantum Researcher", effect: "fadeBlur", duration: 2000 },
+    { text: "AI Engineer", effect: "typewriter", duration: 2000 },
+    { text: "Cybersecurity Specialist", effect: "shake", duration: 2000 },
+    { text: "Systems Architect", effect: "pulse", duration: 2000 }
   ];
 
   const el = document.getElementById("dynamic-title");
   let i = 0;
 
-  function glitchText() {
-    const original = el.innerText;
-    const chars = "!@#$%^&*()_+-=[]{}|;:,.<>?";
-    let glitched = "";
-    for (let j = 0; j < original.length; j++) {
-      glitched += Math.random() > 0.7 ? chars.charAt(Math.floor(Math.random() * chars.length)) : original[j];
+  function applyEffect(effect, text) {
+    el.innerText = text;
+    el.style.transform = "scale(1)";
+    el.style.filter = "blur(0px)";
+    el.style.opacity = "1";
+
+    switch (effect) {
+      case "glitch":
+        let glitchCount = 0;
+        const chars = "!@#$%^&*()_+-=[]{}|;:,.<>?";
+        const glitchInterval = setInterval(() => {
+          let glitched = "";
+          for (let j = 0; j < text.length; j++) {
+            glitched += Math.random() > 0.7 ? chars.charAt(Math.floor(Math.random() * chars.length)) : text[j];
+          }
+          el.innerText = glitched;
+          el.style.transform = `translateX(${Math.random() > 0.5 ? 2 : -2}px)`;
+          glitchCount++;
+          if (glitchCount > 6) {
+            clearInterval(glitchInterval);
+            el.innerText = text;
+            el.style.transform = "scale(1)";
+          }
+        }, 80);
+        break;
+
+      case "fadeBlur":
+        el.style.filter = "blur(2px)";
+        setTimeout(() => {
+          el.style.filter = "blur(0px)";
+        }, 300);
+        break;
+
+      case "typewriter":
+        el.innerText = "";
+        let index = 0;
+        const typeInterval = setInterval(() => {
+          if (index <= text.length) {
+            el.innerText = text.slice(0, index);
+            index++;
+          } else {
+            clearInterval(typeInterval);
+          }
+        }, 70);
+        break;
+
+      case "shake":
+        el.style.transform = "translateX(0)";
+        setTimeout(() => {
+          el.style.transform = "translateX(-2px)";
+          setTimeout(() => {
+            el.style.transform = "translateX(2px)";
+            setTimeout(() => {
+              el.style.transform = "translateX(-2px)";
+              setTimeout(() => {
+                el.style.transform = "translateX(0)";
+              }, 50);
+            }, 50);
+          }, 50);
+        }, 50);
+        break;
+
+      case "pulse":
+        el.style.transform = "scale(1.05)";
+        setTimeout(() => {
+          el.style.transform = "scale(1)";
+        }, 200);
+        break;
+
+      case "zoomIn":
+        el.style.transform = "scale(0.95)";
+        setTimeout(() => {
+          el.style.transform = "scale(1)";
+        }, 200);
+        break;
     }
-    el.innerText = glitched;
-    el.style.textShadow = "0 0 10px #ff0044, 0 0 20px #ff0044";
   }
 
   function next() {
@@ -1522,26 +1589,10 @@
     
     // Fade out
     el.style.opacity = "0";
+    el.style.transform = "scale(0.95)";
+
     setTimeout(() => {
-      if (current.glitch) {
-        // Glitch effect for "Hacker"
-        el.style.color = current.color;
-        el.innerText = current.text;
-        let glitchCount = 0;
-        const glitchInterval = setInterval(() => {
-          glitchText();
-          glitchCount++;
-          if (glitchCount > 8) {
-            clearInterval(glitchInterval);
-            el.innerText = current.text;
-            el.style.textShadow = "";
-          }
-        }, 80);
-      } else {
-        el.style.color = current.color;
-        el.innerText = current.text;
-        el.style.textShadow = "";
-      }
+      applyEffect(current.effect, current.text);
       
       // Fade in
       el.style.opacity = "1";
@@ -1551,7 +1602,9 @@
     }, 400);
   }
 
-  next();
+  window.addEventListener('load', () => {
+    setTimeout(next, 1000);
+  });
 </script>
             <a href="#about" class="hero-cta">Explore My Universe</a>
         </div>
