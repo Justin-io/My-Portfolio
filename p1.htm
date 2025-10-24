@@ -1326,11 +1326,66 @@
                     <span>Available for technical and research collaborations</span>
                 </div>
                 <h1>
-                    Advancing <span class="gradient-text">Theoretical Physics</span><br>
-                    & <span class="gradient-text">Applied Technology</span>
+                    <span id="static-text">Hari Nandan K. a.k.a&nbsp;</span>
+                    <span id="dynamic-text" class="gradient-text">Justin Alexia</span>
                 </h1>
+
+
+
+                <script>
+(function() {
+    const phrases = [
+        "Theoretical Physicist",
+        "Red Team Operator",
+        "Founder of HOPE",
+        "IoT Security Researcher",
+        "Quantum Gravity Researcher"
+    ];
+    
+    const staticText = document.getElementById('static-text');
+    const dynamicText = document.getElementById('dynamic-text');
+    
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typeSpeed = 80;
+    const deleteSpeed = 40;
+    const pauseDelay = 2000;
+
+    function type() {
+        const currentPhrase = phrases[phraseIndex];
+        
+        if (!isDeleting && charIndex <= currentPhrase.length) {
+            // Typing
+            dynamicText.textContent = currentPhrase.substring(0, charIndex);
+            charIndex++;
+            setTimeout(type, typeSpeed);
+        } else if (isDeleting && charIndex >= 0) {
+            // Deleting
+            dynamicText.textContent = currentPhrase.substring(0, charIndex);
+            charIndex--;
+            setTimeout(type, deleteSpeed);
+        } else {
+            // Switch state
+            isDeleting = !isDeleting;
+            if (!isDeleting) {
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                setTimeout(type, typeSpeed);
+            } else {
+                setTimeout(type, pauseDelay);
+            }
+        }
+    }
+
+    // Start animation after a brief delay
+    setTimeout(type, 1000);
+})();
+</script>
+
+
+
                 <p class="subtitle">
-                    Theoretical physicist and full-stack developer building secure, scalable systems—from quantum gravity models to rural EdTech infrastructure.
+                    Theoretical physicist and cybersecurity specialist building resilient systems—from the Chronon-Super Quantum Level Model to rural EdTech and IoT infrastructure.
                 </p>
                 <div class="hero-buttons">
                     <a href="#projects" class="btn btn-primary">
@@ -1354,8 +1409,8 @@
                                     <div class="stat-label">Students Mentored</div>
                                 </div>
                                 <div class="stat-item">
-                                    <div class="stat-number">3</div>
-                                    <div class="stat-label">Active Research Lines</div>
+                                    <div class="stat-number">4</div>
+                                    <div class="stat-label">HOPE Verticals</div>
                                 </div>
                                 <div class="stat-item">
                                     <div class="stat-number">15+</div>
@@ -1363,7 +1418,7 @@
                                 </div>
                                 <div class="stat-item">
                                     <div class="stat-number">50+</div>
-                                    <div class="stat-label">Technologies Used</div>
+                                    <div class="stat-label">Technologies & Tools</div>
                                 </div>
                             </div>
                         </div>
