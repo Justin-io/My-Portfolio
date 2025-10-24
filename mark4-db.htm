@@ -921,4 +921,361 @@ footer {
   </ul>
 </section>
 
+<section>
+  <h2>II. FOUNDATIONAL PHYSICS</h2>
+  <p><strong>Topic:</strong> Electromagnetism – Maxwell’s Equations in Covariant Form, Gauge Invariance, and Retarded Potentials</p>
+  <p class="abstract">
+    <em>Comprehensive, Depth-Oriented Study Notes – Structured for Conceptual Mastery and Technical Fluency</em>
+  </p>
+</section>
 
+<section>
+  <h3>1. Classical Electromagnetism: A Relativistic Theory</h3>
+  <blockquote>
+    <strong>Key insight</strong>: Electromagnetism was <em>already</em> a relativistic theory before Einstein—Maxwell’s equations <strong>implied</strong> special relativity.
+  </blockquote>
+  <ul>
+    <li>Pre-relativity EM used <strong>3-vector formalism</strong> (E, B fields), obscuring spacetime symmetry.</li>
+    <li><strong>Covariant formulation</strong> (4D spacetime) reveals:
+      <ul>
+        <li>Unified electric and magnetic fields</li>
+        <li>Natural incorporation of <strong>Lorentz invariance</strong></li>
+        <li>Elegant expression of conservation laws</li>
+        <li>Foundation for <strong>quantum electrodynamics (QED)</strong></li>
+      </ul>
+    </li>
+  </ul>
+</section>
+
+<section>
+  <h3>2. Spacetime Framework: Minkowski Space</h3>
+  <ul>
+    <li><strong>Metric signature</strong>: We adopt \( (+, -, -, -) \) → \( \eta_{\mu\nu} = \text{diag}(1, -1, -1, -1) \)</li>
+    <li><strong>4-position</strong>: \( x^\mu = (ct, x, y, z) \)</li>
+    <li><strong>4-gradient</strong>: \( \partial_\mu = \left( \frac{1}{c}\frac{\partial}{\partial t}, \nabla \right) \), \( \partial^\mu = \left( \frac{1}{c}\frac{\partial}{\partial t}, -\nabla \right) \)</li>
+    <li><strong>d’Alembertian</strong>: \( \Box = \partial^\mu \partial_\mu = \frac{1}{c^2}\frac{\partial^2}{\partial t^2} - \nabla^2 \)</li>
+  </ul>
+</section>
+
+<section>
+  <h3>3. Electromagnetic Field Tensor \( F^{\mu\nu} \)</h3>
+
+  <div class="subsection">
+    <h4>3.1 Construction from Potentials</h4>
+    <ul>
+      <li><strong>4-potential</strong>: \( A^\mu = (\phi/c, \mathbf{A}) \), where:
+        <ul>
+          <li>\( \phi \): scalar electric potential</li>
+          <li>\( \mathbf{A} \): vector magnetic potential</li>
+        </ul>
+      </li>
+      <li><strong>Field tensor</strong> (antisymmetric, rank-2):
+        <div class="equation boxed-equation">
+          \[ F^{\mu\nu} = \partial^\mu A^\nu - \partial^\nu A^\mu \]
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <h4>3.2 Explicit Matrix Form</h4>
+    <div class="equation boxed-equation">
+      \[
+      F^{\mu\nu} =
+      \begin{pmatrix}
+      0 & -E_x/c & -E_y/c & -E_z/c \\
+      E_x/c & 0 & -B_z & B_y \\
+      E_y/c & B_z & 0 & -B_x \\
+      E_z/c & -B_y & B_x & 0
+      \end{pmatrix}
+      \]
+    </div>
+    <ul>
+      <li><strong>Dual tensor</strong> (for magnetic sources, if any):
+        <div class="equation">
+          \[ \tilde{F}^{\mu\nu} = \frac{1}{2} \epsilon^{\mu\nu\rho\sigma} F_{\rho\sigma} \]
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <h4>3.3 Invariants of the EM Field</h4>
+    <p>Two Lorentz scalars:</p>
+    <ol>
+      <li>\( F^{\mu\nu} F_{\mu\nu} = 2\left(B^2 - \frac{E^2}{c^2}\right) \)</li>
+      <li>\( F^{\mu\nu} \tilde{F}_{\mu\nu} = -\frac{4}{c} \mathbf{E} \cdot \mathbf{B} \)</li>
+    </ol>
+    <p>→ These are the <strong>only</strong> independent scalar invariants of EM.</p>
+  </div>
+</section>
+
+<section>
+  <h3>4. Maxwell’s Equations in Covariant Form</h3>
+
+  <div class="subsection">
+    <h4>4.1 Homogeneous Equations (Bianchi Identity)</h4>
+    <div class="equation boxed-equation">
+      \[ \partial_\lambda F_{\mu\nu} + \partial_\mu F_{\nu\lambda} + \partial_\nu F_{\lambda\mu} = 0
+      \quad \Longleftrightarrow \quad
+      \partial_{[\alpha} F_{\beta\gamma]} = 0 \]
+    </div>
+    <ul>
+      <li>Equivalent to:
+        <ul>
+          <li>\( \nabla \cdot \mathbf{B} = 0 \) (no magnetic monopoles)</li>
+          <li>\( \nabla \times \mathbf{E} = -\frac{\partial \mathbf{B}}{\partial t} \) (Faraday’s law)</li>
+        </ul>
+      </li>
+    </ul>
+    <blockquote>
+      <strong>Geometric meaning</strong>: \( F = dA \) is an <strong>exact 2-form</strong> → automatically closed (\( dF = 0 \)).
+    </blockquote>
+  </div>
+
+  <div class="subsection">
+    <h4>4.2 Inhomogeneous Equations (Dynamical)</h4>
+    <p>Define <strong>4-current</strong>: \( J^\mu = (c\rho, \mathbf{J}) \)</p>
+    <div class="equation boxed-equation">
+      \[ \partial_\mu F^{\mu\nu} = \mu_0 J^\nu \]
+    </div>
+    <ul>
+      <li>Expands to:
+        <ul>
+          <li>\( \nu = 0 \): \( \nabla \cdot \mathbf{E} = \rho / \varepsilon_0 \) (Gauss’s law)</li>
+          <li>\( \nu = i \): \( \nabla \times \mathbf{B} - \frac{1}{c^2} \frac{\partial \mathbf{E}}{\partial t} = \mu_0 \mathbf{J} \) (Ampère–Maxwell law)</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <h4>4.3 Compact Summary</h4>
+    <div class="equation boxed-equation">
+      \[
+      \boxed{
+      \begin{aligned}
+      \partial_{[\alpha} F_{\beta\gamma]} &= 0 \\
+      \partial_\mu F^{\mu\nu} &= \mu_0 J^\nu
+      \end{aligned}
+      }
+      \]
+    </div>
+    <p><strong>Manifest Lorentz covariance</strong>: All inertial observers agree on form.</p>
+  </div>
+</section>
+
+<section>
+  <h3>5. Gauge Invariance</h3>
+
+  <div class="subsection">
+    <h4>5.1 Definition</h4>
+    <ul>
+      <li>The physical fields \( \mathbf{E}, \mathbf{B} \) are <strong>unchanged</strong> under:
+        <div class="equation boxed-equation">
+          \[ A^\mu \to A^\mu + \partial^\mu \chi \]
+        </div>
+        for any smooth scalar function \( \chi(x^\mu) \).
+      </li>
+      <li>Since \( F^{\mu\nu} = \partial^\mu A^\nu - \partial^\nu A^\mu \), the derivative of \( \chi \) cancels.</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <h4>5.2 Physical Significance</h4>
+    <ul>
+      <li><strong>Redundancy in description</strong>: \( A^\mu \) has 4 components, but only 2 physical degrees of freedom (photon polarizations).</li>
+      <li><strong>Constraint</strong>: Gauge freedom allows us to impose <strong>gauge conditions</strong> to simplify equations.</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <h4>5.3 Common Gauges</h4>
+    <table border="1" cellpadding="8" cellspacing="0" style="width:100%; border-collapse: collapse; margin: 1em 0;">
+      <thead>
+        <tr>
+          <th>Gauge</th>
+          <th>Condition</th>
+          <th>Use Case</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Lorenz gauge</strong></td>
+          <td>\( \partial_\mu A^\mu = 0 \)</td>
+          <td>Covariant; leads to wave equations</td>
+        </tr>
+        <tr>
+          <td><strong>Coulomb gauge</strong></td>
+          <td>\( \nabla \cdot \mathbf{A} = 0 \)</td>
+          <td>Electrostatics + transverse radiation</td>
+        </tr>
+        <tr>
+          <td><strong>Temporal gauge</strong></td>
+          <td>\( \phi = 0 \)</td>
+          <td>Hamiltonian formulation</td>
+        </tr>
+        <tr>
+          <td><strong>Axial gauge</strong></td>
+          <td>\( A_3 = 0 \)</td>
+          <td>Certain QFT calculations</td>
+        </tr>
+      </tbody>
+    </table>
+    <blockquote>
+      <strong>Note</strong>: “Lorenz” (not “Lorentz”)—after Ludvig Lorenz.
+    </blockquote>
+  </div>
+
+  <div class="subsection">
+    <h4>5.4 Gauge Fixing &amp; Residual Freedom</h4>
+    <ul>
+      <li>Even after choosing a gauge (e.g., Lorenz), <strong>residual gauge freedom</strong> remains:
+        <ul>
+          <li>If \( \partial_\mu A^\mu = 0 \), then \( A^\mu \to A^\mu + \partial^\mu \chi \) is allowed <strong>iff</strong> \( \Box \chi = 0 \)</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h3>6. Retarded Potentials</h3>
+
+  <div class="subsection">
+    <h4>6.1 Motivation</h4>
+    <ul>
+      <li>Maxwell’s equations are <strong>hyperbolic PDEs</strong> → disturbances propagate at <strong>finite speed</strong> \( c \).</li>
+      <li>Solution must respect <strong>causality</strong>: field at \( (t, \mathbf{r}) \) depends on source at <strong>earlier time</strong> \( t_{\text{ret}} = t - |\mathbf{r} - \mathbf{r}'|/c \)</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <h4>6.2 Derivation in Lorenz Gauge</h4>
+    <ul>
+      <li>In Lorenz gauge: \( \partial_\mu A^\mu = 0 \)</li>
+      <li>Maxwell’s equations become <strong>decoupled wave equations</strong>:
+        <div class="equation boxed-equation">
+          \[ \Box A^\mu = \mu_0 J^\mu \]
+        </div>
+      </li>
+      <li><strong>Green’s function</strong> for \( \Box G(x - x') = \delta^{(4)}(x - x') \) is:
+        <div class="equation">
+          \[ G_{\text{ret}}(x - x') = \frac{\delta\left(t - t' - |\mathbf{r} - \mathbf{r}'|/c\right)}{4\pi |\mathbf{r} - \mathbf{r}'|} \]
+        </div>
+      </li>
+      <li><strong>Retarded 4-potential</strong>:
+        <div class="equation boxed-equation">
+          \[ A^\mu(t, \mathbf{r}) = \frac{\mu_0}{4\pi} \int \frac{J^\mu\left(t - \frac{|\mathbf{r} - \mathbf{r}'|}{c}, \mathbf{r}'\right)}{|\mathbf{r} - \mathbf{r}'|}  d^3r' \]
+        </div>
+      </li>
+      <li>Explicitly:
+        <div class="equation">
+          \[ \phi(t, \mathbf{r}) = \frac{1}{4\pi\varepsilon_0} \int \frac{\rho\left(t_{\text{ret}}, \mathbf{r}'\right)}{|\mathbf{r} - \mathbf{r}'|}  d^3r' \]
+        </div>
+        <div class="equation">
+          \[ \mathbf{A}(t, \mathbf{r}) = \frac{\mu_0}{4\pi} \int \frac{\mathbf{J}\left(t_{\text{ret}}, \mathbf{r}'\right)}{|\mathbf{r} - \mathbf{r}'|}  d^3r' \]
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <h4>6.3 Physical Interpretation</h4>
+    <ul>
+      <li><strong>Jefimenko’s equations</strong>: E and B fields derived from retarded potentials include <strong>velocity and acceleration terms</strong> → explain radiation from accelerating charges.</li>
+      <li><strong>Causality preserved</strong>: No instantaneous action-at-a-distance.</li>
+      <li><strong>Advanced potentials</strong> (with \( t + |\mathbf{r}-\mathbf{r}'|/c \)) are mathematically valid but <strong>non-causal</strong>; discarded on physical grounds.</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <h4>6.4 Liénard–Wiechert Potentials (Point Charge)</h4>
+    <p>For a point charge \( q \) moving on trajectory \( \mathbf{r}_s(t) \):</p>
+    <div class="equation boxed-equation">
+      \[ \phi(\mathbf{r}, t) = \frac{1}{4\pi\varepsilon_0} \left( \frac{q}{(1 - \mathbf{n} \cdot \boldsymbol{\beta}) R} \right)_{\text{ret}} \]
+    </div>
+    <div class="equation boxed-equation">
+      \[ \mathbf{A}(\mathbf{r}, t) = \frac{\mu_0 c}{4\pi} \left( \frac{q \boldsymbol{\beta}}{(1 - \mathbf{n} \cdot \boldsymbol{\beta}) R} \right)_{\text{ret}} \]
+    </div>
+    <p>where:</p>
+    <ul>
+      <li>\( \boldsymbol{\beta} = \mathbf{v}/c \)</li>
+      <li>\( \mathbf{n} = (\mathbf{r} - \mathbf{r}_s)/R \)</li>
+      <li>\( R = |\mathbf{r} - \mathbf{r}_s| \)</li>
+      <li>All evaluated at <strong>retarded time</strong> \( t_{\text{ret}} \)</li>
+    </ul>
+    <p>→ These encode <strong>relativistic beaming</strong> and <strong>radiation reaction</strong>.</p>
+  </div>
+</section>
+
+<section>
+  <h3>7. Conservation Laws &amp; Stress-Energy Tensor</h3>
+
+  <div class="subsection">
+    <h4>7.1 Charge Conservation</h4>
+    <ul>
+      <li>From \( \partial_\nu (\partial_\mu F^{\mu\nu}) = \mu_0 \partial_\nu J^\nu \) and antisymmetry of \( F^{\mu\nu} \):
+        <div class="equation boxed-equation">
+          \[ \partial_\mu J^\mu = 0 \quad \Rightarrow \quad \frac{\partial \rho}{\partial t} + \nabla \cdot \mathbf{J} = 0 \]
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <h4>7.2 Electromagnetic Stress-Energy Tensor</h4>
+    <div class="equation boxed-equation">
+      \[ T^{\mu\nu} = \frac{1}{\mu_0} \left( F^{\mu\alpha} F^\nu_{\ \alpha} - \frac{1}{4} \eta^{\mu\nu} F_{\alpha\beta} F^{\alpha\beta} \right) \]
+    </div>
+    <ul>
+      <li>\( T^{00} = \frac{1}{2} \left( \varepsilon_0 E^2 + \frac{B^2}{\mu_0} \right) \) → energy density</li>
+      <li>\( T^{0i} = \frac{1}{\mu_0} (\mathbf{E} \times \mathbf{B})_i = S_i / c \) → Poynting vector</li>
+      <li>Conservation: \( \partial_\mu T^{\mu\nu} = -F^{\nu\alpha} J_\alpha \) → work done on charges</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h3>8. Connection to Quantum Theory</h3>
+  <ul>
+    <li><strong>Gauge invariance → charge conservation</strong> (via Noether’s theorem for <strong>local</strong> U(1) symmetry)</li>
+    <li><strong>Minimal coupling</strong>: Replace \( \partial_\mu \to D_\mu = \partial_\mu + i \frac{q}{\hbar} A_\mu \) in quantum wave equations</li>
+    <li><strong>Aharonov–Bohm effect</strong>: Physical effect of \( A_\mu \) even where \( F_{\mu\nu} = 0 \) → \( A_\mu \) is <strong>more fundamental</strong> than E/B in quantum regime</li>
+  </ul>
+</section>
+
+<section>
+  <h3>9. Summary: Conceptual Flow</h3>
+  <ol>
+    <li><strong>EM is inherently relativistic</strong> → unify E and B into \( F^{\mu\nu} \)</li>
+    <li><strong>Maxwell’s equations</strong> → two tensor equations (homogeneous + inhomogeneous)</li>
+    <li><strong>Gauge freedom</strong> → redundancy in \( A^\mu \); choose gauge to simplify</li>
+    <li><strong>Lorenz gauge</strong> → wave equations for \( A^\mu \)</li>
+    <li><strong>Retarded solutions</strong> → enforce causality; fields depend on past light cone</li>
+    <li><strong>Point charges</strong> → Liénard–Wiechert potentials → radiation from acceleration</li>
+    <li><strong>Stress-energy tensor</strong> → local conservation of energy-momentum</li>
+  </ol>
+</section>
+
+<section>
+  <h3>10. Common Misconceptions</h3>
+  <ul>
+    <li>❌ “Magnetic fields are just relativistic corrections to electric fields.”  
+      → <strong>No</strong>: Both are components of a single geometric object \( F^{\mu\nu} \). What’s “electric” or “magnetic” depends on observer.</li>
+    <li>❌ “Gauge symmetry is just mathematical convenience.”  
+      → <strong>No</strong>: It’s a <strong>fundamental local symmetry</strong> with physical consequences (charge quantization, photon masslessness).</li>
+    <li>❌ “Retarded potentials violate energy conservation.”  
+      → <strong>No</strong>: The full system (charges + fields) conserves energy; radiation carries it away.</li>
+  </ul>
+</section>
+
+<section>
+  <h3>11. Advanced Directions</h3>
+  <ul>
+    <li><strong>Covariant formulation of radiation reaction</strong> (Abraham–Lorentz–Dirac force)</li>
+    <li><strong>Green’s functions in curved spacetime</strong> (for GR + EM)</li>
+    <li><strong>Feynman propagator</strong> vs. retarded Green’s function in QED</li>
+    <li><strong>Topological aspects</strong>: magnetic monopoles → Dirac quantization condition</li>
+  </ul>
+</section>
