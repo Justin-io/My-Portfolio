@@ -1,0 +1,1931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kerala Gold & Silver Rates - Live Updates</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #d4af37;
+            --secondary-color: #c0c0c0;
+            --dark-color: #1a1a1a;
+            --light-color: #f8f9fa;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --info-color: #17a2b8;
+            --warning-color: #ffc107;
+            --gradient: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f5f5;
+            color: var(--dark-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Splash Screen */
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 1s ease-in-out;
+        }
+        
+        .splash-content {
+            text-align: center;
+            color: white;
+        }
+        
+        .splash-logo {
+            font-size: 5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+        
+        .splash-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .splash-subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: #ccc;
+        }
+        
+        .splash-loader {
+            width: 100px;
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            margin-top: 30px;
+            overflow: hidden;
+        }
+        
+        .splash-loader-bar {
+            height: 100%;
+            width: 0;
+            background-color: var(--primary-color);
+            animation: loading 3s forwards;
+        }
+        
+        @keyframes loading {
+            to { width: 100%; }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Main Container */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-right: 10px;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .date-time {
+            text-align: right;
+        }
+        
+        .date {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+        
+        .time {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+        
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            margin-left: 10px;
+            color: var(--success-color);
+        }
+        
+        .live-dot {
+            width: 10px;
+            height: 10px;
+            background-color: var(--success-color);
+            border-radius: 50%;
+            margin-right: 5px;
+            animation: pulse 1.5s infinite;
+        }
+        
+        .admin-login {
+            margin-left: 20px;
+        }
+        
+        .admin-login button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-login button:hover {
+            background-color: #b8941f;
+            transform: translateY(-2px);
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            background: var(--gradient);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+            margin-bottom: 30px;
+            color: #ccc;
+        }
+        
+        .three-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.3;
+        }
+        
+        /* Widget Section */
+        .widget-section {
+            padding: 40px 0;
+            background-color: white;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+        
+        .widget-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .widget-card {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .widget-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .widget-header {
+            background: var(--gradient);
+            color: white;
+            padding: 15px 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        
+        .widget-header i {
+            font-size: 1.5rem;
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+        
+        .widget-content {
+            padding: 20px;
+        }
+        
+        /* Merchant Rates Section */
+        .merchant-section {
+            padding: 40px 0;
+            background-color: #f9f9f9;
+        }
+        
+        .merchant-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .merchant-card {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .merchant-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+        }
+        
+        .merchant-header {
+            background: linear-gradient(135deg, var(--primary-color), #e5c35a);
+            color: white;
+            padding: 15px 20px;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        
+        .merchant-body {
+            padding: 20px;
+        }
+        
+        .rate-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .rate-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .rate-label {
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .rate-value {
+            font-weight: 700;
+            color: var(--dark-color);
+        }
+        
+        /* Spreadsheet Section */
+        .spreadsheet-section {
+            padding: 40px 0;
+            background-color: white;
+        }
+        
+        .spreadsheet-container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+        
+        .spreadsheet-header {
+            background: var(--gradient);
+            color: white;
+            padding: 15px 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        
+        .spreadsheet-header i {
+            font-size: 1.5rem;
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+        
+        .spreadsheet-content {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .spreadsheet-iframe {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            height: 1000px;
+        }
+        
+        /* Meetings Section */
+        .meetings-section {
+            padding: 40px 0;
+            background-color: #f9f9f9;
+        }
+        
+        .meetings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .meeting-card {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .meeting-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+        }
+        
+        .meeting-header {
+            background: linear-gradient(135deg, var(--info-color), #138496);
+            color: white;
+            padding: 15px 20px;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        
+        .meeting-body {
+            padding: 20px;
+        }
+        
+        .meeting-item {
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .meeting-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .meeting-label {
+            font-weight: 500;
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        
+        .meeting-value {
+            color: var(--dark-color);
+            font-weight: 500;
+        }
+        
+        .join-button {
+            background: linear-gradient(135deg, var(--success-color), #218838);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .join-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+        
+        .join-button:disabled {
+            background: linear-gradient(135deg, #6c757d, #5a6268);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .join-button i {
+            margin-right: 8px;
+        }
+        
+        /* Chart Section */
+        .chart-section {
+            padding: 40px 0;
+            background-color: white;
+        }
+        
+        .chart-container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .chart-header {
+            background: var(--gradient);
+            color: white;
+            padding: 15px 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        
+        .chart-header i {
+            font-size: 1.5rem;
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+        
+        .chart-content {
+            padding: 20px;
+        }
+        
+        /* News Section */
+        .news-section {
+            padding: 40px 0;
+            background-color: #f9f9f9;
+        }
+        
+        .news-container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .news-header {
+            background: linear-gradient(135deg, var(--info-color), #138496);
+            color: white;
+            padding: 15px 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        
+        .news-header i {
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+        
+        .news-content {
+            padding: 20px;
+        }
+        
+        .news-item {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .news-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .news-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+            color: var(--dark-color);
+        }
+        
+        .news-meta {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--gradient);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .footer-section p {
+            margin-bottom: 15px;
+            color: #ccc;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-section ul li a i {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+        
+        .footer-section ul li a:hover {
+            color: var(--primary-color);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        .footer-bottom a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        /* Update Info */
+        .update-info {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--gradient);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+        }
+        
+        .update-info i {
+            margin-right: 8px;
+            color: var(--primary-color);
+        }
+        
+        /* Admin Dashboard */
+        .admin-dashboard {
+            display: none;
+            padding: 40px 0;
+            background-color: #f9f9f9;
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .admin-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark-color);
+        }
+        
+        .admin-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .admin-section {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .admin-section-header {
+            background: var(--gradient);
+            color: white;
+            padding: 15px 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        
+        .admin-section-header i {
+            font-size: 1.5rem;
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+        
+        .admin-section-body {
+            padding: 25px;
+        }
+        
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .admin-table th,
+        .admin-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .admin-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .admin-table tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-buttons button {
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            border-radius: 5px;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #ccc;
+        }
+        
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            overflow: auto;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 0;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .modal-header {
+            background: var(--gradient);
+            color: white;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .close {
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .close:hover {
+            color: var(--primary-color);
+        }
+        
+        .modal-body {
+            padding: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+        }
+        
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), #e5c35a);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger-color), #c82333);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, var(--success-color), #218838);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 50px;
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .notification.success {
+            background: linear-gradient(135deg, var(--success-color), #218838);
+        }
+        
+        .notification.error {
+            background: linear-gradient(135deg, var(--danger-color), #c82333);
+        }
+        
+        .notification.info {
+            background: linear-gradient(135deg, var(--info-color), #138496);
+        }
+        
+        .notification.warning {
+            background: linear-gradient(135deg, var(--warning-color), #e0a800);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .admin-login {
+                margin-left: 0;
+                margin-top: 15px;
+            }
+            
+            .date-time {
+                text-align: center;
+                margin-top: 10px;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .merchant-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .meetings-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .admin-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .admin-actions {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .admin-table {
+                font-size: 0.9rem;
+            }
+            
+            .admin-table th,
+            .admin-table td {
+                padding: 10px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .spreadsheet-iframe {
+                height: 600px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div class="splash-screen" id="splash-screen">
+        <div class="splash-content">
+            <i class="fas fa-coins splash-logo"></i>
+            <h1 class="splash-title">Kerala Gold & Silver Rates</h1>
+            <p class="splash-subtitle">Real-time updates from Kerala's leading merchants</p>
+            <div class="splash-loader">
+                <div class="splash-loader-bar"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="three-container" id="three-container"></div>
+    
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-coins"></i>
+                    <h1>Kerala Gold & Silver Rates</h1>
+                </div>
+                <div class="date-time">
+                    <div class="date" id="current-date"></div>
+                    <div class="time" id="current-time"></div>
+                    <span class="live-indicator">
+                        <span class="live-dot"></span>
+                        LIVE
+                    </span>
+                </div>
+                <div class="admin-login">
+                    <button id="admin-login-btn">Admin Login</button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Today's Gold & Silver Rates</h1>
+                <p class="hero-subtitle">Real-time updates from Kerala's leading merchants</p>
+            </div>
+        </div>
+    </section>
+    
+    <main class="container" id="main-content">
+        <section class="widget-section">
+            <h2 class="section-title">Live Market Rates</h2>
+            <div class="widget-container">
+                <div class="widget-card">
+                    <div class="widget-header">
+                        <i class="fas fa-coins"></i>
+                        Gold Rate (USD)
+                    </div>
+                    <div class="widget-content">
+                        <div class="tradingview-widget-container" style="width: 100%; height: 126px;">
+                            <iframe scrolling="no" allowtransparency="true" frameborder="0" src="https://www.tradingview-widget.com/embed-widget/single-quote/?locale=en#%7B%22symbol%22%3A%22OANDA%3AXAUUSD%22%2C%22width%22%3A%22100%25%22%2C%22colorTheme%22%3A%22light%22%2C%22isTransparent%22%3Afalse%2C%22height%22%3A126%2C%22utm_source%22%3A%22news.jewelleryindustries.com%22%2C%22utm_medium%22%3A%22widget%22%2C%22utm_campaign%22%3A%22single-quote%22%2C%22page-uri%22%3A%22news.jewelleryindustries.com%2F2024%2F03%2Ftoday-gold-rate.html%3Fm%3D1%22%7D" title="single quote TradingView widget" lang="en" style="user-select: none; box-sizing: border-box; display: block; height: 100%; width: 100%;"></iframe>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="widget-card">
+                    <div class="widget-header">
+                        <i class="fas fa-coins"></i>
+                        Silver Rate (USD)
+                    </div>
+                    <div class="widget-content">
+                        <div class="tradingview-widget-container" style="width: 100%; height: 126px;">
+                            <iframe scrolling="no" allowtransparency="true" frameborder="0" src="https://www.tradingview-widget.com/embed-widget/single-quote/?locale=en#%7B%22symbol%22%3A%22OANDA%3AXAGUSD%22%2C%22width%22%3A%22100%25%22%2C%22colorTheme%22%3A%22light%22%2C%22isTransparent%22%3Afalse%2C%22height%22%3A126%2C%22utm_source%22%3A%22news.jewelleryindustries.com%22%2C%22utm_medium%22%3A%22widget%22%2C%22utm_campaign%22%3A%22single-quote%22%2C%22page-uri%22%3A%22news.jewelleryindustries.com%2F2024%2F03%2Ftoday-gold-rate.html%3Fm%3D1%22%7D" title="single quote TradingView widget" lang="en" style="user-select: none; box-sizing: border-box; display: block; height: 100%; width: 100%;"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="merchant-section">
+            <h2 class="section-title">Kerala Merchant Rates</h2>
+            <div class="merchant-grid">
+                <div class="merchant-card">
+                    <div class="merchant-header">AKGSMA S-BHAVAN</div>
+                    <div class="merchant-body">
+                        <div class="rate-item">
+                            <span class="rate-label">22K/916 (1gm):</span>
+                            <span class="rate-value">₹11,865</span>
+                        </div>
+                        <div class="rate-item">
+                            <span class="rate-label">22K/916 (8gms):</span>
+                            <span class="rate-value">₹94,920</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="merchant-card">
+                    <div class="merchant-header">TRICHUR</div>
+                    <div class="merchant-body">
+                        <div class="rate-item">
+                            <span class="rate-label">22K/916 (1gm):</span>
+                            <span class="rate-value">₹11,865</span>
+                        </div>
+                        <div class="rate-item">
+                            <span class="rate-label">22K/916 (8gms):</span>
+                            <span class="rate-value">₹94,920</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="merchant-card">
+                    <div class="merchant-header">KJF</div>
+                    <div class="merchant-body">
+                        <div class="rate-item">
+                            <span class="rate-label">22K/916 (1gm):</span>
+                            <span class="rate-value">₹11,865</span>
+                        </div>
+                        <div class="rate-item">
+                            <span class="rate-label">22K/916 (8gms):</span>
+                            <span class="rate-value">₹94,920</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="merchant-card">
+                    <div class="merchant-header">KGSDA</div>
+                    <div class="merchant-body">
+                        <div class="rate-item">
+                            <span class="rate-label">22K/916 (1gm):</span>
+                            <span class="rate-value">₹11,895</span>
+                        </div>
+                        <div class="rate-item">
+                            <span class="rate-label">22K/916 (8gms):</span>
+                            <span class="rate-value">₹95,160</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="merchant-card">
+                    <div class="merchant-header">18K/750 Gold</div>
+                    <div class="merchant-body">
+                        <div class="rate-item">
+                            <span class="rate-label">18K/750 (1gm):</span>
+                            <span class="rate-value">₹9,810</span>
+                        </div>
+                        <div class="rate-item">
+                            <span class="rate-label">18K/750 (8gms):</span>
+                            <span class="rate-value">₹78,480</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="merchant-card">
+                    <div class="merchant-header">Silver</div>
+                    <div class="merchant-body">
+                        <div class="rate-item">
+                            <span class="rate-label">Silver 995 (1gm):</span>
+                            <span class="rate-value">₹200</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="spreadsheet-section">
+            <h2 class="section-title">Kerala Merchant Rates Database</h2>
+            <div class="spreadsheet-container">
+                <div class="spreadsheet-header">
+                    <i class="fas fa-table"></i>
+                    Complete Kerala Merchant Rates
+                </div>
+                <div class="spreadsheet-content">
+                    <iframe class="spreadsheet-iframe" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQBPq0t76GZEv6kOwMDHJ-M0Fh3vVT3AHjQX3ZG0RMzCWpZMk5Ql97KEz2I12GBfV9t2ZtYViQsuGdr/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+                </div>
+            </div>
+        </section>
+        
+        <section class="meetings-section">
+            <h2 class="section-title">Upcoming Meetings</h2>
+            <div class="meetings-grid" id="meetings-container">
+                <!-- Meetings will be dynamically loaded here -->
+            </div>
+        </section>
+        
+        <section class="chart-section">
+            <h2 class="section-title">Gold Price Chart</h2>
+            <div class="chart-container">
+                <div class="chart-header">
+                    <i class="fas fa-chart-line"></i>
+                    Market Analysis
+                </div>
+                <div class="chart-content">
+                    <div class="tradingview-widget-container">
+                        <div id="tradingview_gold"><div id="tradingview_6e73c-wrapper" style="position: relative; box-sizing: content-box; font-family: -apple-system, BlinkMacSystemFont, &quot;Trebuchet MS&quot;, Roboto, Ubuntu, sans-serif; margin: 0px auto !important; padding: 0px !important; width: 100%; height: 400px;"><iframe title="advanced chart TradingView widget" lang="en" id="tradingview_6e73c" frameborder="0" allowtransparency="true" scrolling="no" allowfullscreen="true" src="https://s.tradingview.com/widgetembed/?hideideas=1&amp;overrides=%7B%7D&amp;enabled_features=%5B%5D&amp;disabled_features=%5B%5D&amp;locale=en#%7B%22symbol%22%3A%22OANDA%3AXAUUSD%22%2C%22frameElementId%22%3A%22tradingview_6e73c%22%2C%22interval%22%3A%221%22%2C%22save_image%22%3A%221%22%2C%22studies%22%3A%22%5B%5D%22%2C%22theme%22%3A%22light%22%2C%22style%22%3A%221%22%2C%22timezone%22%3A%22Etc%2FUTC%22%2C%22studies_overrides%22%3A%22%7B%7D%22%2C%22utm_source%22%3A%22news.jewelleryindustries.com%22%2C%22utm_medium%22%3A%22widget%22%2C%22utm_campaign%22%3A%22chart%22%2C%22utm_term%22%3A%22OANDA%3AXAUUSD%22%2C%22page-uri%22%3A%22news.jewelleryindustries.com%2F2024%2F03%2Ftoday-gold-rate.html%3Fm%3D1%22%7D" style="width: 100%; height: 100%; margin: 0px !important; padding: 0px !important;"></iframe></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="news-section">
+            <h2 class="section-title">Gold & Silver News</h2>
+            <div class="news-container">
+                <div class="news-header">
+                    <i class="fas fa-newspaper"></i>
+                    Latest Updates
+                </div>
+                <div class="news-content">
+                    <div class="news-item">
+                        <div class="news-title">Gold price reaches new high amid global uncertainty</div>
+                        <div class="news-meta">Posted 2 hours ago</div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-title">Silver demand surges in industrial applications</div>
+                        <div class="news-meta">Posted 5 hours ago</div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-title">Kerala jewelry merchants announce festival discounts</div>
+                        <div class="news-meta">Posted 1 day ago</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <div class="admin-dashboard container" id="admin-dashboard">
+        <div class="admin-header">
+            <h1 class="admin-title">Admin Dashboard</h1>
+            <div class="admin-actions">
+                <button class="btn btn-danger" id="logout-btn">Logout</button>
+            </div>
+        </div>
+        
+        <div class="admin-section">
+            <div class="admin-section-header">
+                <i class="fas fa-users"></i>
+                Clients Management
+            </div>
+            <div class="admin-section-body">
+                <button class="btn btn-primary" id="add-client-btn">Add New Client</button>
+                <div style="margin-top: 20px;">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="clients-table-body">
+                            <!-- Clients will be dynamically loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="admin-section">
+            <div class="admin-section-header">
+                <i class="fas fa-calendar-alt"></i>
+                Meetings Management
+            </div>
+            <div class="admin-section-body">
+                <button class="btn btn-primary" id="add-meeting-btn">Schedule New Meeting</button>
+                <div style="margin-top: 20px;">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Client</th>
+                                <th>Title</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Meet Link</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="meetings-table-body">
+                            <!-- Meetings will be dynamically loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Us</h3>
+                    <p>We provide real-time gold and silver rates from Kerala's leading merchants. Our mission is to offer transparent and accurate pricing information to help you make informed decisions.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="#"><i class="fas fa-coins"></i> Gold Rates</a></li>
+                        <li><a href="#"><i class="fas fa-coins"></i> Silver Rates</a></li>
+                        <li><a href="#"><i class="fas fa-store"></i> Merchant Directory</a></li>
+                        <li><a href="#"><i class="fas fa-newspaper"></i> News & Updates</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-phone"></i> +91 123 456 7890</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> info@keralagoldrates.com</a></li>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Kerala, India</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 developed by Justin | All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <div class="update-info">
+        <i class="fas fa-sync-alt"></i>
+        Last updated: <span id="last-update"></span>
+    </div>
+    
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Admin Login</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Client Modal -->
+    <div id="add-client-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Add New Client</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="add-client-form">
+                    <div class="form-group">
+                        <label for="client-name">Name</label>
+                        <input type="text" id="client-name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="client-email">Email</label>
+                        <input type="email" id="client-email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="client-phone">Phone</label>
+                        <input type="tel" id="client-phone" name="phone" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Add Client</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Meeting Modal -->
+    <div id="add-meeting-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Schedule New Meeting</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="add-meeting-form">
+                    <div class="form-group">
+                        <label for="meeting-client">Client</label>
+                        <select id="meeting-client" name="clientId" required>
+                            <option value="">Select a client</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="meeting-title">Title</label>
+                        <input type="text" id="meeting-title" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="meeting-date">Date</label>
+                        <input type="date" id="meeting-date" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="meeting-time">Time</label>
+                        <input type="time" id="meeting-time" name="time" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="meeting-link">Google Meet Link</label>
+                        <input type="url" id="meeting-link" name="meetLink" placeholder="https://meet.google.com/xxx-xxxx-xxx" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Schedule Meeting</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Notification -->
+    <div id="notification" class="notification"></div>
+    
+    <script>
+        // Three.js setup
+        let scene, camera, renderer, goldBar, silverBar;
+        
+        function initThree() {
+            const container = document.getElementById('three-container');
+            
+            // Scene
+            scene = new THREE.Scene();
+            scene.background = null; // Transparent background
+            
+            // Camera
+            camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.z = 5;
+            
+            // Renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
+            
+            // Lights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(1, 1, 1);
+            scene.add(directionalLight);
+            
+            // Gold Bar
+            const goldGeometry = new THREE.BoxGeometry(2, 0.5, 1);
+            const goldMaterial = new THREE.MeshPhongMaterial({ 
+                color: 0xd4af37,
+                shininess: 100,
+                specular: 0xffffff
+            });
+            goldBar = new THREE.Mesh(goldGeometry, goldMaterial);
+            goldBar.position.x = -1.5;
+            scene.add(goldBar);
+            
+            // Silver Bar
+            const silverGeometry = new THREE.BoxGeometry(2, 0.5, 1);
+            const silverMaterial = new THREE.MeshPhongMaterial({ 
+                color: 0xc0c0c0,
+                shininess: 100,
+                specular: 0xffffff
+            });
+            silverBar = new THREE.Mesh(silverGeometry, silverMaterial);
+            silverBar.position.x = 1.5;
+            scene.add(silverBar);
+            
+            // Handle window resize
+            window.addEventListener('resize', onWindowResize);
+        }
+        
+        function onWindowResize() {
+            const container = document.getElementById('three-container');
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        }
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Rotate gold and silver bars
+            goldBar.rotation.x += 0.005;
+            goldBar.rotation.y += 0.01;
+            
+            silverBar.rotation.x += 0.005;
+            silverBar.rotation.y += 0.01;
+            
+            renderer.render(scene, camera);
+        }
+        
+        // Initialize Three.js
+        initThree();
+        animate();
+        
+        // Admin password (for demonstration purposes only)
+        const ADMIN_PASSWORD = "goldadmin123";
+        
+        // Data storage
+        let clients = JSON.parse(localStorage.getItem('clients')) || [];
+        let meetings = JSON.parse(localStorage.getItem('meetings')) || [];
+        let isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        
+        // DOM elements
+        const mainContent = document.getElementById('main-content');
+        const adminDashboard = document.getElementById('admin-dashboard');
+        const loginModal = document.getElementById('login-modal');
+        const addClientModal = document.getElementById('add-client-modal');
+        const addMeetingModal = document.getElementById('add-meeting-modal');
+        const loginForm = document.getElementById('login-form');
+        const addClientForm = document.getElementById('add-client-form');
+        const addMeetingForm = document.getElementById('add-meeting-form');
+        const adminLoginBtn = document.getElementById('admin-login-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        const addClientBtn = document.getElementById('add-client-btn');
+        const addMeetingBtn = document.getElementById('add-meeting-btn');
+        const clientsTableBody = document.getElementById('clients-table-body');
+        const meetingsTableBody = document.getElementById('meetings-table-body');
+        const meetingsContainer = document.getElementById('meetings-container');
+        const meetingClientSelect = document.getElementById('meeting-client');
+        const notification = document.getElementById('notification');
+        const splashScreen = document.getElementById('splash-screen');
+        
+        // Close modal elements
+        const closeBtns = document.querySelectorAll('.close');
+        
+        // Initialize app
+        function init() {
+            // Hide splash screen after 3 seconds
+            setTimeout(() => {
+                splashScreen.style.opacity = '0';
+                setTimeout(() => {
+                    splashScreen.style.display = 'none';
+                }, 1000);
+            }, 3000);
+            
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+            
+            // Check if user is logged in
+            if (isLoggedIn) {
+                showAdminDashboard();
+            } else {
+                showMainContent();
+            }
+            
+            // Load clients and meetings
+            loadClients();
+            loadMeetings();
+            loadUpcomingMeetings();
+            
+            // Check for active meetings every minute
+            setInterval(checkActiveMeetings, 60000);
+            
+            // Auto-refresh page every 5 minutes for live updates
+            setTimeout(function() {
+                location.reload();
+            }, 300000); // 300000ms = 5 minutes
+        }
+        
+        // Update date and time
+        function updateDateTime() {
+            const now = new Date();
+            const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+            
+            document.getElementById('current-date').textContent = now.toLocaleDateString('en-US', dateOptions);
+            document.getElementById('current-time').textContent = now.toLocaleTimeString('en-US', timeOptions);
+            document.getElementById('last-update').textContent = now.toLocaleTimeString('en-US', timeOptions);
+        }
+        
+        // Show main content
+        function showMainContent() {
+            mainContent.style.display = 'block';
+            adminDashboard.style.display = 'none';
+        }
+        
+        // Show admin dashboard
+        function showAdminDashboard() {
+            mainContent.style.display = 'none';
+            adminDashboard.style.display = 'block';
+        }
+        
+        // Show notification
+        function showNotification(message, type = 'info') {
+            const iconMap = {
+                'success': 'fa-check-circle',
+                'error': 'fa-exclamation-circle',
+                'info': 'fa-info-circle',
+                'warning': 'fa-exclamation-triangle'
+            };
+            
+            notification.innerHTML = `<i class="fas ${iconMap[type]}"></i> ${message}`;
+            notification.className = `notification ${type} show`;
+            
+            setTimeout(() => {
+                notification.className = `notification ${type}`;
+            }, 3000);
+        }
+        
+        // Event listeners
+        adminLoginBtn.addEventListener('click', () => {
+            loginModal.style.display = 'block';
+        });
+        
+        logoutBtn.addEventListener('click', () => {
+            isLoggedIn = false;
+            localStorage.setItem('isLoggedIn', 'false');
+            showMainContent();
+            showNotification('Logged out successfully', 'success');
+        });
+        
+        addClientBtn.addEventListener('click', () => {
+            addClientModal.style.display = 'block';
+        });
+        
+        addMeetingBtn.addEventListener('click', () => {
+            // Populate client select dropdown
+            meetingClientSelect.innerHTML = '<option value="">Select a client</option>';
+            clients.forEach(client => {
+                const option = document.createElement('option');
+                option.value = client.id;
+                option.textContent = client.name;
+                meetingClientSelect.appendChild(option);
+            });
+            
+            addMeetingModal.style.display = 'block';
+        });
+        
+        // Close modals
+        closeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                loginModal.style.display = 'none';
+                addClientModal.style.display = 'none';
+                addMeetingModal.style.display = 'none';
+            });
+        });
+        
+        window.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                loginModal.style.display = 'none';
+            }
+            if (e.target === addClientModal) {
+                addClientModal.style.display = 'none';
+            }
+            if (e.target === addMeetingModal) {
+                addMeetingModal.style.display = 'none';
+            }
+        });
+        
+        // Login form submission
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const password = document.getElementById('password').value;
+            
+            if (password === ADMIN_PASSWORD) {
+                isLoggedIn = true;
+                localStorage.setItem('isLoggedIn', 'true');
+                loginModal.style.display = 'none';
+                showAdminDashboard();
+                showNotification('Login successful', 'success');
+                loginForm.reset();
+            } else {
+                showNotification('Invalid password', 'error');
+            }
+        });
+        
+        // Add client form submission
+        addClientForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('client-name').value;
+            const email = document.getElementById('client-email').value;
+            const phone = document.getElementById('client-phone').value;
+            
+            const newClient = {
+                id: Date.now().toString(),
+                name,
+                email,
+                phone
+            };
+            
+            clients.push(newClient);
+            localStorage.setItem('clients', JSON.stringify(clients));
+            
+            loadClients();
+            addClientModal.style.display = 'none';
+            showNotification('Client added successfully', 'success');
+            addClientForm.reset();
+        });
+        
+        // Add meeting form submission
+        addMeetingForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const clientId = document.getElementById('meeting-client').value;
+            const title = document.getElementById('meeting-title').value;
+            const date = document.getElementById('meeting-date').value;
+            const time = document.getElementById('meeting-time').value;
+            const meetLink = document.getElementById('meeting-link').value;
+            
+            const client = clients.find(c => c.id === clientId);
+            
+            const newMeeting = {
+                id: Date.now().toString(),
+                clientId,
+                clientName: client.name,
+                title,
+                date,
+                time,
+                meetLink,
+                isActive: false
+            };
+            
+            meetings.push(newMeeting);
+            localStorage.setItem('meetings', JSON.stringify(meetings));
+            
+            loadMeetings();
+            loadUpcomingMeetings();
+            addMeetingModal.style.display = 'none';
+            showNotification('Meeting scheduled successfully', 'success');
+            addMeetingForm.reset();
+        });
+        
+        // Load clients
+        function loadClients() {
+            clientsTableBody.innerHTML = '';
+            
+            if (clients.length === 0) {
+                clientsTableBody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="empty-state">
+                            <i class="fas fa-users"></i>
+                            <p>No clients found</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            clients.forEach(client => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${client.id}</td>
+                    <td>${client.name}</td>
+                    <td>${client.email}</td>
+                    <td>${client.phone}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-danger" onclick="deleteClient('${client.id}')">Delete</button>
+                        </div>
+                    </td>
+                `;
+                clientsTableBody.appendChild(row);
+            });
+        }
+        
+        // Load meetings
+        function loadMeetings() {
+            meetingsTableBody.innerHTML = '';
+            
+            if (meetings.length === 0) {
+                meetingsTableBody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="empty-state">
+                            <i class="fas fa-calendar-alt"></i>
+                            <p>No meetings found</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            meetings.forEach(meeting => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${meeting.id}</td>
+                    <td>${meeting.clientName}</td>
+                    <td>${meeting.title}</td>
+                    <td>${meeting.date}</td>
+                    <td>${meeting.time}</td>
+                    <td><a href="${meeting.meetLink}" target="_blank">Join Meeting</a></td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-danger" onclick="deleteMeeting('${meeting.id}')">Delete</button>
+                        </div>
+                    </td>
+                `;
+                meetingsTableBody.appendChild(row);
+            });
+        }
+        
+        // Load upcoming meetings
+        function loadUpcomingMeetings() {
+            meetingsContainer.innerHTML = '';
+            
+            if (meetings.length === 0) {
+                meetingsContainer.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-calendar-alt"></i>
+                        <p>No upcoming meetings</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Filter meetings that are in the future
+            const now = new Date();
+            const upcomingMeetings = meetings.filter(meeting => {
+                const meetingDateTime = new Date(`${meeting.date}T${meeting.time}`);
+                return meetingDateTime > now;
+            });
+            
+            if (upcomingMeetings.length === 0) {
+                meetingsContainer.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-calendar-alt"></i>
+                        <p>No upcoming meetings</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Sort meetings by date and time
+            upcomingMeetings.sort((a, b) => {
+                const dateA = new Date(`${a.date}T${a.time}`);
+                const dateB = new Date(`${b.date}T${b.time}`);
+                return dateA - dateB;
+            });
+            
+            // Display only the next 3 meetings
+            const nextMeetings = upcomingMeetings.slice(0, 3);
+            
+            nextMeetings.forEach(meeting => {
+                const meetingDateTime = new Date(`${meeting.date}T${meeting.time}`);
+                const isActive = meeting.isActive || (meetingDateTime <= now && meetingDateTime >= new Date(now.getTime() - 30 * 60000));
+                
+                const meetingCard = document.createElement('div');
+                meetingCard.className = 'meeting-card';
+                meetingCard.innerHTML = `
+                    <div class="meeting-header">${meeting.title}</div>
+                    <div class="meeting-body">
+                        <div class="meeting-item">
+                            <span class="meeting-label">Client:</span>
+                            <span class="meeting-value">${meeting.clientName}</span>
+                        </div>
+                        <div class="meeting-item">
+                            <span class="meeting-label">Date:</span>
+                            <span class="meeting-value">${meeting.date}</span>
+                        </div>
+                        <div class="meeting-item">
+                            <span class="meeting-label">Time:</span>
+                            <span class="meeting-value">${meeting.time}</span>
+                        </div>
+                        <button class="join-button" ${isActive ? '' : 'disabled'} onclick="joinMeeting('${meeting.meetLink}')">
+                            <i class="fas fa-video"></i> ${isActive ? 'Join Meeting' : 'Meeting Not Started'}
+                        </button>
+                    </div>
+                `;
+                meetingsContainer.appendChild(meetingCard);
+            });
+        }
+        
+        // Check for active meetings
+        function checkActiveMeetings() {
+            const now = new Date();
+            
+            meetings.forEach(meeting => {
+                const meetingDateTime = new Date(`${meeting.date}T${meeting.time}`);
+                
+                // Check if meeting is within 30 minutes of start time
+                if (meetingDateTime <= now && meetingDateTime >= new Date(now.getTime() - 30 * 60000)) {
+                    meeting.isActive = true;
+                } else {
+                    meeting.isActive = false;
+                }
+            });
+            
+            localStorage.setItem('meetings', JSON.stringify(meetings));
+            loadUpcomingMeetings();
+        }
+        
+        // Join meeting
+        function joinMeeting(meetLink) {
+            window.open(meetLink, '_blank');
+        }
+        
+        // Delete client
+        function deleteClient(clientId) {
+            if (confirm('Are you sure you want to delete this client?')) {
+                clients = clients.filter(client => client.id !== clientId);
+                localStorage.setItem('clients', JSON.stringify(clients));
+                loadClients();
+                showNotification('Client deleted successfully', 'success');
+            }
+        }
+        
+        // Delete meeting
+        function deleteMeeting(meetingId) {
+            if (confirm('Are you sure you want to delete this meeting?')) {
+                meetings = meetings.filter(meeting => meeting.id !== meetingId);
+                localStorage.setItem('meetings', JSON.stringify(meetings));
+                loadMeetings();
+                loadUpcomingMeetings();
+                showNotification('Meeting deleted successfully', 'success');
+            }
+        }
+        
+        // Initialize app
+        init();
+    </script>
+</body>
+</html>
