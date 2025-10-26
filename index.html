@@ -3355,142 +3355,121 @@ footer {
         });
         
         
-        // Ultra-Minimalist Three.js Background - Abstract Quantum Geometry
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x000000);
-
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 5000);
-const renderer = new THREE.WebGLRenderer({ 
-    alpha: true, 
-    antialias: true,
-    powerPreference: "high-performance"
-});
-
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-document.getElementById('canvas-container').appendChild(renderer.domElement);
-
-// Create abstract geometric structures only (no particles)
-const geometries = [];
-const meshes = [];
-
-// Complex nested geometric structures with subtle animation
-for(let i = 0; i < 6; i++) {
-    const size = 1 + i * 0.3;
-    const geometry = new THREE.IcosahedronGeometry(size, i % 2 === 0 ? 2 : 1);
-    const material = new THREE.MeshPhongMaterial({
-        color: new THREE.Color().setHSL(i * 0.15, 0.8, 0.6),
-        wireframe: true,
-        transparent: true,
-        opacity: 0.15 + (i * 0.05),
-        emissive: new THREE.Color().setHSL(i * 0.15, 0.5, 0.1)
-    });
-    
-    const mesh = new THREE.Mesh(geometry, material);
-    mesh.position.set(
-        (Math.random() - 0.5) * 15,
-        (Math.random() - 0.5) * 15,
-        (Math.random() - 0.5) * 15
-    );
-    
-    scene.add(mesh);
-    geometries.push(geometry);
-    meshes.push(mesh);
-}
-
-// Torus knot structures for quantum field representation
-for(let i = 0; i < 4; i++) {
-    const torusGeometry = new THREE.TorusKnotGeometry(1 + i * 0.3, 0.2, 128, 32);
-    const torusMaterial = new THREE.MeshPhongMaterial({
-        color: new THREE.Color().setHSL(0.5 + i * 0.1, 0.8, 0.6),
-        wireframe: true,
-        transparent: true,
-        opacity: 0.2,
-        emissive: new THREE.Color().setHSL(0.5 + i * 0.1, 0.5, 0.1)
-    });
-    
-    const torusMesh = new THREE.Mesh(torusGeometry, torusMaterial);
-    torusMesh.position.set(
-        (Math.random() - 0.5) * 20,
-        (Math.random() - 0.5) * 20,
-        (Math.random() - 0.5) * 20
-    );
-    
-    scene.add(torusMesh);
-    meshes.push(torusMesh);
-}
-
-// Add minimal lighting system
-const ambientLight = new THREE.AmbientLight(0x404040, 0.3);
-scene.add(ambientLight);
-
-const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-directionalLight.position.set(10, 10, 10);
-scene.add(directionalLight);
-
-// Position camera
-camera.position.set(0, 0, 20);
-
-// Mouse interaction for subtle movement
-let mouseX = 0;
-let mouseY = 0;
-let targetX = 0;
-let targetY = 0;
-
-document.addEventListener('mousemove', (event) => {
-    mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-    mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
-});
-
-// Touch support for mobile
-document.addEventListener('touchmove', (event) => {
-    event.preventDefault();
-    mouseX = (event.touches[0].clientX / window.innerWidth) * 2 - 1;
-    mouseY = -(event.touches[0].clientY / window.innerHeight) * 2 + 1;
-}, { passive: false });
-
-// Animation loop with sophisticated geometric movement
-function animate() {
-    requestAnimationFrame(animate);
-    
-    // Smooth mouse following
-    targetX += (mouseX - targetX) * 0.05;
-    targetY += (mouseY - targetY) * 0.05;
-    
-    // Animate geometric structures with complex patterns
-    meshes.forEach((mesh, index) => {
-        // Complex rotation patterns
-        mesh.rotation.x += 0.003 * Math.cos(index * 0.5);
-        mesh.rotation.y += 0.002 * Math.sin(index * 0.3);
-        mesh.rotation.z += 0.001 * Math.cos(index * 0.7);
+        // Advanced Three.js Background
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
         
-        // Subtle pulsing scale
-        const scale = 1 + Math.sin(Date.now() * 0.001 + index) * 0.05;
-        mesh.scale.set(scale, scale, scale);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('canvas-container').appendChild(renderer.domElement);
         
-        // Orbital movement around center
-        const time = Date.now() * 0.0005;
-        mesh.position.x = Math.sin(time * 0.3 + index) * (3 + index * 0.5);
-        mesh.position.y = Math.cos(time * 0.3 + index) * (3 + index * 0.5);
-        mesh.position.z = Math.sin(time * 0.2 + index) * (3 + index * 0.5);
-    });
-    
-    // Camera movement based on mouse
-    camera.position.x += (targetX * 3 - camera.position.x) * 0.05;
-    camera.position.y += (targetY * 3 - camera.position.y) * 0.05;
-    camera.lookAt(scene.position);
-    
-    renderer.render(scene, camera);
-}
-
-// Handle window resize
-window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-});
-
-animate();
+        // Create advanced particle system
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 4000;
+        const posArray = new Float32Array(particlesCount * 3);
+        const colorsArray = new Float32Array(particlesCount * 3);
+        
+        for(let i = 0; i < particlesCount * 3; i += 3) {
+            posArray[i] = (Math.random() - 0.5) * 20;
+            posArray[i + 1] = (Math.random() - 0.5) * 20;
+            posArray[i + 2] = (Math.random() - 0.5) * 20;
+            
+            const color = new THREE.Color();
+            color.setHSL(Math.random() * 0.2 + 0.5, 0.8, 0.6);
+            colorsArray[i] = color.r;
+            colorsArray[i + 1] = color.g;
+            colorsArray[i + 2] = color.b;
+        }
+        
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorsArray, 3));
+        
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.008,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.8,
+            blending: THREE.AdditiveBlending
+        });
+        
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
+        
+        // Create geometric shapes
+        const geometry1 = new THREE.IcosahedronGeometry(2, 1);
+        const material1 = new THREE.MeshPhongMaterial({
+            color: 0x0066ff,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.1
+        });
+        
+        const mesh1 = new THREE.Mesh(geometry1, material1);
+        scene.add(mesh1);
+        
+        const geometry2 = new THREE.TorusKnotGeometry(1, 0.3, 100, 16);
+        const material2 = new THREE.MeshPhongMaterial({
+            color: 0x00d4ff,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.1
+        });
+        
+        const mesh2 = new THREE.Mesh(geometry2, material2);
+        mesh2.position.x = 5;
+        scene.add(mesh2);
+        
+        // Add lights
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+        
+        const pointLight1 = new THREE.PointLight(0x0066ff, 1);
+        pointLight1.position.set(5, 5, 5);
+        scene.add(pointLight1);
+        
+        const pointLight2 = new THREE.PointLight(0x00d4ff, 1);
+        pointLight2.position.set(-5, -5, -5);
+        scene.add(pointLight2);
+        
+        camera.position.z = 8;
+        
+        // Mouse interaction
+        let mouseX = 0;
+        let mouseY = 0;
+        let targetX = 0;
+        let targetY = 0;
+        
+        document.addEventListener('mousemove', (event) => {
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+        });
+        
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Smooth mouse following
+            targetX += (mouseX - targetX) * 0.05;
+            targetY += (mouseY - targetY) * 0.05;
+            
+            particlesMesh.rotation.x += 0.0005;
+            particlesMesh.rotation.y += 0.0005;
+            
+            mesh1.rotation.x += 0.001;
+            mesh1.rotation.y += 0.001;
+            mesh1.position.x = targetX * 2;
+            mesh1.position.y = targetY * 2;
+            
+            mesh2.rotation.x -= 0.001;
+            mesh2.rotation.y -= 0.001;
+            mesh2.position.x = -targetX * 2;
+            mesh2.position.y = -targetY * 2;
+            
+            renderer.render(scene, camera);
+        }
+        
+        animate();
+        
         // Handle window resize
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
