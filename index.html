@@ -2169,7 +2169,7 @@ footer {
     <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-container">
-          <div class="logo">JA.</div>
+          <div class="logo">JA</div>
             <ul class="nav-links">
                 <li><a href="#home" class="nav-link">Home</a></li>
                 <li><a href="#about" class="nav-link">About</a></li>
@@ -3305,7 +3305,7 @@ footer {
     
 <footer>
     <div class="footer-content">
-        <div class="footer-logo">JA.</div>
+        <div class="footer-logo">JA</div>
         <div class="footer-text">
             I'm open to collaborations in cybersecurity, theoretical physics, EdTech, and IoT systems especially projects that combine technical depth with social impact.
         </div>
@@ -3355,121 +3355,302 @@ footer {
         });
         
         
-        // Advanced Three.js Background
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        // Insane Three.js Background - Quantum Field Simulation
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 5000);
+const renderer = new THREE.WebGLRenderer({ 
+    alpha: true, 
+    antialias: true,
+    powerPreference: "high-performance",
+    stencil: false,
+    depth: false
+});
+
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+// Enhanced particle system with dynamic properties
+const particlesGeometry = new THREE.BufferGeometry();
+const particlesCount = 15000; // Increased particle count
+const posArray = new Float32Array(particlesCount * 3);
+const velArray = new Float32Array(particlesCount * 3); // Velocity
+const lifeArray = new Float32Array(particlesCount); // Life cycle
+const colorsArray = new Float32Array(particlesCount * 3);
+
+// Initialize particles with complex distributions
+for(let i = 0; i < particlesCount * 3; i += 3) {
+    // Create quantum field-like distribution
+    const radius = Math.random() * 50;
+    const theta = Math.random() * Math.PI * 2;
+    const phi = Math.acos(2 * Math.random() - 1);
+    
+    posArray[i] = radius * Math.sin(phi) * Math.cos(theta);
+    posArray[i + 1] = radius * Math.sin(phi) * Math.sin(theta);
+    posArray[i + 2] = radius * Math.cos(phi);
+    
+    // Random velocities
+    velArray[i] = (Math.random() - 0.5) * 0.1;
+    velArray[i + 1] = (Math.random() - 0.5) * 0.1;
+    velArray[i + 2] = (Math.random() - 0.5) * 0.1;
+    
+    // Life cycle (for pulsing effect)
+    lifeArray[Math.floor(i/3)] = Math.random() * Math.PI * 2;
+    
+    // Dynamic colors based on position
+    const hue = (Math.sin(posArray[i] * 0.1) + posArray[i + 1] * 0.01) % 1;
+    const color = new THREE.Color();
+    color.setHSL(hue, 0.9, 0.6);
+    colorsArray[i] = color.r;
+    colorsArray[i + 1] = color.g;
+    colorsArray[i + 2] = color.b;
+}
+
+particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+particlesGeometry.setAttribute('customColor', new THREE.BufferAttribute(colorsArray, 3));
+particlesGeometry.setAttribute('velocity', new THREE.BufferAttribute(velArray, 3));
+particlesGeometry.setAttribute('life', new THREE.BufferAttribute(lifeArray, 1));
+
+// Custom shader material for advanced effects
+const particlesMaterial = new THREE.ShaderMaterial({
+    uniforms: {
+        time: { value: 0 },
+        mouse: { value: new THREE.Vector2() },
+        resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }
+    },
+    vertexShader: `
+        uniform float time;
+        uniform vec2 mouse;
+        attribute vec3 customColor;
+        attribute vec3 velocity;
+        attribute float life;
+        varying vec3 vColor;
+        varying float vLife;
         
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.getElementById('canvas-container').appendChild(renderer.domElement);
-        
-        // Create advanced particle system
-        const particlesGeometry = new THREE.BufferGeometry();
-        const particlesCount = 4000;
-        const posArray = new Float32Array(particlesCount * 3);
-        const colorsArray = new Float32Array(particlesCount * 3);
-        
-        for(let i = 0; i < particlesCount * 3; i += 3) {
-            posArray[i] = (Math.random() - 0.5) * 20;
-            posArray[i + 1] = (Math.random() - 0.5) * 20;
-            posArray[i + 2] = (Math.random() - 0.5) * 20;
+        void main() {
+            vColor = customColor;
+            vLife = life;
             
-            const color = new THREE.Color();
-            color.setHSL(Math.random() * 0.2 + 0.5, 0.8, 0.6);
-            colorsArray[i] = color.r;
-            colorsArray[i + 1] = color.g;
-            colorsArray[i + 2] = color.b;
+            // Complex particle movement
+            vec3 pos = position;
+            pos.x += sin(time * 0.5 + position.y * 0.1) * 0.02;
+            pos.y += cos(time * 0.3 + position.x * 0.1) * 0.02;
+            pos.z += sin(time * 0.4 + position.z * 0.1) * 0.02;
+            
+            // Mouse influence
+            vec3 mouseInfluence = vec3(
+                (mouse.x - 0.5) * 0.1,
+                (mouse.y - 0.5) * 0.1,
+                sin(time + life) * 0.05
+            );
+            
+            pos += mouseInfluence;
+            
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+            gl_PointSize = 2.0 + sin(time + life) * 1.5;
         }
+    `,
+    fragmentShader: `
+        varying vec3 vColor;
+        varying float vLife;
+        uniform float time;
         
-        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-        particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorsArray, 3));
-        
-        const particlesMaterial = new THREE.PointsMaterial({
-            size: 0.008,
-            vertexColors: true,
-            transparent: true,
-            opacity: 0.8,
-            blending: THREE.AdditiveBlending
-        });
-        
-        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-        scene.add(particlesMesh);
-        
-        // Create geometric shapes
-        const geometry1 = new THREE.IcosahedronGeometry(2, 1);
-        const material1 = new THREE.MeshPhongMaterial({
-            color: 0x0066ff,
-            wireframe: true,
-            transparent: true,
-            opacity: 0.1
-        });
-        
-        const mesh1 = new THREE.Mesh(geometry1, material1);
-        scene.add(mesh1);
-        
-        const geometry2 = new THREE.TorusKnotGeometry(1, 0.3, 100, 16);
-        const material2 = new THREE.MeshPhongMaterial({
-            color: 0x00d4ff,
-            wireframe: true,
-            transparent: true,
-            opacity: 0.1
-        });
-        
-        const mesh2 = new THREE.Mesh(geometry2, material2);
-        mesh2.position.x = 5;
-        scene.add(mesh2);
-        
-        // Add lights
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-        scene.add(ambientLight);
-        
-        const pointLight1 = new THREE.PointLight(0x0066ff, 1);
-        pointLight1.position.set(5, 5, 5);
-        scene.add(pointLight1);
-        
-        const pointLight2 = new THREE.PointLight(0x00d4ff, 1);
-        pointLight2.position.set(-5, -5, -5);
-        scene.add(pointLight2);
-        
-        camera.position.z = 8;
-        
-        // Mouse interaction
-        let mouseX = 0;
-        let mouseY = 0;
-        let targetX = 0;
-        let targetY = 0;
-        
-        document.addEventListener('mousemove', (event) => {
-            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
-        });
-        
-        // Animation loop
-        function animate() {
-            requestAnimationFrame(animate);
-            
-            // Smooth mouse following
-            targetX += (mouseX - targetX) * 0.05;
-            targetY += (mouseY - targetY) * 0.05;
-            
-            particlesMesh.rotation.x += 0.0005;
-            particlesMesh.rotation.y += 0.0005;
-            
-            mesh1.rotation.x += 0.001;
-            mesh1.rotation.y += 0.001;
-            mesh1.position.x = targetX * 2;
-            mesh1.position.y = targetY * 2;
-            
-            mesh2.rotation.x -= 0.001;
-            mesh2.rotation.y -= 0.001;
-            mesh2.position.x = -targetX * 2;
-            mesh2.position.y = -targetY * 2;
-            
-            renderer.render(scene, camera);
+        void main() {
+            float alpha = sin(time + vLife) * 0.5 + 0.5;
+            gl_FragColor = vec4(vColor, alpha);
         }
+    `,
+    transparent: true,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false
+});
+
+const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+scene.add(particlesMesh);
+
+// Complex geometric structures
+const geometries = [];
+const meshes = [];
+
+// Multiple nested geometric structures
+for(let i = 0; i < 8; i++) {
+    const size = 1 + i * 0.5;
+    const geometry = new THREE.IcosahedronGeometry(size, i % 2 === 0 ? 2 : 1);
+    const material = new THREE.MeshPhongMaterial({
+        color: new THREE.Color().setHSL(i * 0.1, 0.8, 0.6),
+        wireframe: true,
+        transparent: true,
+        opacity: 0.1 + (i * 0.05),
+        emissive: new THREE.Color().setHSL(i * 0.1, 0.5, 0.1)
+    });
+    
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(
+        (Math.random() - 0.5) * 20,
+        (Math.random() - 0.5) * 20,
+        (Math.random() - 0.5) * 20
+    );
+    
+    scene.add(mesh);
+    geometries.push(geometry);
+    meshes.push(mesh);
+}
+
+// Torus knot structures
+for(let i = 0; i < 5; i++) {
+    const torusGeometry = new THREE.TorusKnotGeometry(1 + i * 0.5, 0.2, 128, 32);
+    const torusMaterial = new THREE.MeshPhongMaterial({
+        color: new THREE.Color().setHSL(0.5 + i * 0.1, 0.8, 0.6),
+        wireframe: true,
+        transparent: true,
+        opacity: 0.15,
+        emissive: new THREE.Color().setHSL(0.5 + i * 0.1, 0.5, 0.1)
+    });
+    
+    const torusMesh = new THREE.Mesh(torusGeometry, torusMaterial);
+    torusMesh.position.set(
+        (Math.random() - 0.5) * 30,
+        (Math.random() - 0.5) * 30,
+        (Math.random() - 0.5) * 30
+    );
+    
+    scene.add(torusMesh);
+    meshes.push(torusMesh);
+}
+
+// Add complex lighting system
+const lights = [];
+const lightCount = 12;
+
+for(let i = 0; i < lightCount; i++) {
+    const light = new THREE.PointLight(
+        new THREE.Color().setHSL(i / lightCount, 0.8, 0.6),
+        1,
+        100
+    );
+    light.position.set(
+        (Math.random() - 0.5) * 50,
+        (Math.random() - 0.5) * 50,
+        (Math.random() - 0.5) * 50
+    );
+    light.castShadow = true;
+    scene.add(light);
+    lights.push(light);
+}
+
+// Ambient light
+const ambientLight = new THREE.AmbientLight(0x404040, 0.3);
+scene.add(ambientLight);
+
+// Directional light for shadows
+const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+directionalLight.position.set(10, 10, 10);
+directionalLight.castShadow = true;
+scene.add(directionalLight);
+
+// Position camera
+camera.position.set(0, 0, 15);
+
+// Mouse interaction with enhanced sensitivity
+let mouseX = 0;
+let mouseY = 0;
+let targetX = 0;
+let targetY = 0;
+let time = 0;
+
+document.addEventListener('mousemove', (event) => {
+    mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+    mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+});
+
+// Touch support for mobile
+document.addEventListener('touchmove', (event) => {
+    event.preventDefault();
+    mouseX = (event.touches[0].clientX / window.innerWidth) * 2 - 1;
+    mouseY = -(event.touches[0].clientY / window.innerHeight) * 2 + 1;
+}, { passive: false });
+
+// Enhanced animation loop
+function animate() {
+    requestAnimationFrame(animate);
+    time += 0.01;
+    
+    // Smooth mouse following
+    targetX += (mouseX - targetX) * 0.05;
+    targetY += (mouseY - targetY) * 0.05;
+    
+    // Update shader uniforms
+    particlesMaterial.uniforms.time.value = time;
+    particlesMaterial.uniforms.mouse.value.set(mouseX, mouseY);
+    
+    // Complex particle rotation and movement
+    particlesMesh.rotation.x = time * 0.001;
+    particlesMesh.rotation.y = time * 0.002;
+    
+    // Update particle positions based on velocity and time
+    const positions = particlesGeometry.attributes.position.array;
+    const velocities = particlesGeometry.attributes.velocity.array;
+    const life = particlesGeometry.attributes.life.array;
+    
+    for(let i = 0; i < particlesCount * 3; i += 3) {
+        positions[i] += velocities[i] * (1 + Math.sin(time * 0.1 + life[Math.floor(i/3)]) * 0.5);
+        positions[i + 1] += velocities[i + 1] * (1 + Math.cos(time * 0.1 + life[Math.floor(i/3)]) * 0.5);
+        positions[i + 2] += velocities[i + 2] * (1 + Math.sin(time * 0.15 + life[Math.floor(i/3)]) * 0.5);
         
-        animate();
+        // Boundary wrapping
+        if(Math.abs(positions[i]) > 25) positions[i] = -positions[i];
+        if(Math.abs(positions[i + 1]) > 25) positions[i + 1] = -positions[i + 1];
+        if(Math.abs(positions[i + 2]) > 25) positions[i + 2] = -positions[i + 2];
+    }
+    
+    particlesGeometry.attributes.position.needsUpdate = true;
+    
+    // Animate geometric structures
+    meshes.forEach((mesh, index) => {
+        mesh.rotation.x += 0.005 * (index + 1);
+        mesh.rotation.y += 0.003 * (index + 1);
+        mesh.rotation.z += 0.002 * (index + 1);
         
+        // Pulsing scale
+        const scale = 1 + Math.sin(time * 2 + index) * 0.1;
+        mesh.scale.set(scale, scale, scale);
+        
+        // Orbital movement
+        mesh.position.x = Math.sin(time * 0.1 + index) * (5 + index * 2);
+        mesh.position.y = Math.cos(time * 0.1 + index) * (5 + index * 2);
+        mesh.position.z = Math.sin(time * 0.05 + index) * (5 + index * 2);
+    });
+    
+    // Animate lights
+    lights.forEach((light, index) => {
+        light.position.x = Math.sin(time * 0.2 + index) * 20;
+        light.position.y = Math.cos(time * 0.2 + index * 1.5) * 20;
+        light.position.z = Math.sin(time * 0.15 + index * 2) * 20;
+        
+        // Pulsing intensity
+        light.intensity = 0.5 + Math.sin(time * 3 + index) * 0.5;
+    });
+    
+    // Camera movement based on mouse
+    camera.position.x += (targetX * 5 - camera.position.x) * 0.05;
+    camera.position.y += (targetY * 5 - camera.position.y) * 0.05;
+    camera.lookAt(scene.position);
+    
+    renderer.render(scene, camera);
+}
+
+// Handle window resize
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    particlesMaterial.uniforms.resolution.value.set(window.innerWidth, window.innerHeight);
+});
+
+animate();
+
         // Handle window resize
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
