@@ -942,7 +942,7 @@
             position: relative;
         }
         
-        /* Custom Cursor - Hide on mobile and touch devices */
+        /* Custom Cursor - Hide on mobile */
         .cursor {
             width: 20px;
             height: 20px;
@@ -1605,7 +1605,6 @@
             padding: 60px;
             position: relative;
             overflow: hidden;
-            margin-bottom: 2rem;
         }
         
         .research-showcase::before {
@@ -2008,65 +2007,64 @@
         }
         
         /* Footer */
-        footer {
-            padding: 60px 20px 30px;
-            text-align: center;
-            background: rgba(0, 0, 0, 0.5);
-            border-top: 1px solid var(--glass-border);
-            width: 100%;
-            box-sizing: border-box;
-        }
+footer {
+    padding: 60px 20px 30px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.5);
+    border-top: 1px solid var(--glass-border);
+    width: 100%;
+    box-sizing: border-box;
+}
 
-        .footer-content {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
+.footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+}
 
-        .footer-logo {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 2rem;
-            font-weight: 700;
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 20px;
-            display: inline-block;
-        }
+.footer-logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 20px;
+    display: inline-block;
+}
 
-        .footer-text {
-            color: var(--text-secondary);
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
+.footer-text {
+    color: var(--text-secondary);
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
 
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
 
-        .footer-link {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.3s ease;
-            font-size: 0.95rem;
-        }
+.footer-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-size: 0.95rem;
+}
 
-        .footer-link:hover {
-            color: var(--accent);
-        }
+.footer-link:hover {
+    color: var(--accent);
+}
 
-        .footer-bottom {
-            padding-top: 30px;
-            border-top: 1px solid var(--glass-border);
-            color: var(--text-tertiary);
-            font-size: 0.9rem;
-            margin-top: 20px;
-        }
-        
+.footer-bottom {
+    padding-top: 30px;
+    border-top: 1px solid var(--glass-border);
+    color: var(--text-tertiary);
+    font-size: 0.9rem;
+    margin-top: 20px;
+}
         /* Responsive Design */
         @media (max-width: 1024px) {
             .hero-container {
@@ -2139,7 +2137,7 @@
         
         /* Additional mobile-specific fixes */
         @media (max-width: 480px) {
-            /* Hide custom cursor on mobile and touch devices */
+            /* Hide custom cursor on mobile */
             .cursor, .cursor-follower {
                 display: none;
             }
@@ -2294,17 +2292,6 @@
             
             .footer-link {
                 font-size: 0.85rem;
-            }
-        }
-        
-        /* Touch device detection */
-        @media (hover: none) and (pointer: coarse) {
-            .cursor, .cursor-follower {
-                display: none;
-            }
-            
-            body {
-                cursor: auto;
             }
         }
         
