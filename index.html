@@ -926,7 +926,7 @@
             --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.3);
             --shadow-glow: 0 0 40px rgba(0, 102, 255, 0.3);
         }
-/* Add this to your CSS */
+/* Add this to your CSS *//* Add this to your CSS */
 .fullscreen-dialog {
     position: fixed;
     top: 0;
@@ -2462,7 +2462,6 @@ footer {
             </div>
         </div>
     </div>
-    <!-- Add this after the loader div -->
 <!-- Add this after the loader div -->
 <div class="fullscreen-dialog" id="fullscreenDialog">
     <div class="dialog-content">
@@ -4144,7 +4143,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.style.mozUserSelect = 'none';
     document.body.style.msUserSelect = 'none';
 });
-
 // Add this to your JavaScript
 // Fullscreen functionality
 const fullscreenDialog = document.getElementById('fullscreenDialog');
@@ -4238,17 +4236,20 @@ document.addEventListener('fullscreenchange', () => {
     }
 });
 
-// Auto-enter fullscreen after page loads
+// Auto-enter fullscreen every time the page loads
 window.addEventListener('load', () => {
-    // Check if user has previously disabled auto-fullscreen
-    if (localStorage.getItem('autoFullscreenDisabled') === 'true') {
-        return;
-    }
-    
-    // Request fullscreen after 3 seconds
+    // Always request fullscreen after 3 seconds
     setTimeout(() => {
         requestFullscreen();
     }, 3000);
+});
+
+// Also request fullscreen on page refresh/reload
+window.addEventListener('beforeunload', () => {
+    // This ensures fullscreen is requested again on reload
+    setTimeout(() => {
+        requestFullscreen();
+    }, 100);
 });
 
 // Handle escape key to exit fullscreen
