@@ -2463,7 +2463,106 @@ footer {
         </div>
     </div>
 <!-- Add this after the loader div -->
+<!-- Add this just before </body> -->
+<div id="experience-overlay" class="fullscreen-dialog active">
+  <div class="dialog-content">
+    <div class="dialog-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 3v18M3 12h18"/>
+        <circle cx="12" cy="12" r="9"/>
+      </svg>
+    </div>
+    <h3>Begin Your Experience</h3>
+    <p>Tap or click anywhere to enter fullscreen and unlock the full immersive interface.</p>
+    <div class="countdown-timer">3</div>
+  </div>
+</div>
 
+<style>
+  /* Already mostly covered in your CSS — adding only what's missing */
+  #experience-overlay {
+    background: rgba(0, 0, 0, 0.92);
+    backdrop-filter: blur(12px);
+  }
+  #experience-overlay .dialog-content {
+    max-width: 480px;
+    padding: 44px;
+  }
+  #experience-overlay p {
+    font-size: 1.05rem;
+    opacity: 0.85;
+  }
+  #experience-overlay .countdown-timer {
+    background: var(--gradient-1);
+  }
+  #experience-overlay .dialog-icon {
+    background: var(--gradient-2);
+    color: var(--accent);
+  }
+</style>
+
+<script>
+(function() {
+  const overlay = document.getElementById('experience-overlay');
+  const timerEl = overlay.querySelector('.countdown-timer');
+  
+  if (!overlay) return;
+
+  // Auto-enter fullscreen after 3s if no interaction
+  let countdown = 3;
+  let countdownInterval = setInterval(() => {
+    countdown--;
+    timerEl.textContent = countdown;
+    if (countdown <= 0) {
+      clearInterval(countdownInterval);
+      attemptFullscreen();
+    }
+  }, 1000);
+
+  // Trigger on any *gesture-safe* interaction
+  const gestureEvents = ['click', 'touchstart', 'pointerdown'];
+  const handleInteraction = () => {
+    clearInterval(countdownInterval);
+    attemptFullscreen();
+  };
+
+  gestureEvents.forEach(evt => 
+    document.addEventListener(evt, handleInteraction, { once: true, passive: true })
+  );
+
+  function attemptFullscreen() {
+    const elem = document.documentElement;
+    let promise;
+    
+    if (elem.requestFullscreen) {
+      promise = elem.requestFullscreen();
+    } else if (elem.webkitRequestFullscreen) {
+      promise = elem.webkitRequestFullscreen();
+    } else {
+      // Fallback: just hide overlay if fullscreen not supported
+      cleanup();
+      return;
+    }
+
+    promise
+      .then(() => cleanup())
+      .catch(err => {
+        console.warn("Fullscreen denied:", err);
+        // Still hide overlay — don’t block UX
+        cleanup();
+      });
+  }
+
+  function cleanup() {
+    // Fade out
+    overlay.style.opacity = '0';
+    overlay.style.visibility = 'hidden';
+    setTimeout(() => {
+      overlay.remove();
+    }, 300);
+  }
+})();
+</script>
 </div>
     <!-- Custom Cursor -->
     <div class="cursor"></div>
