@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Justin-docs</title>
     <style>
+
+
+
         * {
             margin: 0;
             padding: 0;
@@ -182,6 +185,107 @@
             }
         }
     </style>
+
+  <style>
+    /* Fullscreen overlay layer */
+    #fullscreen-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.9);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 999999;
+      cursor: pointer;
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+    #fullscreen-overlay h2 {
+      font-size: 2rem;
+      margin: 0 0 1rem;
+      animation: pulse 2s infinite;
+    }
+    #fullscreen-overlay p {
+      font-size: 1.2rem;
+      opacity: 0.8;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* Optional: Hide scrollbar during overlay */
+    body.overlay-active {
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <!-- Your actual content goes here -->
+  <h1>Welcome to My Page</h1>
+  <p>This is your real content.</p>
+
+  <!-- Fullscreen overlay (initially hidden via JS logic on first-load check) -->
+  <div id="fullscreen-overlay">
+    <h2>🚀 Enter Fullscreen</h2>
+    <p>Click anywhere to enter fullscreen mode.</p>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const overlay = document.getElementById('fullscreen-overlay');
+
+      // Show overlay on every fresh load or refresh
+      // (No localStorage persistence needed — always show on load)
+      overlay.style.display = 'flex';
+      document.body.classList.add('overlay-active');
+
+      const requestFullscreen = () => {
+        const elem = document.documentElement;
+        if (elem.requestFullscreen) {
+          return elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) { // Safari
+          return elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { // IE11
+          return elem.msRequestFullscreen();
+        } else {
+          alert("Fullscreen is not supported in your browser.");
+          return Promise.reject(new Error("Fullscreen API unavailable"));
+        }
+      };
+
+      // Attach click handler to overlay
+      overlay.addEventListener('click', async () => {
+        try {
+          await requestFullscreen();
+          // Remove overlay after successful fullscreen
+          overlay.style.display = 'none';
+          document.body.classList.remove('overlay-active');
+
+          // Optional: Listen for fullscreen exit to re-show overlay?
+          // Uncomment below if you want overlay to reappear on exit
+          /*
+          document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement) {
+              overlay.style.display = 'flex';
+              document.body.classList.add('overlay-active');
+            }
+          });
+          */
+        } catch (err) {
+          console.error("Failed to enter fullscreen:", err);
+          // Keep overlay visible so user can try again
+        }
+      });
+    });
+  </script>
+
+
 </head>
 <body>
     <div class="header">
@@ -2369,5 +2473,16 @@ end Algorithm</div>
     <div class="citation">
         <p><em>Reference: 2024 Exam Scheme & 2025 Handbook for CST201 Data Structures</em></p>
     </div>
+
+
+
+
+
+
+
+
+
+    
+    
 </body>
 </html>
