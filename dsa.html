@@ -1822,7 +1822,1184 @@ Node* deleteFromBeginning(Node* head) {
             </div>
         </div>
     </div>
+    <div class="header">
+        <h2 class="subtitle">Module 3: Trees</h2>
+    </div>
 
+    <div class="section">
+        <h2 class="section-title">1. Basic Tree Terminology</h2>
+        
+        <div class="concept">
+            <div class="simple-explanation">
+                <div class="simple-title">🌳 For a 5-Year-Old: What are Trees?</div>
+                <p>Imagine a big tree in your backyard! It has one thick trunk at the bottom, then branches that split into smaller branches, and finally leaves at the ends. In computers, a tree is just like this - it starts with one "root" and branches out into smaller parts, ending with "leaves" that hold the information!</p>
+            </div>
+            
+            <div class="deep-explanation">
+                <div class="deep-title">🔍 Formal Definition & Technical Terminology</div>
+                <p><strong>Tree</strong> is a hierarchical data structure with a root value and subtrees of children with a parent-child relationship. It's an acyclic graph with exactly one path between any two nodes.</p>
+                
+                <div class="svg-container">
+                    <svg width="700" height="400" viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Tree structure with labeled parts -->
+                        <g transform="translate(350, 50)">
+                            <text x="0" y="0" text-anchor="middle" font-size="18" font-weight="bold" fill="#2c3e50">Tree Terminology Visualization</text>
+                            
+                            <!-- Root node -->
+                            <circle cx="0" cy="40" r="20" fill="#e74c3c" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="0" y="45" text-anchor="middle" fill="white" font-weight="bold">A</text>
+                            <text x="0" y="70" text-anchor="middle" font-size="12" fill="#e74c3c" font-weight="bold">ROOT</text>
+                            
+                            <!-- Level 1 nodes -->
+                            <circle cx="-120" cy="120" r="18" fill="#3498db" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="-120" y="125" text-anchor="middle" fill="white" font-weight="bold">B</text>
+                            
+                            <circle cx="0" cy="120" r="18" fill="#3498db" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="0" y="125" text-anchor="middle" fill="white" font-weight="bold">C</text>
+                            
+                            <circle cx="120" cy="120" r="18" fill="#3498db" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="120" y="125" text-anchor="middle" fill="white" font-weight="bold">D</text>
+                            
+                            <!-- Level 2 nodes -->
+                            <circle cx="-180" cy="200" r="16" fill="#27ae60" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="-180" y="205" text-anchor="middle" fill="white" font-weight="bold">E</text>
+                            
+                            <circle cx="-60" cy="200" r="16" fill="#27ae60" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="-60" y="205" text-anchor="middle" fill="white" font-weight="bold">F</text>
+                            
+                            <circle cx="60" cy="200" r="16" fill="#27ae60" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="60" y="205" text-anchor="middle" fill="white" font-weight="bold">G</text>
+                            
+                            <circle cx="180" cy="200" r="16" fill="#27ae60" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="180" y="205" text-anchor="middle" fill="white" font-weight="bold">H</text>
+                            
+                            <!-- Level 3 nodes (leaves) -->
+                            <circle cx="-210" cy="280" r="14" fill="#f39c12" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="-210" y="285" text-anchor="middle" fill="white" font-size="12">I</text>
+                            <text x="-210" y="305" text-anchor="middle" font-size="10" fill="#f39c12">LEAF</text>
+                            
+                            <circle cx="-150" cy="280" r="14" fill="#f39c12" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="-150" y="285" text-anchor="middle" fill="white" font-size="12">J</text>
+                            <text x="-150" y="305" text-anchor="middle" font-size="10" fill="#f39c12">LEAF</text>
+                            
+                            <circle cx="180" cy="280" r="14" fill="#f39c12" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="180" y="285" text-anchor="middle" fill="white" font-size="12">K</text>
+                            <text x="180" y="305" text-anchor="middle" font-size="10" fill="#f39c12">LEAF</text>
+                            
+                            <!-- Edges -->
+                            <line x1="0" y1="60" x2="-120" y2="102" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="0" y1="60" x2="0" y2="102" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="0" y1="60" x2="120" y2="102" stroke="#2c3e50" stroke-width="2"/>
+                            
+                            <line x1="-120" y1="138" x2="-180" y2="184" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="-120" y1="138" x2="-60" y2="184" stroke="#2c3e50" stroke-width="2"/>
+                            
+                            <line x1="0" y1="138" x2="60" y2="184" stroke="#2c3e50" stroke-width="2"/>
+                            
+                            <line x1="120" y1="138" x2="180" y2="184" stroke="#2c3e50" stroke-width="2"/>
+                            
+                            <line x1="-180" y1="216" x2="-210" y2="266" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="-180" y1="216" x2="-150" y2="266" stroke="#2c3e50" stroke-width="2"/>
+                            
+                            <line x1="180" y1="216" x2="180" y2="266" stroke="#2c3e50" stroke-width="2"/>
+                            
+                            <!-- Annotations -->
+                            <text x="-240" y="240" font-size="10" fill="#7f8c8d">Parent-Child</text>
+                            <text x="-240" y="255" font-size="10" fill="#7f3e50">Relationship</text>
+                            
+                            <text x="90" y="160" font-size="10" fill="#7f8c8d">Siblings:</text>
+                            <text x="90" y="175" font-size="10" fill="#7f8c8d">B, C, D</text>
+                            
+                            <text x="-300" y="120" font-size="10" fill="#7f8c8d">Subtree</text>
+                            <text x="-300" y="135" font-size="10" fill="#7f8c8d">rooted at B</text>
+                        </g>
+                    </svg>
+                    <div class="svg-caption">Figure 1: Tree Structure with Key Terminology</div>
+                </div>
+                
+                <p><strong>Essential Tree Terminology:</strong></p>
+                <ul>
+                    <li><strong>Node:</strong> Basic unit of a tree containing data and links to other nodes</li>
+                    <li><strong>Root:</strong> The topmost node with no parent</li>
+                    <li><strong>Parent:</strong> A node that has child nodes</li>
+                    <li><strong>Child:</strong> A node that has a parent node</li>
+                    <li><strong>Siblings:</strong> Nodes with the same parent</li>
+                    <li><strong>Leaf:</strong> A node with no children</li>
+                    <li><strong>Internal Node:</strong> A node with at least one child</li>
+                    <li><strong>Edge:</strong> Connection between parent and child</li>
+                    <li><strong>Path:</strong> Sequence of nodes and edges connecting two nodes</li>
+                    <li><strong>Height:</strong> Number of edges on longest path from node to leaf</li>
+                    <li><strong>Depth:</strong> Number of edges from root to node</li>
+                    <li><strong>Level:</strong> Depth + 1</li>
+                    <li><strong>Subtree:</strong> Tree consisting of a node and all its descendants</li>
+                </ul>
+                
+                <div class="example">
+                    <div class="example-title">📊 Tree Properties Calculation</div>
+                    <p>For the tree shown in Figure 1:</p>
+                    <ul>
+                        <li><strong>Height of tree:</strong> 3 (longest path: A→B→E→I)</li>
+                        <li><strong>Depth of node G:</strong> 2 (A→C→G)</li>
+                        <li><strong>Level of node D:</strong> 2</li>
+                        <li><strong>Number of leaves:</strong> 3 (I, J, K)</li>
+                        <li><strong>Number of internal nodes:</strong> 8 (A, B, C, D, E, F, G, H)</li>
+                        <li><strong>Degree of node B:</strong> 2 (has 2 children: E, F)</li>
+                    </ul>
+                </div>
+                
+                <div class="formula">
+                    Height(T) = max(Height(child₁), Height(child₂), ..., Height(childₙ)) + 1
+                    <br>
+                    Depth(node) = Depth(parent) + 1
+                    <br>
+                    Level(node) = Depth(node) + 1
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">2. Binary Trees: Properties and Representation</h2>
+        
+        <div class="concept">
+            <div class="simple-explanation">
+                <div class="simple-title">🌿 For a 5-Year-Old: What are Binary Trees?</div>
+                <p>Imagine a special tree where every branch can only split into exactly two smaller branches - no more, no less! A binary tree is like this - every spot on the tree can have at most two "children": one on the left and one on the right, just like your two hands!</p>
+            </div>
+            
+            <div class="deep-explanation">
+                <div class="deep-title">🔢 Formal Definition & Mathematical Properties</div>
+                <p><strong>Binary Tree</strong> is a tree data structure where each node has at most two children, referred to as the left child and right child.</p>
+                
+                <div class="svg-container">
+                    <svg width="700" height="500" viewBox="0 0 700 500" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Binary Tree Types -->
+                        <g transform="translate(50, 50)">
+                            <text x="300" y="0" text-anchor="middle" font-size="18" font-weight="bold" fill="#2c3e50">Types of Binary Trees</text>
+                            
+                            <!-- Complete Binary Tree -->
+                            <g transform="translate(0, 30)">
+                                <text x="150" y="0" text-anchor="middle" font-size="14" font-weight="bold" fill="#2c3e50">Complete Binary Tree</text>
+                                
+                                <circle cx="150" cy="40" r="15" fill="#3498db" stroke="#2c3e50" stroke-width="2"/>
+                                <text x="150" y="45" text-anchor="middle" fill="white" font-size="12">1</text>
+                                
+                                <circle cx="100" cy="90" r="15" fill="#3498db" stroke="#2c3e50" stroke-width="2"/>
+                                <text x="100" y="95" text-anchor="middle" fill="white" font-size="12">2</text>
+                                
+                                <circle cx="200" cy="90" r="15" fill="#3498db" stroke="#2c3e50" stroke-width="2"/>
+                                <text x="200" y="95" text-anchor="middle" fill="white" font-size="12">3</text>
+                                
+                                <circle cx="75" cy="140" r="15" fill="#3498db" stroke="#2c3e50" stroke-width="2"/>
+                                <text x="75" y="145" text-anchor="middle" fill="white" font-size="12">4</text>
+                                
+                                <circle cx="125" cy="140" r="15" fill="#3498db" stroke="#2c3e50" stroke-width="2"/>
+                                <text x="125" y="145" text-anchor="middle" fill="white" font-size="12">5</text>
+                                
+                                <circle cx="175" cy="140" r="15" fill="#3498db" stroke="#2c3e50" stroke-width="2"/>
+                                <text x="175" y="145" text-anchor="middle" fill="white" font-size="12">6</text>
+                                
+                                <circle cx="225" cy="140" r="15" fill="#ecf0f1" stroke="#2c3e50" stroke-width="2" stroke-dasharray="3,3"/>
+                                <text x="225" y="145" text-anchor="middle" fill="#7f8c8d" font-size="12">7</text>
+                                
+                                <!-- Edges -->
+                                <line x1="150" y1="55" x2="100" y2="75" stroke="#2c3e50" stroke-width="2"/>
+                                <line x1="150" y1="55" x2="200" y2="75" stroke="#2c3e50" stroke-width="2"/>
+                                <line x1="100" y1="105" x2="75" y2="125" stroke="#2c3e50" stroke-width="2"/>
+                                <line x1="100" y1="105" x2="125" y2="125" stroke="#2c3e50" stroke-width="2"/>
+                                <line x1="200" y1="105" x2="175" y2="125" stroke="#2c3e50" stroke-width="2"/>
+                                <line x1="200" y1="105" x2="225" y2="125" stroke="#2c3e50" stroke-width="2" stroke-dasharray="3,3"/>
+                            </g>
+                            
+                            <!-- Full Binary Tree -->
+                            <g transform="translate(350, 30)">
+                                <text x="150" y="0" text-anchor="middle" font-size="14" font-weight="bold" fill="#2c3e50">Full Binary Tree</text>
+                                
+                                <circle cx="150" cy="40" r="15" fill="#e74c3c" stroke="#2c3e50" stroke-width="2"/>
+                                <text x="150" y="45" text-anchor="middle" fill="white" font-size="12">1</text>
+                                
+                                <circle cx="100" cy="90" r="15" fill="#e74c3c" stroke="#2c3e50" stroke-width="2"/>
+                                <text x="100" y="95" text-anchor="middle" fill="white" font-size="12">2</text>
+                                
+                                <circle cx="200" cy="90" r="15" fill="#e74c3c" stroke="#2c3e50" stroke-width="2"/>
+                                <text x="200" y="95" text-anchor="middle" fill="white" font-size="12">3</text>
+                                
+                                <circle cx="75" cy="140" r="15" fill="#e74c3c" stroke="#2c3e50" stroke-width="2"/>
+                                <text x="75" y="145" text-anchor="middle" fill="white" font-size="12">4</text>
+                                
+                                <circle cx="125" cy="140" r="15" fill="#e74c3c" stroke="#2c3e50" stroke-width="2"/>
+                                <text x="125" y="145" text-anchor="middle" fill="white" font-size="12">5</text>
+                                
+                                <circle cx="175" cy="140" r="15" fill="#e74c3c" stroke="#2c3e50" stroke-width="2"/>
+                                <text x="175" y="145" text-anchor="middle" fill="white" font-size="12">6</text>
+                                
+                                <circle cx="225" cy="140" r="15" fill="#e74c3c" stroke="#2c3e50" stroke-width="2"/>
+                                <text x="225" y="145" text-anchor="middle" fill="white" font-size="12">7</text>
+                                
+                                <!-- Edges -->
+                                <line x1="150" y1="55" x2="100" y2="75" stroke="#2c3e50" stroke-width="2"/>
+                                <line x1="150" y1="55" x2="200" y2="75" stroke="#2c3e50" stroke-width="2"/>
+                                <line x1="100" y1="105" x2="75" y2="125" stroke="#2c3e50" stroke-width="2"/>
+                                <line x1="100" y1="105" x2="125" y2="125" stroke="#2c3e50" stroke-width="2"/>
+                                <line x1="200" y1="105" x2="175" y2="125" stroke="#2c3e50" stroke-width="2"/>
+                                <line x1="200" y1="105" x2="225" y2="125" stroke="#2c3e50" stroke-width="2"/>
+                            </g>
+                            
+                            <!-- Perfect Binary Tree -->
+                            <g transform="translate(0, 230)">
+                                <text x="150" y="0" text-anchor="middle" font-size="14" font-weight="bold" fill="#2c3e50">Perfect Binary Tree</text>
+                                
+                                <circle cx="150" cy="40" r="15" fill="#27ae60" stroke="#2c3e50" stroke-width="2"/>
+                                <text x="150" y="45" text-anchor="middle" fill="white" font-size="12">1</text>
+                                
+                                <circle cx="100" cy="90" r="15" fill="#27ae60" stroke="#2c3e50" stroke-width="2"/>
+                                <text x="100" y="95" text-anchor="middle" fill="white" font-size="12">2</text>
+                                
+                                <circle cx="200" cy="90" r="15" fill="#27ae60" stroke="#2c3e50" stroke-width="2"/>
+                                <text x="200" y="95" text-anchor="middle" fill="white" font-size="12">3</text>
+                                
+                                <circle cx="75" cy="140" r="15" fill="#27ae60" stroke="#2c3e50" stroke-width="2"/>
+                                <text x="75" y="145" text-anchor="middle" fill="white" font-size="12">4</text>
+                                
+                                <circle cx="125" cy="140" r="15" fill="#27ae60" stroke="#2c3e50" stroke-width="2"/>
+                                <text x="125" y="145" text-anchor="middle" fill="white" font-size="12">5</text>
+                                
+                                <circle cx="175" cy="140" r="15" fill="#27ae60" stroke="#2c3e50" stroke-width="2"/>
+                                <text x="175" y="145" text-anchor="middle" fill="white" font-size="12">6</text>
+                                
+                                <circle cx="225" cy="140" r="15" fill="#27ae60" stroke="#2c3e50" stroke-width="2"/>
+                                <text x="225" y="145" text-anchor="middle" fill="white" font-size="12">7</text>
+                                
+                                <!-- Edges -->
+                                <line x1="150" y1="55" x2="100" y2="75" stroke="#2c3e50" stroke-width="2"/>
+                                <line x1="150" y1="55" x2="200" y2="75" stroke="#2c3e50" stroke-width="2"/>
+                                <line x1="100" y1="105" x2="75" y2="125" stroke="#2c3e50" stroke-width="2"/>
+                                <line x1="100" y1="105" x2="125" y2="125" stroke="#2c3e50" stroke-width="2"/>
+                                <line x1="200" y1="105" x2="175" y2="125" stroke="#2c3e50" stroke-width="2"/>
+                                <line x1="200" y1="105" x2="225" y2="125" stroke="#2c3e50" stroke-width="2"/>
+                            </g>
+                            
+                            <!-- Balanced Binary Tree -->
+                            <g transform="translate(350, 230)">
+                                <text x="150" y="0" text-anchor="middle" font-size="14" font-weight="bold" fill="#2c3e50">Balanced Binary Tree</text>
+                                
+                                <circle cx="150" cy="40" r="15" fill="#f39c12" stroke="#2c3e50" stroke-width="2"/>
+                                <text x="150" y="45" text-anchor="middle" fill="white" font-size="12">8</text>
+                                
+                                <circle cx="100" cy="90" r="15" fill="#f39c12" stroke="#2c3e50" stroke-width="2"/>
+                                <text x="100" y="95" text-anchor="middle" fill="white" font-size="12">3</text>
+                                
+                                <circle cx="200" cy="90" r="15" fill="#f39c12" stroke="#2c3e50" stroke-width="2"/>
+                                <text x="200" y="95" text-anchor="middle" fill="white" font-size="12">10</text>
+                                
+                                <circle cx="75" cy="140" r="15" fill="#f39c12" stroke="#2c3e50" stroke-width="2"/>
+                                <text x="75" y="145" text-anchor="middle" fill="white" font-size="12">1</text>
+                                
+                                <circle cx="125" cy="140" r="15" fill="#f39c12" stroke="#2c3e50" stroke-width="2"/>
+                                <text x="125" y="145" text-anchor="middle" fill="white" font-size="12">6</text>
+                                
+                                <circle cx="175" cy="140" r="15" fill="#f39c12" stroke="#2c3e50" stroke-width="2"/>
+                                <text x="175" y="145" text-anchor="middle" fill="white" font-size="12">14</text>
+                                
+                                <circle cx="225" cy="140" r="15" fill="#f39c12" stroke="#2c3e50" stroke-width="2"/>
+                                <text x="225" y="145" text-anchor="middle" fill="white" font-size="12">18</text>
+                                
+                                <!-- Edges -->
+                                <line x1="150" y1="55" x2="100" y2="75" stroke="#2c3e50" stroke-width="2"/>
+                                <line x1="150" y1="55" x2="200" y2="75" stroke="#2c3e50" stroke-width="2"/>
+                                <line x1="100" y1="105" x2="75" y2="125" stroke="#2c3e50" stroke-width="2"/>
+                                <line x1="100" y1="105" x2="125" y2="125" stroke="#2c3e50" stroke-width="2"/>
+                                <line x1="200" y1="105" x2="175" y2="125" stroke="#2c3e50" stroke-width="2"/>
+                                <line x1="200" y1="105" x2="225" y2="125" stroke="#2c3e50" stroke-width="2"/>
+                            </g>
+                        </g>
+                    </svg>
+                    <div class="svg-caption">Figure 2: Types of Binary Trees</div>
+                </div>
+                
+                <p><strong>Types of Binary Trees:</strong></p>
+                <ul>
+                    <li><strong>Full Binary Tree:</strong> Every node has 0 or 2 children</li>
+                    <li><strong>Complete Binary Tree:</strong> All levels except possibly the last are completely filled, and all nodes are as far left as possible</li>
+                    <li><strong>Perfect Binary Tree:</strong> All interior nodes have two children and all leaves are at the same level</li>
+                    <li><strong>Balanced Binary Tree:</strong> Height difference between left and right subtrees is at most 1 for all nodes</li>
+                    <li><strong>Skewed Binary Tree:</strong> All nodes have only one child (left or right)</li>
+                </ul>
+                
+                <p><strong>Mathematical Properties:</strong></p>
+                <ul>
+                    <li><strong>Maximum nodes at level i:</strong> 2^(i-1)</li>
+                    <li><strong>Maximum nodes in tree of height h:</strong> 2^h - 1</li>
+                    <li><strong>Minimum height for n nodes:</strong> ⌈log₂(n+1)⌉</li>
+                    <li><strong>Maximum height for n nodes:</strong> n (for skewed tree)</li>
+                    <li><strong>Number of leaf nodes:</strong> (n + 1) / 2 for full binary tree</li>
+                </ul>
+                
+                <div class="example">
+                    <div class="example-title">💻 Binary Tree Node Structure</div>
+                    <div class="code">
+// Binary Tree Node Structure
+typedef struct Node {
+    int data;
+    struct Node* left;
+    struct Node* right;
+} Node;
+
+// Create a new node
+Node* createNode(int data) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    if (newNode == NULL) {
+        return NULL;
+    }
+    newNode->data = data;
+    newNode->left = NULL;
+    newNode->right = NULL;
+    return newNode;
+}
+
+// Array representation of binary tree
+// For a complete binary tree:
+// Parent of node i: (i-1)/2
+// Left child of node i: 2i + 1
+// Right child of node i: 2i + 2
+
+int treeArray[] = {1, 2, 3, 4, 5, 6, 7};
+// Index 0: Root (1)
+// Index 1: Left child of root (2)
+// Index 2: Right child of root (3)
+// Index 3: Left child of node 2 (4)
+// Index 4: Right child of node 2 (5)
+// Index 5: Left child of node 3 (6)
+// Index 6: Right child of node 3 (7)
+                    </div>
+                </div>
+                
+                <div class="formula">
+                    Maximum nodes at level i = 2^(i-1)
+                    <br>
+                    Maximum nodes in tree of height h = 2^h - 1
+                    <br>
+                    For array representation:
+                    <br>
+                    • Left child of node i: 2i + 1
+                    <br>
+                    • Right child of node i: 2i + 2
+                    <br>
+                    • Parent of node i: ⌊(i-1)/2⌋
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">3. Tree Traversal Algorithms</h2>
+        
+        <div class="concept">
+            <div class="simple-explanation">
+                <div class="simple-title">🚶‍♂️ For a 5-Year-Old: What is Tree Traversal?</div>
+                <p>Imagine you're exploring a treehouse! You can visit different parts in different ways. You could start at the top and go down one side first, or you could visit every level from top to bottom. Tree traversal is like choosing different paths to visit every part of the tree and collect all the information!</p>
+            </div>
+            
+            <div class="deep-explanation">
+                <div class="deep-title">🔄 Formal Definition & Traversal Methods</div>
+                <p><strong>Tree Traversal</strong> is the process of visiting each node in a tree data structure exactly once. Different traversal orders produce different sequences of node visits.</p>
+                
+                <div class="svg-container">
+                    <svg width="700" height="600" viewBox="0 0 700 600" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Sample Tree for Traversal -->
+                        <g transform="translate(350, 50)">
+                            <text x="0" y="0" text-anchor="middle" font-size="18" font-weight="bold" fill="#2c3e50">Sample Binary Tree for Traversal</text>
+                            
+                            <!-- Tree structure -->
+                            <circle cx="0" cy="50" r="20" fill="#e74c3c" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="0" y="55" text-anchor="middle" fill="white" font-weight="bold">F</text>
+                            
+                            <circle cx="-100" cy="120" r="20" fill="#3498db" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="-100" y="125" text-anchor="middle" fill="white" font-weight="bold">B</text>
+                            
+                            <circle cx="100" cy="120" r="20" fill="#3498db" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="100" y="125" text-anchor="middle" fill="white" font-weight="bold">G</text>
+                            
+                            <circle cx="-150" cy="190" r="20" fill="#27ae60" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="-150" y="195" text-anchor="middle" fill="white" font-weight="bold">A</text>
+                            
+                            <circle cx="-50" cy="190" r="20" fill="#27ae60" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="-50" y="195" text-anchor="middle" fill="white" font-weight="bold">D</text>
+                            
+                            <circle cx="150" cy="190" r="20" fill="#27ae60" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="150" y="195" text-anchor="middle" fill="white" font-weight="bold">I</text>
+                            
+                            <circle cx="-75" cy="260" r="20" fill="#f39c12" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="-75" y="265" text-anchor="middle" fill="white" font-weight="bold">C</text>
+                            
+                            <circle cx="-25" cy="260" r="20" fill="#f39c12" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="-25" y="265" text-anchor="middle" fill="white" font-weight="bold">E</text>
+                            
+                            <circle cx="125" cy="260" r="20" fill="#f39c12" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="125" y="265" text-anchor="middle" fill="white" font-weight="bold">H</text>
+                            
+                            <!-- Edges -->
+                            <line x1="0" y1="70" x2="-100" y2="100" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="0" y1="70" x2="100" y2="100" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="-100" y1="140" x2="-150" y2="170" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="-100" y1="140" x2="-50" y2="170" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="100" y1="140" x2="150" y2="170" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="-50" y1="210" x2="-75" y2="240" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="-50" y1="210" x2="-25" y2="240" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="150" y1="210" x2="125" y2="240" stroke="#2c3e50" stroke-width="2"/>
+                        </g>
+                        
+                        <!-- Traversal Results -->
+                        <g transform="translate(50, 350)">
+                            <text x="300" y="0" text-anchor="middle" font-size="16" font-weight="bold" fill="#2c3e50">Traversal Results</text>
+                            
+                            <!-- Inorder Traversal -->
+                            <rect x="0" y="20" width="600" height="40" fill="#3498db" stroke="#2c3e50" stroke-width="2" rx="5"/>
+                            <text x="10" y="35" font-size="12" fill="white" font-weight="bold">Inorder (Left-Root-Right):</text>
+                            <text x="10" y="50" font-size="14" fill="white">A, B, C, D, E, F, G, H, I</text>
+                            
+                            <!-- Preorder Traversal -->
+                            <rect x="0" y="70" width="600" height="40" fill="#e74c3c" stroke="#2c3e50" stroke-width="2" rx="5"/>
+                            <text x="10" y="85" font-size="12" fill="white" font-weight="bold">Preorder (Root-Left-Right):</text>
+                            <text x="10" y="100" font-size="14" fill="white">F, B, A, D, C, E, G, I, H</text>
+                            
+                            <!-- Postorder Traversal -->
+                            <rect x="0" y="120" width="600" height="40" fill="#27ae60" stroke="#2c3e50" stroke-width="2" rx="5"/>
+                            <text x="10" y="135" font-size="12" fill="white" font-weight="bold">Postorder (Left-Right-Root):</text>
+                            <text x="10" y="150" font-size="14" fill="white">A, C, E, D, B, H, I, G, F</text>
+                            
+                            <!-- Level Order Traversal -->
+                            <rect x="0" y="170" width="600" height="40" fill="#f39c12" stroke="#2c3e50" stroke-width="2" rx="5"/>
+                            <text x="10" y="185" font-size="12" fill="white" font-weight="bold">Level Order (BFS):</text>
+                            <text x="10" y="200" font-size="14" fill="white">F, B, G, A, D, I, C, E, H</text>
+                        </g>
+                    </svg>
+                    <div class="svg-caption">Figure 3: Tree Traversal Methods and Results</div>
+                </div>
+                
+                <p><strong>Depth-First Traversal (DFS):</strong></p>
+                <ul>
+                    <li><strong>Inorder (Left-Root-Right):</strong> Visit left subtree, root, then right subtree</li>
+                    <li><strong>Preorder (Root-Left-Right):</strong> Visit root, left subtree, then right subtree</li>
+                    <li><strong>Postorder (Left-Right-Root):</strong> Visit left subtree, right subtree, then root</li>
+                </ul>
+                
+                <p><strong>Breadth-First Traversal (BFS):</strong></p>
+                <ul>
+                    <li><strong>Level Order:</strong> Visit nodes level by level from top to bottom</li>
+                </ul>
+                
+                <div class="example">
+                    <div class="example-title">💻 Tree Traversal Implementation</div>
+                    <div class="code">
+// Inorder Traversal (Left-Root-Right)
+void inorder(Node* root) {
+    if (root == NULL) return;
+    inorder(root->left);
+    printf("%d ", root->data);
+    inorder(root->right);
+}
+
+// Preorder Traversal (Root-Left-Right)
+void preorder(Node* root) {
+    if (root == NULL) return;
+    printf("%d ", root->data);
+    preorder(root->left);
+    preorder(root->right);
+}
+
+// Postorder Traversal (Left-Right-Root)
+void postorder(Node* root) {
+    if (root == NULL) return;
+    postorder(root->left);
+    postorder(root->right);
+    printf("%d ", root->data);
+}
+
+// Level Order Traversal (using queue)
+#include <stdlib.h>
+#define MAX_SIZE 100
+
+typedef struct {
+    Node* array[MAX_SIZE];
+    int front, rear;
+} Queue;
+
+void levelOrder(Node* root) {
+    if (root == NULL) return;
+    
+    Queue q;
+    q.front = q.rear = -1;
+    q.array[++q.rear] = root;
+    
+    while (q.front <= q.rear) {
+        Node* current = q.array[q.front++];
+        printf("%d ", current->data);
+        
+        if (current->left != NULL)
+            q.array[++q.rear] = current->left;
+        if (current->right != NULL)
+            q.array[++q.rear] = current->right;
+    }
+}
+                    </div>
+                </div>
+                
+                <p><strong>Time and Space Complexity:</strong></p>
+                <ul>
+                    <li><strong>Time Complexity:</strong> O(n) for all traversal methods (visits each node exactly once)</li>
+                    <li><strong>Space Complexity:</strong>
+                        <ul>
+                            <li>DFS (Recursive): O(h) where h is height of tree (call stack)</li>
+                            <li>Level Order: O(w) where w is maximum width of tree (queue size)</li>
+                        </ul>
+                    </li>
+                </ul>
+                
+                <div class="formula">
+                    Time Complexity: T(n) = O(n) for all traversals
+                    <br>
+                    Space Complexity:
+                    <br>
+                    • DFS (Recursive): S(n) = O(h) where h = tree height
+                    <br>
+                    • Level Order: S(n) = O(w) where w = maximum width
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">4. Binary Search Trees (BST)</h2>
+        
+        <div class="concept">
+            <div class="simple-explanation">
+                <div class="simple-title">🔍 For a 5-Year-Old: What is a Binary Search Tree?</div>
+                <p>Imagine a special bookshelf where books are arranged in a very smart way! Books with smaller numbers go on the left side, and books with bigger numbers go on the right side. This makes it super easy to find any book quickly - you just go left or right depending on whether you're looking for a smaller or bigger number!</p>
+            </div>
+            
+            <div class="deep-explanation">
+                <div class="deep-title">🎯 Formal Definition & BST Properties</div>
+                <p><strong>Binary Search Tree (BST)</strong> is a binary tree where for each node, all elements in the left subtree are less than the node, and all elements in the right subtree are greater than the node.</p>
+                
+                <div class="svg-container">
+                    <svg width="700" height="500" viewBox="0 0 700 500" xmlns="http://www.w3.org/2000/svg">
+                        <!-- BST Example -->
+                        <g transform="translate(350, 50)">
+                            <text x="0" y="0" text-anchor="middle" font-size="18" font-weight="bold" fill="#2c3e50">Binary Search Tree Example</text>
+                            
+                            <!-- BST structure -->
+                            <circle cx="0" cy="50" r="20" fill="#e74c3c" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="0" y="55" text-anchor="middle" fill="white" font-weight="bold">50</text>
+                            
+                            <circle cx="-120" cy="120" r="18" fill="#3498db" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="-120" y="125" text-anchor="middle" fill="white" font-weight="bold">30</text>
+                            
+                            <circle cx="120" cy="120" r="18" fill="#3498db" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="120" y="125" text-anchor="middle" fill="white" font-weight="bold">70</text>
+                            
+                            <circle cx="-180" cy="190" r="16" fill="#27ae60" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="-180" y="195" text-anchor="middle" fill="white" font-weight="bold">20</text>
+                            
+                            <circle cx="-60" cy="190" r="16" fill="#27ae60" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="-60" y="195" text-anchor="middle" fill="white" font-weight="bold">40</text>
+                            
+                            <circle cx="60" cy="190" r="16" fill="#27ae60" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="60" y="195" text-anchor="middle" fill="white" font-weight="bold">60</text>
+                            
+                            <circle cx="180" cy="190" r="16" fill="#27ae60" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="180" y="195" text-anchor="middle" fill="white" font-weight="bold">80</text>
+                            
+                            <circle cx="-210" cy="260" r="14" fill="#f39c12" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="-210" y="265" text-anchor="middle" fill="white" font-size="12">10</text>
+                            
+                            <circle cx="-150" cy="260" r="14" fill="#f39c12" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="-150" y="265" text-anchor="middle" fill="white" font-size="12">25</text>
+                            
+                            <circle cx="-90" cy="260" r="14" fill="#f39c12" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="-90" y="265" text-anchor="middle" fill="white" font-size="12">35</text>
+                            
+                            <circle cx="-30" cy="260" r="14" fill="#f39c12" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="-30" y="265" text-anchor="middle" fill="white" font-size="12">45</text>
+                            
+                            <!-- Edges -->
+                            <line x1="0" y1="70" x2="-120" y2="102" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="0" y1="70" x2="120" y2="102" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="-120" y1="138" x2="-180" y2="174" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="-120" y1="138" x2="-60" y2="174" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="120" y1="138" x2="60" y2="174" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="120" y1="138" x2="180" y2="174" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="-180" y1="206" x2="-210" y2="246" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="-180" y1="206" x2="-150" y2="246" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="-60" y1="206" x2="-90" y2="246" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="-60" y1="206" x2="-30" y2="246" stroke="#2c3e50" stroke-width="2"/>
+                            
+                            <!-- BST Property annotations -->
+                            <text x="-250" y="140" font-size="10" fill="#27ae60">Left < 30</text>
+                            <text x="10" y="140" font-size="10" fill="#e74c3c">Right > 30</text>
+                            
+                            <text x="-250" y="210" font-size="10" fill="#27ae60">Left < 20</text>
+                            <text x="-130" y="210" font-size="10" fill="#e74c3c">Right > 20</text>
+                        </g>
+                        
+                        <!-- BST Operations -->
+                        <g transform="translate(50, 340)">
+                            <text x="300" y="0" text-anchor="middle" font-size="16" font-weight="bold" fill="#2c3e50">BST Operations and Complexity</text>
+                            
+                            <!-- Operations table -->
+                            <rect x="0" y="20" width="150" height="30" fill="#34495e" stroke="#2c3e50"/>
+                            <text x="75" y="40" text-anchor="middle" fill="white" font-weight="bold">Operation</text>
+                            
+                            <rect x="150" y="20" width="200" height="30" fill="#34495e" stroke="#2c3e50"/>
+                            <text x="250" y="40" text-anchor="middle" fill="white" font-weight="bold">Average Case</text>
+                            
+                            <rect x="350" y="20" width="150" height="30" fill="#34495e" stroke="#2c3e50"/>
+                            <text x="425" y="40" text-anchor="middle" fill="white" font-weight="bold">Worst Case</text>
+                            
+                            <!-- Search -->
+                            <rect x="0" y="50" width="150" height="25" fill="#ecf0f1" stroke="#2c3e50"/>
+                            <text x="75" y="67" text-anchor="middle">Search</text>
+                            
+                            <rect x="150" y="50" width="200" height="25" fill="#ecf0f1" stroke="#2c3e50"/>
+                            <text x="250" y="67" text-anchor="middle">O(log n)</text>
+                            
+                            <rect x="350" y="50" width="150" height="25" fill="#ecf0f1" stroke="#2c3e50"/>
+                            <text x="425" y="67" text-anchor="middle">O(n)</text>
+                            
+                            <!-- Insert -->
+                            <rect x="0" y="75" width="150" height="25" fill="#ecf0f1" stroke="#2c3e50"/>
+                            <text x="75" y="92" text-anchor="middle">Insert</text>
+                            
+                            <rect x="150" y="75" width="200" height="25" fill="#ecf0f1" stroke="#2c3e50"/>
+                            <text x="250" y="92" text-anchor="middle">O(log n)</text>
+                            
+                            <rect x="350" y="75" width="150" height="25" fill="#ecf0f1" stroke="#2c3e50"/>
+                            <text x="425" y="92" text-anchor="middle">O(n)</text>
+                            
+                            <!-- Delete -->
+                            <rect x="0" y="100" width="150" height="25" fill="#ecf0f1" stroke="#2c3e50"/>
+                            <text x="75" y="117" text-anchor="middle">Delete</text>
+                            
+                            <rect x="150" y="100" width="200" height="25" fill="#ecf0f1" stroke="#2c3e50"/>
+                            <text x="250" y="117" text-anchor="middle">O(log n)</text>
+                            
+                            <rect x="350" y="100" width="150" height="25" fill="#ecf0f1" stroke="#2c3e50"/>
+                            <text x="425" y="117" text-anchor="middle">O(n)</text>
+                            
+                            <!-- Traversal -->
+                            <rect x="0" y="125" width="150" height="25" fill="#ecf0f1" stroke="#2c3e50"/>
+                            <text x="75" y="142" text-anchor="middle">Traversal</text>
+                            
+                            <rect x="150" y="125" width="200" height="25" fill="#ecf0f1" stroke="#2c3e50"/>
+                            <text x="250" y="142" text-anchor="middle">O(n)</text>
+                            
+                            <rect x="350" y="125" width="150" height="25" fill="#ecf0f1" stroke="#2c3e50"/>
+                            <text x="425" y="142" text-anchor="middle">O(n)</text>
+                        </g>
+                    </svg>
+                    <div class="svg-caption">Figure 4: Binary Search Tree Structure and Operations</div>
+                </div>
+                
+                <p><strong>BST Properties:</strong></p>
+                <ul>
+                    <li><strong>Left Subtree Property:</strong> All values in left subtree < root value</li>
+                    <li><strong>Right Subtree Property:</strong> All values in right subtree > root value</li>
+                    <li><strong>No Duplicates:</strong> Typically, BSTs don't contain duplicate values</li>
+                    <li><strong>Inorder Traversal:</strong> Produces sorted sequence of values</li>
+                </ul>
+                
+                <div class="example">
+                    <div class="example-title">💻 BST Operations Implementation</div>
+                    <div class="code">
+// BST Node Structure
+typedef struct BSTNode {
+    int data;
+    struct BSTNode* left;
+    struct BSTNode* right;
+} BSTNode;
+
+// Search in BST
+BSTNode* search(BSTNode* root, int key) {
+    if (root == NULL || root->data == key) {
+        return root;
+    }
+    
+    if (key < root->data) {
+        return search(root->left, key);
+    } else {
+        return search(root->right, key);
+    }
+}
+
+// Insert in BST
+BSTNode* insert(BSTNode* root, int data) {
+    if (root == NULL) {
+        BSTNode* newNode = (BSTNode*)malloc(sizeof(BSTNode));
+        newNode->data = data;
+        newNode->left = newNode->right = NULL;
+        return newNode;
+    }
+    
+    if (data < root->data) {
+        root->left = insert(root->left, data);
+    } else if (data > root->data) {
+        root->right = insert(root->right, data);
+    }
+    
+    return root;
+}
+
+// Find minimum value node
+BSTNode* minValueNode(BSTNode* node) {
+    BSTNode* current = node;
+    while (current && current->left != NULL) {
+        current = current->left;
+    }
+    return current;
+}
+
+// Delete from BST
+BSTNode* delete(BSTNode* root, int key) {
+    if (root == NULL) return root;
+    
+    if (key < root->data) {
+        root->left = delete(root->left, key);
+    } else if (key > root->data) {
+        root->right = delete(root->right, key);
+    } else {
+        // Node with only one child or no child
+        if (root->left == NULL) {
+            BSTNode* temp = root->right;
+            free(root);
+            return temp;
+        } else if (root->right == NULL) {
+            BSTNode* temp = root->left;
+            free(root);
+            return temp;
+        }
+        
+        // Node with two children
+        BSTNode* temp = minValueNode(root->right);
+        root->data = temp->data;
+        root->right = delete(root->right, temp->data);
+    }
+    
+    return root;
+}
+                    </div>
+                </div>
+                
+                <p><strong>Deletion Cases in BST:</strong></p>
+                <ul>
+                    <li><strong>Case 1: Node is a leaf</strong> - Simply remove the node</li>
+                    <li><strong>Case 2: Node has one child</strong> - Replace node with its child</li>
+                    <li><strong>Case 3: Node has two children</strong> - Find inorder successor (minimum in right subtree), copy its value, and delete the successor</li>
+                </ul>
+                
+                <div class="formula">
+                    BST Search Time Complexity:
+                    <br>
+                    • Average Case (balanced): O(log n)
+                    <br>
+                    • Worst Case (skewed): O(n)
+                    <br>
+                    • Space Complexity: O(h) for recursive operations
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">5. AVL Trees and B-Trees</h2>
+        
+        <div class="concept">
+            <div class="simple-explanation">
+                <div class="simple-title">⚖️ For a 5-Year-Old: What are AVL and B-Trees?</div>
+                <p>Imagine you're building a tower with blocks! AVL trees are like towers that you keep perfectly balanced - if one side gets too tall, you quickly adjust it to make both sides equal. B-Trees are like special folders that can hold many papers instead of just two, making them super organized and fast to search through!</p>
+            </div>
+            
+            <div class="deep-explanation">
+                <div class="deep-title">🏗️ Formal Definition & Advanced Tree Structures</div>
+                <p><strong>AVL Trees</strong> and <strong>B-Trees</strong> are self-balancing tree structures that maintain optimal performance for search, insert, and delete operations.</p>
+                
+                <div class="svg-container">
+                    <svg width="700" height="600" viewBox="0 0 700 600" xmlns="http://www.w3.org/2000/svg">
+                        <!-- AVL Tree Example -->
+                        <g transform="translate(50, 50)">
+                            <text x="150" y="0" text-anchor="middle" font-size="16" font-weight="bold" fill="#2c3e50">AVL Tree (Balance Factor = |Height(L) - Height(R)| ≤ 1)</text>
+                            
+                            <!-- AVL Tree structure -->
+                            <circle cx="150" cy="40" r="18" fill="#e74c3c" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="150" y="45" text-anchor="middle" fill="white" font-weight="bold">30</text>
+                            <text x="150" y="65" text-anchor="middle" font-size="10" fill="#e74c3c">BF: 0</text>
+                            
+                            <circle cx="80" cy="100" r="16" fill="#3498db" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="80" y="105" text-anchor="middle" fill="white" font-weight="bold">20</text>
+                            <text x="80" y="120" text-anchor="middle" font-size="9" fill="#3498db">BF: 0</text>
+                            
+                            <circle cx="220" cy="100" r="16" fill="#3498db" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="220" y="105" text-anchor="middle" fill="white" font-weight="bold">40</text>
+                            <text x="220" y="120" text-anchor="middle" font-size="9" fill="#3498db">BF: 0</text>
+                            
+                            <circle cx="50" cy="160" r="14" fill="#27ae60" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="50" y="165" text-anchor="middle" fill="white" font-size="12">10</text>
+                            
+                            <circle cx="110" cy="160" r="14" fill="#27ae60" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="110" y="165" text-anchor="middle" fill="white" font-size="12">25</text>
+                            
+                            <circle cx="190" cy="160" r="14" fill="#27ae60" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="190" y="165" text-anchor="middle" fill="white" font-size="12">35</text>
+                            
+                            <circle cx="250" cy="160" r="14" fill="#27ae60" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="250" y="165" text-anchor="middle" fill="white" font-size="12">50</text>
+                            
+                            <!-- AVL edges -->
+                            <line x1="150" y1="58" x2="80" y2="84" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="150" y1="58" x2="220" y2="84" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="80" y1="116" x2="50" y2="146" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="80" y1="116" x2="110" y2="146" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="220" y1="116" x2="190" y2="146" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="220" y1="116" x2="250" y2="146" stroke="#2c3e50" stroke-width="2"/>
+                        </g>
+                        
+                        <!-- B-Tree Example -->
+                        <g transform="translate(400, 50)">
+                            <text x="150" y="0" text-anchor="middle" font-size="16" font-weight="bold" fill="#2c3e50">B-Tree (Order 3: Max 2 keys, 3 children)</text>
+                            
+                            <!-- B-Tree root -->
+                            <rect x="100" y="30" width="100" height="30" fill="#9b59b6" stroke="#2c3e50" stroke-width="2" rx="5"/>
+                            <text x="150" y="50" text-anchor="middle" fill="white" font-weight="bold">50 | 80</text>
+                            
+                            <!-- B-Tree level 1 -->
+                            <rect x="30" y="90" width="60" height="30" fill="#3498db" stroke="#2c3e50" stroke-width="2" rx="5"/>
+                            <text x="60" y="110" text-anchor="middle" fill="white" font-weight="bold">20 | 30</text>
+                            
+                            <rect x="120" y="90" width="60" height="30" fill="#3498db" stroke="#2c3e50" stroke-width="2" rx="5"/>
+                            <text x="150" y="110" text-anchor="middle" fill="white" font-weight="bold">60</text>
+                            
+                            <rect x="210" y="90" width="60" height="30" fill="#3498db" stroke="#2c3e50" stroke-width="2" rx="5"/>
+                            <text x="240" y="110" text-anchor="middle" fill="white" font-weight="bold">90 | 100</text>
+                            
+                            <!-- B-Tree level 2 -->
+                            <rect x="10" y="150" width="40" height="25" fill="#27ae60" stroke="#2c3e50" stroke-width="2" rx="3"/>
+                            <text x="30" y="167" text-anchor="middle" fill="white" font-size="11">10</text>
+                            
+                            <rect x="70" y="150" width="40" height="25" fill="#27ae60" stroke="#2c3e50" stroke-width="2" rx="3"/>
+                            <text x="90" y="167" text-anchor="middle" fill="white" font-size="11">25</text>
+                            
+                            <rect x="130" y="150" width="40" height="25" fill="#27ae60" stroke="#2c3e50" stroke-width="2" rx="3"/>
+                            <text x="150" y="167" text-anchor="middle" fill="white" font-size="11">55</text>
+                            
+                            <rect x="190" y="150" width="40" height="25" fill="#27ae60" stroke="#2c3e50" stroke-width="2" rx="3"/>
+                            <text x="210" y="167" text-anchor="middle" fill="white" font-size="11">85</text>
+                            
+                            <rect x="250" y="150" width="40" height="25" fill="#27ae60" stroke="#2c3e50" stroke-width="2" rx="3"/>
+                            <text x="270" y="167" text-anchor="middle" fill="white" font-size="11">95</text>
+                            
+                            <!-- B-Tree edges -->
+                            <line x1="120" y1="60" x2="60" y2="90" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="150" y1="60" x2="150" y2="90" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="180" y1="60" x2="240" y2="90" stroke="#2c3e50" stroke-width="2"/>
+                            
+                            <line x1="45" y1="120" x2="30" y2="150" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="75" y1="120" x2="90" y2="150" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="150" y1="120" x2="150" y2="150" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="225" y1="120" x2="210" y2="150" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="255" y1="120" x2="270" y2="150" stroke="#2c3e50" stroke-width="2"/>
+                        </g>
+                        
+                        <!-- Comparison Table -->
+                        <g transform="translate(50, 280)">
+                            <text x="300" y="0" text-anchor="middle" font-size="16" font-weight="bold" fill="#2c3e50">AVL Tree vs B-Tree Comparison</text>
+                            
+                            <!-- Table header -->
+                            <rect x="0" y="20" width="120" height="30" fill="#34495e" stroke="#2c3e50"/>
+                            <text x="60" y="40" text-anchor="middle" fill="white" font-weight="bold">Property</text>
+                            
+                            <rect x="120" y="20" width="240" height="30" fill="#34495e" stroke="#2c3e50"/>
+                            <text x="240" y="40" text-anchor="middle" fill="white" font-weight="bold">AVL Tree</text>
+                            
+                            <rect x="360" y="20" width="240" height="30" fill="#34495e" stroke="#2c3e50"/>
+                            <text x="480" y="40" text-anchor="middle" fill="white" font-weight="bold">B-Tree</text>
+                            
+                            <!-- Balance Factor -->
+                            <rect x="0" y="50" width="120" height="25" fill="#ecf0f1" stroke="#2c3e50"/>
+                            <text x="60" y="67" text-anchor="middle">Balance</text>
+                            
+                            <rect x="120" y="50" width="240" height="25" fill="#ecf0f1" stroke="#2c3e50"/>
+                            <text x="240" y="67" text-anchor="middle">|Height(L) - Height(R)| ≤ 1</text>
+                            
+                            <rect x="360" y="50" width="240" height="25" fill="#ecf0f1" stroke="#2c3e50"/>
+                            <text x="480" y="67" text-anchor="middle">All leaves at same level</text>
+                            
+                            <!-- Node Structure -->
+                            <rect x="0" y="75" width="120" height="25" fill="#ecf0f1" stroke="#2c3e50"/>
+                            <text x="60" y="92" text-anchor="middle">Node Type</text>
+                            
+                            <rect x="120" y="75" width="240" height="25" fill="#ecf0f1" stroke="#2c3e50"/>
+                            <text x="240" y="92" text-anchor="middle">Binary (1 key, 2 children max)</text>
+                            
+                            <rect x="360" y="75" width="240" height="25" fill="#ecf0f1" stroke="#2c3e50"/>
+                            <text x="480" y="92" text-anchor="middle">Multi-way (m-1 keys, m children)</text>
+                            
+                            <!-- Operations -->
+                            <rect x="0" y="100" width="120" height="25" fill="#ecf0f1" stroke="#2c3e50"/>
+                            <text x="60" y="117" text-anchor="middle">Operations</text>
+                            
+                            <rect x="120" y="100" width="240" height="25" fill="#ecf0f1" stroke="#2c3e50"/>
+                            <text x="240" y="117" text-anchor="middle">Rotations for balancing</text>
+                            
+                            <rect x="360" y="100" width="240" height="25" fill="#ecf0f1" stroke="#2c3e50"/>
+                            <text x="480" y="117" text-anchor="middle">Node splitting/merging</text>
+                            
+                            <!-- Performance -->
+                            <rect x="0" y="125" width="120" height="25" fill="#ecf0f1" stroke="#2c3e50"/>
+                            <text x="60" y="142" text-anchor="middle">Performance</text>
+                            
+                            <rect x="120" y="125" width="240" height="25" fill="#ecf0f1" stroke="#2c3e50"/>
+                            <text x="240" y="142" text-anchor="middle">O(log n) guaranteed</text>
+                            
+                            <rect x="360" y="125" width="240" height="25" fill="#ecf0f1" stroke="#2c3e50"/>
+                            <text x="480" y="142" text-anchor="middle">O(log n) with large branching</text>
+                            
+                            <!-- Use Cases -->
+                            <rect x="0" y="150" width="120" height="25" fill="#ecf0f1" stroke="#2c3e50"/>
+                            <text x="60" y="167" text-anchor="middle">Use Cases</text>
+                            
+                            <rect x="120" y="150" width="240" height="25" fill="#ecf0f1" stroke="#2c3e50"/>
+                            <text x="240" y="167" text-anchor="middle">In-memory databases</text>
+                            
+                            <rect x="360" y="150" width="240" height="25" fill="#ecf0f1" stroke="#2c3e50"/>
+                            <text x="480" y="167" text-anchor="middle">Disk-based systems, filesystems</text>
+                        </g>
+                    </svg>
+                    <div class="svg-caption">Figure 5: AVL Tree and B-Tree Structures Comparison</div>
+                </div>
+                
+                <p><strong>AVL Tree Properties:</strong></p>
+                <ul>
+                    <li><strong>Balance Factor:</strong> |Height(left subtree) - Height(right subtree)| ≤ 1</li>
+                    <li><strong>Self-Balancing:</strong> Automatically maintains balance through rotations</li>
+                    <li><strong>Rotations:</strong> Four types: Left, Right, Left-Right, Right-Left</li>
+                    <li><strong>Height:</strong> O(log n) guaranteed for n nodes</li>
+                </ul>
+                
+                <p><strong>B-Tree Properties:</strong></p>
+                <ul>
+                    <li><strong>Order m:</strong> Maximum number of children</li>
+                    <li><strong>Node Capacity:</strong> m-1 keys maximum, ⌈m/2⌉-1 keys minimum</li>
+                    <li><strong>Leaf Level:</strong> All leaves at the same level</li>
+                    <li><strong>Balanced:</strong> Automatically balanced through node splitting</li>
+                </ul>
+                
+                <div class="example">
+                    <div class="example-title">💻 AVL Tree Rotation Implementation</div>
+                    <div class="code">
+// AVL Node Structure
+typedef struct AVLNode {
+    int data;
+    struct AVLNode* left;
+    struct AVLNode* right;
+    int height;
+} AVLNode;
+
+// Get height of node
+int height(AVLNode* node) {
+    if (node == NULL) return 0;
+    return node->height;
+}
+
+// Get balance factor
+int getBalance(AVLNode* node) {
+    if (node == NULL) return 0;
+    return height(node->left) - height(node->right);
+}
+
+// Right rotation
+AVLNode* rightRotate(AVLNode* y) {
+    AVLNode* x = y->left;
+    AVLNode* T2 = x->right;
+    
+    // Perform rotation
+    x->right = y;
+    y->left = T2;
+    
+    // Update heights
+    y->height = 1 + max(height(y->left), height(y->right));
+    x->height = 1 + max(height(x->left), height(x->right));
+    
+    return x;
+}
+
+// Left rotation
+AVLNode* leftRotate(AVLNode* x) {
+    AVLNode* y = x->right;
+    AVLNode* T2 = y->left;
+    
+    // Perform rotation
+    y->left = x;
+    x->right = T2;
+    
+    // Update heights
+    x->height = 1 + max(height(x->left), height(x->right));
+    y->height = 1 + max(height(y->left), height(y->right));
+    
+    return y;
+}
+
+// Insert in AVL tree
+AVLNode* avlInsert(AVLNode* node, int data) {
+    // Standard BST insertion
+    if (node == NULL) {
+        AVLNode* newNode = (AVLNode*)malloc(sizeof(AVLNode));
+        newNode->data = data;
+        newNode->left = newNode->right = NULL;
+        newNode->height = 1;
+        return newNode;
+    }
+    
+    if (data < node->data) {
+        node->left = avlInsert(node->left, data);
+    } else if (data > node->data) {
+        node->right = avlInsert(node->right, data);
+    } else {
+        return node; // Duplicate keys not allowed
+    }
+    
+    // Update height
+    node->height = 1 + max(height(node->left), height(node->right));
+    
+    // Get balance factor
+    int balance = getBalance(node);
+    
+    // Balance the tree if needed
+    
+    // Left Left Case
+    if (balance > 1 && data < node->left->data) {
+        return rightRotate(node);
+    }
+    
+    // Right Right Case
+    if (balance < -1 && data > node->right->data) {
+        return leftRotate(node);
+    }
+    
+    // Left Right Case
+    if (balance > 1 && data > node->left->data) {
+        node->left = leftRotate(node->left);
+        return rightRotate(node);
+    }
+    
+    // Right Left Case
+    if (balance < -1 && data < node->right->data) {
+        node->right = rightRotate(node->right);
+        return leftRotate(node);
+    }
+    
+    return node;
+}
+                    </div>
+                </div>
+                
+                <div class="formula">
+                    AVL Tree Balance Factor: BF = Height(L) - Height(R)
+                    <br>
+                    Balanced Condition: |BF| ≤ 1
+                    <br>
+                    B-Tree Properties:
+                    <br>
+                    • Maximum keys per node: m-1
+                    <br>
+                    • Minimum keys per node: ⌈m/2⌉-1 (except root)
+                    <br>
+                    • Time Complexity: O(logₘ n) for all operations
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">Module Summary & Exam Focus</h2>
+        
+        <div class="concept">
+            <div class="deep-explanation">
+                <div class="deep-title">🎯 Key Exam Topics from Module 3</div>
+                
+                <p><strong>High-Frequency Exam Questions:</strong></p>
+                <ol>
+                    <li><strong>Tree Properties and Terminology:</strong>
+                        <ul>
+                            <li>Calculate height, depth, level of nodes</li>
+                            <li>Identify types of binary trees</li>
+                            <li>Prove mathematical properties of trees</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Tree Traversal Algorithms:</strong>
+                        <ul>
+                            <li>Write algorithms for all traversal methods</li>
+                            <li>Convert between different traversal sequences</li>
+                            <li>Reconstruct trees from traversal sequences</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Binary Search Tree Operations:</strong>
+                        <ul>
+                            <li>Implement search, insert, delete operations</li>
+                            <li>Handle all deletion cases (leaf, one child, two children)</li>
+                            <li>Analyze time complexity for different tree shapes</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>AVL Tree Balancing:</strong>
+                        <ul>
+                            <li>Calculate balance factors</li>
+                            <li>Perform rotations for different cases</li>
+                            <li>Insert and delete with rebalancing</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>B-Tree Operations:</strong>
+                        <ul>
+                            <li>Insert with node splitting</li>
+                            <li>Delete with node merging</li>
+                            <li>Compare with other tree structures</li>
+                        </ul>
+                    </li>
+                </ol>
+                
+                <div class="example">
+                    <div class="example-title">📝 Sample Exam Question</div>
+                    <p><strong>Question:</strong> Construct a Binary Search Tree by inserting the following elements in order: 45, 30, 60, 20, 35, 50, 70, 25, 40. Perform inorder, preorder, and postorder traversals. Then delete node 30 and show the resulting tree structure.</p>
+                    <p><strong>Solution Approach:</strong>
+                    <br>1. Insert elements one by one following BST rules
+                    <br>2. Perform traversals:
+                    <br>   - Inorder: Left-Root-Right (produces sorted output)
+                    <br>   - Preorder: Root-Left-Right
+                    <br>   - Postorder: Left-Right-Root
+                    <br>3. Delete node 30 (has two children):
+                    <br>   - Find inorder successor (minimum in right subtree = 35)
+                    <br>   - Replace 30 with 35
+                    <br>   - Delete the original 35 node (which has only right child 40)
+                    <br>4. Show final tree structure</p>
+                </div>
+                
+                <p><strong>Study Strategy:</strong></p>
+                <ul>
+                    <li>Master tree terminology and mathematical properties</li>
+                    <li>Practice all traversal algorithms (recursive and iterative)</li>
+                    <li>Understand BST operations and edge cases</li>
+                    <li>Learn AVL tree rotations and balancing techniques</li>
+                    <li>Practice B-Tree operations with different orders</li>
+                    <li>Work through previous year question papers</li>
+                </ul>
+                
+                <div class="formula">
+                    Exam Success = Tree Properties + Traversal Algorithms + BST Operations + Balancing Techniques
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="citation">
         <p><em>Reference: 2024 Exam Scheme & 2025 Handbook for CST201 Data Structures</em></p>
