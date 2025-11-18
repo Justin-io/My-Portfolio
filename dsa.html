@@ -1643,7 +1643,364 @@ Algorithm Insert(node, key):
             </div>
         </div>
     </div>
+    <div class="header">
+        <h1 class="title">Justin-docs</h1>
+        <h2 class="subtitle">CST201 Data Structures: Exam Guide</h2>
+        <p class="author">Author: Justin</p>
+        <p class="citation">Source: APJ KTU 2024 Exam Scheme & 2025 Handbook</p>
+    </div>
 
+    <div class="section">
+        <h2 class="section-title">Module 4: Graphs</h2>
+        
+        <div class="concept">
+            <div class="simple-explanation">
+                <div class="simple-title">Explained to a 5-Year-Old:</div>
+                <p>Imagine a big map of a city. The <strong>places</strong> you can visit (like your house, the park, the school) are called <strong>vertices</strong>. The <strong>roads</strong> that connect these places are called <strong>edges</strong>. A graph is just a way to draw this map so we can see how all the places are connected to each other!</p>
+            </div>
+            <div class="deep-explanation">
+                <div class="deep-title">Formal Definition & Terminology:</div>
+                <p>A <strong>Graph</strong> is an ordered pair G = (V, E) comprising a set V of vertices (also called nodes) and a set E of edges, which are 2-element subsets of V.</p>
+                <ul>
+                    <li><strong>Vertex (Node):</strong> A fundamental unit of the graph. Represents an entity or object.</li>
+                    <li><strong>Edge (Arc):</strong> A link between two vertices. Represents a relationship or connection.</li>
+                    <li><strong>Undirected Graph:</strong> Edges have no direction. The edge (A, B) is identical to (B, A). (e.g., a two-way road).</li>
+                    <li><strong>Directed Graph (Digraph):</strong> Edges have a direction. The edge (A -> B) is different from (B -> A). (e.g., a one-way street).</li>
+                    <li><strong>Weighted Graph:</strong> Each edge has a value (a "weight") associated with it, representing cost, distance, or time.</li>
+                    <li><strong>Degree of a Vertex:</strong> The number of edges incident to it. For a directed graph, it has an <strong>in-degree</strong> (incoming edges) and an <strong>out-degree</strong> (outgoing edges).</li>
+                    <li><strong>Path:</strong> A sequence of vertices where each adjacent pair is connected by an edge.</li>
+                    <li><strong>Cycle:</strong> A path that starts and ends at the same vertex.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="concept">
+            <h3 class="section-title">Graph Representation: Adjacency Matrix</h3>
+            <div class="simple-explanation">
+                <div class="simple-title">Explained to a 5-Year-Old:</div>
+                <p>Think of a giant bingo card or a spreadsheet. You list all the places down the side and across the top. If there's a direct road between "Park" and "School," you put a "1" in the box where they meet. If there's no road, you put a "0". It's like a checklist of all possible connections.</p>
+            </div>
+            <div class="deep-explanation">
+                <div class="deep-title">Formal Definition & Analysis:</div>
+                <p>An <strong>Adjacency Matrix</strong> is a square matrix used to represent a finite graph. The elements of the matrix indicate whether pairs of vertices are adjacent or not in the graph.</p>
+                <p>For a graph with V vertices, the matrix is of size V x V. The entry at row `i` and column `j`, `A[i][j]`, is:</p>
+                <ul>
+                    <li><strong>1</strong> if there is an edge from vertex `i` to vertex `j`.</li>
+                    <li><strong>0</strong> otherwise.</li>
+                </ul>
+                <p>For a weighted graph, the entry is the weight of the edge instead of 1.</p>
+                <div class="formula">Space Complexity: O(V²)</div>
+                <p><strong>Advantages:</strong></p>
+                <ul>
+                    <li>Constant time complexity O(1) to check if an edge exists between two vertices.</li>
+                    <li>Simple to implement.</li>
+                </ul>
+                <p><strong>Disadvantages:</strong></p>
+                <ul>
+                    <li>Consumes a lot of memory (V² space), even if the graph is sparse (has few edges).</li>
+                    <li>Adding/Removing a vertex is expensive as it requires resizing the matrix.</li>
+                </ul>
+                <div class="svg-container">
+                    <svg width="100%" height="300" viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Graph -->
+                        <g id="graph">
+                            <text x="100" y="20" text-anchor="middle" font-family="serif" font-size="16px" font-weight="bold">Graph</text>
+                            <!-- Vertices -->
+                            <circle cx="50" cy="80" r="15" fill="#3498db" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="50" y="85" text-anchor="middle" fill="white" font-family="serif" font-size="14px">0</text>
+                            <circle cx="150" cy="80" r="15" fill="#3498db" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="150" y="85" text-anchor="middle" fill="white" font-family="serif" font-size="14px">1</text>
+                            <circle cx="100" cy="170" r="15" fill="#3498db" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="100" y="175" text-anchor="middle" fill="white" font-family="serif" font-size="14px">2</text>
+                            <!-- Edges -->
+                            <line x1="65" y1="80" x2="135" y2="80" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="58" y1="93" x2="92" y2="157" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="142" y1="93" x2="108" y2="157" stroke="#2c3e50" stroke-width="2"/>
+                        </g>
+                        <!-- Matrix -->
+                        <g id="matrix" transform="translate(300, 50)">
+                            <text x="100" y="-30" text-anchor="middle" font-family="serif" font-size="16px" font-weight="bold">Adjacency Matrix</text>
+                            <!-- Header Row -->
+                            <text x="40" y="0" text-anchor="middle" font-family="serif" font-size="14px" font-weight="bold"></text>
+                            <text x="70" y="0" text-anchor="middle" font-family="serif" font-size="14px" font-weight="bold">0</text>
+                            <text x="100" y="0" text-anchor="middle" font-family="serif" font-size="14px" font-weight="bold">1</text>
+                            <text x="130" y="0" text-anchor="middle" font-family="serif" font-size="14px" font-weight="bold">2</text>
+                            
+                            <!-- Row 0 -->
+                            <text x="40" y="30" text-anchor="middle" font-family="serif" font-size="14px" font-weight="bold">0</text>
+                            <rect x="55" y="15" width="30" height="30" fill="#f8f9fa" stroke="#2c3e50" stroke-width="1"/>
+                            <text x="70" y="35" text-anchor="middle" font-family="serif" font-size="14px">0</text>
+                            <rect x="85" y="15" width="30" height="30" fill="#e74c3c" stroke="#2c3e50" stroke-width="1"/>
+                            <text x="100" y="35" text-anchor="middle" font-family="serif" font-size="14px">1</text>
+                            <rect x="115" y="15" width="30" height="30" fill="#e74c3c" stroke="#2c3e50" stroke-width="1"/>
+                            <text x="130" y="35" text-anchor="middle" font-family="serif" font-size="14px">1</text>
+                            
+                            <!-- Row 1 -->
+                            <text x="40" y="60" text-anchor="middle" font-family="serif" font-size="14px" font-weight="bold">1</text>
+                            <rect x="55" y="45" width="30" height="30" fill="#e74c3c" stroke="#2c3e50" stroke-width="1"/>
+                            <text x="70" y="65" text-anchor="middle" font-family="serif" font-size="14px">1</text>
+                            <rect x="85" y="45" width="30" height="30" fill="#f8f9fa" stroke="#2c3e50" stroke-width="1"/>
+                            <text x="100" y="65" text-anchor="middle" font-family="serif" font-size="14px">0</text>
+                            <rect x="115" y="45" width="30" height="30" fill="#e74c3c" stroke="#2c3e50" stroke-width="1"/>
+                            <text x="130" y="65" text-anchor="middle" font-family="serif" font-size="14px">1</text>
+                            
+                            <!-- Row 2 -->
+                            <text x="40" y="90" text-anchor="middle" font-family="serif" font-size="14px" font-weight="bold">2</text>
+                            <rect x="55" y="75" width="30" height="30" fill="#e74c3c" stroke="#2c3e50" stroke-width="1"/>
+                            <text x="70" y="95" text-anchor="middle" font-family="serif" font-size="14px">1</text>
+                            <rect x="85" y="75" width="30" height="30" fill="#e74c3c" stroke="#2c3e50" stroke-width="1"/>
+                            <text x="100" y="95" text-anchor="middle" font-family="serif" font-size="14px">1</text>
+                            <rect x="115" y="75" width="30" height="30" fill="#f8f9fa" stroke="#2c3e50" stroke-width="1"/>
+                            <text x="130" y="95" text-anchor="middle" font-family="serif" font-size="14px">0</text>
+                        </g>
+                    </svg>
+                    <p class="svg-caption">Figure 1: An undirected graph and its corresponding adjacency matrix. The highlighted cells (e.g., A[0][1]=1) correspond to the edges in the graph.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="concept">
+            <h3 class="section-title">Graph Representation: Adjacency List</h3>
+            <div class="simple-explanation">
+                <div class="simple-title">Explained to a 5-Year-Old:</div>
+                <p>Imagine you have a contact list on your phone. For each person (a vertex), you keep a list of all their friends (the vertices they are connected to). So, for "Mom," you have a list that includes "Grandma" and "Dad." This is much smaller than the giant bingo card if most people only have a few friends!</p>
+            </div>
+            <div class="deep-explanation">
+                <div class="deep-title">Formal Definition & Analysis:</div>
+                <p>An <strong>Adjacency List</strong> represents a graph as an array of linked lists. The index of the array represents a vertex, and each element in its linked list represents a vertex that forms an edge with the array vertex.</p>
+                <div class="formula">Space Complexity: O(V + E)</div>
+                <p><strong>Advantages:</strong></p>
+                <ul>
+                    <li>Memory efficient for sparse graphs, as it only stores existing edges.</li>
+                    <li>Adding/Removing a vertex or edge is relatively easy.</li>
+                </ul>
+                <p><strong>Disadvantages:</strong></p>
+                <ul>
+                    <li>Checking if an edge exists between two vertices can be slow, O(V) in the worst case, as it may require traversing a linked list.</li>
+                </ul>
+                <div class="svg-container">
+                    <svg width="100%" height="300" viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Graph -->
+                        <g id="graph-list">
+                            <text x="100" y="20" text-anchor="middle" font-family="serif" font-size="16px" font-weight="bold">Graph</text>
+                            <!-- Vertices -->
+                            <circle cx="50" cy="80" r="15" fill="#3498db" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="50" y="85" text-anchor="middle" fill="white" font-family="serif" font-size="14px">0</text>
+                            <circle cx="150" cy="80" r="15" fill="#3498db" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="150" y="85" text-anchor="middle" fill="white" font-family="serif" font-size="14px">1</text>
+                            <circle cx="100" cy="170" r="15" fill="#3498db" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="100" y="175" text-anchor="middle" fill="white" font-family="serif" font-size="14px">2</text>
+                            <!-- Edges -->
+                            <line x1="65" y1="80" x2="135" y2="80" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="58" y1="93" x2="92" y2="157" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="142" y1="93" x2="108" y2="157" stroke="#2c3e50" stroke-width="2"/>
+                        </g>
+                        <!-- List -->
+                        <g id="adj-list" transform="translate(300, 40)">
+                            <text x="100" y="-20" text-anchor="middle" font-family="serif" font-size="16px" font-weight="bold">Adjacency List</text>
+                            
+                            <!-- List for 0 -->
+                            <rect x="50" y="0" width="30" height="25" fill="#3498db" stroke="#2c3e50" stroke-width="1"/>
+                            <text x="65" y="17" text-anchor="middle" fill="white" font-family="serif" font-size="14px">0</text>
+                            <line x1="80" y1="12" x2="90" y2="12" stroke="#2c3e50" stroke-width="2"/>
+                            <rect x="90" y="0" width="30" height="25" fill="#f8f9fa" stroke="#2c3e50" stroke-width="1"/>
+                            <text x="105" y="17" text-anchor="middle" font-family="serif" font-size="14px">1</text>
+                            <line x1="120" y1="12" x2="130" y2="12" stroke="#2c3e50" stroke-width="2"/>
+                            <rect x="130" y="0" width="30" height="25" fill="#f8f9fa" stroke="#2c3e50" stroke-width="1"/>
+                            <text x="145" y="17" text-anchor="middle" font-family="serif" font-size="14px">2</text>
+                            <line x1="160" y1="12" x2="170" y2="12" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="175" y="17" text-anchor="middle" font-family="serif" font-size="14px">NULL</text>
+
+                            <!-- List for 1 -->
+                            <rect x="50" y="50" width="30" height="25" fill="#3498db" stroke="#2c3e50" stroke-width="1"/>
+                            <text x="65" y="67" text-anchor="middle" fill="white" font-family="serif" font-size="14px">1</text>
+                            <line x1="80" y1="62" x2="90" y2="62" stroke="#2c3e50" stroke-width="2"/>
+                            <rect x="90" y="50" width="30" height="25" fill="#f8f9fa" stroke="#2c3e50" stroke-width="1"/>
+                            <text x="105" y="67" text-anchor="middle" font-family="serif" font-size="14px">0</text>
+                            <line x1="120" y1="62" x2="130" y2="62" stroke="#2c3e50" stroke-width="2"/>
+                            <rect x="130" y="50" width="30" height="25" fill="#f8f9fa" stroke="#2c3e50" stroke-width="1"/>
+                            <text x="145" y="67" text-anchor="middle" font-family="serif" font-size="14px">2</text>
+                            <line x1="160" y1="62" x2="170" y2="62" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="175" y="67" text-anchor="middle" font-family="serif" font-size="14px">NULL</text>
+
+                            <!-- List for 2 -->
+                            <rect x="50" y="100" width="30" height="25" fill="#3498db" stroke="#2c3e50" stroke-width="1"/>
+                            <text x="65" y="117" text-anchor="middle" fill="white" font-family="serif" font-size="14px">2</text>
+                            <line x1="80" y1="112" x2="90" y2="112" stroke="#2c3e50" stroke-width="2"/>
+                            <rect x="90" y="100" width="30" height="25" fill="#f8f9fa" stroke="#2c3e50" stroke-width="1"/>
+                            <text x="105" y="117" text-anchor="middle" font-family="serif" font-size="14px">0</text>
+                            <line x1="120" y1="112" x2="130" y2="112" stroke="#2c3e50" stroke-width="2"/>
+                            <rect x="130" y="100" width="30" height="25" fill="#f8f9fa" stroke="#2c3e50" stroke-width="1"/>
+                            <text x="145" y="117" text-anchor="middle" font-family="serif" font-size="14px">1</text>
+                            <line x1="160" y1="112" x2="170" y2="112" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="175" y="117" text-anchor="middle" font-family="serif" font-size="14px">NULL</text>
+                        </g>
+                    </svg>
+                    <p class="svg-caption">Figure 2: An undirected graph and its corresponding adjacency list. The array index corresponds to the vertex, and the linked list contains its adjacent vertices.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="concept">
+            <h3 class="section-title">Graph Traversal: Breadth-First Search (BFS)</h3>
+            <div class="simple-explanation">
+                <div class="simple-title">Explained to a 5-Year-Old:</div>
+                <p>Imagine you're dropping a pebble in a pond. The ripples spread out in circles. BFS explores a graph like that. It starts at one place, then visits all its immediate neighbors (the first ripple), then visits all of *their* neighbors (the second ripple), and so on, layer by layer. It's great for finding the shortest path in a map where all roads are equal length.</p>
+            </div>
+            <div class="deep-explanation">
+                <div class="deep-title">Algorithm & Analysis:</div>
+                <p>BFS is a graph traversal algorithm that explores vertices in layers. It starts at a given source vertex and explores all of its immediate neighbors. Then, for each of those neighbors, it explores their unvisited neighbors. It uses a <strong>Queue</strong> data structure to keep track of the vertices to visit next.</p>
+                <p><strong>Algorithm Steps:</strong></p>
+                <ol>
+                    <li>Mark the starting vertex as visited and enqueue it.</li>
+                    <li>Loop as long as the queue is not empty:
+                        <ol>
+                            <li>Dequeue a vertex `u`.</li>
+                            <li>For each neighbor `v` of `u`:
+                                <ol>
+                                    <li>If `v` has not been visited, mark it as visited and enqueue `v`.</li>
+                                </ol>
+                            </li>
+                        </ol>
+                    </li>
+                </ol>
+                <div class="formula">Time Complexity: O(V + E)</div>
+                <p><strong>Applications:</strong></p>
+                <ul>
+                    <li>Finding the shortest path in an unweighted graph.</li>
+                    <li>Finding all connected components in a graph.</li>
+                    <li>Web crawlers use BFS to build indexes.</li>
+                </ul>
+                <div class="svg-container">
+                    <svg width="100%" height="400" viewBox="0 0 600 450" xmlns="http://www.w3.org/2000/svg">
+                        <text x="300" y="20" text-anchor="middle" font-family="serif" font-size="16px" font-weight="bold">BFS Traversal starting from Vertex A</text>
+                        
+                        <!-- Graph -->
+                        <g id="bfs-graph" transform="translate(200, 50)">
+                            <!-- Vertices -->
+                            <circle id="vA" cx="100" cy="50" r="20" fill="#e74c3c" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="100" y="55" text-anchor="middle" fill="white" font-family="serif" font-size="16px" font-weight="bold">A</text>
+                            
+                            <circle id="vB" cx="30" cy="130" r="20" fill="#f39c12" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="30" y="135" text-anchor="middle" fill="white" font-family="serif" font-size="16px" font-weight="bold">B</text>
+                            
+                            <circle id="vC" cx="170" cy="130" r="20" fill="#f39c12" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="170" y="135" text-anchor="middle" fill="white" font-family="serif" font-size="16px" font-weight="bold">C</text>
+
+                            <circle id="vD" cx="30" cy="230" r="20" fill="#27ae60" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="30" y="235" text-anchor="middle" fill="white" font-family="serif" font-size="16px" font-weight="bold">D</text>
+
+                            <circle id="vE" cx="100" cy="230" r="20" fill="#27ae60" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="100" y="235" text-anchor="middle" fill="white" font-family="serif" font-size="16px" font-weight="bold">E</text>
+
+                            <circle id="vF" cx="170" cy="230" r="20" fill="#27ae60" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="170" y="235" text-anchor="middle" fill="white" font-family="serif" font-size="16px" font-weight="bold">F</text>
+
+                            <!-- Edges -->
+                            <line x1="85" y1="65" x2="45" y2="115" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="115" y1="65" x2="155" y2="115" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="30" y1="150" x2="30" y2="210" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="45" y1="145" x2="85" y2="215" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="155" y1="145" x2="115" y2="215" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="170" y1="150" x2="170" y2="210" stroke="#2c3e50" stroke-width="2"/>
+                        </g>
+                        
+                        <!-- Queue visualization -->
+                        <g id="queue" transform="translate(50, 320)">
+                            <text x="250" y="0" text-anchor="middle" font-family="serif" font-size="14px" font-weight="bold">Queue State</text>
+                            <rect x="150" y="10" width="40" height="30" fill="#e74c3c" stroke="#2c3e50" stroke-width="1"/>
+                            <text x="170" y="30" text-anchor="middle" fill="white" font-family="serif" font-size="14px">A</text>
+                            <text x="130" y="30" text-anchor="middle" font-family="serif" font-size="14px" font-style="italic">Front</text>
+                            <text x="210" y="30" text-anchor="middle" font-family="serif" font-size="14px" font-style="italic">Rear</text>
+                        </g>
+
+                        <text x="300" y="400" text-anchor="middle" font-family="serif" font-size="14px">Traversal Order: A -> B -> C -> D -> E -> F</text>
+                    </svg>
+                    <p class="svg-caption">Figure 3: BFS traversal starting from vertex A. Colors indicate the layer in which the vertex is visited (Red: Layer 0, Orange: Layer 1, Green: Layer 2).</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="concept">
+            <h3 class="section-title">Graph Traversal: Depth-First Search (DFS)</h3>
+            <div class="simple-explanation">
+                <div class="simple-title">Explained to a 5-Year-Old:</div>
+                <p>Imagine you're exploring a maze. You pick one path and follow it as far as you can go until you hit a dead end. When you do, you turn around and go back to the last place where you had a choice, and try a different path. DFS explores a graph just like that: it goes deep down one branch before coming back to explore others.</p>
+            </div>
+            <div class="deep-explanation">
+                <div class="deep-title">Algorithm & Analysis:</div>
+                <p>DFS is a graph traversal algorithm that explores as far as possible along each branch before backtracking. It can be implemented using a <strong>Stack</strong> (iterative version) or through <strong>recursion</strong> (where the call stack acts as the stack).</p>
+                <p><strong>Algorithm Steps (Recursive):</strong></p>
+                <ol>
+                    <li>Mark the current vertex `u` as visited.</li>
+                    <li>For each neighbor `v` of `u`:
+                        <ol>
+                            <li>If `v` has not been visited, recursively call DFS on `v`.</li>
+                        </ol>
+                    </li>
+                </ol>
+                <div class="formula">Time Complexity: O(V + E)</div>
+                <p><strong>Applications:</strong></p>
+                <ul>
+                    <li>Detecting cycles in a graph.</li>
+                    <li>Topological sorting.</li>
+                    <li>Finding strongly connected components.</li>
+                    <li>Solving puzzles with only one solution (like mazes).</li>
+                </ul>
+                <div class="svg-container">
+                    <svg width="100%" height="400" viewBox="0 0 600 450" xmlns="http://www.w3.org/2000/svg">
+                        <text x="300" y="20" text-anchor="middle" font-family="serif" font-size="16px" font-weight="bold">DFS Traversal starting from Vertex A</text>
+                        
+                        <!-- Graph -->
+                        <g id="dfs-graph" transform="translate(200, 50)">
+                            <!-- Path line -->
+                            <path d="M 100 70 L 30 150 L 30 210 L 100 210 L 170 150 L 170 210" fill="none" stroke="#e74c3c" stroke-width="4" stroke-dasharray="5,5" opacity="0.7"/>
+
+                            <!-- Vertices -->
+                            <circle id="vA-d" cx="100" cy="50" r="20" fill="#e74c3c" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="100" y="55" text-anchor="middle" fill="white" font-family="serif" font-size="16px" font-weight="bold">A</text>
+                            
+                            <circle id="vB-d" cx="30" cy="130" r="20" fill="#f39c12" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="30" y="135" text-anchor="middle" fill="white" font-family="serif" font-size="16px" font-weight="bold">B</text>
+                            
+                            <circle id="vC-d" cx="170" cy="130" r="20" fill="#3498db" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="170" y="135" text-anchor="middle" fill="white" font-family="serif" font-size="16px" font-weight="bold">C</text>
+
+                            <circle id="vD-d" cx="30" cy="230" r="20" fill="#9b59b6" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="30" y="235" text-anchor="middle" fill="white" font-family="serif" font-size="16px" font-weight="bold">D</text>
+
+                            <circle id="vE-d" cx="100" cy="230" r="20" fill="#1abc9c" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="100" y="235" text-anchor="middle" fill="white" font-family="serif" font-size="16px" font-weight="bold">E</text>
+
+                            <circle id="vF-d" cx="170" cy="230" r="20" fill="#2ecc71" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="170" y="235" text-anchor="middle" fill="white" font-family="serif" font-size="16px" font-weight="bold">F</text>
+
+                            <!-- Edges -->
+                            <line x1="85" y1="65" x2="45" y2="115" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="115" y1="65" x2="155" y2="115" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="30" y1="150" x2="30" y2="210" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="45" y1="145" x2="85" y2="215" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="155" y1="145" x2="115" y2="215" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="170" y1="150" x2="170" y2="210" stroke="#2c3e50" stroke-width="2"/>
+                        </g>
+                        
+                        <!-- Stack visualization -->
+                        <g id="stack" transform="translate(50, 320)">
+                            <text x="250" y="0" text-anchor="middle" font-family="serif" font-size="14px" font-weight="bold">Call Stack (Conceptual)</text>
+                            <rect x="150" y="10" width="40" height="30" fill="#f39c12" stroke="#2c3e50" stroke-width="1"/>
+                            <text x="170" y="30" text-anchor="middle" fill="white" font-family="serif" font-size="14px">B</text>
+                            <rect x="150" y="40" width="40" height="30" fill="#e74c3c" stroke="#2c3e50" stroke-width="1"/>
+                            <text x="170" y="60" text-anchor="middle" fill="white" font-family="serif" font-size="14px">A</text>
+                            <text x="210" y="30" text-anchor="middle" font-family="serif" font-size="14px" font-style="italic">Top</text>
+                        </g>
+
+                        <text x="300" y="400" text-anchor="middle" font-family="serif" font-size="14px">One possible Traversal Order: A -> B -> D -> E -> C -> F</text>
+                    </svg>
+                    <p class="svg-caption">Figure 4: DFS traversal starting from vertex A. The dashed line shows the deep path taken. Colors indicate the order of visitation. The call stack shows the state during the exploration of vertex B.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <div class="citation">
