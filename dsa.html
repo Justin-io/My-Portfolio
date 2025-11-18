@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Justin-docs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+        }
+        
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #2c3e50;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .title {
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.5em;
+            color: #7f8c8d;
+            margin-bottom: 5px;
+        }
+        
+        .author {
+            font-size: 1.1em;
+            color: #95a5a6;
+            font-style: italic;
+        }
+        
+        .citation {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            text-align: center;
+            margin-top: 10px;
+            font-style: italic;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            page-break-inside: avoid;
+        }
+        
+        .section-title {
+            font-size: 1.8em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+        }
+        
+        .concept {
+            margin-bottom: 30px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .simple-explanation {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border: 2px solid #27ae60;
+        }
+        
+        .simple-title {
+            font-weight: bold;
+            color: #27ae60;
+            margin-bottom: 10px;
+        }
+        
+        .deep-explanation {
+            background: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            border: 2px solid #3498db;
+        }
+        
+        .deep-title {
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 10px;
+        }
+        
+        .svg-container {
+            text-align: center;
+            margin: 20px 0;
+            page-break-inside: avoid;
+        }
+        
+        .svg-caption {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            text-align: center;
+            margin-top: 10px;
+            font-style: italic;
+        }
+        
+        .formula {
+            background: #f1f2f6;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            margin: 15px 0;
+            border: 1px solid #ddd;
+        }
+        
+        .example {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+        }
+        
+        .example-title {
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .code {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        
+        @media print {
+            body {
+                font-size: 12pt;
+                line-height: 1.4;
+            }
+            
+            .header {
+                page-break-after: avoid;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+                margin-bottom: 25px;
+            }
+            
+            .concept {
+                page-break-inside: avoid;
+            }
+            
+            .svg-container {
+                page-break-inside: avoid;
+            }
+            
+            .title {
+                font-size: 2em;
+            }
+            
+            .section-title {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 class="title">Justin-docs</h1>
+        <h2 class="subtitle">Module 1: Introduction to Data Structures</h2>
+        <p class="author">By Justin</p>
+        <p class="citation">Based on 2024 Exam Scheme & 2025 Handbook Reference</p>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">1. Data Types and Abstract Data Types</h2>
+        
+        <div class="concept">
+            <div class="simple-explanation">
+                <div class="simple-title">🧸 For a 5-Year-Old: What are Data Types?</div>
+                <p>Imagine you have different toy boxes: one for LEGO blocks, one for stuffed animals, and one for toy cars. Each box holds only one type of toy. Data types are like these toy boxes - they tell the computer what kind of information you're storing, like numbers, words, or true/false answers!</p>
+            </div>
+            
+            <div class="deep-explanation">
+                <div class="deep-title">📚 Formal Definition & Technical Details</div>
+                <p><strong>Data Types</strong> are classifications that specify which type of value a variable can hold and what operations can be performed on it. In programming, data types define the size, range, and behavior of data stored in memory.</p>
+                
+                <div class="svg-container">
+                    <svg width="600" height="300" viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Primitive Data Types -->
+                        <rect x="50" y="50" width="120" height="80" fill="#3498db" stroke="#2c3e50" stroke-width="2" rx="5"/>
+                        <text x="110" y="85" text-anchor="middle" fill="white" font-weight="bold">INTEGER</text>
+                        <text x="110" y="105" text-anchor="middle" fill="white" font-size="12">Whole numbers</text>
+                        
+                        <rect x="200" y="50" width="120" height="80" fill="#e74c3c" stroke="#2c3e50" stroke-width="2" rx="5"/>
+                        <text x="260" y="85" text-anchor="middle" fill="white" font-weight="bold">FLOAT</text>
+                        <text x="260" y="105" text-anchor="middle" fill="white" font-size="12">Decimal numbers</text>
+                        
+                        <rect x="350" y="50" width="120" height="80" fill="#27ae60" stroke="#2c3e50" stroke-width="2" rx="5"/>
+                        <text x="410" y="85" text-anchor="middle" fill="white" font-weight="bold">CHARACTER</text>
+                        <text x="410" y="105" text-anchor="middle" fill="white" font-size="12">Single letters</text>
+                        
+                        <!-- Derived Data Types -->
+                        <rect x="125" y="160" width="120" height="80" fill="#f39c12" stroke="#2c3e50" stroke-width="2" rx="5"/>
+                        <text x="185" y="195" text-anchor="middle" fill="white" font-weight="bold">ARRAY</text>
+                        <text x="185" y="215" text-anchor="middle" fill="white" font-size="12">Collection of items</text>
+                        
+                        <rect x="275" y="160" width="120" height="80" fill="#9b59b6" stroke="#2c3e50" stroke-width="2" rx="5"/>
+                        <text x="335" y="195" text-anchor="middle" fill="white" font-weight="bold">STRUCTURE</text>
+                        <text x="335" y="215" text-anchor="middle" fill="white" font-size="12">Group of different types</text>
+                        
+                        <!-- Arrows showing relationships -->
+                        <path d="M 110 130 L 185 160" stroke="#2c3e50" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+                        <path d="M 260 130 L 335 160" stroke="#2c3e50" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+                        
+                        <!-- Arrow marker definition -->
+                        <defs>
+                            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#2c3e50"/>
+                            </marker>
+                        </defs>
+                        
+                        <text x="300" y="30" text-anchor="middle" font-size="16" font-weight="bold" fill="#2c3e50">Data Types Classification</text>
+                    </svg>
+                    <div class="svg-caption">Figure 1: Classification of Primitive and Derived Data Types</div>
+                </div>
+                
+                <p><strong>Primitive Data Types:</strong></p>
+                <ul>
+                    <li><strong>Integer:</strong> Whole numbers (e.g., 42, -17, 0)</li>
+                    <li><strong>Float/Double:</strong> Decimal numbers (e.g., 3.14, -0.001)</li>
+                    <li><strong>Character:</strong> Single letters or symbols (e.g., 'A', '$')</li>
+                    <li><strong>Boolean:</strong> True or false values</li>
+                </ul>
+                
+                <p><strong>Derived Data Types:</strong></p>
+                <ul>
+                    <li><strong>Array:</strong> Fixed-size collection of same-type elements</li>
+                    <li><strong>Structure:</strong> Collection of different-type elements</li>
+                    <li><strong>Pointer:</strong> Memory address reference</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="concept">
+            <div class="simple-explanation">
+                <div class="simple-title">🎭 For a 5-Year-Old: What are Abstract Data Types?</div>
+                <p>Think of a TV remote control. You don't need to know how the electronics inside work - you just need to know which buttons to press to change channels or adjust volume. Abstract Data Types are like remote controls - they show you what you can do (the buttons) but hide how it works inside!</p>
+            </div>
+            
+            <div class="deep-explanation">
+                <div class="deep-title">🔍 Formal Definition & Technical Implementation</div>
+                <p><strong>Abstract Data Types (ADTs)</strong> are mathematical models for data types where the data type is defined by its behavior (semantics) from the point of view of a user, specifically in terms of possible values, possible operations on data of this type, and the behavior of these operations.</p>
+                
+                <div class="svg-container">
+                    <svg width="700" height="400" viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Interface Layer -->
+                        <rect x="50" y="50" width="600" height="80" fill="#3498db" stroke="#2c3e50" stroke-width="2" rx="5"/>
+                        <text x="350" y="85" text-anchor="middle" fill="white" font-size="18" font-weight="bold">INTERFACE (What you can do)</text>
+                        <text x="350" y="110" text-anchor="middle" fill="white" font-size="14">Operations: push(), pop(), isEmpty(), size()</text>
+                        
+                        <!-- Implementation Layer -->
+                        <rect x="50" y="180" width="600" height="80" fill="#e74c3c" stroke="#2c3e50" stroke-width="2" rx="5"/>
+                        <text x="350" y="215" text-anchor="middle" fill="white" font-size="18" font-weight="bold">IMPLEMENTATION (How it works)</text>
+                        <text x="350" y="240" text-anchor="middle" fill="white" font-size="14">Array-based or Linked List-based storage</text>
+                        
+                        <!-- Data Layer -->
+                        <rect x="50" y="310" width="600" height="80" fill="#27ae60" stroke="#2c3e50" stroke-width="2" rx="5"/>
+                        <text x="350" y="345" text-anchor="middle" fill="white" font-size="18" font-weight="bold">DATA (What's stored)</text>
+                        <text x="350" y="370" text-anchor="middle" fill="white" font-size="14">Actual values in memory</text>
+                        
+                        <!-- Arrows showing abstraction -->
+                        <path d="M 350 130 L 350 180" stroke="#2c3e50" stroke-width="3" fill="none" marker-end="url(#arrowhead)" stroke-dasharray="5,5"/>
+                        <path d="M 350 260 L 350 310" stroke="#2c3e50" stroke-width="3" fill="none" marker-end="url(#arrowhead)" stroke-dasharray="5,5"/>
+                        
+                        <!-- Arrow marker definition -->
+                        <defs>
+                            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#2c3e50"/>
+                            </marker>
+                        </defs>
+                        
+                        <text x="350" y="30" text-anchor="middle" font-size="20" font-weight="bold" fill="#2c3e50">Abstract Data Type: Stack Example</text>
+                    </svg>
+                    <div class="svg-caption">Figure 2: ADT Abstraction Layers - Stack Example</div>
+                </div>
+                
+                <p><strong>Key Characteristics of ADTs:</strong></p>
+                <ul>
+                    <li><strong>Encapsulation:</strong> Hides implementation details</li>
+                    <li><strong>Abstraction:</strong> Focuses on what operations do, not how</li>
+                    <li><strong>Modularity:</strong> Can be used independently of implementation</li>
+                </ul>
+                
+                <div class="example">
+                    <div class="example-title">📝 Real-World Example: Stack ADT</div>
+                    <p><strong>Interface:</strong> push(item), pop(), peek(), isEmpty(), size()</p>
+                    <p><strong>Implementation Options:</strong> Array-based, Linked List-based</p>
+                    <p><strong>Real-world Analogy:</strong> Stack of plates - you can only add/remove from the top</p>
+                </div>
+                
+                <div class="formula">
+                    ADT = {Data Objects} ∪ {Operations} ∪ {Axioms}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">2. Algorithm Analysis: Time and Space Complexity</h2>
+        
+        <div class="concept">
+            <div class="simple-explanation">
+                <div class="simple-title">⏱️ For a 5-Year-Old: What is Algorithm Analysis?</div>
+                <p>Imagine you have two ways to clean your room: one way takes 5 minutes, and another way takes 1 hour. Algorithm analysis is like figuring out which way is faster and which way uses more space in your toy box. We want to find the best way that's both fast and doesn't need too much space!</p>
+            </div>
+            
+            <div class="deep-explanation">
+                <div class="deep-title">📊 Formal Definition & Mathematical Foundation</div>
+                <p><strong>Algorithm Analysis</strong> is the process of determining the amount of time, storage, or other resources required to execute an algorithm. It helps us compare different algorithms and choose the most efficient one for a given problem.</p>
+                
+                <div class="svg-container">
+                    <svg width="700" height="350" viewBox="0 0 700 350" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Coordinate system -->
+                        <line x1="50" y1="300" x2="650" y2="300" stroke="#2c3e50" stroke-width="2"/>
+                        <line x1="50" y1="50" x2="50" y2="300" stroke="#2c3e50" stroke-width="2"/>
+                        
+                        <!-- Labels -->
+                        <text x="350" y="330" text-anchor="middle" font-size="14" fill="#2c3e50">Input Size (n)</text>
+                        <text x="25" y="175" text-anchor="middle" font-size="14" fill="#2c3e50" transform="rotate(-90 25 175)">Time</text>
+                        
+                        <!-- O(1) - Constant -->
+                        <line x1="50" y1="250" x2="650" y2="250" stroke="#27ae60" stroke-width="3"/>
+                        <text x="660" y="255" font-size="12" fill="#27ae60">O(1)</text>
+                        
+                        <!-- O(log n) - Logarithmic -->
+                        <path d="M 50 280 Q 150 260, 250 240 T 450 200 T 650 180" stroke="#3498db" stroke-width="3" fill="none"/>
+                        <text x="660" y="185" font-size="12" fill="#3498db">O(log n)</text>
+                        
+                        <!-- O(n) - Linear -->
+                        <line x1="50" y1="280" x2="650" y2="100" stroke="#f39c12" stroke-width="3"/>
+                        <text x="660" y="105" font-size="12" fill="#f39c12">O(n)</text>
+                        
+                        <!-- O(n²) - Quadratic -->
+                        <path d="M 50 290 Q 200 250, 350 150 T 650 50" stroke="#e74c3c" stroke-width="3" fill="none"/>
+                        <text x="660" y="55" font-size="12" fill="#e74c3c">O(n²)</text>
+                        
+                        <!-- Title -->
+                        <text x="350" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#2c3e50">Time Complexity Growth Rates</text>
+                    </svg>
+                    <div class="svg-caption">Figure 3: Comparison of Different Time Complexity Functions</div>
+                </div>
+                
+                <p><strong>Time Complexity:</strong> Measures how the runtime of an algorithm grows with input size.</p>
+                <p><strong>Space Complexity:</strong> Measures how the memory usage grows with input size.</p>
+                
+                <div class="example">
+                    <div class="example-title">🔢 Frequency Count Method Example</div>
+                    <div class="code">
+for (i = 0; i < n; i++) {      // n+1 times
+    for (j = 0; j < n; j++) {  // n*(n+1) times
+        x = x + 1;             // n*n times
+    }
+}
+                    </div>
+                    <p><strong>Total Operations:</strong> (n+1) + n(n+1) + n² = 2n² + 2n + 1</p>
+                    <p><strong>Time Complexity:</strong> O(n²)</p>
+                </div>
+                
+                <div class="formula">
+                    T(n) = c₁n² + c₂n + c₃ = O(n²)
+                </div>
+                
+                <p><strong>Best, Average, and Worst Case Analysis:</strong></p>
+                <ul>
+                    <li><strong>Best Case:</strong> Minimum time/space required (optimistic scenario)</li>
+                    <li><strong>Average Case:</strong> Expected time/space over all possible inputs</li>
+                    <li><strong>Worst Case:</strong> Maximum time/space required (pessimistic scenario)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">3. Asymptotic Notations: Big O, Omega, Theta</h2>
+        
+        <div class="concept">
+            <div class="simple-explanation">
+                <div class="simple-title">📈 For a 5-Year-Old: What are Asymptotic Notations?</div>
+                <p>Imagine you're growing a plant. Big O tells you "your plant won't grow taller than this tree." Omega tells you "your plant will grow at least as tall as this flower." Theta tells you "your plant will grow about as tall as this bush." These are just different ways to describe how big something gets!</p>
+            </div>
+            
+            <div class="deep-explanation">
+                <div class="deep-title">🎯 Mathematical Definitions & Properties</div>
+                <p><strong>Asymptotic Notations</strong> are mathematical tools used to describe the behavior of functions as their input approaches infinity. They provide a way to classify algorithms based on their growth rates.</p>
+                
+                <div class="svg-container">
+                    <svg width="700" height="400" viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Big O Visualization -->
+                        <g transform="translate(0, 0)">
+                            <text x="350" y="30" text-anchor="middle" font-size="16" font-weight="bold" fill="#2c3e50">Big O Notation: f(n) = O(g(n))</text>
+                            
+                            <!-- Coordinate system -->
+                            <line x1="50" y1="150" x2="650" y2="150" stroke="#2c3e50" stroke-width="1"/>
+                            <line x1="50" y1="50" x2="50" y2="150" stroke="#2c3e50" stroke-width="1"/>
+                            
+                            <!-- g(n) = n² -->
+                            <path d="M 50 140 Q 200 100, 350 60 T 650 50" stroke="#e74c3c" stroke-width="2" fill="none" stroke-dasharray="5,5"/>
+                            <text x="660" y="55" font-size="12" fill="#e74c3c">g(n) = n²</text>
+                            
+                            <!-- f(n) = 3n² + 2n + 1 -->
+                            <path d="M 50 145 Q 200 110, 350 70 T 650 55" stroke="#3498db" stroke-width="3" fill="none"/>
+                            <text x="660" y="60" font-size="12" fill="#3498db">f(n) = 3n² + 2n + 1</text>
+                            
+                            <!-- c*g(n) = 4n² -->
+                            <path d="M 50 135 Q 200 90, 350 55 T 650 45" stroke="#27ae60" stroke-width="2" fill="none"/>
+                            <text x="660" y="50" font-size="12" fill="#27ae60">c·g(n) = 4n²</text>
+                            
+                            <!-- n₀ marker -->
+                            <line x1="200" y1="50" x2="200" y2="150" stroke="#f39c12" stroke-width="2" stroke-dasharray="3,3"/>
+                            <text x="200" y="165" text-anchor="middle" font-size="12" fill="#f39c12">n₀</text>
+                        </g>
+                        
+                        <!-- Omega Visualization -->
+                        <g transform="translate(0, 200)">
+                            <text x="350" y="30" text-anchor="middle" font-size="16" font-weight="bold" fill="#2c3e50">Omega Notation: f(n) = Ω(g(n))</text>
+                            
+                            <!-- Coordinate system -->
+                            <line x1="50" y1="150" x2="650" y2="150" stroke="#2c3e50" stroke-width="1"/>
+                            <line x1="50" y1="50" x2="50" y2="150" stroke="#2c3e50" stroke-width="1"/>
+                            
+                            <!-- g(n) = n -->
+                            <path d="M 50 140 Q 350 100, 650 50" stroke="#e74c3c" stroke-width="2" fill="none" stroke-dasharray="5,5"/>
+                            <text x="660" y="55" font-size="12" fill="#e74c3c">g(n) = n</text>
+                            
+                            <!-- f(n) = 2n + 3 -->
+                            <path d="M 50 130 Q 350 80, 650 40" stroke="#3498db" stroke-width="3" fill="none"/>
+                            <text x="660" y="45" font-size="12" fill="#3498db">f(n) = 2n + 3</text>
+                            
+                            <!-- c*g(n) = 1.5n -->
+                            <path d="M 50 135 Q 350 90, 650 45" stroke="#27ae60" stroke-width="2" fill="none"/>
+                            <text x="660" y="50" font-size="12" fill="#27ae60">c·g(n) = 1.5n</text>
+                            
+                            <!-- n₀ marker -->
+                            <line x1="150" y1="50" x2="150" y2="150" stroke="#f39c12" stroke-width="2" stroke-dasharray="3,3"/>
+                            <text x="150" y="165" text-anchor="middle" font-size="12" fill="#f39c12">n₀</text>
+                        </g>
+                    </svg>
+                    <div class="svg-caption">Figure 4: Big O and Omega Notations Visualized</div>
+                </div>
+                
+                <p><strong>Big O Notation (O):</strong> Upper bound</p>
+                <div class="formula">
+                    f(n) = O(g(n)) if ∃ positive constants c and n₀ such that 0 ≤ f(n) ≤ c·g(n) for all n ≥ n₀
+                </div>
+                
+                <p><strong>Omega Notation (Ω):</strong> Lower bound</p>
+                <div class="formula">
+                    f(n) = Ω(g(n)) if ∃ positive constants c and n₀ such that 0 ≤ c·g(n) ≤ f(n) for all n ≥ n₀
+                </div>
+                
+                <p><strong>Theta Notation (Θ):</strong> Tight bound</p>
+                <div class="formula">
+                    f(n) = Θ(g(n)) if ∃ positive constants c₁, c₂, and n₀ such that 0 ≤ c₁·g(n) ≤ f(n) ≤ c₂·g(n) for all n ≥ n₀
+                </div>
+                
+                <div class="example">
+                    <div class="example-title">📊 Practical Example: Analyzing f(n) = 3n² + 2n + 1</div>
+                    <p><strong>Big O:</strong> f(n) = O(n²) because 3n² + 2n + 1 ≤ 4n² for n ≥ 3</p>
+                    <p><strong>Omega:</strong> f(n) = Ω(n²) because 3n² + 2n + 1 ≥ 3n² for n ≥ 1</p>
+                    <p><strong>Theta:</strong> f(n) = Θ(n²) because 3n² ≤ 3n² + 2n + 1 ≤ 4n² for n ≥ 3</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">4. Recursion and its Applications</h2>
+        
+        <div class="concept">
+            <div class="simple-explanation">
+                <div class="simple-title">🔄 For a 5-Year-Old: What is Recursion?</div>
+                <p>Imagine you have a Russian nesting doll. When you open it, you find a smaller doll inside. When you open that one, you find an even smaller doll! This keeps happening until you find the tiniest doll that can't be opened. Recursion is like this - a function that calls itself until it reaches the smallest version!</p>
+            </div>
+            
+            <div class="deep-explanation">
+                <div class="deep-title">🧩 Formal Definition & Implementation</div>
+                <p><strong>Recursion</strong> is a programming technique where a function calls itself directly or indirectly to solve a problem by breaking it down into smaller, similar subproblems.</p>
+                
+                <div class="svg-container">
+                    <svg width="700" height="500" viewBox="0 0 700 500" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Recursive Function Call Stack -->
+                        <g transform="translate(50, 50)">
+                            <text x="300" y="0" text-anchor="middle" font-size="18" font-weight="bold" fill="#2c3e50">Recursive Function Call Stack: factorial(4)</text>
+                            
+                            <!-- Stack frames -->
+                            <rect x="100" y="30" width="400" height="60" fill="#3498db" stroke="#2c3e50" stroke-width="2" rx="5"/>
+                            <text x="300" y="55" text-anchor="middle" fill="white" font-weight="bold">factorial(4)</text>
+                            <text x="300" y="75" text-anchor="middle" fill="white">return 4 * factorial(3)</text>
+                            
+                            <rect x="100" y="100" width="400" height="60" fill="#3498db" stroke="#2c3e50" stroke-width="2" rx="5"/>
+                            <text x="300" y="125" text-anchor="middle" fill="white" font-weight="bold">factorial(3)</text>
+                            <text x="300" y="145" text-anchor="middle" fill="white">return 3 * factorial(2)</text>
+                            
+                            <rect x="100" y="170" width="400" height="60" fill="#3498db" stroke="#2c3e50" stroke-width="2" rx="5"/>
+                            <text x="300" y="195" text-anchor="middle" fill="white" font-weight="bold">factorial(2)</text>
+                            <text x="300" y="215" text-anchor="middle" fill="white">return 2 * factorial(1)</text>
+                            
+                            <rect x="100" y="240" width="400" height="60" fill="#3498db" stroke="#2c3e50" stroke-width="2" rx="5"/>
+                            <text x="300" y="265" text-anchor="middle" fill="white" font-weight="bold">factorial(1)</text>
+                            <text x="300" y="285" text-anchor="middle" fill="white">return 1 * factorial(0)</text>
+                            
+                            <!-- Base case -->
+                            <rect x="100" y="310" width="400" height="60" fill="#27ae60" stroke="#2c3e50" stroke-width="2" rx="5"/>
+                            <text x="300" y="335" text-anchor="middle" fill="white" font-weight="bold">factorial(0)</text>
+                            <text x="300" y="355" text-anchor="middle" fill="white">return 1 (Base Case)</text>
+                            
+                            <!-- Arrows showing call flow -->
+                            <path d="M 300 90 L 300 100" stroke="#2c3e50" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+                            <path d="M 300 160 L 300 170" stroke="#2c3e50" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+                            <path d="M 300 230 L 300 240" stroke="#2c3e50" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+                            <path d="M 300 300 L 300 310" stroke="#2c3e50" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+                            
+                            <!-- Return arrows -->
+                            <path d="M 450 340 L 450 280" stroke="#e74c3c" stroke-width="2" fill="none" marker-end="url(#arrowhead-red)" stroke-dasharray="3,3"/>
+                            <path d="M 450 210 L 450 150" stroke="#e74c3c" stroke-width="2" fill="none" marker-end="url(#arrowhead-red)" stroke-dasharray="3,3"/>
+                            <path d="M 450 140 L 450 80" stroke="#e74c3c" stroke-width="2" fill="none" marker-end="url(#arrowhead-red)" stroke-dasharray="3,3"/>
+                            <path d="M 450 70 L 450 10" stroke="#e74c3c" stroke-width="2" fill="none" marker-end="url(#arrowhead-red)" stroke-dasharray="3,3"/>
+                            
+                            <!-- Arrow markers -->
+                            <defs>
+                                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                                    <polygon points="0 0, 10 3.5, 0 7" fill="#2c3e50"/>
+                                </marker>
+                                <marker id="arrowhead-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                                    <polygon points="0 0, 10 3.5, 0 7" fill="#e74c3c"/>
+                                </marker>
+                            </defs>
+                        </g>
+                    </svg>
+                    <div class="svg-caption">Figure 5: Recursive Function Call Stack for Factorial(4)</div>
+                </div>
+                
+                <p><strong>Essential Components of Recursion:</strong></p>
+                <ul>
+                    <li><strong>Base Case:</strong> The condition that stops the recursion</li>
+                    <li><strong>Recursive Case:</strong> The part where the function calls itself</li>
+                    <li><strong>Call Stack:</strong> Memory stack that tracks function calls</li>
+                </ul>
+                
+                <div class="example">
+                    <div class="example-title">💻 Recursive Factorial Implementation</div>
+                    <div class="code">
+function factorial(n) {
+    // Base case
+    if (n == 0 || n == 1) {
+        return 1;
+    }
+    // Recursive case
+    else {
+        return n * factorial(n - 1);
+    }
+}
+                    </div>
+                    <p><strong>Time Complexity:</strong> O(n)</p>
+                    <p><strong>Space Complexity:</strong> O(n) due to call stack</p>
+                </div>
+                
+                <p><strong>Applications of Recursion:</strong></p>
+                <ul>
+                    <li><strong>Tree Traversal:</strong> Inorder, Preorder, Postorder</li>
+                    <li><strong>Divide and Conquer:</strong> Merge Sort, Quick Sort</li>
+                    <li><strong>Dynamic Programming:</strong> Fibonacci, Coin Change</li>
+                    <li><strong>Graph Algorithms:</strong> DFS, Topological Sort</li>
+                    <li><strong>Mathematical Computations:</strong> Factorial, Power, GCD</li>
+                </ul>
+                
+                <div class="formula">
+                    T(n) = T(n-1) + O(1) = O(n)  // For simple linear recursion
+                </div>
+                
+                <p><strong>Advantages:</strong></p>
+                <ul>
+                    <li>Elegant and concise code for complex problems</li>
+                    <li>Natural fit for problems with recursive structure</li>
+                    <li>Reduces code duplication</li>
+                </ul>
+                
+                <p><strong>Disadvantages:</strong></p>
+                <ul>
+                    <li>Can be less efficient than iterative solutions</li>
+                    <li>Risk of stack overflow for deep recursion</li>
+                    <li>Can be harder to debug and understand</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">Module Summary & Exam Focus</h2>
+        
+        <div class="concept">
+            <div class="deep-explanation">
+                <div class="deep-title">🎯 Key Exam Topics from Module 1</div>
+                
+                <p><strong>High-Frequency Exam Questions:</strong></p>
+                <ol>
+                    <li><strong>Algorithm Analysis using Frequency Count:</strong>
+                        <ul>
+                            <li>Calculate time complexity of nested loops</li>
+                            <li>Analyze recursive algorithms</li>
+                            <li>Compare different algorithmic approaches</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Asymptotic Notations:</strong>
+                        <ul>
+                            <li>Prove Big O, Omega, Theta for given functions</li>
+                            <li>Compare growth rates of different functions</li>
+                            <li>Derive complexity bounds for algorithms</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>ADT Implementation:</strong>
+                        <ul>
+                            <li>Design ADTs for specific problems</li>
+                            <li>Compare different implementations</li>
+                            <li>Analyze trade-offs between implementations</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Recursive Algorithm Design:</strong>
+                        <ul>
+                            <li>Write recursive solutions for problems</li>
+                            <li>Analyze time and space complexity</li>
+                            <li>Convert recursive to iterative solutions</li>
+                        </ul>
+                    </li>
+                </ol>
+                
+                <div class="example">
+                    <div class="example-title">📝 Sample Exam Question</div>
+                    <p><strong>Question:</strong> Calculate the frequency count and time complexity of the following code segment:</p>
+                    <div class="code">
+for (i = 0; i < n; i++) {
+    for (j = 0; j < i; j++) {
+        for (k = 0; k < j; k++) {
+            x = x + 1;
+        }
+    }
+}
+                    </div>
+                    <p><strong>Solution Approach:</strong>
+                    <br>1. Innermost loop (k): runs j times
+                    <br>2. Middle loop (j): runs i times
+                    <br>3. Outer loop (i): runs n times
+                    <br>4. Total operations: Σ(i=0 to n-1) Σ(j=0 to i-1) j = Σ(i=0 to n-1) i(i-1)/2 = O(n³)</p>
+                </div>
+                
+                <p><strong>Study Strategy:</strong></p>
+                <ul>
+                    <li>Master the frequency count method for complexity analysis</li>
+                    <li>Practice proving asymptotic notations mathematically</li>
+                    <li>Understand the relationship between data types and ADTs</li>
+                    <li>Develop intuition for recursive problem-solving</li>
+                    <li>Work through examples from previous year papers</li>
+                </ul>
+                
+                <div class="formula">
+                    Exam Success = Understanding + Practice + Application
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="citation">
+        <p><em>Reference: 2024 Exam Scheme & 2025 Handbook for CST201 Data Structures</em></p>
+    </div>
+</body>
+</html>
