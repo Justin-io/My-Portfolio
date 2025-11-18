@@ -926,7 +926,7 @@
             --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.3);
             --shadow-glow: 0 0 40px rgba(0, 102, 255, 0.3);
         }
-        /* Add this to your CSS */
+/* Add this to your CSS */
 .fullscreen-dialog {
     position: fixed;
     top: 0;
@@ -960,6 +960,7 @@
     text-align: center;
     transform: scale(0.9);
     transition: transform 0.3s ease;
+    position: relative;
 }
 
 .fullscreen-dialog.active .dialog-content {
@@ -988,8 +989,25 @@
 
 .dialog-content p {
     color: var(--text-secondary);
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     line-height: 1.5;
+}
+
+.countdown-timer {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
+    background: var(--gradient-1);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: white;
 }
 
 .dialog-buttons {
@@ -2445,16 +2463,18 @@ footer {
         </div>
     </div>
     <!-- Add this after the loader div -->
+<!-- Add this after the loader div -->
 <div class="fullscreen-dialog" id="fullscreenDialog">
     <div class="dialog-content">
         <div class="dialog-icon">
-            <i class="fas fa-expand"></i>
+            <i class="fas fa-compress"></i>
         </div>
-        <h3>Enhanced Experience</h3>
-        <p>Would you like to view this site in fullscreen mode for the best experience?</p>
+        <h3>Fullscreen Experience</h3>
+        <p>Would you like to exit fullscreen mode?</p>
+        <div class="countdown-timer" id="countdownTimer">3</div>
         <div class="dialog-buttons">
-            <button class="dialog-btn btn-primary" id="fullscreenYes">Yes</button>
-            <button class="dialog-btn btn-secondary" id="fullscreenNo">No</button>
+            <button class="dialog-btn btn-primary" id="exitFullscreen">Exit</button>
+            <button class="dialog-btn btn-secondary" id="stayFullscreen">Stay</button>
         </div>
     </div>
 </div>
@@ -4126,10 +4146,14 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Add this to your JavaScript
-// Fullscreen Dialog
+// Fullscreen functionality
 const fullscreenDialog = document.getElementById('fullscreenDialog');
-const fullscreenYes = document.getElementById('fullscreenYes');
-const fullscreenNo = document.getElementById('fullscreenNo');
+const exitFullscreenBtn = document.getElementById('exitFullscreen');
+const stayFullscreenBtn = document.getElementById('stayFullscreen');
+const countdownTimer = document.getElementById('countdownTimer');
+
+let countdownInterval;
+let countdownValue = 3;
 
 // Check if fullscreen is already active
 function isFullscreenActive() {
@@ -4169,42 +4193,70 @@ function exitFullscreen() {
     }
 }
 
-// Show fullscreen dialog after a delay
-function showFullscreenDialog() {
-    // Don't show if already in fullscreen or if user has previously declined
-    if (isFullscreenActive() || localStorage.getItem('fullscreenDeclined') === 'true') {
-        return;
-    }
+// Start countdown
+function startCountdown() {
+    countdownValue = 3;
+    countdownTimer.textContent = countdownValue;
     
-    setTimeout(() => {
-        fullscreenDialog.classList.add('active');
-    }, 3000); // Show after 3 seconds
+    countdownInterval = setInterval(() => {
+        countdownValue--;
+        countdownTimer.textContent = countdownValue;
+        
+        if (countdownValue <= 0) {
+            clearInterval(countdownInterval);
+            fullscreenDialog.classList.remove('active');
+        }
+    }, 1000);
 }
 
-// Handle fullscreen Yes button
-fullscreenYes.addEventListener('click', () => {
-    requestFullscreen();
+// Show exit fullscreen dialog
+function showExitFullscreenDialog() {
+    if (!isFullscreenActive()) return;
+    
+    fullscreenDialog.classList.add('active');
+    startCountdown();
+}
+
+// Handle exit fullscreen button
+exitFullscreenBtn.addEventListener('click', () => {
+    clearInterval(countdownInterval);
+    exitFullscreen();
     fullscreenDialog.classList.remove('active');
 });
 
-// Handle fullscreen No button
-fullscreenNo.addEventListener('click', () => {
+// Handle stay fullscreen button
+stayFullscreenBtn.addEventListener('click', () => {
+    clearInterval(countdownInterval);
     fullscreenDialog.classList.remove('active');
-    // Remember that user declined so we don't ask again
-    localStorage.setItem('fullscreenDeclined', 'true');
 });
 
 // Listen for fullscreen changes
 document.addEventListener('fullscreenchange', () => {
-    if (!isFullscreenActive()) {
-        // Reset the declined flag when user exits fullscreen
-        localStorage.removeItem('fullscreenDeclined');
+    if (isFullscreenActive()) {
+        // Show exit dialog after a delay
+        setTimeout(showExitFullscreenDialog, 3000);
     }
 });
 
-// Show the dialog when page loads
+// Auto-enter fullscreen after page loads
 window.addEventListener('load', () => {
-    showFullscreenDialog();
+    // Check if user has previously disabled auto-fullscreen
+    if (localStorage.getItem('autoFullscreenDisabled') === 'true') {
+        return;
+    }
+    
+    // Request fullscreen after 3 seconds
+    setTimeout(() => {
+        requestFullscreen();
+    }, 3000);
+});
+
+// Handle escape key to exit fullscreen
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isFullscreenActive()) {
+        clearInterval(countdownInterval);
+        fullscreenDialog.classList.remove('active');
+    }
 });
 </script>
 
