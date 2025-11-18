@@ -926,7 +926,130 @@
             --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.3);
             --shadow-glow: 0 0 40px rgba(0, 102, 255, 0.3);
         }
-        
+        /* Add this to your CSS */
+.fullscreen-dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10001;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.fullscreen-dialog.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.dialog-content {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.fullscreen-dialog.active .dialog-content {
+    transform: scale(1);
+}
+
+.dialog-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--gradient-2);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 20px;
+    font-size: 1.5rem;
+    color: var(--accent);
+}
+
+.dialog-content h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: var(--text-primary);
+}
+
+.dialog-content p {
+    color: var(--text-secondary);
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+.dialog-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.dialog-btn {
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    font-size: 0.95rem;
+}
+
+.dialog-btn.btn-primary {
+    background: var(--gradient-1);
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
+}
+
+.dialog-btn.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 102, 255, 0.4);
+}
+
+.dialog-btn.btn-secondary {
+    background: var(--glass-bg);
+    color: var(--text-primary);
+    border: 1px solid var(--glass-border);
+}
+
+.dialog-btn.btn-secondary:hover {
+    background: var(--glass-bg-hover);
+    border-color: var(--glass-border-hover);
+    transform: translateY(-2px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .dialog-content {
+        padding: 30px 20px;
+    }
+    
+    .dialog-content h3 {
+        font-size: 1.3rem;
+    }
+    
+    .dialog-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .dialog-btn {
+        width: 100%;
+    }
+}
         * {
             margin: 0;
             padding: 0;
@@ -2321,7 +2444,20 @@ footer {
             </div>
         </div>
     </div>
-    
+    <!-- Add this after the loader div -->
+<div class="fullscreen-dialog" id="fullscreenDialog">
+    <div class="dialog-content">
+        <div class="dialog-icon">
+            <i class="fas fa-expand"></i>
+        </div>
+        <h3>Enhanced Experience</h3>
+        <p>Would you like to view this site in fullscreen mode for the best experience?</p>
+        <div class="dialog-buttons">
+            <button class="dialog-btn btn-primary" id="fullscreenYes">Yes</button>
+            <button class="dialog-btn btn-secondary" id="fullscreenNo">No</button>
+        </div>
+    </div>
+</div>
     <!-- Custom Cursor -->
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
@@ -3989,7 +4125,87 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.style.msUserSelect = 'none';
 });
 
+// Add this to your JavaScript
+// Fullscreen Dialog
+const fullscreenDialog = document.getElementById('fullscreenDialog');
+const fullscreenYes = document.getElementById('fullscreenYes');
+const fullscreenNo = document.getElementById('fullscreenNo');
 
+// Check if fullscreen is already active
+function isFullscreenActive() {
+    return !!(
+        document.fullscreenElement ||
+        document.webkitFullscreenElement ||
+        document.mozFullScreenElement ||
+        document.msFullscreenElement
+    );
+}
+
+// Request fullscreen
+function requestFullscreen() {
+    const element = document.documentElement;
+    
+    if (element.requestFullscreen) {
+        element.requestFullscreen();
+    } else if (element.webkitRequestFullscreen) {
+        element.webkitRequestFullscreen();
+    } else if (element.mozRequestFullScreen) {
+        element.mozRequestFullScreen();
+    } else if (element.msRequestFullscreen) {
+        element.msRequestFullscreen();
+    }
+}
+
+// Exit fullscreen
+function exitFullscreen() {
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+    } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+    }
+}
+
+// Show fullscreen dialog after a delay
+function showFullscreenDialog() {
+    // Don't show if already in fullscreen or if user has previously declined
+    if (isFullscreenActive() || localStorage.getItem('fullscreenDeclined') === 'true') {
+        return;
+    }
+    
+    setTimeout(() => {
+        fullscreenDialog.classList.add('active');
+    }, 3000); // Show after 3 seconds
+}
+
+// Handle fullscreen Yes button
+fullscreenYes.addEventListener('click', () => {
+    requestFullscreen();
+    fullscreenDialog.classList.remove('active');
+});
+
+// Handle fullscreen No button
+fullscreenNo.addEventListener('click', () => {
+    fullscreenDialog.classList.remove('active');
+    // Remember that user declined so we don't ask again
+    localStorage.setItem('fullscreenDeclined', 'true');
+});
+
+// Listen for fullscreen changes
+document.addEventListener('fullscreenchange', () => {
+    if (!isFullscreenActive()) {
+        // Reset the declined flag when user exits fullscreen
+        localStorage.removeItem('fullscreenDeclined');
+    }
+});
+
+// Show the dialog when page loads
+window.addEventListener('load', () => {
+    showFullscreenDialog();
+});
 </script>
 
 </body>
