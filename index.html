@@ -942,7 +942,7 @@
             position: relative;
         }
         
-        /* Custom Cursor */
+        /* Custom Cursor - Hide on mobile */
         .cursor {
             width: 20px;
             height: 20px;
@@ -1124,6 +1124,7 @@
             flex-direction: column;
             cursor: pointer;
             gap: 4px;
+            z-index: 1001;
         }
         
         .menu-toggle span {
@@ -2134,7 +2135,166 @@ footer {
             }
         }
         
-
+        /* Additional mobile-specific fixes */
+        @media (max-width: 480px) {
+            /* Hide custom cursor on mobile */
+            .cursor, .cursor-follower {
+                display: none;
+            }
+            
+            body {
+                cursor: auto;
+            }
+            
+            /* Adjust navigation for mobile */
+            nav {
+                padding: 15px 20px;
+            }
+            
+            nav.scrolled {
+                padding: 15px 20px;
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            /* Mobile menu implementation */
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                height: 100vh;
+                background: rgba(10, 10, 10, 0.95);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 30px;
+                transition: right 0.3s ease;
+                z-index: 999;
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-link {
+                font-size: 1.2rem;
+            }
+            
+            .nav-cta {
+                margin-top: 20px;
+            }
+            
+            /* Menu toggle animation */
+            .menu-toggle.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .menu-toggle.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -6px);
+            }
+            
+            /* Adjust hero section for mobile */
+            .hero {
+                padding: 80px 15px;
+            }
+            
+            .hero h1 {
+                font-size: clamp(2.5rem, 7vw, 4rem);
+            }
+            
+            .hero .subtitle {
+                font-size: clamp(1rem, 2.5vw, 1.5rem);
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .btn {
+                padding: 12px 25px;
+                font-size: 0.9rem;
+            }
+            
+            /* Adjust sections for mobile */
+            section {
+                padding: 80px 15px;
+            }
+            
+            .section-header {
+                margin-bottom: 50px;
+            }
+            
+            .section-title {
+                font-size: clamp(2rem, 4vw, 3rem);
+            }
+            
+            /* Adjust project cards for mobile */
+            .project-content {
+                padding: 25px;
+            }
+            
+            .project-title {
+                font-size: 1.5rem;
+            }
+            
+            /* Adjust research section for mobile */
+            .research-showcase {
+                padding: 30px;
+            }
+            
+            .research-title {
+                font-size: 1.5rem;
+            }
+            
+            /* Adjust skill cards for mobile */
+            .skill-card {
+                padding: 25px;
+            }
+            
+            .skill-title {
+                font-size: 1.2rem;
+            }
+            
+            /* Adjust timeline for mobile */
+            .timeline-item {
+                margin-bottom: 50px;
+            }
+            
+            .timeline-content {
+                padding: 20px;
+            }
+            
+            .timeline-title {
+                font-size: 1.1rem;
+            }
+            
+            /* Adjust contact section for mobile */
+            .contact-card, .contact-form {
+                padding: 25px;
+            }
+            
+            .contact-title {
+                font-size: 1.5rem;
+            }
+            
+            /* Adjust footer for mobile */
+            .footer-links {
+                gap: 15px;
+            }
+            
+            .footer-link {
+                font-size: 0.85rem;
+            }
+        }
+        
         /* Animations */
         .fade-in {
             opacity: 0;
