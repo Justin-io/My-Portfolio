@@ -926,7 +926,7 @@
             --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.3);
             --shadow-glow: 0 0 40px rgba(0, 102, 255, 0.3);
         }
-/* Add this to your CSS *//* Add this to your CSS */
+/* Add this to your CSS */
 .fullscreen-dialog {
     position: fixed;
     top: 0;
@@ -2463,6 +2463,7 @@ footer {
         </div>
     </div>
 <!-- Add this after the loader div -->
+<!-- Add this right after the loader div -->
 <div class="fullscreen-dialog" id="fullscreenDialog">
     <div class="dialog-content">
         <div class="dialog-icon">
@@ -4143,122 +4144,144 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.style.mozUserSelect = 'none';
     document.body.style.msUserSelect = 'none';
 });
-// Add this to your JavaScript
-// Fullscreen functionality
-const fullscreenDialog = document.getElementById('fullscreenDialog');
-const exitFullscreenBtn = document.getElementById('exitFullscreen');
-const stayFullscreenBtn = document.getElementById('stayFullscreen');
-const countdownTimer = document.getElementById('countdownTimer');
-
-let countdownInterval;
-let countdownValue = 3;
-
-// Check if fullscreen is already active
-function isFullscreenActive() {
-    return !!(
-        document.fullscreenElement ||
-        document.webkitFullscreenElement ||
-        document.mozFullScreenElement ||
-        document.msFullscreenElement
-    );
-}
-
-// Request fullscreen
-function requestFullscreen() {
-    const element = document.documentElement;
+// Fullscreen functionality - Fresh implementation
+(function() {
+    // Clear any existing localStorage data
+    localStorage.clear();
     
-    if (element.requestFullscreen) {
-        element.requestFullscreen();
-    } else if (element.webkitRequestFullscreen) {
-        element.webkitRequestFullscreen();
-    } else if (element.mozRequestFullScreen) {
-        element.mozRequestFullScreen();
-    } else if (element.msRequestFullscreen) {
-        element.msRequestFullscreen();
-    }
-}
-
-// Exit fullscreen
-function exitFullscreen() {
-    if (document.exitFullscreen) {
-        document.exitFullscreen();
-    } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-    } else if (document.mozCancelFullScreen) {
-        document.mozCancelFullScreen();
-    } else if (document.msExitFullscreen) {
-        document.msExitFullscreen();
-    }
-}
-
-// Start countdown
-function startCountdown() {
-    countdownValue = 3;
-    countdownTimer.textContent = countdownValue;
+    // Get DOM elements
+    const fullscreenDialog = document.getElementById('fullscreenDialog');
+    const exitFullscreenBtn = document.getElementById('exitFullscreen');
+    const stayFullscreenBtn = document.getElementById('stayFullscreen');
+    const countdownTimer = document.getElementById('countdownTimer');
     
-    countdownInterval = setInterval(() => {
-        countdownValue--;
+    let countdownInterval;
+    let countdownValue = 3;
+    
+    // Check if fullscreen is active
+    function isFullscreenActive() {
+        return !!(
+            document.fullscreenElement ||
+            document.webkitFullscreenElement ||
+            document.mozFullScreenElement ||
+            document.msFullscreenElement
+        );
+    }
+    
+    // Request fullscreen
+    function requestFullscreen() {
+        const element = document.documentElement;
+        
+        if (element.requestFullscreen) {
+            element.requestFullscreen().catch(err => {
+                console.log('Fullscreen request failed:', err);
+            });
+        } else if (element.webkitRequestFullscreen) {
+            element.webkitRequestFullscreen();
+        } else if (element.mozRequestFullScreen) {
+            element.mozRequestFullScreen();
+        } else if (element.msRequestFullscreen) {
+            element.msRequestFullscreen();
+        }
+    }
+    
+    // Exit fullscreen
+    function exitFullscreen() {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    }
+    
+    // Start countdown
+    function startCountdown() {
+        countdownValue = 3;
         countdownTimer.textContent = countdownValue;
         
-        if (countdownValue <= 0) {
+        countdownInterval = setInterval(() => {
+            countdownValue--;
+            countdownTimer.textContent = countdownValue;
+            
+            if (countdownValue <= 0) {
+                clearInterval(countdownInterval);
+                fullscreenDialog.classList.remove('active');
+            }
+        }, 1000);
+    }
+    
+    // Show exit fullscreen dialog
+    function showExitFullscreenDialog() {
+        if (!isFullscreenActive()) return;
+        
+        fullscreenDialog.classList.add('active');
+        startCountdown();
+    }
+    
+    // Handle exit fullscreen button
+    if (exitFullscreenBtn) {
+        exitFullscreenBtn.addEventListener('click', () => {
+            clearInterval(countdownInterval);
+            exitFullscreen();
+            fullscreenDialog.classList.remove('active');
+        });
+    }
+    
+    // Handle stay fullscreen button
+    if (stayFullscreenBtn) {
+        stayFullscreenBtn.addEventListener('click', () => {
+            clearInterval(countdownInterval);
+            fullscreenDialog.classList.remove('active');
+        });
+    }
+    
+    // Listen for fullscreen changes
+    document.addEventListener('fullscreenchange', () => {
+        if (isFullscreenActive()) {
+            // Show exit dialog after a delay
+            setTimeout(showExitFullscreenDialog, 3000);
+        }
+    });
+    
+    // Auto-enter fullscreen after page loads
+    window.addEventListener('load', () => {
+        // Request fullscreen after 3 seconds
+        setTimeout(() => {
+            if (!isFullscreenActive()) {
+                requestFullscreen();
+            }
+        }, 3000);
+    });
+    
+    // Also request fullscreen on DOM content loaded (backup)
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            if (!isFullscreenActive()) {
+                requestFullscreen();
+            }
+        }, 4000);
+    });
+    
+    // Handle escape key to exit fullscreen
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && isFullscreenActive()) {
             clearInterval(countdownInterval);
             fullscreenDialog.classList.remove('active');
         }
-    }, 1000);
-}
-
-// Show exit fullscreen dialog
-function showExitFullscreenDialog() {
-    if (!isFullscreenActive()) return;
+    });
     
-    fullscreenDialog.classList.add('active');
-    startCountdown();
-}
-
-// Handle exit fullscreen button
-exitFullscreenBtn.addEventListener('click', () => {
-    clearInterval(countdownInterval);
-    exitFullscreen();
-    fullscreenDialog.classList.remove('active');
-});
-
-// Handle stay fullscreen button
-stayFullscreenBtn.addEventListener('click', () => {
-    clearInterval(countdownInterval);
-    fullscreenDialog.classList.remove('active');
-});
-
-// Listen for fullscreen changes
-document.addEventListener('fullscreenchange', () => {
-    if (isFullscreenActive()) {
-        // Show exit dialog after a delay
-        setTimeout(showExitFullscreenDialog, 3000);
-    }
-});
-
-// Auto-enter fullscreen every time the page loads
-window.addEventListener('load', () => {
-    // Always request fullscreen after 3 seconds
-    setTimeout(() => {
-        requestFullscreen();
-    }, 3000);
-});
-
-// Also request fullscreen on page refresh/reload
-window.addEventListener('beforeunload', () => {
-    // This ensures fullscreen is requested again on reload
-    setTimeout(() => {
-        requestFullscreen();
-    }, 100);
-});
-
-// Handle escape key to exit fullscreen
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && isFullscreenActive()) {
-        clearInterval(countdownInterval);
-        fullscreenDialog.classList.remove('active');
-    }
-});
+    // Fallback: Try fullscreen every 5 seconds if not in fullscreen
+    setInterval(() => {
+        if (!isFullscreenActive()) {
+            requestFullscreen();
+        }
+    }, 5000);
+    
+})();
 </script>
 
 </body>
