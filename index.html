@@ -2248,11 +2248,47 @@ footer {
             nav {
                 padding: 20px;
             }
-            
+
+            /* Mobile menu implementation for phones and small tablets */
             .nav-links {
-                display: none;
+                display: flex; /* make visible on small screens (overrides desktop layout) */
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                height: 100vh;
+                background: rgba(10, 10, 10, 0.95);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 24px;
+                transition: right 0.3s ease;
+                z-index: 10002; /* ensure nav sits above other UI */
+                padding: 20px 0;
             }
-            
+
+            .nav-links.active {
+                right: 0;
+                display: flex;
+            }
+
+            /* Make anchor links clearly visible and easier to tap */
+            .nav-links li {
+                list-style: none;
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links li a.nav-link {
+                color: var(--text-primary) !important;
+                display: block;
+                width: 100%;
+                padding: 14px 20px;
+                font-size: 1.15rem;
+                font-weight: 600;
+            }
+
             .menu-toggle {
                 display: flex;
             }
@@ -2302,6 +2338,7 @@ footer {
             
             /* Mobile menu implementation */
             .nav-links {
+                display: flex; /* make visible on small screens (overrides earlier display:none) */
                 position: fixed;
                 top: 0;
                 right: -100%;
@@ -2319,6 +2356,7 @@ footer {
             
             .nav-links.active {
                 right: 0;
+                display: flex; /* ensure it remains visible after activating */
             }
             
             .nav-link {
