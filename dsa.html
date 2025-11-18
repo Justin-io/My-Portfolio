@@ -186,14 +186,14 @@
         }
     </style>
 
-  <style>
+   <style>
     #fullscreen-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(0, 0, 0, 0.85);
+      background: rgba(0, 0, 0, 0.92);
       color: white;
       display: flex;
       flex-direction: column;
@@ -201,24 +201,17 @@
       align-items: center;
       z-index: 999999;
       cursor: pointer;
+      font-family: system-ui, sans-serif;
       text-align: center;
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-      user-select: none;
-      transition: opacity 0.3s;
     }
     #fullscreen-overlay h2 {
-      font-size: 2rem;
-      margin: 0 0 1rem;
-      animation: fadeIn 1s ease-out;
+      font-size: 1.8rem;
+      margin: 0 0 0.8rem;
     }
     #fullscreen-overlay p {
-      font-size: 1.1rem;
+      font-size: 1rem;
       opacity: 0.8;
-      max-width: 80%;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+      padding: 0 20px;
     }
 
     body.overlay-active {
@@ -227,84 +220,71 @@
   </style>
 </head>
 <body>
-  <h1>Your Content Here</h1>
-  <p>Try scrolling, moving your mouse, or clicking.</p>
-  <div style="height: 200vh;">(Scroll down to trigger fullscreen)</div>
+  <h1>Your Website Content</h1>
+  <p>Move mouse, scroll slightly, or click — fullscreen will trigger instantly.</p>
+  <div style="height: 150vh;">ScrollIndicator → Try scrolling just a tiny bit</div>
 
   <div id="fullscreen-overlay">
-    <h2>🖱️ Interact to Enter Fullscreen</h2>
-    <p>Click, scroll, or move your mouse to continue.</p>
+    <h2>🖱️ Move | ⬇️ Scroll | ✅ Click</h2>
+    <p>Any small interaction enters fullscreen</p>
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    (function() {
       const overlay = document.getElementById('fullscreen-overlay');
-      let hasTriggered = false;
+      let triggered = false;
 
-      // Show overlay on every load
-      overlay.style.display = 'flex';
-      document.body.classList.add('overlay-active');
-
-      // Fullscreen request (cross-browser)
       const enterFullscreen = () => {
-        if (hasTriggered) return; // Prevent re-entry
-        hasTriggered = true;
+        if (triggered) return;
+        triggered = true;
+
+        // Show visual feedback (optional)
+        overlay.style.opacity = '0.6';
 
         const elem = document.documentElement;
         let promise;
 
         if (elem.requestFullscreen) {
           promise = elem.requestFullscreen();
-        } else if (elem.webkitRequestFullscreen) { // Safari
+        } else if (elem.webkitRequestFullscreen) {
           promise = elem.webkitRequestFullscreen();
-        } else if (elem.msRequestFullscreen) { // IE (legacy)
+        } else if (elem.msRequestFullscreen) {
           promise = elem.msRequestFullscreen();
         } else {
           console.warn("Fullscreen not supported");
-          hideOverlay();
-          return Promise.resolve();
+          cleanup();
+          return;
         }
 
-        return promise.catch(err => {
-          console.error("Fullscreen failed:", err);
-          // Don’t hide overlay on failure — let user try again
-          hasTriggered = false;
-        }).then(() => {
-          hideOverlay();
-        });
+        promise
+          .then(() => cleanup())
+          .catch(err => {
+            console.error("Fullscreen failed:", err);
+            triggered = false; // allow retry
+            overlay.style.opacity = '1';
+          });
       };
 
-      const hideOverlay = () => {
-        overlay.style.opacity = '0';
-        setTimeout(() => {
-          overlay.style.display = 'none';
-          document.body.classList.remove('overlay-active');
-        }, 300);
+      const cleanup = () => {
+        overlay.style.display = 'none';
+        document.body.classList.remove('overlay-active');
       };
 
-      // 🖱️ Mouse move (debounced)
-      let mouseMoveTimeout;
-      document.addEventListener('mousemove', () => {
-        if (hasTriggered) return;
-        clearTimeout(mouseMoveTimeout);
-        mouseMoveTimeout = setTimeout(enterFullscreen, 100); // 100ms debounce
-      }, { passive: true });
+      // ✅ Show overlay immediately
+      document.body.classList.add('overlay-active');
 
-      // ⬇️ Scroll
-      let scrollTimeout;
-      const onScroll = () => {
-        if (hasTriggered) return;
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(enterFullscreen, 50); // faster for scroll
-      };
-      window.addEventListener('scroll', onScroll, { passive: true });
+      // 🖱️ Mouse move: triggers on *any* movement — even 1px
+      document.addEventListener('mousemove', enterFullscreen, { once: true, passive: true });
 
-      // ✅ Click (immediate)
-      overlay.addEventListener('click', enterFullscreen);
+      // ⬇️ Scroll: even 1px scroll triggers
+      window.addEventListener('scroll', enterFullscreen, { once: true, passive: true });
 
-      // Optional: Also listen to touchstart for mobile
-      document.addEventListener('touchstart', enterFullscreen, { passive: true, once: true });
-    });
+      // ✅ Click anywhere (including overlay)
+      document.addEventListener('click', enterFullscreen, { once: true, passive: true });
+
+      // 📱 Touch for mobile (first tap)
+      document.addEventListener('touchstart', enterFullscreen, { once: true, passive: true });
+    })();
   </script>
 
 
