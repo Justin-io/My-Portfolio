@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hari Nandan K | Theoretical Physicist & Technopreneur</title>
+    <meta name="description" content="Portfolio of Hari Nandan K - Theoretical Physicist, Cybersecurity Specialist, and Founder of HOPE.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --cursor-size: 20px;
+            --accent: #00f0ff;
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-bg: rgba(10, 10, 10, 0.6);
+        }
+
+        body {
+            background-color: #030303;
+            color: #e0e0e0;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden; 
+            cursor: none; 
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2, h3, h4, .font-grotesk {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Custom Cursor */
+        #cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--cursor-size);
+            height: var(--cursor-size);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background-color 0.3s;
+            mix-blend-mode: difference;
+        }
+        
+        #cursor-dot {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+        }
+
+        body.hovering #cursor {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: transparent;
+            backdrop-filter: blur(2px);
+        }
+
+        /* ThreeJS Canvas */
+        #webgl-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        /* Glassmorphism Utilities */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(0, 240, 255, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -10px rgba(0, 240, 255, 0.1);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+
+        /* Loader */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 10001;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .loader-line {
+            width: 0%;
+            height: 1px;
+            background: var(--accent);
+            transition: width 1s ease-in-out;
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #fff, #666);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .text-gradient-accent {
+            background: linear-gradient(135deg, #00f0ff 0%, #00ff9d 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Horizontal Scroll Section */
+        .h-scroll-container {
+            display: flex;
+            flex-wrap: nowrap;
+            width: fit-content; 
+            height: 100%;
+            align-items: center;
+        }
+
+        .marker-line {
+            position: absolute;
+            left: 0;
+            top: 1.5em; /* Align with text */
+            height: 1px;
+            background: rgba(255,255,255,0.2);
+            width: 0;
+            transition: width 0.5s ease;
+        }
+        li:hover .marker-line {
+            width: 20px;
+            background: var(--accent);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Loader -->
+    <div id="loader">
+        <div class="font-grotesk text-4xl mb-4 tracking-tighter">NAMASKAARAM</div>
+        <div class="w-64 h-[1px] bg-gray-800 rounded overflow-hidden">
+            <div class="loader-line"></div>
+        </div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div id="cursor"></div>
+    <div id="cursor-dot"></div>
+
+    <!-- 3D Background -->
+    <div id="webgl-container"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 w-full z-50 px-6 py-6 flex justify-between items-center mix-blend-difference text-white">
+        <a href="#" class="font-grotesk font-bold text-2xl tracking-tighter hover-trigger">JA.</a>
+        <div class="hidden md:flex gap-8 font-grotesk text-sm uppercase tracking-widest">
+            <a href="#about" class="hover:text-cyan-400 transition-colors hover-trigger">About</a>
+            <a href="#work" class="hover:text-cyan-400 transition-colors hover-trigger">Work</a>
+            <a href="#research" class="hover:text-cyan-400 transition-colors hover-trigger">Research</a>
+            <a href="#contact" class="hover:text-cyan-400 transition-colors hover-trigger">Contact</a>
+        </div>
+        <a href="#contact" class="glass-panel px-6 py-2 rounded-full font-grotesk text-xs uppercase tracking-wider hover:bg-white/10 transition-all hover-trigger">
+            Let's Talk
+        </a>
+    </nav>
+
+    <!-- Main Content Wrapper -->
+    <main class="relative w-full z-10">
+
+        <!-- Hero Section -->
+        <section class="h-screen w-full flex flex-col justify-center items-center relative px-4">
+            <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+            
+            <div class="text-center z-10">
+                <div class="overflow-hidden mb-2">
+                    <p class="hero-anim font-grotesk text-sm md:text-base text-cyan-400 tracking-[0.3em] uppercase">Hari Nandan K</p>
+                </div>
+                <h1 class="hero-title text-6xl md:text-9xl font-bold tracking-tighter mb-4 text-gradient leading-none">
+                    JUSTIN <br> ALEXIA
+                </h1>
+                <div class="overflow-hidden max-w-2xl mx-auto mt-6">
+                    <p class="hero-anim text-gray-400 text-lg md:text-xl font-light leading-relaxed">
+                        Theoretical physicist and cybersecurity specialist building resilient systems from the <span class="text-white">Chronon-Super Quantum Level Model</span> to rural EdTech infrastructure.
+                    </p>
+                </div>
+            </div>
+
+            <div class="absolute bottom-10 left-6 md:left-10 flex flex-col gap-2 font-grotesk text-xs text-gray-500">
+                <span>SCROLL TO EXPLORE</span>
+                <div class="h-12 w-[1px] bg-gray-800 overflow-hidden relative">
+                    <div class="absolute top-0 left-0 w-full h-1/2 bg-cyan-400 animate-bounce"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Marquee Separator -->
+        <div class="py-12 border-y border-white/5 bg-black/20 backdrop-blur-sm overflow-hidden flex">
+            <div class="marquee-content flex gap-12 font-grotesk text-4xl md:text-6xl font-bold text-white/10 whitespace-nowrap uppercase select-none">
+                <span>Secure. Test. Defend.</span>
+                <span class="text-cyan-500/20">Create. Empower. Evolve.</span>
+                <span>Theoretical Physics</span>
+                <span class="text-cyan-500/20">Quantum Gravity</span>
+                <span>Cybersecurity</span>
+                <span class="text-cyan-500/20">IoT Architecture</span>
+                 <span>Secure. Test. Defend.</span>
+                <span class="text-cyan-500/20">Create. Empower. Evolve.</span>
+            </div>
+        </div>
+
+        <!-- Horizontal Scroll Skills/About -->
+        <section id="about" class="w-full relative">
+            <div id="skills-pin-wrapper" class="h-screen w-full flex items-center overflow-hidden">
+                <div class="h-scroll-container pl-6 md:pl-20 flex items-center gap-20 md:gap-40">
+                    
+                    <!-- Panel 1: Intro -->
+                    <div class="w-[80vw] md:w-[40vw] flex flex-col gap-6 shrink-0">
+                        <span class="text-cyan-400 font-grotesk tracking-widest text-sm">THE MISSION</span>
+                        <h2 class="text-4xl md:text-6xl font-bold leading-tight">
+                            Operating at the intersection of <span class="text-gray-500">Theoretical Physics</span> & <span class="text-white">Applied Technology</span>.
+                        </h2>
+                        <p class="text-gray-400 text-lg max-w-md">
+                            I operate the Chronon-Super Quantum Level Model while building deployable systems. My work is guided by two missions: "Secure. Test. Defend." and "Create. Empower. Evolve."
+                        </p>
+                    </div>
+
+                    <!-- Panel 2: Physics Skills -->
+                    <div class="glass-panel w-[85vw] md:w-[30vw] p-8 md:p-12 rounded-3xl shrink-0 flex flex-col justify-between h-[60vh]">
+                        <i class="fas fa-atom text-5xl text-cyan-400 mb-8"></i>
+                        <div>
+                            <h3 class="text-3xl font-bold mb-6">Theoretical Physics</h3>
+                            <ul class="space-y-4 text-gray-300 font-light relative">
+                                <li class="pl-4 relative hover-trigger"><div class="marker-line"></div>Linear Algebra & Hilbert Spaces</li>
+                                <li class="pl-4 relative hover-trigger"><div class="marker-line"></div>Discrete Mathematics & Graph Theory</li>
+                                <li class="pl-4 relative hover-trigger"><div class="marker-line"></div>General Relativity & Diff. Geometry</li>
+                                <li class="pl-4 relative hover-trigger"><div class="marker-line"></div>Quantum Computing Fundamentals</li>
+                                <li class="pl-4 relative hover-trigger"><div class="marker-line"></div>Statistical Mechanics</li>
+                            </ul>
+                        </div>
+                        <div class="mt-8 w-full bg-gray-800 h-1 rounded-full overflow-hidden">
+                            <div class="bg-cyan-400 w-[90%] h-full"></div>
+                        </div>
+                    </div>
+
+                    <!-- Panel 3: Security Skills -->
+                    <div class="glass-panel w-[85vw] md:w-[30vw] p-8 md:p-12 rounded-3xl shrink-0 flex flex-col justify-between h-[60vh]">
+                        <i class="fas fa-shield-halved text-5xl text-green-400 mb-8"></i>
+                        <div>
+                            <h3 class="text-3xl font-bold mb-6">Cybersecurity</h3>
+                            <ul class="space-y-4 text-gray-300 font-light">
+                                <li class="pl-4 relative hover-trigger"><div class="marker-line"></div>Ethical Hacking & Pentesting</li>
+                                <li class="pl-4 relative hover-trigger"><div class="marker-line"></div>Red Teaming & Adversary Sim</li>
+                                <li class="pl-4 relative hover-trigger"><div class="marker-line"></div>IoT Security Assessment</li>
+                                <li class="pl-4 relative hover-trigger"><div class="marker-line"></div>Vulnerability Assessment</li>
+                                <li class="pl-4 relative hover-trigger"><div class="marker-line"></div>Privacy & Anonymity Tools</li>
+                            </ul>
+                        </div>
+                        <div class="mt-8 w-full bg-gray-800 h-1 rounded-full overflow-hidden">
+                            <div class="bg-green-400 w-[95%] h-full"></div>
+                        </div>
+                    </div>
+
+                    <!-- Panel 4: Dev Skills -->
+                    <div class="glass-panel w-[85vw] md:w-[30vw] p-8 md:p-12 rounded-3xl shrink-0 flex flex-col justify-between h-[60vh]">
+                        <i class="fas fa-code text-5xl text-purple-400 mb-8"></i>
+                        <div>
+                            <h3 class="text-3xl font-bold mb-6">Full Stack Dev</h3>
+                            <ul class="space-y-4 text-gray-300 font-light">
+                                <li class="pl-4 relative hover-trigger"><div class="marker-line"></div>HTML5, CSS3, JS (ES6+)</li>
+                                <li class="pl-4 relative hover-trigger"><div class="marker-line"></div>Python & Scientific Libs</li>
+                                <li class="pl-4 relative hover-trigger"><div class="marker-line"></div>Flutter & Cross-Platform</li>
+                                <li class="pl-4 relative hover-trigger"><div class="marker-line"></div>Three.js & WebGL</li>
+                                <li class="pl-4 relative hover-trigger"><div class="marker-line"></div>Firebase & Cloud Infra</li>
+                            </ul>
+                        </div>
+                        <div class="mt-8 w-full bg-gray-800 h-1 rounded-full overflow-hidden">
+                            <div class="bg-purple-400 w-[85%] h-full"></div>
+                        </div>
+                    </div>
+                    
+                     <!-- Buffer for scrolling -->
+                    <div class="w-[10vw] shrink-0"></div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Stacked Projects Section -->
+        <section id="work" class="py-32 px-4 md:px-10 relative z-10 bg-[#030303]">
+            <div class="max-w-7xl mx-auto">
+                <!-- Sticky Header with glassmorphism -->
+                <div class="sticky top-20 z-30 mb-20 pt-4 pb-8 bg-[#030303]/80 backdrop-blur-lg border-b border-white/5 transition-all duration-300">
+                    <h2 class="text-5xl md:text-7xl font-bold mb-4">Selected Works</h2>
+                    <p class="text-gray-400 max-w-xl">Deployed systems across security, research, and social tech.</p>
+                </div>
+
+                <!-- Project 1 (Top adjusted: top-64) -->
+                <div class="project-card sticky top-64 mb-24 w-full">
+                    <div class="glass-panel p-8 md:p-12 rounded-3xl border-t border-cyan-500/30 flex flex-col md:flex-row gap-10 transition-transform duration-500 hover:scale-[1.01] bg-[#050505]">
+                        <div class="w-full md:w-1/2 flex flex-col justify-between">
+                            <div>
+                                <span class="text-cyan-400 text-xs font-bold tracking-widest border border-cyan-500/30 px-3 py-1 rounded-full">EDTECH</span>
+                                <h3 class="text-4xl font-bold mt-6 mb-4">HOPE Platform</h3>
+                                <p class="text-gray-400 leading-relaxed mb-6">
+                                    Social startup with four integrated verticals: Education (TexidoMeg, IoT Camps), E-Commerce (ShopRoyince), IoT systems, and Theoretical Research.
+                                </p>
+                                <div class="flex flex-wrap gap-2 mb-8">
+                                    <span class="px-3 py-1 bg-white/5 rounded-md text-xs">Flutter</span>
+                                    <span class="px-3 py-1 bg-white/5 rounded-md text-xs">Firebase</span>
+                                    <span class="px-3 py-1 bg-white/5 rounded-md text-xs">Mentorship</span>
+                                </div>
+                            </div>
+                            <a href="#" class="hover-trigger group flex items-center gap-2 text-sm font-bold uppercase tracking-wider">
+                                View Ecosystem <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                        </div>
+                        <div class="w-full md:w-1/2 h-[300px] md:h-[400px] bg-gradient-to-br from-cyan-900/20 to-blue-900/20 rounded-2xl overflow-hidden relative group">
+                             <img src="https://firebasestorage.googleapis.com/v0/b/texidomeg-v8.appspot.com/o/me.jpeg?alt=media&token=dd967713-6f64-4cc7-8017-dfa41dfca7db" alt="Hope Platform" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 (Top adjusted: top-72) -->
+                <div class="project-card sticky top-72 mb-24 w-full">
+                    <div class="glass-panel p-8 md:p-12 rounded-3xl border-t border-green-500/30 flex flex-col md:flex-row gap-10 transition-transform duration-500 hover:scale-[1.01] bg-[#0a0a0a]">
+                        <div class="w-full md:w-1/2 flex flex-col justify-between">
+                            <div>
+                                <span class="text-green-400 text-xs font-bold tracking-widest border border-green-500/30 px-3 py-1 rounded-full">SECURITY</span>
+                                <h3 class="text-4xl font-bold mt-6 mb-4">IoT Botnet Detection</h3>
+                                <p class="text-gray-400 leading-relaxed mb-6">
+                                    Machine learning model analyzing network traffic (MQTT) to detect anomalous behavior and mitigate botnet propagation in IoT environments.
+                                </p>
+                                <div class="flex flex-wrap gap-2 mb-8">
+                                    <span class="px-3 py-1 bg-white/5 rounded-md text-xs">Python</span>
+                                    <span class="px-3 py-1 bg-white/5 rounded-md text-xs">Scikit-learn</span>
+                                    <span class="px-3 py-1 bg-white/5 rounded-md text-xs">MQTT</span>
+                                </div>
+                            </div>
+                            <a href="#" class="hover-trigger group flex items-center gap-2 text-sm font-bold uppercase tracking-wider">
+                                View Research <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                        </div>
+                        <div class="w-full md:w-1/2 h-[300px] md:h-[400px] bg-gradient-to-br from-green-900/20 to-emerald-900/20 rounded-2xl overflow-hidden relative group">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <i class="fas fa-network-wired text-8xl text-green-500/20 group-hover:text-green-500/50 transition-all duration-500"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 (Top adjusted: top-80) -->
+                <div class="project-card sticky top-80 mb-12 w-full">
+                    <div class="glass-panel p-8 md:p-12 rounded-3xl border-t border-purple-500/30 flex flex-col md:flex-row gap-10 transition-transform duration-500 hover:scale-[1.01] bg-[#0f0f0f]">
+                        <div class="w-full md:w-1/2 flex flex-col justify-between">
+                            <div>
+                                <span class="text-purple-400 text-xs font-bold tracking-widest border border-purple-500/30 px-3 py-1 rounded-full">RESEARCH</span>
+                                <h3 class="text-4xl font-bold mt-6 mb-4">Chronon-SQL Model</h3>
+                                <p class="text-gray-400 leading-relaxed mb-6">
+                                    Theoretical framework exploring discrete spacetime models and quantum gravity through mathematical unification of quantum mechanics and general relativity.
+                                </p>
+                                <div class="flex flex-wrap gap-2 mb-8">
+                                    <span class="px-3 py-1 bg-white/5 rounded-md text-xs">Quantum Gravity</span>
+                                    <span class="px-3 py-1 bg-white/5 rounded-md text-xs">Hilbert Spaces</span>
+                                    <span class="px-3 py-1 bg-white/5 rounded-md text-xs">GR + QM</span>
+                                </div>
+                            </div>
+                            <a href="#" class="hover-trigger group flex items-center gap-2 text-sm font-bold uppercase tracking-wider">
+                                Read Paper <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                        </div>
+                        <div class="w-full md:w-1/2 h-[300px] md:h-[400px] bg-gradient-to-br from-purple-900/20 to-indigo-900/20 rounded-2xl overflow-hidden relative group">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <i class="fas fa-atom text-8xl text-purple-500/20 group-hover:text-purple-500/50 transition-all duration-500 animate-spin-slow"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Research Archive Section -->
+        <section id="research" class="py-20 px-4 md:px-10 max-w-7xl mx-auto relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div class="col-span-1">
+                    <h2 class="text-5xl font-bold mb-6 sticky top-32">Research<br><span class="text-gradient-accent">Archive</span></h2>
+                </div>
+                <div class="col-span-1 md:col-span-2 space-y-4">
+                    
+                    <!-- Item 1 -->
+                    <div class="glass-card p-6 rounded-xl hover-trigger">
+                        <div class="flex justify-between items-start mb-4">
+                            <h4 class="text-xl font-bold">Q-SAFE Framework</h4>
+                            <span class="text-xs bg-green-500/10 text-green-400 px-2 py-1 rounded">Ongoing</span>
+                        </div>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                            Security-by-design framework for educational technology platforms, integrating offensive security testing and privacy controls.
+                        </p>
+                        <div class="flex gap-4 text-xs text-gray-500 font-mono">
+                            <span>#EdTech</span>
+                            <span>#RedTeam</span>
+                        </div>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="glass-card p-6 rounded-xl hover-trigger">
+                        <div class="flex justify-between items-start mb-4">
+                            <h4 class="text-xl font-bold">Automated Vulnerability Scanner</h4>
+                            <span class="text-xs bg-blue-500/10 text-blue-400 px-2 py-1 rounded">Deployed</span>
+                        </div>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                            Python-based scanner integrating Nmap and web tools for multi-threaded network and application vulnerability detection.
+                        </p>
+                        <div class="flex gap-4 text-xs text-gray-500 font-mono">
+                            <span>#Python</span>
+                            <span>#SecOps</span>
+                        </div>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="glass-card p-6 rounded-xl hover-trigger">
+                        <div class="flex justify-between items-start mb-4">
+                            <h4 class="text-xl font-bold">HOPE-INT-CORE AI</h4>
+                            <span class="text-xs bg-purple-500/10 text-purple-400 px-2 py-1 rounded">Beta</span>
+                        </div>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                            AI-powered content generation platform leveraging Google's Gemini AI to create high-quality educational resources.
+                        </p>
+                        <div class="flex gap-4 text-xs text-gray-500 font-mono">
+                            <span>#GenerativeAI</span>
+                            <span>#Gemini</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="min-h-[80vh] flex items-center justify-center py-20 px-4 relative z-10">
+            <div class="absolute inset-0 bg-gradient-to-t from-blue-900/10 to-transparent pointer-events-none"></div>
+            
+            <div class="glass-panel p-8 md:p-20 rounded-[3rem] max-w-4xl w-full text-center relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-cyan-500 via-purple-500 to-green-500"></div>
+                
+                <h2 class="text-5xl md:text-7xl font-bold mb-8 tracking-tight">Let's Collapse the<br>Wave Function.</h2>
+                <p class="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
+                    Open to research partnerships and consulting opportunities in Quantum Models, Cybersecurity, and High-Scale IoT.
+                </p>
+                
+                <div class="flex flex-col md:flex-row justify-center gap-6 mb-12">
+                    <a href="mailto:harinandan.ofc@gmail.com" class="hover-trigger px-8 py-4 bg-white text-black rounded-full font-bold text-lg hover:scale-105 transition-transform">
+                        harinandan.ofc@gmail.com
+                    </a>
+                    <a href="#" class="hover-trigger px-8 py-4 glass-card rounded-full font-bold text-lg hover:bg-white/10 transition-colors">
+                        Schedule Meeting
+                    </a>
+                </div>
+
+                <div class="flex justify-center gap-8 text-2xl text-gray-500">
+                    <a href="https://github.com/justi-io" class="hover:text-white transition-colors hover-trigger"><i class="fab fa-github"></i></a>
+                    <a href="#" class="hover:text-blue-400 transition-colors hover-trigger"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="hover:text-sky-400 transition-colors hover-trigger"><i class="fab fa-twitter"></i></a>
+                </div>
+
+                <div class="mt-16 text-sm text-gray-600 font-mono">
+                    LOCATION: Kozhikode, Kerala, India <br>
+                    &copy; 2025 Hari Nandan K.
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Scripts -->
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- Lenis Smooth Scroll -->
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+
+    <script>
+        /* ==========================================
+           1. Scroll Architecture (Lenis + GSAP Sync)
+           ========================================== */
+        const lenis = new Lenis({
+            duration: 1.5,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 1,
+            smoothTouch: false,
+            touchMultiplier: 2,
+        });
+
+        // Critical: Synchronize ScrollTrigger with Lenis
+        lenis.on('scroll', ScrollTrigger.update);
+
+        gsap.ticker.add((time) => {
+            // Lenis's raf method needs exact time to keep smooth
+            lenis.raf(time * 1000);
+        });
+
+        // Disable lag smoothing in GSAP to prevent stuttering when Lenis catches up
+        gsap.ticker.lagSmoothing(0);
+
+        /* ==========================================
+           2. Loader & Entrance
+           ========================================== */
+        window.addEventListener('load', () => {
+            const loaderLine = document.querySelector('.loader-line');
+            const loader = document.getElementById('loader');
+            
+            loaderLine.style.width = '100%';
+
+            setTimeout(() => {
+                gsap.to(loader, {
+                    yPercent: -100,
+                    duration: 1,
+                    ease: "power4.inOut",
+                    onComplete: initAnimations
+                });
+            }, 1500);
+        });
+
+        function initAnimations() {
+            // Hero Text Stagger
+            gsap.from(".hero-anim", {
+                y: 50,
+                opacity: 0,
+                duration: 1.5,
+                stagger: 0.1,
+                ease: "power3.out"
+            });
+            
+            gsap.from(".hero-title", {
+                y: 100,
+                opacity: 0,
+                duration: 1.5,
+                delay: 0.2,
+                ease: "power3.out"
+            });
+            
+            // Refresh ScrollTrigger once animations are settled
+            ScrollTrigger.refresh();
+        }
+
+        /* ==========================================
+           3. Custom Cursor
+           ========================================== */
+        const cursor = document.getElementById('cursor');
+        const cursorDot = document.getElementById('cursor-dot');
+        
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursorDot.style.left = mouseX + 'px';
+            cursorDot.style.top = mouseY + 'px';
+        });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.1;
+            cursorY += (mouseY - cursorY) * 0.1;
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        const hoverTriggers = document.querySelectorAll('.hover-trigger');
+        hoverTriggers.forEach(trigger => {
+            trigger.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+            trigger.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+        });
+
+        /* ==========================================
+           4. GSAP Scroll Interactions
+           ========================================== */
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Horizontal Scroll Logic (Fixed)
+        const scrollContainer = document.querySelector(".h-scroll-container");
+        
+        // Calculate real width based on content
+        function getScrollAmount() {
+            let containerWidth = scrollContainer.scrollWidth;
+            return -(containerWidth - window.innerWidth);
+        }
+
+        const tween = gsap.to(scrollContainer, {
+            x: getScrollAmount,
+            ease: "none",
+        });
+
+        // UPDATED: Pin the SECTION (#about) not the wrapper
+        // This ensures the pin spacer is calculated correctly in the DOM flow
+        ScrollTrigger.create({
+            trigger: "#about",
+            start: "top top",
+            end: () => `+=${getScrollAmount() * -1}`, // Dynamic end point
+            pin: true,
+            animation: tween,
+            scrub: 1,
+            invalidateOnRefresh: true, 
+        });
+
+        // Marquee Animation
+        gsap.to(".marquee-content", {
+            xPercent: -50,
+            ease: "none",
+            duration: 20,
+            repeat: -1
+        });
+
+        // Parallax Hero
+        gsap.to(".hero-title", {
+            yPercent: 50,
+            ease: "none",
+            scrollTrigger: {
+                trigger: "body",
+                start: "top top",
+                end: "bottom top",
+                scrub: true
+            }
+        });
+
+        /* ==========================================
+           5. Three.js Background (Quantum Field)
+           ========================================== */
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // optimize for performance
+        document.getElementById('webgl-container').appendChild(renderer.domElement);
+
+        const geometry = new THREE.PlaneGeometry(50, 50, 50, 50);
+        const material = new THREE.PointsMaterial({ 
+            color: 0x00f0ff, 
+            size: 0.04, 
+            transparent: true,
+            opacity: 0.6
+        });
+        
+        const plane = new THREE.Points(geometry, material);
+        scene.add(plane);
+        
+        plane.rotation.x = -Math.PI / 2.5;
+        camera.position.z = 5;
+        camera.position.y = 2;
+
+        const positionAttribute = geometry.attributes.position;
+        const originalPositions = [];
+        for (let i = 0; i < positionAttribute.count; i++) {
+            originalPositions.push(
+                positionAttribute.getX(i),
+                positionAttribute.getY(i),
+                positionAttribute.getZ(i)
+            );
+        }
+
+        let time = 0;
+
+        function animateThree() {
+            requestAnimationFrame(animateThree);
+            time += 0.005;
+
+            for (let i = 0; i < positionAttribute.count; i++) {
+                const x = originalPositions[i * 3];
+                const y = originalPositions[i * 3 + 1];
+                const z = Math.sin(x / 2 + time) * Math.cos(y / 2 + time) * 1.5;
+                positionAttribute.setZ(i, z);
+            }
+            positionAttribute.needsUpdate = true;
+            plane.rotation.z = window.scrollY * 0.0002; // Subtle rotation on scroll
+            
+            renderer.render(scene, camera);
+        }
+
+        animateThree();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            ScrollTrigger.refresh(); // Force recalculation of horizontal scroll
+        });
+
+    </script>
+</body>
+</html>
