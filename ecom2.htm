@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artisan Gems | Avant-Garde</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Lenis for smooth scrolling -->
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'paper': '#F2F0E9',
+                        'ink': '#0a0a0a',
+                        'rust': '#C24128',
+                        'concrete': '#dcdcdc',
+                    },
+                    fontFamily: {
+                        display: ['Syne', 'sans-serif'],
+                        body: ['Space Grotesk', 'sans-serif'],
+                    },
+                    spacing: {
+                        '128': '32rem',
+                    },
+                    animation: {
+                        'marquee': 'marquee 25s linear infinite',
+                        'spin-slow': 'spin 12s linear infinite',
+                    },
+                    keyframes: {
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-100%)' },
+                        }
+                    },
+                    cursor: {
+                        'none': 'none',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #F2F0E9;
+            color: #0a0a0a;
+            cursor: none; /* Hide default cursor */
+        }
+
+        /* Custom Cursor */
+        .cursor-dot,
+        .cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #C24128;
+        }
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(10, 10, 10, 0.2);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+        
+        /* Hover state for cursor */
+        body.hovering .cursor-outline {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(194, 65, 40, 0.1);
+            border-color: #C24128;
+        }
+
+        /* Grain Overlay */
+        .noise {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.04;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Fluid Image Hover */
+        .fluid-img-container {
+            border-radius: 0px;
+            transition: border-radius 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            overflow: hidden;
+        }
+        .group:hover .fluid-img-container {
+            border-radius: 50% 50% 0 0; /* Arch shape */
+        }
+        .group:hover .fluid-img {
+            transform: scale(1.1);
+        }
+
+        /* Smooth Reveal */
+        .reveal-text {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+        }
+        .reveal-text > span {
+            display: inline-block;
+            transform: translateY(100%);
+            transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .is-visible .reveal-text > span {
+            transform: translateY(0);
+        }
+
+        /* Staggered Grid */
+        @media (min-width: 1024px) {
+            .product-item:nth-child(even) {
+                transform: translateY(6rem);
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Custom Cursor Elements -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+    <div class="noise"></div>
+
+    <!-- Nav -->
+    <nav class="fixed top-0 w-full z-40 px-6 py-6 mix-blend-difference text-paper pointer-events-none">
+        <div class="max-w-[1800px] mx-auto flex justify-between items-start">
+            <a href="#" class="pointer-events-auto text-2xl font-display font-bold tracking-tighter uppercase leading-none hover-trigger">
+                Artisan<br><span class="text-rust">Gems.</span>
+            </a>
+            
+            <div class="flex flex-col items-end gap-2 pointer-events-auto">
+                <button onclick="toggleCart()" class="hover-trigger group flex items-center gap-2 text-sm font-body font-bold uppercase tracking-wider">
+                    <span>Cart</span>
+                    <div class="w-6 h-6 bg-paper text-ink rounded-full flex items-center justify-center text-xs group-hover:bg-rust group-hover:text-paper transition-colors">
+                        <span id="cart-count">0</span>
+                    </div>
+                </button>
+                <div class="hidden md:flex gap-6 mt-4 text-xs font-mono opacity-60">
+                    <a href="#shop" class="hover:text-rust hover-trigger">Catalogue</a>
+                    <a href="#about" class="hover:text-rust hover-trigger">Manifesto</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <!-- Big Background Typography -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none z-0">
+            <h1 class="text-[20vw] leading-[0.8] font-display font-bold text-transparent bg-clip-text bg-gradient-to-b from-ink/10 to-transparent select-none">
+                SCULPTED
+            </h1>
+        </div>
+
+        <div class="relative z-10 max-w-[1600px] w-full px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div class="lg:col-span-5 order-2 lg:order-1">
+                <div class="aspect-[3/4] relative overflow-hidden rounded-t-full border border-ink/10">
+                    <img src="https://images.unsplash.com/photo-1531995811006-35cb42e1a022?q=80&w=2070&auto=format&fit=crop" 
+                         class="w-full h-full object-cover scale-110 hover:scale-100 transition-transform duration-[1.5s]" 
+                         data-scroll data-scroll-speed="-0.1">
+                    
+                    <!-- Floating Badge -->
+                    <div class="absolute bottom-8 right-8 w-32 h-32 bg-paper rounded-full flex items-center justify-center animate-spin-slow mix-blend-hard-light">
+                        <svg viewBox="0 0 100 100" width="100" height="100">
+                            <defs><path id="circle" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" /></defs>
+                            <text font-size="10.5" font-weight="bold" font-family="Space Grotesk" letter-spacing="1">
+                                <textPath xlink:href="#circle">EST. 2024 • PORTLAND •</textPath>
+                            </text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-7 order-1 lg:order-2 flex flex-col justify-center">
+                <div class="reveal-trigger mb-6">
+                    <div class="reveal-text"><span class="text-rust text-sm font-mono uppercase tracking-widest mb-2 block">Drop 001 — Genesis</span></div>
+                    <div class="reveal-text"><h2 class="text-6xl md:text-8xl font-display font-bold leading-[0.9] tracking-tighter">OBJECTS<br>OF DESIRE</h2></div>
+                </div>
+                <div class="reveal-trigger">
+                    <div class="reveal-text">
+                        <p class="text-xl md:text-2xl text-ink/60 max-w-md leading-relaxed font-light mt-8">
+                            Jewelry that defies gravity. Hand-forged artifacts for the modern brutalist.
+                        </p>
+                    </div>
+                </div>
+                <div class="mt-12 flex gap-4">
+                    <a href="#shop" class="hover-trigger px-8 py-4 border border-ink rounded-full uppercase text-xs font-bold tracking-widest hover:bg-ink hover:text-paper transition-colors duration-300">
+                        Explore Collection
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Scrolling Text -->
+    <div class="py-12 border-y border-ink flex items-center bg-ink text-paper overflow-hidden">
+        <div class="animate-marquee whitespace-nowrap flex items-center gap-16 text-8xl font-display font-bold opacity-90">
+            <span>RAW MATERIALS</span>
+            <span class="text-rust text-4xl">✦</span>
+            <span>ETHICAL GOLD</span>
+            <span class="text-rust text-4xl">✦</span>
+            <span>AVANT-GARDE</span>
+            <span class="text-rust text-4xl">✦</span>
+            <span>RAW MATERIALS</span>
+            <span class="text-rust text-4xl">✦</span>
+            <span>ETHICAL GOLD</span>
+            <span class="text-rust text-4xl">✦</span>
+        </div>
+    </div>
+
+    <!-- Shop Section -->
+    <section id="shop" class="py-32 px-6 bg-paper relative">
+        <!-- Sticky Category Filter (Desktop) -->
+        <div class="max-w-[1800px] mx-auto flex flex-col lg:flex-row gap-12">
+            <div class="lg:w-1/6 lg:sticky lg:top-32 h-fit z-20">
+                <h3 class="text-xs font-bold uppercase tracking-widest mb-8 border-b border-ink pb-2">Filter</h3>
+                <div class="flex flex-col gap-4 items-start">
+                    <button onclick="filterProducts('all', this)" class="filter-btn hover-trigger text-xl font-display font-bold hover:text-rust transition-colors active-filter text-ink">All</button>
+                    <button onclick="filterProducts('Ring', this)" class="filter-btn hover-trigger text-xl font-display font-bold hover:text-rust transition-colors text-ink/40">Rings</button>
+                    <button onclick="filterProducts('Necklace', this)" class="filter-btn hover-trigger text-xl font-display font-bold hover:text-rust transition-colors text-ink/40">Necklaces</button>
+                    <button onclick="filterProducts('Earrings', this)" class="filter-btn hover-trigger text-xl font-display font-bold hover:text-rust transition-colors text-ink/40">Earrings</button>
+                </div>
+            </div>
+
+            <div class="lg:w-5/6">
+                <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-24">
+                    <!-- Products Injected Here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-32 px-6 bg-ink text-paper rounded-t-[4rem] mt-20 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-[60vw] h-[60vw] bg-rust rounded-full blur-[150px] opacity-20 pointer-events-none"></div>
+        
+        <div class="max-w-[1400px] mx-auto relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                <div>
+                    <span class="text-rust font-mono text-sm uppercase tracking-widest mb-4 block">The Manifesto</span>
+                    <h2 class="text-7xl md:text-9xl font-display font-bold leading-[0.8] mb-12 tracking-tighter">NO<br>COMPROMISE</h2>
+                    <div class="space-y-8 text-xl font-light text-white/70 max-w-xl">
+                        <p>We don't do mass production. We don't do "trendy". We forge heirlooms from chaos and precious metals.</p>
+                        <p>Every piece is designed in our Portland studio using 100% recycled gold and ethically sourced gemstones. Imperfection is the only perfection we acknowledge.</p>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="grid grid-cols-2 gap-4">
+                        <img src="https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?q=80&w=1963&auto=format&fit=crop" class="rounded-full w-full aspect-square object-cover border border-white/10 grayscale hover:grayscale-0 transition duration-700">
+                        <div class="bg-white/5 rounded-full aspect-square flex items-center justify-center backdrop-blur-sm border border-white/10">
+                            <div class="text-center">
+                                <div class="text-6xl font-display font-bold text-rust mb-2">∞</div>
+                                <div class="text-xs uppercase tracking-widest">Lifetime<br>Warranty</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-ink text-paper px-6 pb-12 pt-32">
+        <div class="max-w-[1800px] mx-auto flex flex-col md:flex-row justify-between items-end border-t border-white/10 pt-12">
+            <h2 class="text-[15vw] leading-none font-display font-bold text-white/10 select-none">ARTISAN</h2>
+            <div class="flex gap-8 text-sm font-mono uppercase tracking-widest mb-4 md:mb-8">
+                <a href="#" class="hover:text-rust hover-trigger">Instagram</a>
+                <a href="#" class="hover:text-rust hover-trigger">Email</a>
+                <a href="#" class="hover:text-rust hover-trigger">Legal</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div id="cart-sidebar" class="fixed top-0 right-0 w-full md:w-[600px] h-full bg-paper z-50 transform translate-x-full transition-transform duration-500 cubic-bezier(0.77, 0, 0.175, 1) border-l border-ink flex flex-col">
+        <div class="p-8 flex justify-between items-center border-b border-ink">
+            <h2 class="text-4xl font-display font-bold">YOUR CACHE</h2>
+            <button onclick="toggleCart()" class="hover-trigger w-12 h-12 border border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition-colors">
+                <i class="fa-solid fa-times"></i>
+            </button>
+        </div>
+        
+        <div id="cart-items" class="flex-1 overflow-y-auto p-8 space-y-8">
+            <!-- Items go here -->
+        </div>
+
+        <div class="p-8 bg-concrete/30 border-t border-ink">
+            <div class="flex justify-between items-baseline mb-8">
+                <span class="font-mono uppercase tracking-widest text-sm">Subtotal</span>
+                <span id="cart-total" class="text-5xl font-display font-bold">$0.00</span>
+            </div>
+            <button id="checkout-btn" onclick="openCheckout()" class="hover-trigger w-full bg-ink text-paper py-6 font-bold uppercase tracking-widest text-lg hover:bg-rust transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                Checkout
+            </button>
+        </div>
+    </div>
+    <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-ink/20 backdrop-blur-sm z-40 hidden opacity-0 transition-opacity duration-500"></div>
+
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="fixed inset-0 z-[60] hidden flex items-center justify-center px-4">
+        <div class="absolute inset-0 bg-ink/80 backdrop-blur-md" onclick="closeCheckout()"></div>
+        <div class="relative bg-paper w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-ink shadow-2xl p-8 md:p-16 animate-[fadeUp_0.5s_ease-out]">
+            <button onclick="closeCheckout()" class="absolute top-6 right-6 hover-trigger hover:text-rust"><i class="fa-solid fa-times text-xl"></i></button>
+            
+            <h2 class="text-4xl font-display font-bold mb-2">ACQUIRE</h2>
+            <p class="font-mono text-sm text-ink/60 mb-10">Secure Transaction Node</p>
+            
+            <form onsubmit="handlePayment(event)" class="space-y-8">
+                <div class="grid grid-cols-2 gap-8">
+                    <div class="group">
+                        <label class="block font-mono text-xs uppercase tracking-widest mb-2 group-focus-within:text-rust transition-colors">First Name</label>
+                        <input type="text" required class="w-full bg-transparent border-b border-ink/30 py-2 outline-none focus:border-ink transition-colors font-display text-xl">
+                    </div>
+                    <div class="group">
+                        <label class="block font-mono text-xs uppercase tracking-widest mb-2 group-focus-within:text-rust transition-colors">Last Name</label>
+                        <input type="text" required class="w-full bg-transparent border-b border-ink/30 py-2 outline-none focus:border-ink transition-colors font-display text-xl">
+                    </div>
+                </div>
+
+                <div class="group">
+                    <label class="block font-mono text-xs uppercase tracking-widest mb-2 group-focus-within:text-rust transition-colors">Card Details</label>
+                    <div class="flex gap-4">
+                        <input type="text" placeholder="0000 0000 0000 0000" maxlength="19" required class="w-3/5 bg-transparent border-b border-ink/30 py-2 outline-none focus:border-ink transition-colors font-mono">
+                        <input type="text" placeholder="MM/YY" maxlength="5" required class="w-1/5 bg-transparent border-b border-ink/30 py-2 outline-none focus:border-ink transition-colors font-mono text-center">
+                        <input type="text" placeholder="CVC" maxlength="3" required class="w-1/5 bg-transparent border-b border-ink/30 py-2 outline-none focus:border-ink transition-colors font-mono text-center">
+                    </div>
+                </div>
+
+                <button id="pay-btn" type="submit" class="hover-trigger w-full bg-ink text-paper py-5 mt-4 font-bold uppercase tracking-widest hover:bg-rust transition-colors flex justify-center items-center gap-3">
+                    <span>Confirm Payment</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success Overlay -->
+    <div id="success-overlay" class="fixed inset-0 bg-rust z-[70] hidden flex flex-col items-center justify-center text-center text-paper p-6">
+        <div class="text-[12vw] font-display font-bold leading-none mb-4 tracking-tighter animate-pulse">ACQUIRED</div>
+        <p class="font-mono text-xl opacity-80 mb-12">Your artifact has been secured.</p>
+        <div class="border border-paper/30 px-6 py-2 rounded-full font-mono text-sm mb-12">
+            ID: <span id="order-id"></span>
+        </div>
+        <button onclick="resetShop()" class="hover-trigger border-b border-paper pb-1 font-bold uppercase tracking-widest hover:opacity-70 transition-opacity">Return</button>
+    </div>
+
+    <!-- Logic -->
+    <script>
+        // --- Smooth Scroll ---
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 1,
+            smoothTouch: false,
+            touchMultiplier: 2,
+        });
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // --- Custom Cursor ---
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+        
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+            
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: 'forwards' });
+        });
+
+        // Add hover effect for links/buttons
+        document.querySelectorAll('a, button, .hover-trigger').forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+        });
+
+        // --- Reveal Animation ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal-trigger').forEach(el => observer.observe(el));
+
+        // --- Data & Shop Logic ---
+        const products = [
+            { id: 1, name: "Void Walker", category: "Ring", price: 185.00, image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=600&q=80" },
+            { id: 2, name: "Solar Flare", category: "Necklace", price: 240.00, image: "https://images.unsplash.com/photo-1599643478518-17488fbbcd75?auto=format&fit=crop&w=600&q=80" },
+            { id: 3, name: "Nebula", category: "Earrings", price: 125.00, image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=600&q=80" },
+            { id: 4, name: "Monolith", category: "Ring", price: 155.00, image: "https://images.unsplash.com/photo-1603974372039-adc49044b6bd?auto=format&fit=crop&w=600&q=80" },
+            { id: 5, name: "Eclipse", category: "Ring", price: 495.00, image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=600&q=80" },
+            { id: 6, name: "Orbit", category: "Necklace", price: 115.00, image: "https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?auto=format&fit=crop&w=600&q=80" },
+            { id: 7, name: "Terra", category: "Ring", price: 210.00, image: "https://images.unsplash.com/photo-1603974372039-adc49044b6bd?auto=format&fit=crop&w=600&q=80" },
+            { id: 8, name: "Abyss", category: "Earrings", price: 190.00, image: "https://images.unsplash.com/photo-1586104139863-3cf737f6879a?auto=format&fit=crop&w=600&q=80" },
+            { id: 9, name: "Helix", category: "Necklace", price: 280.00, image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=600&q=80" }
+        ];
+
+        let cart = [];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            filterProducts('all');
+        });
+
+        function filterProducts(category, btn = null) {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = '';
+
+            if(btn) {
+                document.querySelectorAll('.filter-btn').forEach(b => {
+                    b.classList.remove('text-ink');
+                    b.classList.add('text-ink/40');
+                });
+                btn.classList.remove('text-ink/40');
+                btn.classList.add('text-ink');
+            }
+
+            const filtered = category === 'all' ? products : products.filter(p => p.category === category);
+
+            filtered.forEach((p, i) => {
+                const div = document.createElement('div');
+                div.className = 'product-item group relative reveal-trigger';
+                div.innerHTML = `
+                    <div class="reveal-text w-full">
+                        <div class="fluid-img-container aspect-[4/5] bg-concrete/20 mb-6 relative hover-trigger cursor-pointer" onclick="addToCart(${p.id})">
+                            <img src="${p.image}" class="fluid-img w-full h-full object-cover transition-transform duration-700 grayscale group-hover:grayscale-0">
+                            <div class="absolute inset-0 bg-rust/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 mix-blend-multiply"></div>
+                            
+                            <div class="absolute bottom-4 right-4 bg-paper text-ink w-12 h-12 rounded-full flex items-center justify-center opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                                <i class="fa-solid fa-plus"></i>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-baseline border-b border-ink/10 pb-4">
+                            <div>
+                                <h3 class="font-display font-bold text-2xl uppercase leading-none mb-1 group-hover:text-rust transition-colors">${p.name}</h3>
+                                <p class="font-mono text-xs uppercase tracking-widest text-ink/50">${p.category}</p>
+                            </div>
+                            <span class="font-mono text-lg font-bold">$${p.price}</span>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(div);
+                
+                // Re-add hover listeners for dynamic elements
+                const trigger = div.querySelector('.hover-trigger');
+                trigger.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+                trigger.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+                
+                observer.observe(div);
+            });
+        }
+
+        function addToCart(id) {
+            const p = products.find(x => x.id === id);
+            const exist = cart.find(x => x.id === id);
+            if(exist) exist.qty++; else cart.push({...p, qty:1});
+            updateCart();
+            toggleCart();
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(x => x.id !== id);
+            updateCart();
+        }
+
+        function updateCart() {
+            const count = cart.reduce((a,b) => a+b.qty, 0);
+            const total = cart.reduce((a,b) => a + (b.price*b.qty), 0);
+            
+            document.getElementById('cart-count').innerText = count;
+            document.getElementById('cart-total').innerText = `$${total.toFixed(2)}`;
+            document.getElementById('checkout-btn').disabled = count === 0;
+
+            const container = document.getElementById('cart-items');
+            
+            if(count === 0) {
+                container.innerHTML = `<div class="h-full flex flex-col items-center justify-center text-ink/30 font-mono uppercase tracking-widest">Void</div>`;
+                return;
+            }
+
+            container.innerHTML = cart.map(item => `
+                <div class="flex gap-6 items-center animate-[fadeUp_0.3s_ease-out]">
+                    <div class="w-20 h-20 bg-concrete overflow-hidden flex-shrink-0">
+                        <img src="${item.image}" class="w-full h-full object-cover grayscale">
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-display font-bold text-xl leading-none uppercase">${item.name}</h4>
+                            <span class="font-mono text-sm">$${(item.price*item.qty).toFixed(2)}</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="flex items-center border border-ink/20 px-2 py-1 gap-3">
+                                <button onclick="changeQty(${item.id}, -1)" class="hover:text-rust hover-trigger">-</button>
+                                <span class="font-mono text-sm">${item.qty}</span>
+                                <button onclick="changeQty(${item.id}, 1)" class="hover:text-rust hover-trigger">+</button>
+                            </div>
+                            <button onclick="removeFromCart(${item.id})" class="text-xs uppercase tracking-widest text-ink/40 hover:text-rust transition-colors hover-trigger">Remove</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function changeQty(id, delta) {
+            const item = cart.find(x => x.id === id);
+            if(item) {
+                item.qty += delta;
+                if(item.qty <= 0) removeFromCart(id);
+                else updateCart();
+            }
+        }
+
+        function toggleCart() {
+            const sb = document.getElementById('cart-sidebar');
+            const ov = document.getElementById('cart-overlay');
+            const isOpen = !sb.classList.contains('translate-x-full');
+            
+            if(isOpen) {
+                sb.classList.add('translate-x-full');
+                ov.classList.remove('opacity-100');
+                ov.classList.add('opacity-0');
+                setTimeout(() => ov.classList.add('hidden'), 500);
+            } else {
+                sb.classList.remove('translate-x-full');
+                ov.classList.remove('hidden');
+                requestAnimationFrame(() => {
+                    ov.classList.remove('opacity-0');
+                    ov.classList.add('opacity-100');
+                });
+            }
+        }
+
+        function openCheckout() {
+            toggleCart();
+            document.getElementById('checkout-modal').classList.remove('hidden');
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkout-modal').classList.add('hidden');
+        }
+
+        function handlePayment(e) {
+            e.preventDefault();
+            const btn = document.getElementById('pay-btn');
+            const original = btn.innerHTML;
+            
+            btn.innerHTML = "PROCESSING...";
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                btn.innerHTML = original;
+                btn.disabled = false;
+                closeCheckout();
+                document.getElementById('order-id').innerText = Math.random().toString(36).substr(2, 9).toUpperCase();
+                document.getElementById('success-overlay').classList.remove('hidden');
+                cart = [];
+                updateCart();
+            }, 2000);
+        }
+
+        function resetShop() {
+            document.getElementById('success-overlay').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
