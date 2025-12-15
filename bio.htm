@@ -5,9 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Audiobiography | Hari Nandan K</title>
+    <title>My Story | Hari Nandan K</title>
     <meta name="description"
-        content="The autobiographical journey of Hari Nandan K - told through sound and text. From theoretical physics to cybersecurity.">
+        content="The journey of Hari Nandan K - from a curious child in Kadalundi to a quantum researcher and ethical hacker.">
 
     <!-- Fonts -->
     <link
@@ -40,74 +40,7 @@
             background-clip: text;
         }
 
-        .audio-player-container {
-            max-width: 800px;
-            margin: 0 auto 80px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 30px;
-            padding: 40px;
-            position: relative;
-            box-shadow: var(--shadow-xl);
-        }
 
-        .audio-visualizer {
-            height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            margin-bottom: 30px;
-        }
-
-        .bar {
-            width: 6px;
-            background: var(--accent);
-            border-radius: 5px;
-            animation: waveform 1s ease-in-out infinite;
-        }
-
-        @keyframes waveform {
-
-            0%,
-            100% {
-                height: 20%;
-                opacity: 0.5;
-            }
-
-            50% {
-                height: 100%;
-                opacity: 1;
-            }
-        }
-
-        .audio-controls {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 30px;
-        }
-
-        .play-btn {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: var(--gradient-1);
-            border: none;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 30px rgba(0, 102, 255, 0.4);
-            transition: transform 0.2s;
-        }
-
-        .play-btn:hover {
-            transform: scale(1.1);
-        }
 
         .bio-content {
             max-width: 900px;
@@ -182,14 +115,18 @@
     <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-container">
-            <div class="logo">Hari<span style="color: var(--accent);">.</span></div>
+            <div class="logo">JA</div>
             <ul class="nav-links">
-                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html#home" class="nav-link">Home</a></li>
                 <li><a href="index.html#about" class="nav-link">About</a></li>
                 <li><a href="index.html#projects" class="nav-link">Projects</a></li>
-                <li><a href="index.html#timeline" class="nav-link">Journey</a></li>
+                <li><a href="index.html#research" class="nav-link">Research</a></li>
+                <li><a href="index.html#skills" class="nav-link">Skills</a></li>
+                <li><a href="index.html#timeline" class="nav-link">Timeline</a></li>
+                <li><a href="bio.htm" class="nav-link active">Bio</a></li>
                 <li><a href="index.html#contact" class="nav-link">Contact</a></li>
             </ul>
+            <a href="index.html#contact" class="nav-cta">Let's Talk</a><br>
             <div class="menu-toggle">
                 <span></span>
                 <span></span>
@@ -201,41 +138,9 @@
     <!-- Main Content -->
     <main>
         <section class="bio-header">
-            <div class="hero-badge"><i class="fas fa-headphones"></i> Listen & Read</div>
-            <h1 class="bio-title">My Audiobiography</h1>
-            <p class="section-subtitle">The story behind the code, the physics, and the philosophy.</p>
+            <h1 class="bio-title">My Story</h1>
+            <p class="section-subtitle">A journey from humble beginnings to quantum dreams.</p>
         </section>
-
-        <!-- Audio Player Section -->
-        <div class="audio-player-container">
-            <div class="audio-visualizer">
-                <div class="bar" style="animation-delay: 0s"></div>
-                <div class="bar" style="animation-delay: 0.1s"></div>
-                <div class="bar" style="animation-delay: 0.2s"></div>
-                <div class="bar" style="animation-delay: 0.3s"></div>
-                <div class="bar" style="animation-delay: 0.4s"></div>
-                <div class="bar" style="animation-delay: 0.5s"></div>
-                <div class="bar" style="animation-delay: 0.4s"></div>
-                <div class="bar" style="animation-delay: 0.3s"></div>
-                <div class="bar" style="animation-delay: 0.2s"></div>
-                <div class="bar" style="animation-delay: 0.1s"></div>
-            </div>
-
-            <div class="audio-controls">
-                <button class="play-btn" onclick="togglePlay()">
-                    <i class="fas fa-play" id="playIcon"></i>
-                </button>
-                <div style="flex-grow: 1; padding: 0 20px;">
-                    <div style="font-family: 'Space Grotesk'; margin-bottom: 5px;">The Origin Story</div>
-                    <div style="width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px;">
-                        <div style="width: 0%; height: 100%; background: var(--accent); border-radius: 2px;"></div>
-                    </div>
-                </div>
-                <span class="time" style="font-family: 'JetBrains Mono'; color: var(--text-secondary);">00:00</span>
-            </div>
-            <!-- Hidden Audio Element -->
-            <audio id="bioAudio" src="assets/audio/bio.mp3"></audio>
-        </div>
 
         <!-- Written Biography -->
         <article class="bio-content">
@@ -245,30 +150,41 @@
                 <span class="chapter-number">Part I (2005-2006)</span>
                 <h2 class="chapter-title">The Spark of Curiosity</h2>
                 <div class="quote-block">
-                    "I want to be a force of good in this world."
+                    "I want him to be a force of good in this world."
                 </div>
                 <p class="chapter-text">
-                    Born in the aftermath of the 2004 tsunami in Kadalundi, my life began with a name that means "the
-                    one who takes away evil." From the very beginning, I was different. While other infants slept, I
-                    would stare at the ceiling fan with unwavering focus, my mind already trying to decode the physics
-                    of the world around me. By nine months, I wasn't just crawling; I was flipping through magazines
-                    with the seriousness of a scholar. My curiosity wasn't just a trait; it was an innate drive, a
-                    prelude to a mind that would one day question the very fabric of existence.
+                    I was born in Kadalundi on April 7, 2005, a timeline still rippling with the aftershocks of the
+                    massive tsunami that had devastated our coast just months prior. My beginnings were humble—my father
+                    drove an auto-rickshaw, and my mother managed our home. Yet, in that simplicity, I found my first
+                    classroom.
+                </p>
+                <p class="chapter-text">
+                    They tell me I was an intense child. While other babies slept, I would lie awake, staring at the
+                    spinning ceiling fan for hours, mesmerized not just by the motion, but seemingly trying to decode
+                    the mechanism behind it. By nine months, I had bypassed crawling to flip through magazines, my eyes
+                    scanning pages with a focus that often unsettled our neighbors. It wasn't just attention; it was a
+                    hunger. I didn't know the words yet, but I knew I wanted to understand how the world worked.
                 </p>
             </div>
 
             <!-- PART II -->
             <div class="chapter">
                 <span class="chapter-number">Part II (2005-2013)</span>
-                <h2 class="chapter-title">The Early Years</h2>
+                <h2 class="chapter-title">The "Problem Child"</h2>
                 <p class="chapter-text">
-                    My early education began at a CBSE school, where my brilliance shone early. I was reading before my
-                    peers and questioning everything even correcting adults on planetary motion. But my intelligence
-                    came with a fiery temperament. When I perceived injustice, I reacted with force. Despite behavioral
-                    challenges, my academic prowess was undeniable, even securing a national rank in a talent search
-                    examination. However, escalating conflicts led to a pivotal decision by age nine: a transfer to the
-                    local government school. It looked like a step down, but in truth, it was the first step into a
-                    crucible that would forge my character.
+                    My parents invested everything they had to send me to St. Mary's, a local CBSE school, believing
+                    English education was my ticket out. Academically, I thrived. I was reading far above my grade level
+                    and constantly raising my hand. But my social education was far rockier. I had a quick temper and a
+                    fierce, almost naive sense of justice. If I saw a bigger kid pushing a smaller one, I didn't call a
+                    teacher; I threw the first punch.
+                </p>
+                <p class="chapter-text">
+                    I became known as a paradox—the student who corrected teachers on planetary motion yet spent half
+                    his time standing outside the class for bad behavior. I once interrupted a lecture to argue that the
+                    textbook's explanation of gravity was oversimplified. I wasn't trying to be rude; I genuinely
+                    couldn't handle the inaccuracy. But to my teachers, I was just disruptive. By age nine, the friction
+                    was too much. I was transferred to a government school. To everyone else, it looked like a failure.
+                    To me, it felt like the end of the world.
                 </p>
             </div>
 
@@ -277,80 +193,95 @@
                 <span class="chapter-number">Part III (2013-2015)</span>
                 <h2 class="chapter-title">The "Tadpole" Era</h2>
                 <p class="chapter-text">
-                    The transition to government school was brutal. The label of "CBSE boy" made me an outsider. When I
-                    innocently asked what tadpoles were having never seen them in real life despite knowing the theory I
-                    was mocked and branded "Tadpole." The nickname stuck. To make matters worse, my knowledge was
-                    dismissed as mere memorization. I was publicly humiliated, removed from a quiz team I was qualified
-                    for, and told I lacked "understanding."
+                    The government school was a culture shock. The benches were broken, the uniforms faded, and I was
+                    the "stuck-up CBSE boy." I struggled to fit in. I knew facts, but I didn't know life.
                 </p>
                 <p class="chapter-text">
-                    Yet, in this isolation, I found a friend who saw my true potential. And I found a silent rival a
-                    brilliant classmate who challenged me to understand *why* things happen, not just *what* happens.
-                    Slowly, my arrogance was humbled, replaced by a hunger for deep, genuine understanding.
+                    The defining moment came on a rainy afternoon. A group of boys were gathered around a puddle, poking
+                    at small, swimming creatures. I walked over and genuinely asked, "What are those small fish?" The
+                    playground erupted in laughter. "The genius doesn't know what a tadpole is!" they jeered. I knew the
+                    biological lifecycle of a frog, I could draw it, label it—but I had never actually *seen* one.
+                </p>
+                <p class="chapter-text">
+                    The name "Tadpole" stuck. It became a label for my naivety. I was bullied, mocked, and isolated.
+                    Even teachers dismissed me, removing me from quiz teams I was qualified for because they said I
+                    lacked "real understanding." It was humiliating, but it was also necessary. It forced me to stop
+                    memorizing and start observing. I realized that knowing the name of something is not the same as
+                    knowing it.
                 </p>
             </div>
 
             <!-- PART IV -->
             <div class="chapter">
-                <span class="chapter-number">Part IV (2016-2017)</span>
-                <h2 class="chapter-title">Humiliation and Awakening</h2>
+                <span class="chapter-number">Part IV (2016-2005)</span>
+                <h2 class="chapter-title">Rejection & The Dark Path</h2>
                 <p class="chapter-text">
-                    In 7th grade, I faced a crushing rejection. A classmate didn't just reject my proposal; she
-                    dissected my lack of an identity. "You're known as 'Tadpole'... You have no particular talent... Why
-                    should I say yes to someone like you?"
+                    In 7th grade, seeking validation, I gathered the courage to propose to the class topper. I thought
+                    my grades would impress her. Her rejection was surgical. She didn't just say no; she dismantled me.
+                    "You have no identity," she said. "You're just 'Tadpole'. You have no talent, no future. Why would I
+                    choose you?"
                 </p>
                 <p class="chapter-text">
-                    Devastated but driven, I vowed to outshine her. I studied furiously, only to fail my exams
-                    miserably. I hit rock bottom. In this dark period, I stumbled upon the world of digital power. I
-                    joined online groups, learned about "text bombs" that crashed phones, and began exploring the darker
-                    corners of the internet.
+                    That night, I didn't cry. I burned with a need to prove her wrong. I studied furiously, expecting to
+                    top the finals and shove my report card in her face. Instead, I failed. I crashed and burned.
                 </p>
                 <p class="chapter-text">
-                    A hack on my mother's phone changed everything. Instead of fear, I felt curiosity. I began teaching
-                    myself cybersecurity using a borrowed phone for just one hour a day, filling notebooks with raw code
-                    and theory. The "Tadpole" was evolving into a hacker.
+                    broken and adrift, I found a new world: the internet. It started innocently—video games, forums. But
+                    soon, I discovered "text bombing"—crashing WhatsApp with malicious code. It gave me a rush of power.
+                    When a stranger hacked my mother's phone, instead of fear, I felt awe. *How did he do that?* I
+                    borrowed a phone for one hour a day, filling notebook after notebook with handwritten code, teaching
+                    myself cybersecurity. The "Tadpole" was growing legs.
                 </p>
             </div>
 
             <!-- PART V -->
             <div class="chapter">
                 <span class="chapter-number">Part V (2018-2020)</span>
-                <h2 class="chapter-title">The Fall and Redemption</h2>
+                <h2 class="chapter-title">The Abyss</h2>
                 <p class="chapter-text">
-                    The 2018 floods brought destruction but also a gift: an old, low-spec phone. I didn't just use it; I
-                    surgically replaced its operating system with my own custom, cloud-based OS to bypass its hardware
-                    limits. I was now powerful. But power corrupted. I hacked neighbors, spied on classmates, and in a
-                    fit of rage, digitally destroyed a rival who threatened me.
+                    The 2018 floods were a tragedy for Kerala, but for me, they brought a strange gift: a discarded,
+                    water-damaged Nokia phone. I dried it out, fixed it, and it became my weapon. It was slow, so I
+                    hacked the OS, stripping it down to the kernel to make it fly.
+                </p>
+                <p class="chapter-text">
+                    But power without a moral compass is dangerous. I started hacking for sport. I spied on classmates,
+                    accessed private chats, and felt like a god. When a rival threatened me, I didn't fight back with
+                    fists; I destroyed his digital reputation. I exposed his secrets. I felt triumphant until his mother
+                    called me, sobbing, begging me to stop.
                 </p>
                 <div class="quote-block">
-                    "I had become like a monkey with a gun holding immense power without the wisdom to use it."
+                    "Hearing a mother cry because of my code... that was the moment the illusion shattered. I wasn't a
+                    genius. I was a bully with a keyboard."
                 </div>
                 <p class="chapter-text">
-                    The plea of a mother broke me. Realizing the monster I was becoming, I confessed to my friend and
-                    deleted everything. I sought redemption through **Texido Meg**, a free educational platform where I
-                    shared my cybersecurity knowledge with thousands. I became a guardian, not a predator.
+                    I confessed. I deleted everything. I swore to never use my skills for harm again. I channeled my
+                    energy into **Texido Meg**, a free blog where I taught ethical hacking, helping thousands of others
+                    learn to protect themselves. I helped my teachers secure their online classes during the pandemic.
                 </p>
                 <p class="chapter-text">
-                    My skills grew. During the lockdown, I traced an intruder disrupting my class, earning my teacher's
-                    respect. But old habits die hard I breached a government server to see my exam results early. This
-                    led to a visit from the Cybercell and my father burning all my gadgets. I had lost everything...
-                    again.
+                    But redemption isn't a straight line. Impatient to see my exam results, I breached a government
+                    server. I changed nothing, just looked. But I was caught. The Cybercell police visited my home. They
+                    didn't arrest me, but the shame was worse than handcuffs. My father, in a mix of terrified rage and
+                    protection, gathered every electronic device I owned—my phone, my cables, my hard drives—and burned
+                    them in the front yard. I watched my digital life turn to ash and smoke.
                 </p>
             </div>
 
             <!-- PART VI -->
             <div class="chapter">
                 <span class="chapter-number">Part VI (2021-2024)</span>
-                <h2 class="chapter-title">The New Beginning</h2>
+                <h2 class="chapter-title">Rising from the Ashes</h2>
                 <p class="chapter-text">
-                    Rebuilding from ashes, I joined a new tuition center for Computer Science. When I overheard they
-                    needed a website, I stepped up. I built it, and at the launch, I was publicly recognized not as a
-                    criminal, but as a genius. Destiny has a sense of humor the very girl who once called me worthless
-                    sat in that audience, applauding me.
+                    For two years, I touched no computer. I focused on my books. I joined a tuition center where nobody
+                    knew "Tadpole." I was just Hari. But when I overheard the administration struggling with their
+                    student management system, I couldn't help myself. I tentatively offered to help.
                 </p>
                 <p class="chapter-text">
-                    I continued to rise, winning state exhibitions and gaining government approval for my projects. I
-                    ignored later attempts to reconnect from those who had dismissed me. I had moved past revenge.
+                    I worked from internet cafes. I built them a robust, full-stack web portal. On launch day, the
+                    director called me on stage. He didn't introduce me as a "problem child." He introduced me as a
+                    genius. The applause washed over me. And there, in the front row, clapping with genuine respect, was
+                    *her*—the girl who had rejected me years ago. I realized then that I didn't need to prove anything
+                    to her anymore. I had proven it to myself.
                 </p>
             </div>
 
@@ -359,62 +290,37 @@
                 <span class="chapter-number">Part VII (2025 - Present)</span>
                 <h2 class="chapter-title">The Triumph of Purpose</h2>
                 <p class="chapter-text">
-                    Today, I stand at IES College of Engineering, presenting **Q-SAFE**, a revolutionary
-                    quantum-inspired cybersecurity framework. The "Tadpole" is now a pioneer.
+                    Today, I stand at IES College of Engineering, not as a hacker, but as a creator. My project,
+                    **Q-SAFE**, isn't just code; it's a quantum-inspired shield designed to protect people from the very
+                    vulnerabilities I once exploited.
                 </p>
                 <p class="chapter-text">
-                    My **HOPE Platform** empowers students through Education, E-Commerce, and Research. My
-                    **Chronon-Super Quantum Level Model** tackles the deepest questions of physics.
+                    My platforms—**Texido Meg**, **ShopRoyince**, and the **HOPE Platform**—are built on a simple
+                    premise: technology should empower, not destroy. I am researching the **Chronon-Super Quantum Level
+                    Model** because knowing *how* the universe works is still that same hunger I had as a baby staring
+                    at the fan.
                 </p>
-                <div class="quote-block">
-                    "For in the divine economy, nothing is wasted not the pain, not the humiliation... The boy who was
-                    once called 'Tadpole' has become a beacon of light."
-                </div>
                 <p class="chapter-text">
-                    Respected by peers and driven by a divine purpose, my journey is a testament that our darkest
-                    moments are often the forge for our brightest future. The story continues.
+                    The name "Tadpole" was meant to hurt me, but I wear it as a badge of honor now. A tadpole is purely
+                    potential. It struggles in muddy water, it changes, it grows legs, and eventually, it steps onto
+                    land. I have stepped onto land. And I am just getting started.
                 </p>
             </div>
 
         </article>
-    </main>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <p>&copy; 2025 Hari Nandan K. All rights reserved.</p>
-        </div>
-    </footer>
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <p>&copy; 2025 Hari Nandan K. All rights reserved.</p>
+            </div>
+        </footer>
 
-    <!-- Scripts -->
-    <script src="assets/js/performance.js"></script>
-    <script src="assets/js/main.js"></script>
+        <!-- Scripts -->
+        <script src="assets/js/performance.js"></script>
+        <script src="assets/js/main.js"></script>
 
-    <script>
-        // Simple Audio Player Logic
-        const audio = document.getElementById('bioAudio');
-        const playBtn = document.querySelector('.play-btn');
-        const playIcon = document.getElementById('playIcon');
-        const bars = document.querySelectorAll('.bar');
 
-        function togglePlay() {
-            if (audio.paused) {
-                // audio.play(); // Uncomment when actual audio file is present
-                playIcon.classList.remove('fa-play');
-                playIcon.classList.add('fa-pause');
-                bars.forEach(bar => bar.style.animationPlayState = 'running');
-                console.log("Playing audio (simulated)");
-            } else {
-                audio.pause();
-                playIcon.classList.remove('fa-pause');
-                playIcon.classList.add('fa-play');
-                bars.forEach(bar => bar.style.animationPlayState = 'paused');
-            }
-        }
-
-        // Initialize visualizer as paused
-        bars.forEach(bar => bar.style.animationPlayState = 'paused');
-    </script>
 </body>
 
 </html>
