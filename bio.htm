@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Audiobiography | Hari Nandan K</title>
+    <meta name="description"
+        content="The autobiographical journey of Hari Nandan K - told through sound and text. From theoretical physics to cybersecurity.">
+
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="assets/css/style-custom.css">
+
+    <style>
+        /* Bio Specific Styles */
+        .bio-header {
+            padding-top: 150px;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .bio-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .audio-player-container {
+            max-width: 800px;
+            margin: 0 auto 80px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 40px;
+            position: relative;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .audio-visualizer {
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 30px;
+        }
+
+        .bar {
+            width: 6px;
+            background: var(--accent);
+            border-radius: 5px;
+            animation: waveform 1s ease-in-out infinite;
+        }
+
+        @keyframes waveform {
+
+            0%,
+            100% {
+                height: 20%;
+                opacity: 0.5;
+            }
+
+            50% {
+                height: 100%;
+                opacity: 1;
+            }
+        }
+
+        .audio-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .play-btn {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--gradient-1);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0, 102, 255, 0.4);
+            transition: transform 0.2s;
+        }
+
+        .play-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .bio-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px 100px;
+        }
+
+        .chapter {
+            margin-bottom: 80px;
+            position: relative;
+            padding-left: 40px;
+            border-left: 2px solid var(--glass-border);
+        }
+
+        .chapter::before {
+            content: '';
+            position: absolute;
+            left: -11px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            background: var(--secondary);
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+        }
+
+        .chapter-number {
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--accent);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .chapter-title {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            color: var(--text-primary);
+        }
+
+        .chapter-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .quote-block {
+            margin: 40px 0;
+            padding: 30px;
+            background: rgba(0, 102, 255, 0.05);
+            border-radius: 20px;
+            border-left: 4px solid var(--accent);
+            font-style: italic;
+            color: var(--text-primary);
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- Three.js Canvas Background -->
+    <div id="canvas-container"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">Hari<span style="color: var(--accent);">.</span></div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html#about" class="nav-link">About</a></li>
+                <li><a href="index.html#projects" class="nav-link">Projects</a></li>
+                <li><a href="index.html#timeline" class="nav-link">Journey</a></li>
+                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <section class="bio-header">
+            <div class="hero-badge"><i class="fas fa-headphones"></i> Listen & Read</div>
+            <h1 class="bio-title">My Audiobiography</h1>
+            <p class="section-subtitle">The story behind the code, the physics, and the philosophy.</p>
+        </section>
+
+        <!-- Audio Player Section -->
+        <div class="audio-player-container">
+            <div class="audio-visualizer">
+                <div class="bar" style="animation-delay: 0s"></div>
+                <div class="bar" style="animation-delay: 0.1s"></div>
+                <div class="bar" style="animation-delay: 0.2s"></div>
+                <div class="bar" style="animation-delay: 0.3s"></div>
+                <div class="bar" style="animation-delay: 0.4s"></div>
+                <div class="bar" style="animation-delay: 0.5s"></div>
+                <div class="bar" style="animation-delay: 0.4s"></div>
+                <div class="bar" style="animation-delay: 0.3s"></div>
+                <div class="bar" style="animation-delay: 0.2s"></div>
+                <div class="bar" style="animation-delay: 0.1s"></div>
+            </div>
+
+            <div class="audio-controls">
+                <button class="play-btn" onclick="togglePlay()">
+                    <i class="fas fa-play" id="playIcon"></i>
+                </button>
+                <div style="flex-grow: 1; padding: 0 20px;">
+                    <div style="font-family: 'Space Grotesk'; margin-bottom: 5px;">The Origin Story</div>
+                    <div style="width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px;">
+                        <div style="width: 0%; height: 100%; background: var(--accent); border-radius: 2px;"></div>
+                    </div>
+                </div>
+                <span class="time" style="font-family: 'JetBrains Mono'; color: var(--text-secondary);">00:00</span>
+            </div>
+            <!-- Hidden Audio Element -->
+            <audio id="bioAudio" src="assets/audio/bio.mp3"></audio>
+        </div>
+
+        <!-- Written Biography -->
+        <article class="bio-content">
+
+            <!-- PART I -->
+            <div class="chapter">
+                <span class="chapter-number">Part I (2005-2006)</span>
+                <h2 class="chapter-title">The Spark of Curiosity</h2>
+                <div class="quote-block">
+                    "I want to be a force of good in this world."
+                </div>
+                <p class="chapter-text">
+                    Born in the aftermath of the 2004 tsunami in Kadalundi, my life began with a name that means "the
+                    one who takes away evil." From the very beginning, I was different. While other infants slept, I
+                    would stare at the ceiling fan with unwavering focus, my mind already trying to decode the physics
+                    of the world around me. By nine months, I wasn't just crawling; I was flipping through magazines
+                    with the seriousness of a scholar. My curiosity wasn't just a trait; it was an innate drive, a
+                    prelude to a mind that would one day question the very fabric of existence.
+                </p>
+            </div>
+
+            <!-- PART II -->
+            <div class="chapter">
+                <span class="chapter-number">Part II (2005-2013)</span>
+                <h2 class="chapter-title">The Early Years</h2>
+                <p class="chapter-text">
+                    My early education began at a CBSE school, where my brilliance shone early. I was reading before my
+                    peers and questioning everything even correcting adults on planetary motion. But my intelligence
+                    came with a fiery temperament. When I perceived injustice, I reacted with force. Despite behavioral
+                    challenges, my academic prowess was undeniable, even securing a national rank in a talent search
+                    examination. However, escalating conflicts led to a pivotal decision by age nine: a transfer to the
+                    local government school. It looked like a step down, but in truth, it was the first step into a
+                    crucible that would forge my character.
+                </p>
+            </div>
+
+            <!-- PART III -->
+            <div class="chapter">
+                <span class="chapter-number">Part III (2013-2015)</span>
+                <h2 class="chapter-title">The "Tadpole" Era</h2>
+                <p class="chapter-text">
+                    The transition to government school was brutal. The label of "CBSE boy" made me an outsider. When I
+                    innocently asked what tadpoles were having never seen them in real life despite knowing the theory I
+                    was mocked and branded "Tadpole." The nickname stuck. To make matters worse, my knowledge was
+                    dismissed as mere memorization. I was publicly humiliated, removed from a quiz team I was qualified
+                    for, and told I lacked "understanding."
+                </p>
+                <p class="chapter-text">
+                    Yet, in this isolation, I found a friend who saw my true potential. And I found a silent rival a
+                    brilliant classmate who challenged me to understand *why* things happen, not just *what* happens.
+                    Slowly, my arrogance was humbled, replaced by a hunger for deep, genuine understanding.
+                </p>
+            </div>
+
+            <!-- PART IV -->
+            <div class="chapter">
+                <span class="chapter-number">Part IV (2016-2017)</span>
+                <h2 class="chapter-title">Humiliation and Awakening</h2>
+                <p class="chapter-text">
+                    In 7th grade, I faced a crushing rejection. A classmate didn't just reject my proposal; she
+                    dissected my lack of an identity. "You're known as 'Tadpole'... You have no particular talent... Why
+                    should I say yes to someone like you?"
+                </p>
+                <p class="chapter-text">
+                    Devastated but driven, I vowed to outshine her. I studied furiously, only to fail my exams
+                    miserably. I hit rock bottom. In this dark period, I stumbled upon the world of digital power. I
+                    joined online groups, learned about "text bombs" that crashed phones, and began exploring the darker
+                    corners of the internet.
+                </p>
+                <p class="chapter-text">
+                    A hack on my mother's phone changed everything. Instead of fear, I felt curiosity. I began teaching
+                    myself cybersecurity using a borrowed phone for just one hour a day, filling notebooks with raw code
+                    and theory. The "Tadpole" was evolving into a hacker.
+                </p>
+            </div>
+
+            <!-- PART V -->
+            <div class="chapter">
+                <span class="chapter-number">Part V (2018-2020)</span>
+                <h2 class="chapter-title">The Fall and Redemption</h2>
+                <p class="chapter-text">
+                    The 2018 floods brought destruction but also a gift: an old, low-spec phone. I didn't just use it; I
+                    surgically replaced its operating system with my own custom, cloud-based OS to bypass its hardware
+                    limits. I was now powerful. But power corrupted. I hacked neighbors, spied on classmates, and in a
+                    fit of rage, digitally destroyed a rival who threatened me.
+                </p>
+                <div class="quote-block">
+                    "I had become like a monkey with a gun holding immense power without the wisdom to use it."
+                </div>
+                <p class="chapter-text">
+                    The plea of a mother broke me. Realizing the monster I was becoming, I confessed to my friend and
+                    deleted everything. I sought redemption through **Texido Meg**, a free educational platform where I
+                    shared my cybersecurity knowledge with thousands. I became a guardian, not a predator.
+                </p>
+                <p class="chapter-text">
+                    My skills grew. During the lockdown, I traced an intruder disrupting my class, earning my teacher's
+                    respect. But old habits die hard I breached a government server to see my exam results early. This
+                    led to a visit from the Cybercell and my father burning all my gadgets. I had lost everything...
+                    again.
+                </p>
+            </div>
+
+            <!-- PART VI -->
+            <div class="chapter">
+                <span class="chapter-number">Part VI (2021-2024)</span>
+                <h2 class="chapter-title">The New Beginning</h2>
+                <p class="chapter-text">
+                    Rebuilding from ashes, I joined a new tuition center for Computer Science. When I overheard they
+                    needed a website, I stepped up. I built it, and at the launch, I was publicly recognized not as a
+                    criminal, but as a genius. Destiny has a sense of humor the very girl who once called me worthless
+                    sat in that audience, applauding me.
+                </p>
+                <p class="chapter-text">
+                    I continued to rise, winning state exhibitions and gaining government approval for my projects. I
+                    ignored later attempts to reconnect from those who had dismissed me. I had moved past revenge.
+                </p>
+            </div>
+
+            <!-- PART VII -->
+            <div class="chapter">
+                <span class="chapter-number">Part VII (2025 - Present)</span>
+                <h2 class="chapter-title">The Triumph of Purpose</h2>
+                <p class="chapter-text">
+                    Today, I stand at IES College of Engineering, presenting **Q-SAFE**, a revolutionary
+                    quantum-inspired cybersecurity framework. The "Tadpole" is now a pioneer.
+                </p>
+                <p class="chapter-text">
+                    My **HOPE Platform** empowers students through Education, E-Commerce, and Research. My
+                    **Chronon-Super Quantum Level Model** tackles the deepest questions of physics.
+                </p>
+                <div class="quote-block">
+                    "For in the divine economy, nothing is wasted not the pain, not the humiliation... The boy who was
+                    once called 'Tadpole' has become a beacon of light."
+                </div>
+                <p class="chapter-text">
+                    Respected by peers and driven by a divine purpose, my journey is a testament that our darkest
+                    moments are often the forge for our brightest future. The story continues.
+                </p>
+            </div>
+
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Hari Nandan K. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/performance.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <script>
+        // Simple Audio Player Logic
+        const audio = document.getElementById('bioAudio');
+        const playBtn = document.querySelector('.play-btn');
+        const playIcon = document.getElementById('playIcon');
+        const bars = document.querySelectorAll('.bar');
+
+        function togglePlay() {
+            if (audio.paused) {
+                // audio.play(); // Uncomment when actual audio file is present
+                playIcon.classList.remove('fa-play');
+                playIcon.classList.add('fa-pause');
+                bars.forEach(bar => bar.style.animationPlayState = 'running');
+                console.log("Playing audio (simulated)");
+            } else {
+                audio.pause();
+                playIcon.classList.remove('fa-pause');
+                playIcon.classList.add('fa-play');
+                bars.forEach(bar => bar.style.animationPlayState = 'paused');
+            }
+        }
+
+        // Initialize visualizer as paused
+        bars.forEach(bar => bar.style.animationPlayState = 'paused');
+    </script>
+</body>
+
+</html>
