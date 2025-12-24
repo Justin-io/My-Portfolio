@@ -681,6 +681,45 @@ document.addEventListener('DOMContentLoaded', () => {
     let hasGreeted = false;
     let thinkingTimeout = null; // Track thinking timer
 
+    const HERO_IMAGE_ORIGINAL = 'assets/img/me.jpg';
+    let heroInterval = null;
+
+    function startHeroAnimation() {
+        if (heroInterval) return;
+        const heroImg = document.querySelector('.hero-card-content img');
+        if (!heroImg) return;
+
+        heroInterval = setInterval(() => {
+            heroImg.style.transition = "transform 0.5s ease-in-out";
+            heroImg.style.transform = "rotateY(90deg)";
+
+            setTimeout(() => {
+                if (heroImg.src.includes('me.jpg')) {
+                    heroImg.src = FAB_IMAGE_REST;
+                    // Optional: adjust style for the avatar if needed
+                    heroImg.style.borderRadius = "50%";
+                } else {
+                    heroImg.src = HERO_IMAGE_ORIGINAL;
+                }
+                heroImg.style.transform = "rotateY(0deg)";
+            }, 500);
+        }, 2600);
+    }
+
+    function stopHeroAnimation() {
+        if (heroInterval) {
+            clearInterval(heroInterval);
+            heroInterval = null;
+        }
+        const heroImg = document.querySelector('.hero-card-content img');
+        if (heroImg) {
+            // Reset to original state
+            heroImg.style.transition = "none";
+            heroImg.src = HERO_IMAGE_ORIGINAL;
+            heroImg.style.transform = "rotateY(0deg)";
+        }
+    }
+
     // Toggle Chat
     function toggleChat() {
         isChatOpen = !isChatOpen;
@@ -810,8 +849,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const tagName = entry.target.tagName.toLowerCase();
 
                 // 1. NON-THINKING ZONE (Home or Footer)
-                // Immediately stop thinking and look "Resting"
                 if (sectionId === 'home' || tagName === 'footer') {
+                    currentSection = sectionId === 'home' ? 'home' : 'footer';
                     bubble.classList.remove('visible');
 
                     if (USE_FAB_IMAGE) {
@@ -819,17 +858,19 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (fabImg) {
                             fabImg.src = FAB_IMAGE_REST;
                             if (thinkingTimeout) clearTimeout(thinkingTimeout);
+                            if (scrollTimeout) clearTimeout(scrollTimeout);
                         }
                     }
 
-                    // Hide FAB only when in the Footer
-                    if (tagName === 'footer') {
-                        toggleBtn.style.transform = 'scale(0)';
-                        toggleBtn.style.opacity = '0'; // Ensure it's fully invisible
+                    // Hide FAB in both Home and Footer
+                    toggleBtn.style.transform = 'scale(0)';
+                    toggleBtn.style.opacity = '0';
+
+                    // Specific Logic for Home vs Footer
+                    if (sectionId === 'home') {
+                        startHeroAnimation();
                     } else {
-                        // Ensure visible on Home
-                        toggleBtn.style.transform = 'scale(1)';
-                        toggleBtn.style.opacity = '1';
+                        stopHeroAnimation();
                     }
                     return;
                 }
@@ -837,9 +878,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 // 2. ACTIVE SECTIONS
                 currentSection = sectionId;
 
-                // Ensure FAB is visible
+                // Show FAB
                 toggleBtn.style.transform = 'scale(1)';
                 toggleBtn.style.opacity = '1';
+
+                // Stop Hero Animation if leaving home
+                stopHeroAnimation();
 
                 if (summaries[sectionId]) {
                     // Update Bubble text if chat is closed
@@ -847,7 +891,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         bubble.innerHTML = `Summarize <b>${sectionId.toUpperCase()}</b>?`;
                         bubble.classList.add('visible');
                     } else {
-                        // If chat is OPEN, provide the new summary automatically with typing effect
                         provideSummary(sectionId);
                     }
                 }
