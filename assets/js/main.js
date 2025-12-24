@@ -679,6 +679,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentSection = 'home';
     let isChatOpen = false;
     let hasGreeted = false;
+    let thinkingTimeout = null; // Track thinking timer
 
     // Toggle Chat
     function toggleChat() {
@@ -776,12 +777,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 const sectionId = entry.target.id;
                 const tagName = entry.target.tagName.toLowerCase();
 
-                // HIDE BUBBLE conditions: Home section or Footer
+                // 1. NON-THINKING ZONE (Home or Footer)
+                // Immediately stop thinking and look "Resting"
                 if (sectionId === 'home' || tagName === 'footer') {
                     bubble.classList.remove('visible');
+
+                    if (USE_FAB_IMAGE) {
+                        const fabImg = document.getElementById('fab-img');
+                        if (fabImg) {
+                            fabImg.src = FAB_IMAGE_REST;
+                            if (thinkingTimeout) clearTimeout(thinkingTimeout);
+                        }
+                    }
                     return;
                 }
 
+                // 2. THINKING ZONE (Other Sections)
                 if (summaries[sectionId]) {
                     currentSection = sectionId;
 
@@ -789,9 +800,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (USE_FAB_IMAGE) {
                         const fabImg = document.getElementById('fab-img');
                         if (fabImg) {
+                            // Reset timer
+                            if (thinkingTimeout) clearTimeout(thinkingTimeout);
+
+                            // Start Thinking
                             fabImg.src = FAB_IMAGE_THINK;
-                            // Revert to rest image after 2 seconds
-                            setTimeout(() => {
+
+                            // Revert to rest image after delay
+                            thinkingTimeout = setTimeout(() => {
                                 fabImg.src = FAB_IMAGE_REST;
                             }, 3500);
                         }
