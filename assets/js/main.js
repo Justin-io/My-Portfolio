@@ -763,6 +763,38 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!isChatOpen) toggleChat();
     });
 
+    // --- SCROLL-BASED THINKING LOGIC ---
+    let scrollTimeout = null;
+
+    window.addEventListener('scroll', () => {
+        // 1. Check if we are in a "Non-Thinking" zone (based on last known section)
+        // We use the observer's `currentSection` state.
+
+        // If we are currently on Home or Footer, DO NOT think.
+        const isHomeOrFooter = (currentSection === 'home' || currentSection === 'footer');
+        if (isHomeOrFooter) return;
+
+        // 2. If valid section: Start Thinking immediately
+        if (USE_FAB_IMAGE) {
+            const fabImg = document.getElementById('fab-img');
+            if (fabImg) {
+                // Set to thinking image
+                // Optimization: Only update DOM if src is different
+                if (!fabImg.src.includes(FAB_IMAGE_THINK)) {
+                    fabImg.src = FAB_IMAGE_THINK;
+                }
+
+                // Clear any existing timer to revert
+                if (scrollTimeout) clearTimeout(scrollTimeout);
+
+                // 3. Set timer to stop thinking 3.5s AFTER scrolling stops
+                scrollTimeout = setTimeout(() => {
+                    fabImg.src = FAB_IMAGE_REST;
+                }, 3500);
+            }
+        }
+    });
+
     // Interaction Observer for Sections
     // Adjusted detection for better feel
     const observerOptions = {
@@ -789,37 +821,27 @@ document.addEventListener('DOMContentLoaded', () => {
                             if (thinkingTimeout) clearTimeout(thinkingTimeout);
                         }
                     }
+
+                    // Hide FAB only when in the Footer
+                    if (tagName === 'footer') {
+                        toggleBtn.style.transform = 'scale(0)';
+                        toggleBtn.style.opacity = '0'; // Ensure it's fully invisible
+                    } else {
+                        // Ensure visible on Home
+                        toggleBtn.style.transform = 'scale(1)';
+                        toggleBtn.style.opacity = '1';
+                    }
                     return;
                 }
 
-                // 2. THINKING ZONE (Other Sections)
+                // 2. ACTIVE SECTIONS
+                currentSection = sectionId;
+
+                // Ensure FAB is visible
+                toggleBtn.style.transform = 'scale(1)';
+                toggleBtn.style.opacity = '1';
+
                 if (summaries[sectionId]) {
-                    currentSection = sectionId;
-
-                    // Trigger "Thinking" Animation Effect
-                    if (USE_FAB_IMAGE) {
-                        const fabImg = document.getElementById('fab-img');
-                        if (fabImg) {
-                            // Reset timer
-                            if (thinkingTimeout) clearTimeout(thinkingTimeout);
-
-                            // Start Thinking
-                            fabImg.src = FAB_IMAGE_THINK;
-
-                            // Revert to rest image after delay
-                            thinkingTimeout = setTimeout(() => {
-                                fabImg.src = FAB_IMAGE_REST;
-                            }, 3500);
-                        }
-                    } else {
-                        // Lottie Fallback
-                        const player = document.querySelector('lottie-player');
-                        if (player) {
-                            player.stop();
-                            player.play();
-                        }
-                    }
-
                     // Update Bubble text if chat is closed
                     if (!isChatOpen) {
                         bubble.innerHTML = `Summarize <b>${sectionId.toUpperCase()}</b>?`;
