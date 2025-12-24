@@ -1876,22 +1876,49 @@
 
         #ai-notification-bubble {
             position: absolute;
-            bottom: 75px;
+            bottom: 90px;
             right: 0;
             background: white;
             color: #333;
-            padding: 10px 15px;
-            border-radius: 10px 10px 0 10px;
-            font-size: 0.9rem;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            padding: 15px 25px;
+            border-radius: 40px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
             white-space: nowrap;
             opacity: 0;
             transform: translateY(10px) scale(0.9);
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             pointer-events: none;
-            z-index: 1;
-            max-width: 250px;
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            z-index: 10001;
+            border: 2px solid var(--accent);
+        }
+
+        /* Thought Bubble Dots */
+        #ai-notification-bubble::before {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            right: 40px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        #ai-notification-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -28px;
+            right: 25px;
+            width: 12px;
+            height: 12px;
+            background: white;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            z-index: -2;
         }
 
         #ai-notification-bubble.visible {
