@@ -793,7 +793,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             // Revert to rest image after 2 seconds
                             setTimeout(() => {
                                 fabImg.src = FAB_IMAGE_REST;
-                            }, 2000);
+                            }, 3500);
                         }
                     } else {
                         // Lottie Fallback
