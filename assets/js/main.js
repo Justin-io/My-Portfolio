@@ -684,6 +684,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const HERO_IMAGE_ORIGINAL = 'assets/img/me.jpg';
     let heroInterval = null;
 
+    // Add click listener to Hero Image for manual summoning
+    const heroImageElement = document.querySelector('.hero-card-content img');
+    if (heroImageElement) {
+        heroImageElement.style.cursor = "pointer";
+        heroImageElement.addEventListener('click', () => {
+            // Stop glitching
+            stopHeroAnimation();
+
+            // Summon the Bot
+            if (toggleBtn) {
+                toggleBtn.style.transform = 'scale(1)';
+                toggleBtn.style.opacity = '1';
+                // Add a small glitch effect to the button entry
+                toggleBtn.classList.add('glitch-effect');
+                setTimeout(() => { toggleBtn.classList.remove('glitch-effect'); }, 500);
+            }
+
+            // Open Chat
+            if (!isChatOpen) toggleChat();
+        });
+    }
+
     function startHeroAnimation() {
         if (heroInterval) return;
         const heroImg = document.querySelector('.hero-card-content img');
@@ -693,23 +715,22 @@ document.addEventListener('DOMContentLoaded', () => {
             // Trigger Glitch
             heroImg.classList.add('glitch-effect');
 
-            // Swap Image mid-glitch
+            // Swap Image mid-glitch (Slower timing: 400ms)
             setTimeout(() => {
                 if (heroImg.src.includes('me.jpg')) {
                     heroImg.src = FAB_IMAGE_REST;
-                    // Optional: adjust style for the avatar if needed
-                    heroImg.style.borderRadius = "50%";
+                    heroImg.style.borderRadius = "50%"; // Match FAB style
                 } else {
                     heroImg.src = HERO_IMAGE_ORIGINAL;
                 }
-            }, 150); // Swap at 150ms
+            }, 400);
 
-            // Remove Glitch class after animation
+            // Remove Glitch class after animation (Slower timing: 800ms)
             setTimeout(() => {
                 heroImg.classList.remove('glitch-effect');
-            }, 300); // Total duration 300ms
+            }, 800);
 
-        }, 2600);
+        }, 3000); // Slower interval for better impact
     }
 
     function stopHeroAnimation() {
