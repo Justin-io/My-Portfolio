@@ -166,13 +166,28 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--secondary);
             color: var(--text-primary);
             overflow-x: hidden;
             cursor: none;
+            /* Hide default cursor */
             position: relative;
+        }
+
+        /* Ensure system cursor doesn't appear on interactive elements */
+        a,
+        button,
+        .clickable,
+        input[type="submit"],
+        input[type="button"],
+        .timeline-media-container {
+            cursor: none !important;
         }
 
         /* Custom Cursor - Hide on mobile */
@@ -183,7 +198,7 @@
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
-            z-index: 9999;
+            z-index: 100000;
             transition: all 0.1s ease;
             transform: translate(-50%, -50%);
         }
@@ -195,7 +210,7 @@
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
-            z-index: 9998;
+            z-index: 99999;
             transition: all 0.3s ease;
             transform: translate(-50%, -50%);
         }
