@@ -664,15 +664,15 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleBtn.style.boxShadow = 'none'; // Optional: cleaner look for some avatars
     }
 
-    // Section Summaries
+    // Section Summaries - Enhanced Content
     const summaries = {
-        'home': "Welcome to the digital realm of Justin Alexia Andrew. I am an innovator fusing AI, cybersecurity, and theoretical physics to build the future.",
-        'about': "About Justin: A B.Tech Data Science scholar at IES College of Engineering. He is a multi-disciplinary researcher driven by curiosity in the quantum capability of the universe.",
-        'projects': "Key Projects: Features the 'HOPE Platform' for connecting minds, 'ShopRoyince' e-commerce, and 'TexidoMeg' for cyber-education.",
-        'research': "Research Frontiers: Currently developing 'Q-SAFE', a quantum-inspired security framework, and the 'Chronon-Super Quantum Level Model' of spacetime.",
-        'skills': "Tech Stack: Proficient in Python, C++, React, Next.js, and advanced ethical hacking tools. A true full-stack innovator.",
-        'timeline': "The Journey: From early hacking curiosity to founding startups and publishing groundbreaking theories. A timeline of continuous evolution.",
-        'contact': "Connect: Open for high-impact research collaborations, consulting in AI/Security, and discussions on theoretical physics."
+        'home': "Welcome to the digital frontier of **Justin Alexia Andrew**. I am an innovator synthesizing **AI, cybersecurity, and theoretical physics** to engineer the future. Explore my universe.",
+        'about': "**About Justin:** A visionary researcher and B.Tech Data Science scholar at **IES College of Engineering**. Driven by the quantum potential of the cosmos, he bridges the gap between deep theory and practical secure systems.",
+        'projects': "**Key Projects:**\n• **HOPE Platform:** connecting innovators.\n• **ShopRoyince:** specialized e-commerce.\n• **TexidoMeg:** democratizing cyber-education from novice to expert.",
+        'research': "**Research Frontiers:**\n• **Q-SAFE:** A quantum-inspired cybersecurity framework for the post-quantum era.\n• **Chronon-SQL Model:** A groundbreaking theoretical reconstruction of spacetime geometry.",
+        'skills': "**Tech Stack & Arsenal:**\n• **Languages:** Python, C++, Java, JavaScript\n• **Frameworks:** React, Next.js, Node.js\n• **Security:** Penetration Testing, Reverse Engineering, Cryptography.",
+        'timeline': "**The Evolution:**\nFrom a curiosity-driven hacker to a founder and theorist.\n• **2025:** Q-SAFE & Theoretical breakthroughs.\n• **2023:** Founder of ShopRoyince.\n• **2017:** Developed first ethical hacking toolkit.",
+        'contact': "**Connect & Collaborate:**\nOpen for high-impact research, security consulting, and theoretical physics discourse. Let's build something revolutionary."
     };
 
     let currentSection = 'home';
@@ -707,12 +707,14 @@ document.addEventListener('DOMContentLoaded', () => {
             msgDiv.innerText = "";
             messagesContainer.appendChild(msgDiv);
 
-            let i = 0;
-            // Speed up typing for longer texts
-            const typingSpeed = text.length > 100 ? 15 : 25;
+            // Clear any existing typing interval to prevent overlaps
+            if (currentTypingInterval) {
+                clearInterval(currentTypingInterval);
+            }
 
-            // Clear previous typing if any (optional, usually we want to finish)
-            // if (currentTypingInterval) clearInterval(currentTypingInterval);
+            let i = 0;
+            // Enhanced typing speed logic for better flow
+            const typingSpeed = 10;
 
             currentTypingInterval = setInterval(() => {
                 msgDiv.innerText += text.charAt(i);
@@ -740,7 +742,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (sectionId === lastSummarySection && isChatOpen) return;
 
         const summary = summaries[sectionId];
-        const message = `Here is a summary of the ${sectionId.charAt(0).toUpperCase() + sectionId.slice(1)} section:\n\n${summary}`;
+        // Cleaner intro
+        const message = `${summary}`;
 
         // Use typing effect primarily when auto-triggered
         addMessage(message, 'bot', true);
@@ -759,10 +762,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Interaction Observer for Sections
-    // Precise detection: triggers when element crosses the center of the viewport
+    // Adjusted detection for better feel
     const observerOptions = {
         root: null,
-        rootMargin: "-45% 0px -45% 0px",
+        rootMargin: "-40% 0px -40% 0px",
         threshold: 0
     };
 
@@ -782,7 +785,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     // Update Bubble text if chat is closed
                     if (!isChatOpen) {
-                        bubble.innerHTML = `Summarize <b>${sectionId.toUpperCase()}</b>?`; // Use bold for emphasis
+                        bubble.innerHTML = `Summarize <b>${sectionId.toUpperCase()}</b>?`;
                         bubble.classList.add('visible');
                     } else {
                         // If chat is OPEN, provide the new summary automatically with typing effect
@@ -791,7 +794,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         });
-    });
+    }, observerOptions);
 
     // Observe all sections
     document.querySelectorAll('section, header').forEach(section => {
