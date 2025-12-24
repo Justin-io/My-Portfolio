@@ -1382,6 +1382,12 @@
             }
         }
 
+        @media (max-width: 1024px) {
+            .nav-cta {
+                display: none !important;
+            }
+        }
+
         @media (max-width: 768px) {
             nav {
                 padding: 20px;
@@ -1956,15 +1962,19 @@
             flex-direction: column;
             overflow: hidden;
             transform-origin: bottom right;
-            transform: scale(0);
+            transform: scale(0.5) translate(20px, 20px);
             opacity: 0;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            clip-path: circle(0% at 100% 100%);
+            transition: clip-path 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+                opacity 0.5s ease;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
         }
 
         #ai-chat-window.open {
-            transform: scale(1);
+            transform: scale(1) translate(0, 0);
             opacity: 1;
+            clip-path: circle(150% at 100% 100%);
         }
 
         .chat-header {
@@ -2121,5 +2131,99 @@
                 right: 0;
                 height: 400px;
                 bottom: 70px;
+            }
+        }
+
+        /* Glitch Animation for Hero Image Swap */
+        @keyframes glitch-skew {
+            0% {
+                transform: skew(0deg);
+            }
+
+            20% {
+                transform: skew(-10deg);
+            }
+
+            40% {
+                transform: skew(10deg);
+            }
+
+            60% {
+                transform: skew(-5deg);
+            }
+
+            80% {
+                transform: skew(5deg);
+            }
+
+            100% {
+                transform: skew(0deg);
+            }
+        }
+
+        @keyframes glitch-flash {
+            0% {
+                opacity: 1;
+                filter: brightness(1);
+            }
+
+            25% {
+                opacity: 0.8;
+                filter: brightness(2) hue-rotate(90deg);
+            }
+
+            50% {
+                opacity: 1;
+                filter: brightness(1);
+            }
+
+            75% {
+                opacity: 0.8;
+                filter: brightness(3) invert(1);
+            }
+
+            100% {
+                opacity: 1;
+                filter: brightness(1);
+            }
+        }
+
+        .glitch-effect {
+            animation: glitch-skew 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both,
+                glitch-flash 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+        }
+
+        /* Glitch Entrance for Chat Window */
+        @keyframes window-glitch-entrance {
+            0% {
+                clip-path: inset(50% 0 50% 0);
+                transform: scale(0.8) translateX(-20px);
+                filter: hue-rotate(90deg);
+            }
+
+            20% {
+                clip-path: inset(10% 0 60% 0);
+                transform: scale(0.9) translateX(20px);
+            }
+
+            40% {
+                clip-path: inset(80% 0 5% 0);
+                transform: scale(1.05) translateX(-10px);
+                filter: invert(1);
+            }
+
+            60% {
+                clip-path: inset(0 0 0 0);
+                transform: scale(0.95) translateX(5px);
+            }
+
+            80% {
+                transform: scale(1.02);
+                filter: none;
+            }
+
+            100% {
+                transform: scale(1);
+                clip-path: inset(0 0 0 0);
             }
         }

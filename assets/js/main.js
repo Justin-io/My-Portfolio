@@ -690,9 +690,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!heroImg) return;
 
         heroInterval = setInterval(() => {
-            heroImg.style.transition = "transform 0.5s ease-in-out";
-            heroImg.style.transform = "rotateY(90deg)";
+            // Trigger Glitch
+            heroImg.classList.add('glitch-effect');
 
+            // Swap Image mid-glitch
             setTimeout(() => {
                 if (heroImg.src.includes('me.jpg')) {
                     heroImg.src = FAB_IMAGE_REST;
@@ -701,8 +702,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     heroImg.src = HERO_IMAGE_ORIGINAL;
                 }
-                heroImg.style.transform = "rotateY(0deg)";
-            }, 500);
+            }, 150); // Swap at 150ms
+
+            // Remove Glitch class after animation
+            setTimeout(() => {
+                heroImg.classList.remove('glitch-effect');
+            }, 300); // Total duration 300ms
+
         }, 2600);
     }
 
@@ -714,9 +720,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const heroImg = document.querySelector('.hero-card-content img');
         if (heroImg) {
             // Reset to original state
-            heroImg.style.transition = "none";
+            heroImg.classList.remove('glitch-effect');
             heroImg.src = HERO_IMAGE_ORIGINAL;
-            heroImg.style.transform = "rotateY(0deg)";
         }
     }
 
