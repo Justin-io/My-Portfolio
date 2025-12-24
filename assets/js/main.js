@@ -516,3 +516,285 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+// Timeline Media Carousel Logic
+document.addEventListener('DOMContentLoaded', function () {
+    // 1. Auto-scroll logic (existing)
+    const carousels = document.querySelectorAll('.timeline-carousel');
+    carousels.forEach(carousel => {
+        const images = carousel.querySelectorAll('.timeline-img');
+        if (images.length === 0) return;
+        let currentIndex = 0;
+        setInterval(() => {
+            images[currentIndex].classList.remove('active');
+            currentIndex = (currentIndex + 1) % images.length;
+            images[currentIndex].classList.add('active');
+        }, 3000);
+    });
+
+    // 2. Album Modal Logic
+    const modal = document.getElementById('timeline-modal');
+    if (modal) {
+        const modalImg = document.getElementById('img01');
+        const captionText = document.getElementById('caption');
+        const closeModal = document.querySelector('.close-modal');
+        const prevBtn = document.getElementById('modal-prev');
+        const nextBtn = document.getElementById('modal-next');
+
+        let currentAlbumImages = []; // Array of image sources
+        let currentAlbumIndex = 0;
+
+        // Open Album Function
+        window.openAlbum = function (containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            // Collect all images from this specific container
+            const imgs = container.querySelectorAll('.timeline-img');
+            currentAlbumImages = Array.from(imgs).map(img => ({
+                src: img.src,
+                alt: img.alt
+            }));
+
+            if (currentAlbumImages.length === 0) return;
+
+            // Find which one is currently active to start with, or default to 0
+            // Actually, usually better to start from 0 if it's an album view, 
+            // OR find the one currently visible in the carousel.
+            const activeImg = container.querySelector('.timeline-img.active');
+            currentAlbumIndex = Array.from(imgs).indexOf(activeImg);
+            if (currentAlbumIndex === -1) currentAlbumIndex = 0;
+
+            updateModalImage();
+
+            modal.style.display = 'block';
+            setTimeout(() => modal.classList.add('show'), 10);
+            document.body.style.overflow = 'hidden';
+        };
+
+        // Update Image
+        function updateModalImage() {
+            if (currentAlbumImages.length === 0) return;
+            const imgData = currentAlbumImages[currentAlbumIndex];
+
+            // Fade out slightly
+            modalImg.style.opacity = '0.5';
+
+            setTimeout(() => {
+                modalImg.src = imgData.src;
+                captionText.innerText = `(${currentAlbumIndex + 1}/${currentAlbumImages.length}) ${imgData.alt}`;
+                modalImg.style.opacity = '1';
+            }, 150);
+        }
+
+        // Navigation Events
+        if (prevBtn) {
+            prevBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent closing modal
+                currentAlbumIndex = (currentAlbumIndex - 1 + currentAlbumImages.length) % currentAlbumImages.length;
+                updateModalImage();
+            });
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                currentAlbumIndex = (currentAlbumIndex + 1) % currentAlbumImages.length;
+                updateModalImage();
+            });
+        }
+
+        // Keyboard Nav
+        document.addEventListener('keydown', function (e) {
+            if (modal.style.display === 'block') {
+                if (e.key === 'ArrowLeft') {
+                    currentAlbumIndex = (currentAlbumIndex - 1 + currentAlbumImages.length) % currentAlbumImages.length;
+                    updateModalImage();
+                } else if (e.key === 'ArrowRight') {
+                    currentAlbumIndex = (currentAlbumIndex + 1) % currentAlbumImages.length;
+                    updateModalImage();
+                } else if (e.key === 'Escape') {
+                    close();
+                }
+            }
+        });
+
+        // Close functions
+        const close = () => {
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+            }, 300);
+        };
+
+        if (closeModal) {
+            closeModal.addEventListener('click', close);
+        }
+
+        modal.addEventListener('click', function (e) {
+            if (e.target === modal || e.target.classList.contains('modal-nav-container')) {
+                close();
+            }
+        });
+    }
+});
+
+/* AI Chat Assistant Logic */
+document.addEventListener('DOMContentLoaded', () => {
+    const chatContainer = document.getElementById('ai-assistant-container');
+    if (!chatContainer) return;
+
+    // --- FAB Configuration ---
+    // Set to true to use a static image instead of the Lottie animation
+    const USE_FAB_IMAGE = false;
+    const FAB_IMAGE_URL = 'assets/img/my-avatar.png'; // Replace with your image path
+    // -------------------------
+
+    const toggleBtn = document.getElementById('ai-toggle-btn');
+    const chatWindow = document.getElementById('ai-chat-window');
+    const closeBtn = document.getElementById('close-chat');
+    const bubble = document.getElementById('ai-notification-bubble');
+    const messagesContainer = document.getElementById('chat-messages');
+
+    // Apply FAB Image if enabled
+    if (USE_FAB_IMAGE) {
+        toggleBtn.innerHTML = `<img src="${FAB_IMAGE_URL}" alt="AI Assistant">`;
+        toggleBtn.style.background = 'transparent'; // Remove white background for image if needed
+        toggleBtn.style.boxShadow = 'none'; // Optional: cleaner look for some avatars
+    }
+
+    // Section Summaries
+    const summaries = {
+        'home': "Welcome to the digital realm of Justin Alexia Andrew. I am an innovator fusing AI, cybersecurity, and theoretical physics to build the future.",
+        'about': "About Justin: A B.Tech Data Science scholar at IES College of Engineering. He is a multi-disciplinary researcher driven by curiosity in the quantum capability of the universe.",
+        'projects': "Key Projects: Features the 'HOPE Platform' for connecting minds, 'ShopRoyince' e-commerce, and 'TexidoMeg' for cyber-education.",
+        'research': "Research Frontiers: Currently developing 'Q-SAFE', a quantum-inspired security framework, and the 'Chronon-Super Quantum Level Model' of spacetime.",
+        'skills': "Tech Stack: Proficient in Python, C++, React, Next.js, and advanced ethical hacking tools. A true full-stack innovator.",
+        'timeline': "The Journey: From early hacking curiosity to founding startups and publishing groundbreaking theories. A timeline of continuous evolution.",
+        'contact': "Connect: Open for high-impact research collaborations, consulting in AI/Security, and discussions on theoretical physics."
+    };
+
+    let currentSection = 'home';
+    let isChatOpen = false;
+    let hasGreeted = false;
+
+    // Toggle Chat
+    function toggleChat() {
+        isChatOpen = !isChatOpen;
+        if (isChatOpen) {
+            chatWindow.classList.add('open');
+            bubble.classList.remove('visible'); // Hide bubble when chat is open
+            if (!hasGreeted || messagesContainer.children.length === 0) {
+                addMessage("Hello! I'm your AI guide. I can summarize any section you're viewing.", 'bot');
+                hasGreeted = true;
+            }
+            // Provide summary for current section immediately
+            provideSummary(currentSection);
+        } else {
+            chatWindow.classList.remove('open');
+        }
+    }
+
+    // Add Message to Chat
+    let currentTypingInterval = null;
+
+    function addMessage(text, sender, isTyping = false) {
+        const msgDiv = document.createElement('div');
+        msgDiv.classList.add(sender === 'bot' ? 'bot-message' : 'user-message');
+
+        if (isTyping && sender === 'bot') {
+            msgDiv.innerText = "";
+            messagesContainer.appendChild(msgDiv);
+
+            let i = 0;
+            // Speed up typing for longer texts
+            const typingSpeed = text.length > 100 ? 15 : 25;
+
+            // Clear previous typing if any (optional, usually we want to finish)
+            // if (currentTypingInterval) clearInterval(currentTypingInterval);
+
+            currentTypingInterval = setInterval(() => {
+                msgDiv.innerText += text.charAt(i);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                i++;
+                if (i > text.length - 1) {
+                    clearInterval(currentTypingInterval);
+                    currentTypingInterval = null;
+                }
+            }, typingSpeed);
+
+        } else {
+            msgDiv.innerText = text;
+            messagesContainer.appendChild(msgDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+    }
+
+    // Provide Summary
+    let lastSummarySection = null;
+    function provideSummary(sectionId) {
+        if (!sectionId || !summaries[sectionId]) return;
+
+        // Don't repeat if it's the same section interaction
+        if (sectionId === lastSummarySection && isChatOpen) return;
+
+        const summary = summaries[sectionId];
+        const message = `Here is a summary of the ${sectionId.charAt(0).toUpperCase() + sectionId.slice(1)} section:\n\n${summary}`;
+
+        // Use typing effect primarily when auto-triggered
+        addMessage(message, 'bot', true);
+        lastSummarySection = sectionId;
+    }
+
+    // Event Listeners
+    toggleBtn.addEventListener('click', toggleChat);
+    closeBtn.addEventListener('click', () => {
+        isChatOpen = false;
+        chatWindow.classList.remove('open');
+    });
+
+    bubble.addEventListener('click', () => {
+        if (!isChatOpen) toggleChat();
+    });
+
+    // Interaction Observer for Sections
+    // Precise detection: triggers when element crosses the center of the viewport
+    const observerOptions = {
+        root: null,
+        rootMargin: "-45% 0px -45% 0px",
+        threshold: 0
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const sectionId = entry.target.id;
+                if (summaries[sectionId]) {
+                    currentSection = sectionId;
+
+                    // Trigger "Thinking" Animation Effect
+                    const player = document.querySelector('lottie-player');
+                    if (player) {
+                        player.stop();
+                        player.play();
+                    }
+
+                    // Update Bubble text if chat is closed
+                    if (!isChatOpen) {
+                        bubble.innerHTML = `Summarize <b>${sectionId.toUpperCase()}</b>?`; // Use bold for emphasis
+                        bubble.classList.add('visible');
+                    } else {
+                        // If chat is OPEN, provide the new summary automatically with typing effect
+                        provideSummary(sectionId);
+                    }
+                }
+            }
+        });
+    });
+
+    // Observe all sections
+    document.querySelectorAll('section, header').forEach(section => {
+        if (section.id) observer.observe(section);
+    });
+});

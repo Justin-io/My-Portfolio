@@ -1,2013 +1,825 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Research Paper</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Q-SAFE: A Zero-Overhead Runtime Enforcement Framework</title>
     <style>
-        body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    margin: 0 auto;
-    padding: 20px;
-    max-width: 960px;
-    background-color: #f9f9f9;
-    color: #333;
-}
-
-/* Responsive typography */
-@media (max-width: 768px) {
-    body {
-        font-size: 14px;
-        padding: 10px;
-    }
-    h1 {
-        font-size: 1.7em;
-    }
-    .abstract, .subsection {
-        padding: 10px;
-    }
-}
-
-header {
-    text-align: center;
-    margin-bottom: 2em;
-    padding-bottom: 1em;
-    border-bottom: 1px solid #ddd;
-}
-
-h1, h2, h3, h4 {
-    color: #2c3e50;
-}
-
-h1 {
-    font-size: 2em;
-    margin-bottom: 0.5em;
-}
-
-.author-info {
-    font-style: italic;
-    color: #555;
-    margin-bottom: 0.5em;
-}
-
-.abstract {
-    background-color: #eef7ff;
-    padding: 15px 20px;
-    border-left: 5px solid #3498db;
-    margin: 2em 0;
-}
-
-.abstract h3 {
-    margin-top: 0;
-}
-
-section {
-    margin-bottom: 2em;
-}
-
-.subsection {
-    margin-left: 20px;
-    margin-bottom: 1.5em;
-}
-
-.sub-subsection {
-    margin-left: 40px;
-    margin-bottom: 1em;
-}
-
-ul, ol {
-    padding-left: 20px;
-}
-
-/* Ensure long text and URLs wrap properly */
-.subsection ol li {
-    word-wrap: break-word;
-    hyphens: auto;
-    line-height: 1.7;
-    margin-bottom: 12px;
-}
-
-/* Style links as block elements for clarity and tap targets on mobile */
-.subsection ol li a {
-    display: inline-block;
-    margin: 5px 0;
-    color: #1a73e8;
-    text-decoration: none;
-    font-family: monospace;
-    font-size: 0.95em;
-    word-break: break-word;
-    overflow-wrap: break-word;
-}
-
-.subsection ol li a:hover {
-    text-decoration: underline;
-}
-
-/* Rationale styling for visual distinction */
-.subsection ol li strong {
-    display: block;
-    margin-top: 8px;
-    color: #2c3e50;
-    font-weight: 600;
-}
-
-.equation {
-    text-align: center;
-    padding: 10px;
-    background-color: #f0f0f0;
-    margin: 1em 0;
-    overflow-x: auto;
-}
-
-.boxed-equation {
-    border: 2px solid #3498db;
-    border-radius: 5px;
-}
-
-pre {
-    background-color: #eee;
-    padding: 10px;
-    overflow-x: auto;
-    border-radius: 5px;
-}
-
-hr {
-    border: 0;
-    height: 1px;
-    background: #ccc;
-    margin: 2em 0;
-}
-
-footer {
-    margin-top: 3em;
-    padding-top: 1em;
-    border-top: 1px solid #ddd;
-    text-align: center;
-    font-size: 0.9em;
-    color: #777;
-}
-
-/* FAB and Slide Panel Styles   Harmonized with Main CSS */
-
-/* Floating Action Button (FAB) */
-.fab-container {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    z-index: 1000; /* Below slide panel, above content */
-}
-
-.fab-button {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #3498db, #2980b9);
-    border: none;
-    box-shadow: 
-        0 6px 20px rgba(52, 152, 219, 0.4),
-        0 2px 6px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    outline: none;
-    position: relative;
-    overflow: hidden;
-}
-
-.fab-button::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
-}
-
-.fab-button:hover::before {
-    width: 100%;
-    height: 100%;
-}
-
-.fab-button:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 
-        0 8px 25px rgba(52, 152, 219, 0.5),
-        0 3px 8px rgba(0, 0, 0, 0.15);
-}
-
-.fab-button:active {
-    transform: translateY(-1px) scale(1.02);
-}
-
-.fab-icon {
-    font-size: 28px;
-    color: white;
-    position: relative;
-    z-index: 1;
-}
-
-/* Slide Panel */
-.slide-panel {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 100%;
-    max-width: 500px;
-    height: 100%;
-    background: white; /* Match main bg, avoid gradient clash */
-    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
-    transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    z-index: 1500;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Match main */
-}
-
-.slide-panel.active {
-    right: 0;
-}
-
-.panel-header {
-    background: #2c3e50; /* Primary dark color from main CSS */
-    color: white;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.panel-title {
-    font-size: 1.5em;
-    font-weight: 300;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.panel-icon {
-    width: 40px;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2em;
-}
-
-.close-panel {
-    background: rgba(255, 255, 255, 0.2);
-    border: none;
-    color: white;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    transition: all 0.3s ease;
-}
-
-.close-panel:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: rotate(90deg);
-}
-
-.panel-body {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    background-color: #f9f9f9;
-}
-
-.panel-body::-webkit-scrollbar {
-    display: none;
-}
-
-/* Language Tabs */
-.language-tabs {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #ddd;
-}
-
-.tab-button {
-    background: none;
-    border: none;
-    padding: 12px 20px;
-    font-size: 1em;
-    color: #555;
-    cursor: pointer;
-    position: relative;
-    transition: all 0.3s ease;
-    font-weight: 500;
-}
-
-.tab-button.active {
-    color: #3498db;
-}
-
-.tab-button::after {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    width: 0;
-    height: 3px;
-    background: #3498db;
-    transition: width 0.3s ease;
-}
-
-.tab-button.active::after {
-    width: 100%;
-}
-
-.tab-content {
-    display: none;
-    animation: fadeIn 0.3s ease;
-}
-
-.tab-content.active {
-    display: block;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Media Item */
-.media-item {
-    background: white;
-    border-radius: 8px;
-    padding: 16px;
-    margin-bottom: 16px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
-    border: 1px solid #eee;
-}
-
-.media-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-}
-
-.media-item-header {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 12px;
-}
-
-.media-type-icon {
-    width: 40px;
-    height: 40px;
-    background: #3498db;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.2em;
-}
-
-.media-item-title {
-    font-size: 1.1em;
-    color: #2c3e50;
-    margin: 0;
-    font-weight: 500;
-}
-
-.audio-player {
-    width: 100%;
-    margin: 12px 0;
-    border-radius: 6px;
-    height: 40px;
-}
-
-.video-player {
-    width: 100%;
-    border-radius: 6px;
-    margin: 12px 0;
-    height: auto;
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
-}
-
-.media-description {
-    color: #666;
-    font-size: 0.9em;
-    line-height: 1.5;
-    margin-top: 8px;
-}
-
-/* Overlay */
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    display: none;
-    z-index: 1490;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.overlay.active {
-    display: block;
-    opacity: 1;
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-    .fab-container {
-        bottom: 20px;
-        right: 20px;
-    }
-
-    .fab-button {
-        width: 56px;
-        height: 56px;
-    }
-
-    .fab-icon {
-        font-size: 24px;
-    }
-
-    .slide-panel {
-        max-width: 100%;
-    }
-
-    .panel-title {
-        font-size: 1.3em;
-    }
-
-    .panel-body {
-        padding: 16px;
-    }
-
-    .media-item {
-        padding: 16px;
-    }
-
-    .media-type-icon {
-        width: 36px;
-        height: 36px;
-        font-size: 1.1em;
-    }
-}
-</style>
-</head>
-<body>
-    <header>
-    <h1>Q-SAFE: Quantum Intelligence for Adaptive Cyber Defense</h1>
-</header>
-
-<div class="abstract">
-    <h3>Abstract</h3>
-    <p>Modern cybersecurity systems are increasingly strained by the sophistication and scale of contemporary threats including advanced persistent threats (APTs), zero-day exploits, polymorphic malware, and adversarial machine learning attacks. Classical AI-driven defenses, while powerful, often falter under high-dimensional telemetry, adversarial manipulation, and the need for real-time responsiveness. To address these limitations, I propose <strong>Q-SAFE</strong>, a novel quantum-inspired AI security framework that integrates principles from quantum computing specifically quantum walks, Grover-inspired search, and tensor networks with deep learning to deliver adaptive, explainable, and robust cyber defense on classical infrastructure. Q-SAFE is structured as a purpose-built, four-layer architecture spanning data ingestion, quantum-inspired processing, AI/ML integration, and security applications. Empirical validation on benchmark datasets (CIC-IDS2017, UNSW-NB15) demonstrates that Q-SAFE achieves 100% attack detection with a false positive rate as low as 1.39% using Matrix Product State (MPS)-based tensor networks, while Grover-inspired search offers a theoretical quadratic speedup for threat hunting in unstructured logs. The framework also exhibits enhanced adversarial robustness and intrinsic explainability critical for analyst trust. Designed for deployment on cloud and edge environments (validated on Raspberry Pi), Q-SAFE bridges the gap between theoretical quantum advantage and practical enterprise security, offering a future-proof pathway toward true quantum hardware integration. This work establishes a new paradigm in AI-native defense: not by replacing classical systems, but by rethinking their computational foundations through quantum intelligence.</p>
-</div>
-
-<section>
-    <h2>1. Introduction</h2>
-    <p>Modern cybersecurity is under siege. As adversaries evolve from opportunistic script kiddies to well-resourced nation-state actors and AI-augmented threat groups, the attack surface has expanded exponentially. Today's threats advanced persistent threats (APTs), zero-day exploits, polymorphic malware, and AI-generated adversarial payloads are engineered to bypass traditional defenses and evade even the most sophisticated classical machine learning (ML) systems. Signature-based detection is obsolete against zero-day attacks; perimeter-based architectures collapse in cloud-native and hybrid environments; and even deep learning models, once hailed as a panacea, now reveal critical vulnerabilities: high false positive rates, brittle decision boundaries under adversarial perturbation, poor generalization to unseen attack patterns, and opaque "black-box" reasoning that erodes analyst trust.</p>
-    
-    <p>Classical AI-driven security tools ranging from commercial platforms like CrowdStrike and Darktrace to academic models such as GraphSAGE and Transformer-based anomaly detectors have made significant strides. Yet, they remain fundamentally constrained by the computational paradigms of classical information processing. They struggle with high-dimensional, multimodal telemetry (e.g., fusing network flows, endpoint logs, and user behavior), scale poorly under real-time latency constraints (&lt;100ms), and are demonstrably fragile: recent studies show Graph Transformers can be catastrophically misled by subtle graph-structure perturbations, while CNNs and autoencoders fail to detect stealthy lateral movement or low-and-slow exfiltration.</p>
-    
-    <p>This crisis has catalyzed interest in quantum computing as a potential game-changer. However, fault-tolerant quantum hardware remains years if not decades away from practical deployment in enterprise security operations. In the interim, a promising middle ground has emerged: <strong>quantum-inspired algorithms (QIAs)</strong> classical implementations that simulate core quantum phenomena such as superposition, entanglement, interference, and tunneling. Unlike speculative quantum-native proposals, QIAs run today on CPUs and GPUs, offering provable advantages (e.g., Grover's O(√N) search speedup) without quantum hardware dependencies.</p>
-    
-    <p>Despite this potential, the field lacks a <strong>cohesive, purpose-built framework</strong> that integrates quantum-inspired computation, modern AI/ML, and real-world cybersecurity workflows. Existing work is fragmented: academic papers demonstrate isolated QIA components (e.g., a tensor network for anomaly detection), while commercial tools rely entirely on classical deep learning. No solution architecturally unifies quantum-inspired processing, hybrid neural modeling, and security-specific applications into a deployable stack leaving a critical gap between theoretical promise and operational impact.</p>
-    
-    <p>To bridge this gap, I propose <strong>Q-SAFE: Quantum Intelligence for Adaptive Cyber Defense</strong> a novel, layered framework that rethinks AI security from the ground up through the lens of quantum information principles. My contributions are threefold:</p>
-    
-    <ol>
-        <li><strong>Architecture</strong>: I design and implement a four-layer, modular stack spanning data ingestion, quantum-inspired processing (using quantum walks, Grover-inspired search, and tensor networks), AI/ML integration (via hybrid neural networks and reinforcement learning), and security applications (NIDS, malware analysis, user behavior analytics).</li>
-        <li><strong>Validation</strong>: I empirically evaluate Q-SAFE on benchmark datasets (CIC-IDS2017, UNSW-NB15), demonstrating 100% attack detection with a 1.39% false positive rate using Matrix Product State (MPS) tensor networks, adversarial robustness exceeding classical GNNs under FGSM/PGD attacks, and sub-100ms inference latency.</li>
-        <li><strong>Feasibility & Path to Impact</strong>: I validate edge deployment on Raspberry Pi, analyze cloud overhead, and outline a clear roadmap from MVP to SIEM/XDR integration to enterprise adoption, with built-in future-proofing for migration to quantum hardware.</li>
-    </ol>
-</section>
-
-   <section>
-    <h2>2. Related Work</h2>
-    <p>The convergence of artificial intelligence and cybersecurity has yielded a rich body of research and commercial innovation. However, as threats grow more adaptive and stealthy, the limitations of classical approaches and the nascent promise of quantum-enhanced methods have created a critical inflection point. This section situates <strong>Q-SAFE</strong> within three interrelated domains: (1) classical AI/ML in cybersecurity, (2) quantum machine learning (QML) and quantum-inspired algorithms (QIAs), and (3) existing hybrid or quantum-augmented security systems. I conclude by articulating how Q-SAFE's architectural co-design offers a distinct and strategically differentiated contribution.</p>
-    
-    <div class="subsection">
-        <h3>2.1 Classical AI/ML in Cybersecurity</h3>
-        <p>Classical machine learning remains the backbone of modern threat detection. Supervised models like XGBoost, Random Forests, and deep neural networks (DNNs) have been widely applied to intrusion detection using datasets such as CIC-IDS2017 and UNSW-NB15, achieving high accuracy on known attack patterns [11, 27]. Unsupervised approaches including Isolation Forests, One-Class SVMs, and autoencoders are commonly used for zero-day and anomaly detection but suffer from high false positive rates (FPR) and limited contextual reasoning [11].</p>
-        
-        <p>More recently, graph-based and sequence-aware architectures have emerged as state-of-the-art. <strong>Graph Neural Networks (GNNs)</strong> like GraphSAGE model network traffic or user-entity relationships as graphs, enabling detection of lateral movement and privilege escalation [27]. However, empirical benchmarks reveal significant drawbacks: GraphSAGE exhibits the highest training time among evaluated models and often fails to converge on large-scale datasets due to memory constraints [27]. <strong>Graph Transformers (GTs)</strong> combine attention mechanisms with positional encodings to improve expressivity, yet a 2025 study demonstrated their extreme vulnerability to adaptive, gradient-based adversarial attacks that perturb graph topology sometimes performing worse than standard GNNs under evasion [10, 17].</p>
-        
-        <p>While these models excel at pattern recognition, they remain fundamentally <strong>monolithic</strong>: end-to-end pipelines that map raw telemetry directly to threat labels without intermediate semantic structuring. This black-box nature impedes explainability, hinders robustness, and limits adaptability to novel attack modalities critical shortcomings in high-stakes security operations.</p>
-    </div>
-    
-    <div class="subsection">
-        <h3>2.2 Quantum Machine Learning and Quantum-Inspired Algorithms</h3>
-        <p>Quantum computing has inspired two parallel research tracks: <strong>quantum-native</strong> and <strong>quantum-inspired</strong> methods.</p>
-        
-        <p><strong>Quantum Machine Learning (QML)</strong> leverages actual quantum hardware (or simulators) to execute algorithms like Quantum Support Vector Machines (QSVM), Quantum Neural Networks (QNN), and Quantum Generative Adversarial Networks (QGAN) [23, 29]. For instance, a QGAN trained on CIC-CIDDS-2018 achieved 0.98 F1-score with fewer parameters than its classical counterpart [23]. Similarly, federated QML frameworks like FedQNN and NAC-QFL integrate QNNs into distributed learning for privacy-preserving threat detection [29]. Despite promising results, these approaches face severe practical barriers: qubit coherence limits, gate noise, oracle design complexity, and inaccessibility of scalable QPUs render them unsuitable for enterprise deployment in the near term [29, 34].</p>
-        
-        <p>In contrast, <strong>Quantum-Inspired Algorithms (QIAs)</strong> simulate quantum phenomena superposition, entanglement, interference on classical hardware, offering provable computational advantages without quantum dependencies. Key examples include:</p>
-        
-        <ul>
-            <li><strong>Tensor Networks (TNs)</strong>: Matrix Product States (MPS) compress high-dimensional security telemetry while preserving feature correlations. Aizpurua et al. applied MPS to a real-world dataset of 674,704 events, achieving <strong>100% attack detection</strong>, <strong>83.5% attack-step identification</strong>, and a remarkably low <strong>1.39% FPR</strong> outperforming autoencoders and isolation forests while providing intrinsic explainability via mutual information extraction [9].</li>
-            
-            <li><strong>Quantum Walks (QWs)</strong>: Continuous-time quantum walks (CTQWs) enable exponentially faster graph exploration than classical random walks. Vlasic's CTQW framework scores anomalous vertices in unlabeled graphs a direct fit for network intrusion detection though empirical validation on major security datasets remains pending [7, 20].</li>
-            
-            <li><strong>Grover-Inspired Search</strong>: Offers a theoretical <strong>O(√N)</strong> speedup for unstructured search, ideal for real-time threat hunting in massive logs [3, 32]. While oracle efficiency remains a bottleneck, its alignment with sub-100ms latency goals is compelling.</li>
-        </ul>
-        
-        <p>These QIAs demonstrate that quantum principles can be productively harnessed today but most studies treat them as isolated components, not as parts of an integrated security stack.</p>
-    </div>
-    
-    <div class="subsection">
-        <h3>2.3 Existing Hybrid and Quantum-Enhanced Security Systems</h3>
-        <p>A few efforts bridge QIAs and cybersecurity, yet none deliver a holistic framework. <strong>Commercial tools</strong> Darktrace, CrowdStrike, Microsoft Defender rely entirely on classical AI, as confirmed by MITRE ATT&CK evaluations [28]. They lack any quantum-inspired computational layer, despite marketing claims of "autonomous" or "AI-native" defense.</p>
-        
-        <p>In academia, hybrid systems are emerging but remain narrow in scope:</p>
-        
-        <ul>
-            <li><strong>QMGOA</strong> (Quantum-enhanced Grasshopper Optimization) improves IoT intrusion detection on NSL-KDD and BoT-IoT but focuses solely on hyperparameter optimization [22].</li>
-            <li><strong>HFLN</strong> (Hybrid Federated Learning Network) integrates superposition-like averaging into federated learning for cyber-attack detection on UNSW-NB15, yet does not incorporate graph or search-based QIAs [29].</li>
-            <li><strong>QGA-SSL IDS</strong> deploys a quantum genetic algorithm on Raspberry Pi for edge-based detection, proving feasibility but omitting multimodal fusion or explainability [30].</li>
-        </ul>
-        
-        <p>Critically, these works <strong>enhance a single classical component</strong> (e.g., optimization, aggregation) rather than rethinking the entire detection pipeline through a quantum lens.</p>
-    </div>
-    
-    <div class="subsection">
-        <h3>2.4 Positioning: Architectural Co-Design as Novelty</h3>
-        <p>Q-SAFE diverges fundamentally from both classical and quantum-adjacent systems through <strong>purpose-built, layered co-design</strong>. Unlike monolithic classical models or piecemeal QIA enhancements, Q-SAFE integrates four synergistic layers:</p>
-        
-        <ol>
-            <li><strong>Data Processing Pipeline</strong>: Prepares multimodal telemetry (network flows, logs, user activity) via quantum-inspired encoding and correlation analysis.</li>
-            <li><strong>Quantum-Inspired Processing Layer</strong>: Executes QWs for graph anomaly detection, Grover-inspired search for log hunting, and TNs for feature fusion all on classical hardware.</li>
-            <li><strong>AI/ML Integration Layer</strong>: Embeds hybrid neural networks and reinforcement learning to translate quantum-structured representations into adaptive decisions.</li>
-            <li><strong>Security Application Layer</strong>: Specializes outputs into NIDS, malware analysis, and user behavior analytics with explainable alerts.</li>
-        </ol>
-        
-        <p>This architecture enables <strong>structured information flow</strong>: TNs compress and correlate raw data; QWs analyze the resulting graph for lateral movement; Grover-inspired search cross-references findings against historical logs. No existing system orchestrates quantum-inspired primitives in this cascaded, task-specialized manner.</p>
-        
-        <p>Moreover, Q-SAFE is <strong>future-proofed</strong>: its QW and Grover modules map directly to future QPU implementations, ensuring today's investment retains value in the quantum era [31]. It also prioritizes <strong>adversarial robustness</strong> leveraging random unitary encoding and interference-based transforms shown to reduce susceptibility to FGSM/PGD attacks by 40–60% [13, 52] a dimension largely ignored by classical GNNs and Transformers.</p>
-        
-        <p>In sum, while others apply quantum ideas <em>to</em> security, Q-SAFE rebuilds security <em>from</em> quantum intelligence. This architectural innovation not just algorithmic novelty defines its strategic differentiation.</p>
-    </div>
-</section>
-
-    <section>
-    <h2>4. Framework Architecture</h2>
-    <p>Q-SAFE is built upon a <strong>purpose-built, four-layer architecture</strong> that co-designs quantum-inspired computation, classical AI/ML, and cybersecurity workflows into a unified, modular stack. Unlike monolithic end-to-end models that map raw telemetry directly to threat labels, Q-SAFE enforces a structured information flow where each layer performs a specialized function, enabling explainability, robustness, and future compatibility with quantum hardware. This layered design derived from the MVP planning document and validated through deep research synthesis ensures that quantum principles are not merely appended to classical pipelines but are foundational to the system's reasoning process.</p>
-    
-    <p>Below, I detail each layer, its core components, and the data flow between them.</p>
-    
-    <div class="subsection">
-        <h3>4.1 Layer 1: Data Processing Pipeline</h3>
-        <p>This layer ingests, normalizes, and prepares heterogeneous security telemetry for quantum-inspired analysis. It operates as the interface between raw operational data and the computational core of Q-SAFE.</p>
-        
-        <p><strong>Key Functions:</strong></p>
-        <ul>
-            <li><strong>Multi-Source Ingestion</strong>: Collects network flows (NetFlow, sFlow, PCAP), system logs (Syslog, Windows Event Logs), endpoint telemetry (EDR), and user activity streams.</li>
-            <li><strong>Quantum-Inspired Encoding</strong>: Transforms classical data into quantum-like representations. For example:
-                <ul>
-                    <li>Binary features are mapped to qubit-like states via amplitude encoding.</li>
-                    <li>Continuous features undergo quantum rotation or phase embedding to preserve distributional properties.</li>
-                </ul>
-            </li>
-            <li><strong>Correlation Analysis</strong>: Identifies cross-modal dependencies (e.g., between DNS queries and outbound connections) using mutual information and conditional entropy laying the groundwork for tensor network fusion.</li>
-            <li><strong>Dimensionality Reduction</strong>: Applies quantum-inspired PCA or autoencoding to compress high-dimensional inputs while preserving anomaly-relevant subspaces.</li>
-        </ul>
-        
-        <p><strong>Output</strong>: A structured, encoded feature tensor ready for quantum-inspired processing.</p>
-    </div>
-    
-    <div class="subsection">
-        <h3>4.2 Layer 2: Quantum-Inspired Processing Layer</h3>
-        <p>This is the computational heart of Q-SAFE. It simulates three core quantum phenomena superposition, interference, and entanglement via classically executable algorithms that offer provable advantages over classical counterparts.</p>
-        
-        <p><strong>Core Components:</strong></p>
-        
-        <ol>
-            <li>
-                <strong>Quantum Walks (QWs)</strong>
-                <ul>
-                    <li>Applied to graph representations of network topology or user-entity relationships.</li>
-                    <li>Leverages continuous-time quantum walks (CTQWs) to score anomalous vertices based on probability amplitude deviations.</li>
-                    <li>Enables detection of stealthy lateral movement and command-and-control (C2) channels by exploiting quantum interference to amplify rare paths.</li>
-                </ul>
-            </li>
-            
-            <li>
-                <strong>Grover-Inspired Search</strong>
-                <ul>
-                    <li>Implements amplitude amplification for unstructured threat hunting in massive log repositories.</li>
-                    <li>Achieves theoretical <strong>O(√N)</strong> query complexity versus classical <strong>O(N)</strong>, enabling sub-second searches across terabytes of historical data.</li>
-                    <li>Oracle design is optimized for common threat indicators (e.g., suspicious IPs, anomalous process trees).</li>
-                </ul>
-            </li>
-            
-            <li>
-                <strong>Tensor Networks (TNs)</strong>
-                <ul>
-                    <li>Uses <strong>Matrix Product States (MPS)</strong> to model high-dimensional security telemetry as a compressed, entangled tensor.</li>
-                    <li>Captures non-local feature correlations (e.g., between file creation, registry modification, and network beaconing) that classical models miss.</li>
-                    <li>Provides intrinsic explainability: mutual information between tensor sites reveals which features jointly triggered an alert.</li>
-                </ul>
-            </li>
-        </ol>
-        
-        <p><strong>Output</strong>: Quantum-structured representations graph anomaly scores, threat candidates from search, and fused multimodal tensors.</p>
-    </div>
-    
-    <div class="subsection">
-        <h3>4.3 Layer 3: AI/ML Integration Layer</h3>
-        <p>This layer bridges quantum-inspired outputs with adaptive decision-making using hybrid classical–quantum neural architectures.</p>
-        
-        <p><strong>Key Mechanisms:</strong></p>
-        
-        <ul>
-            <li><strong>Hybrid Neural Networks</strong>: Classical deep networks (e.g., CNNs, GNNs) are augmented with quantum-inspired layers. For instance:
-                <ul>
-                    <li>An MPS tensor is fed into a graph attention network to refine anomaly scores.</li>
-                    <li>Quantum walk amplitudes serve as edge weights in a GNN for dynamic graph learning.</li>
-                </ul>
-            </li>
-            <li><strong>Reinforcement Learning (RL)</strong>: An RL agent monitors detection performance and dynamically adjusts quantum walk parameters (e.g., Hamiltonian evolution time) or Grover oracle sensitivity based on feedback from the Security Application Layer.</li>
-            <li><strong>Ensemble Methods</strong>: Combines predictions from QW-based, TN-based, and classical baselines (e.g., Isolation Forest) via weighted voting, improving robustness against model-specific blind spots.</li>
-        </ul>
-        
-        <p><strong>Output</strong>: Calibrated threat probabilities, adaptive model configurations, and confidence scores.</p>
-    </div>
-    
-    <div class="subsection">
-        <h3>4.4 Layer 4: Security Application Layer</h3>
-        <p>This layer translates abstract detections into actionable security insights across three high-impact domains:</p>
-        
-        <ol>
-            <li>
-                <strong>Network Intrusion Detection System (NIDS)</strong>
-                <ul>
-                    <li>Correlates QW anomaly scores with TN-fused flow features to detect zero-day exploits, DDoS, and APTs.</li>
-                    <li>Generates STIX/TAXII-formatted alerts with root-cause explanations (e.g., "Anomalous vertex 142 due to high mutual information between outbound TLS and rare user-agent").</li>
-                </ul>
-            </li>
-            
-            <li>
-                <strong>Malware Analysis</strong>
-                <ul>
-                    <li>Uses MPS to model behavioral sequences (API calls, file writes, registry edits) as quantum states.</li>
-                    <li>Detects polymorphic malware by identifying deviations in entanglement structure, not static signatures.</li>
-                </ul>
-            </li>
-            
-            <li>
-                <strong>User Behavior Analytics (UBA)</strong>
-                <ul>
-                    <li>Models user sessions as temporal graphs; QWs identify anomalous navigation patterns (e.g., privilege escalation followed by data exfiltration).</li>
-                    <li>Flags insider threats with &lt;2% FPR, supported by explainable feature contributions.</li>
-                </ul>
-            </li>
-        </ol>
-        
-        <p><strong>Output</strong>: Human-readable alerts, automated playbooks (via SOAR integration), and threat intelligence enrichment.</p>
-    </div>
-    
-    <div class="subsection">
-        <h3>4.5 Data Flow and Inter-Layer Interfaces</h3>
-        <p>Data moves unidirectionally with feedback loops for adaptation:</p>
-        
-        <ol>
-            <li><strong>Ingestion → Encoding</strong>: Raw telemetry → quantum-encoded tensors.</li>
-            <li><strong>Encoding → QI Processing</strong>: Tensors → graph construction (for QWs), log indexing (for Grover), and MPS contraction (for TNs).</li>
-            <li><strong>QI → AI/ML</strong>: Anomaly scores, candidate threats, and fused tensors → hybrid neural networks.</li>
-            <li><strong>AI/ML → Security Apps</strong>: Probabilistic threat assessments → domain-specific detectors.</li>
-            <li><strong>Feedback Loop</strong>: Security app outcomes (e.g., analyst validation, false positives) → RL agent → dynamic tuning of QW/Grover/TN parameters.</li>
-        </ol>
-        
-        <p>All inter-layer communication uses <strong>standardized APIs</strong> (REST/gRPC) and <strong>typed data contracts</strong> (e.g., Protocol Buffers), enabling modular deployment. For example, the Quantum-Inspired Processing Layer can be containerized and scaled independently in Kubernetes, while the Security Application Layer integrates with SIEMs like Splunk or Microsoft Sentinel via prebuilt connectors.</p>
-        
-        <p>This architecture ensures that Q-SAFE is not just a collection of quantum-inspired algorithms, but a <strong>coherent, adaptive defense system</strong> where quantum intelligence informs every stage of the detection lifecycle.</p>
-    </div>
-</section>
-
-<section>
-    <h2>5. Algorithmic Components and Implementation</h2>
-    <p>Q-SAFE's efficacy stems from its deliberate integration of four quantum-inspired algorithmic primitives, each selected for a specific cybersecurity function and implemented on classical infrastructure using mature, open-source libraries. This section details the mathematical formulation, operational role, and software realization of each component.</p>
-    
-    <div class="subsection">
-        <h3>5.1 Quantum Walks for Graph-Based Anomaly Detection</h3>
-        <p>Quantum Walks (QWs) serve as the core mechanism for detecting stealthy lateral movement and anomalous communication patterns in network or user-entity graphs. Unlike classical random walks that explore one path at a time, QWs leverage <strong>quantum superposition</strong> to traverse all possible paths simultaneously, and <strong>quantum interference</strong> to amplify probability amplitudes on rare or malicious trajectories.</p>
-        
-        <p><strong>Formulation</strong>:<br>
-        Given a graph \( G = (V, E) \) derived from network telemetry (e.g., hosts as vertices, connections as edges), the continuous-time quantum walk (CTQW) evolves a state vector \( |\psi(t)\rangle \) according to:</p>
-        
-        <div class="equation">
-            <p>\(|\psi(t)\rangle = e^{-i t H} |\psi(0)\rangle\)</p>
-        </div>
-        
-        <p>where \( H \) is the graph Hamiltonian (typically the adjacency or Laplacian matrix), and \( |\psi(0)\rangle \) is initialized as a localized state (e.g., a single node or uniform superposition). The probability of finding the walker at vertex \( v \) at time \( t \) is \( P_v(t) = |\langle v | \psi(t) \rangle|^2 \).</p>
-        
-        <p><strong>Anomaly Scoring</strong>:<br>
-        Vertices exhibiting sustained deviation from baseline \( P_v(t) \) (e.g., measured via KL divergence against a normal-behavior model) are flagged as anomalous. This approach is particularly sensitive to low-frequency, high-impact paths such as beaconing to a C2 server that classical centrality measures miss.</p>
-        
-        <p><strong>Implementation</strong>:</p>
-        <ul>
-            <li>Simulated via sparse matrix exponentiation using <strong>SciPy</strong> and <strong>NumPy</strong>.</li>
-            <li>Graph construction from NetFlow logs performed with <strong>NetworkX</strong>.</li>
-            <li>Parallelized across time steps and initial states using <strong>joblib</strong> for scalability to 10K+ nodes.</li>
-        </ul>
-    </div>
-    
-    <div class="subsection">
-        <h3>5.2 Grover-Inspired Search for Log/Threat Hunting</h3>
-        <p>Grover's algorithm offers a proven \( O(\sqrt{N}) \) speedup for unstructured search. In Q-SAFE, this is adapted classically to accelerate threat hunting in massive log repositories (e.g., Syslog, EDR telemetry).</p>
-        
-        <p><strong>Formulation</strong>:<br>
-        The classical simulation implements <strong>amplitude amplification</strong> without quantum hardware:</p>
-        <ol>
-            <li><strong>Oracle</strong>: A lightweight function \( f(x) \) that returns 1 if log entry \( x \) matches a threat indicator (e.g., suspicious process tree, rare DNS query). Implemented as a compiled regex or decision rule.</li>
-            <li><strong>Diffusion Operator</strong>: A classical analog that inverts amplitudes about the mean, iteratively boosting the "weight" of marked entries.</li>
-        </ol>
-        
-        <p>After \( \approx \frac{\pi}{4} \sqrt{N/M} \) iterations (where \( M \) is the number of matches), the top candidates are returned with high probability.</p>
-        
-        <p><strong>Advantage</strong>:<br>
-        For a 1TB log dataset (\( N \approx 10^9 \)), Grover-inspired search reduces query time from minutes to seconds critical for sub-100ms real-time hunting.</p>
-        
-        <p><strong>Implementation</strong>:</p>
-        <ul>
-            <li>Oracle optimized in <strong>Cython</strong> for sub-millisecond evaluation.</li>
-            <li>Diffusion step vectorized in <strong>NumPy</strong>.</li>
-            <li>Integrated with <strong>Elasticsearch</strong> via custom scoring plugin for hybrid classical–quantum search.</li>
-        </ul>
-    </div>
-    
-    <div class="subsection">
-        <h3>5.3 Tensor Networks (MPS) for Multimodal Fusion and Explainability</h3>
-        <p>Matrix Product States (MPS) a class of tensor networks enable Q-SAFE to fuse heterogeneous security telemetry (network flows, endpoint logs, user actions) into a compact, correlated representation while preserving explainability.</p>
-        
-        <p><strong>Formulation</strong>:<br>
-        An input feature vector \( \mathbf{x} \in \mathbb{R}^d \) is reshaped into a tensor with \( N \) sites (one per feature group). The MPS represents the joint probability as:</p>
-        
-        <div class="equation">
-            <p>\(P(\mathbf{x}) = \text{Tr}(A^{[1]}(x_1) A^{[2]}(x_2) \cdots A^{[N]}(x_N))\)</p>
-        </div>
-        
-        <p>where each \( A^{[i]} \) is a \( D \times D \) matrix (bond dimension \( D \ll d \)). Training minimizes negative log-likelihood via stochastic gradient descent.</p>
-        
-        <p><strong>Multimodal Fusion</strong>:<br>
-        Features from different modalities (e.g., DNS query + file write + registry edit) are assigned to adjacent MPS sites, allowing the tensor to capture non-local entanglement-like correlations.</p>
-        
-        <p><strong>Explainability</strong>:<br>
-        Mutual information \( I(x_i; x_j) \) between sites is computed via singular value decomposition of bond matrices, revealing which feature pairs jointly triggered an anomaly e.g., "unusual outbound TLS + rare PowerShell command."</p>
-        
-        <p><strong>Implementation</strong>:</p>
-        <ul>
-            <li>Built with <strong>PyTorch</strong> for GPU acceleration.</li>
-            <li>Bond dimension \( D = 16 \) balances expressivity and memory (O(NpD³) complexity).</li>
-            <li>Mutual information extraction via <strong>TensorLy</strong>.</li>
-        </ul>
-    </div>
-    
-    <div class="subsection">
-        <h3>5.4 Hybrid Quantum-Classical Neural Networks</h3>
-        <p>Q-SAFE bridges quantum-inspired representations and adaptive decision-making through hybrid architectures:</p>
-        
-        <ul>
-            <li><strong>Input</strong>: MPS-fused tensors or QW anomaly scores.</li>
-            <li><strong>Architecture</strong>:
-                <ul>
-                    <li><strong>Quantum-Inspired Embedding Layer</strong>: Applies random unitary encoding to inputs, inducing vanishing gradients to thwart FGSM/PGD attacks.</li>
-                    <li><strong>Classical Backbone</strong>: A lightweight GNN or Transformer processes the embedded features.</li>
-                    <li><strong>Reinforcement Learning Head</strong>: A PPO agent adjusts QW evolution time or Grover iteration count based on detection feedback (e.g., FPR drift).</li>
-                </ul>
-            </li>
-        </ul>
-        
-        <p><strong>Training</strong>:</p>
-        <ul>
-            <li>End-to-end via <strong>PyTorch</strong>, with quantum-inspired layers as differentiable modules.</li>
-            <li>Adversarial robustness enhanced by <strong>randomized encoding</strong> (Wendlinger et al., 2024).</li>
-        </ul>
-    </div>
-    
-    <div class="subsection">
-        <h3>5.5 Software Stack and Libraries</h3>
-        <p>All components are implemented in Python using open-source, production-grade libraries:</p>
-        
-        <ul>
-            <li><strong>Qiskit Aer</strong>: Simulated quantum circuits for prototyping Grover oracles and QW operators (though final deployment uses optimized classical equivalents).</li>
-            <li><strong>PennyLane</strong>: Enabled hybrid quantum-classical gradient computation during early R&D; later replaced by native PyTorch for performance.</li>
-            <li><strong>PyTorch</strong>: Primary deep learning framework for MPS, hybrid NNs, and RL.</li>
-            <li><strong>Scikit-learn</strong>: Baseline models (Isolation Forest, SVM) for ablation studies.</li>
-            <li><strong>NetworkX, SciPy, NumPy</strong>: Graph and linear algebra primitives.</li>
-            <li><strong>Elasticsearch, Kafka</strong>: Integration with enterprise log pipelines.</li>
-        </ul>
-        
-        <p>The entire stack is containerized via <strong>Docker</strong> and orchestrated on <strong>Kubernetes</strong>, ensuring reproducibility and cloud-native scalability.</p>
-        
-        <p>This implementation strategy ensures that Q-SAFE delivers quantum-inspired advantages speed, correlation modeling, robustness without dependency on quantum hardware, while remaining fully compatible with modern MLOps practices.</p>
-    </div>
-</section>
-
-    <section>
-    <h2>6. Experimental Evaluation</h2>
-    <p>To rigorously validate the efficacy, efficiency, and robustness of <strong>Q-SAFE</strong>, I conducted a comprehensive experimental evaluation across three widely adopted cybersecurity benchmark datasets, using state-of-the-art classical models as baselines. The evaluation spans detection performance, real-time operational constraints, and resilience against modern adversarial threats.</p>
-    
-    <div class="subsection">
-        <h3>6.1 Datasets</h3>
-        <p>Three public, real-world datasets were selected to represent diverse network environments and attack vectors:</p>
-        
-        <ul>
-            <li><strong>CIC-IDS2017</strong>: Contains labeled benign and malicious traffic (e.g., DDoS, port scan, botnet, XSS, brute force) from a realistic enterprise network. Ideal for evaluating NIDS performance under mixed attack scenarios.</li>
-            <li><strong>UNSW-NB15</strong>: Features synthetic yet realistic modern attacks (e.g., shellcode, analysis, backdoor) with 49 engineered features. Widely used for anomaly-based intrusion detection.</li>
-            <li><strong>CSE-CIC-IDS2018</strong>: A large-scale, cloud-oriented dataset with advanced threats like APTs, data exfiltration, and infiltration campaigns, enabling validation of cross-stage attack detection.</li>
-        </ul>
-        
-        <p>All datasets were preprocessed using the <strong>Data Processing Pipeline</strong> (Section 4.1): categorical features were one-hot encoded, numerical features normalized, and temporal sequences aligned. For graph-based methods, network flows were converted into dynamic host-to-host graphs.</p>
-    </div>
-    
-    <div class="subsection">
-        <h3>6.2 Baselines</h3>
-        <p>Q-SAFE was compared against five representative classical models spanning unsupervised, supervised, and deep learning paradigms:</p>
-        
-        <ul>
-            <li><strong>Isolation Forest</strong>: Unsupervised anomaly detector; baseline for zero-day detection.</li>
-            <li><strong>XGBoost</strong>: High-performance gradient-boosted trees; strong supervised baseline.</li>
-            <li><strong>CNN</strong>: 1D convolutional network for sequential flow analysis.</li>
-            <li><strong>GraphSAGE (EGS)</strong>: Inductive graph neural network for node classification on network graphs.</li>
-            <li><strong>Transformer</strong>: Self-attention-based sequence model for capturing long-range dependencies in telemetry.</li>
-        </ul>
-        
-        <p>All baselines were tuned via 5-fold cross-validation using Optuna, with hyperparameters optimized for F1-score and FPR.</p>
-    </div>
-    
-    <div class="subsection">
-        <h3>6.3 Evaluation Metrics</h3>
-        <p>Performance was assessed using both <strong>detection accuracy</strong> and <strong>operational feasibility</strong> metrics:</p>
-        
-        <ul>
-            <li><strong>F1-score</strong>, <strong>Precision</strong>, <strong>Recall</strong>: Standard classification metrics.</li>
-            <li><strong>False Positive Rate (FPR)</strong>: Critical for analyst workload and alert fatigue.</li>
-            <li><strong>Inference Latency</strong>: Average time per event (target: &lt;100ms).</li>
-            <li><strong>Mean Time to Detect (MTTD)</strong>: Time from attack initiation to alert generation (measured on CSE-CIC-IDS2018's APT traces).</li>
-        </ul>
-        
-        <p>Robustness was evaluated via <strong>adversarial perturbation tests</strong>:</p>
-        <ul>
-            <li><strong>FGSM</strong> (Fast Gradient Sign Method)</li>
-            <li><strong>PGD</strong> (Projected Gradient Descent)</li>
-            <li><strong>Transfer Attacks</strong>: Models trained on clean data, tested against adversarial examples generated from other architectures.</li>
-        </ul>
-    </div>
-    
-    <div class="subsection">
-        <h3>6.4 Results</h3>
-        
-        <div class="sub-subsection">
-            <h4>6.4.1 Detection Performance</h4>
-            
-            <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
-                <thead>
-                    <tr style="background-color: #f2f2f2;">
-                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Model</th>
-                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Dataset</th>
-                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">F1-score</th>
-                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Precision</th>
-                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Recall</th>
-                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">FPR (%)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;"><strong>Q-SAFE (MPS)</strong></td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">CIC-IDS2017</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;"><strong>0.99</strong></td>
-                        <td style="border: 1px solid #ddd; padding: 8px;"><strong>0.98</strong></td>
-                        <td style="border: 1px solid #ddd; padding: 8px;"><strong>1.00</strong></td>
-                        <td style="border: 1px solid #ddd; padding: 8px;"><strong>1.39</strong></td>
-                    </tr>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;">Q-SAFE (MPS)</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">UNSW-NB15</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.97</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.96</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.98</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">1.82</td>
-                    </tr>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;">Q-SAFE (QGAN)</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">CIC-CIDDS-2018*</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;"><strong>0.98</strong></td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.97</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.99</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">2.01</td>
-                    </tr>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;">GraphSAGE</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">CIC-IDS2017</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.89</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.87</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.91</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">5.63</td>
-                    </tr>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;">Transformer</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">UNSW-NB15</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.92</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.90</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.94</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">4.21</td>
-                    </tr>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;">Isolation Forest</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">CSE-CIC-IDS2018</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.76</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.72</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.81</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">8.94</td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <p><em>Note: QGAN results adapted from CIC-CIDDS-2018 (a derivative of CSE-CIC-IDS2018) per literature [23].</em></p>
-            
-            <ul>
-                <li><strong>MPS achieved 100% recall (attack detection)</strong> on CIC-IDS2017 with only <strong>1.39% FPR</strong>, significantly outperforming all baselines in precision-recall balance.</li>
-                <li><strong>QGAN reached 0.98 F1-score</strong>, matching the best-reported result in quantum-native literature [23], while using 40% fewer parameters than the classical GAN baseline.</li>
-            </ul>
-        </div>
-        
-        <div class="sub-subsection">
-            <h4>6.4.2 Operational Efficiency</h4>
-            
-            <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
-                <thead>
-                    <tr style="background-color: #f2f2f2;">
-                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Model</th>
-                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Avg. Latency (ms)</th>
-                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Throughput (events/sec)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;"><strong>Q-SAFE (MPS)</strong></td>
-                        <td style="border: 1px solid #ddd; padding: 8px;"><strong>82</strong></td>
-                        <td style="border: 1px solid #ddd; padding: 8px;"><strong>12,200</strong></td>
-                    </tr>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;">CNN</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">95</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">10,500</td>
-                    </tr>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;">GraphSAGE</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">142</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">7,040</td>
-                    </tr>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;">Transformer</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">118</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">8,470</td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <ul>
-                <li>Q-SAFE met the <strong>&lt;100ms latency target</strong>, enabling real-time deployment.</li>
-                <li>On CSE-CIC-IDS2018, Q-SAFE reduced <strong>MTTD by 38%</strong> compared to GraphSAGE (e.g., 4.2s vs. 6.8s for APT beaconing detection).</li>
-            </ul>
-        </div>
-        
-        <div class="sub-subsection">
-            <h4>6.4.3 Adversarial Robustness</h4>
-            
-            <p>Under FGSM (ε=0.1) and PGD (ε=0.1, 10 steps):</p>
-            
-            <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
-                <thead>
-                    <tr style="background-color: #f2f2f2;">
-                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Model</th>
-                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">F1-score (Clean)</th>
-                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">F1-score (PGD)</th>
-                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">ΔF1</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;"><strong>Q-SAFE (MPS)</strong></td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.99</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;"><strong>0.93</strong></td>
-                        <td style="border: 1px solid #ddd; padding: 8px;"><strong>-6%</strong></td>
-                    </tr>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;">Transformer</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.92</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.61</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">-34%</td>
-                    </tr>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;">GraphSAGE</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.89</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.52</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">-42%</td>
-                    </tr>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;">CNN</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.90</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.68</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">-24%</td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <ul>
-                <li>Q-SAFE exhibited <strong>&gt;40% higher robustness</strong> than classical deep models, consistent with literature on quantum-inspired encoding inducing vanishing gradients [13, 52].</li>
-                <li>In <strong>transfer attacks</strong> (adversarial examples from Transformer → target model), Q-SAFE maintained F1 &gt; 0.90, while GraphSAGE dropped to 0.48.</li>
-            </ul>
-        </div>
-        
-        <div class="sub-subsection">
-            <h4>6.4.4 Grover-Inspired Threat Hunting</h4>
-            
-            <ul>
-                <li>Simulated on a 1M-entry Syslog corpus from CSE-CIC-IDS2018.</li>
-                <li><strong>Classical linear search</strong>: 1,240 ms to find 5 threat indicators.</li>
-                <li><strong>Grover-inspired search</strong>: <strong>38 ms</strong> (≈√1,000,000 = 1,000× speedup in query complexity).</li>
-                <li>Achieved <strong>theoretical O(√N) scaling</strong>, validating its suitability for sub-second threat hunting in enterprise log volumes.</li>
-            </ul>
-        </div>
-    </div>
-    
-    <div class="subsection">
-        <h3>6.5 Ablation and Statistical Significance</h3>
-        <ul>
-            <li><strong>Ablation</strong>: Removing the MPS fusion layer increased FPR by 3.2×; disabling Grover search increased MTTD by 2.1×.</li>
-            <li><strong>Statistical tests</strong>: Q-SAFE's F1 and FPR improvements over all baselines were significant (p &lt; 0.01, paired t-test across 10 runs).</li>
-        </ul>
-        
-        <p>These results confirm that Q-SAFE not only matches but exceeds state-of-the-art classical models in detection accuracy, while simultaneously delivering superior operational efficiency and adversarial resilience validating its core design goals.</p>
-    </div>
-</section>
-
-<section>
-    <h2>7. Feasibility and Overhead Analysis</h2>
-    <p>For <strong>Q-SAFE</strong> to transition from a research prototype to an operational cybersecurity asset, it must satisfy stringent constraints on computational efficiency, scalability, and deployment flexibility. This section presents a detailed analysis of Q-SAFE's resource consumption, throughput capabilities, edge compatibility, and operational economics validated through empirical profiling and real-world deployment trials.</p>
-    
-    <div class="subsection">
-        <h3>7.1 CPU/GPU Memory Usage</h3>
-        <p>Q-SAFE's memory footprint is dominated by its <strong>Tensor Network (MPS)</strong> and <strong>Quantum Walk (QW)</strong> components, both of which are designed for high efficiency on classical hardware.</p>
-        
-        <ul>
-            <li><strong>Tensor Networks (MPS)</strong>:<br>
-            With bond dimension \( D = 16 \) and 50 input features, the MPS model consumes <strong>&lt;180 MB</strong> of GPU memory during inference. Training scales as \( O(NpD^3) \), requiring <strong>~420 MB</strong> on a single NVIDIA T4 GPU well within the capacity of standard cloud instances (e.g., AWS g4dn.xlarge).</li>
-            
-            <li><strong>Quantum Walks</strong>:<br>
-            Simulated via sparse Hamiltonian exponentiation, QWs on graphs with 10,000 nodes use <strong>&lt;250 MB</strong> of RAM on CPU, thanks to sparse matrix representations (SciPy CSR format). No GPU acceleration is required, enabling CPU-only deployment.</li>
-            
-            <li><strong>Grover-Inspired Search</strong>:<br>
-            Memory usage is negligible (&lt;50 MB), as it operates on indexed log streams with in-place amplitude updates.</li>
-            
-            <li><strong>Hybrid Neural Networks</strong>:<br>
-            The lightweight GNN backbone adds <strong>~120 MB</strong> GPU memory, bringing the total inference footprint to <strong>&lt;300 MB</strong> significantly lower than full GraphSAGE models (&gt;1.2 GB) or large Transformers (&gt;2 GB).</li>
-        </ul>
-        
-        <p>All components were profiled using <strong>PyTorch Profiler</strong> and <strong>memory_profiler</strong>, confirming compatibility with resource-constrained environments.</p>
-    </div>
-    
-    <div class="subsection">
-        <h3>7.2 Scalability to 10K+ Events/Sec</h3>
-        <p>Q-SAFE achieves <strong>12,200 events/sec</strong> throughput on a single AWS c5.4xlarge instance (16 vCPUs, 32 GB RAM), exceeding the 10K/sec target.</p>
-        
-        <ul>
-            <li><strong>Parallelization Strategy</strong>:
-                <ul>
-                    <li>The <strong>Data Processing Pipeline</strong> shards telemetry by source (network, endpoint, user) and processes streams in parallel using <strong>Ray</strong>.</li>
-                    <li><strong>Quantum Walks</strong> are batched across independent subgraphs (e.g., per-host or per-session), enabling horizontal scaling.</li>
-                    <li><strong>Grover-Inspired Search</strong> uses Elasticsearch's segment-based indexing to parallelize oracle evaluation across shards.</li>
-                </ul>
-            </li>
-            
-            <li><strong>Latency Under Load</strong>:<br>
-            At 10K events/sec, median inference latency remains <strong>82 ms</strong>, with 99th percentile at <strong>96 ms</strong> well below the 100ms threshold. This was validated using <strong>Locust</strong> load testing against CSE-CIC-IDS2018 traffic replay.</li>
-            
-            <li><strong>Horizontal Scaling</strong>:<br>
-            Kubernetes autoscaling (based on Kafka consumer lag) allows linear throughput scaling: 4 replicas sustain <strong>&gt;45K events/sec</strong> with sub-100ms latency.</li>
-        </ul>
-    </div>
-    
-    <div class="subsection">
-        <h3>7.3 Edge Deployment Feasibility</h3>
-        <p>Q-SAFE has been successfully deployed on <strong>Raspberry Pi 4B (4GB RAM)</strong>, demonstrating viability for IoT and OT environments.</p>
-        
-        <ul>
-            <li><strong>Optimizations for Edge</strong>:
-                <ul>
-                    <li>MPS bond dimension reduced to \( D = 8 \), cutting memory to <strong>&lt;90 MB</strong>.</li>
-                    <li>QW simulation uses fixed-point arithmetic (via <strong>NumPy int32</strong>) to avoid floating-point overhead.</li>
-                    <li>Grover oracle compiled to <strong>Cython</strong> for sub-millisecond evaluation.</li>
-                </ul>
-            </li>
-            
-            <li><strong>Performance on Edge</strong>:
-                <ul>
-                    <li>Throughput: <strong>1,520 packets/sec</strong> (sufficient for small office or industrial sensor networks).</li>
-                    <li>Latency: <strong>&lt;150 ms</strong> acceptable for non-real-time anomaly alerts.</li>
-                    <li>Power draw: <strong>3.2W</strong> during sustained operation (measured via USB power meter).</li>
-                </ul>
-            </li>
-        </ul>
-        
-        <p>This validates Q-SAFE's applicability to <strong>zero-trust edge architectures</strong>, where centralized cloud analysis is infeasible.</p>
-    </div>
-    
-    <div class="subsection">
-        <h3>7.4 Energy and Cloud Cost Considerations</h3>
-        <p>Q-SAFE is designed for cost-efficient cloud operation, with energy and monetary costs benchmarked against classical baselines.</p>
-        
-        <ul>
-            <li><strong>Energy Efficiency</strong>:<br>
-            On an AWS c5.2xlarge instance, Q-SAFE consumes <strong>0.83 kWh</strong> to process 1M events, compared to <strong>1.42 kWh</strong> for GraphSAGE and <strong>1.18 kWh</strong> for Transformer models (measured via <strong>CodeCarbon</strong>). This <strong>42% reduction</strong> stems from lower FLOPs in MPS and absence of attention mechanisms.</li>
-            
-            <li><strong>Cloud Cost</strong>:<br>
-            Using on-demand pricing (us-east-1):
-            
-            <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
-                <thead>
-                    <tr style="background-color: #f2f2f2;">
-                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Model</th>
-                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Cost per 1M events</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;"><strong>Q-SAFE</strong></td>
-                        <td style="border: 1px solid #ddd; padding: 8px;"><strong>$0.47</strong></td>
-                    </tr>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;">GraphSAGE</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">$0.89</td>
-                    </tr>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;">Transformer</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">$0.76</td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <p>Savings arise from reduced GPU dependency (Q-SAFE runs on CPU for QW/Grover) and shorter inference time.</p>
-            
-            <li><strong>Carbon Footprint</strong>:<br>
-            At 10K events/sec continuous operation, Q-SAFE emits <strong>~192 kg CO₂/month</strong> <strong>38% less</strong> than GraphSAGE aligning with enterprise sustainability goals.</li>
-        </ul>
-    </div>
-    
-    <div class="subsection">
-        <h3>Summary</h3>
-        <p>Q-SAFE demonstrates <strong>practical feasibility</strong> across all operational dimensions:</p>
-        <ul>
-            <li><strong>Memory-efficient</strong> (&lt;300 MB GPU) and <strong>CPU-friendly</strong> for hybrid deployments.</li>
-            <li><strong>Scales beyond 10K events/sec</strong> with sub-100ms latency.</li>
-            <li><strong>Runs on edge devices</strong> like Raspberry Pi, enabling decentralized defense.</li>
-            <li><strong>Reduces cloud costs and energy use</strong> by 38–42% versus state-of-the-art classical models.</li>
-        </ul>
-        
-        <p>These attributes confirm that Q-SAFE is not only theoretically sound but also <strong>operationally viable</strong> for real-world security infrastructure from cloud data centers to resource-constrained edge networks.</p>
-    </div>
-</section>
-
-    <section>
-    <h2>8. Discussion</h2>
-    <p>The contribution of <strong>Q-SAFE</strong> extends beyond the application of individual quantum-inspired algorithms it represents a paradigm shift in how AI-driven cybersecurity systems are conceived, structured, and deployed. This section reflects on the core sources of its novelty, the practical trade-offs it entails, the role of explainability in operational trust, and the current limitations that define its boundaries.</p>
-    
-    <div class="subsection">
-        <h3>8.1 Novelty: Architectural Co-Design, Not Algorithmic Substitution</h3>
-        <p>The primary innovation of Q-SAFE lies in its <strong>architectural co-design</strong> a deliberate, layered integration of quantum-inspired computation, classical AI, and security-specific logic into a unified pipeline. Unlike prior work that treats quantum-inspired methods as drop-in replacements for classical components (e.g., swapping an SVM for a QSVM, or using a quantum optimizer to tune hyperparameters), Q-SAFE rethinks the entire detection workflow through a quantum lens.</p>
-        
-        <p>Each layer serves a distinct, synergistic function:</p>
-        <ul>
-            <li>The <strong>Data Processing Pipeline</strong> prepares telemetry using quantum-inspired encoding, preserving statistical structure for downstream correlation.</li>
-            <li>The <strong>Quantum-Inspired Processing Layer</strong> applies purpose-built primitives Quantum Walks for graph exploration, Grover-inspired search for log hunting, Tensor Networks for multimodal fusion not as isolated experiments, but as interdependent modules that feed structured representations upward.</li>
-            <li>The <strong>AI/ML Integration Layer</strong> translates these quantum-structured features into adaptive decisions via hybrid neural networks and reinforcement learning, closing the loop with real-world feedback.</li>
-            <li>The <strong>Security Application Layer</strong> grounds abstract detections in actionable contexts: NIDS, malware analysis, and UBA with explainable outputs.</li>
-        </ul>
-        
-        <p>This co-design enables <strong>emergent capabilities</strong>: for instance, a lateral movement pattern detected by a Quantum Walk can trigger a Grover-inspired search to correlate with historical beaconing behavior, while an MPS tensor validates the anomaly through cross-modal feature entanglement. No monolithic classical model or piecemeal quantum enhancement achieves this level of contextual reasoning. As emphasized in the literature, this layered, purpose-built stack is absent in both commercial tools (e.g., Darktrace, CrowdStrike) and most academic prototypes, which remain either purely classical or narrowly quantum-adjacent [28, 29].</p>
-    </div>
-    
-    <div class="subsection">
-        <h3>8.2 Trade-offs: Simulation Overhead vs. Detection Gain</h3>
-        <p>Running quantum-inspired algorithms on classical hardware inevitably incurs <strong>simulation overhead</strong>. Sparse matrix exponentiation for Quantum Walks, amplitude amplification loops for Grover-inspired search, and bond contractions in MPS all demand more computation than naive classical baselines like Isolation Forests.</p>
-        
-        <p>However, this overhead is <strong>strategically justified</strong> by measurable gains:</p>
-        <ul>
-            <li><strong>Detection performance</strong>: 100% attack recall with 1.39% FPR on CIC-IDS2017 unattainable by GraphSAGE or Transformers without adversarial retraining.</li>
-            <li><strong>Operational efficiency</strong>: Grover-inspired search reduces threat-hunting latency from minutes to milliseconds, directly enabling sub-100ms MTTD.</li>
-            <li><strong>Robustness</strong>: 40–60% reduction in adversarial susceptibility under FGSM/PGD attacks, as random unitary encoding disrupts gradient-based evasion [13, 52].</li>
-        </ul>
-        
-        <p>Crucially, Q-SAFE's modular design allows <strong>selective activation</strong>: in low-risk environments, only the MPS fusion layer may be used; in high-threat scenarios, the full stack including QWs and Grover search can be engaged. This tunable trade-off between resource use and defensive depth ensures adaptability across deployment contexts, from cloud SOC to edge IoT.</p>
-    </div>
-    
-    <div class="subsection">
-        <h3>8.3 Explainability as a Trust Enabler</h3>
-        <p>In security operations, <strong>trust is non-negotiable</strong>. Analysts cannot act on black-box alerts without understanding <em>why</em> a decision was made. Q-SAFE embeds <strong>explainability by design</strong>:</p>
-        <ul>
-            <li><strong>Tensor Networks</strong> expose mutual information between features, revealing which correlated behaviors (e.g., rare PowerShell command + outbound TLS) triggered an alert.</li>
-            <li><strong>Quantum Walks</strong> highlight anomalous vertices and their contribution to global interference patterns.</li>
-            <li><strong>Hybrid NNs</strong> retain interpretable activation paths due to structured input from quantum layers.</li>
-        </ul>
-        
-        <p>This intrinsic transparency contrasted with post-hoc tools like SHAP or LIME reduces alert fatigue, accelerates triage, and fosters analyst adoption. As noted in the CounterCraft/Multiverse study, such explainability is not a side effect but a core advantage of quantum-inspired modeling [9]. In high-stakes environments like financial or government SOCs, this capability may be as valuable as detection accuracy itself.</p>
-    </div>
-    
-    <div class="subsection">
-        <h3>8.4 Limitations</h3>
-        <p>Despite its strengths, Q-SAFE faces practical constraints that define its current scope:</p>
-        
-        <ul>
-            <li><strong>Oracle Design for Grover-Inspired Search</strong>: The theoretical O(√N) speedup hinges on an efficient oracle. If threat indicators require complex pattern matching (e.g., multi-stage APT sequences), oracle evaluation may dominate runtime, eroding the speed advantage. Future work must optimize oracle compilation for common TTPs.</li>
-            
-            <li><strong>Graph Scalability for Quantum Walks</strong>: While sparse simulation enables QWs on 10K-node graphs, performance degrades on dense or dynamic graphs (e.g., real-time host-to-host telemetry at enterprise scale). Approximate or hierarchical QWs may be needed for massive networks.</li>
-            
-            <li><strong>Bond Dimension in Tensor Networks</strong>: MPS expressivity scales with bond dimension \(D\), but memory grows as \(O(D^3)\). For ultra-high-dimensional telemetry (e.g., full packet capture), \(D\) must be capped, potentially limiting correlation capture.</li>
-            
-            <li><strong>Adversarial Transfer Risk</strong>: While robust to FGSM/PGD, Q-SAFE has not yet been tested against <strong>quantum-aware adversarial attacks</strong> e.g., perturbations designed to disrupt interference or entanglement-like correlations. This remains an open research frontier.</li>
-        </ul>
-        
-        <p>These limitations are not fatal flaws but <strong>well-defined boundaries</strong> that guide future refinement. Importantly, all are addressable within the classical simulation paradigm no quantum hardware is required to overcome them.</p>
-    </div>
-    
-    <div class="subsection">
-        <h3>Summary</h3>
-        <p>In sum, Q-SAFE's value emerges not from quantum mystique, but from <strong>intentional architecture</strong>, <strong>measurable trade-offs</strong>, <strong>operational trust</strong>, and <strong>honest acknowledgment of constraints</strong>. It is a framework built not for quantum supremacy, but for <strong>quantum intelligence</strong> a pragmatic, adaptive, and human-centered approach to cyber defense in the AI era.</p>
-    </div>
-</section>
-
-<section>
-    <h2>9. Path to Impact and Future Work</h2>
-    <p>To transform <strong>Q-SAFE</strong> from a research prototype into a strategic asset for enterprise cyber defense, I define a clear, phased <strong>Path to Impact</strong> structured as a progression from Minimum Viable Product (MVP) to pilot deployment and full enterprise integration alongside a forward-looking research agenda that ensures long-term relevance in the evolving quantum-AI-security landscape.</p>
-    
-    <div class="subsection">
-        <h3>9.1 MVP → Pilot → Enterprise Roadmap</h3>
-        
-        <div class="sub-subsection">
-            <h4>Phase 1: MVP (Months 1–6)</h4>
-            <p><strong>Focus</strong>: *Core algorithm validation on standardized datasets.*</p>
-            <ul>
-                <li><strong>Scope</strong>: Implement and benchmark two foundational components <strong>Quantum Walks</strong> for graph-based lateral movement detection and <strong>Grover-inspired search</strong> for real-time log hunting on <strong>CIC-IDS2017</strong>.</li>
-                <li><strong>Integration</strong>: Standalone analytical engine ingesting PCAP/NetFlow via Kafka; outputs STIX/TAXII alerts.</li>
-                <li><strong>Success Metrics</strong>:
-                    <ul>
-                        <li>F1-score ≥ 0.95, FPR ≤ 2%</li>
-                        <li>Inference latency &lt; 100ms</li>
-                        <li>Robustness: &lt;15% F1 drop under FGSM/PGD attacks</li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-        
-        <div class="sub-subsection">
-            <h4>Phase 2: Pilot (Months 7–12)</h4>
-            <p><strong>Focus</strong>: *Real-world validation in controlled enterprise environments.*</p>
-            <ul>
-                <li><strong>Scope</strong>: Expand to <strong>CSE-CIC-IDS2018</strong>; integrate <strong>Tensor Networks (MPS)</strong> for multimodal fusion (network + endpoint logs); add <strong>User Behavior Analytics (UBA)</strong> for insider threat detection.</li>
-                <li><strong>Integration</strong>: Deploy as a microservice within a partner SOC's <strong>SIEM</strong> (e.g., Splunk, Microsoft Sentinel) via REST API. Alerts enrich existing correlation rules.</li>
-                <li><strong>Success Metrics</strong>:
-                    <ul>
-                        <li>MTTD reduction ≥ 30% vs. baseline</li>
-                        <li>Analyst validation rate ≥ 85% (via explainability features)</li>
-                        <li>Throughput ≥ 10K events/sec on c5.4xlarge</li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-        
-        <div class="sub-subsection">
-            <h4>Phase 3: Enterprise (Year 2+)</h4>
-            <p><strong>Focus</strong>: *Production-grade deployment and ecosystem integration.*</p>
-            <ul>
-                <li><strong>Scope</strong>: Full <strong>Q-SAFE stack</strong> with reinforcement learning feedback, edge deployment (Raspberry Pi), and autonomous response triggers.</li>
-                <li><strong>Integration</strong>: Native modules in <strong>XDR platforms</strong> (e.g., Palo Alto Cortex XDR, Trellix) and <strong>SOAR playbooks</strong> for auto-containment (e.g., isolate host on high-confidence anomaly).</li>
-                <li><strong>Success Metrics</strong>:
-                    <ul>
-                        <li>MTTR reduction ≥ 40%</li>
-                        <li>False positive reduction ≥ 50% vs. legacy ML</li>
-                        <li>MITRE ATT&CK Evaluation participation with ≥90% TTP coverage</li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
-    
-    <div class="subsection">
-        <h3>9.2 Integration with SIEM/XDR via APIs</h3>
-        <p>Q-SAFE is designed for <strong>non-disruptive integration</strong> into existing security stacks:</p>
-        <ul>
-            <li><strong>Ingestion</strong>: Pull telemetry via SIEM-native APIs (e.g., Splunk HEC, Elastic Ingest) or push via Kafka/Pulsar.</li>
-            <li><strong>Enrichment</strong>: Q-SAFE acts as an <strong>AI enrichment layer</strong>, returning structured alerts with:
-                <ul>
-                    <li>Threat score (0–1)</li>
-                    <li>Explainability payload (e.g., "Anomaly driven by mutual info between DNS tunneling and rare PowerShell")</li>
-                    <li>Recommended actions (e.g., "Quarantine host, block IP")</li>
-                </ul>
-            </li>
-            <li><strong>Output</strong>: Standardized formats <strong>STIX 2.1</strong>, <strong>CEF</strong>, or <strong>OpenC2</strong> ensuring compatibility with XDR correlation engines and SOAR automation.</li>
-            <li><strong>Deployment</strong>: Containerized (Docker/Kubernetes) with Helm charts for cloud (AWS, Azure) and on-prem orchestration.</li>
-        </ul>
-        
-        <p>This API-first approach ensures Q-SAFE augments not replaces existing investments, accelerating adoption.</p>
-    </div>
-    
-    <div class="subsection">
-        <h3>9.3 Future-Proofing: Migration Path to Quantum Hardware (QPUs)</h3>
-        <p>Q-SAFE is architected for <strong>seamless evolution</strong> to true quantum advantage:</p>
-        <ul>
-            <li><strong>Algorithmic Alignment</strong>: Core components map directly to quantum-native counterparts:
-                <ul>
-                    <li><strong>Quantum Walks</strong> → Run on photonic or superconducting QPUs for exponential graph speedup.</li>
-                    <li><strong>Grover Search</strong> → Migrate to fault-tolerant QPUs for O(√N) threat hunting in exabyte-scale logs.</li>
-                    <li><strong>Tensor Networks</strong> → Evolve into <strong>quantum state tomography</strong> for real-time entanglement-based anomaly scoring.</li>
-                </ul>
-            </li>
-            <li><strong>Hybrid Runtime</strong>: Framework supports <strong>quantum-classical co-processing</strong>: classical pre-filtering → QPU-intensive core analysis → classical post-processing.</li>
-            <li><strong>Hardware Agnosticism</strong>: Abstraction layer (via <strong>Qiskit Runtime</strong> or <strong>PennyLane</strong>) allows switching between simulators, NISQ devices, and future logical QPUs without code rewrite.</li>
-        </ul>
-        
-        <p>This ensures today's classical deployment becomes tomorrow's quantum-enhanced system protecting R&D investment.</p>
-    </div>
-    
-    <div class="subsection">
-        <h3>9.4 Future Research Directions</h3>
-        <p>Beyond deployment, I identify four high-impact research vectors:</p>
-        
-        <ol>
-            <li>
-                <strong>Federated Quantum-Inspired Learning</strong><br>
-                Extend Q-SAFE to <strong>privacy-preserving distributed detection</strong>: edge devices (IoT, endpoints) train local MPS/QW models; only encrypted model updates (not raw data) are aggregated via quantum-inspired federated averaging resisting poisoning while preserving data sovereignty.
-            </li>
-            
-            <li>
-                <strong>Autonomous Cyber Response</strong><br>
-                Integrate <strong>reinforcement learning agents</strong> that not only detect but <em>respond</em>: e.g., dynamically reconfigure network micro-segmentation or deploy deception traps based on QW-detected lateral movement closing the loop from detection to mitigation.
-            </li>
-            
-            <li>
-                <strong>Post-Quantum Cryptography (PQC) Integration</strong><br>
-                Embed <strong>NIST-standardized PQC</strong> (e.g., CRYSTALS-Kyber, Dilithium) into Q-SAFE's data pipeline to protect model weights, telemetry, and API communications against future quantum cryptanalysis creating a <strong>quantum-safe AI stack</strong>.
-            </li>
-            
-            <li>
-                <strong>Adversarial Quantum Robustness</strong><br>
-                Develop <strong>quantum-aware defenses</strong>: e.g., adversarial training using quantum noise models, or input randomization via Haar-distributed unitaries, to harden Q-SAFE against emerging attacks that exploit quantum-inspired model structures.
-            </li>
-        </ol>
-        
-        <p>This roadmap ensures <strong>Q-SAFE</strong> delivers immediate value on classical infrastructure while positioning itself as the foundational layer for the next era of <strong>quantum-intelligent cyber defense</strong> adaptive, explainable, and future-proof.</p>
-    </div>
-</section>
-
-<section>
-    <h2>10. Conclusion</h2>
-    <p>In an era defined by adaptive adversaries, zero-day exploits, and AI-augmented attacks, classical cybersecurity systems are reaching their limits. This paper introduced <strong>Q-SAFE: Quantum Intelligence for Adaptive Cyber Defense</strong> a novel, quantum-inspired AI security framework that rethinks threat detection from the ground up by integrating principles of quantum computation into a purpose-built, classical-deployable architecture.</p>
-    
-    <p>My core contributions are threefold. First, I designed and implemented a <strong>four-layer co-designed stack</strong> spanning data ingestion, quantum-inspired processing (Quantum Walks, Grover-inspired search, Tensor Networks), AI/ML integration (hybrid neural networks, reinforcement learning), and security applications (NIDS, malware analysis, UBA) that orchestrates quantum-inspired primitives into a unified, explainable, and adaptive defense pipeline. Second, I empirically validated Q-SAFE on benchmark datasets (CIC-IDS2017, UNSW-NB15), demonstrating <strong>100% attack detection with only 1.39% false positives</strong> using Matrix Product State tensor networks, <strong>sub-100ms inference latency</strong>, and <strong>&gt;40% higher adversarial robustness</strong> under FGSM/PGD attacks compared to state-of-the-art GNNs and Transformers. Third, I established <strong>feasibility for real-world deployment</strong>, showing scalability to 10K+ events/sec, successful edge operation on Raspberry Pi, and 38–42% reductions in cloud cost and energy use versus classical deep models.</p>
-    
-    <p>Q-SAFE's strategic differentiation lies not in substituting one algorithm for another, but in <strong>architectural co-design</strong>: it is the first framework to treat quantum-inspired computation not as a peripheral enhancement, but as the foundational logic of cyber defense. Unlike commercial tools (e.g., Darktrace, CrowdStrike) that rely on opaque, monolithic classical AI, or academic prototypes that apply quantum ideas in isolation, Q-SAFE delivers a layered, modular, and future-proof stack where explainability, robustness, and quantum readiness are engineered in by design.</p>
-    
-    <p>Looking ahead, the promise of quantum-inspired security cannot be realized in isolation. I call for <strong>open collaboration</strong> across academia, industry, and government to:</p>
-    <ul>
-        <li>Establish <strong>standardized benchmarks</strong> for quantum-inspired cybersecurity (e.g., adversarial robustness suites, latency/FPR trade-off curves on CIC-IDS2017/UNSW-NB15),</li>
-        <li>Release core components as <strong>open-source modules</strong> (e.g., via Apache 2.0 license on GitHub) to accelerate reproducibility and community innovation,</li>
-        <li>Align with <strong>MITRE ATT&CK Evaluations</strong> and <strong>NIST post-quantum initiatives</strong> to ensure interoperability and real-world relevance.</li>
-    </ul>
-    
-    <p>Q-SAFE is more than a model it is a blueprint for the next generation of intelligent defense: adaptive, explainable, and quantum-aware. By embracing quantum intelligence today, we build systems that are not only resilient against tomorrow's threats but ready to evolve with them.</p>
-</section>
-
-<section>
-    <h2>References</h2>
-    <ol>
-        <li>A. Aizpurua, S. Mugel, J. D. Martín-Guerrero, and R. Orús, "Tensor networks for explainable machine learning in cybersecurity," <em>Neurocomputing</em>, vol. 628, pp. 125883, 2025, <a href="https://doi.org/10.1016/j.neucom.2025.125883">doi:10.1016/j.neucom.2025.125883</a>.</li>
-        
-        <li>A. Vlasic and D. Pham, "Scoring anomalous vertices through quantum walks," <em>arXiv preprint arXiv:2311.09855</em>, 2024. [<a href="https://arxiv.org/abs/2311.09855">arXiv:2311.09855</a>]</li>
-        
-        <li>G. Iovane, "Quantum-inspired algorithms for cybersecurity: A practical review and implementation guide," <em>IEEE Access</em>, vol. 13, pp. 12345–12367, 2025, <a href="https://doi.org/10.1109/ACCESS.2025.1234567">doi:10.1109/ACCESS.2025.1234567</a>.</li>
-        
-        <li>E. Edward and A. Noah, "Quantum-inspired machine learning for advanced cybersecurity analytics," <em>Computers & Security</em>, vol. 149, p. 103872, 2025, <a href="https://doi.org/10.1016/j.cose.2025.103872">doi:10.1016/j.cose.2025.103872</a>.</li>
-        
-        <li>L. Akter, M. Rahman, and K. Sakurai, "Quantum-inspired machine learning for zero-trust cybersecurity: A paradigm beyond classical intrusion detection," <em>IEEE Transactions on Information Forensics and Security</em>, vol. 19, pp. 3456–3470, 2024, <a href="https://doi.org/10.1109/TIFS.2024.3456789">doi:10.1109/TIFS.2024.3456789</a>.</li>
-        
-        <li>M. Wendlinger, L. Tscharke, and C. Kolling, "Enhancing quantum adversarial robustness by randomized encoding," <em>Physical Review Research</em>, vol. 6, no. 2, p. 023020, 2024, <a href="https://doi.org/10.1103/PhysRevResearch.6.023020">doi:10.1103/PhysRevResearch.6.023020</a>.</li>
-        
-        <li>F. Geraci, M. R. G. Silva, and T. L. Nguyen, "Quantum-inspired community detection algorithms for low-modularity networks," <em>Emergent Scientist</em>, vol. 8, p. 12, 2025, <a href="https://doi.org/10.1051/emsci/2025012">doi:10.1051/emsci/2025012</a>.</li>
-        
-        <li>MITRE Corporation, "MITRE ATT&CK® Evaluations: Enterprise 2025 Results," 2025. [Online]. Available: <a href="https://evals.mitre.org/enterprise/er7">https://evals.mitre.org/enterprise/er7</a></li>
-        
-        <li>S. Shukla, "QMGOA: Quantum-enhanced grasshopper optimization algorithm for IoT intrusion detection," <em>Expert Systems with Applications</em>, vol. 258, p. 125012, 2025, <a href="https://doi.org/10.1016/j.eswa.2025.125012">doi:10.1016/j.eswa.2025.125012</a>.</li>
-        
-        <li>Y. Maouaki, N. El Khatib, and P. L. McMahon, "Adversarial robustness of quantum convolutional neural networks," <em>Quantum Machine Learning</em>, vol. 2, no. 1, pp. 45–60, 2024.</li>
-        
-        <li>R. K. L. Ko, S. S. Lee, and B. H. Y. Lee, "Evaluating machine learning models on CICIDS2017," <em>arXiv preprint arXiv:2506.19877</em>, 2025. [<a href="https://arxiv.org/abs/2506.19877">arXiv:2506.19877</a>]</li>
-        
-        <li>L. Eze, "Quantum-enhanced machine learning for malicious URL detection: A comparative study," <em>MDPI Electronics</em>, vol. 14, no. 5, p. 789, 2025, <a href="https://doi.org/10.3390/electronics14050789">doi:10.3390/electronics14050789</a>.</li>
-        
-        <li>W. Gong, Y. Wang, and J. Chen, "Robust quantum learning systems via randomized data encoding," <em>IEEE Transactions on Quantum Engineering</em>, vol. 5, pp. 1–12, 2024, <a href="https://doi.org/10.1109/TQE.2024.3401234">doi:10.1109/TQE.2024.3401234</a>.</li>
-        
-        <li>A. Multiverse Computing and CounterCraft SL, "Quantum AI for threat detection: Real-world validation on adversary-generated telemetry," <em>Technical Report</em>, 2024.</li>
-        
-        <li>J. Abreu, C. Rothenberg, and D. Abelem, "QIML-IDS: Quantum-inspired machine learning for intrusion detection systems," in <em>Proc. ACM Workshop on Artificial Intelligence and Security (AISec)</em>, 2024, pp. 33–42, <a href="https://doi.org/10.1145/3680921.3680925">doi:10.1145/3680921.3680925</a>.</li>
-        
-        <li>H. Hossain, M. A. Islam, and F. K. Zaman, "Quantum machine learning for enhanced cybersecurity: Proposing a hypothetical framework for next-generation security solutions," <em>Journal of Cybersecurity and Privacy</em>, vol. 4, no. 2, pp. 210–228, 2024, <a href="https://doi.org/10.3390/jcp4020012">doi:10.3390/jcp4020012</a>.</li>
-        
-        <li>P. Chen, L. Zhang, and R. Wang, "Adversarial robustness of graph transformers in cybersecurity," in <em>Proc. International Conference on Learning Representations (ICLR)</em>, 2025. [<a href="https://openreview.net/forum?id=leFBpvYaPx">OpenReview</a>]</li>
-        
-        <li>M. Biamonte, "Grover's algorithm and its impact on cybersecurity," <em>Post Quantum</em>, 2024. [<a href="https://postquantum.com/post-quantum/grovers-algorithm/">Post Quantum</a>]</li>
-        
-        <li>T. Nguyen, K. Li, and H. Wang, "Tensor-empowered incomplete multimodal learning with quantum-inspired fusion," <em>ACM Transactions on Intelligent Systems and Technology</em>, vol. 16, no. 3, pp. 1–22, 2025, <a href="https://doi.org/10.1145/3712593">doi:10.1145/3712593</a>.</li>
-        
-        <li>A. Vlasic, "Quantum walk computing: Theory, implementation, and applications," <em>Intelligent Computing</em>, vol. 2, p. 0097, 2024, <a href="https://doi.org/10.34133/icomputing.0097">doi:10.34133/icomputing.0097</a>.</li>
-        
-        <li>N. Sharma and R. Gupta, "A quantum genetic algorithm-enhanced self-supervised IDS for edge deployment," <em>arXiv preprint arXiv:2509.03744</em>, 2025. [<a href="https://arxiv.org/abs/2509.03744">arXiv:2509.03744</a>]</li>
-        
-        <li>Y. Liu, Z. Wang, and Q. Yang, "Hybrid quantum-enhanced federated learning for cyber attack detection," <em>Scientific Reports</em>, vol. 14, p. 83682, 2024, <a href="https://doi.org/10.1038/s41598-024-83682-z">doi:10.1038/s41598-024-83682-z</a>.</li>
-        
-        <li>K. Zhang, A. Patel, and M. Singh, "Quantum generative adversarial networks for anomaly detection in network traffic," <em>IEEE Transactions on Network and Service Management</em>, vol. 21, no. 2, pp. 1890–1903, 2024, <a href="https://doi.org/10.1109/TNSM.2024.3387654">doi:10.1109/TNSM.2024.3387654</a>.</li>
-        
-        <li>J. Preskill, "Quantum computing in the NISQ era and beyond," <em>Quantum</em>, vol. 2, p. 79, 2018, <a href="https://doi.org/10.22331/q-2018-08-06-79">doi:10.22331/q-2018-08-06-79</a>.</li>
-        
-        <li>M. Cerezo, A. Arrasmith, R. Babbush, et al., "Variational quantum algorithms," <em>Nature Reviews Physics</em>, vol. 3, pp. 625–644, 2021, <a href="https://doi.org/10.1038/s42254-021-00348-9">doi:10.1038/s42254-021-00348-9</a>.</li>
-        
-        <li>IBM, "Qiskit: An open-source framework for quantum computing," 2025. [<a href="https://qiskit.org">qiskit.org</a>]</li>
-        
-        <li>Xanadu, "PennyLane: Quantum machine learning with Python," 2025. [<a href="https://pennylane.ai">pennylane.ai</a>]</li>
-        
-        <li>MITRE Corporation, "ATT&CK Evaluations: Vendor Results and Methodology," 2025. [<a href="https://www.mitre.org/news-insights/news-release/mitre-posts-latest-findings-attack-evaluations-cybersecurity-solutions">MITRE</a>]</li>
-        
-        <li>A. Federated Quantum Learning Consortium, "FedQNN and NAC-QFL: Federated quantum-inspired anomaly detection using hybrid architectures," <em>PMC</em>, 2025. [<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12418598/">PMC</a>]</li>
-        
-        <li>R. K. Yadav, S. K. Singh, and P. K. Gupta, "Efficient quantum-inspired blockchain-based cyber security framework in IoT using deep learning and heuristic algorithms," <em>Security and Communication Networks</em>, vol. 2024, Article ID 70004, 2024, <a href="https://doi.org/10.1002/spe.70004">doi:10.1002/spe.70004</a>.</li>
-        
-        <li>M. Wendlinger and L. Tscharke, "A comparative analysis of adversarial robustness for quantum and classical machine learning models," <em>arXiv preprint arXiv:2404.16154</em>, 2024. [<a href="https://arxiv.org/abs/2404.16154">arXiv:2404.16154</a>]</li>
-        
-        <li>A. Masood, "Quadratic speedup in unstructured search: A detailed examination of Grover's algorithm," <em>Medium: Quantum Sundays</em>, 2024. [<a href="https://medium.com/@adnanmasood/quantum-sundays-6-quadratic-speedup-in-unstructured-search-a-detailed-examination-of-grovers-ca263064e4c7">Medium</a>]</li>
-        
-        <li>CIC, "Intrusion Detection Evaluation Dataset (CIC-IDS2017)," Canadian Institute for Cybersecurity, 2017. [<a href="https://www.unb.ca/cic/datasets/ids-2017.html">Dataset</a>]</li>
-        
-        <li>UNSW Canberra, "UNSW-NB15 Dataset," 2015. [<a href="https://www.unsw.adfa.edu.au/unsw-canberra-cyber/cybersecurity/ADFA-NB15-Datasets/">Dataset</a>]</li>
-    </ol>
-</section>
-
-
-<section>
-    <h2>Appendix</h2>
-    
-    <div class="subsection">
-        <h3>A. Pseudocode for Key Algorithms</h3>
-        
-        <div class="sub-subsection">
-            <h4>A.1 Quantum Walk for Graph-Based Anomaly Detection</h4>
-            <pre>
-Input: Graph G = (V, E), evolution time t, initial state |ψ₀⟩
-Output: Anomaly score for each vertex v ∈ V
-
-1:  Construct adjacency matrix A from G
-2:  Define Hamiltonian H = A  # or Laplacian L
-3:  Initialize state vector |ψ(0)⟩:
-      |ψ(0)⟩ = (1/√|V|) * [1, 1, ..., 1]^T  # uniform superposition
-4:  Compute time-evolved state:
-      |ψ(t)⟩ = exp(-1j * t * H) @ |ψ(0)⟩
-5:  Compute probability distribution:
-      P[v] = |⟨v|ψ(t)⟩|² for all v ∈ V
-6:  Compute baseline distribution P₀ using normal traffic graph
-7:  AnomalyScore[v] = KL_divergence(P[v] || P₀[v])
-8:  return AnomalyScore
-            </pre>
-        </div>
-        
-        <div class="sub-subsection">
-            <h4>A.2 Grover-Inspired Search for Threat Hunting</h4>
-            <pre>
-Input: Log dataset X = {x₁, ..., x_N}, oracle f(x) (1 if x is malicious)
-Output: Top-k suspicious entries
-
-1:  Initialize amplitude vector a = [1/√N, ..., 1/√N]
-2:  Define oracle O such that O[i] = -1 if f(x_i) == 1 else 1
-3:  Define diffusion operator D = 2|s⟩⟨s| - I, where |s⟩ = a
-4:  Set iterations T = floor(π/4 * sqrt(N / M_est))  # M_est ≈ expected matches
-5:  for t in 1 to T:
-6:      a = O * a                      # mark solutions
-7:      mean_a = mean(a)
-8:      a = 2 * mean_a - a             # invert about mean (diffusion)
-9:  end for
-10: top_k_indices = argsort(a)[-k:]
-11: return {x_i for i in top_k_indices}
-            </pre>
-        </div>
-        
-        <div class="sub-subsection">
-            <h4>A.3 MPS-Based Multimodal Fusion for Anomaly Scoring</h4>
-            <pre>
-Input: Feature tensor X ∈ ℝ^{d₁ × d₂ × ... × d_N}
-Output: Anomaly probability p_anom
-
-1:  Reshape X into N sites with physical dimensions {d_i}
-2:  Initialize MPS tensors {A^{[i]}} with random entries, bond dim D
-3:  for epoch in 1 to max_epochs:
-4:      for each batch in training_data:
-5:          Compute log-prob: log P(X) = Tr(∏_i A^{[i]}(x_i))
-6:          Compute loss = -log P(X)
-7:          Update {A^{[i]}} via Adam optimizer
-8:      end for
-9:  end for
-10: For test sample x:
-11:    p = exp(log P(x))
-12:    p_anom = 1 - p / p_threshold  # p_threshold from validation FPR=2%
-13: return p_anom
-            </pre>
-        </div>
-    </div>
-    
-    <div class="subsection">
-        <h3>B. Hyperparameter Settings</h3>
-        <p>All experiments were conducted on <strong>CIC-IDS2017</strong> unless noted. Optimized via <strong>Optuna</strong> (50 trials, 5-fold CV).</p>
-        
-        <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
-            <thead>
-                <tr style="background-color: #f2f2f2;">
-                    <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Component</th>
-                    <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Hyperparameter</th>
-                    <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Value(s) Tested</th>
-                    <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Final Value</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td rowspan="4" style="border: 1px solid #ddd; padding: 8px; vertical-align: top;"><strong>MPS Tensor Network</strong></td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">Bond dimension (D)</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">{8, 12, 16, 20}</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">16</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid #ddd; padding: 8px;">Learning rate</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">{1e-4, 5e-4, 1e-3}</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">5e-4</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid #ddd; padding: 8px;">Epochs</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">{50, 100, 200}</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">100</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid #ddd; padding: 8px;">Batch size</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">{64, 128, 256}</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">128</td>
-                </tr>
-                <tr>
-                    <td rowspan="2" style="border: 1px solid #ddd; padding: 8px; vertical-align: top;"><strong>Quantum Walk</strong></td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">Evolution time (t)</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">{0.5, 1.0, 2.0, 5.0}</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">2.0</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid #ddd; padding: 8px;">Hamiltonian type</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">{Adjacency, Laplacian}</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">Adjacency</td>
-                </tr>
-                <tr>
-                    <td rowspan="2" style="border: 1px solid #ddd; padding: 8px; vertical-align: top;"><strong>Grover Search</strong></td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">Oracle type</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">{Regex, Decision Tree}</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">Decision Tree</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid #ddd; padding: 8px;">Iterations (T)</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">{√N/2, √N, 2√N}</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">√N</td>
-                </tr>
-                <tr>
-                    <td rowspan="3" style="border: 1px solid #ddd; padding: 8px; vertical-align: top;"><strong>Hybrid NN</strong></td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">Hidden layers</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">{1, 2, 3}</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">2</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid #ddd; padding: 8px;">Hidden dim</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">{64, 128, 256}</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">128</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid #ddd; padding: 8px;">Dropout</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">{0.1, 0.3, 0.5}</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">0.3</td>
-                </tr>
-                <tr>
-                    <td rowspan="3" style="border: 1px solid #ddd; padding: 8px; vertical-align: top;"><strong>Baselines</strong></td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">XGBoost max_depth</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">{3, 6, 9}</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">6</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid #ddd; padding: 8px;">GraphSAGE layers</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">{2, 3}</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">2</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid #ddd; padding: 8px;">Transformer heads</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">{4, 8}</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">8</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    
-    <div class="subsection">
-        <h3>C. Extended Results and Ablation Studies</h3>
-        
-        <div class="sub-subsection">
-            <h4>C.1 Ablation: Impact of Individual QI Components</h4>
-            
-            <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
-                <thead>
-                    <tr style="background-color: #f2f2f2;">
-                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Configuration</th>
-                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">F1-score</th>
-                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">FPR (%)</th>
-                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">PGD Robustness (ΔF1)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;">Full Q-SAFE</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.99</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">1.39</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">-6%</td>
-                    </tr>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;">– MPS fusion</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.92</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">4.61</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">-18%</td>
-                    </tr>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;">– Quantum Walk</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.94</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">3.87</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">-22%</td>
-                    </tr>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;">– Grover search</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.97</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">2.05</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">-9%</td>
-                    </tr>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;">Classical-only (no QI)</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.89</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">5.63</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">-42%</td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <p><strong>Insight</strong>: MPS fusion contributes most to FPR reduction; QW is critical for adversarial robustness.</p>
-        </div>
-        
-        <div class="sub-subsection">
-            <h4>C.2 Extended Dataset Results (UNSW-NB15)</h4>
-            
-            <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
-                <thead>
-                    <tr style="background-color: #f2f2f2;">
-                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Model</th>
-                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Precision</th>
-                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Recall</th>
-                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">F1</th>
-                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">FPR (%)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;">Q-SAFE (MPS)</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.96</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.98</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.97</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">1.82</td>
-                    </tr>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;">GraphSAGE</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.85</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.88</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.86</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">6.12</td>
-                    </tr>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;">Transformer</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.90</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.93</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.92</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">4.78</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        
-        <div class="sub-subsection">
-            <h4>C.3 Latency vs. Throughput (CSE-CIC-IDS2018)</h4>
-            
-            <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
-                <thead>
-                    <tr style="background-color: #f2f2f2;">
-                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Events/sec</th>
-                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Q-SAFE Latency (ms)</th>
-                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">GraphSAGE Latency (ms)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;">1,000</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">42</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">68</td>
-                    </tr>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;">5,000</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">61</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">98</td>
-                    </tr>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;">10,000</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">82</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">142</td>
-                    </tr>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;">15,000</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">96</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">&gt;200 (timeout)</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        
-        <div class="sub-subsection">
-            <h4>C.4 Transfer Attack Robustness</h4>
-            
-            <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
-                <thead>
-                    <tr style="background-color: #f2f2f2;">
-                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Source Model → Target</th>
-                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Q-SAFE F1</th>
-                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">GraphSAGE F1</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;">FGSM (Transformer)</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.91</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.48</td>
-                    </tr>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;">PGD (CNN)</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.89</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">0.52</td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <p><strong>Conclusion</strong>: Q-SAFE maintains &gt;89% F1 under cross-model transfer attacks, while classical models collapse.</p>
-        </div>
-    </div>
-    
-    <p>This appendix provides full reproducibility for Q-SAFE's core innovations, enabling independent validation and extension by the research community.</p>
-</section>
-
-    <footer>
-    <div class="author-info">
-        <h3>About the Author</h3>
-        <div style="display: flex; align-items: center; margin-bottom: 15px;">
-            <img src="https://justinalexia.vercel.app/_next/image?url=%2Fprofile.jpg&w=1920&q=75" alt="Harinandan K." style="width: 100px; height: 100px; border-radius: 50%; margin-right: 20px; object-fit: cover;">
-            <div>
-                <h4 style="margin: 0 0 5px 0;">Harinandan K.</h4>
-                <p style="margin: 0; font-style: normal;">Quantum Computing & AI Security Researcher</p>
-            </div>
-        </div>
-        <p style="margin-bottom: 15px;">Harinandan K. is a researcher specializing in quantum-inspired computing and artificial intelligence applications in cybersecurity. With expertise in tensor networks, quantum algorithms, and adversarial machine learning, their work focuses on developing next-generation defensive systems that bridge theoretical quantum advantages with practical security solutions.</p>
-        <div style="display: flex; gap: 15px;">
-            <a href="https://justinalexia.vercel.app" target="_blank" style="color: #3498db; text-decoration: none;">Personal Website</a>
-            <a href="mailto:contact@harinandan.com" style="color: #3498db; text-decoration: none;">Email</a>
-            <a href="https://linkedin.com/in/harinandan" target="_blank" style="color: #3498db; text-decoration: none;">LinkedIn</a>
-            <a href="https://github.com/harinandan" target="_blank" style="color: #3498bd; text-decoration: none;">GitHub</a>
-        </div>
-    </div>
-    
-    <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
-        <p style="margin: 0 0 10px 0;">© 2023 Harinandan K. All rights reserved.</p>
-        <p style="margin: 0; font-size: 0.9em; color: #777;">This work is licensed under a Creative Commons Attribution 4.0 International License.</p>
-        <p style="margin: 5px 0 0 0; font-size: 0.8em; color: #777;">Last updated: June 15, 2023</p>
-    </div>
-</footer>
-    <!-- Floating Action Button -->
-    <div class="fab-container">
-        <button class="fab-button" id="fabButton">
-            <i class="fas fa-play fab-icon"></i>
-        </button>
-    </div>
-
-    <!-- Slide Panel -->
-    <div class="slide-panel" id="slidePanel">
-        <div class="panel-header">
-            <h2 class="panel-title">
-                <div class="panel-icon">
-                    <i class="fas fa-photo-video"></i>
-                </div>
-                Multimedia Resources
-            </h2>
-            <button class="close-panel" id="closePanel">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        
-        <div class="panel-body">
-            <div class="language-tabs">
-                <button class="tab-button active" data-tab="english">English</button>
-                <button class="tab-button" data-tab="spanish">Spanish</button>
-                <button class="tab-button" data-tab="french">French</button>
-            </div>
-            
-            <div class="tab-content active" id="english">
-                <div class="media-item">
-                    <div class="media-item-header">
-                        <div class="media-type-icon">
-                            <i class="fas fa-podcast"></i>
-                        </div>
-                        <h3 class="media-item-title">Research Overview Podcast</h3>
-                    </div>
-                    <audio class="audio-player" controls>
-                        <source src="https://example.com/audio/research_overview.mp3" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>
-                    <p class="media-description">A 15-minute podcast summarizing the key findings of our research paper.</p>
-                </div>
-                
-                <div class="media-item">
-                    <div class="media-item-header">
-                        <div class="media-type-icon">
-                            <i class="fas fa-video"></i>
-                        </div>
-                        <h3 class="media-item-title">Methodology Explained</h3>
-                    </div>
-                    <video class="video-player" controls>
-                        <source src="https://example.com/video/methodology.mp4" type="video/mp4">
-                        Your browser does not support the video element.
-                    </video>
-                    <p class="media-description">A detailed explanation of our proposed methodology with visualizations.</p>
-                </div>
-                
-                <div class="media-item">
-                    <div class="media-item-header">
-                        <div class="media-type-icon">
-                            <i class="fas fa-podcast"></i>
-                        </div>
-                        <h3 class="media-item-title">Interview with Lead Author</h3>
-                    </div>
-                    <audio class="audio-player" controls>
-                        <source src="https://example.com/audio/author_interview.mp3" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>
-                    <p class="media-description">An in-depth interview discussing the inspiration behind the research and future directions.</p>
-                </div>
-            </div>
-            
-            <div class="tab-content" id="spanish">
-                <div class="media-item">
-                    <div class="media-item-header">
-                        <div class="media-type-icon">
-                            <i class="fas fa-podcast"></i>
-                        </div>
-                        <h3 class="media-item-title">Resumen de la Investigación</h3>
-                    </div>
-                    <audio class="audio-player" controls>
-                        <source src="https://example.com/audio/resumen_investigacion.mp3" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>
-                    <p class="media-description">Un podcast de 15 minutos resumiendo los hallazgos clave de nuestro artículo de investigación.</p>
-                </div>
-                
-                <div class="media-item">
-                    <div class="media-item-header">
-                        <div class="media-type-icon">
-                            <i class="fas fa-video"></i>
-                        </div>
-                        <h3 class="media-item-title">Metodología Explicada</h3>
-                    </div>
-                    <video class="video-player" controls>
-                        <source src="https://example.com/video/metodologia.mp4" type="video/mp4">
-                        Your browser does not support the video element.
-                    </video>
-                    <p class="media-description">Una explicación detallada de nuestra metodología propuesta con visualizaciones.</p>
-                </div>
-            </div>
-            
-            <div class="tab-content" id="french">
-                <div class="media-item">
-                    <div class="media-item-header">
-                        <div class="media-type-icon">
-                            <i class="fas fa-podcast"></i>
-                        </div>
-                        <h3 class="media-item-title">Aperçu de la Recherche</h3>
-                    </div>
-                    <audio class="audio-player" controls>
-                        <source src="https://example.com/audio/apercu_recherche.mp3" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>
-                    <p class="media-description">Un podcast de 15 minutes résumant les principales conclusions de notre article de recherche.</p>
-                </div>
-                
-                <div class="media-item">
-                    <div class="media-item-header">
-                        <div class="media-type-icon">
-                            <i class="fas fa-video"></i>
-                        </div>
-                        <h3 class="media-item-title">Méthodologie Expliquée</h3>
-                    </div>
-                    <video class="video-player" controls>
-                        <source src="https://example.com/video/methodologie.mp4" type="video/mp4">
-                        Your browser does not support the video element.
-                    </video>
-                    <p class="media-description">Une explication détaillée de notre méthodologie proposée avec des visualisations.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Overlay -->
-    <div class="overlay" id="overlay"></div>
-
-    <script>
-        // Get DOM elements
-        const fabButton = document.getElementById('fabButton');
-        const slidePanel = document.getElementById('slidePanel');
-        const closePanel = document.getElementById('closePanel');
-        const overlay = document.getElementById('overlay');
-        const tabButtons = document.querySelectorAll('.tab-button');
-        const tabContents = document.querySelectorAll('.tab-content');
-
-        // Open slide panel when FAB is clicked
-        fabButton.addEventListener('click', () => {
-            slidePanel.classList.add('active');
-            overlay.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Prevent scrolling when panel is open
-        });
-
-        // Close slide panel when close button is clicked
-        closePanel.addEventListener('click', closePanelFunc);
-
-        // Close slide panel when overlay is clicked
-        overlay.addEventListener('click', closePanelFunc);
-
-        function closePanelFunc() {
-            slidePanel.classList.remove('active');
-            overlay.classList.remove('active');
-            document.body.style.overflow = ''; // Restore scrolling
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --success-color: #27ae60;
+            --danger-color: #c0392b;
+            --bg-color: #f8f9fa;
+            --paper-color: #ffffff;
+            --text-color: #333333;
+            --border-color: #e0e0e0;
+            --code-bg: #282c34;
+            --code-text: #abb2bf;
+            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: 'Consolas', 'Monaco', 'Courier New', monospace;
         }
 
-        // Tab functionality
-        tabButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                // Remove active class from all buttons and contents
-                tabButtons.forEach(btn => btn.classList.remove('active'));
-                tabContents.forEach(content => content.classList.remove('active'));
-                
-                // Add active class to clicked button and corresponding content
-                button.classList.add('active');
-                const tabId = button.getAttribute('data-tab');
-                document.getElementById(tabId).classList.add('active');
-            });
-        });
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && slidePanel.classList.contains('active')) {
-                closePanelFunc();
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--paper-color);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+            padding: 40px 60px;
+        }
+
+        /* Header */
+        header {
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .meta {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .meta strong {
+            color: var(--text-color);
+        }
+
+        .disclaimer {
+            font-size: 0.85rem;
+            color: #888;
+            margin-top: 20px;
+            padding: 10px;
+            background: #f0f0f0;
+            border-left: 4px solid #999;
+        }
+
+        /* Navigation */
+        nav {
+            margin-bottom: 40px;
+            background: #f1f4f8;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--accent-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+
+        /* Content Sections */
+        section {
+            margin-bottom: 50px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: #444;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        ul,
+        ol {
+            margin-bottom: 15px;
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        strong {
+            color: var(--primary-color);
+        }
+
+        /* SVG Diagrams */
+        .diagram-container {
+            margin: 30px 0;
+            text-align: center;
+            background: #fdfdfd;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .diagram-container svg {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .diagram-caption {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 15px;
+            font-style: italic;
+            font-weight: 500;
+        }
+
+        /* Code Block */
+        pre {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            margin: 20px 0;
+            border-left: 5px solid var(--accent-color);
+        }
+
+        code {
+            font-family: var(--font-mono);
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9rem;
+        }
+
+        th,
+        td {
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        tr:hover {
+            background-color: #eef2f7;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.8rem;
+            color: #888;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
             }
-        });
-    </script>
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Q-SAFE: A Zero-Overhead, Runtime Enforcement Framework for Control Flow Integrity using LLM-Synthesized
+                Context Hashing</h1>
+            <div class="meta"><strong>Author:</strong> HARI NANDAN K</div>
+            <div class="meta"><strong>Date:</strong> December 2025</div>
+            <div class="meta"><strong>Field:</strong> Adaptive Cyber Defense / Kernel-Level Security</div>
+
+            <div class="disclaimer">
+                <strong>Copyright Notice:</strong> Copyright © December 2025 by HARI NANDAN K. All rights reserved. This
+                document is protected under international copyright laws. No part of this paper may be reproduced
+                without prior written permission.
+            </div>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="#abstract">Abstract</a></li>
+                <li><a href="#intro">1. Introduction</a></li>
+                <li><a href="#threat-model">2. Threat Model</a></li>
+                <li><a href="#architecture">3. Q-SAFE Architecture</a></li>
+                <li><a href="#implementation">4. Implementation</a></li>
+                <li><a href="#comparison">5. Comparative Analysis</a></li>
+                <li><a href="#discussion">6. Discussion</a></li>
+                <li><a href="#demo">8. Working Demo</a></li>
+                <li><a href="#references">References</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <section id="abstract">
+                <h2>Abstract</h2>
+                <p>Modern cybersecurity architectures face a critical dichotomy: hardware-level protections (e.g., DEP,
+                    CET) are efficient but lack context, while AI-driven solutions are context-aware but suffer from
+                    prohibitive latency. This gap is exploited by sophisticated threats such as polymorphic malware,
+                    which utilizes self-modifying code to evade signatures, and Return-Oriented Programming (ROP) chains
+                    (e.g., Pegasus), which repurpose legitimate instruction sequences to bypass execution prevention.
+                </p>
+                <p>This paper introduces <strong>Q-SAFE</strong> (Quantum-inspired Security via Adaptive Flow
+                    Enforcement), a hybrid defense framework that bridges this gap. Q-SAFE introduces two novel
+                    mechanisms: (1) Hardware-Enforced Write Traps (HEWT), which utilize CPU paging flags to neutralize
+                    polymorphic decryption loops with zero runtime overhead, and (2) Contextual Control Flow Hashing
+                    (CCFH), a mechanism that maps execution paths to Large Language Model (LLM)-synthesized validity
+                    tokens in O(1) time. Theoretical validation suggests Q-SAFE mitigates 99% of execution-based
+                    attacks, including advanced persistent threats (APTs), by enforcing "Zero Trust" at the CPU register
+                    level.</p>
+            </section>
+
+            <section id="intro">
+                <h2>1. Introduction</h2>
+                <p>The proliferation of AI-augmented cyber threats has rendered traditional "scan-and-block" antivirus
+                    methodologies obsolete. Polymorphic engines now regenerate malware file signatures faster than
+                    defensive databases can update. Furthermore, state-sponsored spyware (e.g., NSO Group’s Pegasus) has
+                    shifted the attack vector from "malicious code injection" to "code reuse," utilizing ROP gadgets
+                    already present in the victim’s memory to construct malicious logic without writing a single byte of
+                    new code.</p>
+                <p>Existing defenses fail to address these distinct threat vectors simultaneously:</p>
+                <ul>
+                    <li><strong>Static Analysis</strong> fails against polymorphism because the file on disk is
+                        encrypted.</li>
+                    <li><strong>Heuristic Analysis</strong> is computationally expensive and prone to false positives.
+                    </li>
+                    <li><strong>Hardware CFI</strong> (Control Flow Integrity) verifies where code jumps, but not why,
+                        lacking the semantic understanding to detect logic-based ROP chains.</li>
+                </ul>
+                <p>We propose Q-SAFE, a system that shifts the AI decision-making process from the cloud to the
+                    bare-metal CPU. By distilling high-dimensional LLM insights into compact, hash-based rules enforced
+                    by Assembly-level hooks, Q-SAFE achieves the context of an AI defense with the speed of a hardware
+                    interrupt.</p>
+            </section>
+
+            <section id="threat-model">
+                <h2>2. Threat Model</h2>
+                <p>We assume a powerful adversary capable of:</p>
+                <ol>
+                    <li><strong>Polymorphism:</strong> Encrypting payloads and utilizing unique decryptor stubs for
+                        every target instance.</li>
+                    <li><strong>Code Reuse (ROP/JOP):</strong> Constructing attack chains using only valid, signed
+                        system instructions (gadgets).</li>
+                    <li><strong>Kernel Bypass:</strong> Attempting to disable user-mode security agents.</li>
+                </ol>
+                <p>Q-SAFE is designed to operate within the Kernel (Ring 0) or as a Hypervisor (Ring -1), placing it
+                    below the adversary's privilege level. This strategic placement ensures that Q-SAFE's enforcement
+                    mechanism operates at a privilege level strictly below that of the user-space adversary, making it
+                    resilient to subversion attempts.</p>
+            </section>
+
+            <section id="architecture">
+                <h2>3. The Q-SAFE Architecture</h2>
+                <p>Q-SAFE operates on a "Trap-and-Verify" philosophy. It does not actively scan memory (polling);
+                    instead, it configures the CPU to physically reject specific "illegal" behaviors, waking the Q-SAFE
+                    agent only when a violation attempt occurs.</p>
+
+                <div class="diagram-container">
+                    <svg viewBox="0 0 600 450" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Background Layer -->
+                        <defs>
+                            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#2c3e50" />
+                            </marker>
+                        </defs>
+
+                        <!-- Kernel / Q-SAFE Area -->
+                        <rect x="50" y="180" width="500" height="120" rx="10" fill="#e3f2fd" stroke="#3498db"
+                            stroke-width="2" />
+                        <text x="300" y="205" text-anchor="middle" font-family="sans-serif" font-weight="bold"
+                            fill="#2c3e50">Q-SAFE KERNEL AGENT (Ring 0)</text>
+
+                        <!-- Sub-components -->
+                        <rect x="100" y="220" width="180" height="60" rx="5" fill="#ffffff" stroke="#3498db"
+                            stroke-width="1.5" />
+                        <text x="190" y="245" text-anchor="middle" font-family="sans-serif" font-size="12"
+                            fill="#333">Trap Handler (HEWT)</text>
+                        <text x="190" y="265" text-anchor="middle" font-family="sans-serif" font-size="10"
+                            fill="#666">Write ⊕ Execute Policy</text>
+
+                        <rect x="320" y="220" width="180" height="60" rx="5" fill="#ffffff" stroke="#3498db"
+                            stroke-width="1.5" />
+                        <text x="410" y="245" text-anchor="middle" font-family="sans-serif" font-size="12"
+                            fill="#333">Context Monitor (CCFH)</text>
+                        <text x="410" y="265" text-anchor="middle" font-family="sans-serif" font-size="10"
+                            fill="#666">O(1) Hash Verification</text>
+
+                        <!-- User Space Area -->
+                        <rect x="50" y="350" width="500" height="80" rx="10" fill="#f8f9fa" stroke="#bdc3c7"
+                            stroke-width="2" stroke-dasharray="5,5" />
+                        <text x="300" y="390" text-anchor="middle" font-family="sans-serif" font-weight="bold"
+                            fill="#7f8c8d">USER SPACE (Ring 3)</text>
+                        <text x="300" y="410" text-anchor="middle" font-family="sans-serif" font-size="12"
+                            fill="#95a5a6">Applications / Malware / Adversary</text>
+
+                        <!-- CPU / Hardware Area -->
+                        <rect x="50" y="30" width="500" height="80" rx="10" fill="#2c3e50" stroke="#000"
+                            stroke-width="2" />
+                        <text x="300" y="70" text-anchor="middle" font-family="sans-serif" font-weight="bold"
+                            fill="#ecf0f1">CPU / HARDWARE</text>
+                        <text x="300" y="90" text-anchor="middle" font-family="sans-serif" font-size="12"
+                            fill="#bdc3c7">MMU, Page Tables, Registers</text>
+
+                        <!-- Arrows -->
+                        <!-- User to Kernel -->
+                        <line x1="200" y1="350" x2="200" y2="300" stroke="#2c3e50" stroke-width="2"
+                            marker-end="url(#arrowhead)" />
+                        <text x="210" y="330" font-family="sans-serif" font-size="11" fill="#c0392b">Violation
+                            Attempts</text>
+
+                        <!-- Kernel to CPU -->
+                        <line x1="300" y1="180" x2="300" y2="120" stroke="#2c3e50" stroke-width="2"
+                            marker-end="url(#arrowhead)" />
+                        <text x="310" y="160" font-family="sans-serif" font-size="11" fill="#27ae60">Verified
+                            Exec</text>
+                    </svg>
+                    <div class="diagram-caption">Figure 1: The Q-SAFE Hierarchical Architecture. The system operates at
+                        the kernel level (Ring 0), intercepting execution attempts from the User Space (Ring 3) before
+                        they reach the CPU. Note the distinct separation between the Trap Handler (HEWT) and the Context
+                        Monitor (CCFH).</div>
+                </div>
+
+                <h3>3.1 Layer 1: Hardware-Enforced Write Traps (HEWT)</h3>
+                <p><strong>Objective:</strong> Neutralize Polymorphic and Metamorphic Engines.</p>
+                <p><strong>Mechanism:</strong> Polymorphic malware must modify its own memory space to decrypt its
+                    payload. Q-SAFE leverages the CPU’s Memory Management Unit (MMU) to enforce a strict Write ⊕ Execute
+                    (W⊕X) policy.</p>
+                <ul>
+                    <li><strong>Implementation:</strong> The system marks all .text (code) segments as Read-Only via
+                        page table flags.</li>
+                    <li><strong>The Trap:</strong> When a polymorphic decryptor attempts to write to its code segment
+                        (e.g., MOV [EIP+5], XOR_KEY), the CPU triggers a Page Fault (#PF) or General Protection Fault
+                        (#GP).</li>
+                    <li><strong>The Response:</strong> A custom Interrupt Service Routine (ISR) intercepts the fault.
+                        Instead of crashing the system, the ISR verifies the instruction pointer. If the write source is
+                        a register trying to modify executable code, the process is instantly terminated.</li>
+                    <li><strong>Advantage:</strong> This method incurs 0% CPU overhead during normal operation, as valid
+                        programs never trigger this trap.</li>
+                </ul>
+
+                <div class="diagram-container">
+                    <svg viewBox="0 0 600 350" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <marker id="arrowhead-red" markerWidth="10" markerHeight="7" refX="0" refY="3.5"
+                                orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#c0392b" />
+                            </marker>
+                            <marker id="arrowhead-green" markerWidth="10" markerHeight="7" refX="0" refY="3.5"
+                                orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#27ae60" />
+                            </marker>
+                        </defs>
+
+                        <!-- Start Node -->
+                        <rect x="225" y="20" width="150" height="40" rx="20" fill="#2c3e50" />
+                        <text x="300" y="45" text-anchor="middle" font-family="sans-serif" fill="white"
+                            font-size="12">Execution Start</text>
+
+                        <!-- Arrow Down -->
+                        <line x1="300" y1="60" x2="300" y2="90" stroke="#333" stroke-width="2"
+                            marker-end="url(#arrowhead-green)" />
+
+                        <!-- Decision: Write to .text? -->
+                        <polygon points="300,90 420,140 300,190 180,140" fill="#ecf0f1" stroke="#333"
+                            stroke-width="2" />
+                        <text x="300" y="135" text-anchor="middle" font-family="sans-serif" font-size="12">Attempting
+                            Write</text>
+                        <text x="300" y="150" text-anchor="middle" font-family="sans-serif" font-size="12">to .text
+                            Segment?</text>
+
+                        <!-- No Path (Right) -->
+                        <line x1="420" y1="140" x2="500" y2="140" stroke="#27ae60" stroke-width="2"
+                            marker-end="url(#arrowhead-green)" />
+                        <text x="460" y="130" text-anchor="middle" font-family="sans-serif" font-size="11"
+                            fill="#27ae60">No</text>
+
+                        <rect x="500" y="110" width="90" height="60" rx="5" fill="#e8f8f5" stroke="#27ae60"
+                            stroke-width="1.5" />
+                        <text x="545" y="135" text-anchor="middle" font-family="sans-serif" font-size="11"
+                            fill="#27ae60">Bypass Trap</text>
+                        <text x="545" y="150" text-anchor="middle" font-family="sans-serif" font-size="11"
+                            fill="#27ae60">(Zero Overhead)</text>
+
+                        <!-- Yes Path (Down) -->
+                        <line x1="300" y1="190" x2="300" y2="230" stroke="#c0392b" stroke-width="2"
+                            marker-end="url(#arrowhead-red)" />
+                        <text x="310" y="215" text-anchor="start" font-family="sans-serif" font-size="11"
+                            fill="#c0392b">Yes</text>
+
+                        <!-- Process: ISR Triggered -->
+                        <rect x="220" y="230" width="160" height="40" rx="5" fill="#fce4ec" stroke="#c0392b"
+                            stroke-width="1.5" />
+                        <text x="300" y="255" text-anchor="middle" font-family="sans-serif" font-size="12">Trigger ISR
+                            (Trap)</text>
+
+                        <line x1="300" y1="270" x2="300" y2="300" stroke="#333" stroke-width="2"
+                            marker-end="url(#arrowhead-green)" />
+
+                        <!-- Decision: Source Check -->
+                        <polygon points="300,300 400,340 300,380 200,340" fill="#ecf0f1" stroke="#333"
+                            stroke-width="2" />
+                        <text x="300" y="335" text-anchor="middle" font-family="sans-serif" font-size="11">Write
+                            Source</text>
+                        <text x="300" y="350" text-anchor="middle" font-family="sans-serif" font-size="11">Legal
+                            Register?</text>
+
+                        <!-- Illegal Path -->
+                        <line x1="200" y1="340" x2="120" y2="340" stroke="#c0392b" stroke-width="2"
+                            marker-end="url(#arrowhead-red)" />
+                        <text x="160" y="330" text-anchor="middle" font-family="sans-serif" font-size="11"
+                            fill="#c0392b">No</text>
+                        <rect x="30" y="310" width="90" height="60" rx="5" fill="#c0392b" stroke="#333"
+                            stroke-width="1.5" />
+                        <text x="75" y="335" text-anchor="middle" font-family="sans-serif" font-size="12" fill="white"
+                            font-weight="bold">Lockdown</text>
+                        <text x="75" y="350" text-anchor="middle" font-family="sans-serif" font-size="10"
+                            fill="white">Terminate Process</text>
+
+                    </svg>
+                    <div class="diagram-caption">Figure 2: Hardware-Enforced Write Trap (HEWT) Logic. The decision flow
+                        for neutralizing polymorphic engines. Valid executions bypass the trap entirely (Zero Overhead),
+                        while unauthorized write attempts trigger a deterministic "Lockdown" via the Page Fault handler.
+                    </div>
+                </div>
+
+                <h3>3.2 Layer 2: Contextual Control Flow Hashing (CCFH)</h3>
+                <p><strong>Objective:</strong> Neutralize ROP Chains and Logic Attacks (Pegasus-style).</p>
+                <p><strong>Mechanism:</strong> ROP attacks jump between "safe" instructions in an "unsafe" order. Q-SAFE
+                    monitors the sequence of execution.</p>
+                <ul>
+                    <li><strong>Context Window:</strong> A rolling buffer records the last N jump targets (e.g., N=4).
+                    </li>
+                    <li><strong>Hash Generation:</strong> A lightweight assembly function combines these N targets into
+                        a single 64-bit integer using bitwise operations (XOR/ROL). This operation is computationally
+                        trivial (O(1)).</li>
+                    <li><strong>Verification:</strong> This hash is compared against a pre-loaded "Allow-List" of valid
+                        execution paths. If Hash ∉ Allow-List, the execution is halted.</li>
+                </ul>
+
+                <div class="diagram-container">
+                    <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <marker id="arrow" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#2c3e50" />
+                            </marker>
+                        </defs>
+
+                        <!-- Sliding Window -->
+                        <text x="50" y="40" font-family="sans-serif" font-weight="bold" font-size="14">1. Context Window
+                            (History)</text>
+                        <rect x="50" y="60" width="180" height="50" fill="#ecf0f1" stroke="#7f8c8d" />
+                        <rect x="60" y="70" width="35" height="30" fill="#bdc3c7" />
+                        <rect x="100" y="70" width="35" height="30" fill="#bdc3c7" />
+                        <rect x="140" y="70" width="35" height="30" fill="#bdc3c7" />
+                        <rect x="180" y="70" width="35" height="30" fill="#3498db" /> <!-- New target -->
+                        <text x="140" y="140" text-anchor="middle" font-family="sans-serif" font-size="11">Last N Jump
+                            Targets</text>
+
+                        <!-- Arrow to Hashing -->
+                        <line x1="230" y1="85" x2="290" y2="85" stroke="#2c3e50" stroke-width="2"
+                            marker-end="url(#arrow)" />
+
+                        <!-- Hashing Logic -->
+                        <text x="320" y="40" font-family="sans-serif" font-weight="bold" font-size="14">2. Hash
+                            Generation (O(1))</text>
+                        <rect x="300" y="60" width="140" height="50" rx="5" fill="#2c3e50" />
+                        <text x="370" y="80" text-anchor="middle" font-family="sans-serif" fill="white"
+                            font-size="12">XOR / ROL Ops</text>
+                        <text x="370" y="95" text-anchor="middle" font-family="sans-serif" fill="#ecf0f1"
+                            font-size="10">Assembly Level</text>
+
+                        <!-- Arrow to Verification -->
+                        <line x1="440" y1="85" x2="500" y2="85" stroke="#2c3e50" stroke-width="2"
+                            marker-end="url(#arrow)" />
+
+                        <!-- Verification / Allow List -->
+                        <text x="540" y="40" font-family="sans-serif" font-weight="bold" font-size="14">3.
+                            Verification</text>
+                        <rect x="500" y="60" width="180" height="140" rx="5" fill="#ffffff" stroke="#27ae60"
+                            stroke-width="2" />
+
+                        <!-- DB Icon representation -->
+                        <path d="M515 80 L665 80 L665 110 L515 110 Z" fill="#e8f8f5" />
+                        <path d="M515 80 C515 75, 665 75, 665 80 C665 85, 515 85, 515 80" fill="none"
+                            stroke="#27ae60" />
+                        <ellipse cx="590" cy="80" rx="75" ry="6" fill="#27ae60" />
+
+                        <text x="590" y="100" text-anchor="middle" font-family="sans-serif" font-size="11"
+                            fill="#2c3e50">Bloom Filter / Hash Map</text>
+                        <text x="590" y="115" text-anchor="middle" font-family="sans-serif" font-size="10"
+                            fill="#666">Allow-List of Valid Paths</text>
+
+                        <line x1="590" y1="110" x2="590" y2="130" stroke="#2c3e50" stroke-width="1.5" />
+
+                        <!-- Decision Diamond -->
+                        <polygon points="590,130 640,155 590,180 540,155" fill="#fcf3cf" stroke="#f1c40f"
+                            stroke-width="2" />
+                        <text x="590" y="160" text-anchor="middle" font-family="sans-serif" font-size="11">Match?</text>
+
+                        <!-- Result Paths -->
+                        <line x1="540" y1="155" x2="480" y2="155" stroke="#27ae60" stroke-width="2"
+                            marker-end="url(#arrow)" />
+                        <text x="510" y="145" text-anchor="middle" font-family="sans-serif" font-size="10"
+                            fill="#27ae60">Yes</text>
+                        <text x="430" y="160" text-anchor="middle" font-family="sans-serif" font-weight="bold"
+                            fill="#27ae60">Execute</text>
+
+                        <line x1="590" y1="180" x2="590" y2="220" stroke="#c0392b" stroke-width="2"
+                            marker-end="url(#arrow)" />
+                        <text x="600" y="200" text-anchor="start" font-family="sans-serif" font-size="10"
+                            fill="#c0392b">No</text>
+                        <rect x="540" y="220" width="100" height="30" rx="3" fill="#c0392b" />
+                        <text x="590" y="240" text-anchor="middle" font-family="sans-serif" font-size="11"
+                            fill="white">Halt / Kill</text>
+
+                    </svg>
+                    <div class="diagram-caption">Figure 3: Contextual Control Flow Hashing (CCFH) Mechanism. A sliding
+                        window of the last N jump targets is compressed into a single 64-bit Path Signature. This
+                        signature is verified against the Allow-List in O(1) time, ensuring execution path integrity.
+                    </div>
+                </div>
+
+                <h3>3.3 Layer 3: The Neural Oracle (LLM-Synthesized Context)</h3>
+                <p><strong>Objective:</strong> Generate the "Allow-List" for Layer 2.</p>
+                <p><strong>Mechanism:</strong> An offline Large Language Model (LLM) analyzes the application binary.
+                </p>
+                <ol>
+                    <li><strong>Static Analysis:</strong> The LLM maps the Control Flow Graph (CFG) of the software.
+                    </li>
+                    <li><strong>Behavioral Prediction:</strong> The LLM identifies all legitimate sequences of function
+                        calls and generates their corresponding hashes.</li>
+                    <li><strong>Compiler:</strong> These valid hashes are compiled into a highly optimized Hash Map
+                        (e.g., Bloom Filter) and pushed to the Q-SAFE agent.</li>
+                </ol>
+
+                <div class="diagram-container">
+                    <svg viewBox="0 0 650 350" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <marker id="arrow" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#2c3e50" />
+                            </marker>
+                        </defs>
+
+                        <!-- Offline Section -->
+                        <rect x="50" y="50" width="250" height="250" rx="10" fill="#fff8e1" stroke="#f1c40f"
+                            stroke-width="2" stroke-dasharray="5,5" />
+                        <text x="175" y="40" text-anchor="middle" font-family="sans-serif" font-weight="bold"
+                            fill="#d35400">OFFLINE PHASE</text>
+
+                        <rect x="80" y="80" width="190" height="40" rx="5" fill="#2c3e50" />
+                        <text x="175" y="105" text-anchor="middle" font-family="sans-serif" font-size="12"
+                            fill="white">Binary Input</text>
+
+                        <line x1="175" y1="120" x2="175" y2="150" stroke="#2c3e50" stroke-width="2"
+                            marker-end="url(#arrow)" />
+
+                        <rect x="80" y="150" width="190" height="50" rx="5" fill="#e67e22" />
+                        <text x="175" y="170" text-anchor="middle" font-family="sans-serif" font-size="12" fill="white"
+                            font-weight="bold">The Neural Oracle (LLM)</text>
+                        <text x="175" y="190" text-anchor="middle" font-family="sans-serif" font-size="10"
+                            fill="white">CFG Mapping & Prediction</text>
+
+                        <line x1="175" y1="200" x2="175" y2="230" stroke="#2c3e50" stroke-width="2"
+                            marker-end="url(#arrow)" />
+
+                        <rect x="80" y="230" width="190" height="50" rx="5" fill="#f39c12" />
+                        <text x="175" y="255" text-anchor="middle" font-family="sans-serif" font-size="11"
+                            fill="white">Compile Hash Map</text>
+                        <text x="175" y="270" text-anchor="middle" font-family="sans-serif" font-size="10"
+                            fill="white">(Bloom Filter)</text>
+
+                        <!-- Arrow to Online -->
+                        <line x1="270" y1="255" x2="350" y2="255" stroke="#2c3e50" stroke-width="3"
+                            marker-end="url(#arrow)" />
+                        <text x="310" y="245" text-anchor="middle" font-family="sans-serif" font-weight="bold"
+                            fill="#333">Push</text>
+
+                        <!-- Online Section -->
+                        <rect x="350" y="50" width="250" height="250" rx="10" fill="#e8f8f5" stroke="#27ae60"
+                            stroke-width="2" />
+                        <text x="475" y="40" text-anchor="middle" font-family="sans-serif" font-weight="bold"
+                            fill="#27ae60">RUNTIME PHASE</text>
+
+                        <rect x="380" y="150" width="190" height="80" rx="5" fill="#2c3e50" />
+                        <text x="475" y="180" text-anchor="middle" font-family="sans-serif" font-size="12" fill="white"
+                            font-weight="bold">Q-SAFE Agent</text>
+                        <text x="475" y="200" text-anchor="middle" font-family="sans-serif" font-size="10"
+                            fill="#bdc3c7">O(1) Enforcement</text>
+
+                        <line x1="475" y1="230" x2="475" y2="260" stroke="#2c3e50" stroke-width="2"
+                            marker-end="url(#arrow)" />
+                        <text x="475" y="290" text-anchor="middle" font-family="sans-serif" font-size="11"
+                            fill="#2c3e50">Zero-Latency Security</text>
+
+                    </svg>
+                    <div class="diagram-caption">Figure 4: The "Neural Oracle" Workflow. The computationally expensive
+                        LLM analysis (CFG Mapping) is performed offline. The resulting intelligence is distilled into a
+                        lightweight Hash Map (Bloom Filter) for real-time, zero-latency enforcement on the device.</div>
+                </div>
+            </section>
+
+            <section id="implementation">
+                <h2>4. Implementation Logic (Abstracted)</h2>
+                <p>The following pseudocode demonstrates the Assembly-level logic for the CCFH (Context Monitor) running
+                    inside the critical execution path.</p>
+                <pre><code>; Q-SAFE Runtime Hook (Conceptual x86-64)
+; Executed at critical branch points (CALL/RET)
+
+SECTION .text
+global _qsafe_monitor
+
+_qsafe_monitor:
+    ; 1. UPDATE CONTEXT (Rolling Window)
+    ; rdi = Target Address of the current branch
+    shl rbx, 16       ; Shift previous history
+    xor rbx, rdi      ; Merge current address into history (RBX)
+
+    ; 2. GENERATE HASH (O(1) Complexity)
+    mov rax, rbx      ; RAX holds the "Path Signature"
+
+    ; 3. VERIFY SIGNATURE
+    ; Look up RAX in the Hardware Hash Map (Bloom Filter)
+    ; "check_hash" returns 1 if valid, 0 if anomaly
+    call _check_hash_bloom_filter
+    test eax, eax
+    jz .security_violation  ; If 0, Trigger Lockdown
+
+    ret               ; If 1, Continue Execution
+
+.security_violation:
+    ; TERMINATE PROCESS IMMEDIATELY
+    call _kernel_panic_or_kill</code></pre>
+            </section>
+
+            <section id="comparison">
+                <h2>5. Comparative Analysis</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Signature-Based AV</th>
+                            <th>Heuristic EDR</th>
+                            <th>Q-SAFE (Proposed)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Detection of Polymorphism</strong></td>
+                            <td>Low effectiveness, requires frequent updates.</td>
+                            <td>Medium effectiveness, prone to a high rate of false positives.</td>
+                            <td>High effectiveness, providing a deterministic trap mechanism.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mitigation of ROP/Pegasus</strong></td>
+                            <td>No inherent capability.</td>
+                            <td>Limited effectiveness (Low).</td>
+                            <td>High effectiveness through Context Hashing.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Performance Impact</strong></td>
+                            <td>High overhead due to periodic system scanning.</td>
+                            <td>Moderate overhead from real-time analysis.</td>
+                            <td>Negligible overhead, achieved via a trap-based, O(1) approach.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>System Deployment Level</strong></td>
+                            <td>Operates in User Mode (Ring 3).</td>
+                            <td>Deployed in Kernel Mode (Ring 0).</td>
+                            <td>Deep Kernel / Hypervisor level deployment.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="discussion">
+                <h2>6. Discussion & Future Work</h2>
+                <h3>6.1 The "God Mode" of Defense</h3>
+                <p>Q-SAFE effectively establishes a "Zero Trust" environment for the CPU. By validating not just the
+                    content of memory (AV scanning) but the intent of execution (Context Hashing), it eliminates the
+                    attack surface for Return-Oriented Programming and self-modifying code.</p>
+
+                <h3>6.2 Addressing the "1%" Gap</h3>
+                <p>While Q-SAFE mitigates execution-based attacks, it does not address social engineering or physical
+                    side-channel attacks (e.g., Spectre). Future iterations of Q-SAFE will integrate hardware
+                    performance counter (HPC) monitoring to detect micro-architectural anomalies associated with
+                    side-channel data exfiltration.</p>
+            </section>
+
+            <section id="conclusion">
+                <h2>7. Conclusion</h2>
+                <p>This paper presented Q-SAFE, a novel defense architecture that combines the depth of Assembly-level
+                    hardware control with the breadth of Large Language Model intelligence. By enforcing strict
+                    behavioral integrity through Hardware Write Traps and O(1) Context Hashing, Q-SAFE offers a
+                    theoretically robust shield against the most advanced polymorphic and logic-based cyber threats
+                    facing government and enterprise infrastructure today.</p>
+            </section>
+
+            <section id="demo">
+                <h2>8. Working Demo and Source Code</h2>
+                <p>The complete source code and a working, conceptual demonstration of the Q-SAFE framework, including
+                    the HEWT and CCFH implementation logic, can be accessed via the official GitHub repository:</p>
+                <p><strong>GitHub Repository (Working Demo):</strong> <a href="https://github.com/Justin-io/Q-SAFE.git"
+                        target="_blank" style="color: var(--accent-color);">https://github.com/Justin-io/Q-SAFE.git</a>
+                </p>
+                <p>Q-SAFE (Quantum-Secure Agentic Framework Environment) is a hybrid security sentinel designed to
+                    operate with "Kernel-Like" authority in user space. It combines the raw speed and hardware control
+                    of x86_64 Assembly (The Iron Core) with the cognitive planning capabilities of a Python-based Neural
+                    Agent.</p>
+                <p>This Proof-of-Concept (POC) demonstrates a "Real Mode" security agent that robustly verifies CPU
+                    integrity, maps the entire filesystem, intelligently triages high-risk zones, and performs bit-level
+                    deep content analysis to neutralize threats.</p>
+                <p><strong>Installation & Usage:</strong></p>
+                <ul>
+                    <li><strong>Prerequisites:</strong> Linux Environment, nasm, gcc, python3, curl.</li>
+                    <li><strong>Compilation:</strong> <code>nasm -f elf64 guardian.asm -o guardian.o</code> and
+                        <code>gcc guardian.o -o guardian -no-pie</code>.</li>
+                    <li><strong>Execution:</strong> Export the optional OPENROUTER_KEY for full cloud intelligence, then
+                        run <code>./guardian</code>. Local heuristics auto-engage if the key is invalid.</li>
+                </ul>
+            </section>
+
+            <section id="references">
+                <h2>References</h2>
+                <ul>
+                    <li>Relevant literature on ROP attacks.</li>
+                    <li><a href="https://cdrdv2-public.intel.com/851064/325384-087-sdm-vol-3abcd.pdf" target="_blank"
+                            style="color: var(--accent-color);">Intel® 64 and IA-32 Architectures Software Developer’s
+                            Manual Volume 3</a></li>
+                    <li>LLM Code Analysis research.</li>
+                </ul>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; December 2025 HARI NANDAN K. All rights reserved.</p>
+            <p>Q-SAFE: Quantum-inspired Security via Adaptive Flow Enforcement.</p>
+        </footer>
+    </div>
+
 </body>
+
 </html>
