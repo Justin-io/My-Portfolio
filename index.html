@@ -1965,11 +1965,24 @@
             <div class="chat-messages" id="chat-messages">
                 <!-- Dynamic messages will appear here -->
             </div>
-            <div class="chat-input-area">
-                <input type="text" placeholder="Ask a question..." disabled style="cursor: not-allowed; opacity: 0.6;">
-                <button disabled><i class="fas fa-paper-plane"></i></button>
+            <div class="chat-suggestions" id="chat-suggestions">
+                <!-- Chips will be injected here -->
+            </div>
+
+        </div>
+
+        <!-- Walkthrough Controls -->
+        <div id="walkthrough-controls" style="display: none;">
+            <div class="wt-status">
+                <span class="wt-dot"></span>
+                <span id="wt-text">Explaining...</span>
+            </div>
+            <div class="wt-buttons">
+                <button id="wt-pause-btn" title="Pause/Resume"><i class="fas fa-pause"></i></button>
+                <button id="wt-stop-btn" title="Stop & Chat"><i class="fas fa-stop"></i> End</button>
             </div>
         </div>
+
         <div id="ai-toggle-btn">
             <!-- Lottie Animation: Thinking Bot -->
             <lottie-player src="https://lottie.host/4b82d432-849c-482a-8959-1f4862423378/W5yN2hC2l7.json"

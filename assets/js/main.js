@@ -666,14 +666,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Section Summaries - Enhanced Content
+    // Section Summaries - Enhanced First-Person POV
     const summaries = {
-        'home': "Welcome to the digital frontier of **Justin Alexia Andrew**. I am an innovator synthesizing **AI, cybersecurity, and theoretical physics** to engineer the future. Explore my universe.",
-        'about': "**About Justin:** A visionary researcher and B.Tech Data Science scholar at **IES College of Engineering**. Driven by the quantum potential of the cosmos, he bridges the gap between deep theory and practical secure systems.",
-        'projects': "**Key Projects:**\n• **HOPE Platform:** connecting innovators.\n• **ShopRoyince:** specialized e-commerce.\n• **TexidoMeg:** democratizing cyber-education from novice to expert.",
-        'research': "**Research Frontiers:**\n• **Q-SAFE:** A quantum-inspired cybersecurity framework for the post-quantum era.\n• **Chronon-SQL Model:** A groundbreaking theoretical reconstruction of spacetime geometry.",
-        'skills': "**Tech Stack & Arsenal:**\n• **Languages:** Python, C++, Java, JavaScript\n• **Frameworks:** React, Next.js, Node.js\n• **Security:** Penetration Testing, Reverse Engineering, Cryptography.",
-        'timeline': "**The Evolution:**\nFrom a curiosity-driven hacker to a founder and theorist.\n• **2025:** Q-SAFE & Theoretical breakthroughs.\n• **2023:** Founder of ShopRoyince.\n• **2017:** Developed first ethical hacking toolkit.",
-        'contact': "**Connect & Collaborate:**\nOpen for high-impact research, security consulting, and theoretical physics discourse. Let's build something revolutionary."
+        'home': "Welcome to my digital workspace. I'm Justin, a developer obsessed with the intersection of AI, Security, and System Architecture. This portfolio isn't just a showcase; it's a window into my experiments with code and creativity.",
+        'about': "My journey started with a curiosity for how things work under the hood. Now, I specialize in building autonomous agents and secure frameworks. I don't just write code; I architect solutions that think and adapt.",
+        'projects': "These aren't just repos; they're my R&D lab. Q-SAFE, RED-QUEEN, F.R.I.D.A.Y.—each represents a challenge I wanted to solve. Whether it's offensive AI or quantum security, I build what I want to see in the world.",
+        'research': "I'm redefining boundaries with Q-SAFE, a Hybrid Sentinel framework, and exploring quantum-time geometry with Chronon-SQL. My research aims to secure the next generation of computing.",
+        'skills': "I believe in the right tool for the job. My stack is heavy on performance (Rust, C++, ASM) and intelligence (Python, AI Agents). I treat languages like superpowers—combining them to solve complex problems.",
+        'timeline': "Every milestone has been a lesson. From enhancing global satellite data at NASA Space Apps to founding ShopRoyince, I've applied my skills in high-stakes environments where precision matters.",
+        'contact': "Communication is key. If you have an idea, a challenge, or just want to talk shop about the future of AI and security, drop me a message. I'm always open to collaboration."
     };
 
     let currentSection = 'home';
@@ -746,22 +747,213 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // --- WALKTHROUGH LOGIC ---
+    let walkthroughActive = false;
+    let walkthroughPaused = false;
+    let walkthroughStep = 0;
+    let walkthroughTimer = null;
+    const sectionsOrder = ['home', 'about', 'skills', 'projects', 'experience', 'contact'];
+    const FAB_IMAGE_EXPLAIN = 'assets/img/explain.png';
+
+    function startWalkthrough() {
+        walkthroughActive = true;
+        walkthroughPaused = false;
+        walkthroughStep = 0;
+
+        // Close Chat
+        isChatOpen = false;
+        chatWindow.classList.remove('open');
+
+        // Show Controls
+        const controls = document.getElementById('walkthrough-controls');
+        if (controls) controls.style.display = 'flex';
+
+        // Start Step
+        processWalkthroughStep();
+    }
+
+    function processWalkthroughStep() {
+        if (!walkthroughActive || walkthroughPaused) return;
+
+        if (walkthroughStep >= sectionsOrder.length) {
+            stopWalkthrough(true); // Completed
+            return;
+        }
+
+        const sectionId = sectionsOrder[walkthroughStep];
+        const sectionEl = document.getElementById(sectionId);
+
+        if (sectionEl) {
+            // 1. Scroll to Section
+            sectionEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            // 2. Set FAB to Explain Mode
+            if (USE_FAB_IMAGE) {
+                const fabImg = document.getElementById('fab-img');
+                if (fabImg) fabImg.src = FAB_IMAGE_EXPLAIN;
+            }
+
+            // 3. Show Summary in Bubble (Without opening chat)
+            const summary = summaries[sectionId];
+            bubble.classList.add('visible');
+            // Short preview logic
+            const shortSummary = summary.length > 80 ? summary.substring(0, 80) + "..." : summary;
+            bubble.innerHTML = `<i class="fas fa-comment-dots"></i> ${shortSummary}`;
+
+            // Update Control Text
+            const statusText = document.getElementById('wt-text');
+            if (statusText) statusText.innerText = `Explaining ${sectionId.charAt(0).toUpperCase() + sectionId.slice(1)}`;
+
+            // 4. Wait for user to read (8 seconds)
+            if (walkthroughTimer) clearTimeout(walkthroughTimer);
+            walkthroughTimer = setTimeout(() => {
+                walkthroughStep++;
+                processWalkthroughStep();
+            }, 8000);
+        } else {
+            walkthroughStep++;
+            processWalkthroughStep();
+        }
+    }
+
+    function toggleWalkthroughPause() {
+        walkthroughPaused = !walkthroughPaused;
+        const btnIcon = document.querySelector('#wt-pause-btn i');
+        if (walkthroughPaused) {
+            if (walkthroughTimer) clearTimeout(walkthroughTimer);
+            if (btnIcon) {
+                btnIcon.classList.remove('fa-pause');
+                btnIcon.classList.add('fa-play');
+            }
+            const statusText = document.getElementById('wt-text');
+            if (statusText) statusText.innerText = "Paused";
+        } else {
+            if (btnIcon) {
+                btnIcon.classList.remove('fa-play');
+                btnIcon.classList.add('fa-pause');
+            }
+            processWalkthroughStep();
+        }
+    }
+
+    function stopWalkthrough(completed = false) {
+        walkthroughActive = false;
+        if (walkthroughTimer) clearTimeout(walkthroughTimer);
+
+        // Hide Controls
+        const controls = document.getElementById('walkthrough-controls');
+        if (controls) controls.style.display = 'none';
+
+        // Open Chat with Summary
+        toggleChat();
+
+        setTimeout(() => {
+            const finalSection = sectionsOrder[walkthroughStep] || 'contact';
+            const msg = completed
+                ? "Walkthrough complete! I've shown you the highlights. Any specific questions?"
+                : `Walkthrough stopped at **${finalSection.toUpperCase()}**. Here is the detailed summary: \n\n${summaries[finalSection]}`;
+
+            addMessage(msg, 'bot', true);
+        }, 500);
+    }
+
+    // Bind Walkthrough Buttons (Wait for DOM or bind if elements exist)
+    const pauseBtn = document.getElementById('wt-pause-btn');
+    if (pauseBtn) pauseBtn.addEventListener('click', toggleWalkthroughPause);
+
+    const stopBtn = document.getElementById('wt-stop-btn');
+    if (stopBtn) stopBtn.addEventListener('click', () => stopWalkthrough(false));
+
+
     // Toggle Chat
     function toggleChat() {
         isChatOpen = !isChatOpen;
         if (isChatOpen) {
             chatWindow.classList.add('open');
             bubble.classList.remove('visible'); // Hide bubble when chat is open
+
+            const startTourChip = 'Start Tour 🚀';
+
             if (!hasGreeted || messagesContainer.children.length === 0) {
-                addMessage("Hello! I'm your AI guide. I can summarize any section you're viewing.", 'bot');
+                addMessage("Hello! I'm Justin's Digital Twin. I can show you around the portfolio.", 'bot');
+                renderChips([startTourChip, ...defaultChips]);
                 hasGreeted = true;
+            } else {
+                // If returning, show chips based on context
+                renderChips([startTourChip, ...defaultChips]);
             }
-            // Provide summary for current section immediately
-            provideSummary(currentSection);
+
+            // If we have a specific section context, mention it
+            if (summaries[currentSection] && currentSection !== 'home') {
+                // Optional: Add a specific chip for the current section
+                const contextChips = [`Explain ${currentSection}`, startTourChip, ...defaultChips.slice(0, 2)];
+                renderChips(contextChips);
+            }
+
         } else {
             chatWindow.classList.remove('open');
         }
     }
+
+    // Chat Chips Logic
+    const defaultChips = ['Who is Justin?', 'Tell me about Q-SAFE', 'Tech Stack?', 'How to Contact?'];
+    const suggestionsContainer = document.getElementById('chat-suggestions');
+
+    function renderChips(chips) {
+        if (!suggestionsContainer) return;
+        suggestionsContainer.innerHTML = '';
+
+        chips.forEach(text => {
+            const chip = document.createElement('div');
+            chip.className = 'chat-chip';
+            chip.innerText = text;
+            chip.addEventListener('click', () => handleChipClick(text));
+            suggestionsContainer.appendChild(chip);
+        });
+    }
+
+    function handleChipClick(text) {
+        if (text.includes("Start Tour")) {
+            startWalkthrough();
+            return;
+        }
+
+        // 1. User Message
+        addMessage(text, 'user');
+
+        // 2. Clear chips temporarily
+        suggestionsContainer.innerHTML = '';
+
+        // 3. Bot Response logic
+        let response = "";
+
+        if (text.includes("Who is Justin")) {
+            response = "I'm a full-stack developer and security researcher with a passion for AI, Quantum Computing, and Ethical Hacking. I build systems that bridge the gap between abstract theory and robust application.";
+        } else if (text.includes("Q-SAFE")) {
+            response = "Q-SAFE is my flagship research project: a Hybrid 'Sentinel' framework. It uses an x86 Assembly core for speed and a Python Neural Oracle to detect threats agentically. It's designed to be quantum-resilient.";
+        } else if (text.includes("Tech Stack")) {
+            response = "My arsenal includes Python, Rust, Java, and JavaScript (Node/React). I also work deeply with Assembly (x86), Linux Kernel modules, and AI frameworks like Ollama and PyTorch.";
+        } else if (text.includes("Contact")) {
+            response = "You can reach me via the contact form below, or check out my GitHub profiles linked in the projects!";
+        } else if (text.includes("Explain")) {
+            // Dynamic section explanation
+            const section = text.replace("Explain ", "").toLowerCase();
+            response = summaries[section] || "This section showcases my work.";
+        } else {
+            response = "I'm here to help navigate the portfolio. Try checking out the Projects section!";
+        }
+
+        // 4. Send Response
+        // Use a small delay for "thinking" feel
+        setTimeout(() => {
+            addMessage(response, 'bot', true);
+            // Restore default chips after response
+            const startTourChip = 'Start Tour 🚀';
+            setTimeout(() => renderChips([startTourChip, ...defaultChips]), 2000 + (response.length * 10));
+        }, 500);
+    }
+
+    // Add Message to Chat
 
     // Add Message to Chat
     let currentTypingInterval = null;
@@ -840,7 +1032,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isHomeOrFooter) return;
 
         // 2. If valid section: Start Thinking immediately
-        if (USE_FAB_IMAGE) {
+        if (USE_FAB_IMAGE && !walkthroughActive) {
             const fabImg = document.getElementById('fab-img');
             if (fabImg) {
                 // Set to thinking image
@@ -877,9 +1069,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 // 1. NON-THINKING ZONE (Home or Footer)
                 if (sectionId === 'home' || tagName === 'footer') {
                     currentSection = sectionId === 'home' ? 'home' : 'footer';
-                    bubble.classList.remove('visible');
 
-                    if (USE_FAB_IMAGE) {
+                    // Only hide bubble if NOT in walkthrough (walkthrough uses bubble)
+                    if (!walkthroughActive) bubble.classList.remove('visible');
+
+                    if (USE_FAB_IMAGE && !walkthroughActive) {
                         const fabImg = document.getElementById('fab-img');
                         if (fabImg) {
                             fabImg.src = FAB_IMAGE_REST;
@@ -889,14 +1083,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
 
                     // Hide FAB in both Home and Footer
-                    toggleBtn.style.transform = 'scale(0)';
-                    toggleBtn.style.opacity = '0';
+                    // But if Walkthrough is active, keep it visible!
+                    if (!walkthroughActive) {
+                        toggleBtn.style.transform = 'scale(0)';
+                        toggleBtn.style.opacity = '0';
+                    }
 
                     // Specific Logic for Home vs Footer
-                    if (sectionId === 'home') {
+                    if (sectionId === 'home' && !walkthroughActive) {
                         startHeroAnimation();
                     } else {
-                        stopHeroAnimation();
+                        stopHeroAnimation(); // Always stop hero glitch if we aren't "idle" on home
                     }
                     return;
                 }
@@ -912,13 +1109,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 stopHeroAnimation();
 
                 if (summaries[sectionId]) {
-                    // Update Bubble text if chat is closed
-                    if (!isChatOpen) {
+                    // Update Bubble text if chat is closed AND not in walkthrough
+                    if (!isChatOpen && !walkthroughActive) {
                         bubble.innerHTML = `Summarize <b>${sectionId.toUpperCase()}</b>?`;
                         bubble.classList.add('visible');
-                    } else {
+                    } else if (isChatOpen) {
                         provideSummary(sectionId);
                     }
+                    // If walkthroughActive, processWalkthroughStep handles the bubble.
                 }
             }
         });
