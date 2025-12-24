@@ -648,8 +648,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- FAB Configuration ---
     // Set to true to use a static image instead of the Lottie animation
     const USE_FAB_IMAGE = true;
-    const FAB_IMAGE_REST = 'assets/img/bb.png';  // Default "Rest" state
-    const FAB_IMAGE_THINK = 'assets/img/think.png'; // "Thinking" state
+    const FAB_IMAGE_REST = 'assets/img/bb.gif';  // Default "Rest" state
+    const FAB_IMAGE_THINK = 'assets/img/think.gif'; // "Thinking" state
     // -------------------------
 
     const toggleBtn = document.getElementById('ai-toggle-btn');
@@ -774,6 +774,14 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const sectionId = entry.target.id;
+                const tagName = entry.target.tagName.toLowerCase();
+
+                // HIDE BUBBLE conditions: Home section or Footer
+                if (sectionId === 'home' || tagName === 'footer') {
+                    bubble.classList.remove('visible');
+                    return;
+                }
+
                 if (summaries[sectionId]) {
                     currentSection = sectionId;
 
@@ -809,8 +817,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, observerOptions);
 
-    // Observe all sections
-    document.querySelectorAll('section, header').forEach(section => {
-        if (section.id) observer.observe(section);
+    // Observe all sections and footer
+    document.querySelectorAll('section, header, footer').forEach(element => {
+        if (element.id || element.tagName.toLowerCase() === 'footer') {
+            observer.observe(element);
+        }
     });
 });
