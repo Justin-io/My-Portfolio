@@ -648,7 +648,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- FAB Configuration ---
     // Set to true to use a static image instead of the Lottie animation
     const USE_FAB_IMAGE = true;
-    const FAB_IMAGE_REST = 'assets/img/ab.png';  // Default "Rest" state
+    const FAB_IMAGE_REST = 'assets/img/think.png';  // Default "Rest" state
     const FAB_IMAGE_THINK = 'assets/img/aa.png'; // "Thinking" state
     // -------------------------
 
