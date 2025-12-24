@@ -647,8 +647,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- FAB Configuration ---
     // Set to true to use a static image instead of the Lottie animation
-    const USE_FAB_IMAGE = false;
-    const FAB_IMAGE_URL = 'assets/img/my-avatar.png'; // Replace with your image path
+    const USE_FAB_IMAGE = true;
+    const FAB_IMAGE_REST = 'assets/img/ab.png';  // Default "Rest" state
+    const FAB_IMAGE_THINK = 'assets/img/aa.png'; // "Thinking" state
     // -------------------------
 
     const toggleBtn = document.getElementById('ai-toggle-btn');
@@ -659,7 +660,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Apply FAB Image if enabled
     if (USE_FAB_IMAGE) {
-        toggleBtn.innerHTML = `<img src="${FAB_IMAGE_URL}" alt="AI Assistant">`;
+        toggleBtn.innerHTML = `<img src="${FAB_IMAGE_REST}" alt="AI Assistant" id="fab-img">`;
         toggleBtn.style.background = 'transparent'; // Remove white background for image if needed
         toggleBtn.style.boxShadow = 'none'; // Optional: cleaner look for some avatars
     }
@@ -777,10 +778,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     currentSection = sectionId;
 
                     // Trigger "Thinking" Animation Effect
-                    const player = document.querySelector('lottie-player');
-                    if (player) {
-                        player.stop();
-                        player.play();
+                    if (USE_FAB_IMAGE) {
+                        const fabImg = document.getElementById('fab-img');
+                        if (fabImg) {
+                            fabImg.src = FAB_IMAGE_THINK;
+                            // Revert to rest image after 2 seconds
+                            setTimeout(() => {
+                                fabImg.src = FAB_IMAGE_REST;
+                            }, 2000);
+                        }
+                    } else {
+                        // Lottie Fallback
+                        const player = document.querySelector('lottie-player');
+                        if (player) {
+                            player.stop();
+                            player.play();
+                        }
                     }
 
                     // Update Bubble text if chat is closed
