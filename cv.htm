@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume - Justin Alexia</title>
+    <style>
+        /* ATS OPTIMIZED CSS */
+        :root {
+            --text-color: #222222;
+            --muted-text: #444444;
+            --accent-color: #0056b3;
+            /* Standard professional blue for links */
+            --bg-color: #ffffff;
+            --border-color: #dddddd;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            /* Safest fonts for ATS */
+            font-size: 15px;
+            line-height: 1.5;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .resume-container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 0 10px;
+            /* Padding for print view */
+        }
+
+        /* HEADER */
+        header {
+            border-bottom: 2px solid #000;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 26px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .alias {
+            font-size: 14px;
+            font-weight: normal;
+            color: var(--muted-text);
+            margin-bottom: 5px;
+        }
+
+        .titles {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .contact-info {
+            font-size: 14px;
+        }
+
+        .contact-info a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin-right: 15px;
+            font-weight: 500;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        /* SECTION STYLING */
+        section {
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 16px;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 4px;
+            margin-bottom: 12px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            color: #000;
+        }
+
+        h3 {
+            font-size: 15px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 4px;
+        }
+
+        .date {
+            font-size: 14px;
+            color: var(--muted-text);
+            font-style: italic;
+            white-space: nowrap;
+        }
+
+        .organization {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--muted-text);
+            margin-bottom: 6px;
+        }
+
+        ul {
+            margin: 0 0 10px 20px;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 4px;
+            color: #333;
+        }
+
+        /* SKILLS GRID */
+        .skills-category {
+            margin-bottom: 10px;
+        }
+
+        .skills-category-title {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 4px;
+            color: #000;
+        }
+
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .skill-tag {
+            background: #f0f0f0;
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .skill-tag::after {
+            content: attr(data-level);
+            /* Show percentage if needed, though ATS often ignores it */
+            margin-left: 4px;
+            opacity: 0.7;
+            font-size: 11px;
+        }
+
+        /* PROJECTS */
+        .project-item {
+            margin-bottom: 10px;
+        }
+
+        .project-tech {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 2px;
+            display: block;
+        }
+
+        /* FOOTER / MISSION */
+        .mission-statement {
+            margin-top: 30px;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+            text-align: center;
+            font-style: italic;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* PRINT STYLES */
+        @media print {
+            body {
+                font-size: 11pt;
+            }
+
+            .resume-container {
+                width: 100%;
+                padding: 0;
+            }
+
+            a {
+                text-decoration: none;
+                color: #000;
+            }
+
+            h2 {
+                border-bottom: 2px solid #000;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="resume-container">
+
+        <!-- HEADER -->
+        <header>
+            <h1>Justin Alexia</h1>
+            <div class="alias">Also known as: Justin</div>
+            <div class="titles">Theoretical Physicist & Cybersecurity Expert</div>
+            <div class="contact-info">
+                <a href="mailto:contact@justinalexia.vercel.app">contact@justinalexia.vercel.app</a>
+                <a href="https://justinalexia.vercel.app">justinalexia.vercel.app</a>
+                <a href="https://linkedin.com/in/harinandank">linkedin.com/in/harinandank</a>
+                <a href="https://github.com/justinalexia">github.com/justinalexia</a>
+            </div>
+        </header>
+
+        <!-- SUMMARY -->
+        <section>
+            <h2>Professional Summary</h2>
+            <p>
+                Theoretical physicist and cybersecurity specialist with 5+ years of experience building resilient
+                systems from quantum-level models to rural EdTech and IoT infrastructure. Founder of HOPE platform, a
+                multi-vertical social startup integrating Education, E-Commerce, IoT innovation, and fundamental
+                research. Successfully mentored 500+ students in cybersecurity, full-stack development, and embedded
+                systems through hands-on, project-based learning. Expertise in quantum gravity research, offensive
+                security, and AI-driven automation systems.
+            </p>
+        </section>
+
+        <!-- EXPERIENCE -->
+        <section>
+            <h2>Professional Experience</h2>
+
+            <article>
+                <div class="entry-header">
+                    <h3>Founder & CEO</h3>
+                    <span class="date">2025 - Present</span>
+                </div>
+                <div class="organization">HOPE INT CORE</div>
+                <ul>
+                    <li>Established HOPE INT CORE, expanding the HOPE platform's technological and research
+                        capabilities.</li>
+                    <li>Leading innovative social solutions across Education, E-Commerce, IoT, and Research verticals.
+                    </li>
+                    <li>Managing 15+ deployed projects and mentoring 500+ students.</li>
+                </ul>
+            </article>
+
+            <article>
+                <div class="entry-header">
+                    <h3>Freelance Developer & Researcher</h3>
+                    <span class="date">2024 - Present</span>
+                </div>
+                <div class="organization">Self-Employed</div>
+                <ul>
+                    <li>Advancing the Q-SAFE framework for quantum-inspired cybersecurity defense.</li>
+                    <li>Continuing theoretical work on the Chronon-Super Quantum Level Model.</li>
+                    <li>Developing custom security solutions and AI automation systems.</li>
+                </ul>
+            </article>
+
+            <article>
+                <div class="entry-header">
+                    <h3>Founder</h3>
+                    <span class="date">2023</span>
+                </div>
+                <div class="organization">ShopRoyince</div>
+                <ul>
+                    <li>Founded government-focused e-commerce web application supporting students.</li>
+                    <li>Implemented full-stack development with secure payment processing.</li>
+                </ul>
+            </article>
+
+            <article>
+                <div class="entry-header">
+                    <h3>Founder</h3>
+                    <span class="date">2022</span>
+                </div>
+                <div class="organization">TexidoMeg</div>
+                <ul>
+                    <li>Launched educational platform guiding students from beginner to advanced hacking skills.</li>
+                    <li>Developed structured cybersecurity curriculum with CTF labs and Parrot OS training.</li>
+                </ul>
+            </article>
+        </section>
+
+        <!-- KEY PROJECTS & RESEARCH -->
+        <section>
+            <h2>Key Projects & Research</h2>
+
+            <article class="project-item">
+                <div class="entry-header">
+                    <h3>Chronon-Super Quantum Level Model</h3>
+                    <span class="date">Ongoing</span>
+                </div>
+                <span class="project-tech">Theoretical Physics Research</span>
+                <ul>
+                    <li>Theoretical framework unifying quantum mechanics and general relativity through discrete
+                        spacetime structures.</li>
+                    <li>Exploring pre-geometric Hilbert spaces and quantized time at the Planck scale.</li>
+                    <li>Currently at M4 version with applications across 3+ domains.</li>
+                </ul>
+            </article>
+
+            <article class="project-item">
+                <div class="entry-header">
+                    <h3>Q-SAFE Framework</h3>
+                    <span class="date">2024</span>
+                </div>
+                <span class="project-tech">Quantum Security Research (x86_64 Assembly, Python Neural Oracle)</span>
+                <ul>
+                    <li>Hybrid "Sentinel" framework combining Assembly for raw speed and AI for reasoning.</li>
+                    <li>Bridges kernel-like integrity checks with agentic intelligence.</li>
+                    <li>Features endpoint security with semantic code analysis and hardware integrity verification.</li>
+                </ul>
+            </article>
+
+            <article class="project-item">
+                <div class="entry-header">
+                    <h3>THE RED QUEEN</h3>
+                    <span class="date">2024</span>
+                </div>
+                <span class="project-tech">Autonomous Security Agent (Rust, AI, OODA Loop)</span>
+                <ul>
+                    <li>Autonomous offensive security agent bridging vulnerability detection and exploitation.</li>
+                    <li>Features concurrent Rust scanning and AI-driven payload generation.</li>
+                    <li>Implements advanced red teaming automation with Ollama integration.</li>
+                </ul>
+            </article>
+
+            <article class="project-item">
+                <div class="entry-header">
+                    <h3>BLOOMWATCH-PRO</h3>
+                    <span class="date">2024</span>
+                </div>
+                <span class="project-tech">NASA Space Apps Challenge Winner (Satellite Data, MODIS, VIIRS)</span>
+                <ul>
+                    <li>Platform tracking global plant life cycles using satellite data and citizen science.</li>
+                    <li>Features interactive 3D visualizations and AI phenology prediction.</li>
+                </ul>
+            </article>
+
+            <article class="project-item">
+                <div class="entry-header">
+                    <h3>J.A.R.V.I.S. M1</h3>
+                    <span class="date">2024</span>
+                </div>
+                <span class="project-tech">AI Automation System (Python, Three.js, Ollama)</span>
+                <ul>
+                    <li>Voice-activated Linux assistant with hybrid AI core.</li>
+                    <li>Real-time 3D neural interface and autonomous agentic workflows.</li>
+                </ul>
+            </article>
+
+            <article class="project-item">
+                <div class="entry-header">
+                    <h3>F.R.I.D.A.Y.</h3>
+                    <span class="date">2023</span>
+                </div>
+                <span class="project-tech">Single-File AI Assistant (JavaScript, PWA)</span>
+                <ul>
+                    <li>Zero-dependency personal assistant running entirely within single HTML file.</li>
+                    <li>Features PWA support, specialized voice interface, and local persistence.</li>
+                </ul>
+            </article>
+
+            <article class="project-item">
+                <div class="entry-header">
+                    <h3>IoT Botnet Detection System</h3>
+                    <span class="date">2023</span>
+                </div>
+                <span class="project-tech">Security Research (Scikit-learn, MQTT)</span>
+                <ul>
+                    <li>Machine learning model analyzing network traffic to detect anomalous behavior.</li>
+                    <li>Mitigates botnet propagation in IoT environments using Wireshark integration.</li>
+                </ul>
+            </article>
+
+            <article class="project-item">
+                <div class="entry-header">
+                    <h3>Automated Vulnerability Scanner</h3>
+                    <span class="date">2023</span>
+                </div>
+                <span class="project-tech">Security Tool (Python, Nmap, Flask)</span>
+                <ul>
+                    <li>Python-based scanner integrating Nmap and web tools for multi-threaded vulnerability detection.
+                    </li>
+                    <li>Network and application security assessment with automated report generation.</li>
+                </ul>
+            </article>
+        </section>
+
+        <!-- TECHNICAL SKILLS -->
+        <section>
+            <h2>Technical Skills</h2>
+
+            <div class="skills-category">
+                <div class="skills-category-title">Theoretical Physics</div>
+                <div class="skills-grid">
+                    <span class="skill-tag" data-level="90%">Linear Algebra & Hilbert Spaces</span>
+                    <span class="skill-tag" data-level="85%">Discrete Mathematics & Graph Theory</span>
+                    <span class="skill-tag" data-level="80%">General Relativity</span>
+                    <span class="skill-tag" data-level="85%">Calculus</span>
+                    <span class="skill-tag" data-level="75%">Quantum Computing</span>
+                    <span class="skill-tag" data-level="75%">Statistical Mechanics</span>
+                </div>
+            </div>
+
+            <div class="skills-category">
+                <div class="skills-category-title">Cybersecurity</div>
+                <div class="skills-grid">
+                    <span class="skill-tag" data-level="95%">Ethical Hacking & Pentesting</span>
+                    <span class="skill-tag" data-level="90%">Linux (Parrot/Kali)</span>
+                    <span class="skill-tag" data-level="90%">Network Security</span>
+                    <span class="skill-tag" data-level="85%">Red Teaming</span>
+                    <span class="skill-tag" data-level="90%">Vulnerability Assessment</span>
+                    <span class="skill-tag" data-level="85%">OWASP</span>
+                    <span class="skill-tag" data-level="85%">Privacy & Anonymity</span>
+                    <span class="skill-tag" data-level="75%">Cryptography</span>
+                    <span class="skill-tag" data-level="70%">Cloud Security (AWS/Azure)</span>
+                </div>
+            </div>
+
+            <div class="skills-category">
+                <div class="skills-category-title">Full-Stack Development</div>
+                <div class="skills-grid">
+                    <span class="skill-tag" data-level="95%">HTML5, CSS3, Bootstrap</span>
+                    <span class="skill-tag" data-level="85%">JavaScript (ES6+)</span>
+                    <span class="skill-tag" data-level="90%">Python</span>
+                    <span class="skill-tag" data-level="80%">Flutter</span>
+                    <span class="skill-tag" data-level="80%">Firebase</span>
+                    <span class="skill-tag" data-level="75%">WordPress</span>
+                </div>
+            </div>
+
+            <div class="skills-category">
+                <div class="skills-category-title">IoT</div>
+                <div class="skills-grid">
+                    <span class="skill-tag" data-level="90%">Microcontrollers (ESP32, Arduino)</span>
+                    <span class="skill-tag" data-level="85%">Wireless Protocols (MQTT, Zigbee)</span>
+                    <span class="skill-tag" data-level="85%">IoT Security Assessment</span>
+                    <span class="skill-tag" data-level="80%">Firmware Analysis</span>
+                    <span class="skill-tag" data-level="70%">PCB Design</span>
+                </div>
+            </div>
+
+            <div class="skills-category">
+                <div class="skills-category-title">AI & Machine Learning</div>
+                <div class="skills-grid">
+                    <span class="skill-tag" data-level="90%">Python for Security</span>
+                    <span class="skill-tag" data-level="85%">Scikit-learn & Pandas</span>
+                    <span class="skill-tag" data-level="80%">Ollama & Local AI</span>
+                    <span class="skill-tag" data-level="75%">TensorFlow Lite / OpenCV</span>
+                </div>
+            </div>
+
+            <div class="skills-category">
+                <div class="skills-category-title">DevOps & Tools</div>
+                <div class="skills-grid">
+                    <span class="skill-tag" data-level="95%">Git/GitHub/GitLab</span>
+                    <span class="skill-tag" data-level="90%">Nmap, Wireshark, Metasploit</span>
+                    <span class="skill-tag" data-level="70%">Docker, K8s, CI/CD</span>
+                    <span class="skill-tag" data-level="75%">x86_64 Assembly</span>
+                </div>
+            </div>
+
+            <div class="skills-category">
+                <div class="skills-category-title">Programming Languages</div>
+                <div class="skills-grid">
+                    <span class="skill-tag">Python (Expert)</span>
+                    <span class="skill-tag">JavaScript (Advanced)</span>
+                    <span class="skill-tag">Java (Advanced)</span>
+                    <span class="skill-tag">C/C++ (Intermediate)</span>
+                    <span class="skill-tag">Rust (Intermediate)</span>
+                    <span class="skill-tag">Assembly (Intermediate)</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- EDUCATION -->
+        <section>
+            <h2>Education</h2>
+
+            <article>
+                <div class="entry-header">
+                    <h3>Bachelor of Technology in Data Science</h3>
+                    <span class="date">2024</span>
+                </div>
+                <div class="organization">IES College of Engineering</div>
+                <p>Specialization in AI, machine learning, and data-driven security research.</p>
+            </article>
+
+            <article>
+                <div class="entry-header">
+                    <h3>Certified Ethical Hacker (CEH)</h3>
+                    <span class="date">2019</span>
+                </div>
+                <div class="organization">Professional Certification</div>
+                <p>Validated expertise in ethical hacking and network defense.</p>
+            </article>
+
+            <article>
+                <div class="entry-header">
+                    <h3>Higher Secondary Education & Industry Training</h3>
+                    <span class="date">2023</span>
+                </div>
+                <div class="organization">VHSE School & Keltron</div>
+                <p>Completed VHSE education and industrial internship at Keltron.</p>
+            </article>
+        </section>
+
+        <!-- ACHIEVEMENTS & LEADERSHIP -->
+        <section>
+            <h2>Achievements & Leadership</h2>
+            <ul>
+                <li><strong>HOPE Platform:</strong> Founded multi-vertical social startup with 4 integrated divisions
+                    (Education, E-Commerce, IoT, Research). Managed 15+ projects and 500+ students.</li>
+                <li><strong>NASA Space Apps Winner (2024):</strong> Recognized for BLOOMWATCH-PRO platform tracking
+                    global plant life cycles.</li>
+                <li><strong>State Vocational Expo Winner (2023):</strong> Secured victory for outstanding app
+                    development.</li>
+                <li><strong>Speaker & Educator:</strong> Guest Lecturer at MES Ponnani College (Java Development) and
+                    IEDC IES College (Open Source). Conducted global cybersecurity awareness session for 250+ students.
+                </li>
+                <li><strong>IoT Camp Organizer:</strong> Organized annual HOPE Summer IoT Camp since 2017, teaching
+                    Arduino, ESP32, and sensor integration.</li>
+            </ul>
+        </section>
+
+        <!-- RESEARCH PUBLICATIONS -->
+        <section>
+            <h2>Research Publications & Patents</h2>
+            <ul>
+                <li>Chronon-Super Quantum Level Model: Theoretical framework exploring discrete spacetime and
+                    pre-geometric structures.</li>
+                <li>Q-Safe Environment: Research on hybrid endpoint security framework with Neural Oracle and Assembly
+                    Sentinel.</li>
+                <li>IoT Botnet Detection: Research on anomaly-based detection using MQTT protocol analysis.</li>
+                <li>Emerging Threat R&D: Research into novel attack vectors, mobile pentesting toolchains, and
+                    vulnerability discovery automation.</li>
+            </ul>
+        </section>
+
+        <!-- FOOTER -->
+        <div class="mission-statement">
+            "Secure. Test. Defend." &nbsp;|&nbsp; "Create. Empower. Evolve."
+        </div>
+
+    </div>
+
+</body>
+
+</html>

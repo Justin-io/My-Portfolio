@@ -658,6 +658,75 @@ document.addEventListener('DOMContentLoaded', () => {
     const bubble = document.getElementById('ai-notification-bubble');
     const messagesContainer = document.getElementById('chat-messages');
 
+    // --- API & State Management ---
+    let apiKeys = {
+        groq: localStorage.getItem('groq_key') || '',
+        gemini: localStorage.getItem('gemini_key') || '',
+        openrouter: localStorage.getItem('openrouter_key') || ''
+    };
+
+    // Settings Modal
+    const settingsModal = document.getElementById('api-settings-modal');
+    const openSettingsBtn = document.getElementById('open-settings');
+    const closeSettingsBtn = document.getElementById('close-settings');
+    const saveSettingsBtn = document.getElementById('save-settings');
+
+    if (openSettingsBtn) {
+        openSettingsBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent closing chat
+            document.getElementById('groq-key').value = apiKeys.groq;
+            document.getElementById('gemini-key').value = apiKeys.gemini;
+            document.getElementById('openrouter-key').value = apiKeys.openrouter;
+            settingsModal.classList.add('show');
+        });
+    }
+
+    if (closeSettingsBtn) {
+        closeSettingsBtn.addEventListener('click', () => settingsModal.classList.remove('show'));
+    }
+
+    if (saveSettingsBtn) {
+        saveSettingsBtn.addEventListener('click', () => {
+            apiKeys.groq = document.getElementById('groq-key').value.trim();
+            apiKeys.gemini = document.getElementById('gemini-key').value.trim();
+            apiKeys.openrouter = document.getElementById('openrouter-key').value.trim();
+
+            localStorage.setItem('groq_key', apiKeys.groq);
+            localStorage.setItem('gemini_key', apiKeys.gemini);
+            localStorage.setItem('openrouter_key', apiKeys.openrouter);
+
+            settingsModal.classList.remove('show');
+            addMessage("Configuration saved! I'm now using your stored keys for enhanced intelligence.", 'bot');
+        });
+    }
+
+    // Input Handling
+    const chatInput = document.getElementById('chat-input');
+    const chatSendBtn = document.getElementById('chat-send-btn');
+
+    function handleUserInput() {
+        const text = chatInput.value.trim();
+        if (!text) return;
+
+        addMessage(text, 'user');
+        chatInput.value = '';
+
+        // Hide suggestions when typing
+        if (suggestionsContainer) suggestionsContainer.style.display = 'none';
+
+        processBotResponse(text);
+    }
+
+    if (chatSendBtn) chatSendBtn.addEventListener('click', handleUserInput);
+
+    if (chatInput) {
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleUserInput();
+        });
+        // Show suggestions again if input is cleared? Maybe not needed.
+    }
+
+
     // Apply FAB Image if enabled
     if (USE_FAB_IMAGE) {
         toggleBtn.innerHTML = `<img src="${FAB_IMAGE_REST}" alt="AI Assistant" id="fab-img">`;
@@ -865,29 +934,88 @@ document.addEventListener('DOMContentLoaded', () => {
     if (stopBtn) stopBtn.addEventListener('click', () => stopWalkthrough(false));
 
 
-    // Toggle Chat
+    // --- Mode Selection Logic ---
+    function askModeSelection() {
+        if (messagesContainer.children.length > 0 && hasGreeted) return; // Don't ask if conversation exists
+
+        addMessage("Hello! I'm Justin's Digital Twin. How would you like to proceed?", 'bot');
+
+        const modeContainer = document.createElement('div');
+        modeContainer.style.display = 'flex';
+        modeContainer.style.gap = '10px';
+        modeContainer.style.marginTop = '10px';
+        modeContainer.style.justifyContent = 'center';
+
+        const apiBtn = document.createElement('button');
+        apiBtn.innerText = 'Use API Key 🧠';
+        apiBtn.className = 'chat-chip';
+        apiBtn.style.background = 'var(--gradient-1)'; // Highlight
+        apiBtn.onclick = () => handleModeChoice('api');
+
+        const localBtn = document.createElement('button');
+        localBtn.innerText = 'Local Mode ⚡';
+        localBtn.className = 'chat-chip';
+        localBtn.onclick = () => handleModeChoice('local');
+
+        modeContainer.appendChild(apiBtn);
+        modeContainer.appendChild(localBtn);
+        messagesContainer.appendChild(modeContainer);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+        hasGreeted = true;
+    }
+
+    function handleModeChoice(mode) {
+        // Clear buttons
+        const lastMsg = messagesContainer.lastElementChild;
+        if (lastMsg.tagName === 'DIV' && lastMsg.style.display === 'flex') {
+            lastMsg.remove();
+        }
+
+        if (mode === 'api') {
+            addMessage("Enable Intelligence Mode: Please paste your API Key (Groq, Gemini, or OpenRouter).", 'bot');
+            const inputContainer = document.querySelector('.chat-input-container');
+            if (inputContainer) {
+                inputContainer.style.display = 'flex';
+                inputContainer.classList.add('fade-in'); // Add animation class if exists
+                setTimeout(() => document.getElementById('chat-input').focus(), 100);
+            }
+        } else {
+            addMessage("Local Mode active. restricted to predefined responses.", 'bot');
+            // Ensure input is hidden
+            const inputContainer = document.querySelector('.chat-input-container');
+            if (inputContainer) inputContainer.style.display = 'none';
+
+            renderChips(['Who is Justin?', 'Tell me about Q-SAFE', 'Tech Stack?', 'How to Contact?']);
+        }
+    }
+
+    // Toggle Chat Updated
     function toggleChat() {
         isChatOpen = !isChatOpen;
         if (isChatOpen) {
             chatWindow.classList.add('open');
-            bubble.classList.remove('visible'); // Hide bubble when chat is open
+            bubble.classList.remove('visible');
 
-            const startTourChip = 'Start Tour 🚀';
-
-            if (!hasGreeted || messagesContainer.children.length === 0) {
-                addMessage("Hello! I'm Justin's Digital Twin. I can show you around the portfolio.", 'bot');
-                renderChips([startTourChip, ...defaultChips]);
-                hasGreeted = true;
+            // Check if we need to ask for mode
+            const hasKey = apiKeys.gemini || apiKeys.groq || apiKeys.openrouter;
+            if (!hasKey && !hasGreeted) {
+                askModeSelection();
+            } else if (hasKey) {
+                // If key exists, show input
+                const inputContainer = document.querySelector('.chat-input-container');
+                if (inputContainer) inputContainer.style.display = 'flex';
+                if (!hasGreeted) {
+                    addMessage("Welcome back! Systems online.", 'bot');
+                    renderChips(['Start Tour 🚀', ...defaultChips]);
+                    hasGreeted = true;
+                }
             } else {
-                // If returning, show chips based on context
-                renderChips([startTourChip, ...defaultChips]);
-            }
-
-            // If we have a specific section context, mention it
-            if (summaries[currentSection] && currentSection !== 'home') {
-                // Optional: Add a specific chip for the current section
-                const contextChips = [`Explain ${currentSection}`, startTourChip, ...defaultChips.slice(0, 2)];
-                renderChips(contextChips);
+                // Returning to local mode
+                if (messagesContainer.children.length === 0) {
+                    // Should not really happen if hasGreeted is true but just in case
+                    askModeSelection();
+                }
             }
 
         } else {
@@ -895,38 +1023,144 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Chat Chips Logic
-    const defaultChips = ['Who is Justin?', 'Tell me about Q-SAFE', 'Tech Stack?', 'How to Contact?'];
-    const suggestionsContainer = document.getElementById('chat-suggestions');
+    // Unified Processing Logic
+    async function processBotResponse(text) {
+        // 1. Check for specific context commands first
+        const lowerText = text.toLowerCase();
 
-    function renderChips(chips) {
-        if (!suggestionsContainer) return;
-        suggestionsContainer.innerHTML = '';
+        // --- API KEY DETECTION ---
+        let keyDetected = false;
+        let pName = "";
 
-        chips.forEach(text => {
-            const chip = document.createElement('div');
-            chip.className = 'chat-chip';
-            chip.innerText = text;
-            chip.addEventListener('click', () => handleChipClick(text));
-            suggestionsContainer.appendChild(chip);
-        });
-    }
+        if (text.startsWith('sk-or-v1-')) {
+            apiKeys.openrouter = text.trim();
+            localStorage.setItem('openrouter_key', apiKeys.openrouter);
+            pName = "OpenRouter";
+            keyDetected = true;
+        } else if (text.startsWith('gsk_')) {
+            apiKeys.groq = text.trim();
+            localStorage.setItem('groq_key', apiKeys.groq);
+            pName = "Groq";
+            keyDetected = true;
+        } else if (text.startsWith('AIza')) {
+            apiKeys.gemini = text.trim();
+            localStorage.setItem('gemini_key', apiKeys.gemini);
+            pName = "Gemini";
+            keyDetected = true;
+        }
 
-    function handleChipClick(text) {
-        if (text.includes("Start Tour")) {
-            startWalkthrough();
+        if (keyDetected) {
+            // HIDE PRETEXT VALUES (Remove the raw key message from view)
+            const userMsgs = document.querySelectorAll('.user-message');
+            if (userMsgs.length > 0) {
+                const lastUserMsg = userMsgs[userMsgs.length - 1];
+                lastUserMsg.innerText = `[${pName} Key Provided]`;
+                lastUserMsg.style.fontStyle = 'italic';
+                lastUserMsg.style.opacity = '0.7';
+            }
+
+            addMessage(`${pName} API Connected! Chat input enabled.`, 'bot');
             return;
         }
 
-        // 1. User Message
-        addMessage(text, 'user');
+        // 2. Determine if we can use an API
+        const hasKey = apiKeys.gemini || apiKeys.groq || apiKeys.openrouter;
 
-        // 2. Clear chips temporarily
-        suggestionsContainer.innerHTML = '';
 
-        // 3. Bot Response logic
+        if (hasKey) {
+            // New Typing Indicator
+            const thinkingHTML = `
+                <div class="typing-indicator">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>`;
+            const thinkingMsgId = addMessage(thinkingHTML, 'bot', false, true);
+
+            try {
+                let response = "";
+
+                // API selection logic remains, but with better response verification in functions
+                if (apiKeys.gemini) {
+                    response = await callGemini(text, apiKeys.gemini);
+                } else if (apiKeys.groq) {
+                    response = await callGroq(text, apiKeys.groq);
+                } else if (apiKeys.openrouter) {
+                    response = await callOpenRouter(text, apiKeys.openrouter);
+                }
+
+                // Remove thinking bubbles
+                const thinkingEl = document.getElementById(thinkingMsgId);
+                if (thinkingEl) thinkingEl.remove();
+
+                if (response) {
+                    addMessage(response, 'bot', true);
+                } else {
+                    // Fallback if empty response
+                    handleStaticResponse(text);
+                }
+
+            } catch (err) {
+                console.error("API Error Details:", err);
+
+                // Remove thinking bubbles immediately
+                const thinkingEl = document.getElementById(thinkingMsgId);
+                if (thinkingEl) thinkingEl.remove();
+
+                // Show friendly error message
+                const errorMsg = `<i>Connection interrupted.</i><br><small style="color:#ff6b6b">${err.message || 'Unknown Error'}</small>`;
+                addMessage(errorMsg, 'bot', false, true);
+
+                // Optional: Fallback to local mode automatically after error?
+                setTimeout(() => handleStaticResponse(text), 2000);
+            }
+        } else {
+            // No keys, use static response
+            handleStaticResponse(text);
+        }
+
+        // Restore chips after a delay
+        setTimeout(() => {
+            if (suggestionsContainer) {
+                suggestionsContainer.innerHTML = '';
+                // Only show tour chips if not typing purely custom
+                renderChips(['Start Tour 🚀', ...defaultChips]);
+                suggestionsContainer.style.display = 'flex';
+            }
+        }, 2000);
+    }
+
+    // API Function Definitions (unchanged but included to complete block)
+    async function callGemini(prompt, key) {
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${key}`;
+        const systemPrompt = "You are Justin's intelligent portfolio assistant. You are knowledgeable about Cybersecurity, Physics, and Coding. Answer briefly and professionally in the first person as if you are his digital twin.";
+        const data = { contents: [{ parts: [{ text: systemPrompt + "\n\nUser: " + prompt }] }] };
+        const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+        const json = await response.json();
+        return json.candidates[0].content.parts[0].text;
+    }
+
+    async function callGroq(prompt, key) {
+        const url = 'https://api.groq.com/openai/v1/chat/completions';
+        const data = { model: "llama3-8b-8192", messages: [{ role: "system", content: "You are Justin's intelligent portfolio assistant. Answer briefly and professionally." }, { role: "user", content: prompt }] };
+        const response = await fetch(url, { method: 'POST', headers: { 'Authorization': `Bearer ${key}`, 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+        const json = await response.json();
+        return json.choices[0].message.content;
+    }
+
+    async function callOpenRouter(prompt, key) {
+        const url = 'https://openrouter.ai/api/v1/chat/completions';
+        const data = { model: "mistralai/mistral-7b-instruct:free", messages: [{ role: "system", content: "You are Justin's intelligent portfolio assistant." }, { role: "user", content: prompt }] };
+        const response = await fetch(url, { method: 'POST', headers: { 'Authorization': `Bearer ${key}`, 'Content-Type': 'application/json', 'HTTP-Referer': window.location.href }, body: JSON.stringify(data) });
+        const json = await response.json();
+        return json.choices[0].message.content;
+    }
+
+    // Static Fallback Logic
+    function handleStaticResponse(text) {
         let response = "";
 
+        // Basic keyword matching
         if (text.includes("Who is Justin")) {
             response = "I'm a full-stack developer and security researcher with a passion for AI, Quantum Computing, and Ethical Hacking. I build systems that bridge the gap between abstract theory and robust application.";
         } else if (text.includes("Q-SAFE")) {
@@ -935,45 +1169,147 @@ document.addEventListener('DOMContentLoaded', () => {
             response = "My arsenal includes Python, Rust, Java, and JavaScript (Node/React). I also work deeply with Assembly (x86), Linux Kernel modules, and AI frameworks like Ollama and PyTorch.";
         } else if (text.includes("Contact")) {
             response = "You can reach me via the contact form below, or check out my GitHub profiles linked in the projects!";
-        } else if (text.includes("Explain")) {
-            // Dynamic section explanation
+        } else if (text.includes("Explain") || summaries[text.toLowerCase()]) {
             const section = text.replace("Explain ", "").toLowerCase();
-            response = summaries[section] || "This section showcases my work.";
+            response = summaries[section] || summaries[currentSection] || "This section showcases my work.";
         } else {
-            response = "I'm here to help navigate the portfolio. Try checking out the Projects section!";
+            response = "I'm currently in 'Local Mode' (no API keys configured). I can only answer basic questions about the portfolio. Add an API key in settings for full intelligence!";
         }
 
-        // 4. Send Response
-        // Use a small delay for "thinking" feel
-        setTimeout(() => {
-            addMessage(response, 'bot', true);
-            // Restore default chips after response
-            const startTourChip = 'Start Tour 🚀';
-            setTimeout(() => renderChips([startTourChip, ...defaultChips]), 2000 + (response.length * 10));
-        }, 500);
+        setTimeout(() => addMessage(response, 'bot', true), 500);
     }
 
-    // Add Message to Chat
+    function handleChipClick(text) {
+        if (text.includes("Start Tour")) {
+            startWalkthrough();
+            return;
+        }
+        // Use the unified handler
+        addMessage(text, 'user');
+        if (suggestionsContainer) suggestionsContainer.style.display = 'none';
+        processBotResponse(text);
+    }
 
-    // Add Message to Chat
+    // --- API Functions ---
+    // Helper for timeout
+    const fetchWithTimeout = async (resource, options = {}) => {
+        const { timeout = 8000 } = options;
+        const controller = new AbortController();
+        const id = setTimeout(() => controller.abort(), timeout);
+        const response = await fetch(resource, {
+            ...options,
+            signal: controller.signal
+        });
+        clearTimeout(id);
+        return response;
+    };
+
+    async function callGemini(prompt, key) {
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${key}`;
+        // Context instruction
+        const systemPrompt = "You are Justin's intelligent portfolio assistant. You are knowledgeable about Cybersecurity, Physics, and Coding. Answer briefly and professionally in the first person as if you are his digital twin.";
+
+        const data = {
+            contents: [{
+                parts: [{ text: systemPrompt + "\n\nUser: " + prompt }]
+            }]
+        };
+
+        const response = await fetchWithTimeout(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        if (!response.ok) {
+            const err = await response.json();
+            throw new Error(err.error?.message || `Gemini Error: ${response.status}`);
+        }
+        const json = await response.json();
+        return json.candidates[0].content.parts[0].text;
+    }
+
+    async function callGroq(prompt, key) {
+        const url = 'https://api.groq.com/openai/v1/chat/completions';
+        const data = {
+            model: "llama3-8b-8192", // Fast model
+            messages: [
+                { role: "system", content: "You are Justin's intelligent portfolio assistant. Answer briefly and professionally." },
+                { role: "user", content: prompt }
+            ]
+        };
+
+        const response = await fetchWithTimeout(url, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${key}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        if (!response.ok) {
+            const err = await response.json();
+            throw new Error(err.error?.message || `Groq Error: ${response.status}`);
+        }
+        const json = await response.json();
+        return json.choices[0].message.content;
+    }
+
+    async function callOpenRouter(prompt, key) {
+        const url = 'https://openrouter.ai/api/v1/chat/completions';
+        const data = {
+            model: "mistralai/mistral-7b-instruct:free", // Default to free or low cost
+            messages: [
+                { role: "system", content: "You are Justin's intelligent portfolio assistant." },
+                { role: "user", content: prompt }
+            ]
+        };
+
+        const response = await fetchWithTimeout(url, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${key}`,
+                'Content-Type': 'application/json',
+                'HTTP-Referer': window.location.href
+            },
+            body: JSON.stringify(data)
+        });
+        if (!response.ok) {
+            let errorMsg = `OpenRouter Error: ${response.status}`;
+            try {
+                const err = await response.json();
+                if (err.error && err.error.message) errorMsg = err.error.message;
+            } catch (e) { }
+            throw new Error(errorMsg);
+        }
+        const json = await response.json();
+        if (!json.choices || !json.choices.length) throw new Error("Invalid response from OpenRouter");
+        return json.choices[0].message.content;
+    }
+
+    // Add Message to Chat (Enhanced)
     let currentTypingInterval = null;
 
-    function addMessage(text, sender, isTyping = false) {
+    function addMessage(text, sender, isTyping = false, isHTML = false) {
         const msgDiv = document.createElement('div');
         msgDiv.classList.add(sender === 'bot' ? 'bot-message' : 'user-message');
+        const uniqueId = 'msg-' + Date.now();
+        msgDiv.id = uniqueId;
+
+        if (isHTML) {
+            msgDiv.innerHTML = text; // Direct inject for loading icons etc
+            messagesContainer.appendChild(msgDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            return uniqueId;
+        }
 
         if (isTyping && sender === 'bot') {
             msgDiv.innerText = "";
             messagesContainer.appendChild(msgDiv);
 
-            // Clear any existing typing interval to prevent overlaps
-            if (currentTypingInterval) {
-                clearInterval(currentTypingInterval);
-            }
+            if (currentTypingInterval) clearInterval(currentTypingInterval);
 
             let i = 0;
-            // Enhanced typing speed logic for better flow
-            const typingSpeed = 10;
+            const typingSpeed = 5;
 
             currentTypingInterval = setInterval(() => {
                 msgDiv.innerText += text.charAt(i);
@@ -982,6 +1318,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (i > text.length - 1) {
                     clearInterval(currentTypingInterval);
                     currentTypingInterval = null;
+                    // Parse markdown-like formatting after typing if simple
+                    msgDiv.innerHTML = msgDiv.innerText.replace(/\n/g, '<br>');
                 }
             }, typingSpeed);
 
@@ -990,24 +1328,20 @@ document.addEventListener('DOMContentLoaded', () => {
             messagesContainer.appendChild(msgDiv);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
+        return uniqueId;
     }
 
     // Provide Summary
     let lastSummarySection = null;
     function provideSummary(sectionId) {
         if (!sectionId || !summaries[sectionId]) return;
-
-        // Don't repeat if it's the same section interaction
         if (sectionId === lastSummarySection && isChatOpen) return;
 
         const summary = summaries[sectionId];
-        // Cleaner intro
-        const message = `${summary}`;
-
-        // Use typing effect primarily when auto-triggered
-        addMessage(message, 'bot', true);
+        addMessage(summary, 'bot', true);
         lastSummarySection = sectionId;
     }
+
 
     // Event Listeners
     toggleBtn.addEventListener('click', toggleChat);
