@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF E-Signer | Office Hero</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/downloadjs/1.4.8/download.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="back-nav">
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Tools
+            </a>
+        </div>
+
+        <header>
+            <div class="icon-box" style="margin: 0 auto 1.5rem auto;">
+                <i class="fas fa-signature"></i>
+            </div>
+            <h1 class="brand">PDF E-Signer</h1>
+            <p class="tagline">Sign your documents digitally. Fast and secure.</p>
+        </header>
+
+        <div class="tool-interface">
+            <div class="drop-zone" id="drop-zone">
+                <i class="fas fa-file-pdf"
+                    style="font-size: 3rem; color: var(--text-secondary); margin-bottom: 1rem;"></i>
+                <p id="file-label">Upload a PDF to sign</p>
+                <input type="file" id="file-input" accept=".pdf" style="display: none;">
+            </div>
+
+            <div id="signature-area" style="display:none; text-align: left;">
+                <h3 style="margin-bottom: 1rem;">Draw your signature below:</h3>
+                <div style="background: white; border-radius: 8px; overflow: hidden; margin-bottom: 1rem;">
+                    <canvas id="signature-pad" width="600" height="200"
+                        style="width: 100%; touch-action: none;"></canvas>
+                </div>
+                <div style="display: flex; gap: 10px; margin-bottom: 2rem;">
+                    <button class="btn-action" id="clear-btn"
+                        style="background: var(--card-bg); border: 1px solid var(--border-color);">Clear</button>
+                    <button class="btn-action" id="save-btn">Add Signature & Download</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-input');
+        const fileLabel = document.getElementById('file-label');
+        const signatureArea = document.getElementById('signature-area');
+        const canvas = document.getElementById('signature-pad');
+        let currentFile = null;
+        let signaturePad;
+
+        // Init Signature Pad
+        window.onload = () => {
+            signaturePad = new SignaturePad(canvas, {
+                backgroundColor: 'rgba(255, 255, 255, 0)',
+                penColor: 'rgb(0, 0, 0)'
+            });
+        };
+
+        dropZone.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+
+        function handleFile(file) {
+            if (!file || file.type !== 'application/pdf') return;
+            currentFile = file;
+            fileLabel.innerHTML = `<i class="fas fa-check" style="color:#4ade80"></i> ${file.name} selected`;
+            signatureArea.style.display = 'block';
+
+            // Resize canvas for high DPI
+            const ratio = Math.max(window.devicePixelRatio || 1, 1);
+            canvas.width = canvas.offsetWidth * ratio;
+            canvas.height = canvas.offsetHeight * ratio;
+            canvas.getContext("2d").scale(ratio, ratio);
+            signaturePad.clear(); // clear to reset
+        }
+
+        document.getElementById('clear-btn').addEventListener('click', () => signaturePad.clear());
+
+        document.getElementById('save-btn').addEventListener('click', async () => {
+            if (signaturePad.isEmpty()) {
+                alert("Please draw your signature first.");
+                return;
+            }
+            if (!currentFile) return;
+
+            const btn = document.getElementById('save-btn');
+            btn.innerText = "Signing...";
+            btn.disabled = true;
+
+            try {
+                const arrayBuffer = await currentFile.arrayBuffer();
+                const pngDataUrl = signaturePad.toDataURL();
+
+                const PDFDocument = PDFLib.PDFDocument;
+                const pdfDoc = await PDFDocument.load(arrayBuffer);
+
+                // Embed the PNG image
+                const pngImage = await pdfDoc.embedPng(pngDataUrl);
+
+                const pages = pdfDoc.getPages();
+                const lastPage = pages[pages.length - 1];
+                const { width, height } = lastPage.getSize();
+
+                // Append signature to bottom right
+                const sigWidth = 200;
+                const sigHeight = (pngImage.height / pngImage.width) * sigWidth;
+
+                lastPage.drawImage(pngImage, {
+                    x: width - sigWidth - 50,
+                    y: 50,
+                    width: sigWidth,
+                    height: sigHeight,
+                });
+
+                const pdfBytes = await pdfDoc.save();
+                download(pdfBytes, `signed_${currentFile.name}`, "application/pdf");
+            } catch (error) {
+                console.error(error);
+                alert("Error signing PDF.");
+            } finally {
+                btn.innerText = "Add Signature & Download";
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+
+</html>
