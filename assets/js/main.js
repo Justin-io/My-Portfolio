@@ -743,6 +743,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'research': "I'm redefining boundaries with Q-SAFE, a Hybrid Sentinel framework, and exploring quantum-time geometry with Chronon-SQL. My research aims to secure the next generation of computing.",
         'skills': "I believe in the right tool for the job. My stack is heavy on performance (Rust, C++, ASM) and intelligence (Python, AI Agents). I treat languages like superpowers combining them to solve complex problems.",
         'timeline': "Every milestone has been a lesson. From enhancing global satellite data at NASA Space Apps to founding ShopRoyince, I've applied my skills in high-stakes environments where precision matters.",
+        'utilities': "I've built a suite of client-side 'Office Hero' tools including a PDF Merger, Converter, E-Signer, and OCR. They run entirely in your browser for maximum privacy.",
         'contact': "Communication is key. If you have an idea, a challenge, or just want to talk shop about the future of AI and security, drop me a message. I'm always open to collaboration."
     };
 
@@ -1167,6 +1168,8 @@ document.addEventListener('DOMContentLoaded', () => {
             response = "Q-SAFE is my flagship research project: a Hybrid 'Sentinel' framework. It uses an x86 Assembly core for speed and a Python Neural Oracle to detect threats agentically. It's designed to be quantum-resilient.";
         } else if (text.includes("Tech Stack")) {
             response = "My arsenal includes Python, Rust, Java, and JavaScript (Node/React). I also work deeply with Assembly (x86), Linux Kernel modules, and AI frameworks like Ollama and PyTorch.";
+        } else if (text.includes("Office Hero") || text.includes("Utilities")) {
+            response = "Office Hero is my browser-based toolkit. It allows you to Merge PDFs, Sign documents, Convert formats, and perform OCR text extraction without ever uploading your files to a server.";
         } else if (text.includes("Contact")) {
             response = "You can reach me via the contact form below, or check out my GitHub profiles linked in the projects!";
         } else if (text.includes("Explain") || summaries[text.toLowerCase()]) {

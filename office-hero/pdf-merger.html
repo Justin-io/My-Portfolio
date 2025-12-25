@@ -15,7 +15,7 @@
 <body>
     <div class="container">
         <div class="back-nav">
-            <a href="index.html" class="back-btn">
+            <a href="../index.html#utilities" class="back-btn">
                 <i class="fas fa-arrow-left"></i> Back to Tools
             </a>
         </div>
@@ -88,9 +88,12 @@
 
         function updateFileList() {
             fileList.innerHTML = selectedFiles.map((f, i) => `
-                <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
-                    <span><i class="fas fa-file-pdf" style="color: #ef4444; margin-right: 10px;"></i> ${f.name}</span>
-                    <i class="fas fa-times" style="cursor: pointer; color: #ef4444;" onclick="removeFile(${i})"></i>
+                <div class="file-item" style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-radius: 12px; margin-bottom: 0.5rem;">
+                    <span style="display: flex; align-items: center; gap: 10px; font-weight: 500;">
+                        <i class="fas fa-file-pdf" style="color: #ef4444; font-size: 1.2rem;"></i> 
+                        ${f.name}
+                    </span>
+                    <i class="fas fa-times delete-icon" style="cursor: pointer; opacity: 0.7; transition: 0.2s;" onclick="removeFile(${i})"></i>
                 </div>
             `).join('');
             mergeBtn.disabled = selectedFiles.length < 2;

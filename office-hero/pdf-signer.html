@@ -16,7 +16,7 @@
 <body>
     <div class="container">
         <div class="back-nav">
-            <a href="index.html" class="back-btn">
+            <a href="../index.html#utilities" class="back-btn">
                 <i class="fas fa-arrow-left"></i> Back to Tools
             </a>
         </div>
@@ -37,15 +37,15 @@
                 <input type="file" id="file-input" accept=".pdf" style="display: none;">
             </div>
 
-            <div id="signature-area" style="display:none; text-align: left;">
-                <h3 style="margin-bottom: 1rem;">Draw your signature below:</h3>
-                <div style="background: white; border-radius: 8px; overflow: hidden; margin-bottom: 1rem;">
+            <div id="signature-area" class="signature-section">
+                <h3 style="margin-bottom: 1rem; color: var(--text-primary); font-family: 'Space Grotesk', sans-serif;">
+                    Draw your signature below:</h3>
+                <div class="signature-canvas-container">
                     <canvas id="signature-pad" width="600" height="200"
                         style="width: 100%; touch-action: none;"></canvas>
                 </div>
-                <div style="display: flex; gap: 10px; margin-bottom: 2rem;">
-                    <button class="btn-action" id="clear-btn"
-                        style="background: var(--card-bg); border: 1px solid var(--border-color);">Clear</button>
+                <div class="action-buttons">
+                    <button class="btn-action btn-outline" id="clear-btn">Clear</button>
                     <button class="btn-action" id="save-btn">Add Signature & Download</button>
                 </div>
             </div>
