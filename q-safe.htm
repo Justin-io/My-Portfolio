@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Q-SAFE: A Zero-Overhead Runtime Enforcement Framework</title>
+    <meta name="description"
+        content="My research paper on Q-SAFE, a zero-overhead runtime enforcement framework for control flow integrity using LLM-synthesized context hashing.">
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -796,7 +798,8 @@ _qsafe_monitor:
                 <ul>
                     <li><strong>Prerequisites:</strong> Linux Environment, nasm, gcc, python3, curl.</li>
                     <li><strong>Compilation:</strong> <code>nasm -f elf64 guardian.asm -o guardian.o</code> and
-                        <code>gcc guardian.o -o guardian -no-pie</code>.</li>
+                        <code>gcc guardian.o -o guardian -no-pie</code>.
+                    </li>
                     <li><strong>Execution:</strong> Export the optional OPENROUTER_KEY for full cloud intelligence, then
                         run <code>./guardian</code>. Local heuristics auto-engage if the key is invalid.</li>
                 </ul>

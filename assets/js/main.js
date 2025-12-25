@@ -739,9 +739,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const summaries = {
         'home': "Welcome to my digital workspace. I'm Justin, a developer obsessed with the intersection of AI, Security, and System Architecture. This portfolio isn't just a showcase; it's a window into my experiments with code and creativity.",
         'about': "My journey started with a curiosity for how things work under the hood. Now, I specialize in building autonomous agents and secure frameworks. I don't just write code; I architect solutions that think and adapt.",
-        'projects': "These aren't just repos; they're my R&D lab. Q-SAFE, RED-QUEEN, F.R.I.D.A.Y.—each represents a challenge I wanted to solve. Whether it's offensive AI or quantum security, I build what I want to see in the world.",
+        'projects': "These aren't just repos; they're my R&D lab. Q-SAFE, RED-QUEEN, F.R.I.D.A.Y. each represents a challenge I wanted to solve. Whether it's offensive AI or quantum security, I build what I want to see in the world.",
         'research': "I'm redefining boundaries with Q-SAFE, a Hybrid Sentinel framework, and exploring quantum-time geometry with Chronon-SQL. My research aims to secure the next generation of computing.",
-        'skills': "I believe in the right tool for the job. My stack is heavy on performance (Rust, C++, ASM) and intelligence (Python, AI Agents). I treat languages like superpowers—combining them to solve complex problems.",
+        'skills': "I believe in the right tool for the job. My stack is heavy on performance (Rust, C++, ASM) and intelligence (Python, AI Agents). I treat languages like superpowers combining them to solve complex problems.",
         'timeline': "Every milestone has been a lesson. From enhancing global satellite data at NASA Space Apps to founding ShopRoyince, I've applied my skills in high-stakes environments where precision matters.",
         'contact': "Communication is key. If you have an idea, a challenge, or just want to talk shop about the future of AI and security, drop me a message. I'm always open to collaboration."
     };

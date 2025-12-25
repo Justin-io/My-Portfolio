@@ -22,7 +22,7 @@ This codebase is made public strictly for **EDUCATIONAL AND RESEARCH PURPOSES ON
 3.  **NO COMMERCIAL USE**: This code may not be used, sold, or integrated into any commercial product, template, or service.
 
 ### ⚖️ LEGAL NOTICE
-This project represents the intellectual property of the author. Any unauthorized use, reproduction, cloning, or distribution of this code—in whole or in part—for personal representation or commercial gain is a direct violation of copyright laws. 
+This project represents the intellectual property of the author. Any unauthorized use, reproduction, cloning, or distribution of this code in whole or in part for personal representation or commercial gain is a direct violation of copyright laws. 
 
 **Violators will face legal consequences.**
 

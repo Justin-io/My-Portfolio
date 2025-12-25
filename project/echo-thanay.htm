@@ -1,101 +1,108 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Basic Meta Tags -->
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Join ECHO a hands-on workshop designed to help beginners master prompt engineering and build autonomous AI agents. No prior AI experience required. Learn from experts, build real projects, and unlock the future of AI.">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Join ECHO a hands-on workshop designed to help beginners master prompt engineering and build autonomous AI agents. No prior AI experience required. Learn from experts, build real projects, and unlock the future of AI.">
 
-<meta name="keywords" content="AI Workshop, Prompt Engineering, AI Agents, LLMs, Artificial Intelligence, Machine Learning, AI for Beginners, LangChain, OpenAI, Hugging Face, AI Kerala, Tech Workshop, Online Learning, AI Certification">
-<meta name="author" content="Justin">
-<meta name="robots" content="index, follow">
+    <meta name="keywords"
+        content="AI Workshop, Prompt Engineering, AI Agents, LLMs, Artificial Intelligence, Machine Learning, AI for Beginners, LangChain, OpenAI, Hugging Face, AI Kerala, Tech Workshop, Online Learning, AI Certification">
+    <meta name="author" content="Justin">
+    <meta name="robots" content="index, follow">
 
-<!-- Open Graph / Facebook Meta Tags -->
-<meta property="og:title" content="ECHO: Mastering Prompt Engineering & AI Agents">
-<meta property="og:description" content="Techfest Registration to A beginner-friendly, project-driven workshop to master prompt engineering and AI agents. Learn, build, and automate with cutting-edge AI tools.">
-<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/texidomeg-v8.appspot.com/o/1754579286.png?alt=media&token=859599ec-8592-412a-962d-5a26df775d8a">
-<meta property="og:url" content="https://justinalexia.vercel.app/echo.htm">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="ECHO">
-<meta property="og:locale" content="en_IN">
+    <!-- Open Graph / Facebook Meta Tags -->
+    <meta property="og:title" content="ECHO: Mastering Prompt Engineering & AI Agents">
+    <meta property="og:description"
+        content="Techfest Registration to A beginner-friendly, project-driven workshop to master prompt engineering and AI agents. Learn, build, and automate with cutting-edge AI tools.">
+    <meta property="og:image"
+        content="https://firebasestorage.googleapis.com/v0/b/texidomeg-v8.appspot.com/o/1754579286.png?alt=media&token=859599ec-8592-412a-962d-5a26df775d8a">
+    <meta property="og:url" content="../echo.htm">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="ECHO">
+    <meta property="og:locale" content="en_IN">
 
-<!-- Twitter Meta Tags -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="@AIKeralaOfficial">
-<meta name="twitter:creator" content="@AIKeralaOfficial">
-<meta name="twitter:title" content="ECHO: Mastering Prompt Engineering & AI Agents">
-<meta name="twitter:description" content="Dive into AI with hands-on learning in prompt engineering and autonomous agents. Perfect for students and beginners.">
-<meta name="twitter:image" content="https://yoursite.com/echo-workshop-preview.jpg">
-<meta name="twitter:image:alt" content="ECHO Workshop Learn AI through interactive sessions and real-world projects">
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@AIKeralaOfficial">
+    <meta name="twitter:creator" content="@AIKeralaOfficial">
+    <meta name="twitter:title" content="ECHO: Mastering Prompt Engineering & AI Agents">
+    <meta name="twitter:description"
+        content="Dive into AI with hands-on learning in prompt engineering and autonomous agents. Perfect for students and beginners.">
+    <meta name="twitter:image" content="https://yoursite.com/echo-workshop-preview.jpg">
+    <meta name="twitter:image:alt"
+        content="ECHO Workshop Learn AI through interactive sessions and real-world projects">
 
-<!-- Apple & PWA Meta Tags -->
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="apple-mobile-web-app-title" content="ECHO Workshop">
-<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+    <!-- Apple & PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="ECHO Workshop">
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
 
-<!-- Theme Color for Chrome, Firefox, Safari -->
-<meta name="theme-color" content="#000000">
-<meta name="msapplication-TileColor" content="#000000">
-<script>
+    <!-- Theme Color for Chrome, Firefox, Safari -->
+    <meta name="theme-color" content="#000000">
+    <meta name="msapplication-TileColor" content="#000000">
+    <script>
 
-// Disable right-click context menu
-document.addEventListener('contextmenu', (event) => event.preventDefault());
+        // Disable right-click context menu
+        document.addEventListener('contextmenu', (event) => event.preventDefault());
 
-// Prevent F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+S
-document.addEventListener('keydown', (event) => {
-    if (
-        event.key === 'F12' || // F12
-        (event.ctrlKey && event.shiftKey && event.key === 'I') || // Ctrl+Shift+I
-        (event.ctrlKey && event.shiftKey && event.key === 'J') || // Ctrl+Shift+J
-        (event.ctrlKey && event.key === 'U') || // Ctrl+U
-        (event.ctrlKey && event.key === 'S') // Ctrl+S
-    ) {
-        event.preventDefault();
-    }
-});
+        // Prevent F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+S
+        document.addEventListener('keydown', (event) => {
+            if (
+                event.key === 'F12' || // F12
+                (event.ctrlKey && event.shiftKey && event.key === 'I') || // Ctrl+Shift+I
+                (event.ctrlKey && event.shiftKey && event.key === 'J') || // Ctrl+Shift+J
+                (event.ctrlKey && event.key === 'U') || // Ctrl+U
+                (event.ctrlKey && event.key === 'S') // Ctrl+S
+            ) {
+                event.preventDefault();
+            }
+        });
 
-// Detect and block the opening of developer tools
-(function detectDevTools() {
-    const devToolsCheck = new Function('debugger');
-    setInterval(() => {
-        const start = performance.now();
-        devToolsCheck();
-        if (performance.now() - start > 100) {
-            alert('Developer tools are not allowed on this page.');
-            window.close(); // Close the tab
-        }
-    }, 500);
-})();
+        // Detect and block the opening of developer tools
+        (function detectDevTools() {
+            const devToolsCheck = new Function('debugger');
+            setInterval(() => {
+                const start = performance.now();
+                devToolsCheck();
+                if (performance.now() - start > 100) {
+                    alert('Developer tools are not allowed on this page.');
+                    window.close(); // Close the tab
+                }
+            }, 500);
+        })();
 
-// Disable drag-and-drop actions
-document.addEventListener('dragstart', (event) => event.preventDefault());
+        // Disable drag-and-drop actions
+        document.addEventListener('dragstart', (event) => event.preventDefault());
 
-// Disable copying, cutting, or pasting
-document.addEventListener('copy', (event) => event.preventDefault());
-document.addEventListener('cut', (event) => event.preventDefault());
-document.addEventListener('paste', (event) => event.preventDefault());
+        // Disable copying, cutting, or pasting
+        document.addEventListener('copy', (event) => event.preventDefault());
+        document.addEventListener('cut', (event) => event.preventDefault());
+        document.addEventListener('paste', (event) => event.preventDefault());
 
-// Hide the source code
-document.onkeydown = function (e) {
-    if (e.ctrlKey && e.key === 'P') {
-        // Disable Print
-        e.preventDefault();
-    }
-};
-document.addEventListener('DOMContentLoaded', () => {
-    document.body.style.userSelect = 'none';
-    document.body.style.webkitUserSelect = 'none';
-    document.body.style.mozUserSelect = 'none';
-    document.body.style.msUserSelect = 'none';
-});
+        // Hide the source code
+        document.onkeydown = function (e) {
+            if (e.ctrlKey && e.key === 'P') {
+                // Disable Print
+                e.preventDefault();
+            }
+        };
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.style.userSelect = 'none';
+            document.body.style.webkitUserSelect = 'none';
+            document.body.style.mozUserSelect = 'none';
+            document.body.style.msUserSelect = 'none';
+        });
 
 
-</script>
-<!-- Structured Data (JSON-LD) for SEO -->
-<script type="application/ld+json">
+    </script>
+    <!-- Structured Data (JSON-LD) for SEO -->
+    <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Event",
@@ -236,15 +243,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         @keyframes float {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: translate(0, 0) rotate(0deg);
             }
+
             25% {
                 transform: translate(20px, -20px) rotate(90deg);
             }
+
             50% {
                 transform: translate(-10px, 10px) rotate(180deg);
             }
+
             75% {
                 transform: translate(15px, 15px) rotate(270deg);
             }
@@ -257,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
+            background-image:
                 linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
             background-size: 50px 50px;
@@ -269,6 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
             0% {
                 transform: translate(0, 0);
             }
+
             100% {
                 transform: translate(50px, 50px);
             }
@@ -1250,6 +1263,7 @@ document.addEventListener('DOMContentLoaded', () => {
             0% {
                 transform: rotate(0deg);
             }
+
             100% {
                 transform: rotate(360deg);
             }
@@ -1771,6 +1785,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     </style>
 </head>
+
 <body>
     <!-- Neural Network Background -->
     <div class="neural-network">
@@ -1802,7 +1817,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <li><a href="#benefits">Benefits</a></li>
                 <li><a href="#testimonials">Testimonials</a></li>
                 <li><a href="#team">Team</a></li>
-             <!--    <li><a href="#pricing">Pricing</a></li>-->
+                <!--    <li><a href="#pricing">Pricing</a></li>-->
                 <li><a href="#gallery">Gallery</a></li>
                 <li><a href="#contact">Contact</a></li>
                 <li><a href="#faq">FAQ</a></li>
@@ -1810,541 +1825,633 @@ document.addEventListener('DOMContentLoaded', () => {
                 <li><a href="#register">Register</a></li>
             </ul>
         </nav>
-        
+
     </header>
 
     <!-- Hero Section -->
     <section class="hero" id="home">
-    <div class="hero-content">
-        <h1>ECHO : Empowering Creativity & Human Optimization</h1>
-        <p class="subtitle">Master Prompt Engineering. Design AI Workflows.<br>
-Let your potential Echo across the future.</p>
-        <div class="hero-buttons">
-            <a href="#register" class="btn btn-primary">Register Now</a>
-            <a href="#interactive-demo" class="btn btn-outline">Try Demo</a>
+        <div class="hero-content">
+            <h1>ECHO : Empowering Creativity & Human Optimization</h1>
+            <p class="subtitle">Master Prompt Engineering. Design AI Workflows.<br>
+                Let your potential Echo across the future.</p>
+            <div class="hero-buttons">
+                <a href="#register" class="btn btn-primary">Register Now</a>
+                <a href="#interactive-demo" class="btn btn-outline">Try Demo</a>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- About Section -->
-<section class="about" id="about">
-<h2 class="section-title">What You’ll Build in This Demo</h2>
+    <!-- About Section -->
+    <section class="about" id="about">
+        <h2 class="section-title">What You’ll Build in This Demo</h2>
 
-<div class="about-content">
-<div class="about-card" onclick="toggleAbout(this)">
-<i class="fas fa-robot"></i>
-<h3>What is ECHO? (It’s Not What You Think)</h3>
-<p>Forget everything you know about AI. ECHO isn’t a lecture. It’s a live lab where you command AI to think, adapt, and solve problems on its own — using nothing but your words. This is your first step from user to architect.</p>
-<div class="about-details">
-<p>You’ve seen AI chat. Now watch it reason. In this demo, you’ll trigger behaviors no one programmed: self-correction, creative leaps, and step-by-step problem solving. It’s not magic. It’s emergence — and you’re holding the keys.</p>
-<p>We’ll show you how a simple prompt can make AI act like a research assistant, a coder, or a strategist. No theory. Just live, hands-on control. By the end, you’ll know how to make AI anticipate your needs before you even ask.</p>
-<p>This is the future of work. And in 90 minutes, you’ll be building it.</p>
-</div>
-<i class="fas fa-chevron-down expand-icon"></i>
-</div>
+        <div class="about-content">
+            <div class="about-card" onclick="toggleAbout(this)">
+                <i class="fas fa-robot"></i>
+                <h3>What is ECHO? (It’s Not What You Think)</h3>
+                <p>Forget everything you know about AI. ECHO isn’t a lecture. It’s a live lab where you command AI to
+                    think, adapt, and solve problems on its own using nothing but your words. This is your first step
+                    from user to architect.</p>
+                <div class="about-details">
+                    <p>You’ve seen AI chat. Now watch it reason. In this demo, you’ll trigger behaviors no one
+                        programmed: self-correction, creative leaps, and step-by-step problem solving. It’s not magic.
+                        It’s emergence and you’re holding the keys.</p>
+                    <p>We’ll show you how a simple prompt can make AI act like a research assistant, a coder, or a
+                        strategist. No theory. Just live, hands-on control. By the end, you’ll know how to make AI
+                        anticipate your needs before you even ask.</p>
+                    <p>This is the future of work. And in 90 minutes, you’ll be building it.</p>
+                </div>
+                <i class="fas fa-chevron-down expand-icon"></i>
+            </div>
 
-<div class="about-card" onclick="toggleAbout(this)">
-<i class="fas fa-code"></i>
-<h3>Prompt Engineering: Your New Superpower</h3>
-<p>This is the one skill that separates AI amateurs from masters. You won’t just ask AI questions. You’ll program its brain — without writing a single line of code.</p>
-<div class="about-details">
-<p>Watch live as we turn vague requests into laser-focused commands. Learn the exact structure to make AI generate flawless code, summarize complex research, or draft a winning project proposal — every time.</p>
-<p>We’ll break down the secret frameworks: Chain-of-Thought, Role Assignment, Prompt Chaining. You’ll see them work in real-time on ChatGPT and Claude. Then, you’ll build your own.</p>
-<p>By the end of this demo, you’ll have a repeatable system to get perfect results from any AI, every time. No more guessing. No more garbage outputs.</p>
-</div>
-<i class="fas fa-chevron-down expand-icon"></i>
-</div>
+            <div class="about-card" onclick="toggleAbout(this)">
+                <i class="fas fa-code"></i>
+                <h3>Prompt Engineering: Your New Superpower</h3>
+                <p>This is the one skill that separates AI amateurs from masters. You won’t just ask AI questions.
+                    You’ll program its brain without writing a single line of code.</p>
+                <div class="about-details">
+                    <p>Watch live as we turn vague requests into laser-focused commands. Learn the exact structure to
+                        make AI generate flawless code, summarize complex research, or draft a winning project proposal
+                        every time.</p>
+                    <p>We’ll break down the secret frameworks: Chain-of-Thought, Role Assignment, Prompt Chaining.
+                        You’ll see them work in real-time on ChatGPT and Claude. Then, you’ll build your own.</p>
+                    <p>By the end of this demo, you’ll have a repeatable system to get perfect results from any AI,
+                        every time. No more guessing. No more garbage outputs.</p>
+                </div>
+                <i class="fas fa-chevron-down expand-icon"></i>
+            </div>
 
-<div class="about-card" onclick="toggleAbout(this)">
-<i class="fas fa-users-cog"></i>
-<h3>AI Agents: Build Your Own Digital Employee</h3>
-<p>Imagine an AI that doesn’t just answer — it acts. Researches. Writes. Organizes. All by itself. In this demo, you’ll build one live.</p>
-<div class="about-details">
-<p>We’ll show you how to create an AI agent that can plan a project, gather data, and deliver a polished report — triggered by one prompt. No complex setup. No APIs. Just pure, strategic language.</p>
-<p>You’ll see how students are already using these agents to automate their studies, build side projects, and crush deadlines. This isn’t science fiction. It’s a practical skill you’ll leave with today.</p>
-<p>Think of it as hiring a digital intern — one that works 24/7 and costs nothing. The only question is: what will you have it do first?</p>
-</div>
-<i class="fas fa-chevron-down expand-icon"></i>
-</div>
-</div></section>
+            <div class="about-card" onclick="toggleAbout(this)">
+                <i class="fas fa-users-cog"></i>
+                <h3>AI Agents: Build Your Own Digital Employee</h3>
+                <p>Imagine an AI that doesn’t just answer it acts. Researches. Writes. Organizes. All by itself. In this
+                    demo, you’ll build one live.</p>
+                <div class="about-details">
+                    <p>We’ll show you how to create an AI agent that can plan a project, gather data, and deliver a
+                        polished report triggered by one prompt. No complex setup. No APIs. Just pure, strategic
+                        language.</p>
+                    <p>You’ll see how students are already using these agents to automate their studies, build side
+                        projects, and crush deadlines. This isn’t science fiction. It’s a practical skill you’ll leave
+                        with today.</p>
+                    <p>Think of it as hiring a digital intern one that works 24/7 and costs nothing. The only question
+                        is: what will you have it do first?</p>
+                </div>
+                <i class="fas fa-chevron-down expand-icon"></i>
+            </div>
+        </div>
+    </section>
 
-<!-- Workshop Details -->
-<section class="workshop-details" id="details">
-<div class="details-container">
-<h2 class="section-title">Your Demo Session: What You Need to Know</h2>
+    <!-- Workshop Details -->
+    <section class="workshop-details" id="details">
+        <div class="details-container">
+            <h2 class="section-title">Your Demo Session: What You Need to Know</h2>
 
-<div class="details-grid">
-<div class="detail-card">
-<h3><i class="fas fa-calendar-alt"></i> Date & Time</h3>
-<ul>
-<li><strong>Day 1:</strong> September 26, 2025</li>
-<li><strong>Day 2:</strong> September 27, 2025</li>
-<li><strong>Duration:</strong> 105 Minutes of Pure AI Action</li>
-<li><strong>First Batch(Day1):</strong> 9:45 AM - 11:20 AM (Grab the early slot)</li>
-<li><strong>Last Batch(Day2):</strong> 9:45 AM - 11:20 AM (Don’t wait till it’s too late)</li>
-</ul>
-<p>This isn’t a lecture. It’s a live build session. You’ll spend 105 minutes designing, testing, and commanding AI in real-time. Every batch is capped at 30 students — so you get personal attention while you build your first AI agent. Choose your slot before your friends take it.</p>
-</div>
+            <div class="details-grid">
+                <div class="detail-card">
+                    <h3><i class="fas fa-calendar-alt"></i> Date & Time</h3>
+                    <ul>
+                        <li><strong>Day 1:</strong> September 26, 2025</li>
+                        <li><strong>Day 2:</strong> September 27, 2025</li>
+                        <li><strong>Duration:</strong> 105 Minutes of Pure AI Action</li>
+                        <li><strong>First Batch(Day1):</strong> 9:45 AM - 11:20 AM (Grab the early slot)</li>
+                        <li><strong>Last Batch(Day2):</strong> 9:45 AM - 11:20 AM (Don’t wait till it’s too late)</li>
+                    </ul>
+                    <p>This isn’t a lecture. It’s a live build session. You’ll spend 105 minutes designing, testing, and
+                        commanding AI in real-time. Every batch is capped at 30 students so you get personal attention
+                        while you build your first AI agent. Choose your slot before your friends take it.</p>
+                </div>
 
-<div class="detail-card">
-<h3><i class="fas fa-map-marker-alt"></i> Venue</h3>
-<ul>
-<li><strong>Where:</strong> IES College of Engineering</li>
-<li><strong>Exactly:</strong> Data Science Lab, P.O. Chittilappilly</li>
-<li><strong>Why Here:</strong> The only lab on campus with zero-latency AI tools</li>
-<li><strong>Setup:</strong> 30 seats, high-speed Wi-Fi, crystal-clear audio</li>
-<li><strong>Vibe:</strong> Where your AI journey begins</li>
-</ul>
-<p>This is the command center. We’ve pre-loaded every machine with ChatGPT, Claude, and Poe. No downloads. No setup. Just walk in, sit down, and start building. This is where you’ll watch AI think for the first time — live, on the big screen.</p>
-</div>
+                <div class="detail-card">
+                    <h3><i class="fas fa-map-marker-alt"></i> Venue</h3>
+                    <ul>
+                        <li><strong>Where:</strong> IES College of Engineering</li>
+                        <li><strong>Exactly:</strong> Data Science Lab, P.O. Chittilappilly</li>
+                        <li><strong>Why Here:</strong> The only lab on campus with zero-latency AI tools</li>
+                        <li><strong>Setup:</strong> 30 seats, high-speed Wi-Fi, crystal-clear audio</li>
+                        <li><strong>Vibe:</strong> Where your AI journey begins</li>
+                    </ul>
+                    <p>This is the command center. We’ve pre-loaded every machine with ChatGPT, Claude, and Poe. No
+                        downloads. No setup. Just walk in, sit down, and start building. This is where you’ll watch AI
+                        think for the first time live, on the big screen.</p>
+                </div>
 
-<div class="detail-card">
-<h3><i class="fas fa-user-graduate"></i> Who Should Be Here</h3>
-<ul>
-<li><strong>You:</strong> If you’ve ever used ChatGPT or wondered how AI works</li>
-<li><strong>Your Friend:</strong> The one who’s always asking, “How do I make AI do that?”</li>
-<li><strong>No Experience?</strong> Perfect. We start from zero.</li>
-<li><strong>Know Code?</strong> Great, but you won’t need it.</li>
-<li><strong>Batch Size:</strong> 30 students. No exceptions.</li>
-</ul>
-<p>If you’re curious, you belong here. This is for students who want to stop asking AI questions and start giving it commands. By the end, you’ll be the person your batch turns to for AI help. Don’t let someone else become that person first.</p>
-</div>
+                <div class="detail-card">
+                    <h3><i class="fas fa-user-graduate"></i> Who Should Be Here</h3>
+                    <ul>
+                        <li><strong>You:</strong> If you’ve ever used ChatGPT or wondered how AI works</li>
+                        <li><strong>Your Friend:</strong> The one who’s always asking, “How do I make AI do that?”</li>
+                        <li><strong>No Experience?</strong> Perfect. We start from zero.</li>
+                        <li><strong>Know Code?</strong> Great, but you won’t need it.</li>
+                        <li><strong>Batch Size:</strong> 30 students. No exceptions.</li>
+                    </ul>
+                    <p>If you’re curious, you belong here. This is for students who want to stop asking AI questions and
+                        start giving it commands. By the end, you’ll be the person your batch turns to for AI help.
+                        Don’t let someone else become that person first.</p>
+                </div>
 
-<div class="detail-card">
-<h3><i class="fas fa-laptop-code"></i> What to Bring</h3>
-<ul>
-<li><strong>Essential:</strong> Laptop or smartphone. That’s it.</li>
-<li><strong>Optional:</strong> Notebook. You’ll want to write this down.</li>
-<li><strong>Not Needed:</strong> Software, installations, prior knowledge</li>
-<li><strong>You Get:</strong> A working AI project + Certificate</li>
-<li><strong>Dress:</strong> Like you’re about to build the future</li>
-</ul>
-<p>Bring your device. We’ll handle the rest. In 105 minutes, you’ll leave with a live AI workflow you built from scratch — no code, just smart prompts. And yes, you’ll get a certificate to prove it. But the real prize? The ability to make AI do exactly what you want.</p>
-</div>
-</div>
-</div></section>
+                <div class="detail-card">
+                    <h3><i class="fas fa-laptop-code"></i> What to Bring</h3>
+                    <ul>
+                        <li><strong>Essential:</strong> Laptop or smartphone. That’s it.</li>
+                        <li><strong>Optional:</strong> Notebook. You’ll want to write this down.</li>
+                        <li><strong>Not Needed:</strong> Software, installations, prior knowledge</li>
+                        <li><strong>You Get:</strong> A working AI project + Certificate</li>
+                        <li><strong>Dress:</strong> Like you’re about to build the future</li>
+                    </ul>
+                    <p>Bring your device. We’ll handle the rest. In 105 minutes, you’ll leave with a live AI workflow
+                        you built from scratch no code, just smart prompts. And yes, you’ll get a certificate to prove
+                        it. But the real prize? The ability to make AI do exactly what you want.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- Curriculum Section --><section class="curriculum" id="curriculum">
-<h2 class="section-title">What You’ll Build in 90 Minutes</h2>
-<p class="section-subtitle">
-This isn’t a lecture. It’s a live build session. Each module is a hands-on challenge you’ll complete before the clock runs out.
-</p>
+    <!-- Curriculum Section -->
+    <section class="curriculum" id="curriculum">
+        <h2 class="section-title">What You’ll Build in 90 Minutes</h2>
+        <p class="section-subtitle">
+            This isn’t a lecture. It’s a live build session. Each module is a hands-on challenge you’ll complete before
+            the clock runs out.
+        </p>
 
-<div class="curriculum-container">
-<!-- Module 1 -->
-<div class="curriculum-item" onclick="toggleCurriculum(this)">
-<div class="curriculum-number">01</div>
-<div class="curriculum-content">
-<h3>Crack the AI Code: How It Really Thinks</h3>
-<p>In 10 minutes, you’ll understand exactly how AI generates answers — not through magic, but through patterns. You’ll learn what triggers its “thinking” and how to control it.</p>
-<div class="curriculum-details">
-<p>
-• See how AI evolved from simple rules to complex reasoning<br>
-• Understand the one thing all AI tools have in common: context<br>
-• Learn why AI “hallucinates” and how to stop it in its tracks<br>
-• Discover how to use AI’s limitations to your advantage<br>
-• Real-world examples: How students use this to ace assignments and research
-</p>
-</div>
-</div>
-</div>
+        <div class="curriculum-container">
+            <!-- Module 1 -->
+            <div class="curriculum-item" onclick="toggleCurriculum(this)">
+                <div class="curriculum-number">01</div>
+                <div class="curriculum-content">
+                    <h3>Crack the AI Code: How It Really Thinks</h3>
+                    <p>In 10 minutes, you’ll understand exactly how AI generates answers not through magic, but through
+                        patterns. You’ll learn what triggers its “thinking” and how to control it.</p>
+                    <div class="curriculum-details">
+                        <p>
+                            • See how AI evolved from simple rules to complex reasoning<br>
+                            • Understand the one thing all AI tools have in common: context<br>
+                            • Learn why AI “hallucinates” and how to stop it in its tracks<br>
+                            • Discover how to use AI’s limitations to your advantage<br>
+                            • Real-world examples: How students use this to ace assignments and research
+                        </p>
+                    </div>
+                </div>
+            </div>
 
-<!-- Module 2 -->
-<div class="curriculum-item" onclick="toggleCurriculum(this)">
-<div class="curriculum-number">02</div>
-<div class="curriculum-content">
-<h3>The Prompt Formula: Your First AI Command</h3>
-<p>In 15 minutes, you’ll craft your first precision prompt. No more vague answers. You’ll learn the exact 4-part structure that forces AI to give you exactly what you need.</p>
-<div class="curriculum-details">
-<p>
-• The 4-part prompt: Instruction, Context, Input, Output<br>
-• How to assign AI a role: “Act as a Senior Developer”<br>
-• The secret to eliminating vague, off-topic responses<br>
-• Live demo: Watch a bad prompt get transformed into a perfect one<br>
-• Build your first reusable template for essays, code, or summaries
-</p>
-</div>
-</div>
-</div>
+            <!-- Module 2 -->
+            <div class="curriculum-item" onclick="toggleCurriculum(this)">
+                <div class="curriculum-number">02</div>
+                <div class="curriculum-content">
+                    <h3>The Prompt Formula: Your First AI Command</h3>
+                    <p>In 15 minutes, you’ll craft your first precision prompt. No more vague answers. You’ll learn the
+                        exact 4-part structure that forces AI to give you exactly what you need.</p>
+                    <div class="curriculum-details">
+                        <p>
+                            • The 4-part prompt: Instruction, Context, Input, Output<br>
+                            • How to assign AI a role: “Act as a Senior Developer”<br>
+                            • The secret to eliminating vague, off-topic responses<br>
+                            • Live demo: Watch a bad prompt get transformed into a perfect one<br>
+                            • Build your first reusable template for essays, code, or summaries
+                        </p>
+                    </div>
+                </div>
+            </div>
 
-<!-- Module 3 -->
-<div class="curriculum-item" onclick="toggleCurriculum(this)">
-<div class="curriculum-number">03</div>
-<div class="curriculum-content">
-<h3>Make AI Think Step-by-Step (Like a Human)</h3>
-<p>In 15 minutes, you’ll unlock AI’s hidden reasoning power. You’ll use “Chain-of-Thought” to make it break down complex problems — perfect for debugging code or solving logic puzzles.</p>
-<div class="curriculum-details">
-<p>
-• Force AI to “show its work” before giving an answer<br>
-• Use “Few-Shot” learning: Give it examples to copy<br>
-• “Prompt Chaining”: Break big tasks into small, manageable steps<br>
-• Live challenge: Make AI solve a problem it couldn’t solve before<br>
-• Walk away with a technique to tackle any complex assignment
-</p>
-</div>
-</div>
-</div>
+            <!-- Module 3 -->
+            <div class="curriculum-item" onclick="toggleCurriculum(this)">
+                <div class="curriculum-number">03</div>
+                <div class="curriculum-content">
+                    <h3>Make AI Think Step-by-Step (Like a Human)</h3>
+                    <p>In 15 minutes, you’ll unlock AI’s hidden reasoning power. You’ll use “Chain-of-Thought” to make
+                        it break down complex problems perfect for debugging code or solving logic puzzles.</p>
+                    <div class="curriculum-details">
+                        <p>
+                            • Force AI to “show its work” before giving an answer<br>
+                            • Use “Few-Shot” learning: Give it examples to copy<br>
+                            • “Prompt Chaining”: Break big tasks into small, manageable steps<br>
+                            • Live challenge: Make AI solve a problem it couldn’t solve before<br>
+                            • Walk away with a technique to tackle any complex assignment
+                        </p>
+                    </div>
+                </div>
+            </div>
 
-<!-- Module 4 -->
-<div class="curriculum-item" onclick="toggleCurriculum(this)">
-<div class="curriculum-number">04</div>
-<div class="curriculum-content">
-<h3>Build Your First AI Agent: It Works While You Sleep</h3>
-<p>In 20 minutes, you’ll create an AI agent that can plan, act, and correct itself. This is the core skill that separates users from builders.</p>
-<div class="curriculum-details">
-<p>
-• Turn a single prompt into a multi-step workflow<br>
-• Simulate memory: Make AI remember your previous commands<br>
-• Add a feedback loop: Make AI review and improve its own work<br>
-• Live build: Create an agent that researches a topic and writes a report<br>
-• This is your digital intern. What will you have it do first?
-</p>
-</div>
-</div>
-</div>
+            <!-- Module 4 -->
+            <div class="curriculum-item" onclick="toggleCurriculum(this)">
+                <div class="curriculum-number">04</div>
+                <div class="curriculum-content">
+                    <h3>Build Your First AI Agent: It Works While You Sleep</h3>
+                    <p>In 20 minutes, you’ll create an AI agent that can plan, act, and correct itself. This is the core
+                        skill that separates users from builders.</p>
+                    <div class="curriculum-details">
+                        <p>
+                            • Turn a single prompt into a multi-step workflow<br>
+                            • Simulate memory: Make AI remember your previous commands<br>
+                            • Add a feedback loop: Make AI review and improve its own work<br>
+                            • Live build: Create an agent that researches a topic and writes a report<br>
+                            • This is your digital intern. What will you have it do first?
+                        </p>
+                    </div>
+                </div>
+            </div>
 
-<!-- Module 5 -->
-<div class="curriculum-item" onclick="toggleCurriculum(this)">
-<div class="curriculum-number">05</div>
-<div class="curriculum-content">
-<h3>Live Project: Build Your Personal AI Tool</h3>
-<p>In 20 minutes, you’ll build a custom AI tool live. Choose your mission: Study Buddy, Research Assistant, or Content Creator. This is yours to keep.</p>
-<div class="curriculum-details">
-<p>
-• Option 1: Build a Study Buddy that explains concepts and makes quizzes<br>
-• Option 2: Create a Research Agent that finds and summarizes articles<br>
-• Option 3: Design a Writing Assistant that drafts emails or reports<br>
-• Get live feedback from mentors and peers<br>
-• Save your prompt. Use it tomorrow. Show it off to your friends.
-</p>
-</div>
-</div>
-</div>
+            <!-- Module 5 -->
+            <div class="curriculum-item" onclick="toggleCurriculum(this)">
+                <div class="curriculum-number">05</div>
+                <div class="curriculum-content">
+                    <h3>Live Project: Build Your Personal AI Tool</h3>
+                    <p>In 20 minutes, you’ll build a custom AI tool live. Choose your mission: Study Buddy, Research
+                        Assistant, or Content Creator. This is yours to keep.</p>
+                    <div class="curriculum-details">
+                        <p>
+                            • Option 1: Build a Study Buddy that explains concepts and makes quizzes<br>
+                            • Option 2: Create a Research Agent that finds and summarizes articles<br>
+                            • Option 3: Design a Writing Assistant that drafts emails or reports<br>
+                            • Get live feedback from mentors and peers<br>
+                            • Save your prompt. Use it tomorrow. Show it off to your friends.
+                        </p>
+                    </div>
+                </div>
+            </div>
 
-<!-- Module 6 -->
-<div class="curriculum-item" onclick="toggleCurriculum(this)">
-<div class="curriculum-number">06</div>
-<div class="curriculum-content">
-<h3>AI Safety: Don’t Get Caught Off Guard</h3>
-<p>In 5 minutes, you’ll learn how to spot AI’s mistakes and protect yourself. This is non-negotiable for anyone using AI in academics or projects.</p>
-<div class="curriculum-details">
-<p>
-• How to fact-check AI’s answers in 10 seconds<br>
-• Spot bias and misinformation before it ruins your work<br>
-• Never put sensitive data in a prompt — here’s why<br>
-• The one question to always ask before trusting AI’s output<br>
-• Build workflows that are reliable, not risky
-</p>
-</div>
-</div>
-</div>
+            <!-- Module 6 -->
+            <div class="curriculum-item" onclick="toggleCurriculum(this)">
+                <div class="curriculum-number">06</div>
+                <div class="curriculum-content">
+                    <h3>AI Safety: Don’t Get Caught Off Guard</h3>
+                    <p>In 5 minutes, you’ll learn how to spot AI’s mistakes and protect yourself. This is non-negotiable
+                        for anyone using AI in academics or projects.</p>
+                    <div class="curriculum-details">
+                        <p>
+                            • How to fact-check AI’s answers in 10 seconds<br>
+                            • Spot bias and misinformation before it ruins your work<br>
+                            • Never put sensitive data in a prompt here’s why<br>
+                            • The one question to always ask before trusting AI’s output<br>
+                            • Build workflows that are reliable, not risky
+                        </p>
+                    </div>
+                </div>
+            </div>
 
-<!-- Module 7 -->
-<div class="curriculum-item" onclick="toggleCurriculum(this)">
-<div class="curriculum-number">07</div>
-<div class="curriculum-content">
-<h3>Your AI Career Starts Now</h3>
-<p>In 5 minutes, you’ll map your next steps. AI isn’t the future — it’s your present. Learn how to turn today’s skills into internships, projects, or a career.</p>
-<div class="curriculum-details">
-<p>
-• The 5 most in-demand AI skills (you now have 3 of them)<br>
-• How to build a portfolio that gets you noticed<br>
-• Where to find your next AI project or collaboration<br>
-• The exact path to HOPE’s 2-month program (if you’re ready to go deeper)<br>
-• You’re no longer an AI user. You’re an AI builder. What’s your first move?
-</p>
-</div>
-</div>
-</div>
-</div></section>
+            <!-- Module 7 -->
+            <div class="curriculum-item" onclick="toggleCurriculum(this)">
+                <div class="curriculum-number">07</div>
+                <div class="curriculum-content">
+                    <h3>Your AI Career Starts Now</h3>
+                    <p>In 5 minutes, you’ll map your next steps. AI isn’t the future it’s your present. Learn how to
+                        turn today’s skills into internships, projects, or a career.</p>
+                    <div class="curriculum-details">
+                        <p>
+                            • The 5 most in-demand AI skills (you now have 3 of them)<br>
+                            • How to build a portfolio that gets you noticed<br>
+                            • Where to find your next AI project or collaboration<br>
+                            • The exact path to HOPE’s 2-month program (if you’re ready to go deeper)<br>
+                            • You’re no longer an AI user. You’re an AI builder. What’s your first move?
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- Benefits Section -->
-<section class="benefits" id="benefits">
-<div class="benefits-container">
-<h2 class="section-title">What You’ll Walk Away With</h2>
-<p class="section-subtitle">
-This isn’t theory. In 90 minutes, you’ll leave with skills, tools, and proof you can use tomorrow.
-</p>
+    <!-- Benefits Section -->
+    <section class="benefits" id="benefits">
+        <div class="benefits-container">
+            <h2 class="section-title">What You’ll Walk Away With</h2>
+            <p class="section-subtitle">
+                This isn’t theory. In 90 minutes, you’ll leave with skills, tools, and proof you can use tomorrow.
+            </p>
 
-<div class="benefits-grid">
-<!-- 1. Certification -->
-<div class="benefit-card">
-<i class="fas fa-certificate"></i>
-<h3>Official Certificate — Yours to Keep</h3>
-<p>You’ll receive a verifiable certificate from HOPE Int CORE — signed, dated, and ready for LinkedIn or your portfolio. Not just attendance. Proof you built something real.</p>
-</div>
+            <div class="benefits-grid">
+                <!-- 1. Certification -->
+                <div class="benefit-card">
+                    <i class="fas fa-certificate"></i>
+                    <h3>Official Certificate Yours to Keep</h3>
+                    <p>You’ll receive a verifiable certificate from HOPE Int CORE signed, dated, and ready for LinkedIn
+                        or your portfolio. Not just attendance. Proof you built something real.</p>
+                </div>
 
-<!-- 2. Networking -->
-<div class="benefit-card">
-<i class="fas fa-network-wired"></i>
-<h3>Connect With Your Future Peers</h3>
-<p>You’re not alone in this. The 30 people in your batch are the same ones who’ll be building AI tools on campus next semester. You’ll meet them. Work with them. And they’ll remember you for it.</p>
-</div>
+                <!-- 2. Networking -->
+                <div class="benefit-card">
+                    <i class="fas fa-network-wired"></i>
+                    <h3>Connect With Your Future Peers</h3>
+                    <p>You’re not alone in this. The 30 people in your batch are the same ones who’ll be building AI
+                        tools on campus next semester. You’ll meet them. Work with them. And they’ll remember you for
+                        it.</p>
+                </div>
 
-<!-- 3. Career Advancement -->
-<div class="benefit-card">
-<i class="fas fa-briefcase"></i>
-<h3>Stand Out in Internships & Projects</h3>
-<p>Every resume says “familiar with AI.” Yours will say: “Built an AI research assistant using prompt engineering.” That’s the difference between being noticed — and being hired.</p>
-</div>
+                <!-- 3. Career Advancement -->
+                <div class="benefit-card">
+                    <i class="fas fa-briefcase"></i>
+                    <h3>Stand Out in Internships & Projects</h3>
+                    <p>Every resume says “familiar with AI.” Yours will say: “Built an AI research assistant using
+                        prompt engineering.” That’s the difference between being noticed and being hired.</p>
+                </div>
 
-<!-- 4. Problem-Solving & Innovation -->
-<div class="benefit-card">
-<i class="fas fa-lightbulb"></i>
-<h3>Solve Any Assignment Faster</h3>
-<p>Summarize 50 pages of research in 3 minutes. Draft project reports without staring at a blank screen. Turn vague instructions into perfect outputs. This isn’t magic — it’s a system you’ll build today.</p>
-</div>
+                <!-- 4. Problem-Solving & Innovation -->
+                <div class="benefit-card">
+                    <i class="fas fa-lightbulb"></i>
+                    <h3>Solve Any Assignment Faster</h3>
+                    <p>Summarize 50 pages of research in 3 minutes. Draft project reports without staring at a blank
+                        screen. Turn vague instructions into perfect outputs. This isn’t magic it’s a system you’ll
+                        build today.</p>
+                </div>
 
-<!-- 5. Expert Mentorship -->
-<div class="benefit-card">
-<i class="fas fa-hands-helping"></i>
-<h3>Get Direct Feedback From Real Builders</h3>
-<p>Hari and Thanay aren’t lecturing. They’re watching you build. And when you get stuck, they’ll show you exactly how to fix it — no jargon, no theory, just what works.</p>
-</div>
+                <!-- 5. Expert Mentorship -->
+                <div class="benefit-card">
+                    <i class="fas fa-hands-helping"></i>
+                    <h3>Get Direct Feedback From Real Builders</h3>
+                    <p>Hari and Thanay aren’t lecturing. They’re watching you build. And when you get stuck, they’ll
+                        show you exactly how to fix it no jargon, no theory, just what works.</p>
+                </div>
 
-<!-- 6. Lifetime Resources -->
-<div class="benefit-card">
-<i class="fas fa-gift"></i>
-<h3>Take Home Everything You Use</h3>
-<p>All prompt templates, workflow structures, and cheat sheets you see live? You get them after. No login. No portal. Just files you can open on your laptop tonight.</p>
-</div>
+                <!-- 6. Lifetime Resources -->
+                <div class="benefit-card">
+                    <i class="fas fa-gift"></i>
+                    <h3>Take Home Everything You Use</h3>
+                    <p>All prompt templates, workflow structures, and cheat sheets you see live? You get them after. No
+                        login. No portal. Just files you can open on your laptop tonight.</p>
+                </div>
 
-<!-- 7. Hands-On Experience -->
-<div class="benefit-card">
-<i class="fas fa-vial"></i>
-<h3>Build Something That Works — Today</h3>
-<p>You won’t watch a demo. You’ll make one. A working AI agent that summarizes articles, drafts emails, or explains concepts — built entirely by you, in under two hours.</p>
-</div>
+                <!-- 7. Hands-On Experience -->
+                <div class="benefit-card">
+                    <i class="fas fa-vial"></i>
+                    <h3>Build Something That Works Today</h3>
+                    <p>You won’t watch a demo. You’ll make one. A working AI agent that summarizes articles, drafts
+                        emails, or explains concepts built entirely by you, in under two hours.</p>
+                </div>
 
-<!-- 8. Skill Validation -->
-<div class="benefit-card">
-<i class="fas fa-award"></i>
-<h3>Prove You Can Do It — Live</h3>
-<p>You’ll present your workflow to peers and mentors. They’ll ask questions. You’ll answer. That moment — when you realize you actually know how to do this — is the point where you stop being a user and become a builder.</p>
-</div>
+                <!-- 8. Skill Validation -->
+                <div class="benefit-card">
+                    <i class="fas fa-award"></i>
+                    <h3>Prove You Can Do It Live</h3>
+                    <p>You’ll present your workflow to peers and mentors. They’ll ask questions. You’ll answer. That
+                        moment when you realize you actually know how to do this is the point where you stop being a
+                        user and become a builder.</p>
+                </div>
 
-<!-- 9. Community Access -->
-<div class="benefit-card">
-<i class="fas fa-users"></i>
-<h3>Join the Only AI Group That Matters Here</h3>
-<p>This isn’t a Discord server. It’s the group of IES students already using AI to win hackathons, automate assignments, and build side projects. You’ll be invited in — if you show up today.</p>
-</div>
+                <!-- 9. Community Access -->
+                <div class="benefit-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Join the Only AI Group That Matters Here</h3>
+                    <p>This isn’t a Discord server. It’s the group of IES students already using AI to win hackathons,
+                        automate assignments, and build side projects. You’ll be invited in if you show up today.</p>
+                </div>
 
-<!-- 10. Future-Proofing -->
-<div class="benefit-card">
-<i class="fas fa-shield-alt"></i>
-<h3>Be Ahead of Everyone Else in Your Batch</h3>
-<p>By December, half your class will be asking, “How did you get AI to do that?” You’ll already have the answer. And the tool. And the confidence to explain it.</p>
-</div>
+                <!-- 10. Future-Proofing -->
+                <div class="benefit-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Be Ahead of Everyone Else in Your Batch</h3>
+                    <p>By December, half your class will be asking, “How did you get AI to do that?” You’ll already have
+                        the answer. And the tool. And the confidence to explain it.</p>
+                </div>
 
-<!-- 11. Project Portfolio -->
-<div class="benefit-card">
-<i class="fas fa-folder-open"></i>
-<h3>One Project. Zero Coding. All Impact.</h3>
-<p>You’ll walk out with a functional AI tool — documented, shareable, and ready to add to your resume. No GitHub needed. Just a link. And the ability to say: “I built this.”</p>
-</div>
+                <!-- 11. Project Portfolio -->
+                <div class="benefit-card">
+                    <i class="fas fa-folder-open"></i>
+                    <h3>One Project. Zero Coding. All Impact.</h3>
+                    <p>You’ll walk out with a functional AI tool documented, shareable, and ready to add to your resume.
+                        No GitHub needed. Just a link. And the ability to say: “I built this.”</p>
+                </div>
 
-<!-- 12. Confidence with AI -->
-<div class="benefit-card">
-<i class="fas fa-brain"></i>
-<h3>No More Guessing. Just Results.</h3>
-<p>You’ll stop saying “I don’t know how to ask AI.” Instead, you’ll say: “Here’s my prompt.” Because you’ll know exactly what structure works — and why.</p>
-</div>
-</div>
-</div></section>
+                <!-- 12. Confidence with AI -->
+                <div class="benefit-card">
+                    <i class="fas fa-brain"></i>
+                    <h3>No More Guessing. Just Results.</h3>
+                    <p>You’ll stop saying “I don’t know how to ask AI.” Instead, you’ll say: “Here’s my prompt.” Because
+                        you’ll know exactly what structure works and why.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Testimonials Section -->
-<section class="testimonials" id="testimonials">
-    <h2 class="section-title">What Students Say</h2>
-    <p class="section-subtitle">
-        Don’t just take our word for it hear from learners who’ve transformed their skills, built real AI workflows, and advanced their learning through ECHO and the HOPE ecosystem.
-    </p>
+    <section class="testimonials" id="testimonials">
+        <h2 class="section-title">What Students Say</h2>
+        <p class="section-subtitle">
+            Don’t just take our word for it hear from learners who’ve transformed their skills, built real AI workflows,
+            and advanced their learning through ECHO and the HOPE ecosystem.
+        </p>
 
-    <div class="testimonials-container">
-        <!-- Testimonial 1 -->
-        <div class="testimonial-card">
-            <div class="testimonial-rating">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
+        <div class="testimonials-container">
+            <!-- Testimonial 1 -->
+            <div class="testimonial-card">
+                <div class="testimonial-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="testimonial-content">
+                    "This workshop completely transformed my understanding of AI beyond chatbots to intelligent
+                    workflows that simulate thinking and action. The hands-on approach with browser-based AI tools made
+                    concepts like chain-of-thought and contextual memory easy to grasp. I’m now designing AI helpers
+                    with classmates one of which we’re refining for academic use. This is practical AI, not just
+                    theory."
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">AK</div>
+                    <div class="author-info">
+                        <h4>Arya Krishnan</h4>
+                        <p>Computer Science, CUSAT</p>
+                    </div>
+                </div>
             </div>
-            <div class="testimonial-content">
-                "This workshop completely transformed my understanding of AI beyond chatbots to intelligent workflows that simulate thinking and action. The hands-on approach with browser-based AI tools made concepts like chain-of-thought and contextual memory easy to grasp. I’m now designing AI helpers with classmates one of which we’re refining for academic use. This is practical AI, not just theory."
+
+            <!-- Testimonial 2 -->
+            <div class="testimonial-card">
+                <div class="testimonial-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="testimonial-content">
+                    "The prompt engineering techniques I learned here have been invaluable in both academics and
+                    personal projects. I applied tree-of-thought prompting to debug a machine learning concept and used
+                    prompt chaining to automate study summaries. The instructors, trained under HOPE Int CORE, broke
+                    down advanced topics with clarity. This is the kind of skill you can’t get from generic online
+                    tutorials."
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">MF</div>
+                    <div class="author-info">
+                        <h4>Muhammed Faisal</h4>
+                        <p>Information Technology, NIT Calicut</p>
+                    </div>
+                </div>
             </div>
-            <div class="testimonial-author">
-                <div class="author-avatar">AK</div>
-                <div class="author-info">
-                    <h4>Arya Krishnan</h4>
-                    <p>Computer Science, CUSAT</p>
+
+            <!-- Testimonial 3 -->
+            <div class="testimonial-card">
+                <div class="testimonial-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <div class="testimonial-content">
+                    "One of the best technical workshops I’ve attended. The curriculum felt like it was designed by
+                    someone who actually uses AI in real workflows because it was. Harinandan’s team at HOPE structured
+                    the modules to mirror practical problem-solving. I connected with fellow learners, and we’re now
+                    collaborating on a research assistant workflow for our final year project."
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">AJ</div>
+                    <div class="author-info">
+                        <h4>Anjali Joseph</h4>
+                        <p>Electronics Engineering, TKMCE</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial 4: Career Switcher -->
+            <div class="testimonial-card">
+                <div class="testimonial-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="testimonial-content">
+                    "As a senior educator, I was skeptical about AI replacing human teaching. This workshop changed my
+                    perspective entirely. I now use prompt engineering to design lesson plans, generate quizzes, and
+                    guide students in creating simple AI tools. After presenting my work at a staff meeting, I was
+                    invited to lead AI integration training across our district all sparked by one session with HOPE."
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">RS</div>
+                    <div class="author-info">
+                        <h4>Rahul S.</h4>
+                        <p>Senior Educator, Trivandrum</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial 5: Entrepreneur -->
+            <div class="testimonial-card">
+                <div class="testimonial-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="testimonial-content">
+                    "I joined to understand AI basics. I left with a working prototype for my ed-tech idea. The workflow
+                    design module was a game-changer within hours, I had an AI system helping with content drafting,
+                    student queries, and feedback analysis. It’s now part of my project plan. This workshop didn’t just
+                    teach me AI it accelerated my entire learning journey."
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">SV</div>
+                    <div class="author-info">
+                        <h4>Sneha Varma</h4>
+                        <p>Startup Founder, Kochi</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial 6: Working Professional -->
+            <div class="testimonial-card">
+                <div class="testimonial-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="testimonial-content">
+                    "As a marketing lead, I needed practical, usable AI skills not theory. This delivered exactly that.
+                    I now draft campaign content faster, built a prompt-based assistant for sentiment analysis, and
+                    trained my team to use chaining for brainstorming. We’re applying these methods across projects. The
+                    impact was immediate, and the support from HOPE’s network has been incredibly helpful."
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">DK</div>
+                    <div class="author-info">
+                        <h4>Dinesh Kumar</h4>
+                        <p>Digital Marketing Lead, Ernakulam</p>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <!-- Testimonial 2 -->
-        <div class="testimonial-card">
-            <div class="testimonial-rating">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-            </div>
-            <div class="testimonial-content">
-                "The prompt engineering techniques I learned here have been invaluable in both academics and personal projects. I applied tree-of-thought prompting to debug a machine learning concept and used prompt chaining to automate study summaries. The instructors, trained under HOPE Int CORE, broke down advanced topics with clarity. This is the kind of skill you can’t get from generic online tutorials."
-            </div>
-            <div class="testimonial-author">
-                <div class="author-avatar">MF</div>
-                <div class="author-info">
-                    <h4>Muhammed Faisal</h4>
-                    <p>Information Technology, NIT Calicut</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Testimonial 3 -->
-        <div class="testimonial-card">
-            <div class="testimonial-rating">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <div class="testimonial-content">
-                "One of the best technical workshops I’ve attended. The curriculum felt like it was designed by someone who actually uses AI in real workflows because it was. Harinandan’s team at HOPE structured the modules to mirror practical problem-solving. I connected with fellow learners, and we’re now collaborating on a research assistant workflow for our final year project."
-            </div>
-            <div class="testimonial-author">
-                <div class="author-avatar">AJ</div>
-                <div class="author-info">
-                    <h4>Anjali Joseph</h4>
-                    <p>Electronics Engineering, TKMCE</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Testimonial 4: Career Switcher -->
-        <div class="testimonial-card">
-            <div class="testimonial-rating">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-            </div>
-            <div class="testimonial-content">
-                "As a senior educator, I was skeptical about AI replacing human teaching. This workshop changed my perspective entirely. I now use prompt engineering to design lesson plans, generate quizzes, and guide students in creating simple AI tools. After presenting my work at a staff meeting, I was invited to lead AI integration training across our district all sparked by one session with HOPE."
-            </div>
-            <div class="testimonial-author">
-                <div class="author-avatar">RS</div>
-                <div class="author-info">
-                    <h4>Rahul S.</h4>
-                    <p>Senior Educator, Trivandrum</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Testimonial 5: Entrepreneur -->
-        <div class="testimonial-card">
-            <div class="testimonial-rating">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-            </div>
-            <div class="testimonial-content">
-                "I joined to understand AI basics. I left with a working prototype for my ed-tech idea. The workflow design module was a game-changer within hours, I had an AI system helping with content drafting, student queries, and feedback analysis. It’s now part of my project plan. This workshop didn’t just teach me AI it accelerated my entire learning journey."
-            </div>
-            <div class="testimonial-author">
-                <div class="author-avatar">SV</div>
-                <div class="author-info">
-                    <h4>Sneha Varma</h4>
-                    <p>Startup Founder, Kochi</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Testimonial 6: Working Professional -->
-        <div class="testimonial-card">
-            <div class="testimonial-rating">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-            </div>
-            <div class="testimonial-content">
-                "As a marketing lead, I needed practical, usable AI skills not theory. This delivered exactly that. I now draft campaign content faster, built a prompt-based assistant for sentiment analysis, and trained my team to use chaining for brainstorming. We’re applying these methods across projects. The impact was immediate, and the support from HOPE’s network has been incredibly helpful."
-            </div>
-            <div class="testimonial-author">
-                <div class="author-avatar">DK</div>
-                <div class="author-info">
-                    <h4>Dinesh Kumar</h4>
-                    <p>Digital Marketing Lead, Ernakulam</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+    </section>
 
     <!-- Team Section -->
-<section class="team" id="team">
-    <h2 class="section-title">Meet Our Core Team</h2>
-    
-    <div class="team-container">
-        <div class="team-grid">
-            <div class="team-card">
-                <div class="team-avatar">HN</div>
-                <div class="team-name">Hari</div>
-                <div class="team-role">Founder, HOPE Int CORE | AI & Physics Innovator</div>
-                <div class="team-bio">
-                    Harinandan K is a BTech Data Science student at IES College of Engineering, a theoretical physics researcher, and the founder of HOPE a learning-focused ecosystem that empowers students through AI education and innovation. He is developing the Chronon-Super Quantum Level Model, a conceptual framework exploring structured emergence in complex systems.
+    <section class="team" id="team">
+        <h2 class="section-title">Meet Our Core Team</h2>
+
+        <div class="team-container">
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-avatar">HN</div>
+                    <div class="team-name">Hari</div>
+                    <div class="team-role">Founder, HOPE Int CORE | AI & Physics Innovator</div>
+                    <div class="team-bio">
+                        Harinandan K is a BTech Data Science student at IES College of Engineering, a theoretical
+                        physics researcher, and the founder of HOPE a learning-focused ecosystem that empowers students
+                        through AI education and innovation. He is developing the Chronon-Super Quantum Level Model, a
+                        conceptual framework exploring structured emergence in complex systems.
+                    </div>
+                    <div class="team-bio">
+                        As a tech educator and developer, he has led the HOPE Summer AI Workshop, built the IES DS
+                        Portal, and founded TexidoMeg, a platform for learning digital skills. His work connects AI,
+                        education, and structured thinking, showing how students can harness AI effectively even at the
+                        undergraduate level.
+                    </div>
                 </div>
-                <div class="team-bio">
-                    As a tech educator and developer, he has led the HOPE Summer AI Workshop, built the IES DS Portal, and founded TexidoMeg, a platform for learning digital skills. His work connects AI, education, and structured thinking, showing how students can harness AI effectively even at the undergraduate level.
+
+                <div class="team-card">
+                    <div class="team-avatar">TK</div>
+                    <div class="team-name">Thanay</div>
+                    <div class="team-role">AI Systems Architect | HOPE Research Lead</div>
+                    <div class="team-bio">
+                        Thanay Krishna C U is a core contributor to HOPE’s AI education initiatives, specializing in
+                        prompt frameworks, reasoning patterns, and AI workflow design. He brings technical insight from
+                        projects in AI-assisted learning and structured problem-solving.
+                    </div>
+                    <div class="team-bio">
+                        With a strong foundation in mathematics and logic, he focuses on making AI interactions clear,
+                        reliable, and educationally valuable. He mentors students in the HOPE learning lab, guiding them
+                        from basic prompts to designing intelligent workflows.
+                    </div>
                 </div>
-            </div>
-            
-            <div class="team-card">
-                <div class="team-avatar">TK</div>
-                <div class="team-name">Thanay</div>
-                <div class="team-role">AI Systems Architect | HOPE Research Lead</div>
-                <div class="team-bio">
-                    Thanay Krishna C U is a core contributor to HOPE’s AI education initiatives, specializing in prompt frameworks, reasoning patterns, and AI workflow design. He brings technical insight from projects in AI-assisted learning and structured problem-solving.
+
+                <div class="team-card">
+                    <div class="team-avatar">AS</div>
+                    <div class="team-name">Amna</div>
+                    <div class="team-role">Prompt Engineering Lead | HOPE Education</div>
+                    <div class="team-bio">
+                        Amna Shareef leads the prompt engineering curriculum within HOPE Education, designing practical
+                        frameworks that help students interact with AI effectively. She has developed reusable prompt
+                        templates and training modules used in workshops and academic projects.
+                    </div>
+                    <div class="team-bio">
+                        Her expertise lies in structuring AI responses through chain-of-thought, role prompting, and
+                        iterative refinement turning ideas into clear, actionable outputs. She is passionate about
+                        making AI approachable and empowering for beginner learners.
+                    </div>
                 </div>
-                <div class="team-bio">
-                    With a strong foundation in mathematics and logic, he focuses on making AI interactions clear, reliable, and educationally valuable. He mentors students in the HOPE learning lab, guiding them from basic prompts to designing intelligent workflows.
-                </div>
-            </div>
-            
-            <div class="team-card">
-                <div class="team-avatar">AS</div>
-                <div class="team-name">Amna</div>
-                <div class="team-role">Prompt Engineering Lead | HOPE Education</div>
-                <div class="team-bio">
-                    Amna Shareef leads the prompt engineering curriculum within HOPE Education, designing practical frameworks that help students interact with AI effectively. She has developed reusable prompt templates and training modules used in workshops and academic projects.
-                </div>
-                <div class="team-bio">
-                    Her expertise lies in structuring AI responses through chain-of-thought, role prompting, and iterative refinement turning ideas into clear, actionable outputs. She is passionate about making AI approachable and empowering for beginner learners.
-                </div>
-            </div>
-            
-            <div class="team-card">
-                <div class="team-avatar">AP</div>
-                <div class="team-name">Adithyan</div>
-                <div class="team-role">Technical Operations | HOPE IoT</div>
-                <div class="team-bio">
-                    Adithyan P S ensures smooth delivery of all technical aspects in HOPE’s workshops and live demos. With experience in digital systems and cloud-based platforms, he supports the setup and flow of AI learning sessions.
-                </div>
-                <div class="team-bio">
-                    He specializes in optimizing browser-based AI tools and real-time workflows, ensuring zero setup friction for participants. A key member of the HOPE team, he helps students test, refine, and present their AI-powered projects with confidence.
+
+                <div class="team-card">
+                    <div class="team-avatar">AP</div>
+                    <div class="team-name">Adithyan</div>
+                    <div class="team-role">Technical Operations | HOPE IoT</div>
+                    <div class="team-bio">
+                        Adithyan P S ensures smooth delivery of all technical aspects in HOPE’s workshops and live
+                        demos. With experience in digital systems and cloud-based platforms, he supports the setup and
+                        flow of AI learning sessions.
+                    </div>
+                    <div class="team-bio">
+                        He specializes in optimizing browser-based AI tools and real-time workflows, ensuring zero setup
+                        friction for participants. A key member of the HOPE team, he helps students test, refine, and
+                        present their AI-powered projects with confidence.
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
     <!-- Interactive Demo Section 
     <section class="interactive-demo" id="interactive-demo">
         <h2 class="section-title">Try Our AI Demo</h2>
@@ -2366,80 +2473,93 @@ This isn’t theory. In 90 minutes, you’ll leave with skills, tools, and proof
             </div>
         </div>
     </section>-->
-                
+
 
     <!-- Timeline Section -->
-<section class="timeline" id="timeline">
-    <h2 class="section-title">Workshop Schedule</h2>
-    
-    <div class="timeline-container">
-        <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-                <div class="timeline-time">9:15 AM - 9:25 AM</div>
-                <div class="timeline-title">Welcome & Vision</div>
-                <div class="timeline-description">
-                    Introduction to ECHO and the HOPE mission: Create. Empower. Evolve. Overview of how prompt engineering and AI workflows are reshaping learning, creativity, and productivity. Meet your facilitators and get oriented to the 90-minute journey ahead.
+    <section class="timeline" id="timeline">
+        <h2 class="section-title">Workshop Schedule</h2>
+
+        <div class="timeline-container">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-time">9:15 AM - 9:25 AM</div>
+                    <div class="timeline-title">Welcome & Vision</div>
+                    <div class="timeline-description">
+                        Introduction to ECHO and the HOPE mission: Create. Empower. Evolve. Overview of how prompt
+                        engineering and AI workflows are reshaping learning, creativity, and productivity. Meet your
+                        facilitators and get oriented to the 90-minute journey ahead.
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-time">9:25 AM - 9:40 AM</div>
+                    <div class="timeline-title">AI Fundamentals & Emergent Intelligence</div>
+                    <div class="timeline-description">
+                        Explore how large language models work not just as tools, but as systems capable of emergent
+                        behaviors. Learn how simple prompts can trigger complex, intelligent-seeming responses, inspired
+                        by cognitive modeling and the Chronon-Super Quantum Level Model.
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-time">9:40 AM - 9:55 AM</div>
+                    <div class="timeline-title">Prompt Engineering Deep Dive</div>
+                    <div class="timeline-description">
+                        Master the science of prompting: instruction design, role assignment, and context control.
+                        Practice with real AI tools like ChatGPT and Claude. Learn how to guide AI responses a skill
+                        used in HOPE’s educational projects and student workflows.
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-time">9:55 AM - 10:05 AM</div>
+                    <div class="timeline-title">Live Demo: AI Thinking Patterns</div>
+                    <div class="timeline-description">
+                        See how AI simulates reasoning in real time. Watch chain-of-thought and self-consistency
+                        prompting reveal step-by-step logic. A live walkthrough showing how structured prompts lead to
+                        smarter, more reliable outputs.
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-time">10:05 AM - 10:25 AM</div>
+                    <div class="timeline-title">Designing AI Workflows Live</div>
+                    <div class="timeline-description">
+                        The highlight: a live demonstration of an AI workflow that generates a complete application
+                        concept, research summary, or creative project from a single natural language prompt. No
+                        templates, no coding just strategic prompting. See how students use this for academic and
+                        personal tools.
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-time">10:25 AM - 10:30 AM</div>
+                    <div class="timeline-title">Q&A & Next Steps</div>
+                    <div class="timeline-description">
+                        Ask questions, get guidance, and learn how to continue your journey with HOPE’s advanced
+                        programs. Discover how to apply today’s learning to your studies, projects, or future career in
+                        an AI-driven world.
+                    </div>
                 </div>
             </div>
         </div>
-        
-        <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-                <div class="timeline-time">9:25 AM - 9:40 AM</div>
-                <div class="timeline-title">AI Fundamentals & Emergent Intelligence</div>
-                <div class="timeline-description">
-                    Explore how large language models work not just as tools, but as systems capable of emergent behaviors. Learn how simple prompts can trigger complex, intelligent-seeming responses, inspired by cognitive modeling and the Chronon-Super Quantum Level Model.
-                </div>
-            </div>
-        </div>
-        
-        <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-                <div class="timeline-time">9:40 AM - 9:55 AM</div>
-                <div class="timeline-title">Prompt Engineering Deep Dive</div>
-                <div class="timeline-description">
-                    Master the science of prompting: instruction design, role assignment, and context control. Practice with real AI tools like ChatGPT and Claude. Learn how to guide AI responses a skill used in HOPE’s educational projects and student workflows.
-                </div>
-            </div>
-        </div>
-        
-        <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-                <div class="timeline-time">9:55 AM - 10:05 AM</div>
-                <div class="timeline-title">Live Demo: AI Thinking Patterns</div>
-                <div class="timeline-description">
-                    See how AI simulates reasoning in real time. Watch chain-of-thought and self-consistency prompting reveal step-by-step logic. A live walkthrough showing how structured prompts lead to smarter, more reliable outputs.
-                </div>
-            </div>
-        </div>
-        
-        <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-                <div class="timeline-time">10:05 AM - 10:25 AM</div>
-                <div class="timeline-title">Designing AI Workflows Live</div>
-                <div class="timeline-description">
-                    The highlight: a live demonstration of an AI workflow that generates a complete application concept, research summary, or creative project from a single natural language prompt. No templates, no coding just strategic prompting. See how students use this for academic and personal tools.
-                </div>
-            </div>
-        </div>
-        
-        <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-                <div class="timeline-time">10:25 AM - 10:30 AM</div>
-                <div class="timeline-title">Q&A & Next Steps</div>
-                <div class="timeline-description">
-                    Ask questions, get guidance, and learn how to continue your journey with HOPE’s advanced programs. Discover how to apply today’s learning to your studies, projects, or future career in an AI-driven world.
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+    </section>
     <!-- Pricing Section 
     <section class="pricing" id="pricing">
         <h2 class="section-title">Workshop Pricing</h2>
@@ -2494,48 +2614,48 @@ This isn’t theory. In 90 minutes, you’ll leave with skills, tools, and proof
     </section>-->
 
     <!-- Gallery Section -->
-<section class="gallery" id="gallery">
-    <h2 class="section-title">Workshop Gallery</h2>
-    
-    <div class="gallery-grid">
-        <div class="gallery-item">
-            <img src="assets/img/hopeiot2.jpeg" alt="Workshop Session">
-            <div class="gallery-overlay">
-                <div class="gallery-title">Interactive Session</div>
-                <div class="gallery-description">Hands-on prompt engineering practice</div>
+    <section class="gallery" id="gallery">
+        <h2 class="section-title">Workshop Gallery</h2>
+
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="assets/img/hopeiot2.jpeg" alt="Workshop Session">
+                <div class="gallery-overlay">
+                    <div class="gallery-title">Interactive Session</div>
+                    <div class="gallery-description">Hands-on prompt engineering practice</div>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="assets/img/hopeiot3.jpeg" alt="Group Discussion">
+                <div class="gallery-overlay">
+                    <div class="gallery-title">Group Discussion</div>
+                    <div class="gallery-description">Designing AI workflows together</div>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="assets/img/s1ds1.jpeg" alt="Presentation">
+                <div class="gallery-overlay">
+                    <div class="gallery-title">Expert Presentation</div>
+                    <div class="gallery-description">Understanding AI behavior and prompting</div>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="assets/img/s1ds3.jpeg" alt="Networking">
+                <div class="gallery-overlay">
+                    <div class="gallery-title">Networking</div>
+                    <div class="gallery-description">Connecting with AI learners and mentors</div>
+                </div>
             </div>
         </div>
-        
-        <div class="gallery-item">
-            <img src="assets/img/hopeiot3.jpeg" alt="Group Discussion">
-            <div class="gallery-overlay">
-                <div class="gallery-title">Group Discussion</div>
-                <div class="gallery-description">Designing AI workflows together</div>
-            </div>
-        </div>
-        
-        <div class="gallery-item">
-            <img src="assets/img/s1ds1.jpeg" alt="Presentation">
-            <div class="gallery-overlay">
-                <div class="gallery-title">Expert Presentation</div>
-                <div class="gallery-description">Understanding AI behavior and prompting</div>
-            </div>
-        </div>
-        
-        <div class="gallery-item">
-            <img src="assets/img/s1ds3.jpeg" alt="Networking">
-            <div class="gallery-overlay">
-                <div class="gallery-title">Networking</div>
-                <div class="gallery-description">Connecting with AI learners and mentors</div>
-            </div>
-        </div>
-    </div>
-</section>
+    </section>
 
     <!-- Contact Section -->
     <section class="contact" id="contact">
         <h2 class="section-title">Contact Us</h2>
-        
+
         <div class="contact-container">
             <div class="contact-info">
                 <h3>Get in Touch</h3>
@@ -2571,318 +2691,347 @@ This isn’t theory. In 90 minutes, you’ll leave with skills, tools, and proof
                     </div>
                 </div>
             </div>
-            
+
             <div class="contact-form">
-    <h3>Send a Message</h3>
-    <form 
-        action="https://getform.io/f/161d40d2-275f-4027-b38d-926c67413486" 
-        method="POST" 
-        id="contactForm"
-    >
-        <!-- Hidden Fields for Automation -->
-        <input type="hidden" name="source" value="ECHO Techfest 2025 - Contact Form">
-        <input type="hidden" name="_next" value="https://hopeintcore.in/thank-you.html">
-        <input type="hidden" name="_gotcha" style="display:none !important">
+                <h3>Send a Message</h3>
+                <form action="https://getform.io/f/161d40d2-275f-4027-b38d-926c67413486" method="POST" id="contactForm">
+                    <!-- Hidden Fields for Automation -->
+                    <input type="hidden" name="source" value="ECHO Techfest 2025 - Contact Form">
+                    <input type="hidden" name="_next" value="https://hopeintcore.in/thank-you.html">
+                    <input type="hidden" name="_gotcha" style="display:none !important">
 
-        <!-- Name Field -->
-        <div class="form-group">
-            <label for="contactName">Name</label>
-            <input type="text" id="contactName" name="name" placeholder="Your full name" required>
-        </div>
+                    <!-- Name Field -->
+                    <div class="form-group">
+                        <label for="contactName">Name</label>
+                        <input type="text" id="contactName" name="name" placeholder="Your full name" required>
+                    </div>
 
-        <!-- Email Field -->
-        <div class="form-group">
-            <label for="contactEmail">Email</label>
-            <input type="email" id="contactEmail" name="email" placeholder="your.email@example.com" required>
-        </div>
+                    <!-- Email Field -->
+                    <div class="form-group">
+                        <label for="contactEmail">Email</label>
+                        <input type="email" id="contactEmail" name="email" placeholder="your.email@example.com"
+                            required>
+                    </div>
 
-        <!-- Subject Dropdown (Improved for Intent Capture) -->
-        <div class="form-group">
-            <label for="contactSubject">How Can We Help?</label>
-            <select id="contactSubject" name="subject" required>
-                <option value="" disabled selected>Choose an option</option>
-                <option value="Workshop Inquiry">Workshop Inquiry</option>
-                <option value="Join 2-Month AI Course">Join 2-Month AI Agents Course (₹1499)</option>
-                <option value="Collaborate with HOPE">Collaborate with HOPE Int CORE</option>
-                <option value="Project Mentorship">Seek Project Mentorship</option>
-                <option value="Technical Issue">Report a Technical Issue</option>
-                <option value="Other">Other</option>
-            </select>
-        </div>
+                    <!-- Subject Dropdown (Improved for Intent Capture) -->
+                    <div class="form-group">
+                        <label for="contactSubject">How Can We Help?</label>
+                        <select id="contactSubject" name="subject" required>
+                            <option value="" disabled selected>Choose an option</option>
+                            <option value="Workshop Inquiry">Workshop Inquiry</option>
+                            <option value="Join 2-Month AI Course">Join 2-Month AI Agents Course (₹1499)</option>
+                            <option value="Collaborate with HOPE">Collaborate with HOPE Int CORE</option>
+                            <option value="Project Mentorship">Seek Project Mentorship</option>
+                            <option value="Technical Issue">Report a Technical Issue</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
 
-        <!-- Message Field -->
-        <div class="form-group">
-            <label for="contactMessage">Message</label>
-            <textarea 
-                id="contactMessage" 
-                name="message" 
-                placeholder="Tell us more about your interest, project, or question..." 
-                rows="5" 
-                required
-            ></textarea>
-        </div>
+                    <!-- Message Field -->
+                    <div class="form-group">
+                        <label for="contactMessage">Message</label>
+                        <textarea id="contactMessage" name="message"
+                            placeholder="Tell us more about your interest, project, or question..." rows="5"
+                            required></textarea>
+                    </div>
 
-        <!-- Submit Button -->
-        <button type="submit" class="contact-btn">Send Message</button>
-    </form>
-</div>
+                    <!-- Submit Button -->
+                    <button type="submit" class="contact-btn">Send Message</button>
+                </form>
+            </div>
         </div>
     </section>
 
 
-<!-- FAQ Section --><section class="faq" id="faq">
-<h2 class="section-title">Frequently Asked Questions</h2>
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <h2 class="section-title">Frequently Asked Questions</h2>
 
-<div class="faq-container">
+        <div class="faq-container">
 
-<!-- FAQ 1 -->
-<div class="faq-item">
-<div class="faq-question" onclick="toggleFAQ(this)">
-<h3>Do I need prior programming experience?</h3>
-<i class="fas fa-plus faq-icon"></i>
-</div>
-<div class="faq-answer">
-<p>No. If you’ve ever typed a question into ChatGPT, you already have what it takes. We start from zero. No code. No jargon. Just clear steps to make AI do what you want — even if you’ve never written a single line.</p>
-</div>
-</div>
+            <!-- FAQ 1 -->
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>Do I need prior programming experience?</h3>
+                    <i class="fas fa-plus faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>No. If you’ve ever typed a question into ChatGPT, you already have what it takes. We start from
+                        zero. No code. No jargon. Just clear steps to make AI do what you want even if you’ve never
+                        written a single line.</p>
+                </div>
+            </div>
 
-<!-- FAQ 2 -->
-<div class="faq-item">
-<div class="faq-question" onclick="toggleFAQ(this)">
-<h3>What tools/software do I need?</h3>
-<i class="fas fa-plus faq-icon"></i>
-</div>
-<div class="faq-answer">
-<p>Your laptop or phone. That’s it. Everything runs in your browser — no downloads, no accounts, no setup. We’ll give you instant access to the exact tools we use live during the session.</p>
-</div>
-</div>
+            <!-- FAQ 2 -->
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>What tools/software do I need?</h3>
+                    <i class="fas fa-plus faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Your laptop or phone. That’s it. Everything runs in your browser no downloads, no accounts, no
+                        setup. We’ll give you instant access to the exact tools we use live during the session.</p>
+                </div>
+            </div>
 
-<!-- FAQ 3 -->
-<div class="faq-item">
-<div class="faq-question" onclick="toggleFAQ(this)">
-<h3>Will I receive a certificate?</h3>
-<i class="fas fa-plus faq-icon"></i>
-</div>
-<div class="faq-answer">
-<p>Yes. Everyone who attends gets a certificate — signed, dated, and ready to add to LinkedIn or your resume. It doesn’t say “attended.” It says “built an AI workflow.” That’s the difference.</p>
-</div>
-</div>
+            <!-- FAQ 3 -->
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>Will I receive a certificate?</h3>
+                    <i class="fas fa-plus faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes. Everyone who attends gets a certificate signed, dated, and ready to add to LinkedIn or your
+                        resume. It doesn’t say “attended.” It says “built an AI workflow.” That’s the difference.</p>
+                </div>
+            </div>
 
-<!-- FAQ 4 -->
-<div class="faq-item">
-<div class="faq-question" onclick="toggleFAQ(this)">
-<h3>Is there any post-workshop support?</h3>
-<i class="fas fa-plus faq-icon"></i>
-</div>
-<div class="faq-answer">
-<p>You’ll get all the prompts, templates, and guides we use — instantly. After the session, you’re not left alone. You’ll be invited into the same group where students are already using these tools to automate assignments, build projects, and win challenges.</p>
-</div>
-</div>
+            <!-- FAQ 4 -->
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>Is there any post-workshop support?</h3>
+                    <i class="fas fa-plus faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>You’ll get all the prompts, templates, and guides we use instantly. After the session, you’re not
+                        left alone. You’ll be invited into the same group where students are already using these tools
+                        to automate assignments, build projects, and win challenges.</p>
+                </div>
+            </div>
 
-<!-- FAQ 5 -->
-<div class="faq-item">
-<div class="faq-question" onclick="toggleFAQ(this)">
-<h3>Can I get a refund if I can't attend?</h3>
-<i class="fas fa-plus faq-icon"></i>
-</div>
-<div class="faq-answer">
-<p>Full refund if you cancel 7 days before. After that, you can transfer your seat to someone else — no questions asked. This isn’t a locked-in commitment. It’s a chance to show up and see if this changes how you work.</p>
-</div>
-</div>
+            <!-- FAQ 5 -->
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>Can I get a refund if I can't attend?</h3>
+                    <i class="fas fa-plus faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Full refund if you cancel 7 days before. After that, you can transfer your seat to someone else
+                        no questions asked. This isn’t a locked-in commitment. It’s a chance to show up and see if this
+                        changes how you work.</p>
+                </div>
+            </div>
 
-<!-- FAQ 6 -->
-<div class="faq-item">
-<div class="faq-question" onclick="toggleFAQ(this)">
-<h3>How is this workshop different from other AI courses?</h3>
-<i class="fas fa-plus faq-icon"></i>
-</div>
-<div class="faq-answer">
-<p>Most AI courses teach you how AI works. This one teaches you how to control it. You won’t learn theory. You’ll learn how to make AI summarize research, write reports, or explain concepts — by typing the right words. No coding. Just results.</p>
-</div>
-</div>
+            <!-- FAQ 6 -->
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>How is this workshop different from other AI courses?</h3>
+                    <i class="fas fa-plus faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Most AI courses teach you how AI works. This one teaches you how to control it. You won’t learn
+                        theory. You’ll learn how to make AI summarize research, write reports, or explain concepts by
+                        typing the right words. No coding. Just results.</p>
+                </div>
+            </div>
 
-<!-- FAQ 7 -->
-<div class="faq-item">
-<div class="faq-question" onclick="toggleFAQ(this)">
-<h3>How long is the workshop?</h3>
-<i class="fas fa-plus faq-icon"></i>
-</div>
-<div class="faq-answer">
-<p>105 minutes. From 9:15 AM to 10:45 AM. You’ll walk in as a user. You’ll walk out with a working AI tool you built yourself.</p>
-</div>
-</div>
+            <!-- FAQ 7 -->
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>How long is the workshop?</h3>
+                    <i class="fas fa-plus faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>105 minutes. From 9:15 AM to 10:45 AM. You’ll walk in as a user. You’ll walk out with a working
+                        AI tool you built yourself.</p>
+                </div>
+            </div>
 
-<!-- FAQ 8 -->
-<div class="faq-item">
-<div class="faq-question" onclick="toggleFAQ(this)">
-<h3>Is there homework or assignments?</h3>
-<i class="fas fa-plus faq-icon"></i>
-</div>
-<div class="faq-answer">
-<p>No. But if you want to go further, we’ll give you optional prompts to try at home — like turning your notes into flashcards or automating email drafts. Do it if you want. Skip it if you don’t. The core skill? Learned in the session.</p>
-</div>
-</div>
+            <!-- FAQ 8 -->
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>Is there homework or assignments?</h3>
+                    <i class="fas fa-plus faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>No. But if you want to go further, we’ll give you optional prompts to try at home like turning
+                        your notes into flashcards or automating email drafts. Do it if you want. Skip it if you don’t.
+                        The core skill? Learned in the session.</p>
+                </div>
+            </div>
 
-<!-- FAQ 9 -->
-<div class="faq-item">
-<div class="faq-question" onclick="toggleFAQ(this)">
-<h3>Are sessions recorded?</h3>
-<i class="fas fa-plus faq-icon"></i>
-</div>
-<div class="faq-answer">
-<p>No. Because the magic happens when you’re doing it live — asking questions, seeing AI react, fixing your prompt on the spot. You’ll get everything we use afterward, but the real value? Only here, in the room, with the clock ticking.</p>
-</div>
-</div>
+            <!-- FAQ 9 -->
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>Are sessions recorded?</h3>
+                    <i class="fas fa-plus faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>No. Because the magic happens when you’re doing it live asking questions, seeing AI react, fixing
+                        your prompt on the spot. You’ll get everything we use afterward, but the real value? Only here,
+                        in the room, with the clock ticking.</p>
+                </div>
+            </div>
 
-<!-- FAQ 10 -->
-<div class="faq-item">
-<div class="faq-question" onclick="toggleFAQ(this)">
-<h3>Can students attend?</h3>
-<i class="fas fa-plus faq-icon"></i>
-</div>
-<div class="faq-answer">
-<p>This is made for students. Not engineers. Not researchers. Students. Whether you're in CSE, ECE, or Civil Engineering — if you’ve ever wasted hours writing a report or summarizing notes, this is for you.</p>
-</div>
-</div>
+            <!-- FAQ 10 -->
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>Can students attend?</h3>
+                    <i class="fas fa-plus faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>This is made for students. Not engineers. Not researchers. Students. Whether you're in CSE, ECE,
+                        or Civil Engineering if you’ve ever wasted hours writing a report or summarizing notes, this is
+                        for you.</p>
+                </div>
+            </div>
 
-<!-- FAQ 11 -->
-<div class="faq-item">
-<div class="faq-question" onclick="toggleFAQ(this)">
-<h3>Will I work on real projects?</h3>
-<i class="fas fa-plus faq-icon"></i>
-</div>
-<div class="faq-answer">
-<p>You’ll build one — during the session. A real AI assistant that can summarize articles, generate quizzes, or draft emails. Not a demo. Not a simulation. Something you can open tomorrow morning and use to save time on your next assignment.</p>
-</div>
-</div>
+            <!-- FAQ 11 -->
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>Will I work on real projects?</h3>
+                    <i class="fas fa-plus faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>You’ll build one during the session. A real AI assistant that can summarize articles, generate
+                        quizzes, or draft emails. Not a demo. Not a simulation. Something you can open tomorrow morning
+                        and use to save time on your next assignment.</p>
+                </div>
+            </div>
 
-<!-- FAQ 12 -->
-<div class="faq-item">
-<div class="faq-question" onclick="toggleFAQ(this)">
-<h3>What if I’m in a different time zone?</h3>
-<i class="fas fa-plus faq-icon"></i>
-</div>
-<div class="faq-answer">
-<p>This is happening at IES College of Engineering, Thrissur — as part of Techfest. It’s a live, in-person event. If you can’t make it, you miss the only chance to build something with us. Materials will be shared later — but the moment you become the person who knows how to make AI work for them? That only happens if you show up.</p>
-</div>
-</div>
+            <!-- FAQ 12 -->
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>What if I’m in a different time zone?</h3>
+                    <i class="fas fa-plus faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>This is happening at IES College of Engineering, Thrissur as part of Techfest. It’s a live,
+                        in-person event. If you can’t make it, you miss the only chance to build something with us.
+                        Materials will be shared later but the moment you become the person who knows how to make AI
+                        work for them? That only happens if you show up.</p>
+                </div>
+            </div>
 
-</div></section>
+        </div>
+    </section>
 
     <!-- Resources Section -->
-<section class="resources" id="resources">
-    <h2 class="section-title">Additional Resources</h2>
-    
-    <div class="resources-grid">
-        <!-- Resource 1 -->
-        <div class="resource-card">
-            <h3><i class="fas fa-book"></i> Recommended Reading</h3>
-            <ul>
-                <li>Introduction to Artificial Intelligence Stuart Russell & Peter Norvig</li>
-                <li>Deep Learning with Python François Chollet</li>
-                <li>Hands-On Machine Learning Aurélien Géron</li>
-                <li>Natural Language Processing in Action Language, Reasoning, and Computation</li>
-                <li>Pattern Recognition and Machine Learning Bayesian Approaches and Neural Models</li>
-            </ul>
-            <p>These foundational texts help build understanding of how AI systems process information and generate responses. Within HOPE Education, we reference these works to explore prompt behavior, structured reasoning, and cognitive simulation concepts that inform how we design effective AI workflows and learning experiences for students.</p>
+    <section class="resources" id="resources">
+        <h2 class="section-title">Additional Resources</h2>
+
+        <div class="resources-grid">
+            <!-- Resource 1 -->
+            <div class="resource-card">
+                <h3><i class="fas fa-book"></i> Recommended Reading</h3>
+                <ul>
+                    <li>Introduction to Artificial Intelligence Stuart Russell & Peter Norvig</li>
+                    <li>Deep Learning with Python François Chollet</li>
+                    <li>Hands-On Machine Learning Aurélien Géron</li>
+                    <li>Natural Language Processing in Action Language, Reasoning, and Computation</li>
+                    <li>Pattern Recognition and Machine Learning Bayesian Approaches and Neural Models</li>
+                </ul>
+                <p>These foundational texts help build understanding of how AI systems process information and generate
+                    responses. Within HOPE Education, we reference these works to explore prompt behavior, structured
+                    reasoning, and cognitive simulation concepts that inform how we design effective AI workflows and
+                    learning experiences for students.</p>
+            </div>
+
+            <!-- Resource 2 -->
+            <div class="resource-card">
+                <h3><i class="fas fa-video"></i> Video Tutorials</h3>
+                <ul>
+                    <li>AI Fundamentals Series Core Concepts in LLMs and Transformers</li>
+                    <li>Prompt Engineering Masterclass From Basics to Chain-of-Thought</li>
+                    <li>Building with AI Agents Step-by-Step Memory, Tools, and Loops</li>
+                    <li>Real-world AI Applications Automation, Research, and Productivity</li>
+                    <li>Advanced Neural Network Architectures Attention, Feedback, and Emergence</li>
+                </ul>
+                <p>These curated tutorials reflect the same practical, learner-focused approach used in HOPE workshops.
+                    Designed for clarity and real-world relevance, they support the skills taught in ECHO especially
+                    prompt design, workflow thinking, and using AI effectively in academic and personal projects.</p>
+            </div>
+
+            <!-- Resource 3 -->
+            <div class="resource-card">
+                <h3><i class="fas fa-tools"></i> Tools & Platforms</h3>
+                <ul>
+                    <li>ChatGPT & Claude Browser-based AI for natural language interaction</li>
+                    <li>Hugging Face Spaces Access and test open AI apps without coding</li>
+                    <li>Poe by Quora Platform to use multiple AI models with custom prompts</li>
+                    <li>Google Keep + AI Tools Simple integration for task automation ideas</li>
+                    <li>Notion AI Features Organize and apply AI in note-taking and planning</li>
+                </ul>
+                <p>These accessible, no-code platforms are ideal for practicing prompt engineering and designing AI
+                    workflows. Whether simulating agent-like behavior, summarizing research, or organizing tasks, these
+                    tools allow learners to experiment and build functional systems quickly all within familiar,
+                    browser-based environments.</p>
+            </div>
+
+            <!-- Resource 4 -->
+            <div class="resource-card">
+                <h3><i class="fas fa-users"></i> Community</h3>
+                <ul>
+                    <li>AI Kerala Discord Server Connect with regional learners and educators</li>
+                    <li>Monthly Meetups Share ideas, learn from peers, and grow together</li>
+                    <li>Project Showcase Platform Highlight your AI workflows and get feedback</li>
+                    <li>Mentorship Program Learn from HOPE facilitators and experienced participants</li>
+                    <li>Learning Challenges Practice prompting, share results, and stay engaged</li>
+                </ul>
+                <p>Becoming part of a learning community is a key step in your AI journey. HOPE actively supports these
+                    networks to encourage collaboration and growth. As a workshop attendee, you’ll receive an invitation
+                    to join HOPE’s private learning circle a space for ongoing support, idea exchange, and peer
+                    encouragement.</p>
+            </div>
         </div>
-        
-        <!-- Resource 2 -->
-        <div class="resource-card">
-            <h3><i class="fas fa-video"></i> Video Tutorials</h3>
-            <ul>
-                <li>AI Fundamentals Series Core Concepts in LLMs and Transformers</li>
-                <li>Prompt Engineering Masterclass From Basics to Chain-of-Thought</li>
-                <li>Building with AI Agents Step-by-Step Memory, Tools, and Loops</li>
-                <li>Real-world AI Applications Automation, Research, and Productivity</li>
-                <li>Advanced Neural Network Architectures Attention, Feedback, and Emergence</li>
-            </ul>
-            <p>These curated tutorials reflect the same practical, learner-focused approach used in HOPE workshops. Designed for clarity and real-world relevance, they support the skills taught in ECHO especially prompt design, workflow thinking, and using AI effectively in academic and personal projects.</p>
-        </div>
-        
-        <!-- Resource 3 -->
-        <div class="resource-card">
-            <h3><i class="fas fa-tools"></i> Tools & Platforms</h3>
-            <ul>
-                <li>ChatGPT & Claude Browser-based AI for natural language interaction</li>
-                <li>Hugging Face Spaces Access and test open AI apps without coding</li>
-                <li>Poe by Quora Platform to use multiple AI models with custom prompts</li>
-                <li>Google Keep + AI Tools Simple integration for task automation ideas</li>
-                <li>Notion AI Features Organize and apply AI in note-taking and planning</li>
-            </ul>
-            <p>These accessible, no-code platforms are ideal for practicing prompt engineering and designing AI workflows. Whether simulating agent-like behavior, summarizing research, or organizing tasks, these tools allow learners to experiment and build functional systems quickly all within familiar, browser-based environments.</p>
-        </div>
-        
-        <!-- Resource 4 -->
-        <div class="resource-card">
-            <h3><i class="fas fa-users"></i> Community</h3>
-            <ul>
-                <li>AI Kerala Discord Server Connect with regional learners and educators</li>
-                <li>Monthly Meetups Share ideas, learn from peers, and grow together</li>
-                <li>Project Showcase Platform Highlight your AI workflows and get feedback</li>
-                <li>Mentorship Program Learn from HOPE facilitators and experienced participants</li>
-                <li>Learning Challenges Practice prompting, share results, and stay engaged</li>
-            </ul>
-            <p>Becoming part of a learning community is a key step in your AI journey. HOPE actively supports these networks to encourage collaboration and growth. As a workshop attendee, you’ll receive an invitation to join HOPE’s private learning circle a space for ongoing support, idea exchange, and peer encouragement.</p>
-        </div>
-    </div>
-</section>
+    </section>
     <!-- Registration Section -->
     <section class="registration" id="register">
-    <h2 class="section-title">Register Now</h2>
-    
-    <div class="registration-container">
-        <div class="seat-counter">
-            <h3>Limited Seats Available</h3>
-            <div class="seats-left" id="seatsLeft">42</div>
-            <p>seats remaining out of 80</p>
+        <h2 class="section-title">Register Now</h2>
+
+        <div class="registration-container">
+            <div class="seat-counter">
+                <h3>Limited Seats Available</h3>
+                <div class="seats-left" id="seatsLeft">42</div>
+                <p>seats remaining out of 80</p>
+            </div>
+
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSflqtHWHhdHfxruK57Gg-a5bKME8Qg0IhgFf0dH0hnxkkYwzQ/viewform?usp=dialog"
+                target="_blank" class="register-btn">
+                <i class="fas fa-external-link-alt"></i> Secure Your Spot
+            </a>
+
+            <p class="register-note" id="countdown-note">
+                Registration closes on September 24, 2025
+            </p>
         </div>
-        
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSflqtHWHhdHfxruK57Gg-a5bKME8Qg0IhgFf0dH0hnxkkYwzQ/viewform?usp=dialog" target="_blank" class="register-btn">
-            <i class="fas fa-external-link-alt"></i> Secure Your Spot
-        </a>
-        
-        <p class="register-note" id="countdown-note">
-            Registration closes on September 24, 2025
-        </p>
-    </div>
-</section>
+    </section>
 
-<script>
-// Dynamic Day Counter for Registration Deadline
-document.addEventListener("DOMContentLoaded", function () {
-    const deadline = new Date("September 24, 2025 23:59:59").getTime();
-    const noteElement = document.getElementById("countdown-note");
+    <script>
+        // Dynamic Day Counter for Registration Deadline
+        document.addEventListener("DOMContentLoaded", function () {
+            const deadline = new Date("September 24, 2025 23:59:59").getTime();
+            const noteElement = document.getElementById("countdown-note");
 
-    // Update the counter every day (and immediately on load)
-    function updateCounter() {
-        const now = new Date().getTime();
-        const distance = deadline - now;
+            // Update the counter every day (and immediately on load)
+            function updateCounter() {
+                const now = new Date().getTime();
+                const distance = deadline - now;
 
-        if (distance < 0) {
-            noteElement.innerHTML = "Registration has closed. Stay tuned for the next session.";
-            return;
-        }
+                if (distance < 0) {
+                    noteElement.innerHTML = "Registration has closed. Stay tuned for the next session.";
+                    return;
+                }
 
-        // Calculate remaining days
-        const daysLeft = Math.floor(distance / (1000 * 60 * 60 * 24));
+                // Calculate remaining days
+                const daysLeft = Math.floor(distance / (1000 * 60 * 60 * 24));
 
-        // Update message
-        if (daysLeft === 1) {
-            noteElement.innerHTML = "⏳ Only <strong>1 day</strong> left to register! Don’t miss your chance to join ECHO.";
-        } else {
-            noteElement.innerHTML = "⏳ <strong>" + daysLeft + " days</strong> left to register. Secure your spot before seats fill up.";
-        }
-    }
+                // Update message
+                if (daysLeft === 1) {
+                    noteElement.innerHTML = "⏳ Only <strong>1 day</strong> left to register! Don’t miss your chance to join ECHO.";
+                } else {
+                    noteElement.innerHTML = "⏳ <strong>" + daysLeft + " days</strong> left to register. Secure your spot before seats fill up.";
+                }
+            }
 
-    // Run immediately
-    updateCounter();
+            // Run immediately
+            updateCounter();
 
-    // Update daily (optional: you can use setInterval for real-time, but once per day is enough)
-    // Here we update every 6 hours for smooth UX
-    setInterval(updateCounter, 6 * 60 * 60 * 1000);
-});
-</script>
+            // Update daily (optional: you can use setInterval for real-time, but once per day is enough)
+            // Here we update every 6 hours for smooth UX
+            setInterval(updateCounter, 6 * 60 * 60 * 1000);
+        });
+    </script>
 
     <!-- Floating Action Button -->
     <a href="#register" target="_blank" class="fab" title="Quick Registration">
@@ -2910,16 +3059,16 @@ document.addEventListener("DOMContentLoaded", function () {
         // Neural Network Visualization
         const canvas = document.getElementById('neural-canvas');
         const ctx = canvas.getContext('2d');
-        
+
         // Set canvas size
         function resizeCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         }
-        
+
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
-        
+
         // Neural network nodes
         class Node {
             constructor(x, y, layer) {
@@ -2933,7 +3082,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 this.active = Math.random() > 0.7;
                 this.activationTimer = Math.random() * 100;
             }
-            
+
             update() {
                 // Random activation
                 this.activationTimer--;
@@ -2941,7 +3090,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     this.active = Math.random() > 0.7;
                     this.activationTimer = Math.random() * 100 + 50;
                 }
-                
+
                 // Pulse effect when active
                 if (this.active) {
                     this.pulseRadius += this.pulseSpeed;
@@ -2950,14 +3099,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 }
             }
-            
+
             draw() {
                 // Draw node
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
                 ctx.fillStyle = 'rgba(74, 158, 255, 0.8)';
                 ctx.fill();
-                
+
                 // Draw pulse if active
                 if (this.active && this.pulseRadius > 0) {
                     ctx.beginPath();
@@ -2968,7 +3117,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             }
         }
-        
+
         // Neural network connections
         class Connection {
             constructor(node1, node2) {
@@ -2979,7 +3128,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 this.signalPosition = 0;
                 this.signalSpeed = 0.02;
             }
-            
+
             update() {
                 // Activate connection randomly or if either node is active
                 this.activationTimer--;
@@ -2990,13 +3139,13 @@ document.addEventListener("DOMContentLoaded", function () {
                         this.signalPosition = 0;
                     }
                 }
-                
+
                 // Move signal along connection
                 if (this.active && this.signalPosition < 1) {
                     this.signalPosition += this.signalSpeed;
                 }
             }
-            
+
             draw() {
                 // Draw connection line
                 ctx.beginPath();
@@ -3005,12 +3154,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 ctx.strokeStyle = 'rgba(74, 158, 255, 0.2)';
                 ctx.lineWidth = 1;
                 ctx.stroke();
-                
+
                 // Draw signal if active
                 if (this.active && this.signalPosition < 1) {
                     const x = this.node1.x + (this.node2.x - this.node1.x) * this.signalPosition;
                     const y = this.node1.y + (this.node2.y - this.node1.y) * this.signalPosition;
-                    
+
                     ctx.beginPath();
                     ctx.arc(x, y, 3, 0, Math.PI * 2);
                     ctx.fillStyle = 'rgba(74, 158, 255, 0.8)';
@@ -3018,13 +3167,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             }
         }
-        
+
         // Create neural network
         const nodes = [];
         const connections = [];
         const layers = 5;
         const nodesPerLayer = 8;
-        
+
         // Create nodes
         for (let layer = 0; layer < layers; layer++) {
             for (let i = 0; i < nodesPerLayer; i++) {
@@ -3033,7 +3182,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 nodes.push(new Node(x, y, layer));
             }
         }
-        
+
         // Create connections
         for (let i = 0; i < nodes.length; i++) {
             for (let j = 0; j < nodes.length; j++) {
@@ -3044,31 +3193,31 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             }
         }
-        
+
         // Animation loop
         function animateNeuralNetwork() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
+
             // Update and draw connections
             connections.forEach(connection => {
                 connection.update();
                 connection.draw();
             });
-            
+
             // Update and draw nodes
             nodes.forEach(node => {
                 node.update();
                 node.draw();
             });
-            
+
             requestAnimationFrame(animateNeuralNetwork);
         }
-        
+
         animateNeuralNetwork();
-        
+
         // Kerala names for notifications
         const keralaNames = [
-            "Arya Nair", "Muhammed Faisal", "Anjali Joseph", "Arun Kumar P.", "Lijina Das", 
+            "Arya Nair", "Muhammed Faisal", "Anjali Joseph", "Arun Kumar P.", "Lijina Das",
             "Sooraj M.", "Divya Gopalakrishnan", "Rahul Krishnan", "Sneha Menon", "Vishnu Nair",
             "Fatima Beevi", "Pranav Suresh", "Amritha Varma", "Sajith Ahmed", "Kavya Mohan",
             "Abhinav K. Vijayan", "Remya Krishnan", "Firoz Khan", "Gayathri Sreekumar", "Anoop Thomas",
@@ -3101,22 +3250,22 @@ document.addEventListener("DOMContentLoaded", function () {
             const container = document.getElementById('notificationContainer');
             const notification = document.createElement('div');
             notification.className = 'notification';
-            
+
             // Get a random name that hasn't been shown yet
             let name;
             do {
                 name = keralaNames[Math.floor(Math.random() * keralaNames.length)];
             } while (shownNames.has(name) && shownNames.size < keralaNames.length);
-            
+
             // If all names have been shown, reset the set
             if (shownNames.size >= keralaNames.length) {
                 shownNames.clear();
             }
-            
+
             shownNames.add(name);
-            
+
             const message = notificationMessages[Math.floor(Math.random() * notificationMessages.length)];
-            
+
             notification.innerHTML = `
                 <div class="notification-header">
                     <div class="notification-icon">
@@ -3128,9 +3277,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     <strong>${name}</strong> ${message}
                 </div>
             `;
-            
+
             container.appendChild(notification);
-            
+
             // Remove notification after animation completes
             setTimeout(() => {
                 notification.remove();
@@ -3197,7 +3346,7 @@ document.addEventListener("DOMContentLoaded", function () {
         function generateBasicResponse() {
             const prompt = document.getElementById('promptInput').value || "Explain quantum computing";
             const output = document.getElementById('demoOutput');
-            
+
             output.textContent = `Basic Response:
 ${prompt}
 
@@ -3207,7 +3356,7 @@ Quantum computing is a type of computation that harnesses the collective propert
         function generateAdvancedResponse() {
             const prompt = document.getElementById('promptInput').value || "Explain quantum computing";
             const output = document.getElementById('demoOutput');
-            
+
             output.textContent = `Advanced Response:
 ${prompt}
 
@@ -3223,7 +3372,7 @@ These properties enable quantum computers to solve certain problems exponentiall
         function generateChainOfThought() {
             const prompt = document.getElementById('promptInput').value || "Explain quantum computing";
             const output = document.getElementById('demoOutput');
-            
+
             output.textContent = `Chain of Thought Response:
 ${prompt}
 
@@ -3243,7 +3392,7 @@ Finally, these properties allow quantum computers to perform certain calculation
         function generateRoleBased() {
             const prompt = document.getElementById('promptInput').value || "Explain quantum computing";
             const output = document.getElementById('demoOutput');
-            
+
             output.textContent = `Role-Based Response:
 ${prompt}
 
@@ -3261,9 +3410,9 @@ This explanation uses everyday analogies to make complex quantum concepts access
         }
 
         // Contact form submission
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
+        document.getElementById('contactForm').addEventListener('submit', function (e) {
             e.preventDefault();
-            
+
             // Show success message
             const formContainer = document.querySelector('.contact-form');
             const successMessage = document.createElement('div');
@@ -3283,10 +3432,10 @@ This explanation uses everyday analogies to make complex quantum concepts access
             `;
             successMessage.textContent = 'Message sent successfully! We\'ll get back to you soon.';
             formContainer.appendChild(successMessage);
-            
+
             // Reset form
             this.reset();
-            
+
             // Remove success message after 5 seconds
             setTimeout(() => {
                 successMessage.remove();
@@ -3294,11 +3443,12 @@ This explanation uses everyday analogies to make complex quantum concepts access
         });
 
         // Translation functionality
-        document.getElementById('translateBtn').addEventListener('click', function() {
+        document.getElementById('translateBtn').addEventListener('click', function () {
             // This is a placeholder for translation functionality
             // In a real implementation, you would integrate with a translation service
             alert('Translation feature will be available soon!');
         });
     </script>
 </body>
+
 </html>
