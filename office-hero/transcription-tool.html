@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice to Text | Office Hero</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="back-nav">
+            <a href="../index.html#utilities" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Tools
+            </a>
+        </div>
+
+        <header>
+            <div class="icon-box" style="margin: 0 auto 1.5rem auto;">
+                <i class="fas fa-microphone"></i>
+            </div>
+            <h1 class="brand">Voice to Text</h1>
+            <p class="tagline">Real-time speech transcription using browser-native AI.</p>
+        </header>
+
+        <div class="tool-interface" style="max-width: 900px;">
+            <div class="control-panel"
+                style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+                <div style="display: flex; gap: 15px; align-items: center;">
+                    <button id="start-btn" class="btn-action" style="background: var(--success); width: auto;">
+                        <i class="fas fa-play"></i> Start Listening
+                    </button>
+                    <button id="stop-btn" class="btn-action btn-outline" style="width: auto;" disabled>
+                        <i class="fas fa-stop"></i> Stop
+                    </button>
+                </div>
+
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <span id="status-indicator"
+                        style="display: inline-block; width: 10px; height: 10px; background: #666; border-radius: 50%;"></span>
+                    <span id="status-text" style="color: var(--text-secondary);">Ready</span>
+                </div>
+
+                <select id="lang-select"
+                    style="background: rgba(0,0,0,0.3); color: white; border: 1px solid var(--glass-border); padding: 0.5rem; border-radius: 6px;">
+                    <option value="en-US">English (US)</option>
+                    <option value="en-GB">English (UK)</option>
+                    <option value="es-ES">Spanish</option>
+                    <option value="fr-FR">French</option>
+                    <option value="de-DE">German</option>
+                    <option value="hi-IN">Hindi</option>
+                </select>
+            </div>
+
+            <textarea id="transcript" class="text-area-styled" placeholder="Speech will appear here..."
+                style="height: 400px; margin-bottom: 2rem; padding: 20px; font-size: 1.1rem; line-height: 1.6;"></textarea>
+
+            <div style="text-align: center; display: flex; gap: 20px; justify-content: center;">
+                <button class="btn-action btn-sm btn-outline" onclick="copyText()"><i class="fas fa-copy"></i> Copy
+                    Text</button>
+                <button class="btn-action btn-sm btn-outline" onclick="clearText()"><i class="fas fa-trash"></i>
+                    Clear</button>
+                <button class="btn-action btn-sm btn-outline" onclick="downloadText()"><i class="fas fa-download"></i>
+                    Save as .txt</button>
+            </div>
+
+            <p
+                style="text-align: center; margin-top: 2rem; color: var(--text-secondary); opacity: 0.7; font-size: 0.9rem;">
+                Note: This tool uses the Web Speech API. For file transcription, play the audio file on speakers while
+                microphone listens.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const startBtn = document.getElementById('start-btn');
+        const stopBtn = document.getElementById('stop-btn');
+        const statusText = document.getElementById('status-text');
+        const statusInd = document.getElementById('status-indicator');
+        const transcript = document.getElementById('transcript');
+        const langSelect = document.getElementById('lang-select');
+
+        // Check compatibility
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+        if (!SpeechRecognition) {
+            alert("Your browser does not support the Web Speech API. Please use Chrome or Edge.");
+            startBtn.disabled = true;
+            statusText.innerText = "Not Supported";
+        } else {
+            const recognition = new SpeechRecognition();
+            recognition.continuous = true;
+            recognition.interimResults = true;
+
+            let finalTranscript = '';
+
+            recognition.onstart = () => {
+                statusText.innerText = "Listening...";
+                statusInd.style.background = "#4ade80";
+                startBtn.disabled = true;
+                stopBtn.disabled = false;
+                startBtn.style.opacity = "0.5";
+            };
+
+            recognition.onerror = (event) => {
+                statusText.innerText = "Error: " + event.error;
+                statusInd.style.background = "#ef4444";
+            };
+
+            recognition.onend = () => {
+                statusText.innerText = "Stopped";
+                statusInd.style.background = "#666";
+                startBtn.disabled = false;
+                stopBtn.disabled = true;
+                startBtn.style.opacity = "1";
+            };
+
+            recognition.onresult = (event) => {
+                let interimTranscript = '';
+
+                for (let i = event.resultIndex; i < event.results.length; ++i) {
+                    if (event.results[i].isFinal) {
+                        finalTranscript += event.results[i][0].transcript + ' ';
+                    } else {
+                        interimTranscript += event.results[i][0].transcript;
+                    }
+                }
+
+                // Capitalize first letter of final sentences approximately
+                transcript.value = finalTranscript + interimTranscript;
+                transcript.scrollTop = transcript.scrollHeight;
+            };
+
+            startBtn.addEventListener('click', () => {
+                recognition.lang = langSelect.value;
+                finalTranscript = transcript.value ? transcript.value + ' ' : '';
+                recognition.start();
+            });
+
+            stopBtn.addEventListener('click', () => {
+                recognition.stop();
+            });
+        }
+
+        function copyText() {
+            transcript.select();
+            document.execCommand('copy');
+        }
+
+        function clearText() {
+            transcript.value = '';
+        }
+
+        function downloadText() {
+            const element = document.createElement('a');
+            const file = new Blob([transcript.value], { type: 'text/plain' });
+            element.href = URL.createObjectURL(file);
+            element.download = "transcription.txt";
+            document.body.appendChild(element);
+            element.click();
+        }
+    </script>
+</body>
+
+</html>

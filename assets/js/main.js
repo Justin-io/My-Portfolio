@@ -743,7 +743,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'research': "I'm redefining boundaries with Q-SAFE, a Hybrid Sentinel framework, and exploring quantum-time geometry with Chronon-SQL. My research aims to secure the next generation of computing.",
         'skills': "I believe in the right tool for the job. My stack is heavy on performance (Rust, C++, ASM) and intelligence (Python, AI Agents). I treat languages like superpowers combining them to solve complex problems.",
         'timeline': "Every milestone has been a lesson. From enhancing global satellite data at NASA Space Apps to founding ShopRoyince, I've applied my skills in high-stakes environments where precision matters.",
-        'utilities': "I've expanded 'Office Hero' to support Content Creators too. Now featuring Social Image Resizers, Video-to-GIF, Background Removal, and Bulk Compression along with the classic PDF tools.",
+        'utilities': "I've expanded 'Office Hero' into a massive suite of 15 tools. It covers everything: Office (PDFs), Creativity (Images/GIFs), Development (JSON/JWT), and now Academic Writing (Citations, Transcription, Case Reform).",
         'contact': "Communication is key. If you have an idea, a challenge, or just want to talk shop about the future of AI and security, drop me a message. I'm always open to collaboration."
     };
 
@@ -1169,7 +1169,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (text.includes("Tech Stack")) {
             response = "My arsenal includes Python, Rust, Java, and JavaScript (Node/React). I also work deeply with Assembly (x86), Linux Kernel modules, and AI frameworks like Ollama and PyTorch.";
         } else if (text.includes("Office Hero") || text.includes("Utilities")) {
-            response = "Office Hero is my browser-based toolkit. It now includes 8 tools: PDF Merger, Signer, Converter, OCR, plus new Creator Tools like Background Remover, Video-to-GIF, Social Resizer, and Bulk Compressor.";
+            response = "Office Hero is my 15-tool mega-suite. It runs entirely in your browser. Key tools include: PDF Merger, Image-to-OCR, Social Resizer, JWT Debugger, Citation Generator, and Voice Transcription.";
         } else if (text.includes("Contact")) {
             response = "You can reach me via the contact form below, or check out my GitHub profiles linked in the projects!";
         } else if (text.includes("Explain") || summaries[text.toLowerCase()]) {

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Formatter | Office Hero</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sql-formatter@4.0.2/dist/sql-formatter.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="back-nav">
+            <a href="../index.html#utilities" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Tools
+            </a>
+        </div>
+
+        <header>
+            <div class="icon-box" style="margin: 0 auto 1.5rem auto;">
+                <i class="fas fa-database"></i>
+            </div>
+            <h1 class="brand">SQL Formatter</h1>
+            <p class="tagline">Beautify and indent complex SQL queries instantly.</p>
+        </header>
+
+        <div class="tool-interface" style="max-width: 1200px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div>
+                    <h3 style="margin-bottom: 10px; color: var(--text-secondary);">Messy SQL</h3>
+                    <textarea id="sql-input" class="text-area-styled" placeholder="SELECT * FROM table WHERE id=1..."
+                        style="height: 500px; font-family: 'JetBrains Mono', monospace;"></textarea>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 10px; color: var(--text-secondary);">Formatted SQL</h3>
+                    <textarea id="sql-output" class="text-area-styled" readonly
+                        style="height: 500px; font-family: 'JetBrains Mono', monospace; background: rgba(0,0,0,0.3); color: var(--accent); white-space: pre;"></textarea>
+                </div>
+            </div>
+
+            <div style="margin-top: 2rem; text-align: center; display: flex; gap: 20px; justify-content: center;">
+                <button id="format-btn" class="btn-action">Format SQL</button>
+                <button id="copy-btn" class="btn-action btn-outline">Copy Result</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const input = document.getElementById('sql-input');
+        const output = document.getElementById('sql-output');
+        const formatBtn = document.getElementById('format-btn');
+        const copyBtn = document.getElementById('copy-btn');
+
+        formatBtn.addEventListener('click', () => {
+            const sql = input.value;
+            if (!sql) return;
+
+            try {
+                // Using sql-formatter library
+                output.value = sqlFormatter.format(sql, { language: 'sql', indent: '    ' });
+            } catch (e) {
+                output.value = "Error formatting SQL: " + e.message;
+            }
+        });
+
+        copyBtn.addEventListener('click', () => {
+            output.select();
+            document.execCommand('copy');
+            const original = copyBtn.innerText;
+            copyBtn.innerText = "Copied!";
+            setTimeout(() => copyBtn.innerText = original, 2000);
+        });
+    </script>
+</body>
+
+</html>
