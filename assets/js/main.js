@@ -756,52 +756,96 @@ document.addEventListener('DOMContentLoaded', () => {
     let heroInterval = null;
 
     // Add click listener to Hero Image for manual summoning
-    const heroImageElement = document.querySelector('.hero-card-content img');
-    if (heroImageElement) {
-        heroImageElement.style.cursor = "pointer";
-        heroImageElement.addEventListener('click', () => {
-            // Stop glitching
-            stopHeroAnimation();
+    const heroMainImg = document.getElementById('hero-main-img');
+    const heroGlitchContainer = document.getElementById('hero-glitch-container');
 
-            // Summon the Bot
-            if (toggleBtn) {
-                toggleBtn.style.transform = 'scale(1)';
-                toggleBtn.style.opacity = '1';
-                // Add a small glitch effect to the button entry
-                toggleBtn.classList.add('glitch-effect');
-                setTimeout(() => { toggleBtn.classList.remove('glitch-effect'); }, 500);
-            }
+    if (heroMainImg && heroGlitchContainer) {
+        heroMainImg.style.cursor = "pointer";
+        heroMainImg.addEventListener('click', () => {
+            // Stop auto animation
+            stopHeroAnimation();
 
             // Open Chat
             if (!isChatOpen) toggleChat();
         });
     }
 
+    // --- REUSABLE GHOST GLITCH LOGIC ---
+    window.triggerGhostGlitch = function (container, currentSrc, nextSrc, onSwitch) {
+        if (!container) return;
+
+        // Apply Glitch Class
+        container.classList.add('glitch-effect');
+
+        // Create Ghost Layers
+        const ghostRed = document.createElement('img');
+        const ghostBlue = document.createElement('img');
+
+        ghostRed.src = currentSrc;
+        ghostBlue.src = currentSrc;
+
+        ghostRed.className = 'glitch-ghost-layer glitch-ghost-red';
+        ghostBlue.className = 'glitch-ghost-layer glitch-ghost-blue';
+
+        // Match the style (especially if it's the hero circle)
+        const mainImg = container.querySelector('img');
+        if (mainImg) {
+            const styles = window.getComputedStyle(mainImg);
+            [ghostRed, ghostBlue].forEach(ghost => {
+                ghost.style.width = styles.width;
+                ghost.style.height = styles.height;
+                ghost.style.borderRadius = styles.borderRadius;
+                ghost.style.border = styles.border;
+            });
+        }
+
+        container.appendChild(ghostRed);
+        container.appendChild(ghostBlue);
+
+        // Show Ghosts
+        setTimeout(() => {
+            ghostRed.style.opacity = '0.5';
+            ghostBlue.style.opacity = '0.5';
+        }, 10);
+
+        // Perform the actual src switch mid-glitch
+        setTimeout(() => {
+            if (onSwitch) onSwitch();
+            // Update ghosts to next src as well for the exit
+            ghostRed.src = nextSrc;
+            ghostBlue.src = nextSrc;
+        }, 300);
+
+        // Clean up
+        setTimeout(() => {
+            container.classList.remove('glitch-effect');
+            ghostRed.style.opacity = '0';
+            ghostBlue.style.opacity = '0';
+            setTimeout(() => {
+                ghostRed.remove();
+                ghostBlue.remove();
+            }, 200);
+        }, 800);
+    };
+
     function startHeroAnimation() {
         if (heroInterval) return;
-        const heroImg = document.querySelector('.hero-card-content img');
-        if (!heroImg) return;
+        const container = document.getElementById('hero-glitch-container');
+        const heroImg = document.getElementById('hero-main-img');
+        if (!heroImg || !container) return;
 
         heroInterval = setInterval(() => {
-            // Trigger Glitch
-            heroImg.classList.add('glitch-effect');
+            const currentSrc = heroImg.src;
+            const nextSrc = currentSrc.includes('me.jpg') ? FAB_IMAGE_REST : HERO_IMAGE_ORIGINAL;
 
-            // Swap Image mid-glitch (Slower timing: 400ms)
-            setTimeout(() => {
-                if (heroImg.src.includes('me.jpg')) {
-                    heroImg.src = FAB_IMAGE_REST;
-                    heroImg.style.borderRadius = "50%"; // Match FAB style
-                } else {
-                    heroImg.src = HERO_IMAGE_ORIGINAL;
+            window.triggerGhostGlitch(container, currentSrc, nextSrc, () => {
+                heroImg.src = nextSrc;
+                if (nextSrc === FAB_IMAGE_REST) {
+                    heroImg.style.borderRadius = "50%";
                 }
-            }, 400);
+            });
 
-            // Remove Glitch class after animation (Slower timing: 800ms)
-            setTimeout(() => {
-                heroImg.classList.remove('glitch-effect');
-            }, 800);
-
-        }, 3000); // Slower interval for better impact
+        }, 5000); // Realistic pace
     }
 
     function stopHeroAnimation() {
@@ -809,11 +853,13 @@ document.addEventListener('DOMContentLoaded', () => {
             clearInterval(heroInterval);
             heroInterval = null;
         }
-        const heroImg = document.querySelector('.hero-card-content img');
-        if (heroImg) {
+        const heroImg = document.getElementById('hero-main-img');
+        const container = document.getElementById('hero-glitch-container');
+        if (heroImg && container) {
             // Reset to original state
-            heroImg.classList.remove('glitch-effect');
+            container.classList.remove('glitch-effect');
             heroImg.src = HERO_IMAGE_ORIGINAL;
+            heroImg.style.borderRadius = "50%";
         }
     }
 

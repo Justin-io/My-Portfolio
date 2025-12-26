@@ -345,8 +345,10 @@
                         </div>
 
                         <div style="text-align: center; margin-bottom: 24px;">
-                            <img src="/assets/img/me.jpg" alt="Hari Nandan K / Justin Alexia"
-                                style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border-color, #eaeaea); box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+                            <div class="glitch-container" id="hero-glitch-container">
+                                <img src="/assets/img/me.jpg" alt="Hari Nandan K / Justin Alexia" id="hero-main-img"
+                                    style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border-color, #eaeaea); box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+                            </div>
                         </div>
 
 
@@ -423,10 +425,12 @@
                 </div>
             </div>
             <div class="about-visual">
-                <div class="about-image-container" style="position: relative; overflow: hidden; border-radius: 8px;">
+                <div class="about-image-container glitch-container" id="about-glitch-container"
+                    style="position: relative; overflow: hidden; border-radius: 30px;">
                     <!-- Image Slides -->
-                    <div id="image-slides" style="position: relative; width: 100%; height: 100%;">
-                        <img src="/assets/img/me.jpg" alt="Justin Alexia - Cybersecurity" class="about-image-slide"
+                    <div id="image-slides" style="position: relative; width: 100%; height: 500px;">
+                        <img src="/assets/img/me.jpg" alt="Justin Alexia - Cybersecurity"
+                            class="about-image-slide active"
                             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 1; transition: opacity 0.8s ease-in-out;">
                         <img src="/assets/img/bng1.jpeg" alt="HOPE IoT Camp" class="about-image-slide"
                             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.8s ease-in-out;">
@@ -449,18 +453,31 @@
             </div>
 
             <script>
+                // Glitch Switching Logic for About Section
                 (function () {
                     const slides = document.querySelectorAll('.about-image-slide');
+                    const container = document.getElementById('about-glitch-container');
                     let currentIndex = 0;
 
-                    function showNext() {
-                        slides[currentIndex].style.opacity = 0;
+                    function glitchSwitch() {
+                        const currentImg = slides[currentIndex];
                         currentIndex = (currentIndex + 1) % slides.length;
-                        slides[currentIndex].style.opacity = 1;
+                        const nextImg = slides[currentIndex];
+
+                        // Trigger Ghost Glitch
+                        if (window.triggerGhostGlitch) {
+                            window.triggerGhostGlitch(container, currentImg.src, nextImg.src, () => {
+                                slides.forEach(s => s.style.opacity = 0);
+                                nextImg.style.opacity = 1;
+                            });
+                        } else {
+                            // Fallback
+                            slides.forEach(s => s.style.opacity = 0);
+                            nextImg.style.opacity = 1;
+                        }
                     }
 
-                    // Start auto-rotation every 4 seconds
-                    setInterval(showNext, 4000);
+                    setInterval(glitchSwitch, 5000);
                 })();
             </script>
         </div>
