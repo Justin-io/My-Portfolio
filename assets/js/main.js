@@ -184,6 +184,25 @@ window.addEventListener('scroll', () => {
     }
 });
 
+// AI Chat Box Visibility
+function handleChatVisibility() {
+    const chatContainer = document.getElementById('ai-assistant-container');
+    if (!chatContainer) return;
+
+    // Hide if on hero section (scrolled less than 80% of viewport)
+    if (window.scrollY < window.innerHeight * 0.8) {
+        chatContainer.style.opacity = '0';
+        chatContainer.style.pointerEvents = 'none';
+        chatContainer.style.transition = 'opacity 0.3s ease';
+    } else {
+        chatContainer.style.opacity = '1';
+        chatContainer.style.pointerEvents = 'auto';
+    }
+}
+
+window.addEventListener('scroll', handleChatVisibility);
+window.addEventListener('load', handleChatVisibility);
+
 // Active navigation link
 const sections = document.querySelectorAll('section');
 const navLinks = document.querySelectorAll('.nav-link');
