@@ -185,23 +185,7 @@ window.addEventListener('scroll', () => {
 });
 
 // AI Chat Box Visibility
-function handleChatVisibility() {
-    const chatContainer = document.getElementById('ai-assistant-container');
-    if (!chatContainer) return;
-
-    // Hide if on hero section (scrolled less than 80% of viewport)
-    if (window.scrollY < window.innerHeight * 0.8) {
-        chatContainer.style.opacity = '0';
-        chatContainer.style.pointerEvents = 'none';
-        chatContainer.style.transition = 'opacity 0.3s ease';
-    } else {
-        chatContainer.style.opacity = '1';
-        chatContainer.style.pointerEvents = 'auto';
-    }
-}
-
-window.addEventListener('scroll', handleChatVisibility);
-window.addEventListener('load', handleChatVisibility);
+// [Removed conflicting visibility logic to use IntersectionObserver instead]
 
 // Active navigation link
 const sections = document.querySelectorAll('section');
@@ -1225,26 +1209,30 @@ document.addEventListener('DOMContentLoaded', () => {
     // Static Fallback Logic
     function handleStaticResponse(text) {
         let response = "";
+        const lowerText = text.toLowerCase();
 
-        // Basic keyword matching
-        if (text.includes("Who is Justin")) {
-            response = "I'm a full-stack developer and security researcher with a passion for AI, Quantum Computing, and Ethical Hacking. I build systems that bridge the gap between abstract theory and robust application.";
-        } else if (text.includes("Q-SAFE")) {
-            response = "Q-SAFE is my flagship research project: a Hybrid 'Sentinel' framework. It uses an x86 Assembly core for speed and a Python Neural Oracle to detect threats agentically. It's designed to be quantum-resilient.";
-        } else if (text.includes("Tech Stack")) {
-            response = "My arsenal includes Python, Rust, Java, and JavaScript (Node/React). I also work deeply with Assembly (x86), Linux Kernel modules, and AI frameworks like Ollama and PyTorch.";
-        } else if (text.includes("Office Hero") || text.includes("Utilities")) {
-            response = "Office Hero is my 15-tool mega-suite. It runs entirely in your browser. Key tools include: PDF Merger, Image-to-OCR, Social Resizer, JWT Debugger, Citation Generator, and Voice Transcription.";
-        } else if (text.includes("Contact")) {
-            response = "You can reach me via the contact form below, or check out my GitHub profiles linked in the projects!";
-        } else if (text.includes("Explain") || summaries[text.toLowerCase()]) {
-            const section = text.replace("Explain ", "").toLowerCase();
+        // Enhanced NLP-ish matching
+        if (lowerText.includes("who is justin") || lowerText.includes("about you")) {
+            response = "I'm a **theoretical physicist** and **cybersecurity specialist**. I build systems that bridge the gap between abstract theory and robust application, from **Quantum Gravity** to **Offensive Security**.";
+        } else if (lowerText.includes("resume") || lowerText.includes("cv")) {
+            response = "You can view my full resume/CV by contacting me directly. I'm happy to share it for relevant opportunities! 📄";
+        } else if (lowerText.includes("email") || lowerText.includes("contact")) {
+            response = "You can reach me at **harinandan.ofc@gmail.com** or use the contact form at the bottom of the page. 📧";
+        } else if (lowerText.includes("q-safe")) {
+            response = "**Q-SAFE** is my flagship research project: a Hybrid 'Sentinel' framework. It uses an **x86 Assembly core** for speed and a **Python Neural Oracle** to detect threats agentically.";
+        } else if (lowerText.includes("tech stack") || lowerText.includes("skills")) {
+            response = "My arsenal includes:\n- **Languages**: Python, Rust, C++, JavaScript, Assembly (x86)\n- **AI**: PyTorch, TensorFlow, Ollama\n- **Security**: Metasploit, Wireshark, Burp Suite";
+        } else if (lowerText.includes("office hero") || lowerText.includes("utilities")) {
+            response = "**Office Hero** is my 15-tool mega-suite running entirely in your browser. It includes PDF tools, OCR, and even a Citation Generator.";
+        } else if (lowerText.includes("explain") || summaries[lowerText]) {
+            const section = lowerText.replace("explain ", "").trim();
             response = summaries[section] || summaries[currentSection] || "This section showcases my work.";
         } else {
-            response = "I'm currently in 'Local Mode' (no API keys configured). I can only answer basic questions about the portfolio. Add an API key in settings for full intelligence!";
+            response = "I'm currently in **Local Mode** ⚡. I can answer questions about my skills, projects (Q-SAFE, HOPE), or contact info. Connect an API key for full intelligence!";
         }
 
-        setTimeout(() => addMessage(response, 'bot', true), 500);
+        const formatted = parseMarkdown(response);
+        setTimeout(() => addMessage(formatted, 'bot', false, true), 500);
     }
 
     function handleChipClick(text) {
@@ -1406,8 +1394,21 @@ document.addEventListener('DOMContentLoaded', () => {
         if (sectionId === lastSummarySection && isChatOpen) return;
 
         const summary = summaries[sectionId];
-        addMessage(summary, 'bot', true);
+        // Render with markdown support
+        const formattedSummary = parseMarkdown(summary);
+        addMessage(formattedSummary, 'bot', true, true);
         lastSummarySection = sectionId;
+    }
+
+    // Markdown Helper
+    function parseMarkdown(text) {
+        if (!text) return "";
+        let html = text
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold
+            .replace(/\*(.*?)\*/g, '<em>$1</em>') // Italic
+            .replace(/`([^`]+)`/g, '<code>$1</code>') // Inline Code
+            .replace(/\n/g, '<br>'); // Line breaks
+        return html;
     }
 
 
@@ -1486,9 +1487,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     // Hide FAB in both Home and Footer
                     // But if Walkthrough is active, keep it visible!
+                    // Hide FAB in both Home and Footer
+                    // But if Walkthrough is active, keep it visible!
                     if (!walkthroughActive) {
-                        toggleBtn.style.transform = 'scale(0)';
+                        toggleBtn.style.transform = 'scale(0) rotate(180deg)'; // Added rotation for flair
                         toggleBtn.style.opacity = '0';
+                        toggleBtn.style.pointerEvents = 'none'; // Ensure no clicks
+                    } else {
+                        // Ensure it's visible if walkthrough IS active
+                        toggleBtn.style.transform = 'scale(1) rotate(0deg)';
+                        toggleBtn.style.opacity = '1';
+                        toggleBtn.style.pointerEvents = 'auto';
                     }
 
                     // Specific Logic for Home vs Footer
@@ -1504,8 +1513,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentSection = sectionId;
 
                 // Show FAB
-                toggleBtn.style.transform = 'scale(1)';
+                // Show FAB
+                toggleBtn.style.transform = 'scale(1) rotate(0deg)';
                 toggleBtn.style.opacity = '1';
+                toggleBtn.style.pointerEvents = 'auto';
 
                 // Stop Hero Animation if leaving home
                 stopHeroAnimation();
