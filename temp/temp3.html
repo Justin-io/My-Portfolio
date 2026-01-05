@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumière Beauty Lounge | Premium Ladies Salon</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@200;300;400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            gold: '#C5A059',
+                            goldLight: '#E5C585',
+                            dark: '#111111',
+                            charcoal: '#1A1A1A',
+                            cream: '#F4F1EA',
+                            white: '#FFFFFF',
+                            gray: '#888888'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Montserrat"', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'hero-pattern': "url('https://images.unsplash.com/photo-1600948836101-f9ffda59d250?q=80&w=2036&auto=format&fit=crop')",
+                        'noise': "url('https://www.transparenttextures.com/patterns/stardust.png')"
+                    },
+                    animation: {
+                        'spin-slow': 'spin 12s linear infinite',
+                        'marquee': 'marquee 25s linear infinite',
+                    },
+                    keyframes: {
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-100%)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* --- CORE STYLES --- */
+        body {
+            background-color: #F4F1EA;
+            cursor: none;
+            /* Hide default cursor for custom one */
+        }
+
+        /* Disable custom cursor on mobile */
+        @media (max-width: 768px) {
+            body {
+                cursor: auto;
+            }
+
+            .custom-cursor {
+                display: none !important;
+            }
+        }
+
+        /* --- CUSTOM CURSOR --- */
+        .custom-cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 12px;
+            height: 12px;
+            background-color: #C5A059;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background-color 0.3s;
+            mix-blend-mode: difference;
+        }
+
+        .custom-cursor.hovered {
+            width: 50px;
+            height: 50px;
+            background-color: transparent;
+            border: 1px solid #C5A059;
+            mix-blend-mode: normal;
+        }
+
+        /* --- TYPOGRAPHY UTILS --- */
+        .text-outline {
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+            color: transparent;
+        }
+
+        /* --- ANIMATIONS --- */
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-up.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stagger-1 {
+            transition-delay: 0.1s;
+        }
+
+        .stagger-2 {
+            transition-delay: 0.2s;
+        }
+
+        .stagger-3 {
+            transition-delay: 0.3s;
+        }
+
+        /* --- COMPONENTS --- */
+        /* Magnetic Button Effect */
+        .btn-magnetic {
+            position: relative;
+            overflow: hidden;
+            transition: color 0.4s;
+            z-index: 1;
+        }
+
+        .btn-magnetic::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background-color: #C5A059;
+            transition: transform 0.4s cubic-bezier(0.7, 0, 0.3, 1);
+            z-index: -1;
+        }
+
+        .btn-magnetic:hover::before {
+            transform: translateX(100%);
+        }
+
+        .btn-magnetic:hover {
+            color: white !important;
+            border-color: #C5A059 !important;
+        }
+
+        /* Image Hover Reveal */
+        .hover-reveal-img {
+            clip-path: inset(0 0 0 0);
+            transition: clip-path 0.8s ease;
+        }
+
+        /* Glass Nav */
+        .glass-nav {
+            background: rgba(244, 241, 234, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* Marquee */
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        /* Preloader */
+        .curtain {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #111;
+            z-index: 10000;
+            transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .curtain.slide-up {
+            transform: translateY(-100%);
+        }
+
+        /* Hide Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #111;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<body class="text-brand-dark antialiased overflow-x-hidden selection:bg-brand-gold selection:text-white">
+
+    <!-- Custom Cursor -->
+    <div id="cursor" class="custom-cursor hidden md:block"></div>
+
+    <!-- Preloader -->
+    <div id="loader" class="curtain">
+        <div class="text-center">
+            <h1 class="font-serif text-5xl md:text-7xl text-brand-gold italic tracking-wider opacity-0"
+                id="loader-text">Lumière</h1>
+            <p class="text-white font-sans text-xs uppercase tracking-[0.4em] mt-4 opacity-0" id="loader-sub">Beauty
+                Lounge</p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar"
+        class="fixed w-full z-50 transition-all duration-500 py-6 px-6 lg:px-12 bg-transparent mix-blend-difference text-white">
+        <div class="max-w-[1920px] mx-auto flex justify-between items-center">
+            <a href="#" onclick="router('home')"
+                class="hover-trigger font-serif text-3xl tracking-widest font-bold z-50 relative">
+                LUMIÈRE
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-12 font-sans text-xs tracking-[0.2em] uppercase font-medium">
+                <a href="#" onclick="router('home')" class="hover-trigger relative group">
+                    Home
+                    <span
+                        class="absolute -bottom-2 left-0 w-0 h-[1px] bg-current transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#" onclick="router('services')" class="hover-trigger relative group">
+                    Services
+                    <span
+                        class="absolute -bottom-2 left-0 w-0 h-[1px] bg-current transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#" onclick="router('gallery')" class="hover-trigger relative group">
+                    Gallery
+                    <span
+                        class="absolute -bottom-2 left-0 w-0 h-[1px] bg-current transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#" onclick="router('about')" class="hover-trigger relative group">
+                    About
+                    <span
+                        class="absolute -bottom-2 left-0 w-0 h-[1px] bg-current transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#" onclick="router('contact')" class="hover-trigger relative group">
+                    Contact
+                    <span
+                        class="absolute -bottom-2 left-0 w-0 h-[1px] bg-current transition-all duration-300 group-hover:w-full"></span>
+                </a>
+            </div>
+
+            <button onclick="openBooking()"
+                class="hidden md:block hover-trigger btn-magnetic border border-current px-8 py-3 text-xs uppercase tracking-[0.2em] transition-all duration-300">
+                Book Now
+            </button>
+
+            <!-- Mobile Menu Button -->
+            <button onclick="toggleMobileMenu()" class="md:hidden z-50 focus:outline-none">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu"
+        class="fixed inset-0 bg-[#111] z-40 transform translate-y-full transition-transform duration-700 ease-[cubic-bezier(0.77,0,0.175,1)] flex flex-col justify-center items-center space-y-8 md:hidden text-brand-cream">
+        <a href="#" onclick="router('home'); toggleMobileMenu()"
+            class="font-serif text-4xl italic hover:text-brand-gold transition-colors">Home</a>
+        <a href="#" onclick="router('services'); toggleMobileMenu()"
+            class="font-serif text-4xl italic hover:text-brand-gold transition-colors">Services</a>
+        <a href="#" onclick="router('gallery'); toggleMobileMenu()"
+            class="font-serif text-4xl italic hover:text-brand-gold transition-colors">Gallery</a>
+        <a href="#" onclick="router('about'); toggleMobileMenu()"
+            class="font-serif text-4xl italic hover:text-brand-gold transition-colors">About</a>
+        <a href="#" onclick="router('contact'); toggleMobileMenu()"
+            class="font-serif text-4xl italic hover:text-brand-gold transition-colors">Contact</a>
+        <button onclick="openBooking(); toggleMobileMenu()"
+            class="border border-brand-gold text-brand-gold px-8 py-3 uppercase tracking-widest mt-8">Book
+            Appointment</button>
+    </div>
+
+    <!-- Main Content Area -->
+    <main id="app-content" class="min-h-screen">
+        <!-- Content injected via JS -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-brand-dark text-white pt-24 pb-12 px-6 border-t border-gray-900">
+        <div class="max-w-[1920px] mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16">
+                <h2 class="font-serif text-6xl md:text-9xl text-brand-gold opacity-20">Lumière</h2>
+                <div class="flex space-x-8 mt-8 md:mt-0">
+                    <a href="#" class="hover-trigger hover:text-brand-gold transition"><i
+                            class="fab fa-instagram text-xl"></i></a>
+                    <a href="#" class="hover-trigger hover:text-brand-gold transition"><i
+                            class="fab fa-facebook text-xl"></i></a>
+                    <a href="#" class="hover-trigger hover:text-brand-gold transition"><i
+                            class="fab fa-pinterest text-xl"></i></a>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 border-t border-gray-800 pt-12">
+                <div>
+                    <h4 class="font-sans text-xs uppercase tracking-widest text-brand-gold mb-6">Address</h4>
+                    <p class="text-gray-400 font-serif text-lg">123 Luxury Ave, Suite 100<br>New York, NY 10012</p>
+                </div>
+                <div>
+                    <h4 class="font-sans text-xs uppercase tracking-widest text-brand-gold mb-6">Contact</h4>
+                    <p class="text-gray-400 font-serif text-lg">hello@lumiere.com<br>+1 (555) 000-0000</p>
+                </div>
+                <div>
+                    <h4 class="font-sans text-xs uppercase tracking-widest text-brand-gold mb-6">Menu</h4>
+                    <ul class="space-y-2 font-serif text-lg text-gray-400">
+                        <li><a href="#" onclick="router('services')" class="hover:text-white transition">Services</a>
+                        </li>
+                        <li><a href="#" onclick="router('gallery')" class="hover:text-white transition">Gallery</a></li>
+                    </ul>
+                </div>
+                <div class="md:text-right">
+                    <p class="text-gray-600 text-xs font-sans uppercase tracking-widest">&copy; 2024 Lumière Salon.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Booking Modal -->
+    <div id="booking-modal" class="fixed inset-0 z-[60] hidden transition-opacity duration-300 opacity-0">
+        <div class="absolute inset-0 bg-brand-dark/90 backdrop-blur-md" onclick="closeBooking()"></div>
+        <div class="absolute right-0 top-0 h-full w-full md:w-[600px] bg-brand-cream p-12 shadow-2xl transform translate-x-full transition-transform duration-500 ease-[cubic-bezier(0.77,0,0.175,1)]"
+            id="booking-panel">
+            <div class="flex justify-between items-center mb-16">
+                <h2 class="font-serif text-4xl text-brand-dark italic">Reserve Your Spot</h2>
+                <button onclick="closeBooking()"
+                    class="hover-trigger w-12 h-12 rounded-full border border-brand-dark flex items-center justify-center hover:bg-brand-dark hover:text-white transition-colors">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form class="space-y-8"
+                onsubmit="event.preventDefault(); alert('Request sent! We will contact you shortly.'); closeBooking();">
+                <div class="space-y-1">
+                    <label class="text-xs uppercase tracking-widest text-gray-500">Full Name</label>
+                    <input type="text"
+                        class="w-full bg-transparent border-b border-gray-300 py-3 font-serif text-xl focus:outline-none focus:border-brand-gold transition-colors"
+                        placeholder="Jane Doe">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-xs uppercase tracking-widest text-gray-500">Email Address</label>
+                    <input type="email"
+                        class="w-full bg-transparent border-b border-gray-300 py-3 font-serif text-xl focus:outline-none focus:border-brand-gold transition-colors"
+                        placeholder="jane@example.com">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-xs uppercase tracking-widest text-gray-500">Service Interest</label>
+                    <select
+                        class="w-full bg-transparent border-b border-gray-300 py-3 font-serif text-xl focus:outline-none focus:border-brand-gold transition-colors">
+                        <option>Hair Styling & Color</option>
+                        <option>Nail Spa</option>
+                        <option>Facial Treatment</option>
+                        <option>Bridal Package</option>
+                    </select>
+                </div>
+                <div class="space-y-1">
+                    <label class="text-xs uppercase tracking-widest text-gray-500">Preferred Date</label>
+                    <input type="date"
+                        class="w-full bg-transparent border-b border-gray-300 py-3 font-serif text-xl focus:outline-none focus:border-brand-gold transition-colors text-gray-500">
+                </div>
+                <button type="submit"
+                    class="hover-trigger w-full bg-brand-dark text-white py-6 text-sm uppercase tracking-[0.2em] hover:bg-brand-gold transition-colors mt-8">
+                    Confirm Request
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // --- PAGE DATA ---
+        const pages = {
+            home: `
+                <!-- Hero Section -->
+                <section class="relative h-screen w-full overflow-hidden bg-brand-dark">
+                    <div class="absolute inset-0 bg-hero-pattern bg-cover bg-center opacity-60 scale-105 animate-[spin-slow_60s_linear_infinite_reverse]"></div>
+                    <div class="absolute inset-0 bg-black/40"></div>
+                    
+                    <div class="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
+                        <div class="overflow-hidden mb-4">
+                            <p class="reveal-up text-brand-gold uppercase tracking-[0.4em] text-xs font-sans font-medium">Est. 2014 • New York</p>
+                        </div>
+                        <div class="overflow-hidden">
+                            <h1 class="reveal-up stagger-1 font-serif text-6xl md:text-8xl lg:text-9xl text-white italic leading-tight">Lumière <br><span class="not-italic text-outline">Lounge</span></h1>
+                        </div>
+                        <div class="overflow-hidden mt-12">
+                            <button onclick="router('services')" class="reveal-up stagger-2 hover-trigger btn-magnetic border border-white text-white px-12 py-4 text-xs uppercase tracking-[0.2em] transition-all">
+                                Explore Menu
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Scroll Indicator -->
+                    <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2">
+                        <div class="w-[1px] h-16 bg-white/20 relative overflow-hidden">
+                            <div class="absolute top-0 left-0 w-full h-1/2 bg-brand-gold animate-[marquee_2s_linear_infinite]"></div>
+                        </div>
+                        <span class="text-[10px] text-white/50 uppercase tracking-widest font-sans">Scroll</span>
+                    </div>
+                </section>
+
+                <!-- Marquee Strip -->
+                <div class="bg-brand-gold py-4 overflow-hidden relative z-20">
+                    <div class="marquee-container flex animate-marquee">
+                        <div class="flex gap-12 px-6">
+                             <span class="text-brand-dark font-serif text-2xl italic">Luxury Hair Care</span>
+                             <span class="text-brand-dark font-sans text-2xl">•</span>
+                             <span class="text-brand-dark font-serif text-2xl italic">Premium Nail Spa</span>
+                             <span class="text-brand-dark font-sans text-2xl">•</span>
+                             <span class="text-brand-dark font-serif text-2xl italic">Organic Facials</span>
+                             <span class="text-brand-dark font-sans text-2xl">•</span>
+                             <span class="text-brand-dark font-serif text-2xl italic">Bridal Specialists</span>
+                             <span class="text-brand-dark font-sans text-2xl">•</span>
+                        </div>
+                        <div class="flex gap-12 px-6">
+                             <span class="text-brand-dark font-serif text-2xl italic">Luxury Hair Care</span>
+                             <span class="text-brand-dark font-sans text-2xl">•</span>
+                             <span class="text-brand-dark font-serif text-2xl italic">Premium Nail Spa</span>
+                             <span class="text-brand-dark font-sans text-2xl">•</span>
+                             <span class="text-brand-dark font-serif text-2xl italic">Organic Facials</span>
+                             <span class="text-brand-dark font-sans text-2xl">•</span>
+                             <span class="text-brand-dark font-serif text-2xl italic">Bridal Specialists</span>
+                             <span class="text-brand-dark font-sans text-2xl">•</span>
+                        </div>
+                         <div class="flex gap-12 px-6">
+                             <span class="text-brand-dark font-serif text-2xl italic">Luxury Hair Care</span>
+                             <span class="text-brand-dark font-sans text-2xl">•</span>
+                             <span class="text-brand-dark font-serif text-2xl italic">Premium Nail Spa</span>
+                             <span class="text-brand-dark font-sans text-2xl">•</span>
+                             <span class="text-brand-dark font-serif text-2xl italic">Organic Facials</span>
+                             <span class="text-brand-dark font-sans text-2xl">•</span>
+                             <span class="text-brand-dark font-serif text-2xl italic">Bridal Specialists</span>
+                             <span class="text-brand-dark font-sans text-2xl">•</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Intro Section -->
+                <section class="py-32 px-6 md:px-12 max-w-[1920px] mx-auto bg-brand-cream">
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+                        <div class="md:col-span-5 relative reveal-up">
+                            <div class="aspect-[3/4] overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1560750588-73207b1ef5b8?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-[1.5s] hover:scale-110 grayscale hover:grayscale-0" alt="Salon Interior">
+                            </div>
+                        </div>
+                        <div class="md:col-span-1 hidden md:block"></div>
+                        <div class="md:col-span-6 space-y-8 reveal-up stagger-1">
+                            <h2 class="font-serif text-5xl md:text-7xl text-brand-dark leading-[1.1]">Redefining the <br><span class="text-brand-gold italic">Art of Beauty</span></h2>
+                            <p class="font-sans text-gray-600 leading-loose max-w-lg text-sm tracking-wide">
+                                We believe beauty is a feeling, not just a look. Nestled in a private sanctuary, our team of master artisans combines ancient techniques with modern precision to craft a look that is uniquely yours.
+                            </p>
+                            <div class="pt-8">
+                                <a href="#" onclick="router('about')" class="hover-trigger inline-block text-brand-dark border-b border-brand-dark pb-2 text-xs uppercase tracking-[0.2em] hover:text-brand-gold hover:border-brand-gold transition-colors">Discover Our Story</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Services Preview -->
+                <section class="py-32 bg-white relative">
+                    <div class="max-w-[1920px] mx-auto px-6">
+                        <div class="flex flex-col md:flex-row justify-between items-end mb-20 reveal-up">
+                            <div>
+                                <h3 class="font-serif text-4xl md:text-5xl text-brand-dark italic">Signature Treatments</h3>
+                            </div>
+                            <button onclick="router('services')" class="hover-trigger hidden md:block text-xs uppercase tracking-[0.2em] border border-gray-200 px-8 py-3 hover:bg-brand-dark hover:text-white transition-colors">View Full Menu</button>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-gray-100 border border-gray-100">
+                            <!-- Card 1 -->
+                            <div class="bg-white p-12 md:p-16 group hover:bg-brand-dark transition-colors duration-500 cursor-none hover-trigger reveal-up" onclick="router('services')">
+                                <div class="mb-8 text-brand-gold text-4xl">
+                                    <i class="fas fa-cut"></i>
+                                </div>
+                                <h4 class="font-serif text-3xl mb-4 group-hover:text-white transition-colors">Hair Artistry</h4>
+                                <p class="font-sans text-xs text-gray-500 leading-relaxed group-hover:text-gray-400 transition-colors">Precision cutting, balayage, and restorative treatments designed to enhance your natural texture.</p>
+                                <div class="mt-8 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+                                    <span class="text-white text-xs uppercase tracking-widest border-b border-brand-gold pb-1">View Details</span>
+                                </div>
+                            </div>
+                             <!-- Card 2 -->
+                            <div class="bg-white p-12 md:p-16 group hover:bg-brand-dark transition-colors duration-500 cursor-none hover-trigger reveal-up stagger-1" onclick="router('services')">
+                                <div class="mb-8 text-brand-gold text-4xl">
+                                    <i class="fas fa-spa"></i>
+                                </div>
+                                <h4 class="font-serif text-3xl mb-4 group-hover:text-white transition-colors">Skin & Spa</h4>
+                                <p class="font-sans text-xs text-gray-500 leading-relaxed group-hover:text-gray-400 transition-colors">Holistic facials and body therapies using organic, ethically sourced botanical ingredients.</p>
+                                <div class="mt-8 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+                                    <span class="text-white text-xs uppercase tracking-widest border-b border-brand-gold pb-1">View Details</span>
+                                </div>
+                            </div>
+                             <!-- Card 3 -->
+                            <div class="bg-white p-12 md:p-16 group hover:bg-brand-dark transition-colors duration-500 cursor-none hover-trigger reveal-up stagger-2" onclick="router('services')">
+                                <div class="mb-8 text-brand-gold text-4xl">
+                                    <i class="fas fa-gem"></i>
+                                </div>
+                                <h4 class="font-serif text-3xl mb-4 group-hover:text-white transition-colors">Nail Couture</h4>
+                                <p class="font-sans text-xs text-gray-500 leading-relaxed group-hover:text-gray-400 transition-colors">Detailed manicures and pedicures that prioritize nail health and artistic expression.</p>
+                                <div class="mt-8 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+                                    <span class="text-white text-xs uppercase tracking-widest border-b border-brand-gold pb-1">View Details</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `,
+            services: `
+                <div class="pt-48 pb-24 bg-brand-cream text-center px-4">
+                    <p class="reveal-up font-sans text-brand-gold uppercase tracking-[0.3em] text-xs mb-4">Curated Menu</p>
+                    <h1 class="reveal-up stagger-1 font-serif text-6xl md:text-8xl text-brand-dark">Our Services</h1>
+                </div>
+
+                <div class="max-w-6xl mx-auto py-24 px-6">
+                    <!-- Section -->
+                    <div class="mb-24 reveal-up">
+                        <div class="flex items-baseline justify-between border-b border-gray-300 pb-6 mb-12">
+                            <h2 class="font-serif text-4xl italic text-brand-dark">Hair</h2>
+                            <span class="font-sans text-xs uppercase text-gray-400">01</span>
+                        </div>
+                        
+                        <div class="space-y-8">
+                             <!-- Item -->
+                            <div class="flex flex-col md:flex-row justify-between items-start md:items-center group hover-trigger cursor-none">
+                                <div>
+                                    <h3 class="font-serif text-2xl text-brand-dark group-hover:text-brand-gold transition-colors">Signature Cut & Style</h3>
+                                    <p class="font-sans text-xs text-gray-500 mt-2 tracking-wide">Consultation, wash, massage, cut, blowdry</p>
+                                </div>
+                                <div class="flex items-center w-full md:w-auto mt-4 md:mt-0">
+                                    <div class="h-[1px] bg-gray-200 w-full md:w-32 mx-4"></div>
+                                    <span class="font-serif text-xl">$95</span>
+                                </div>
+                            </div>
+                             <!-- Item -->
+                            <div class="flex flex-col md:flex-row justify-between items-start md:items-center group hover-trigger cursor-none">
+                                <div>
+                                    <h3 class="font-serif text-2xl text-brand-dark group-hover:text-brand-gold transition-colors">Full Balayage</h3>
+                                    <p class="font-sans text-xs text-gray-500 mt-2 tracking-wide">Hand-painted highlights, toner, bond builder</p>
+                                </div>
+                                <div class="flex items-center w-full md:w-auto mt-4 md:mt-0">
+                                    <div class="h-[1px] bg-gray-200 w-full md:w-32 mx-4"></div>
+                                    <span class="font-serif text-xl">$220+</span>
+                                </div>
+                            </div>
+                             <!-- Item -->
+                            <div class="flex flex-col md:flex-row justify-between items-start md:items-center group hover-trigger cursor-none">
+                                <div>
+                                    <h3 class="font-serif text-2xl text-brand-dark group-hover:text-brand-gold transition-colors">Gloss & Blowout</h3>
+                                    <p class="font-sans text-xs text-gray-500 mt-2 tracking-wide">Shine treatment and volume styling</p>
+                                </div>
+                                <div class="flex items-center w-full md:w-auto mt-4 md:mt-0">
+                                    <div class="h-[1px] bg-gray-200 w-full md:w-32 mx-4"></div>
+                                    <span class="font-serif text-xl">$85</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section -->
+                    <div class="mb-24 reveal-up stagger-1">
+                        <div class="flex items-baseline justify-between border-b border-gray-300 pb-6 mb-12">
+                            <h2 class="font-serif text-4xl italic text-brand-dark">Skin</h2>
+                            <span class="font-sans text-xs uppercase text-gray-400">02</span>
+                        </div>
+                        
+                        <div class="space-y-8">
+                             <!-- Item -->
+                            <div class="flex flex-col md:flex-row justify-between items-start md:items-center group hover-trigger cursor-none">
+                                <div>
+                                    <h3 class="font-serif text-2xl text-brand-dark group-hover:text-brand-gold transition-colors">The Lumière Glow</h3>
+                                    <p class="font-sans text-xs text-gray-500 mt-2 tracking-wide">60min • Enzyme peel, LED therapy, massage</p>
+                                </div>
+                                <div class="flex items-center w-full md:w-auto mt-4 md:mt-0">
+                                    <div class="h-[1px] bg-gray-200 w-full md:w-32 mx-4"></div>
+                                    <span class="font-serif text-xl">$140</span>
+                                </div>
+                            </div>
+                             <!-- Item -->
+                            <div class="flex flex-col md:flex-row justify-between items-start md:items-center group hover-trigger cursor-none">
+                                <div>
+                                    <h3 class="font-serif text-2xl text-brand-dark group-hover:text-brand-gold transition-colors">Sculpting Facial</h3>
+                                    <p class="font-sans text-xs text-gray-500 mt-2 tracking-wide">75min • Microcurrent lifting and buccal massage</p>
+                                </div>
+                                <div class="flex items-center w-full md:w-auto mt-4 md:mt-0">
+                                    <div class="h-[1px] bg-gray-200 w-full md:w-32 mx-4"></div>
+                                    <span class="font-serif text-xl">$180</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="py-24 bg-brand-dark text-center">
+                    <p class="text-white/60 font-serif text-2xl mb-8 italic">Unsure what you need?</p>
+                    <button onclick="router('contact')" class="hover-trigger btn-magnetic border border-white text-white px-10 py-4 text-xs uppercase tracking-[0.2em] transition-all">Book Consultation</button>
+                </div>
+            `,
+            gallery: `
+                 <div class="pt-48 pb-24 bg-white text-center px-4">
+                    <p class="reveal-up font-sans text-brand-gold uppercase tracking-[0.3em] text-xs mb-4">Portfolio</p>
+                    <h1 class="reveal-up stagger-1 font-serif text-6xl md:text-8xl text-brand-dark">Visual Diary</h1>
+                </div>
+
+                <div class="px-4 md:px-12 pb-24">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+                        <!-- Image 1 -->
+                        <div class="aspect-[4/5] overflow-hidden reveal-up group relative">
+                            <img src="https://images.unsplash.com/photo-1620331313123-6cc9823cc1c6?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-110">
+                            <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                                <p class="text-white font-serif text-3xl italic">Editorial</p>
+                            </div>
+                        </div>
+                         <!-- Image 2 -->
+                        <div class="aspect-[4/5] overflow-hidden reveal-up stagger-1 group relative lg:translate-y-16">
+                            <img src="https://images.unsplash.com/photo-1596472537366-515e4b344551?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-110">
+                             <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                                <p class="text-white font-serif text-3xl italic">Bridal</p>
+                            </div>
+                        </div>
+                         <!-- Image 3 -->
+                        <div class="aspect-[4/5] overflow-hidden reveal-up stagger-2 group relative">
+                            <img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?q=80&w=1935&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-110">
+                             <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                                <p class="text-white font-serif text-3xl italic">Color</p>
+                            </div>
+                        </div>
+                         <!-- Image 4 -->
+                        <div class="aspect-[4/5] overflow-hidden reveal-up group relative">
+                            <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-110">
+                        </div>
+                         <!-- Image 5 -->
+                        <div class="aspect-[4/5] overflow-hidden reveal-up stagger-1 group relative lg:translate-y-16">
+                            <img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-110">
+                        </div>
+                         <!-- Image 6 -->
+                        <div class="aspect-[4/5] overflow-hidden reveal-up stagger-2 group relative">
+                            <img src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=2069&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-110">
+                        </div>
+                    </div>
+                </div>
+            `,
+            about: `
+                <div class="relative h-[80vh] w-full overflow-hidden">
+                     <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1507646227500-4d389b0012be?q=80&w=2080&auto=format&fit=crop')] bg-cover bg-center bg-fixed"></div>
+                     <div class="absolute inset-0 bg-black/40"></div>
+                     <div class="relative z-10 h-full flex flex-col items-center justify-center text-center">
+                         <h1 class="reveal-up font-serif text-6xl md:text-8xl text-white italic mb-8">The Philosophy</h1>
+                         <p class="reveal-up stagger-1 font-sans text-white/80 max-w-2xl leading-relaxed tracking-wide">
+                             "Beauty is the illumination of your soul."
+                         </p>
+                     </div>
+                 </div>
+
+                 <section class="max-w-[1920px] mx-auto py-32 px-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+                        <div class="reveal-up">
+                            <h2 class="font-serif text-5xl text-brand-dark mb-8">Craftsmanship & Care</h2>
+                            <p class="font-sans text-gray-600 mb-6 leading-loose text-justify text-sm tracking-wide">
+                                Founded in 2014 by Sarah Jenkins, Lumière was born from a desire to slow down the beauty experience. In a world of express services, we offer pause. 
+                            </p>
+                             <p class="font-sans text-gray-600 mb-6 leading-loose text-justify text-sm tracking-wide">
+                                Every stylist at Lumière undergoes a rigorous 2-year master training program, ensuring that the hands touching your hair are not just skilled, but artistic. We are proudly carbon-neutral and use only sustainably sourced, cruelty-free products.
+                            </p>
+                            <div class="mt-12 border-l border-brand-gold pl-8">
+                                <p class="font-serif text-2xl italic text-brand-dark">"We don't just style hair; we curate confidence."</p>
+                                <p class="font-sans text-xs uppercase tracking-widest text-gray-400 mt-4">- Sarah Jenkins, Founder</p>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 reveal-up stagger-1">
+                            <img src="https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                             <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=1964&auto=format&fit=crop" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 mt-12">
+                        </div>
+                    </div>
+                 </section>
+            `,
+            contact: `
+                <div class="flex flex-col lg:flex-row h-screen">
+                    <div class="w-full lg:w-1/2 bg-brand-cream flex flex-col justify-center p-12 lg:p-24 relative overflow-hidden">
+                         <div class="absolute top-0 right-0 p-32 bg-brand-gold/5 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+                         
+                         <div class="relative z-10 reveal-up">
+                             <p class="font-sans text-brand-gold uppercase tracking-[0.3em] text-xs mb-4">Contact Us</p>
+                             <h1 class="font-serif text-6xl text-brand-dark italic mb-12">Get in Touch</h1>
+                             
+                             <div class="space-y-8 mb-12">
+                                 <div>
+                                     <h4 class="font-sans text-xs uppercase tracking-widest text-brand-dark mb-2">Location</h4>
+                                     <p class="font-serif text-2xl text-gray-600">123 Luxury Avenue,<br>New York, NY 10012</p>
+                                 </div>
+                                 <div>
+                                     <h4 class="font-sans text-xs uppercase tracking-widest text-brand-dark mb-2">Direct Line</h4>
+                                     <p class="font-serif text-2xl text-gray-600">+1 (555) 123-4567</p>
+                                 </div>
+                                 <div>
+                                     <h4 class="font-sans text-xs uppercase tracking-widest text-brand-dark mb-2">Email</h4>
+                                     <p class="font-serif text-2xl text-gray-600">hello@lumiere.com</p>
+                                 </div>
+                             </div>
+                             
+                             <div class="flex space-x-6">
+                                 <a href="#" class="hover-trigger w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:border-brand-dark hover:bg-brand-dark hover:text-white transition-all"><i class="fab fa-instagram"></i></a>
+                                 <a href="#" class="hover-trigger w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:border-brand-dark hover:bg-brand-dark hover:text-white transition-all"><i class="fab fa-whatsapp"></i></a>
+                             </div>
+                         </div>
+                    </div>
+                    
+                    <div class="w-full lg:w-1/2 bg-white flex flex-col justify-center p-12 lg:p-24">
+                        <form onsubmit="event.preventDefault(); alert('Message Sent!');" class="space-y-8 reveal-up stagger-1 max-w-lg w-full mx-auto">
+                            <div>
+                                <input type="text" placeholder="Your Name" class="w-full bg-transparent border-b border-gray-200 py-4 font-serif text-xl focus:outline-none focus:border-brand-gold transition-colors placeholder:text-gray-300 text-brand-dark">
+                            </div>
+                            <div>
+                                <input type="email" placeholder="Email Address" class="w-full bg-transparent border-b border-gray-200 py-4 font-serif text-xl focus:outline-none focus:border-brand-gold transition-colors placeholder:text-gray-300 text-brand-dark">
+                            </div>
+                            <div>
+                                <textarea rows="4" placeholder="How can we help?" class="w-full bg-transparent border-b border-gray-200 py-4 font-serif text-xl focus:outline-none focus:border-brand-gold transition-colors placeholder:text-gray-300 text-brand-dark"></textarea>
+                            </div>
+                            <button class="hover-trigger btn-magnetic border border-brand-dark text-brand-dark w-full py-5 text-xs uppercase tracking-[0.2em]">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            `
+        };
+
+        // --- CORE LOGIC ---
+
+        function router(pageName) {
+            const contentDiv = document.getElementById('app-content');
+            const navbar = document.getElementById('navbar');
+
+            // Scroll to top with fade effect
+            window.scrollTo(0, 0);
+
+            // Update Active Link State
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+
+            // Navbar Logic
+            if (pageName === 'home') {
+                navbar.classList.add('mix-blend-difference', 'text-white', 'bg-transparent');
+                navbar.classList.remove('bg-white', 'text-brand-dark', 'glass-nav');
+            } else {
+                navbar.classList.remove('mix-blend-difference', 'text-white', 'bg-transparent');
+                navbar.classList.add('bg-white', 'text-brand-dark'); // Fallback solid
+                // We add glass-nav via scroll listener usually, but for inner pages let's force a style or keep it white
+                navbar.classList.add('glass-nav');
+            }
+
+            // Inject Content
+            contentDiv.innerHTML = pages[pageName];
+
+            // Re-trigger scroll observer
+            setTimeout(observeElements, 100);
+
+            // Re-init cursor listeners for new elements
+            initHoverTargets();
+        }
+
+        // --- INTERACTIVE FEATURES ---
+
+        // Custom Cursor Logic
+        const cursor = document.getElementById('cursor');
+
+        document.addEventListener('mousemove', (e) => {
+            if (window.innerWidth > 768) {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            }
+        });
+
+        function initHoverTargets() {
+            const triggers = document.querySelectorAll('.hover-trigger');
+            triggers.forEach(trigger => {
+                trigger.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+                trigger.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+            });
+        }
+
+        // Scroll Observer (Reveal Animation)
+        function observeElements() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
+
+            document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
+        }
+
+        // Booking Modal
+        function openBooking() {
+            const modal = document.getElementById('booking-modal');
+            const panel = document.getElementById('booking-panel');
+            modal.classList.remove('hidden');
+            // Trigger reflow
+            void modal.offsetWidth;
+            modal.classList.remove('opacity-0');
+            panel.classList.remove('translate-x-full');
+        }
+
+        function closeBooking() {
+            const modal = document.getElementById('booking-modal');
+            const panel = document.getElementById('booking-panel');
+            modal.classList.add('opacity-0');
+            panel.classList.add('translate-x-full');
+
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 500);
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const isOpen = !menu.classList.contains('translate-y-full');
+
+            if (isOpen) {
+                menu.classList.add('translate-y-full');
+            } else {
+                menu.classList.remove('translate-y-full');
+            }
+        }
+
+        // --- INIT ---
+        window.addEventListener('load', () => {
+            // Loader Animation sequence
+            const loaderText = document.getElementById('loader-text');
+            const loaderSub = document.getElementById('loader-sub');
+            const loader = document.getElementById('loader');
+
+            // 1. Fade in text
+            loaderText.style.transition = 'opacity 0.8s ease';
+            loaderText.style.opacity = '1';
+
+            setTimeout(() => {
+                loaderSub.style.transition = 'opacity 0.8s ease';
+                loaderSub.style.opacity = '1';
+            }, 400);
+
+            // 2. Slide curtain up
+            setTimeout(() => {
+                loader.classList.add('slide-up');
+            }, 1800);
+
+            // 3. Remove loader
+            setTimeout(() => {
+                loader.style.display = 'none';
+            }, 3000);
+
+            // Init App
+            router('home');
+
+            // Scroll Logic for Nav on Home Page
+            window.addEventListener('scroll', () => {
+                const navbar = document.getElementById('navbar');
+                // Check if current page is home
+                const isHome = !document.querySelector('.bg-brand-cream'); // A crude check, but works since Home hero is dark
+
+                if (document.querySelector('section.bg-brand-dark')) { // If Home
+                    if (window.scrollY > 50) {
+                        navbar.classList.remove('mix-blend-difference', 'text-white', 'bg-transparent');
+                        navbar.classList.add('glass-nav', 'text-brand-dark');
+                    } else {
+                        navbar.classList.add('mix-blend-difference', 'text-white', 'bg-transparent');
+                        navbar.classList.remove('glass-nav', 'text-brand-dark');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
