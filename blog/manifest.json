@@ -1,52 +1,282 @@
 [
     {
         "id": "1",
-        "title": "The Dawn of Agentic AI",
+        "title": "The Quantum Internet: Entanglement Distribution",
         "date": "Jan 08, 2025",
-        "category": "Artificial Intelligence",
-        "excerpt": "Why strict prompt engineering is dying, and autonomous agents with tool-use capabilities are taking over. A look at the J.A.R.V.I.S. M1 architecture.",
-        "image": "/assets/img/jarvis.png",
+        "category": "Quantum Physics",
+        "excerpt": "How we are building the unhackable network using quantum entanglement and repeaters.",
+        "image": "../assets/img/blog/quantum.png",
         "file": "blog1.html",
-        "tags": ["AI", "Agents", "Python"]
+        "tags": [
+            "Quantum",
+            "Networking",
+            "Future"
+        ]
     },
     {
         "id": "2",
-        "title": "The Chronon Model: Discrete Spacetime",
-        "date": "Dec 28, 2024",
-        "category": "Quantum Physics",
-        "excerpt": "Questioning the continuity of spacetime. My research into pre-geometric structures and the unification of Quantum Mechanics with General Relativity.",
-        "image": "/assets/img/3.png",
+        "title": "Zero Trust Architecture: Beyond the Firewall",
+        "date": "Jan 05, 2025",
+        "category": "Cybersecurity",
+        "excerpt": "Why the 'castle and moat' security model is dead and how strictly authenticating every request is the only way forward.",
+        "image": "../assets/img/blog/security.png",
         "file": "blog2.html",
-        "tags": ["Physics", "Research", "Math"]
+        "tags": [
+            "Security",
+            "Zero Trust",
+            "Cloud"
+        ]
     },
     {
         "id": "3",
-        "title": "Red Teaming IoT Infrastructures",
-        "date": "Dec 15, 2024",
-        "category": "Cybersecurity",
-        "excerpt": "It's not just about firewalls. Physical access, UART sniffing, and firmware dumping. Lessons learned from securing rural educational networks.",
-        "image": "/assets/img/bng1.jpeg",
+        "title": "Rust for Systems Programming: Safety First",
+        "date": "Jan 03, 2025",
+        "category": "Web Development",
+        "excerpt": "Memory safety without garbage collection? How Rust is rewriting the rules of operating systems and browser engines.",
+        "image": "../assets/img/blog/dev.png",
         "file": "blog3.html",
-        "tags": ["Security", "IoT", "Hacking"]
+        "tags": [
+            "Rust",
+            "Systems",
+            "Programming"
+        ]
     },
     {
         "id": "4",
-        "title": "Building Offline-First PWAs",
-        "date": "Nov 30, 2024",
-        "category": "Web Development",
-        "excerpt": "Service Workers are underutilized. How I built F.R.I.D.A.Y. to run completely offline without a backend, using local storage and cache APIs.",
-        "image": "/assets/img/friday.png",
+        "title": "General Relativity vs Quantum Loop",
+        "date": "Dec 29, 2024",
+        "category": "Physics",
+        "excerpt": "The clash of the titans. Exploring the conflict between smooth spacetime and discrete quantum chunks.",
+        "image": "../assets/img/blog/space.png",
         "file": "blog4.html",
-        "tags": ["Web", "PWA", "JavaScript"]
+        "tags": [
+            "Physics",
+            "Cosmology",
+            "Theory"
+        ]
     },
     {
         "id": "5",
-        "title": "Bloomwatch: Satellite Data for Ecology",
-        "date": "Oct 12, 2024",
-        "category": "Space Tech",
-        "excerpt": "Processing NASA MODIS data to predict plant phenology. Our journey to winning the Space Apps challenge and the tech stack behind it.",
-        "image": "/assets/img/bloomwatch.png",
+        "title": "AI Agents in 2025: From Chatbots to Executors",
+        "date": "Dec 25, 2024",
+        "category": "Artificial Intelligence",
+        "excerpt": "LLMs can now use tools. Why autonomous agents taking action is the next massive shift in AI capability.",
+        "image": "../assets/img/blog/dev.png",
         "file": "blog5.html",
-        "tags": ["NASA", "Data Science", "Space"]
+        "tags": [
+            "AI",
+            "Agents",
+            "Automation"
+        ]
+    },
+    {
+        "id": "6",
+        "title": "Ethical Hacking: The Recon Phase",
+        "date": "Dec 20, 2024",
+        "category": "Cybersecurity",
+        "excerpt": "You can't hack what you can't see. Why 90% of a successful penetration test is passive and active reconnaissance.",
+        "image": "../assets/img/blog/security.png",
+        "file": "blog6.html",
+        "tags": [
+            "Hacking",
+            "Recon",
+            "Tutorial"
+        ]
+    },
+    {
+        "id": "7",
+        "title": "The Simulation Hypothesis: Are We NPCs?",
+        "date": "Dec 18, 2024",
+        "category": "Physics",
+        "excerpt": "Analyzing Nick Bostrom's argument and the physics limits that might reveal the resolution of our reality.",
+        "image": "../assets/img/blog/space.png",
+        "file": "blog7.html",
+        "tags": [
+            "Philosophy",
+            "Simulation",
+            "Physics"
+        ]
+    },
+    {
+        "id": "8",
+        "title": "Dark Matter: The Invisible Galaxy Glue",
+        "date": "Dec 14, 2024",
+        "category": "Physics",
+        "excerpt": "85% of the universe is missing. Looking at WIMPs, Axions, and modified gravity theories.",
+        "image": "../assets/img/blog/space.png",
+        "file": "blog8.html",
+        "tags": [
+            "Space",
+            "Dark Matter",
+            "Research"
+        ]
+    },
+    {
+        "id": "9",
+        "title": "React Server Components: The Pendulum Swings",
+        "date": "Dec 10, 2024",
+        "category": "Web Development",
+        "excerpt": "We moved everything to the client. Now we are moving it back. Understanding the RSC paradigm shift in Next.js.",
+        "image": "../assets/img/blog/dev.png",
+        "file": "blog9.html",
+        "tags": [
+            "React",
+            "Next.js",
+            "Frontend"
+        ]
+    },
+    {
+        "id": "10",
+        "title": "Post-Quantum Cryptography: Preparing for Q-Day",
+        "date": "Dec 05, 2024",
+        "category": "Cybersecurity",
+        "excerpt": "Shor's algorithm will eventually break RSA. NIST guidelines and the migration to lattice-based cryptography.",
+        "image": "../assets/img/blog/security.png",
+        "file": "blog10.html",
+        "tags": [
+            "Crypto",
+            "Quantum",
+            "Security"
+        ]
+    },
+    {
+        "id": "11",
+        "title": "CI/CD Pipelines: The DevOps Backbone",
+        "date": "Dec 01, 2024",
+        "category": "Web Development",
+        "excerpt": "Automating the path from commit to production. Best practices with GitHub Actions and Docker.",
+        "image": "../assets/img/blog/dev.png",
+        "file": "blog11.html",
+        "tags": [
+            "DevOps",
+            "CI/CD",
+            "Automation"
+        ]
+    },
+    {
+        "id": "12",
+        "title": "String Theory: Principles and Problems",
+        "date": "Nov 28, 2024",
+        "category": "Physics",
+        "excerpt": "Is everything made of vibrating strings? The elegance and the untestability of the theory of everything.",
+        "image": "../assets/img/blog/space.png",
+        "file": "blog12.html",
+        "tags": [
+            "Physics",
+            "String Theory",
+            "Cosmos"
+        ]
+    },
+    {
+        "id": "13",
+        "title": "Neuromorphic Computing: Brain Chips",
+        "date": "Nov 25, 2024",
+        "category": "Artificial Intelligence",
+        "excerpt": "Moving beyond von Neumann architecture. Mimicking neurons and synapses in silicon for efficiency.",
+        "image": "../assets/img/blog/dev.png",
+        "file": "blog13.html",
+        "tags": [
+            "AI",
+            "Hardware",
+            "Bio-mimicry"
+        ]
+    },
+    {
+        "id": "14",
+        "title": "Social Engineering: Hacking Humans",
+        "date": "Nov 20, 2024",
+        "category": "Cybersecurity",
+        "excerpt": "Why buy a zero-day exploit when you can just ask for the password? Phishing, Vishing, and Tailgating.",
+        "image": "../assets/img/blog/security.png",
+        "file": "blog14.html",
+        "tags": [
+            "Security",
+            "Social",
+            "Psychology"
+        ]
+    },
+    {
+        "id": "15",
+        "title": "Kubernetes: Orchestrating Chaos",
+        "date": "Nov 15, 2024",
+        "category": "Web Development",
+        "excerpt": "Managing containers at scale. Pods, Deployments, and Services explained for the uninitiated.",
+        "image": "../assets/img/blog/dev.png",
+        "file": "blog15.html",
+        "tags": [
+            "DevOps",
+            "K8s",
+            "Cloud"
+        ]
+    },
+    {
+        "id": "16",
+        "title": "Black Holes: The Event Horizon",
+        "date": "Nov 10, 2024",
+        "category": "Physics",
+        "excerpt": "The point of no return. What happens to time and space near a singularity?",
+        "image": "../assets/img/blog/space.png",
+        "file": "blog16.html",
+        "tags": [
+            "Space",
+            "Black Holes",
+            "Gravity"
+        ]
+    },
+    {
+        "id": "17",
+        "title": "Blockchain: Sharding & Layer 2",
+        "date": "Nov 05, 2024",
+        "category": "Web Development",
+        "excerpt": "Solving the trilemma of Decentralization, Security, and Scalability. Rollups and Sidechains.",
+        "image": "../assets/img/blog/dev.png",
+        "file": "blog17.html",
+        "tags": [
+            "Crypto",
+            "Web3",
+            "Tech"
+        ]
+    },
+    {
+        "id": "18",
+        "title": "WebAssembly: The Universal Binary",
+        "date": "Oct 30, 2024",
+        "category": "Web Development",
+        "excerpt": "Running C++ and Rust in the browser at near-native speed. The end of the JavaScript monopoly?",
+        "image": "../assets/img/blog/dev.png",
+        "file": "blog18.html",
+        "tags": [
+            "Wasm",
+            "Web",
+            "Performance"
+        ]
+    },
+    {
+        "id": "19",
+        "title": "IoT Firmware Hacking",
+        "date": "Oct 25, 2024",
+        "category": "Cybersecurity",
+        "excerpt": "Extracting filesystems from SPI flash chips and reverse engineering binaries with Ghidra.",
+        "image": "../assets/img/blog/security.png",
+        "file": "blog19.html",
+        "tags": [
+            "IoT",
+            "Hacking",
+            "ReverseEng"
+        ]
+    },
+    {
+        "id": "20",
+        "title": "Time Crystals: Perpetual Motion?",
+        "date": "Oct 20, 2024",
+        "category": "Quantum Physics",
+        "excerpt": "A new phase of matter that repeats in time rather than space. Breaking time-translation symmetry.",
+        "image": "../assets/img/blog/quantum.png",
+        "file": "blog20.html",
+        "tags": [
+            "Physics",
+            "Quantum",
+            "Matter"
+        ]
     }
 ]
