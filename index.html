@@ -172,6 +172,14 @@
             const overlay = document.getElementById('begin-overlay');
             if (!overlay) return;
 
+            // Check if mobile (touch device and small screen)
+            const isMobile = 'ontouchstart' in window && window.innerWidth <= 768;
+
+            if (!isMobile) {
+                overlay.remove(); // Remove immediately if not mobile
+                return;
+            }
+
             // Trigger on first *gesture-safe* interaction
             const gestureEvents = ['click', 'touchstart', 'pointerdown'];
             const enterFullscreen = () => {
@@ -476,21 +484,7 @@
     </div>
     </section>
 
-    <!-- Utilities Section -->
-    <section id="utilities">
-        <div class="section-header">
-            <div class="section-label">TOOLBOX</div>
-            <h2 class="section-title">Office Hero Utilities</h2>
-            <p class="section-subtitle">A suite of browser-based tools for productivity and document management</p>
-        </div>
-        <div style="text-align: center; margin-top: 40px;">
-            <p style="margin-bottom: 30px; font-size: 1.2rem; color: var(--text-secondary);">I have moved my suite of
-                15+ developer and office tools to a dedicated page.</p>
-            <a href="tools.html" class="btn btn-primary">
-                <i class="fas fa-toolbox"></i> Open Utilities Dashboard
-            </a>
-        </div>
-    </section>
+
 
     <!-- Projects Section -->
     <section id="projects">
