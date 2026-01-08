@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Blog | Hari Nandan K</title>
+    <meta name="description" content="Thoughts, tutorials, and insights on AI, Tech, and Product Development.">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="assets/css/style-custom.css?v=2">
+    <link rel="stylesheet" href="style.css?v=2">
+
+    <style>
+        .blog-header {
+            padding-top: 150px;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 100px;
+        }
+
+        .blog-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border-color: var(--accent);
+        }
+
+        .blog-image {
+            height: 200px;
+            background: var(--glass-bg-hover);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .blog-card:hover .blog-image img {
+            transform: scale(1.05);
+        }
+
+        .blog-content {
+            padding: 30px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-meta {
+            font-size: 0.85rem;
+            color: var(--text-tertiary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .blog-meta i {
+            color: var(--accent);
+        }
+
+        .blog-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .blog-excerpt {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex: 1;
+        }
+
+        .read-more {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: auto;
+        }
+
+        .read-more i {
+            transition: transform 0.3s ease;
+        }
+
+        .blog-card:hover .read-more i {
+            transform: translateX(5px);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- Canvas Background -->
+    <div id="canvas-container"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">JA</div>
+            <ul class="nav-links">
+                <li><a href="index.html#home" class="nav-link">Home</a></li>
+                <li><a href="index.html#about" class="nav-link">About Me</a></li>
+                <li><a href="tools.html" class="nav-link">Utilities</a></li>
+                <li><a href="blog.html" class="nav-link active">Blog</a></li>
+                <li><a href="index.html#projects" class="nav-link">My Projects</a></li>
+                <li><a href="bio.htm" class="nav-link">Bio</a></li>
+            </ul>
+            <a href="index.html#contact" class="nav-cta">Let's Talk</a><br>
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <section class="blog-header">
+            <div class="section-label">WRITINGS</div>
+            <h1 class="section-title">Latest Knowledge</h1>
+            <p class="section-subtitle">Insights, tutorials, and thoughts on technology, AI, and the future.</p>
+        </section>
+
+        <div class="blog-grid">
+            <!-- Article 1 -->
+            <a href="#" class="blog-card">
+                <div class="blog-image">
+                    <!-- Placeholder color/gradient for now if no image -->
+                    <div style="width:100%; height:100%; background: linear-gradient(135deg, #0052cc, #00a3ff);"></div>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span><i class="far fa-calendar"></i> Jan 04, 2025</span>
+                        <span><i class="far fa-folder"></i> Artificial Intelligence</span>
+                    </div>
+                    <h3 class="blog-title">The Evolution of LLMs: From GPT-3 to Agentic AI</h3>
+                    <p class="blog-excerpt">Exploring how Large Language Models are shifting from passive text
+                        generators to active agents capable of reasoning, planning, and executing complex tasks.</p>
+                    <div class="read-more">
+                        Read Article <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Article 2 -->
+            <a href="#" class="blog-card">
+                <div class="blog-image">
+                    <div style="width:100%; height:100%; background: linear-gradient(135deg, #7c3aed, #4f46e5);"></div>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span><i class="far fa-calendar"></i> Dec 28, 2024</span>
+                        <span><i class="far fa-folder"></i> Web Development</span>
+                    </div>
+                    <h3 class="blog-title">Building High-Performance PWAs in 2025</h3>
+                    <p class="blog-excerpt">A deep dive into modern caching strategies, Service Workers, and
+                        offline-first architecture for the next generation of web apps.</p>
+                    <div class="read-more">
+                        Read Article <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Article 3 -->
+            <a href="#" class="blog-card">
+                <div class="blog-image">
+                    <div style="width:100%; height:100%; background: linear-gradient(135deg, #00a3ff, #00ff9d);"></div>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span><i class="far fa-calendar"></i> Dec 15, 2024</span>
+                        <span><i class="far fa-folder"></i> Quantum Physics</span>
+                    </div>
+                    <h3 class="blog-title">Understanding the Chronon Model</h3>
+                    <p class="blog-excerpt">Breaking down my research on discrete spacetime intervals and their
+                        implications for unified field theories.</p>
+                    <div class="read-more">
+                        Read Article <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content" style="text-align: center; padding: 40px; color: var(--text-secondary);">
+            <p>&copy; 2025 Hari Nandan K. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="assets/js/performance.js"></script>
+    <script src="assets/js/main.js?v=2"></script>
+</body>
+
+</html>
