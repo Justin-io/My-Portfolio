@@ -425,22 +425,21 @@
                 </div>
             </div>
             <div class="about-visual">
-                <div class="about-image-container marquee-container"
+                <div class="about-image-container" id="about-slideshow-container"
                     style="position: relative; overflow: hidden; border-radius: 30px; height: 500px;">
-                    <!-- Image Marquee -->
-                    <div class="marquee-content">
-                        <!-- Set 1 -->
-                        <img src="assets/img/me.jpg" alt="Justin Alexia - Cybersecurity" class="about-marquee-img">
-                        <img src="assets/img/bng1.jpeg" alt="HOPE IoT Camp" class="about-marquee-img">
-                        <img src="assets/img/bng3.jpeg" alt="Quantum Research" class="about-marquee-img">
-                        <img src="assets/img/bng4.jpeg" alt="TexidoMeg Platform" class="about-marquee-img">
-                        <img src="assets/img/bng5.png" alt="Keltron Internship" class="about-marquee-img">
-                        <!-- Set 2 (Duplicate for seamless loop) -->
-                        <img src="assets/img/me.jpg" alt="Justin Alexia - Cybersecurity" class="about-marquee-img">
-                        <img src="assets/img/bng1.jpeg" alt="HOPE IoT Camp" class="about-marquee-img">
-                        <img src="assets/img/bng3.jpeg" alt="Quantum Research" class="about-marquee-img">
-                        <img src="assets/img/bng4.jpeg" alt="TexidoMeg Platform" class="about-marquee-img">
-                        <img src="assets/img/bng5.png" alt="Keltron Internship" class="about-marquee-img">
+                    <!-- Image Slides -->
+                    <div id="image-slides" style="position: relative; width: 100%; height: 100%;">
+                        <img src="assets/img/me.jpg" alt="Justin Alexia - Cybersecurity"
+                            class="about-image-slide active"
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 1; transition: opacity 1s ease-in-out;">
+                        <img src="assets/img/bng1.jpeg" alt="HOPE IoT Camp" class="about-image-slide"
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1s ease-in-out;">
+                        <img src="assets/img/bng3.jpeg" alt="Quantum Research" class="about-image-slide"
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1s ease-in-out;">
+                        <img src="assets/img/bng4.jpeg" alt="TexidoMeg Platform" class="about-image-slide"
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1s ease-in-out;">
+                        <img src="assets/img/bng5.png" alt="Keltron Internship" class="about-image-slide"
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1s ease-in-out;">
                     </div>
 
                     <!-- Overlay -->
@@ -451,6 +450,26 @@
                         </p>
                     </div>
                 </div>
+
+                <script>
+                    // Simple Crossover Slideshow Logic
+                    (function () {
+                        const slides = document.querySelectorAll('.about-image-slide');
+                        let currentIndex = 0;
+
+                        function nextSlide() {
+                            const currentImg = slides[currentIndex];
+                            currentImg.style.opacity = 0; // Fade out
+
+                            currentIndex = (currentIndex + 1) % slides.length;
+
+                            const nextImg = slides[currentIndex];
+                            nextImg.style.opacity = 1; // Fade in
+                        }
+
+                        setInterval(nextSlide, 3500);
+                    })();
+                </script>
             </div>
         </div>
     </section>
