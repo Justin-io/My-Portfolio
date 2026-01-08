@@ -63,7 +63,8 @@ function initThreeJS() {
         posArray[i + 2] = (Math.random() - 0.5) * 20;
 
         const color = new THREE.Color();
-        color.setHSL(Math.random() * 0.2 + 0.5, 0.8, 0.6);
+        // Darker blue/black colors for light theme
+        color.setHSL(Math.random() * 0.2 + 0.5, 0.8, 0.3); // Lower lightness
         colorsArray[i] = color.r;
         colorsArray[i + 1] = color.g;
         colorsArray[i + 2] = color.b;
@@ -77,7 +78,7 @@ function initThreeJS() {
         vertexColors: true,
         transparent: true,
         opacity: 0.8,
-        blending: THREE.AdditiveBlending
+        blending: THREE.NormalBlending // Normal blending for visibility on white
     });
 
     const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
@@ -86,7 +87,7 @@ function initThreeJS() {
     // Create geometric shapes
     const geometry1 = new THREE.IcosahedronGeometry(2, 1);
     const material1 = new THREE.MeshPhongMaterial({
-        color: 0x0066ff,
+        color: 0x003366, // Darker Blue
         wireframe: true,
         transparent: true,
         opacity: 0.1
@@ -97,7 +98,7 @@ function initThreeJS() {
 
     const geometry2 = new THREE.TorusKnotGeometry(1, 0.3, 100, 16);
     const material2 = new THREE.MeshPhongMaterial({
-        color: 0x00d4ff,
+        color: 0x005580, // Darker Teal
         wireframe: true,
         transparent: true,
         opacity: 0.1

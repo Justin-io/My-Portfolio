@@ -423,8 +423,8 @@
         }
 
         .jarvis-voice::before {
-            content: "" ";
- position: absolute;
+            content: "\201C";
+            position: absolute;
             top: -10px;
             left: 10px;
             font-size: 3rem;
@@ -432,8 +432,8 @@
         }
 
         .jarvis-voice::after {
-            content: "" ";
- position: absolute;
+            content: "\201D";
+            position: absolute;
             bottom: -30px;
             right: 10px;
             font-size: 3rem;
@@ -823,6 +823,21 @@
                 }
             });
         })();
+
+        // Decrypt contacts
+        function decryptContacts() {
+            return encryptedContacts.map(contact => {
+                try {
+                    return {
+                        name: atob(contact.name),
+                        phone: atob(contact.phone)
+                    };
+                } catch (e) {
+                    console.error('Decryption error', e);
+                    return { name: 'Unknown', phone: 'Unknown' };
+                }
+            });
+        }
 
         // Initialize variables
         let failedAttempts = parseInt(localStorage.getItem('failedAttempts') || '0');
