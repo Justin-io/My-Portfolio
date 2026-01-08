@@ -1,23 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IRON VAULT - SECURE CONTACT SYSTEM</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-      <script src="assets/js/main.js"></script>
+    <script src="assets/js/main.js?v=2"></script>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
-        
+
         * {
             font-family: 'Rajdhani', sans-serif;
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             background: #000;
             color: #fff;
@@ -25,20 +26,20 @@
             overflow-x: hidden;
             position: relative;
         }
-        
+
         .iron-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
+            background:
                 radial-gradient(circle at 20% 30%, rgba(218, 165, 32, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 80% 70%, rgba(255, 0, 0, 0.1) 0%, transparent 50%),
                 linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
             z-index: -1;
         }
-        
+
         .arc-reactor {
             position: fixed;
             top: 20px;
@@ -51,7 +52,7 @@
             animation: pulse 2s infinite;
             z-index: 10;
         }
-        
+
         .arc-reactor::before {
             content: "";
             position: absolute;
@@ -62,7 +63,7 @@
             border-radius: 50%;
             background: radial-gradient(circle, #fff 0%, #d4af37 50%, transparent 70%);
         }
-        
+
         .arc-reactor::after {
             content: "";
             position: absolute;
@@ -74,12 +75,19 @@
             background: #fff;
             box-shadow: 0 0 10px #fff;
         }
-        
+
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -87,14 +95,14 @@
             position: relative;
             z-index: 1;
         }
-        
+
         .header {
             text-align: center;
             margin-bottom: 40px;
             padding: 20px;
             position: relative;
         }
-        
+
         .header h1 {
             font-family: 'Orbitron', monospace;
             font-weight: 900;
@@ -106,15 +114,17 @@
             margin-bottom: 10px;
             letter-spacing: 3px;
         }
-        
+
         .header p {
             font-size: 1.2rem;
             color: #d4af37;
             font-weight: 300;
             letter-spacing: 2px;
         }
-        
-        .auth-container, .vault-container, .blocked-container {
+
+        .auth-container,
+        .vault-container,
+        .blocked-container {
             background: linear-gradient(135deg, rgba(20, 20, 20, 0.9) 0%, rgba(10, 10, 10, 0.95) 100%);
             border: 1px solid #d4af37;
             border-radius: 15px;
@@ -124,24 +134,27 @@
             position: relative;
             overflow: hidden;
         }
-        
-        .auth-container::before, .vault-container::before, .blocked-container::before {
+
+        .auth-container::before,
+        .vault-container::before,
+        .blocked-container::before {
             content: "";
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
+            background:
                 linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.05) 50%, transparent 100%),
                 linear-gradient(0deg, transparent 0%, rgba(212, 175, 55, 0.05) 50%, transparent 100%);
             pointer-events: none;
         }
-        
-        .vault-container, .blocked-container {
+
+        .vault-container,
+        .blocked-container {
             display: none;
         }
-        
+
         .form-control {
             background: rgba(0, 0, 0, 0.7);
             border: 1px solid #d4af37;
@@ -151,14 +164,14 @@
             font-size: 1.1rem;
             transition: all 0.3s;
         }
-        
+
         .form-control:focus {
             background: rgba(0, 0, 0, 0.8);
             border-color: #d4af37;
             color: #fff;
             box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.25);
         }
-        
+
         .btn {
             border-radius: 10px;
             font-weight: 600;
@@ -169,49 +182,49 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        
+
         .btn-primary {
             background: linear-gradient(90deg, #d4af37, #f1c40f);
             color: #000;
         }
-        
+
         .btn-primary:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
         }
-        
+
         .btn-success {
             background: linear-gradient(90deg, #2ecc71, #27ae60);
             color: #fff;
         }
-        
+
         .btn-success:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 20px rgba(46, 204, 113, 0.3);
         }
-        
+
         .btn-danger {
             background: linear-gradient(90deg, #e74c3c, #c0392b);
             color: #fff;
         }
-        
+
         .btn-danger:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 20px rgba(231, 76, 60, 0.3);
         }
-        
+
         .btn-outline {
             background: transparent;
             border: 2px solid #d4af37;
             color: #d4af37;
         }
-        
+
         .btn-outline:hover {
             background: rgba(212, 175, 55, 0.1);
             transform: translateY(-3px);
             box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
         }
-        
+
         .search-section {
             background: rgba(0, 0, 0, 0.5);
             border-radius: 15px;
@@ -219,14 +232,14 @@
             margin-bottom: 30px;
             border: 1px solid rgba(212, 175, 55, 0.3);
         }
-        
+
         .search-section h3 {
             color: #d4af37;
             margin-bottom: 20px;
             font-weight: 700;
             font-family: 'Orbitron', monospace;
         }
-        
+
         .contact-item {
             background: rgba(0, 0, 0, 0.5);
             border-radius: 15px;
@@ -235,29 +248,29 @@
             border-left: 4px solid #d4af37;
             transition: all 0.3s;
         }
-        
+
         .contact-item:hover {
             transform: translateX(5px);
             box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
         }
-        
+
         .contact-item h5 {
             color: #d4af37;
             font-weight: 700;
             margin-bottom: 10px;
             font-size: 1.3rem;
         }
-        
+
         .contact-item p {
             margin-bottom: 15px;
             font-size: 1.1rem;
         }
-        
+
         .contact-actions {
             display: flex;
             gap: 10px;
         }
-        
+
         .timer-container {
             position: fixed;
             top: 20px;
@@ -270,14 +283,14 @@
             display: none;
             box-shadow: 0 10px 30px rgba(231, 76, 60, 0.3);
         }
-        
+
         .timer-container .timer-label {
             color: #e74c3c;
             font-weight: 600;
             margin-bottom: 5px;
             text-align: center;
         }
-        
+
         .timer-container .timer {
             color: #e74c3c;
             font-weight: 700;
@@ -285,7 +298,7 @@
             text-align: center;
             font-family: 'Orbitron', monospace;
         }
-        
+
         .notification {
             position: fixed;
             top: 20px;
@@ -301,19 +314,19 @@
             max-width: 80%;
             text-align: center;
         }
-        
+
         .notification .notification-title {
             color: #d4af37;
             font-weight: 700;
             margin-bottom: 10px;
             font-size: 1.2rem;
         }
-        
+
         .notification .notification-message {
             color: #fff;
             font-weight: 500;
         }
-        
+
         .loading-overlay {
             position: fixed;
             top: 0;
@@ -327,11 +340,11 @@
             z-index: 2000;
             display: none;
         }
-        
+
         .loading-content {
             text-align: center;
         }
-        
+
         .loading-spinner {
             width: 80px;
             height: 80px;
@@ -341,17 +354,19 @@
             animation: spin 1s ease-in-out infinite;
             margin: 0 auto 20px;
         }
-        
+
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
-        
+
         .loading-text {
             color: #d4af37;
             font-weight: 600;
             font-size: 1.2rem;
         }
-        
+
         .security-warning {
             background: rgba(231, 76, 60, 0.1);
             border: 1px solid #e74c3c;
@@ -363,7 +378,7 @@
             display: none;
             font-weight: 600;
         }
-        
+
         .attempts-counter {
             text-align: center;
             margin-top: 20px;
@@ -371,7 +386,7 @@
             font-weight: 600;
             font-size: 1.1rem;
         }
-        
+
         .footer {
             text-align: center;
             margin-top: 50px;
@@ -380,14 +395,14 @@
             color: #666;
             border-top: 1px solid rgba(212, 175, 55, 0.2);
         }
-        
+
         .hologram-effect {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
+            background:
                 linear-gradient(0deg, transparent 24%, rgba(212, 175, 55, 0.05) 25%, rgba(212, 175, 55, 0.05) 26%, transparent 27%, transparent 74%, rgba(212, 175, 55, 0.05) 75%, rgba(212, 175, 55, 0.05) 76%, transparent 77%, transparent),
                 linear-gradient(90deg, transparent 24%, rgba(212, 175, 55, 0.05) 25%, rgba(212, 175, 55, 0.05) 26%, transparent 27%, transparent 74%, rgba(212, 175, 55, 0.05) 75%, rgba(212, 175, 55, 0.05) 76%, transparent 77%, transparent);
             background-size: 50px 50px;
@@ -395,7 +410,7 @@
             z-index: -1;
             opacity: 0.3;
         }
-        
+
         .jarvis-voice {
             background: rgba(0, 0, 0, 0.5);
             border: 1px solid #d4af37;
@@ -406,29 +421,29 @@
             position: relative;
             min-height: 60px;
         }
-        
+
         .jarvis-voice::before {
-            content: """;
-            position: absolute;
+            content: "" ";
+ position: absolute;
             top: -10px;
             left: 10px;
             font-size: 3rem;
             color: rgba(212, 175, 55, 0.3);
         }
-        
+
         .jarvis-voice::after {
-            content: """;
-            position: absolute;
+            content: "" ";
+ position: absolute;
             bottom: -30px;
             right: 10px;
             font-size: 3rem;
             color: rgba(212, 175, 55, 0.3);
         }
-        
+
         .jarvis-typing {
             display: inline-block;
         }
-        
+
         .jarvis-cursor {
             display: inline-block;
             width: 3px;
@@ -438,24 +453,31 @@
             vertical-align: text-bottom;
             margin-left: 2px;
         }
-        
+
         @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
         }
-        
+
         .empty-state {
             text-align: center;
             padding: 40px;
             color: #a0a0ff;
         }
-        
+
         .empty-state i {
             font-size: 4rem;
             margin-bottom: 20px;
             color: rgba(212, 175, 55, 0.3);
         }
-        
+
         .contact-card {
             background: rgba(0, 0, 0, 0.5);
             border-radius: 15px;
@@ -464,30 +486,30 @@
             border: 1px solid rgba(212, 175, 55, 0.3);
             transition: all 0.3s;
         }
-        
+
         .contact-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(212, 175, 55, 0.2);
         }
-        
+
         .contact-card h5 {
             color: #d4af37;
             font-weight: 700;
             margin-bottom: 15px;
             font-size: 1.3rem;
         }
-        
+
         .contact-card .number {
             font-size: 1.2rem;
             margin-bottom: 15px;
             color: #fff;
         }
-        
+
         .contact-card .actions {
             display: flex;
             gap: 10px;
         }
-        
+
         .system-status {
             position: fixed;
             bottom: 20px;
@@ -500,28 +522,28 @@
             display: none;
             box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
         }
-        
+
         .system-status .status-item {
             display: flex;
             align-items: center;
             margin-bottom: 5px;
         }
-        
+
         .system-status .status-item:last-child {
             margin-bottom: 0;
         }
-        
+
         .system-status .status-icon {
             color: #2ecc71;
             margin-right: 10px;
         }
-        
+
         .system-status .status-text {
             color: #d4af37;
             font-size: 0.9rem;
             font-weight: 600;
         }
-        
+
         .power-button {
             position: fixed;
             bottom: 20px;
@@ -539,29 +561,30 @@
             transition: all 0.3s;
             display: none;
         }
-        
+
         .power-button:hover {
             transform: scale(1.1);
             box-shadow: 0 0 25px rgba(231, 76, 60, 0.8);
         }
     </style>
 </head>
+
 <body>
     <div class="iron-bg"></div>
     <div class="arc-reactor"></div>
-    
+
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-content">
             <div class="loading-spinner"></div>
             <div class="loading-text" id="loadingText">INITIALIZING J.A.R.V.I.S. PROTOCOLS...</div>
         </div>
     </div>
-    
+
     <div class="notification" id="notification">
         <div class="notification-title" id="notificationTitle">J.A.R.V.I.S. NOTIFICATION</div>
         <div class="notification-message" id="notificationMessage">System message</div>
     </div>
-    
+
     <div class="system-status" id="systemStatus">
         <div class="status-item">
             <i class="fas fa-shield-alt status-icon"></i>
@@ -576,30 +599,32 @@
             <span class="status-text">ENCRYPTION: AES-256</span>
         </div>
     </div>
-    
+
     <button class="power-button" id="powerButton" title="Emergency Shutdown">
         <i class="fas fa-power-off"></i>
     </button>
-    
+
     <div class="container">
         <div class="header">
             <h1>IRON VAULT</h1>
             <p>SECURE CONTACT MANAGEMENT SYSTEM</p>
         </div>
-        
+
         <!-- Authentication Container -->
         <div class="auth-container" id="authContainer">
             <div class="security-warning" id="securityWarning">
-                <i class="fas fa-exclamation-triangle me-2"></i> SECURITY ALERT: DEVELOPER TOOLS DETECTED. INITIATING COUNTERMEASURES...
+                <i class="fas fa-exclamation-triangle me-2"></i> SECURITY ALERT: DEVELOPER TOOLS DETECTED. INITIATING
+                COUNTERMEASURES...
             </div>
-            
+
             <h2 class="text-center mb-4">SECURITY AUTHENTICATION</h2>
             <p class="text-center mb-4">Enter your access code to unlock the vault</p>
-            
+
             <form id="loginForm">
                 <div class="mb-4">
                     <div class="input-group">
-                        <input type="password" class="form-control" id="password" placeholder="Enter access code" required>
+                        <input type="password" class="form-control" id="password" placeholder="Enter access code"
+                            required>
                         <button class="btn btn-outline" type="button" id="togglePassword">
                             <i class="fas fa-eye"></i>
                         </button>
@@ -609,16 +634,16 @@
                     <button type="submit" class="btn btn-primary">UNLOCK VAULT</button>
                 </div>
             </form>
-            
+
             <div class="attempts-counter" id="attemptsCounter">
                 REMAINING ATTEMPTS: <span id="remainingAttempts">2</span>
             </div>
-            
+
             <div class="jarvis-voice" id="jarvisLogin">
                 <span class="jarvis-typing"></span><span class="jarvis-cursor"></span>
             </div>
         </div>
-        
+
         <!-- Vault Container -->
         <div class="vault-container" id="vaultContainer">
             <div class="hologram-effect"></div>
@@ -628,7 +653,7 @@
                     <i class="fas fa-sign-out-alt me-2"></i>LOGOUT
                 </button>
             </div>
-            
+
             <!-- Search Section -->
             <div class="search-section">
                 <h3><i class="fas fa-search me-2"></i>CONTACT SEARCH</h3>
@@ -639,7 +664,7 @@
                     </button>
                 </div>
             </div>
-            
+
             <!-- Contacts List -->
             <div id="contactsList">
                 <div class="empty-state">
@@ -648,218 +673,219 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Blocked Container -->
         <div class="blocked-container" id="blockedContainer">
             <div class="hologram-effect"></div>
             <div class="text-center">
                 <i class="fas fa-ban fa-4x mb-4" style="color: #e74c3c;"></i>
                 <h2>ACCESS DENIED</h2>
-                <p class="mb-4">This device has been permanently blocked due to multiple failed authentication attempts.</p>
+                <p class="mb-4">This device has been permanently blocked due to multiple failed authentication attempts.
+                </p>
                 <p>Your device information has been logged and reported.</p>
                 <button class="btn btn-danger mt-3" onclick="redirectBlocked()">
                     <i class="fas fa-external-link-alt me-2"></i>LEAVE SYSTEM
                 </button>
             </div>
         </div>
-        
+
         <div class="footer">
             <p>© 2023 IRON VAULT | J.A.R.V.I.S. SECURE SYSTEM | ALL RIGHTS RESERVED</p>
         </div>
     </div>
-    
+
     <div class="timer-container" id="timerContainer">
         <div class="timer-label">SESSION TIME REMAINING:</div>
         <div class="timer" id="sessionTimer">00:30</div>
     </div>
 
     <script>
-    const encryptedContacts = [
-    { name: "VGhhbmF5IEtyaXNobmEgQ1U=", phone: "KzkxODI4MTcxNDUyMg==" },
-    { name: "RGhlZXJhanAgUHJhc2Fk", phone: "KzkxODg5MTAwNzAyMQ==" },
-    { name: "U2hhbW1hcyIs", phone: "KzkxNzc2MzYxNzQwNTg=" },
-    { name: "Umluc2hhZA==", phone: "KzkxODcxNDI5NzM0NQ==" },
-    { name: "QWRpdGh5YW4=", phone: "KzkxOTY1NjUxNTg4OQ==" },
-    { name: "TWlsYW4gUmFwaHk=", phone: "KzkxOTIwNzE2NjkyNg==" },
-    { name: "U2hpYmls", phone: "KzkxNzUxMTM4ODI5" },
-    { name: "QWRoZXJzaCBQIFByYW1vZA==", phone: "KzkxOTk5NTgyMzEwNw==" },
-    { name: "U3JlZW5hdCBTcmVlbmF0aA==", phone: "KzkxODg5MTYzMzI4MQ==" },
-    { name: "QWxlbiBTYW50aG9zaA==", phone: "KzkxOTc3ODA3NDk2MQ==" },
-    { name: "SGliYSBBYmR1bCBIYWtlZW0=", phone: "KzkxODcxNDM5NjE5NA==" },
-    { name: "QWFrYXNo", phone: "KzkxODA3ODQ0OTU1Mg==" },
-    { name: "QW5ha2hh", phone: "KzkxOTA3NDA0MDUzMg==" },
-    { name: "QXNoaWsgRGV2aWwgVGlnZXJzIE1vZHM=", phone: "KzkxIDgxMzkwIDUwODE0" },
-    { name: "QXRobHVsIEtyaXNobmE=", phone: "OTc4OTAgNTQ2ODM=" },
-    { name: "QXZpbiBTdW5ueQ==", phone: "KzkxODU5MDM1NTAwMw==" },
-    { name: "QmVuIChMdWNpIE1vZHMp", phone: "KzkxIDYyMzg3IDI3MzMy" },
-    { name: "RFIuIFNhbmRlZXAgU2ly", phone: "KzkxIDk0NDY4IDM0MzQ0" },
-    { name: "RFMgSE9E", phone: "OTc0NjggNzEyMDQ=" },
-    { name: "RGhhcmFtZXR0YW4gU21hc2FuYW0=", phone: "KzkxIDc3MzYyIDUxMDMy" },
-    { name: "RHJ1ZGhhbg==", phone: "KzkxIDczNTY0IDI1MjM5" },
-    { name: "SGFyaWtyaXNobmFuIEcgUg==", phone: "KzkxOTQ0NjYxMDQwNw==" },
-    { name: "SGliYSIgKFNlbmlvcik=", phone: "KzkxNjIzNTg5OTIzOQ==" },
-    { name: "SGliYSBBYmR1bCBIYWtlZW0=", phone: "KzkxOTYzMzkzOTkzMA==" },
-    { name: "SWhzYW4gKEJ0ZWNoKQ==", phone: "KzkxOTg0NjIwNzk3MQ==" },
-    { name: "SmFzaW0gKEpabW9kcyk=", phone: "KzkxIDgwODkyIDc2MzA4" },
-    { name: "Sm9zIFAgSm9tb24=", phone: "KzkxOTc0NjYxNjMzMQ==" },
-    { name: "S2FsaWRzIHZybw==", phone: "KzkxIDc3MzY3IDYzMjY5" },
-    { name: "TmFndWw=", phone: "KzkxODU0Nzg3Mzk5Ng==" },
-    { name: "TmFpdGhpaA==", phone: "KzkxIDgyODEwIDEwNTgx" },
-    { name: "TmFqaW0=", phone: "KzkxODcxNDUzMTk3NA==" },
-    { name: "UGhvIG5p eCBNb2Rz", phone: "KzkxIDgxNTcwIDQ1NzY0" },
-    { name: "UmFpaGFuYXRo", phone: "KzkxNzAzNDE2NjMzMQ==" },
-    { name: "UmFtemFu", phone: "KzkxNjI4MjA3MzgzMA==" },
-    { name: "UmlzaGFk", phone: "KzkxIDk5OTUyIDQzNTM3" },
-    { name: "U2FmdmFu", phone: "KzkxODcxNDE5NTE5MA==" },
-    { name: "RHAgU2hpa2hpbCBIb21l", phone: "KzkxIDc3MzY3IDU5ODk4" },
-    { name: "U2luYW4=", phone: "KzkxNjIzNTgzNDU3MA==" },
-    { name: "VHJlbmRTdG9yZSBSZXNlbGxlcg==", phone: "KzkxIDgzMzA4IDI0MDM0" },
-    { name: "VW1haXI=", phone: "KzkxODcxNDcxNDg4Mw==" },
-    { name: "REsgU0lSIG9n", phone: "NjI4MjYzMzQzNw==" }
-];
+        const encryptedContacts = [
+            { name: "VGhhbmF5IEtyaXNobmEgQ1U=", phone: "KzkxODI4MTcxNDUyMg==" },
+            { name: "RGhlZXJhanAgUHJhc2Fk", phone: "KzkxODg5MTAwNzAyMQ==" },
+            { name: "U2hhbW1hcyIs", phone: "KzkxNzc2MzYxNzQwNTg=" },
+            { name: "Umluc2hhZA==", phone: "KzkxODcxNDI5NzM0NQ==" },
+            { name: "QWRpdGh5YW4=", phone: "KzkxOTY1NjUxNTg4OQ==" },
+            { name: "TWlsYW4gUmFwaHk=", phone: "KzkxOTIwNzE2NjkyNg==" },
+            { name: "U2hpYmls", phone: "KzkxNzUxMTM4ODI5" },
+            { name: "QWRoZXJzaCBQIFByYW1vZA==", phone: "KzkxOTk5NTgyMzEwNw==" },
+            { name: "U3JlZW5hdCBTcmVlbmF0aA==", phone: "KzkxODg5MTYzMzI4MQ==" },
+            { name: "QWxlbiBTYW50aG9zaA==", phone: "KzkxOTc3ODA3NDk2MQ==" },
+            { name: "SGliYSBBYmR1bCBIYWtlZW0=", phone: "KzkxODcxNDM5NjE5NA==" },
+            { name: "QWFrYXNo", phone: "KzkxODA3ODQ0OTU1Mg==" },
+            { name: "QW5ha2hh", phone: "KzkxOTA3NDA0MDUzMg==" },
+            { name: "QXNoaWsgRGV2aWwgVGlnZXJzIE1vZHM=", phone: "KzkxIDgxMzkwIDUwODE0" },
+            { name: "QXRobHVsIEtyaXNobmE=", phone: "OTc4OTAgNTQ2ODM=" },
+            { name: "QXZpbiBTdW5ueQ==", phone: "KzkxODU5MDM1NTAwMw==" },
+            { name: "QmVuIChMdWNpIE1vZHMp", phone: "KzkxIDYyMzg3IDI3MzMy" },
+            { name: "RFIuIFNhbmRlZXAgU2ly", phone: "KzkxIDk0NDY4IDM0MzQ0" },
+            { name: "RFMgSE9E", phone: "OTc0NjggNzEyMDQ=" },
+            { name: "RGhhcmFtZXR0YW4gU21hc2FuYW0=", phone: "KzkxIDc3MzYyIDUxMDMy" },
+            { name: "RHJ1ZGhhbg==", phone: "KzkxIDczNTY0IDI1MjM5" },
+            { name: "SGFyaWtyaXNobmFuIEcgUg==", phone: "KzkxOTQ0NjYxMDQwNw==" },
+            { name: "SGliYSIgKFNlbmlvcik=", phone: "KzkxNjIzNTg5OTIzOQ==" },
+            { name: "SGliYSBBYmR1bCBIYWtlZW0=", phone: "KzkxOTYzMzkzOTkzMA==" },
+            { name: "SWhzYW4gKEJ0ZWNoKQ==", phone: "KzkxOTg0NjIwNzk3MQ==" },
+            { name: "SmFzaW0gKEpabW9kcyk=", phone: "KzkxIDgwODkyIDc2MzA4" },
+            { name: "Sm9zIFAgSm9tb24=", phone: "KzkxOTc0NjYxNjMzMQ==" },
+            { name: "S2FsaWRzIHZybw==", phone: "KzkxIDc3MzY3IDYzMjY5" },
+            { name: "TmFndWw=", phone: "KzkxODU0Nzg3Mzk5Ng==" },
+            { name: "TmFpdGhpaA==", phone: "KzkxIDgyODEwIDEwNTgx" },
+            { name: "TmFqaW0=", phone: "KzkxODcxNDUzMTk3NA==" },
+            { name: "UGhvIG5p eCBNb2Rz", phone: "KzkxIDgxNTcwIDQ1NzY0" },
+            { name: "UmFpaGFuYXRo", phone: "KzkxNzAzNDE2NjMzMQ==" },
+            { name: "UmFtemFu", phone: "KzkxNjI4MjA3MzgzMA==" },
+            { name: "UmlzaGFk", phone: "KzkxIDk5OTUyIDQzNTM3" },
+            { name: "U2FmdmFu", phone: "KzkxODcxNDE5NTE5MA==" },
+            { name: "RHAgU2hpa2hpbCBIb21l", phone: "KzkxIDc3MzY3IDU5ODk4" },
+            { name: "U2luYW4=", phone: "KzkxNjIzNTgzNDU3MA==" },
+            { name: "VHJlbmRTdG9yZSBSZXNlbGxlcg==", phone: "KzkxIDgzMzA4IDI0MDM0" },
+            { name: "VW1haXI=", phone: "KzkxODcxNDcxNDg4Mw==" },
+            { name: "REsgU0lSIG9n", phone: "NjI4MjYzMzQzNw==" }
+        ];
 
-    
 
-    // Show loading overlay
-    document.getElementById('loadingOverlay').style.display = 'flex';
 
-    // Security measures to prevent developer tools
-    (function() {
-        'use strict';
+        // Show loading overlay
+        document.getElementById('loadingOverlay').style.display = 'flex';
 
-        // Check if device is blocked
-        if (localStorage.getItem('deviceBlocked') === 'true') {
-            document.getElementById('authContainer').style.display = 'none';
-            document.getElementById('blockedContainer').style.display = 'block';
-            document.getElementById('loadingOverlay').style.display = 'none';
-            return;
-        }
+        // Security measures to prevent developer tools
+        (function () {
+            'use strict';
 
-        // Disable right-click
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-            return false;
-        });
-
-        // Disable common keyboard shortcuts
-        document.addEventListener('keydown', function(e) {
-            if (
-                e.keyCode === 123 || 
-                (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || 
-                (e.ctrlKey && e.keyCode === 85)
-            ) {
-                e.preventDefault();
-                showSecurityWarning();
-                return false;
+            // Check if device is blocked
+            if (localStorage.getItem('deviceBlocked') === 'true') {
+                document.getElementById('authContainer').style.display = 'none';
+                document.getElementById('blockedContainer').style.display = 'block';
+                document.getElementById('loadingOverlay').style.display = 'none';
+                return;
             }
-        });
 
-        // Check for dev tools open
-        let devtools = {open: false, orientation: null};
-        const threshold = 160;
+            // Disable right-click
+            document.addEventListener('contextmenu', function (e) {
+                e.preventDefault();
+                return false;
+            });
 
-        setInterval(function() {
-            if (window.outerHeight - window.innerHeight > threshold || 
-                window.outerWidth - window.innerWidth > threshold) {
-                if (!devtools.open) {
-                    devtools.open = true;
+            // Disable common keyboard shortcuts
+            document.addEventListener('keydown', function (e) {
+                if (
+                    e.keyCode === 123 ||
+                    (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) ||
+                    (e.ctrlKey && e.keyCode === 85)
+                ) {
+                    e.preventDefault();
                     showSecurityWarning();
+                    return false;
                 }
-            } else {
-                devtools.open = false;
+            });
+
+            // Check for dev tools open
+            let devtools = { open: false, orientation: null };
+            const threshold = 160;
+
+            setInterval(function () {
+                if (window.outerHeight - window.innerHeight > threshold ||
+                    window.outerWidth - window.innerWidth > threshold) {
+                    if (!devtools.open) {
+                        devtools.open = true;
+                        showSecurityWarning();
+                    }
+                } else {
+                    devtools.open = false;
+                }
+            }, 500);
+
+            // Function to show security warning and redirect
+            function showSecurityWarning() {
+                document.getElementById('securityWarning').style.display = 'block';
+                setTimeout(function () {
+                    window.location.href = 'https://www.starkindustries.com'; // Fixed: no extra spaces
+                }, 2000);
             }
-        }, 500);
 
-        // Function to show security warning and redirect
-        function showSecurityWarning() {
-            document.getElementById('securityWarning').style.display = 'block';
-            setTimeout(function() {
-                window.location.href = 'https://www.starkindustries.com'; // Fixed: no extra spaces
-            }, 2000);
-        }
+            // Console warning
+            console.clear();
+            console.log("%cIRON VAULT SECURITY ALERT: Unauthorized access to this system is prohibited.", "color: #d4af37; font-size: 20px; font-weight: bold;");
+            console.log("%cYour IP address has been logged. J.A.R.V.I.S. is monitoring all activities on this system.", "color: #d4af37; font-size: 16px;");
 
-        // Console warning
-        console.clear();
-        console.log("%cIRON VAULT SECURITY ALERT: Unauthorized access to this system is prohibited.", "color: #d4af37; font-size: 20px; font-weight: bold;");
-        console.log("%cYour IP address has been logged. J.A.R.V.I.S. is monitoring all activities on this system.", "color: #d4af37; font-size: 16px;");
-
-        // Disable drag and drop
-        document.addEventListener('dragstart', function(e) {
-            e.preventDefault();
-            return false;
-        });
-
-        // Disable text selection (partial)
-        document.addEventListener('selectstart', function(e) {
-            if (document.getElementById('vaultContainer').style.display !== 'none') {
+            // Disable drag and drop
+            document.addEventListener('dragstart', function (e) {
                 e.preventDefault();
                 return false;
-            }
-        });
-    })();
+            });
 
-    // Initialize variables
-    let failedAttempts = parseInt(localStorage.getItem('failedAttempts') || '0');
-    let sessionTimer;
-    let timeRemaining = 30; // Reset to 30s each session
-    let contacts = [];
+            // Disable text selection (partial)
+            document.addEventListener('selectstart', function (e) {
+                if (document.getElementById('vaultContainer').style.display !== 'none') {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        })();
 
-    // Update attempts counter on page load
-    document.getElementById('remainingAttempts').textContent = 2 - failedAttempts;
+        // Initialize variables
+        let failedAttempts = parseInt(localStorage.getItem('failedAttempts') || '0');
+        let sessionTimer;
+        let timeRemaining = 30; // Reset to 30s each session
+        let contacts = [];
 
-    // Type J.A.R.V.I.S. message effect
-    function typeJarvisMessage(elementId, message) {
-        const element = document.getElementById(elementId);
-        const typingElement = element.querySelector('.jarvis-typing');
-        const cursorElement = element.querySelector('.jarvis-cursor');
+        // Update attempts counter on page load
+        document.getElementById('remainingAttempts').textContent = 2 - failedAttempts;
 
-        typingElement.textContent = '';
-        let i = 0;
-        const typingInterval = setInterval(function() {
-            if (i < message.length) {
-                typingElement.textContent += message.charAt(i);
-                i++;
-            } else {
-                clearInterval(typingInterval);
-            }
-        }, 50);
-    }
+        // Type J.A.R.V.I.S. message effect
+        function typeJarvisMessage(elementId, message) {
+            const element = document.getElementById(elementId);
+            const typingElement = element.querySelector('.jarvis-typing');
+            const cursorElement = element.querySelector('.jarvis-cursor');
 
-    // Show notification
-    function showNotification(title, message) {
-        const notification = document.getElementById('notification');
-        const notificationTitle = document.getElementById('notificationTitle');
-        const notificationMessage = document.getElementById('notificationMessage');
+            typingElement.textContent = '';
+            let i = 0;
+            const typingInterval = setInterval(function () {
+                if (i < message.length) {
+                    typingElement.textContent += message.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(typingInterval);
+                }
+            }, 50);
+        }
 
-        notificationTitle.textContent = title;
-        notificationMessage.textContent = message;
+        // Show notification
+        function showNotification(title, message) {
+            const notification = document.getElementById('notification');
+            const notificationTitle = document.getElementById('notificationTitle');
+            const notificationMessage = document.getElementById('notificationMessage');
 
-        notification.style.display = 'block';
+            notificationTitle.textContent = title;
+            notificationMessage.textContent = message;
 
-        setTimeout(function() {
-            notification.style.display = 'none';
-        }, 3000);
-    }
+            notification.style.display = 'block';
 
-    // Display contacts
-    function displayContacts(contactsToDisplay = contacts) {
-        const container = document.getElementById('contactsList');
+            setTimeout(function () {
+                notification.style.display = 'none';
+            }, 3000);
+        }
 
-        if (contactsToDisplay.length === 0) {
-            container.innerHTML = `
+        // Display contacts
+        function displayContacts(contactsToDisplay = contacts) {
+            const container = document.getElementById('contactsList');
+
+            if (contactsToDisplay.length === 0) {
+                container.innerHTML = `
                 <div class="empty-state">
                     <i class="fas fa-user-slash"></i>
                     <p>No contacts found matching your search.</p>
                 </div>
             `;
-            return;
-        }
+                return;
+            }
 
-        container.innerHTML = '';
-        contactsToDisplay.forEach((contact, index) => {
-            const contactCard = document.createElement('div');
-            contactCard.className = 'contact-card';
-            contactCard.innerHTML = `
+            container.innerHTML = '';
+            contactsToDisplay.forEach((contact, index) => {
+                const contactCard = document.createElement('div');
+                contactCard.className = 'contact-card';
+                contactCard.innerHTML = `
                 <h5>${contact.name}</h5>
                 <div class="number">${contact.phone}</div>
                 <div class="actions">
@@ -871,197 +897,198 @@
                     </button>
                 </div>
             `;
-            container.appendChild(contactCard);
-        });
-    }
-
-    // Search contacts
-    function searchContacts() {
-        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-        if (searchTerm === '') {
-            displayContacts();
-            return;
+                container.appendChild(contactCard);
+            });
         }
-        const filteredContacts = contacts.filter(contact => 
-            contact.name.toLowerCase().includes(searchTerm) || 
-            contact.phone.includes(searchTerm)
-        );
-        displayContacts(filteredContacts);
-    }
 
-    // Password validation
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const password = document.getElementById('password').value;
+        // Search contacts
+        function searchContacts() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            if (searchTerm === '') {
+                displayContacts();
+                return;
+            }
+            const filteredContacts = contacts.filter(contact =>
+                contact.name.toLowerCase().includes(searchTerm) ||
+                contact.phone.includes(searchTerm)
+            );
+            displayContacts(filteredContacts);
+        }
 
-        if (password === 'justin3237') {
-            // Reset attempts
-            localStorage.setItem('failedAttempts', '0');
-            failedAttempts = 0;
+        // Password validation
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const password = document.getElementById('password').value;
 
-            // Show vault
-            document.getElementById('authContainer').style.display = 'none';
-            document.getElementById('vaultContainer').style.display = 'block';
-            document.getElementById('timerContainer').style.display = 'block';
-            document.getElementById('systemStatus').style.display = 'block';
-            document.getElementById('powerButton').style.display = 'block';
+            if (password === 'justin3237') {
+                // Reset attempts
+                localStorage.setItem('failedAttempts', '0');
+                failedAttempts = 0;
 
-            // Decrypt and display contacts
-            contacts = decryptContacts();
-            displayContacts();
+                // Show vault
+                document.getElementById('authContainer').style.display = 'none';
+                document.getElementById('vaultContainer').style.display = 'block';
+                document.getElementById('timerContainer').style.display = 'block';
+                document.getElementById('systemStatus').style.display = 'block';
+                document.getElementById('powerButton').style.display = 'block';
 
-            // Reset and start timer
-            timeRemaining = 30; // Reset time
-            document.getElementById('sessionTimer').style.color = '#e74c3c'; // Reset color
-            startSessionTimer();
+                // Decrypt and display contacts
+                contacts = decryptContacts();
+                displayContacts();
 
-            // Messages
-            typeJarvisMessage('jarvisLogin', 'Access granted, sir. All contacts decrypted and ready for your command.');
-            showNotification('ACCESS GRANTED', 'Vault unlocked successfully.');
-        } else {
-            failedAttempts++;
-            localStorage.setItem('failedAttempts', failedAttempts.toString());
-            document.getElementById('remainingAttempts').textContent = 2 - failedAttempts;
+                // Reset and start timer
+                timeRemaining = 30; // Reset time
+                document.getElementById('sessionTimer').style.color = '#e74c3c'; // Reset color
+                startSessionTimer();
+
+                // Messages
+                typeJarvisMessage('jarvisLogin', 'Access granted, sir. All contacts decrypted and ready for your command.');
+                showNotification('ACCESS GRANTED', 'Vault unlocked successfully.');
+            } else {
+                failedAttempts++;
+                localStorage.setItem('failedAttempts', failedAttempts.toString());
+                document.getElementById('remainingAttempts').textContent = 2 - failedAttempts;
+                document.getElementById('password').value = '';
+
+                typeJarvisMessage('jarvisLogin', `Authentication failed. ${2 - failedAttempts} attempts remaining before lockdown.`);
+                showNotification('ACCESS DENIED', `Invalid access code. ${2 - failedAttempts} attempts remaining.`);
+
+                if (failedAttempts >= 2) {
+                    blockDevice();
+                }
+            }
+        });
+
+        // Toggle password visibility
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('i');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        });
+
+        // Search functionality
+        document.getElementById('searchBtn').addEventListener('click', searchContacts);
+        document.getElementById('searchInput').addEventListener('keyup', function (e) {
+            if (e.key === 'Enter') {
+                searchContacts();
+            }
+        });
+
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', function () {
+            logout('manual');
+        });
+
+        // Emergency shutdown
+        document.getElementById('powerButton').addEventListener('click', function () {
+            if (confirm('Are you sure you want to initiate emergency shutdown?')) {
+                logout('emergency');
+            }
+        });
+
+        // Session timer
+        function startSessionTimer() {
+            updateTimerDisplay();
+            sessionTimer = setInterval(function () {
+                timeRemaining--;
+                updateTimerDisplay();
+                if (timeRemaining <= 0) {
+                    logout('timeout');
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            document.getElementById('sessionTimer').textContent = `00:${timeRemaining.toString().padStart(2, '0')}`;
+            const timerEl = document.getElementById('sessionTimer');
+            if (timeRemaining <= 10) {
+                timerEl.style.color = '#e74c3c';
+                if (timeRemaining === 10) {
+                    showNotification('SESSION WARNING', 'Session will expire in 10 seconds.');
+                }
+            } else {
+                timerEl.style.color = '#e74c3c'; // Keep consistent color
+            }
+        }
+
+        // Logout function
+        function logout(reason) {
+            clearInterval(sessionTimer);
+            timeRemaining = 30; // Reset for next login
+
+            document.getElementById('vaultContainer').style.display = 'none';
+            document.getElementById('timerContainer').style.display = 'none';
+            document.getElementById('systemStatus').style.display = 'none';
+            document.getElementById('powerButton').style.display = 'none';
+            document.getElementById('authContainer').style.display = 'block';
             document.getElementById('password').value = '';
 
-            typeJarvisMessage('jarvisLogin', `Authentication failed. ${2 - failedAttempts} attempts remaining before lockdown.`);
-            showNotification('ACCESS DENIED', `Invalid access code. ${2 - failedAttempts} attempts remaining.`);
+            const timerEl = document.getElementById('sessionTimer');
+            timerEl.style.color = '#e74c3c'; // Reset color
 
-            if (failedAttempts >= 2) {
-                blockDevice();
+            let message, notificationMsg;
+            if (reason === 'manual') {
+                message = 'Session terminated. Security protocols re-engaged. Have a good day, sir.';
+                notificationMsg = 'SESSION TERMINATED';
+            } else if (reason === 'timeout') {
+                message = 'Session expired due to inactivity. Security protocols re-engaged.';
+                notificationMsg = 'SESSION EXPIRED';
+            } else if (reason === 'emergency') {
+                message = 'Emergency shutdown initiated. All systems offline.';
+                notificationMsg = 'EMERGENCY SHUTDOWN';
             }
+            typeJarvisMessage('jarvisLogin', message);
+            showNotification(notificationMsg, notificationMsg.includes('SHUTDOWN') ? 'All systems have been secured.' : 'Automatic logout due to inactivity.');
         }
-    });
 
-    // Toggle password visibility
-    document.getElementById('togglePassword').addEventListener('click', function() {
-        const passwordInput = document.getElementById('password');
-        const icon = this.querySelector('i');
-        if (passwordInput.type === 'password') {
-            passwordInput.type = 'text';
-            icon.classList.replace('fa-eye', 'fa-eye-slash');
-        } else {
-            passwordInput.type = 'password';
-            icon.classList.replace('fa-eye-slash', 'fa-eye');
+        // Block device
+        function blockDevice() {
+            localStorage.setItem('deviceBlocked', 'true');
+            document.getElementById('authContainer').style.display = 'none';
+            document.getElementById('blockedContainer').style.display = 'block';
         }
-    });
 
-    // Search functionality
-    document.getElementById('searchBtn').addEventListener('click', searchContacts);
-    document.getElementById('searchInput').addEventListener('keyup', function(e) {
-        if (e.key === 'Enter') {
-            searchContacts();
+        // Redirect blocked device
+        function redirectBlocked() {
+            window.location.href = 'https://www.starkindustries.com'; // Fixed: no extra spaces
         }
-    });
 
-    // Logout functionality
-    document.getElementById('logoutBtn').addEventListener('click', function() {
-        logout('manual');
-    });
-
-    // Emergency shutdown
-    document.getElementById('powerButton').addEventListener('click', function() {
-        if (confirm('Are you sure you want to initiate emergency shutdown?')) {
-            logout('emergency');
+        // Make call
+        function makeCall(number) {
+            showNotification('INITIATING CALL', `Dialing ${number}...`);
+            setTimeout(function () {
+                window.open(`tel:${number}`, '_self');
+            }, 1000);
         }
-    });
 
-    // Session timer
-    function startSessionTimer() {
-        updateTimerDisplay();
-        sessionTimer = setInterval(function() {
-            timeRemaining--;
-            updateTimerDisplay();
-            if (timeRemaining <= 0) {
-                logout('timeout');
-            }
-        }, 1000);
-    }
-
-    function updateTimerDisplay() {
-        document.getElementById('sessionTimer').textContent = `00:${timeRemaining.toString().padStart(2, '0')}`;
-        const timerEl = document.getElementById('sessionTimer');
-        if (timeRemaining <= 10) {
-            timerEl.style.color = '#e74c3c';
-            if (timeRemaining === 10) {
-                showNotification('SESSION WARNING', 'Session will expire in 10 seconds.');
-            }
-        } else {
-            timerEl.style.color = '#e74c3c'; // Keep consistent color
+        // Send WhatsApp
+        function sendWhatsApp(number) {
+            const cleanNumber = number.replace(/\D/g, ''); // Remove non-digits
+            showNotification('OPENING WHATSAPP', `Connecting to ${cleanNumber}...`);
+            setTimeout(function () {
+                window.open(`https://wa.me/${cleanNumber}`, '_blank'); // ✅ Fixed: no extra spaces
+            }, 1000);
         }
-    }
 
-    // Logout function
-    function logout(reason) {
-        clearInterval(sessionTimer);
-        timeRemaining = 30; // Reset for next login
+        // Clear session on page close
+        window.addEventListener('beforeunload', function () {
+            sessionStorage.clear();
+        });
 
-        document.getElementById('vaultContainer').style.display = 'none';
-        document.getElementById('timerContainer').style.display = 'none';
-        document.getElementById('systemStatus').style.display = 'none';
-        document.getElementById('powerButton').style.display = 'none';
-        document.getElementById('authContainer').style.display = 'block';
-        document.getElementById('password').value = '';
-
-        const timerEl = document.getElementById('sessionTimer');
-        timerEl.style.color = '#e74c3c'; // Reset color
-
-        let message, notificationMsg;
-        if (reason === 'manual') {
-            message = 'Session terminated. Security protocols re-engaged. Have a good day, sir.';
-            notificationMsg = 'SESSION TERMINATED';
-        } else if (reason === 'timeout') {
-            message = 'Session expired due to inactivity. Security protocols re-engaged.';
-            notificationMsg = 'SESSION EXPIRED';
-        } else if (reason === 'emergency') {
-            message = 'Emergency shutdown initiated. All systems offline.';
-            notificationMsg = 'EMERGENCY SHUTDOWN';
-        }
-        typeJarvisMessage('jarvisLogin', message);
-        showNotification(notificationMsg, notificationMsg.includes('SHUTDOWN') ? 'All systems have been secured.' : 'Automatic logout due to inactivity.');
-    }
-
-    // Block device
-    function blockDevice() {
-        localStorage.setItem('deviceBlocked', 'true');
-        document.getElementById('authContainer').style.display = 'none';
-        document.getElementById('blockedContainer').style.display = 'block';
-    }
-
-    // Redirect blocked device
-    function redirectBlocked() {
-        window.location.href = 'https://www.starkindustries.com'; // Fixed: no extra spaces
-    }
-
-    // Make call
-    function makeCall(number) {
-        showNotification('INITIATING CALL', `Dialing ${number}...`);
-        setTimeout(function() {
-            window.open(`tel:${number}`, '_self');
-        }, 1000);
-    }
-
-    // Send WhatsApp
-    function sendWhatsApp(number) {
-        const cleanNumber = number.replace(/\D/g, ''); // Remove non-digits
-        showNotification('OPENING WHATSAPP', `Connecting to ${cleanNumber}...`);
-        setTimeout(function() {
-            window.open(`https://wa.me/${cleanNumber}`, '_blank'); // ✅ Fixed: no extra spaces
-        }, 1000);
-    }
-
-    // Clear session on page close
-    window.addEventListener('beforeunload', function() {
-        sessionStorage.clear();
-    });
-
-    // Initialize page
-    window.addEventListener('load', function() {
-        setTimeout(function() {
-            document.getElementById('loadingOverlay').style.display = 'none';
-            typeJarvisMessage('jarvisLogin', 'Good morning, sir. Initiating security protocols. Please enter your access code to proceed.');
-        }, 1500);
-    });
-</script>
+        // Initialize page
+        window.addEventListener('load', function () {
+            setTimeout(function () {
+                document.getElementById('loadingOverlay').style.display = 'none';
+                typeJarvisMessage('jarvisLogin', 'Good morning, sir. Initiating security protocols. Please enter your access code to proceed.');
+            }, 1500);
+        });
+    </script>
 </body>
+
 </html>
