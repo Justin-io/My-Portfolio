@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Dawn of Agentic AI | Blog</title>
+    <meta name="theme-color" content="#040404">
+
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="../assets/css/style-custom.css?v=2">
+    <style>
+        .article-header {
+            padding-top: 150px;
+            padding-bottom: 60px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .article-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            line-height: 1.1;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .article-meta {
+            color: var(--text-tertiary);
+            font-size: 0.9rem;
+            margin-bottom: 40px;
+        }
+
+        .article-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            background: rgba(0, 82, 204, 0.2);
+            color: var(--accent);
+            border: 1px solid rgba(0, 82, 204, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .article-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px 100px;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .article-content h2 {
+            color: var(--text-primary);
+            font-family: 'Space Grotesk', sans-serif;
+            margin-top: 50px;
+            margin-bottom: 20px;
+        }
+
+        .article-content p {
+            margin-bottom: 20px;
+        }
+
+        .article-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin-bottom: 50px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-tertiary);
+            text-decoration: none;
+            margin-bottom: 30px;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Canvas BG -->
+    <div id="canvas-container" style="position: fixed; inset: 0; z-index: -1;"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">JA</div>
+            <ul class="nav-links">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="../tools.html" class="nav-link">Utilities</a></li>
+                <li><a href="../blog.html" class="nav-link active">Blog</a></li>
+                <li><a href="../bio.htm" class="nav-link">Bio</a></li>
+                <li><a href="../index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+            <div class="article-header">
+                <a href="../blog.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Blog</a>
+                <br>
+                <span class="article-badge">Artificial Intelligence</span>
+                <h1 class="article-title">The Dawn of Agentic AI</h1>
+                <div class="article-meta">
+                    <span><i class="far fa-calendar"></i> Jan 08, 2025</span> &bull;
+                    <span><i class="far fa-user"></i> Hari Nandan K</span> &bull;
+                    <span><i class="far fa-clock"></i> 5 min read</span>
+                </div>
+                <img src="/assets/img/jarvis.png" alt="AI Agent" class="article-image">
+            </div>
+
+            <div class="article-content">
+                <p>The era of passive chatbots is ending. We are witnessing the rise of <strong>Agentic
+                        AI</strong>—systems that don't just generate text, but actively reason, plan, and execute tasks
+                    using tools.</p>
+
+                <h2>Beyond the Chatbox</h2>
+                <p>Traditional LLMs like GPT-4 are powerful reasoning engines, but they are trapped in a text box.
+                    Agentic workflows break these chains by giving the model "hands"—access to APIs, file systems, and
+                    the web.</p>
+
+                <h2>The J.A.R.V.I.S. M1 Architecture</h2>
+                <p>My project, J.A.R.V.I.S. M1, explores this paradigm. By using a local hybrid core (Ollama), it
+                    processes voice commands and translates them into system-level actions on Linux. It doesn't just say
+                    "I can do that"—it runs the command.</p>
+
+                <p>Key components of an Agentic System:</p>
+                <ul>
+                    <li><strong>Reasoning Loop:</strong> The brain (LLM) decides what to do next.</li>
+                    <li><strong>Memory:</strong> Short-term context and long-term vector stores.</li>
+                    <li><strong>Tools:</strong> Functions the model can call (calculator, web search, bash).</li>
+                </ul>
+
+                <h2>The Future</h2>
+                <p>As we move into 2025, the prompt engineer will evolve into the <em>Agent Architect</em>. The skill
+                    lies not in asking the right question, but in building the right environment for the AI to succeed.
+                </p>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <div class="footer-content" style="text-align: center; padding: 40px; color: var(--text-secondary);">
+            <p>&copy; 2025 Hari Nandan K. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // Initialize simple background if main.js doesn't auto-trigger due to path diffs
+        // (Our main.js handles ThreeJS init if element exists)
+    </script>
+</body>
+
+</html>

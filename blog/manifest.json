@@ -1,0 +1,52 @@
+[
+    {
+        "id": "1",
+        "title": "The Dawn of Agentic AI",
+        "date": "Jan 08, 2025",
+        "category": "Artificial Intelligence",
+        "excerpt": "Why strict prompt engineering is dying, and autonomous agents with tool-use capabilities are taking over. A look at the J.A.R.V.I.S. M1 architecture.",
+        "image": "/assets/img/jarvis.png",
+        "file": "blog1.html",
+        "tags": ["AI", "Agents", "Python"]
+    },
+    {
+        "id": "2",
+        "title": "The Chronon Model: Discrete Spacetime",
+        "date": "Dec 28, 2024",
+        "category": "Quantum Physics",
+        "excerpt": "Questioning the continuity of spacetime. My research into pre-geometric structures and the unification of Quantum Mechanics with General Relativity.",
+        "image": "/assets/img/3.png",
+        "file": "blog2.html",
+        "tags": ["Physics", "Research", "Math"]
+    },
+    {
+        "id": "3",
+        "title": "Red Teaming IoT Infrastructures",
+        "date": "Dec 15, 2024",
+        "category": "Cybersecurity",
+        "excerpt": "It's not just about firewalls. Physical access, UART sniffing, and firmware dumping. Lessons learned from securing rural educational networks.",
+        "image": "/assets/img/bng1.jpeg",
+        "file": "blog3.html",
+        "tags": ["Security", "IoT", "Hacking"]
+    },
+    {
+        "id": "4",
+        "title": "Building Offline-First PWAs",
+        "date": "Nov 30, 2024",
+        "category": "Web Development",
+        "excerpt": "Service Workers are underutilized. How I built F.R.I.D.A.Y. to run completely offline without a backend, using local storage and cache APIs.",
+        "image": "/assets/img/friday.png",
+        "file": "blog4.html",
+        "tags": ["Web", "PWA", "JavaScript"]
+    },
+    {
+        "id": "5",
+        "title": "Bloomwatch: Satellite Data for Ecology",
+        "date": "Oct 12, 2024",
+        "category": "Space Tech",
+        "excerpt": "Processing NASA MODIS data to predict plant phenology. Our journey to winning the Space Apps challenge and the tech stack behind it.",
+        "image": "/assets/img/bloomwatch.png",
+        "file": "blog5.html",
+        "tags": ["NASA", "Data Science", "Space"]
+    }
+]

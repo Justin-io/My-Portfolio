@@ -4,7 +4,6 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Blog | Hari Nandan K</title>
     <meta name="description" content="Thoughts, tutorials, and insights on AI, Tech, and Product Development.">
     <meta name="theme-color" content="#040404">
@@ -20,13 +19,41 @@
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="assets/css/style-custom.css?v=2">
-    <link rel="stylesheet" href="style.css?v=2">
-
     <style>
         .blog-header {
             padding-top: 150px;
             text-align: center;
             margin-bottom: 60px;
+        }
+
+        /* Filter Styles */
+        .blog-filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 50px;
+            padding: 0 20px;
+        }
+
+        .filter-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            padding: 10px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: rgba(0, 82, 204, 0.2);
+            border-color: var(--accent);
+            color: white;
+            transform: translateY(-2px);
         }
 
         .blog-grid {
@@ -44,22 +71,31 @@
             border: 1px solid var(--glass-border);
             border-radius: 20px;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: flex;
             flex-direction: column;
             text-decoration: none;
             color: var(--text-primary);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .blog-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             border-color: var(--accent);
         }
 
         .blog-image {
-            height: 200px;
-            background: var(--glass-bg-hover);
+            height: 220px;
             position: relative;
             overflow: hidden;
         }
@@ -68,11 +104,24 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
+            transition: transform 0.6s ease;
         }
 
         .blog-card:hover .blog-image img {
-            transform: scale(1.05);
+            transform: scale(1.1);
+        }
+
+        .blog-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .blog-content {
@@ -100,14 +149,14 @@
             font-size: 1.4rem;
             font-weight: 700;
             margin-bottom: 15px;
-            line-height: 1.4;
+            line-height: 1.3;
         }
 
         .blog-excerpt {
             color: var(--text-secondary);
             font-size: 0.95rem;
             line-height: 1.6;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             flex: 1;
         }
 
@@ -117,8 +166,10 @@
             font-size: 0.9rem;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
             margin-top: auto;
+            border-top: 1px solid var(--glass-border);
+            padding-top: 20px;
         }
 
         .read-more i {
@@ -128,118 +179,140 @@
         .blog-card:hover .read-more i {
             transform: translateX(5px);
         }
+
+        .loading-spinner {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: var(--text-tertiary);
+            padding: 50px;
+        }
     </style>
 </head>
 
 <body>
-    <!-- Custom Cursor -->
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
-
-    <!-- Canvas Background -->
     <div id="canvas-container"></div>
 
-    <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-container">
             <div class="logo">JA</div>
             <ul class="nav-links">
-                <li><a href="index.html#home" class="nav-link">Home</a></li>
+                <li><a href="index.html" class="nav-link">Home</a></li>
                 <li><a href="index.html#about" class="nav-link">About Me</a></li>
                 <li><a href="tools.html" class="nav-link">Utilities</a></li>
                 <li><a href="blog.html" class="nav-link active">Blog</a></li>
-                <li><a href="index.html#projects" class="nav-link">My Projects</a></li>
                 <li><a href="bio.htm" class="nav-link">Bio</a></li>
             </ul>
-            <a href="index.html#contact" class="nav-cta">Let's Talk</a><br>
-            <div class="menu-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            <div class="menu-toggle"><span></span><span></span><span></span></div>
         </div>
     </nav>
 
-    <!-- Main Content -->
     <main>
         <section class="blog-header">
-            <div class="section-label">WRITINGS</div>
-            <h1 class="section-title">Latest Knowledge</h1>
-            <p class="section-subtitle">Insights, tutorials, and thoughts on technology, AI, and the future.</p>
+            <div class="section-label">KNOWLEDGE BASE</div>
+            <h1 class="section-title">Insights & Research</h1>
+            <p class="section-subtitle">Exploring the frontiers of Quantum Physics, AI, and Cybersecurity.</p>
         </section>
 
-        <div class="blog-grid">
-            <!-- Article 1 -->
-            <a href="#" class="blog-card">
-                <div class="blog-image">
-                    <!-- Placeholder color/gradient for now if no image -->
-                    <div style="width:100%; height:100%; background: linear-gradient(135deg, #0052cc, #00a3ff);"></div>
-                </div>
-                <div class="blog-content">
-                    <div class="blog-meta">
-                        <span><i class="far fa-calendar"></i> Jan 04, 2025</span>
-                        <span><i class="far fa-folder"></i> Artificial Intelligence</span>
-                    </div>
-                    <h3 class="blog-title">The Evolution of LLMs: From GPT-3 to Agentic AI</h3>
-                    <p class="blog-excerpt">Exploring how Large Language Models are shifting from passive text
-                        generators to active agents capable of reasoning, planning, and executing complex tasks.</p>
-                    <div class="read-more">
-                        Read Article <i class="fas fa-arrow-right"></i>
-                    </div>
-                </div>
-            </a>
+        <!-- Dynamic Filters -->
+        <div class="blog-filters" id="blog-filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <!-- Categories injected by JS -->
+        </div>
 
-            <!-- Article 2 -->
-            <a href="#" class="blog-card">
-                <div class="blog-image">
-                    <div style="width:100%; height:100%; background: linear-gradient(135deg, #7c3aed, #4f46e5);"></div>
-                </div>
-                <div class="blog-content">
-                    <div class="blog-meta">
-                        <span><i class="far fa-calendar"></i> Dec 28, 2024</span>
-                        <span><i class="far fa-folder"></i> Web Development</span>
-                    </div>
-                    <h3 class="blog-title">Building High-Performance PWAs in 2025</h3>
-                    <p class="blog-excerpt">A deep dive into modern caching strategies, Service Workers, and
-                        offline-first architecture for the next generation of web apps.</p>
-                    <div class="read-more">
-                        Read Article <i class="fas fa-arrow-right"></i>
-                    </div>
-                </div>
-            </a>
-
-            <!-- Article 3 -->
-            <a href="#" class="blog-card">
-                <div class="blog-image">
-                    <div style="width:100%; height:100%; background: linear-gradient(135deg, #00a3ff, #00ff9d);"></div>
-                </div>
-                <div class="blog-content">
-                    <div class="blog-meta">
-                        <span><i class="far fa-calendar"></i> Dec 15, 2024</span>
-                        <span><i class="far fa-folder"></i> Quantum Physics</span>
-                    </div>
-                    <h3 class="blog-title">Understanding the Chronon Model</h3>
-                    <p class="blog-excerpt">Breaking down my research on discrete spacetime intervals and their
-                        implications for unified field theories.</p>
-                    <div class="read-more">
-                        Read Article <i class="fas fa-arrow-right"></i>
-                    </div>
-                </div>
-            </a>
+        <div class="blog-grid" id="blog-grid">
+            <div class="loading-spinner">Loading articles...</div>
         </div>
     </main>
 
-    <!-- Footer -->
     <footer>
         <div class="footer-content" style="text-align: center; padding: 40px; color: var(--text-secondary);">
             <p>&copy; 2025 Hari Nandan K. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="assets/js/performance.js"></script>
     <script src="assets/js/main.js?v=2"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const grid = document.getElementById('blog-grid');
+            const filtersContainer = document.getElementById('blog-filters');
+
+            try {
+                // Fetch Manifest
+                const response = await fetch('blog/manifest.json');
+                if (!response.ok) throw new Error('Failed to load blog manifest');
+                const posts = await response.json();
+
+                // Clear loading
+                grid.innerHTML = '';
+
+                // Extract unique categories
+                const categories = new Set(posts.map(post => post.category));
+                categories.forEach(cat => {
+                    const btn = document.createElement('button');
+                    btn.className = 'filter-btn';
+                    btn.textContent = cat;
+                    btn.dataset.filter = cat;
+                    filtersContainer.appendChild(btn);
+                });
+
+                // Render Function
+                function renderPosts(filter = 'all') {
+                    grid.innerHTML = '';
+                    let delay = 0;
+
+                    posts.forEach(post => {
+                        if (filter !== 'all' && post.category !== filter) return;
+
+                        const card = document.createElement('a');
+                        card.href = 'blog/' + post.file;
+                        card.className = 'blog-card';
+                        card.style.animationDelay = `${delay}s`;
+
+                        card.innerHTML = `
+                            <div class="blog-image">
+                                <img src="${post.image}" alt="${post.title}" loading="lazy">
+                                <span class="blog-badge">${post.category}</span>
+                            </div>
+                            <div class="blog-content">
+                                <div class="blog-meta">
+                                    <span><i class="far fa-calendar"></i> ${post.date}</span>
+                                </div>
+                                <h3 class="blog-title">${post.title}</h3>
+                                <p class="blog-excerpt">${post.excerpt}</p>
+                                <div class="read-more">
+                                    Read Article <i class="fas fa-arrow-right"></i>
+                                </div>
+                            </div>
+                        `;
+
+                        grid.appendChild(card);
+                        delay += 0.1;
+                    });
+                }
+
+                // Initial Render
+                renderPosts();
+
+                // Filter Logic
+                const filterBtns = document.querySelectorAll('.filter-btn');
+                filterBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        filterBtns.forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        renderPosts(btn.dataset.filter);
+                    });
+                });
+
+            } catch (error) {
+                console.error(error);
+                grid.innerHTML = '<div style="text-align:center; color:red;">Failed to load blog posts. check console.</div>';
+            }
+        });
+    </script>
 </body>
 
 </html>
