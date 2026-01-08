@@ -425,62 +425,36 @@
                 </div>
             </div>
             <div class="about-visual">
-                <div class="about-image-container glitch-container" id="about-glitch-container"
-                    style="position: relative; overflow: hidden; border-radius: 30px;">
-                    <!-- Image Slides -->
-                    <div id="image-slides" style="position: relative; width: 100%; height: 500px;">
-                        <img src="/assets/img/me.jpg" alt="Justin Alexia - Cybersecurity"
-                            class="about-image-slide active"
-                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 1; transition: opacity 0.8s ease-in-out;">
-                        <img src="/assets/img/bng1.jpeg" alt="HOPE IoT Camp" class="about-image-slide"
-                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.8s ease-in-out;">
-                        <img src="/assets/img/bng3.jpeg" alt="Quantum Research" class="about-image-slide"
-                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.8s ease-in-out;">
-                        <img src="/assets/img/bng4.jpeg" alt="TexidoMeg Platform" class="about-image-slide"
-                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.8s ease-in-out;">
-                        <img src="/assets/img/bng5.png" alt="Keltron Internship" class="about-image-slide"
-                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.8s ease-in-out;">
+                <div class="about-image-container marquee-container"
+                    style="position: relative; overflow: hidden; border-radius: 30px; height: 500px;">
+                    <!-- Image Marquee -->
+                    <div class="marquee-content">
+                        <!-- Set 1 -->
+                        <img src="assets/img/me.jpg" alt="Justin Alexia - Cybersecurity" class="about-marquee-img">
+                        <img src="assets/img/bng1.jpeg" alt="HOPE IoT Camp" class="about-marquee-img">
+                        <img src="assets/img/bng3.jpeg" alt="Quantum Research" class="about-marquee-img">
+                        <img src="assets/img/bng4.jpeg" alt="TexidoMeg Platform" class="about-marquee-img">
+                        <img src="assets/img/bng5.png" alt="Keltron Internship" class="about-marquee-img">
+                        <!-- Set 2 (Duplicate for seamless loop) -->
+                        <img src="assets/img/me.jpg" alt="Justin Alexia - Cybersecurity" class="about-marquee-img">
+                        <img src="assets/img/bng1.jpeg" alt="HOPE IoT Camp" class="about-marquee-img">
+                        <img src="assets/img/bng3.jpeg" alt="Quantum Research" class="about-marquee-img">
+                        <img src="assets/img/bng4.jpeg" alt="TexidoMeg Platform" class="about-marquee-img">
+                        <img src="assets/img/bng5.png" alt="Keltron Internship" class="about-marquee-img">
                     </div>
 
-                    <!-- Overlay (unchanged) -->
+                    <!-- Overlay -->
                     <div class="about-image-overlay"
-                        style="position: absolute; bottom: 0; left: 0; width: 100%; padding: 1.5rem; background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);">
+                        style="position: absolute; bottom: 0; left: 0; width: 100%; padding: 1.5rem; background: linear-gradient(to top, rgba(0,0,0,0.7), transparent); pointer-events: none;">
                         <p class="about-quote" style="color: white; font-size: 1.1rem; margin: 0; text-align: center;">
                             "Secure by design. Built to last."
                         </p>
                     </div>
                 </div>
             </div>
-
-            <script>
-                // Glitch Switching Logic for About Section
-                (function () {
-                    const slides = document.querySelectorAll('.about-image-slide');
-                    const container = document.getElementById('about-glitch-container');
-                    let currentIndex = 0;
-
-                    function glitchSwitch() {
-                        const currentImg = slides[currentIndex];
-                        currentIndex = (currentIndex + 1) % slides.length;
-                        const nextImg = slides[currentIndex];
-
-                        // Trigger Ghost Glitch
-                        if (window.triggerGhostGlitch) {
-                            window.triggerGhostGlitch(container, currentImg.src, nextImg.src, () => {
-                                slides.forEach(s => s.style.opacity = 0);
-                                nextImg.style.opacity = 1;
-                            });
-                        } else {
-                            // Fallback
-                            slides.forEach(s => s.style.opacity = 0);
-                            nextImg.style.opacity = 1;
-                        }
-                    }
-
-                    setInterval(glitchSwitch, 5000);
-                })();
-            </script>
         </div>
+    </section>
+    </div>
     </section>
 
     <!-- Utilities Section -->

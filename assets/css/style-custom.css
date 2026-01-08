@@ -2650,3 +2650,36 @@
             color: var(--text-secondary);
             line-height: 1.6;
         }
+
+        /* --- About Marquee Animation --- */
+        .marquee-container {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            background: var(--primary);
+        }
+
+        .marquee-content {
+            display: flex;
+            width: max-content;
+            height: 100%;
+            animation: scrollRightToLeft 30s linear infinite;
+        }
+
+        .about-marquee-img {
+            height: 100%;
+            width: auto;
+            max-width: none;
+            object-fit: cover;
+            display: block;
+        }
+
+        @keyframes scrollRightToLeft {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
