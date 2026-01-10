@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Cleanup Tool</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+
+        .container {
+            background: #2d2d2d;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 90%;
+        }
+
+        h1 {
+            color: #00ff64;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #ccc;
+            margin-bottom: 30px;
+        }
+
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            background: #333;
+            font-family: monospace;
+            text-align: left;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .log-item {
+            margin: 5px 0;
+            border-bottom: 1px solid #444;
+            padding-bottom: 2px;
+        }
+
+        .success {
+            color: #00ff64;
+        }
+
+        .btn {
+            background: #00ff64;
+            color: #000;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background: #00cc50;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Safety Unlock Tool</h1>
+        <p>This tool ensures all security locks and flags are cleared from your browser for this site.</p>
+        <div id="status" class="status">Initializing...</div>
+        <a href="index.html" class="btn" id="homeBtn" style="display: none;">Go to Homepage</a>
+    </div>
+
+    <script>
+        const statusDiv = document.getElementById('status');
+        const homeBtn = document.getElementById('homeBtn');
+
+        function log(msg, type = 'info') {
+            const div = document.createElement('div');
+            div.className = 'log-item ' + (type === 'success' ? 'success' : '');
+            div.textContent = `> ${msg}`;
+            statusDiv.appendChild(div);
+            statusDiv.scrollTop = statusDiv.scrollHeight;
+        }
+
+        async function performCleanup() {
+            log('Starting cleanup process...');
+
+            // 1. LocalStorage
+            let lsCount = 0;
+            const lsKeysToRemove = [];
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && key.includes('dev_protect_')) {
+                    lsKeysToRemove.push(key);
+                }
+            }
+            lsKeysToRemove.forEach(k => {
+                localStorage.removeItem(k);
+                lsCount++;
+            });
+            log(`Cleared ${lsCount} LocalStorage locks.`, 'success');
+
+            // 2. SessionStorage
+            let ssCount = 0;
+            const ssKeysToRemove = [];
+            for (let i = 0; i < sessionStorage.length; i++) {
+                const key = sessionStorage.key(i);
+                if (key && key.includes('dev_protect_')) {
+                    ssKeysToRemove.push(key);
+                }
+            }
+            ssKeysToRemove.forEach(k => {
+                sessionStorage.removeItem(k);
+                ssCount++;
+            });
+            log(`Cleared ${ssCount} SessionStorage locks.`, 'success');
+
+            // 3. Cookies
+            let cookieCount = 0;
+            const cookies = document.cookie.split(";");
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i];
+                const eqPos = cookie.indexOf("=");
+                const name = eqPos > -1 ? cookie.substr(0, eqPos).trim() : cookie.trim();
+                if (name.includes('dev_protect_')) {
+                    document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+                    cookieCount++;
+                }
+            }
+            log(`Cleared ${cookieCount} Cookie locks.`, 'success');
+
+            // 4. IndexedDB
+            try {
+                if (window.indexedDB && window.indexedDB.databases) {
+                    const dbs = await window.indexedDB.databases();
+                    let dbFound = false;
+                    for (const dbInfo of dbs) {
+                        if (dbInfo.name === 'ProtectionDB') {
+                            const req = window.indexedDB.deleteDatabase('ProtectionDB');
+                            req.onsuccess = () => log('ProtectionDB Database deleted.', 'success');
+                            req.onerror = () => log('Failed to delete ProtectionDB.', 'error');
+                            req.onblocked = () => log('Database deletion blocked - close other tabs.', 'info');
+                            dbFound = true;
+                        }
+                    }
+                    if (!dbFound) log('No ProtectionDB found.', 'info');
+                } else {
+                    // Fallback attempt
+                    const req = window.indexedDB.deleteDatabase('ProtectionDB');
+                    req.onsuccess = () => log('ProtectionDB check complete.', 'success');
+                }
+            } catch (e) {
+                log('IndexedDB cleanup skipped (not supported/error).');
+            }
+
+            log('Cleanup complete! You are now unblocked.', 'success');
+            homeBtn.style.display = 'inline-block';
+        }
+
+        setTimeout(performCleanup, 1000);
+    </script>
+</body>
+
+</html>
