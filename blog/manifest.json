@@ -2,7 +2,7 @@
     {
         "id": "1",
         "title": "The Quantum Internet: Entanglement Distribution",
-        "date": "Jan 08, 2025",
+        "date": "Jan 08, 2026",
         "category": "Quantum Physics",
         "excerpt": "How we are building the unhackable network using quantum entanglement and repeaters.",
         "image": "../assets/img/blog/blog1.png",
@@ -16,7 +16,7 @@
     {
         "id": "2",
         "title": "Zero Trust Architecture: Beyond the Firewall",
-        "date": "Jan 05, 2025",
+        "date": "Jan 05, 2026",
         "category": "Cybersecurity",
         "excerpt": "Why the 'castle and moat' security model is dead and how strictly authenticating every request is the only way forward.",
         "image": "../assets/img/blog/blog2.png",
@@ -30,7 +30,7 @@
     {
         "id": "3",
         "title": "Rust for Systems Programming: Safety First",
-        "date": "Jan 03, 2025",
+        "date": "Jan 03, 2026",
         "category": "Web Development",
         "excerpt": "Memory safety without garbage collection? How Rust is rewriting the rules of operating systems and browser engines.",
         "image": "../assets/img/blog/blog3.png",
@@ -57,7 +57,7 @@
     },
     {
         "id": "5",
-        "title": "AI Agents in 2025: From Chatbots to Executors",
+        "title": "AI Agents in 2026: From Chatbots to Executors",
         "date": "Dec 25, 2024",
         "category": "Artificial Intelligence",
         "excerpt": "LLMs can now use tools. Why autonomous agents taking action is the next massive shift in AI capability.",
