@@ -5,7 +5,7 @@
         "date": "Jan 08, 2025",
         "category": "Quantum Physics",
         "excerpt": "How we are building the unhackable network using quantum entanglement and repeaters.",
-        "image": "../assets/img/blog/quantum.png",
+        "image": "../assets/img/blog/blog1.png",
         "file": "blog1.html",
         "tags": [
             "Quantum",
@@ -19,7 +19,7 @@
         "date": "Jan 05, 2025",
         "category": "Cybersecurity",
         "excerpt": "Why the 'castle and moat' security model is dead and how strictly authenticating every request is the only way forward.",
-        "image": "../assets/img/blog/security.png",
+        "image": "../assets/img/blog/blog2.png",
         "file": "blog2.html",
         "tags": [
             "Security",
@@ -33,7 +33,7 @@
         "date": "Jan 03, 2025",
         "category": "Web Development",
         "excerpt": "Memory safety without garbage collection? How Rust is rewriting the rules of operating systems and browser engines.",
-        "image": "../assets/img/blog/dev.png",
+        "image": "../assets/img/blog/blog3.png",
         "file": "blog3.html",
         "tags": [
             "Rust",
@@ -47,7 +47,7 @@
         "date": "Dec 29, 2024",
         "category": "Physics",
         "excerpt": "The clash of the titans. Exploring the conflict between smooth spacetime and discrete quantum chunks.",
-        "image": "../assets/img/blog/space.png",
+        "image": "../assets/img/blog/blog4.png",
         "file": "blog4.html",
         "tags": [
             "Physics",
@@ -61,7 +61,7 @@
         "date": "Dec 25, 2024",
         "category": "Artificial Intelligence",
         "excerpt": "LLMs can now use tools. Why autonomous agents taking action is the next massive shift in AI capability.",
-        "image": "../assets/img/blog/dev.png",
+        "image": "../assets/img/blog/blog5.png",
         "file": "blog5.html",
         "tags": [
             "AI",
@@ -75,7 +75,7 @@
         "date": "Dec 20, 2024",
         "category": "Cybersecurity",
         "excerpt": "You can't hack what you can't see. Why 90% of a successful penetration test is passive and active reconnaissance.",
-        "image": "../assets/img/blog/security.png",
+        "image": "../assets/img/blog/blog6.png",
         "file": "blog6.html",
         "tags": [
             "Hacking",
@@ -89,7 +89,7 @@
         "date": "Dec 18, 2024",
         "category": "Physics",
         "excerpt": "Analyzing Nick Bostrom's argument and the physics limits that might reveal the resolution of our reality.",
-        "image": "../assets/img/blog/space.png",
+        "image": "../assets/img/blog/blog7.png",
         "file": "blog7.html",
         "tags": [
             "Philosophy",
@@ -103,7 +103,7 @@
         "date": "Dec 14, 2024",
         "category": "Physics",
         "excerpt": "85% of the universe is missing. Looking at WIMPs, Axions, and modified gravity theories.",
-        "image": "../assets/img/blog/space.png",
+        "image": "../assets/img/blog/blog8.png",
         "file": "blog8.html",
         "tags": [
             "Space",
@@ -117,7 +117,7 @@
         "date": "Dec 10, 2024",
         "category": "Web Development",
         "excerpt": "We moved everything to the client. Now we are moving it back. Understanding the RSC paradigm shift in Next.js.",
-        "image": "../assets/img/blog/dev.png",
+        "image": "../assets/img/blog/blog9.png",
         "file": "blog9.html",
         "tags": [
             "React",
@@ -131,7 +131,7 @@
         "date": "Dec 05, 2024",
         "category": "Cybersecurity",
         "excerpt": "Shor's algorithm will eventually break RSA. NIST guidelines and the migration to lattice-based cryptography.",
-        "image": "../assets/img/blog/security.png",
+        "image": "../assets/img/blog/blog10.png",
         "file": "blog10.html",
         "tags": [
             "Crypto",
@@ -145,7 +145,7 @@
         "date": "Dec 01, 2024",
         "category": "Web Development",
         "excerpt": "Automating the path from commit to production. Best practices with GitHub Actions and Docker.",
-        "image": "../assets/img/blog/dev.png",
+        "image": "../assets/img/blog/blog11.png",
         "file": "blog11.html",
         "tags": [
             "DevOps",
@@ -159,7 +159,7 @@
         "date": "Nov 28, 2024",
         "category": "Physics",
         "excerpt": "Is everything made of vibrating strings? The elegance and the untestability of the theory of everything.",
-        "image": "../assets/img/blog/space.png",
+        "image": "../assets/img/blog/blog12.png",
         "file": "blog12.html",
         "tags": [
             "Physics",
@@ -173,7 +173,7 @@
         "date": "Nov 25, 2024",
         "category": "Artificial Intelligence",
         "excerpt": "Moving beyond von Neumann architecture. Mimicking neurons and synapses in silicon for efficiency.",
-        "image": "../assets/img/blog/dev.png",
+        "image": "../assets/img/blog/blog13.png",
         "file": "blog13.html",
         "tags": [
             "AI",
@@ -187,7 +187,7 @@
         "date": "Nov 20, 2024",
         "category": "Cybersecurity",
         "excerpt": "Why buy a zero-day exploit when you can just ask for the password? Phishing, Vishing, and Tailgating.",
-        "image": "../assets/img/blog/security.png",
+        "image": "../assets/img/blog/blog14.png",
         "file": "blog14.html",
         "tags": [
             "Security",
@@ -201,7 +201,7 @@
         "date": "Nov 15, 2024",
         "category": "Web Development",
         "excerpt": "Managing containers at scale. Pods, Deployments, and Services explained for the uninitiated.",
-        "image": "../assets/img/blog/dev.png",
+        "image": "../assets/img/blog/blog15.png",
         "file": "blog15.html",
         "tags": [
             "DevOps",
@@ -215,7 +215,7 @@
         "date": "Nov 10, 2024",
         "category": "Physics",
         "excerpt": "The point of no return. What happens to time and space near a singularity?",
-        "image": "../assets/img/blog/space.png",
+        "image": "../assets/img/blog/blog12.png",
         "file": "blog16.html",
         "tags": [
             "Space",
@@ -229,7 +229,7 @@
         "date": "Nov 05, 2024",
         "category": "Web Development",
         "excerpt": "Solving the trilemma of Decentralization, Security, and Scalability. Rollups and Sidechains.",
-        "image": "../assets/img/blog/dev.png",
+        "image": "../assets/img/blog/blog2.png",
         "file": "blog17.html",
         "tags": [
             "Crypto",
@@ -243,7 +243,7 @@
         "date": "Oct 30, 2024",
         "category": "Web Development",
         "excerpt": "Running C++ and Rust in the browser at near-native speed. The end of the JavaScript monopoly?",
-        "image": "../assets/img/blog/dev.png",
+        "image": "../assets/img/blog/blog3.png",
         "file": "blog18.html",
         "tags": [
             "Wasm",
@@ -257,7 +257,7 @@
         "date": "Oct 25, 2024",
         "category": "Cybersecurity",
         "excerpt": "Extracting filesystems from SPI flash chips and reverse engineering binaries with Ghidra.",
-        "image": "../assets/img/blog/security.png",
+        "image": "../assets/img/blog/blog6.png",
         "file": "blog19.html",
         "tags": [
             "IoT",
@@ -271,7 +271,7 @@
         "date": "Oct 20, 2024",
         "category": "Quantum Physics",
         "excerpt": "A new phase of matter that repeats in time rather than space. Breaking time-translation symmetry.",
-        "image": "../assets/img/blog/quantum.png",
+        "image": "../assets/img/blog/blog8.png",
         "file": "blog20.html",
         "tags": [
             "Physics",
