@@ -381,6 +381,66 @@
                 padding: 0.5rem 1rem;
                 font-size: 0.9rem;
             }
+
+            /* Responsive Table Card View */
+            .table-container {
+                box-shadow: none;
+                background: transparent;
+                border: none;
+                overflow-x: visible;
+            }
+
+            thead {
+                display: none;
+            }
+
+            tbody tr {
+                display: block;
+                background: white;
+                border-radius: 16px;
+                padding: 1.25rem;
+                margin-bottom: 1.25rem;
+                border: 1px solid #e2e8f0;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            }
+
+            td {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                padding: 0.75rem 0;
+                border-bottom: 1px solid #f1f5f9;
+                text-align: right;
+                gap: 1rem;
+            }
+
+            td:last-child {
+                border-bottom: none;
+            }
+
+            td::before {
+                content: attr(data-label);
+                font-weight: 600;
+                font-size: 0.75rem;
+                text-transform: uppercase;
+                color: var(--text-light);
+                text-align: left;
+                min-width: 100px;
+                flex-shrink: 0;
+            }
+
+            tr.total-row {
+                background: var(--dark-surface);
+            }
+
+            tr.total-row td {
+                color: var(--accent);
+                border-color: rgba(255, 255, 255, 0.1);
+            }
+
+            tr.total-row td::before {
+                color: rgba(255, 255, 255, 0.6);
+            }
         }
 
         /* Print Styles */
@@ -528,82 +588,82 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Raspberry Pi 4 Model B</td>
-                            <td>4GB RAM</td>
-                            <td>₹5,300 - ₹6,000</td>
-                            <td>2GB works if 4GB OOS.</td>
+                            <td data-label="Component">Raspberry Pi 4 Model B</td>
+                            <td data-label="Specification">4GB RAM</td>
+                            <td data-label="Est. Price (₹)">₹5,300 - ₹6,000</td>
+                            <td data-label="Notes">2GB works if 4GB OOS.</td>
                         </tr>
                         <tr>
-                            <td>Pi Camera Module 3</td>
-                            <td>Standard/Wide</td>
-                            <td>₹2,400 - ₹2,800</td>
-                            <td>Auto-focus enabled.</td>
+                            <td data-label="Component">Pi Camera Module 3</td>
+                            <td data-label="Specification">Standard/Wide</td>
+                            <td data-label="Est. Price (₹)">₹2,400 - ₹2,800</td>
+                            <td data-label="Notes">Auto-focus enabled.</td>
                         </tr>
                         <tr>
-                            <td>MicroSD Card</td>
-                            <td>32GB Class 10</td>
-                            <td>₹400 - ₹500</td>
-                            <td>SanDisk Recommended.</td>
+                            <td data-label="Component">MicroSD Card</td>
+                            <td data-label="Specification">32GB Class 10</td>
+                            <td data-label="Est. Price (₹)">₹400 - ₹500</td>
+                            <td data-label="Notes">SanDisk Recommended.</td>
                         </tr>
                         <tr>
-                            <td>Power Supply</td>
-                            <td>5V 3A USB-C</td>
-                            <td>₹500 - ₹700</td>
-                            <td>Official/High quality required.</td>
+                            <td data-label="Component">Power Supply</td>
+                            <td data-label="Specification">5V 3A USB-C</td>
+                            <td data-label="Est. Price (₹)">₹500 - ₹700</td>
+                            <td data-label="Notes">Official/High quality required.</td>
                         </tr>
                         <tr>
-                            <td>PCA9685 Driver</td>
-                            <td>16-Channel</td>
-                            <td>₹250 - ₹350</td>
-                            <td>Servo controller.</td>
+                            <td data-label="Component">PCA9685 Driver</td>
+                            <td data-label="Specification">16-Channel</td>
+                            <td data-label="Est. Price (₹)">₹250 - ₹350</td>
+                            <td data-label="Notes">Servo controller.</td>
                         </tr>
                         <tr>
-                            <td>Servo Motors (x2)</td>
-                            <td>MG996R (Metal)</td>
-                            <td>₹500 - ₹600</td>
-                            <td>Stronger than SG90.</td>
+                            <td data-label="Component">Servo Motors (x2)</td>
+                            <td data-label="Specification">MG996R (Metal)</td>
+                            <td data-label="Est. Price (₹)">₹500 - ₹600</td>
+                            <td data-label="Notes">Stronger than SG90.</td>
                         </tr>
                         <tr>
-                            <td>Pan/Tilt Bracket</td>
-                            <td>Plastic Kit</td>
-                            <td>₹200 - ₹300</td>
-                            <td>&nbsp;</td>
+                            <td data-label="Component">Pan/Tilt Bracket</td>
+                            <td data-label="Specification">Plastic Kit</td>
+                            <td data-label="Est. Price (₹)">₹200 - ₹300</td>
+                            <td data-label="Notes">&nbsp;</td>
                         </tr>
                         <tr>
-                            <td>MCP3008 ADC</td>
-                            <td>8-Channel 10-bit</td>
-                            <td>₹250 - ₹300</td>
-                            <td>For Analog sensors.</td>
+                            <td data-label="Component">MCP3008 ADC</td>
+                            <td data-label="Specification">8-Channel 10-bit</td>
+                            <td data-label="Est. Price (₹)">₹250 - ₹300</td>
+                            <td data-label="Notes">For Analog sensors.</td>
                         </tr>
                         <tr>
-                            <td>MQ-135 Sensor</td>
-                            <td>Gas/Air Quality</td>
-                            <td>₹120 - ₹150</td>
-                            <td>Detects Smoke, CO2, etc.</td>
+                            <td data-label="Component">MQ-135 Sensor</td>
+                            <td data-label="Specification">Gas/Air Quality</td>
+                            <td data-label="Est. Price (₹)">₹120 - ₹150</td>
+                            <td data-label="Notes">Detects Smoke, CO2, etc.</td>
                         </tr>
                         <tr>
-                            <td>DHT22 Sensor</td>
-                            <td>Temp/Humidity</td>
-                            <td>₹350 - ₹450</td>
-                            <td>Better than DHT11.</td>
+                            <td data-label="Component">DHT22 Sensor</td>
+                            <td data-label="Specification">Temp/Humidity</td>
+                            <td data-label="Est. Price (₹)">₹350 - ₹450</td>
+                            <td data-label="Notes">Better than DHT11.</td>
                         </tr>
                         <tr>
-                            <td>IR Sensors (x2)</td>
-                            <td>Proximity</td>
-                            <td>₹150 - ₹200</td>
-                            <td>For door counting.</td>
+                            <td data-label="Component">IR Sensors (x2)</td>
+                            <td data-label="Specification">Proximity</td>
+                            <td data-label="Est. Price (₹)">₹150 - ₹200</td>
+                            <td data-label="Notes">For door counting.</td>
                         </tr>
                         <tr>
-                            <td>Misc (Wires/Breadboard)</td>
-                            <td>M-M, M-F, F-F</td>
-                            <td>₹250 - ₹350</td>
-                            <td>Prototyping essentials.</td>
+                            <td data-label="Component">Misc (Wires/Breadboard)</td>
+                            <td data-label="Specification">M-M, M-F, F-F</td>
+                            <td data-label="Est. Price (₹)">₹250 - ₹350</td>
+                            <td data-label="Notes">Prototyping essentials.</td>
                         </tr>
                         <tr class="total-row">
-                            <td>TOTAL ESTIMATE</td>
-                            <td></td>
-                            <td>₹11,670 - ₹14,100</td>
-                            <td>Excl. optional power bank</td>
+                            <td data-label="Component">TOTAL ESTIMATE</td>
+                            <td data-label="Specification"></td>
+                            <td data-label="Est. Price (₹)">₹11,670 - ₹14,100</td>
+                            <td data-label="Notes">Excl. optional power bank</td>
                         </tr>
                     </tbody>
                 </table>
