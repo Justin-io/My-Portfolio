@@ -278,5 +278,19 @@
             "Quantum",
             "Matter"
         ]
+    },
+    {
+        "id": "21",
+        "title": "PROJECT RETRO-BOT: V12.0 SENTRY EDITION",
+        "date": "Jan 22, 2026",
+        "category": "Robotics",
+        "excerpt": "An advanced desktop companion robot with emotional AI, sentry mode, and arcade games powered by ESP32.",
+        "image": "../assets/img/blog/blog19.png",
+        "file": "blog21.html",
+        "tags": [
+            "Robotics",
+            "ESP32",
+            "IoT"
+        ]
     }
 ]
