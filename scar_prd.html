@@ -202,12 +202,16 @@
             border-radius: 16px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
             border: 1px solid #e2e8f0;
+            -webkit-overflow-scrolling: touch;
+            /* Smooth scroll on iOS */
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             font-size: 0.95rem;
+            min-width: 600px;
+            /* Ensure table doesn't squash too much */
         }
 
         th {
@@ -314,6 +318,71 @@
             font-weight: 400;
         }
 
+        /* MOBILE RESPONSIVE OVERRIDES */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .container {
+                border-radius: 16px;
+            }
+
+            .hero {
+                flex-direction: column-reverse;
+                text-align: center;
+                padding: 2.5rem 1.5rem;
+                gap: 2rem;
+            }
+
+            .hero-content {
+                width: 100%;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                margin: 0 auto;
+            }
+
+            .hero-image {
+                width: 100%;
+                max-width: 250px;
+                height: auto;
+                aspect-ratio: 1/1;
+                margin: 0 auto;
+            }
+
+            .section {
+                padding: 2rem 1.25rem;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .connection-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .connection-block {
+                border-left: none;
+                border-top: 4px solid var(--accent);
+            }
+
+            .tech-stack {
+                justify-content: center;
+            }
+
+            .tech-pill {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
         /* Print Styles */
         @media print {
             body {
@@ -349,8 +418,6 @@
 
             .hero-image {
                 display: none;
-                /* Often images waste ink, but depends on user. I'll keep it if it looks ok, but prompt says "for printing" so clean is better. Let's keep it grayscale or just hidden to save space? Let's hide BG gradients. */
-                border: 1px solid #ccc;
             }
 
             .section {
@@ -376,7 +443,6 @@
                 border: 1px solid #000;
             }
 
-            /* Hide non-essential graphics */
             .hero::before {
                 display: none;
             }
