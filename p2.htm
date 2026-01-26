@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hari Nandan K | Theoretical Physicist & Technopreneur</title>
+    <meta name="description" content="Portfolio of Hari Nandan K - Theoretical Physicist, Cybersecurity Specialist, and Founder of HOPE.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --cursor-size: 20px;
+            --accent: #ffaa00; /* Changed accent to match Black Hole (Accretion Orange) */
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-bg: rgba(10, 10, 10, 0.6);
+        }
+
+        body {
+            background-color: #000000;
+            color: #e0e0e0;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden; 
+            cursor: none; 
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2, h3, h4, .font-grotesk {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Custom Cursor */
+        #cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--cursor-size);
+            height: var(--cursor-size);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background-color 0.3s;
+            mix-blend-mode: difference;
+        }
+        
+        #cursor-dot {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+        }
+
+        body.hovering #cursor {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: transparent;
+            backdrop-filter: blur(2px);
+        }
+
+        /* ThreeJS Canvas */
+        #webgl-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Glassmorphism Utilities */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 170, 0, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -10px rgba(255, 170, 0, 0.1);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+
+        /* Loader */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 10001;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .loader-line {
+            width: 0%;
+            height: 1px;
+            background: var(--accent);
+            transition: width 1s ease-in-out;
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #fff, #666);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .text-gradient-accent {
+            background: linear-gradient(135deg, #ffaa00 0%, #ffdd80 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Horizontal Scroll Section */
+        .h-scroll-container {
+            display: flex;
+            flex-wrap: nowrap;
+            width: fit-content; 
+            height: 100%;
+            align-items: center;
+        }
+
+        .marker-line {
+            position: absolute;
+            left: 0;
+            top: 1.5em; /* Align with text */
+            height: 1px;
+            background: rgba(255,255,255,0.2);
+            width: 0;
+            transition: width 0.5s ease;
+        }
+        li:hover .marker-line {
+            width: 20px;
+            background: var(--accent);
+        }
+
+        /* Hero specific styles */
+        .glitch-wrapper {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Loader -->
+    <div id="loader">
+        <div class="font-grotesk text-4xl mb-4 tracking-tighter text-white">EVENT HORIZON</div>
+        <div class="w-64 h-[1px] bg-gray-800 rounded overflow-hidden">
+            <div class="loader-line"></div>
+        </div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div id="cursor"></div>
+    <div id="cursor-dot"></div>
+
+    <!-- 3D Background -->
+    <div id="webgl-container"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 w-full z-50 px-6 py-6 flex justify-between items-center text-white">
+        <a href="#" class="font-grotesk font-bold text-2xl tracking-tighter hover-trigger">JA.</a>
+        <div class="hidden md:flex gap-8 font-grotesk text-sm uppercase tracking-widest">
+            <a href="#about" class="hover:text-orange-400 transition-colors hover-trigger">About</a>
+            <a href="#work" class="hover:text-orange-400 transition-colors hover-trigger">Work</a>
+            <a href="#research" class="hover:text-orange-400 transition-colors hover-trigger">Research</a>
+            <a href="#contact" class="hover:text-orange-400 transition-colors hover-trigger">Contact</a>
+        </div>
+        <a href="#contact" class="glass-panel px-6 py-2 rounded-full font-grotesk text-xs uppercase tracking-wider hover:bg-white/10 transition-all hover-trigger">
+            Let's Talk
+        </a>
+    </nav>
+
+    <!-- Main Content Wrapper -->
+    <main class="relative w-full z-10">
+
+        <!-- Pro Hero Section -->
+        <section class="h-screen w-full flex flex-col justify-center items-center relative px-4 perspective-container">
+            <!-- 3D Tilt Container -->
+            <div id="hero-content" class="text-center z-10 transition-transform duration-100 ease-out" style="transform-style: preserve-3d;">
+                
+                <div class="overflow-hidden mb-4">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md hero-anim">
+                        <span class="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></span>
+                        <span class="font-grotesk text-xs text-gray-300 tracking-widest uppercase">Singularity Detected</span>
+                    </div>
+                </div>
+
+                <h1 class="hero-title text-7xl md:text-[10rem] font-bold tracking-tighter mb-2 text-white leading-[0.9] select-none mix-blend-overlay">
+                    <span class="glitch-text" data-value="JUSTIN">JUSTIN</span><br>
+                    <span class="glitch-text" data-value="ALEXIA">ALEXIA</span>
+                </h1>
+                
+                <div class="overflow-hidden max-w-2xl mx-auto mt-8">
+                    <p class="hero-anim text-gray-300 text-lg md:text-xl font-light leading-relaxed backdrop-blur-sm p-4 rounded-lg bg-black/20 border border-white/5">
+                        Theoretical physicist & cybersecurity specialist exploring the <span class="text-orange-400 font-bold">Event Horizon</span> of technology.
+                    </p>
+                </div>
+
+                <div class="mt-10 flex justify-center gap-4 hero-anim">
+                    <a href="#work" class="hover-trigger px-8 py-3 bg-white text-black rounded-full font-bold text-sm tracking-widest hover:scale-105 transition-transform shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+                        ENTER
+                    </a>
+                    <a href="#about" class="hover-trigger px-8 py-3 border border-white/20 rounded-full font-bold text-sm tracking-widest hover:bg-white/10 transition-colors backdrop-blur-md text-white">
+                        OBSERVE
+                    </a>
+                </div>
+            </div>
+
+            <div class="absolute bottom-10 left-0 w-full flex justify-between px-10 font-grotesk text-xs text-gray-500 mix-blend-difference">
+                <div class="flex gap-8">
+                    <span>KOCHI, INDIA</span>
+                    <span>COORD: 9.9312° N</span>
+                </div>
+                <div class="animate-bounce">GRAVITY ASSIST: SCROLL</div>
+            </div>
+        </section>
+
+        <!-- Marquee Separator -->
+        <div class="py-12 border-y border-white/5 bg-black/40 backdrop-blur-md overflow-hidden flex">
+            <div class="marquee-content flex gap-12 font-grotesk text-4xl md:text-6xl font-bold text-white/10 whitespace-nowrap uppercase select-none">
+                <span>Spacetime Geometry</span>
+                <span class="text-orange-500/20">Event Horizon</span>
+                <span>Cybersecurity</span>
+                <span class="text-orange-500/20">Quantum Fields</span>
+                <span>IoT Infrastructure</span>
+                <span class="text-orange-500/20">Singularity</span>
+                 <span>Spacetime Geometry</span>
+                <span class="text-orange-500/20">Event Horizon</span>
+            </div>
+        </div>
+
+        <!-- Horizontal Scroll Skills/About -->
+        <section id="about" class="w-full relative">
+            <div id="skills-pin-wrapper" class="h-screen w-full flex items-center overflow-hidden">
+                <div class="h-scroll-container pl-6 md:pl-20 flex items-center gap-20 md:gap-40">
+                    
+                    <!-- Panel 1: Intro -->
+                    <div class="w-[80vw] md:w-[40vw] flex flex-col gap-6 shrink-0">
+                        <span class="text-orange-400 font-grotesk tracking-widest text-sm">THE MISSION</span>
+                        <h2 class="text-4xl md:text-6xl font-bold leading-tight text-white">
+                            Operating at the intersection of <span class="text-gray-500">Physics</span> & <span class="text-orange-200">Applied Tech</span>.
+                        </h2>
+                        <p class="text-gray-400 text-lg max-w-md">
+                            I operate the Chronon-Super Quantum Level Model while building deployable systems. My work is guided by two missions: "Secure. Test. Defend." and "Create. Empower. Evolve."
+                        </p>
+                    </div>
+
+                    <!-- Panel 2: Physics Skills -->
+                    <div class="glass-panel w-[85vw] md:w-[30vw] p-8 md:p-12 rounded-3xl shrink-0 flex flex-col justify-between h-[60vh]">
+                        <i class="fas fa-atom text-5xl text-orange-400 mb-8"></i>
+                        <div>
+                            <h3 class="text-3xl font-bold mb-6 text-white">Theoretical Physics</h3>
+                            <ul class="space-y-4 text-gray-300 font-light relative">
+                                <li class="pl-4 relative hover-trigger"><div class="marker-line"></div>Linear Algebra & Hilbert Spaces</li>
+                                <li class="pl-4 relative hover-trigger"><div class="marker-line"></div>Discrete Mathematics & Graph Theory</li>
+                                <li class="pl-4 relative hover-trigger"><div class="marker-line"></div>General Relativity & Diff. Geometry</li>
+                                <li class="pl-4 relative hover-trigger"><div class="marker-line"></div>Quantum Computing Fundamentals</li>
+                                <li class="pl-4 relative hover-trigger"><div class="marker-line"></div>Statistical Mechanics</li>
+                            </ul>
+                        </div>
+                        <div class="mt-8 w-full bg-gray-800 h-1 rounded-full overflow-hidden">
+                            <div class="bg-orange-400 w-[90%] h-full"></div>
+                        </div>
+                    </div>
+
+                    <!-- Panel 3: Security Skills -->
+                    <div class="glass-panel w-[85vw] md:w-[30vw] p-8 md:p-12 rounded-3xl shrink-0 flex flex-col justify-between h-[60vh]">
+                        <i class="fas fa-shield-halved text-5xl text-green-400 mb-8"></i>
+                        <div>
+                            <h3 class="text-3xl font-bold mb-6 text-white">Cybersecurity</h3>
+                            <ul class="space-y-4 text-gray-300 font-light">
+                                <li class="pl-4 relative hover-trigger"><div class="marker-line"></div>Ethical Hacking & Pentesting</li>
+                                <li class="pl-4 relative hover-trigger"><div class="marker-line"></div>Red Teaming & Adversary Sim</li>
+                                <li class="pl-4 relative hover-trigger"><div class="marker-line"></div>IoT Security Assessment</li>
+                                <li class="pl-4 relative hover-trigger"><div class="marker-line"></div>Vulnerability Assessment</li>
+                                <li class="pl-4 relative hover-trigger"><div class="marker-line"></div>Privacy & Anonymity Tools</li>
+                            </ul>
+                        </div>
+                        <div class="mt-8 w-full bg-gray-800 h-1 rounded-full overflow-hidden">
+                            <div class="bg-green-400 w-[95%] h-full"></div>
+                        </div>
+                    </div>
+
+                    <!-- Panel 4: Dev Skills -->
+                    <div class="glass-panel w-[85vw] md:w-[30vw] p-8 md:p-12 rounded-3xl shrink-0 flex flex-col justify-between h-[60vh]">
+                        <i class="fas fa-code text-5xl text-blue-400 mb-8"></i>
+                        <div>
+                            <h3 class="text-3xl font-bold mb-6 text-white">Full Stack Dev</h3>
+                            <ul class="space-y-4 text-gray-300 font-light">
+                                <li class="pl-4 relative hover-trigger"><div class="marker-line"></div>HTML5, CSS3, JS (ES6+)</li>
+                                <li class="pl-4 relative hover-trigger"><div class="marker-line"></div>Python & Scientific Libs</li>
+                                <li class="pl-4 relative hover-trigger"><div class="marker-line"></div>Flutter & Cross-Platform</li>
+                                <li class="pl-4 relative hover-trigger"><div class="marker-line"></div>Three.js & WebGL</li>
+                                <li class="pl-4 relative hover-trigger"><div class="marker-line"></div>Firebase & Cloud Infra</li>
+                            </ul>
+                        </div>
+                        <div class="mt-8 w-full bg-gray-800 h-1 rounded-full overflow-hidden">
+                            <div class="bg-blue-400 w-[85%] h-full"></div>
+                        </div>
+                    </div>
+                    
+                     <!-- Buffer for scrolling -->
+                    <div class="w-[10vw] shrink-0"></div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Stacked Projects Section -->
+        <section id="work" class="py-32 px-4 md:px-10 relative z-10 bg-transparent">
+            <div class="max-w-7xl mx-auto">
+                <!-- Sticky Header -->
+                <div class="sticky top-0 z-30 pt-24 pb-8 bg-[#000000]/80 backdrop-blur-lg border-b border-white/5 w-full">
+                    <h2 class="text-5xl md:text-7xl font-bold mb-4 text-white">Selected Works</h2>
+                    <p class="text-gray-400 max-w-xl">Deployed systems across security, research, and social tech.</p>
+                </div>
+
+                <!-- Project 1 -->
+                <div class="project-card sticky top-64 mb-24 w-full">
+                    <div class="glass-panel p-8 md:p-12 rounded-3xl border-t border-orange-500/30 flex flex-col md:flex-row gap-10 transition-transform duration-500 hover:scale-[1.01] bg-[#050505]">
+                        <div class="w-full md:w-1/2 flex flex-col justify-between">
+                            <div>
+                                <span class="text-orange-400 text-xs font-bold tracking-widest border border-orange-500/30 px-3 py-1 rounded-full">EDTECH</span>
+                                <h3 class="text-4xl font-bold mt-6 mb-4 text-white">HOPE Platform</h3>
+                                <p class="text-gray-400 leading-relaxed mb-6">
+                                    Social startup with four integrated verticals: Education (TexidoMeg, IoT Camps), E-Commerce (ShopRoyince), IoT systems, and Theoretical Research.
+                                </p>
+                                <div class="flex flex-wrap gap-2 mb-8">
+                                    <span class="px-3 py-1 bg-white/5 rounded-md text-xs text-gray-300">Flutter</span>
+                                    <span class="px-3 py-1 bg-white/5 rounded-md text-xs text-gray-300">Firebase</span>
+                                    <span class="px-3 py-1 bg-white/5 rounded-md text-xs text-gray-300">Mentorship</span>
+                                </div>
+                            </div>
+                            <a href="#" class="hover-trigger group flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-white">
+                                View Ecosystem <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                        </div>
+                        <div class="w-full md:w-1/2 h-[300px] md:h-[400px] bg-gradient-to-br from-orange-900/20 to-red-900/20 rounded-2xl overflow-hidden relative group">
+                             <img src="https://firebasestorage.googleapis.com/v0/b/texidomeg-v8.appspot.com/o/me.jpeg?alt=media&token=dd967713-6f64-4cc7-8017-dfa41dfca7db" alt="Hope Platform" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700 grayscale group-hover:grayscale-0">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card sticky top-72 mb-24 w-full">
+                    <div class="glass-panel p-8 md:p-12 rounded-3xl border-t border-green-500/30 flex flex-col md:flex-row gap-10 transition-transform duration-500 hover:scale-[1.01] bg-[#0a0a0a]">
+                        <div class="w-full md:w-1/2 flex flex-col justify-between">
+                            <div>
+                                <span class="text-green-400 text-xs font-bold tracking-widest border border-green-500/30 px-3 py-1 rounded-full">SECURITY</span>
+                                <h3 class="text-4xl font-bold mt-6 mb-4 text-white">IoT Botnet Detection</h3>
+                                <p class="text-gray-400 leading-relaxed mb-6">
+                                    Machine learning model analyzing network traffic (MQTT) to detect anomalous behavior and mitigate botnet propagation in IoT environments.
+                                </p>
+                                <div class="flex flex-wrap gap-2 mb-8">
+                                    <span class="px-3 py-1 bg-white/5 rounded-md text-xs text-gray-300">Python</span>
+                                    <span class="px-3 py-1 bg-white/5 rounded-md text-xs text-gray-300">Scikit-learn</span>
+                                    <span class="px-3 py-1 bg-white/5 rounded-md text-xs text-gray-300">MQTT</span>
+                                </div>
+                            </div>
+                            <a href="#" class="hover-trigger group flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-white">
+                                View Research <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                        </div>
+                        <div class="w-full md:w-1/2 h-[300px] md:h-[400px] bg-gradient-to-br from-green-900/20 to-emerald-900/20 rounded-2xl overflow-hidden relative group">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <i class="fas fa-network-wired text-8xl text-green-500/20 group-hover:text-green-500/50 transition-all duration-500"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card sticky top-80 mb-12 w-full">
+                    <div class="glass-panel p-8 md:p-12 rounded-3xl border-t border-purple-500/30 flex flex-col md:flex-row gap-10 transition-transform duration-500 hover:scale-[1.01] bg-[#0f0f0f]">
+                        <div class="w-full md:w-1/2 flex flex-col justify-between">
+                            <div>
+                                <span class="text-purple-400 text-xs font-bold tracking-widest border border-purple-500/30 px-3 py-1 rounded-full">RESEARCH</span>
+                                <h3 class="text-4xl font-bold mt-6 mb-4 text-white">Chronon-SQL Model</h3>
+                                <p class="text-gray-400 leading-relaxed mb-6">
+                                    Theoretical framework exploring discrete spacetime models and quantum gravity through mathematical unification of quantum mechanics and general relativity.
+                                </p>
+                                <div class="flex flex-wrap gap-2 mb-8">
+                                    <span class="px-3 py-1 bg-white/5 rounded-md text-xs text-gray-300">Quantum Gravity</span>
+                                    <span class="px-3 py-1 bg-white/5 rounded-md text-xs text-gray-300">Hilbert Spaces</span>
+                                    <span class="px-3 py-1 bg-white/5 rounded-md text-xs text-gray-300">GR + QM</span>
+                                </div>
+                            </div>
+                            <a href="#" class="hover-trigger group flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-white">
+                                Read Paper <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                        </div>
+                        <div class="w-full md:w-1/2 h-[300px] md:h-[400px] bg-gradient-to-br from-purple-900/20 to-indigo-900/20 rounded-2xl overflow-hidden relative group">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <i class="fas fa-atom text-8xl text-purple-500/20 group-hover:text-purple-500/50 transition-all duration-500 animate-spin-slow"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Research Archive Section -->
+        <section id="research" class="py-20 px-4 md:px-10 max-w-7xl mx-auto relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div class="col-span-1">
+                    <h2 class="text-5xl font-bold mb-6 sticky top-32 text-white">Research<br><span class="text-gradient-accent">Archive</span></h2>
+                </div>
+                <div class="col-span-1 md:col-span-2 space-y-4">
+                    
+                    <!-- Item 1 -->
+                    <div class="glass-card p-6 rounded-xl hover-trigger">
+                        <div class="flex justify-between items-start mb-4">
+                            <h4 class="text-xl font-bold text-white">Q-SAFE Framework</h4>
+                            <span class="text-xs bg-green-500/10 text-green-400 px-2 py-1 rounded">Ongoing</span>
+                        </div>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                            Security-by-design framework for educational technology platforms, integrating offensive security testing and privacy controls.
+                        </p>
+                        <div class="flex gap-4 text-xs text-gray-500 font-mono">
+                            <span>#EdTech</span>
+                            <span>#RedTeam</span>
+                        </div>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="glass-card p-6 rounded-xl hover-trigger">
+                        <div class="flex justify-between items-start mb-4">
+                            <h4 class="text-xl font-bold text-white">Automated Vulnerability Scanner</h4>
+                            <span class="text-xs bg-blue-500/10 text-blue-400 px-2 py-1 rounded">Deployed</span>
+                        </div>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                            Python-based scanner integrating Nmap and web tools for multi-threaded network and application vulnerability detection.
+                        </p>
+                        <div class="flex gap-4 text-xs text-gray-500 font-mono">
+                            <span>#Python</span>
+                            <span>#SecOps</span>
+                        </div>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="glass-card p-6 rounded-xl hover-trigger">
+                        <div class="flex justify-between items-start mb-4">
+                            <h4 class="text-xl font-bold text-white">HOPE-INT-CORE AI</h4>
+                            <span class="text-xs bg-purple-500/10 text-purple-400 px-2 py-1 rounded">Beta</span>
+                        </div>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                            AI-powered content generation platform leveraging Google's Gemini AI to create high-quality educational resources.
+                        </p>
+                        <div class="flex gap-4 text-xs text-gray-500 font-mono">
+                            <span>#GenerativeAI</span>
+                            <span>#Gemini</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="min-h-[80vh] flex items-center justify-center py-20 px-4 relative z-10">
+            <div class="absolute inset-0 bg-gradient-to-t from-blue-900/10 to-transparent pointer-events-none"></div>
+            
+            <div class="glass-panel p-8 md:p-20 rounded-[3rem] max-w-4xl w-full text-center relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-orange-500 via-purple-500 to-blue-500"></div>
+                
+                <h2 class="text-5xl md:text-7xl font-bold mb-8 tracking-tight text-white">Let's Collapse the<br>Wave Function.</h2>
+                <p class="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
+                    Open to research partnerships and consulting opportunities in Quantum Models, Cybersecurity, and High-Scale IoT.
+                </p>
+                
+                <div class="flex flex-col md:flex-row justify-center gap-6 mb-12">
+                    <a href="mailto:harinandan.ofc@gmail.com" class="hover-trigger px-8 py-4 bg-white text-black rounded-full font-bold text-lg hover:scale-105 transition-transform">
+                        harinandan.ofc@gmail.com
+                    </a>
+                    <a href="#" class="hover-trigger px-8 py-4 glass-card rounded-full font-bold text-lg hover:bg-white/10 transition-colors text-white">
+                        Schedule Meeting
+                    </a>
+                </div>
+
+                <div class="flex justify-center gap-8 text-2xl text-gray-500">
+                    <a href="https://github.com/justi-io" class="hover:text-white transition-colors hover-trigger"><i class="fab fa-github"></i></a>
+                    <a href="#" class="hover:text-blue-400 transition-colors hover-trigger"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="hover:text-sky-400 transition-colors hover-trigger"><i class="fab fa-twitter"></i></a>
+                </div>
+
+                <div class="mt-16 text-sm text-gray-600 font-mono">
+                    LOCATION: Kozhikode, Kerala, India <br>
+                    &copy; 2025 Hari Nandan K.
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Scripts -->
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Post Processing -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+    
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- Lenis Smooth Scroll -->
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+
+    <script>
+        /* ==========================================
+           1. Scroll Architecture
+           ========================================== */
+        const lenis = new Lenis({
+            duration: 1.5,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 1,
+            smoothTouch: false,
+            touchMultiplier: 2,
+        });
+
+        lenis.on('scroll', ScrollTrigger.update);
+
+        gsap.ticker.add((time) => {
+            lenis.raf(time * 1000);
+        });
+        gsap.ticker.lagSmoothing(0);
+
+        /* ==========================================
+           2. Hacker Text Effect
+           ========================================== */
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        document.querySelectorAll('.glitch-text').forEach(element => {
+            let iteration = 0;
+            const originalText = element.dataset.value;
+            let interval = null;
+
+            // Start animation on load
+            setTimeout(() => {
+                interval = setInterval(() => {
+                    element.innerText = originalText
+                        .split("")
+                        .map((letter, index) => {
+                            if(index < iteration) {
+                                return originalText[index];
+                            }
+                            return letters[Math.floor(Math.random() * 26)]
+                        })
+                        .join("");
+                    
+                    if(iteration >= originalText.length){ 
+                        clearInterval(interval);
+                    }
+                    
+                    iteration += 1/3;
+                }, 30);
+            }, 1500); // Delay start
+        });
+
+        /* ==========================================
+           3. Interactive Tilt Hero
+           ========================================== */
+        const heroContent = document.getElementById('hero-content');
+        const heroSection = document.querySelector('.perspective-container');
+
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+
+            const moveX = (x - 0.5) * 20; // Adjust range
+            const moveY = (y - 0.5) * 20;
+
+            if (window.scrollY < window.innerHeight) {
+                heroContent.style.transform = `rotateY(${moveX}deg) rotateX(${-moveY}deg)`;
+            }
+        });
+
+
+        /* ==========================================
+           4. GSAP Entrance Animations
+           ========================================== */
+        window.addEventListener('load', () => {
+            const loaderLine = document.querySelector('.loader-line');
+            const loader = document.getElementById('loader');
+            
+            loaderLine.style.width = '100%';
+
+            setTimeout(() => {
+                gsap.to(loader, {
+                    yPercent: -100,
+                    duration: 1,
+                    ease: "power4.inOut",
+                    onComplete: initAnimations
+                });
+            }, 1500);
+        });
+
+        function initAnimations() {
+            gsap.from(".hero-anim", {
+                y: 30,
+                opacity: 0,
+                duration: 1,
+                stagger: 0.1,
+                ease: "power3.out",
+                delay: 0.5
+            });
+            
+            ScrollTrigger.refresh();
+        }
+
+        /* ==========================================
+           5. Interstellar Black Hole (Three.js)
+           ========================================== */
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 12;
+        camera.position.y = 2;
+
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        document.getElementById('webgl-container').appendChild(renderer.domElement);
+
+        // Post Processing (Bloom)
+        const renderScene = new THREE.RenderPass(scene, camera);
+        const bloomPass = new THREE.UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
+        bloomPass.threshold = 0;
+        bloomPass.strength = 2.0; // Strong glow for accretion disk
+        bloomPass.radius = 0.5;
+
+        const composer = new THREE.EffectComposer(renderer);
+        composer.addPass(renderScene);
+        composer.addPass(bloomPass);
+
+        // --- The Event Horizon (Black Sphere) ---
+        const sphereGeo = new THREE.SphereGeometry(3, 64, 64);
+        const sphereMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
+        const blackHole = new THREE.Mesh(sphereGeo, sphereMat);
+        scene.add(blackHole);
+
+        // --- Accretion Disk (Swirling Matter) ---
+        // We use a ring geometry with a custom shader
+        const discGeometry = new THREE.RingGeometry(4, 12, 64);
+        const pos = discGeometry.attributes.position;
+        const v3 = new THREE.Vector3();
+        for (let i = 0; i < pos.count; i++){
+            v3.fromBufferAttribute(pos, i);
+            discGeometry.attributes.uv.setXY(i, v3.length() < 6 ? 0 : 1, 1);
+        }
+
+        const discVertexShader = `
+            varying vec2 vUv;
+            varying vec3 vPos;
+            void main() {
+                vUv = uv;
+                vPos = position;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+        `;
+
+        const discFragmentShader = `
+            uniform float uTime;
+            varying vec2 vUv;
+            varying vec3 vPos;
+
+            // Noise function
+            vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+            vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+            vec4 permute(vec4 x) { return mod289(((x*34.0)+1.0)*x); }
+            vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
+            float snoise(vec3 v) { 
+                const vec2  C = vec2(1.0/6.0, 1.0/3.0) ;
+                const vec4  D = vec4(0.0, 0.5, 1.0, 2.0);
+                vec3 i  = floor(v + dot(v, C.yyy) );
+                vec3 x0 = v - i + dot(i, C.xxx) ;
+                vec3 g = step(x0.yzx, x0.xyz);
+                vec3 l = 1.0 - g;
+                vec3 i1 = min( g.xyz, l.zxy );
+                vec3 i2 = max( g.xyz, l.zxy );
+                vec3 x1 = x0 - i1 + C.xxx;
+                vec3 x2 = x0 - i2 + C.yyy;
+                vec3 x3 = x0 - D.yyy;
+                i = mod289(i);
+                vec4 p = permute( permute( permute( 
+                            i.z + vec4(0.0, i1.z, i2.z, 1.0 ))
+                            + i.y + vec4(0.0, i1.y, i2.y, 1.0 )) 
+                            + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));
+                float n_ = 0.142857142857;
+                vec3  ns = n_ * D.wyz - D.xzx;
+                vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
+                vec4 x_ = floor(j * ns.z);
+                vec4 y_ = floor(j - 7.0 * x_ );
+                vec4 x = x_ *ns.x + ns.yyyy;
+                vec4 y = y_ *ns.x + ns.yyyy;
+                vec4 h = 1.0 - abs(x) - abs(y);
+                vec4 b0 = vec4( x.xy, y.xy );
+                vec4 b1 = vec4( x.zw, y.zw );
+                vec4 s0 = floor(b0)*2.0 + 1.0;
+                vec4 s1 = floor(b1)*2.0 + 1.0;
+                vec4 sh = -step(h, vec4(0.0));
+                vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;
+                vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;
+                vec3 p0 = vec3(a0.xy,h.x);
+                vec3 p1 = vec3(a0.zw,h.y);
+                vec3 p2 = vec3(a1.xy,h.z);
+                vec3 p3 = vec3(a1.zw,h.w);
+                vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));
+                p0 *= norm.x;
+                p1 *= norm.y;
+                p2 *= norm.z;
+                p3 *= norm.w;
+                vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
+                m = m * m;
+                return 42.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3) ) );
+            }
+
+            void main() {
+                // Polar coordinates
+                float angle = atan(vPos.y, vPos.x);
+                float radius = length(vPos.xy);
+
+                // Swirl effect
+                float noise = snoise(vec3(vPos.x * 0.5 + uTime, vPos.y * 0.5 + uTime, uTime * 0.5));
+                
+                // Intensity fade out
+                float intensity = 1.0 / (radius - 2.5) * 0.8;
+                intensity += noise * 0.5;
+                
+                // Color palette (Orange/Gold for accretion disk)
+                vec3 color = vec3(1.0, 0.5, 0.1) * intensity;
+                
+                // Alpha fade
+                float alpha = smoothstep(12.0, 4.0, radius);
+
+                gl_FragColor = vec4(color, alpha);
+            }
+        `;
+
+        const discMaterial = new THREE.ShaderMaterial({
+            vertexShader: discVertexShader,
+            fragmentShader: discFragmentShader,
+            uniforms: { uTime: { value: 0 } },
+            transparent: true,
+            side: THREE.DoubleSide,
+            blending: THREE.AdditiveBlending
+        });
+
+        const accretionDisk = new THREE.Mesh(discGeometry, discMaterial);
+        accretionDisk.rotation.x = Math.PI / 2.2; // Tilt it
+        scene.add(accretionDisk);
+
+        // --- Gravitational Lensing Ring (Simplified) ---
+        // A vertical ring to simulate light bending over the top
+        const lensGeo = new THREE.RingGeometry(3.5, 3.8, 64);
+        const lensMat = new THREE.MeshBasicMaterial({ 
+            color: 0xffaa00, 
+            transparent: true, 
+            opacity: 0.3,
+            side: THREE.DoubleSide,
+            blending: THREE.AdditiveBlending
+        });
+        const lensRing = new THREE.Mesh(lensGeo, lensMat);
+        lensRing.position.y = 0.5; // Slightly offset
+        lensRing.rotation.x = -0.2; // Slight tilt
+        // scene.add(lensRing); // Optional: can be too distracting
+
+        // --- Starfield ---
+        const starsGeo = new THREE.BufferGeometry();
+        const starsCount = 2000;
+        const starsPos = new Float32Array(starsCount * 3);
+        
+        for(let i = 0; i < starsCount * 3; i+=3) {
+            starsPos[i] = (Math.random() - 0.5) * 200;
+            starsPos[i+1] = (Math.random() - 0.5) * 200;
+            starsPos[i+2] = (Math.random() - 0.5) * 100 - 20; // Push background
+        }
+        starsGeo.setAttribute('position', new THREE.BufferAttribute(starsPos, 3));
+        const starsMat = new THREE.PointsMaterial({color: 0xffffff, size: 0.15, transparent: true, opacity: 0.8});
+        const starField = new THREE.Points(starsGeo, starsMat);
+        scene.add(starField);
+
+
+        // --- Animation Loop ---
+        let time = 0;
+        let mouse = { x: 0, y: 0 };
+
+        document.addEventListener('mousemove', (event) => {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            time += 0.01;
+
+            discMaterial.uniforms.uTime.value = time;
+
+            // Rotate Accretion Disk
+            accretionDisk.rotation.z = time * 0.2;
+
+            // Interactive Tilt (Parallax)
+            const targetRotX = mouse.y * 0.1 + Math.PI / 2.2;
+            const targetRotY = mouse.x * 0.1;
+            
+            accretionDisk.rotation.x += (targetRotX - accretionDisk.rotation.x) * 0.05;
+            accretionDisk.rotation.y += (targetRotY - accretionDisk.rotation.y) * 0.05;
+            
+            // Starfield drift
+            starField.rotation.z += 0.0002;
+
+            composer.render();
+        }
+        animate();
+
+        // --- Custom Cursor Logic ---
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorRing = document.getElementById('cursor');
+        let cx = 0, cy = 0, mx = 0, my = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mx = e.clientX;
+            my = e.clientY;
+            cursorDot.style.left = mx + 'px';
+            cursorDot.style.top = my + 'px';
+        });
+
+        function loopCursor() {
+            cx += (mx - cx) * 0.15;
+            cy += (my - cy) * 0.15;
+            cursorRing.style.left = cx + 'px';
+            cursorRing.style.top = cy + 'px';
+            requestAnimationFrame(loopCursor);
+        }
+        loopCursor();
+
+        // Resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            composer.setSize(window.innerWidth, window.innerHeight);
+            ScrollTrigger.refresh();
+        });
+
+        /* ==========================================
+           6. Re-init GSAP Scroll logic (Bug Fix Included)
+           ========================================== */
+        gsap.registerPlugin(ScrollTrigger);
+
+        const scrollContainer = document.querySelector(".h-scroll-container");
+        
+        function getScrollAmount() {
+            // Force recalculation of width based on scrollWidth
+            // We add a small buffer or calculate based on children width sum if needed
+            let containerWidth = scrollContainer.scrollWidth;
+            return -(containerWidth - window.innerWidth);
+        }
+
+        const tween = gsap.to(scrollContainer, {
+            x: getScrollAmount,
+            ease: "none",
+        });
+
+        ScrollTrigger.create({
+            trigger: "#about",
+            start: "top top",
+            end: () => `+=${getScrollAmount() * -1}`, 
+            pin: true,
+            animation: tween,
+            scrub: 1,
+            invalidateOnRefresh: true, 
+        });
+
+        gsap.to(".marquee-content", {
+            xPercent: -50,
+            ease: "none",
+            duration: 20,
+            repeat: -1
+        });
+
+    </script>
+</body>
+</html>

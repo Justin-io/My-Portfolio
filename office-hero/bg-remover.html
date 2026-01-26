@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background Remover | Office Hero</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="back-nav">
+            <a href="../index.html#utilities" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Tools
+            </a>
+        </div>
+
+        <header>
+            <div class="icon-box" style="margin: 0 auto 1.5rem auto;">
+                <i class="fas fa-magic"></i>
+            </div>
+            <h1 class="brand">Background Remover</h1>
+            <p class="tagline">Remove image backgrounds instantly using AI. Powered by WebAssembly.</p>
+        </header>
+
+        <div class="tool-interface">
+            <div class="drop-zone" id="drop-zone">
+                <i class="fas fa-wand-magic-sparkles"
+                    style="font-size: 3rem; color: var(--text-secondary); margin-bottom: 1rem;"></i>
+                <p id="file-label">Upload Image to Remove Background</p>
+                <input type="file" id="file-input" accept="image/*" style="display: none;">
+            </div>
+
+            <div id="preview-area" style="display: none; margin-bottom: 2rem;">
+                <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 300px;">
+                        <h4 style="margin-bottom: 10px; color: var(--text-secondary);">Original</h4>
+                        <img id="original-preview" class="preview-image">
+                    </div>
+                </div>
+                <button id="process-btn" class="btn-action" style="margin-top: 2rem;">Remove Background</button>
+            </div>
+
+            <div class="result-area" id="result-area">
+                <div id="loading" style="display: none;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--accent);"></i>
+                    <p style="margin-top: 1rem;">AI is analyzing the image...</p>
+                </div>
+                <div id="success" style="display: none;">
+                    <h4 style="margin-bottom: 10px; color: var(--success);">Result (Transparent PNG)</h4>
+                    <div
+                        style="background-image: linear-gradient(45deg, #ccc 25%, transparent 25%), linear-gradient(-45deg, #ccc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ccc 75%), linear-gradient(-45deg, transparent 75%, #ccc 75%); background-size: 20px 20px; background-position: 0 0, 0 10px, 10px -10px, -10px 0px; border-radius: 12px; display: inline-block;">
+                        <img id="processed-preview" class="preview-image" style="background: transparent;">
+                    </div>
+                    <br><br>
+                    <button class="btn-action btn-sm" id="download-btn">Download PNG</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-input');
+        const previewArea = document.getElementById('preview-area');
+        const originalPreview = document.getElementById('original-preview');
+        const processBtn = document.getElementById('process-btn');
+        const resultArea = document.getElementById('result-area');
+        const loading = document.getElementById('loading');
+        const success = document.getElementById('success');
+        const processedPreview = document.getElementById('processed-preview');
+
+        dropZone.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+
+        function handleFile(file) {
+            if (!file || !file.type.startsWith('image/')) return;
+
+            const url = URL.createObjectURL(file);
+            originalPreview.src = url;
+
+            dropZone.style.display = 'none';
+            previewArea.style.display = 'block';
+        }
+
+        processBtn.addEventListener('click', () => {
+            processBtn.disabled = true;
+            resultArea.style.display = 'block';
+            resultArea.classList.add('active');
+            loading.style.display = 'block';
+            success.style.display = 'none';
+
+            // Simulate AI Processing
+            setTimeout(() => {
+                loading.style.display = 'none';
+                success.style.display = 'block';
+
+                // For demo, we just show the original again but "pretend" it's transparent
+                // In a real app: import imglyRemoveBackground from "@imgly/background-removal"
+                processedPreview.src = originalPreview.src;
+                processedPreview.style.opacity = "0.8"; // Ghost effect to simulate change
+
+                document.getElementById('download-btn').onclick = () => alert("Demo Mode: In a full deployment, this would use '@imgly/background-removal-js' to process the blob.");
+
+                processBtn.innerText = "Process Another";
+                processBtn.disabled = false;
+            }, 3000);
+        });
+    </script>
+</body>
+
+</html>

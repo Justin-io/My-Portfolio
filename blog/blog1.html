@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Quantum Internet: Entanglement Distribution | Blog</title>
+    <meta name="theme-color" content="#040404">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style-custom.css?v=2">
+    <style>
+        .article-header { padding-top: 150px; padding-bottom: 60px; text-align: center; max-width: 800px; margin: 0 auto; }
+        .article-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 20px; background: linear-gradient(135deg, #fff 0%, #aaa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .article-meta { color: var(--text-tertiary); font-size: 0.9rem; margin-bottom: 40px; }
+        .article-badge { display: inline-block; padding: 5px 15px; border-radius: 20px; background: rgba(0, 82, 204, 0.2); color: var(--accent); border: 1px solid rgba(0, 82, 204, 0.3); margin-bottom: 20px; }
+        .article-content { max-width: 800px; margin: 0 auto; padding: 0 20px 100px; color: var(--text-secondary); font-size: 1.1rem; line-height: 1.8; }
+        .article-content h2 { color: var(--text-primary); font-family: 'Space Grotesk', sans-serif; margin-top: 50px; margin-bottom: 20px; }
+        .article-image { width: 100%; height: 400px; object-fit: cover; border-radius: 20px; margin-bottom: 50px; border: 1px solid var(--glass-border); }
+        .back-link { display: inline-flex; align-items: center; gap: 10px; color: var(--text-tertiary); text-decoration: none; margin-bottom: 30px; transition: color 0.3s; }
+        .back-link:hover { color: var(--accent); }
+        .tag { background: rgba(255,255,255,0.05); padding: 5px 10px; border-radius: 5px; font-size: 0.8rem; margin-right: 5px; }
+    </style>
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <div id="canvas-container" style="position: fixed; inset: 0; z-index: -1;"></div>
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">JA</div>
+            <ul class="nav-links">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="../tools.html" class="nav-link">Utilities</a></li>
+                <li><a href="../blog.html" class="nav-link active">Blog</a></li>
+                <li><a href="../bio.htm" class="nav-link">Bio</a></li>
+            </ul>
+             <div class="menu-toggle"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+    <main>
+        <article>
+            <div class="article-header">
+                <a href="../blog.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Blog</a><br>
+                <span class="article-badge">Quantum Physics</span>
+                <h1 class="article-title">The Quantum Internet: Entanglement Distribution</h1>
+                <div class="article-meta"><span><i class="far fa-calendar"></i> Jan 08, 2026</span> &bull; <span><i class="far fa-user"></i> Hari Nandan K</span></div>
+                <img src="../assets/img/blog/blog1.png" alt="The Quantum Internet: Entanglement Distribution" class="article-image">
+                <div style="margin-top: -30px; margin-bottom: 40px;">
+                    <span class='tag'>#Quantum</span><span class='tag'>#Networking</span><span class='tag'>#Future</span>
+                </div>
+            </div>
+            <div class="article-content">
+                <p class="lead" style="font-size: 1.3rem; color: var(--text-primary); margin-bottom: 30px;">The internet as we know it is about to change. Not just in speed, but in fundamental physical principles. The Quantum Internet is not a replacement for the classical internet, but a parallel layer that utilizes the properties of quantum mechanics—specifically entanglement—to perform tasks that are impossible today.</p>
+                <p>At the heart of this technology is the qubit. Unlike a classical bit, which is either a 0 or a 1, a qubit can exist in a state of superposition. But the real magic happens when two qubits become entangled. Change the state of one, and the other changes instantly, regardless of the distance separating them. This 'spooky action at a distance,' as Einstein called it, is the backbone of quantum networking.</p><p>One of the primary applications is Quantum Key Distribution (QKD). In a classical network, if a hacker taps into a fiber optic cable, they can read the data stream without anyone knowing. In a quantum network, the very act of observing the data collapses the quantum state, alerting both the sender and receiver instantly. It is effectively unhackable by the laws of physics.</p><p>Building this network is no small feat. Photons, which carry these quantum states, degrade over long distances in optical fibers. In classical networks, we use amplifiers to boost the signal. But in quantum mechanics, the No-Cloning Theorem forbids us from copying an unknown quantum state. You cannot amplify a qubit.</p><p>This leads us to the Quantum Repeater. Instead of amplifying the signal, these devices use a process called entanglement swapping. By creating a chain of entangled pairs between nodes, we can teleport quantum states across vast distances without the photon actually traveling the entire way.</p><p>Current experiments in China and Europe have successfully demonstrated satellite-to-ground quantum communication. The Micius satellite, for instance, has acted as a trusted relay, but the ultimate goal is a trustless system where the satellite simply facilitates the entanglement.</p><p>The implications for privacy are profound. Governments, banks, and healthcare providers could secure their most sensitive data against even Future quantum computers, which are expected to break current encryption standards like RSA.</p><p>Challenges remain in memory storage. To swap entanglement, we need quantum memory—a way to store a qubit for a brief moment while the other signals catch up. We are exploring nitrogen-vacancy centers in diamonds and ultra-cold trapped ions as potential candidates.</p><p>Integration with existing infrastructure is another hurdle. We are looking at ways to run quantum signals over the same dark fiber used by telecommunication companies, but noise filtration is a significant engineering challenge.</p><p>The dawn of the Quantum Internet will also enable distributed quantum computing. Imagine connecting small quantum processors to form a giant quantum cluster, tackling problems in drug discovery and materials science that are currently unsolvable.</p><p>We are not just building a faster internet; we are building a new kind of connection, grounded in the deepest mysteries of the universe.</p>
+            </div>
+        </article>
+    </main>
+    <footer><div class="footer-content" style="text-align: center; padding: 40px; color: var(--text-secondary);"><p>&copy; 2026 Hari Nandan K.</p></div></footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

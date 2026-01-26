@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insights & Research | Hari Nandan K</title>
+    <meta name="description" content="Thoughts, tutorials, and insights on AI, Tech, and Product Development.">
+    <meta name="theme-color" content="#040404">
+
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="assets/css/style-custom.css?v=2">
+    <!-- Premium Blog CSS -->
+    <link rel="stylesheet" href="assets/css/blog-pro.css?v=1">
+</head>
+
+<body>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    <div id="canvas-container"></div>
+
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">JA</div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html#about" class="nav-link">About Me</a></li>
+                <li><a href="tools.html" class="nav-link">Utilities</a></li>
+                <li><a href="blog.html" class="nav-link active">Blog</a></li>
+                <li><a href="bio.htm" class="nav-link">Bio</a></li>
+            </ul>
+            <div class="menu-toggle"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="blog-hero">
+            <div style="position: relative; z-index: 2;">
+                <span class="blog-hero-label">Knowledge Base</span>
+                <h1 class="blog-hero-title">Insights & <br>Research</h1>
+                <p class="blog-hero-subtitle">Exploring the frontiers of Quantum Physics, Artificial Intelligence, and
+                    Cybersecurity. Deep dives into the technology shaping our future.</p>
+            </div>
+        </section>
+
+        <!-- Dynamic Filters -->
+        <div class="blog-filters-container" id="blog-filters">
+            <button class="blog-filter-btn active" data-filter="all">All Topics</button>
+            <!-- Categories injected by JS -->
+        </div>
+
+        <div class="blog-grid-pro" id="blog-grid">
+            <div class="loading-spinner" style="color: var(--text-tertiary); text-align: center; grid-column: 1/-1;">
+                Loading intelligence...</div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content"
+            style="text-align: center; padding: 60px 20px; color: var(--text-secondary); border-top: 1px solid rgba(255,255,255,0.05); background: #020202;">
+            <p style="font-family: 'Space Grotesk', sans-serif;">&copy; 2026 Hari Nandan K. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="assets/js/main.js?v=2"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const grid = document.getElementById('blog-grid');
+            const filtersContainer = document.getElementById('blog-filters');
+
+            try {
+                // Fetch Manifest
+                const response = await fetch('blog/manifest.json');
+                if (!response.ok) throw new Error('Failed to load blog manifest');
+                const posts = await response.json();
+
+                // Clear loading
+                grid.innerHTML = '';
+
+                // Extract unique categories
+                const categories = new Set(posts.map(post => post.category));
+                categories.forEach(cat => {
+                    const btn = document.createElement('button');
+                    btn.className = 'blog-filter-btn';
+                    btn.textContent = cat;
+                    btn.dataset.filter = cat;
+                    filtersContainer.appendChild(btn);
+                });
+
+                // Render Function
+                function renderPosts(filter = 'all') {
+                    grid.innerHTML = '';
+                    let delay = 0;
+
+                    posts.forEach(post => {
+                        if (filter !== 'all' && post.category !== filter) return;
+
+                        // Fix image path if relative
+                        let imagePath = post.image;
+                        if (imagePath.startsWith('../')) {
+                            imagePath = imagePath.substring(3);
+                        }
+
+                        const card = document.createElement('a');
+                        card.href = 'blog/' + post.file;
+                        card.className = 'blog-card-pro';
+                        card.style.opacity = '0';
+                        card.style.animation = `fadeInUp 0.6s forwards ${delay}s`;
+
+                        card.innerHTML = `
+                            <div class="blog-card-image-wrapper">
+                                <img src="${imagePath}" alt="${post.title}" class="blog-card-image" loading="lazy">
+                                <span class="blog-badge-pro">${post.category}</span>
+                            </div>
+                            <div class="blog-card-content">
+                                <div class="blog-meta-pro">
+                                    <span><i class="far fa-calendar"></i> ${post.date}</span>
+                                </div>
+                                <h3 class="blog-title-pro">${post.title}</h3>
+                                <p class="blog-excerpt-pro">${post.excerpt}</p>
+                                <div class="blog-read-more">
+                                    Read Analysis <i class="fas fa-arrow-right"></i>
+                                </div>
+                            </div>
+                        `;
+
+                        grid.appendChild(card);
+                        delay += 0.05;
+                    });
+                }
+
+                // Add Keyframes for JS animation
+                const styleSheet = document.createElement("style");
+                styleSheet.innerText = `
+                    @keyframes fadeInUp {
+                        from { opacity: 0; transform: translateY(30px); }
+                        to { opacity: 1; transform: translateY(0); }
+                    }
+                `;
+                document.head.appendChild(styleSheet);
+
+                // Initial Render
+                renderPosts();
+
+                // Filter Logic
+                const filterBtns = document.querySelectorAll('.blog-filter-btn');
+                filterBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        // Re-query buttons to include dynamically added ones
+                        const allBtns = document.querySelectorAll('.blog-filter-btn');
+                        allBtns.forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+
+                        renderPosts(btn.dataset.filter);
+                    });
+                });
+
+            } catch (error) {
+                console.error(error);
+                grid.innerHTML = '<div style="text-align:center; color:red; padding: 40px;">Failed to load intelligence feed. Check console connection.</div>';
+            }
+        });
+    </script>
+</body>
+
+</html>

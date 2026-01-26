@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hari Nandan K | The Event Horizon</title>
+    <meta name="description" content="Theoretical Physics & Cybersecurity Portfolio">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&family=Syncopate:wght@700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        grotesk: ['Space Grotesk', 'sans-serif'],
+                        sync: ['Syncopate', 'sans-serif'],
+                    },
+                    colors: {
+                        accent: '#ffaa00',
+                    },
+                    animation: {
+                        'spin-slow': 'spin 12s linear infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --cursor-size: 20px;
+            --glass-surface: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-highlight: rgba(255, 255, 255, 0.15);
+        }
+
+        body {
+            background-color: #030303;
+            color: #e0e0e0;
+            overflow-x: hidden;
+            cursor: none;
+            /* Custom cursor */
+        }
+
+        /* --- LIQUID GLASSMORPHISM ENGINE --- */
+        .liquid-glass {
+            background: var(--glass-surface);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            box-shadow:
+                0 4px 30px rgba(0, 0, 0, 0.1),
+                inset 0 0 20px rgba(255, 255, 255, 0.02);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.3s;
+        }
+
+        /* The dynamic shine effect */
+        .liquid-glass::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y),
+                    rgba(255, 255, 255, 0.06),
+                    transparent 40%);
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+
+        .liquid-glass:hover::before {
+            opacity: 1;
+        }
+
+        .liquid-glass:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Noise overlay for texture */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9000;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* --- CUSTOM CURSOR --- */
+        #cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--cursor-size);
+            height: var(--cursor-size);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s;
+            mix-blend-mode: difference;
+        }
+
+        #cursor-dot {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+        }
+
+        body.hovering #cursor {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(2px);
+            border-color: transparent;
+        }
+
+        body.magnetic-active #cursor {
+            width: 0px;
+            height: 0px;
+            opacity: 0;
+        }
+
+        /* --- UTILITIES --- */
+        #webgl-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Horizontal Scroll Fixes */
+        .h-scroll-wrapper {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .h-scroll-container {
+            display: flex;
+            flex-wrap: nowrap;
+            height: 100%;
+            align-items: center;
+            will-change: transform;
+        }
+
+        /* Text Reveal Animations */
+        .char-reveal {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(100%);
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+        }
+
+        /* Magnetic Button Class */
+        .magnetic-btn {
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Active Nav State */
+        .nav-active {
+            background-color: rgba(255, 255, 255, 0.15) !important;
+            color: #ffaa00 !important;
+            box-shadow: 0 0 15px rgba(255, 170, 0, 0.1);
+        }
+
+        /* Loader */
+        .preloader {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 10001;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Noise Texture -->
+    <div class="noise-overlay"></div>
+
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="flex flex-col items-center">
+            <div class="font-sync text-4xl md:text-6xl font-bold text-white tracking-widest mb-4 mix-blend-difference">
+                <span class="inline-block loader-char">L</span>
+                <span class="inline-block loader-char">O</span>
+                <span class="inline-block loader-char">A</span>
+                <span class="inline-block loader-char">D</span>
+                <span class="inline-block loader-char">I</span>
+                <span class="inline-block loader-char">N</span>
+                <span class="inline-block loader-char">G</span>
+            </div>
+            <div class="w-48 h-[2px] bg-gray-800 rounded overflow-hidden">
+                <div class="h-full bg-accent w-0" id="loader-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cursor -->
+    <div id="cursor"></div>
+    <div id="cursor-dot"></div>
+
+    <!-- WebGL Background -->
+    <div id="webgl-container"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 px-6 py-6 flex justify-between items-center text-white">
+        <a href="#home" class="font-grotesk font-bold text-2xl tracking-tighter magnetic-target hover-trigger"
+            data-strength="20">JA.</a>
+
+        <ul class="nav-links hidden md:flex gap-1 glass-panel p-1 rounded-full liquid-glass">
+            <li>
+                <a href="#about"
+                    class="nav-link px-6 py-2 rounded-full hover:bg-white/10 transition-all duration-300 font-grotesk text-xs uppercase tracking-widest hover-trigger">About</a>
+            </li>
+            <li>
+                <a href="#projects"
+                    class="nav-link px-6 py-2 rounded-full hover:bg-white/10 transition-all duration-300 font-grotesk text-xs uppercase tracking-widest hover-trigger">Work</a>
+            </li>
+            <li>
+                <a href="#research"
+                    class="nav-link px-6 py-2 rounded-full hover:bg-white/10 transition-all duration-300 font-grotesk text-xs uppercase tracking-widest hover-trigger">Research</a>
+            </li>
+            <li>
+                <a href="#skills"
+                    class="nav-link px-6 py-2 rounded-full hover:bg-white/10 transition-all duration-300 font-grotesk text-xs uppercase tracking-widest hover-trigger">Skills</a>
+            </li>
+            <li>
+                <a href="#timeline"
+                    class="nav-link px-6 py-2 rounded-full hover:bg-white/10 transition-all duration-300 font-grotesk text-xs uppercase tracking-widest hover-trigger">Timeline</a>
+            </li>
+            <li>
+                <a href="#contact"
+                    class="nav-link px-6 py-2 rounded-full hover:bg-white/10 transition-all duration-300 font-grotesk text-xs uppercase tracking-widest hover-trigger">Contact</a>
+            </li>
+        </ul>
+
+        <div class="magnetic-btn hover-trigger md:hidden">
+            <a href="#contact"
+                class="liquid-glass px-6 py-2 rounded-full font-grotesk text-xs uppercase tracking-wider group overflow-hidden relative">
+                <span class="relative z-10 group-hover:text-accent transition-colors">Let’s Talk</span>
+            </a>
+        </div>
+
+        <!-- Mobile menu toggle -->
+        <div class="menu-toggle md:hidden flex flex-col cursor-pointer" aria-label="Toggle navigation">
+            <span class="w-6 h-0.5 bg-white mb-1 transition-all"></span>
+            <span class="w-6 h-0.5 bg-white mb-1 transition-all"></span>
+            <span class="w-6 h-0.5 bg-white transition-all"></span>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero"
+            class="h-screen w-full flex flex-col justify-center items-center relative px-4 perspective-container overflow-hidden">
+
+            <!-- Hero Content -->
+            <div id="hero-content" class="text-center z-10 relative mix-blend-difference">
+                <div class="mb-6 overflow-hidden flex justify-center">
+                    <div
+                        class="hero-tag px-4 py-1.5 border border-white/20 rounded-full backdrop-blur-md flex items-center gap-3">
+                        <span class="w-1.5 h-1.5 bg-accent rounded-full animate-pulse shadow-[0_0_10px_#ffaa00]"></span>
+                        <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-gray-300">Available for
+                            collaborations</span>
+                    </div>
+                </div>
+
+                <!-- Name with Dynamic Text -->
+                <h1
+                    class="font-sync text-6xl md:text-[9rem] leading-[0.85] font-bold text-white tracking-tighter select-none">
+                    <div class="overflow-hidden"><span class="hero-line block">JUSTIN</span></div>
+                    <div class="overflow-hidden"><span
+                            class="hero-line block text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-500"
+                            id="dynamic-text">ALEXIA</span></div>
+                </h1>
+
+                <!-- Subtitle -->
+                <div class="mt-8 overflow-hidden max-w-xl mx-auto">
+                    <p class="hero-desc text-gray-400 text-lg font-grotesk font-light leading-relaxed">
+                        Navigating the <span class="text-white font-semibold">Event Horizon</span> between Theoretical
+                        Physics and Applied Cybersecurity.
+                    </p>
+                </div>
+
+                <!-- Buttons -->
+                <div class="mt-12 flex justify-center gap-6">
+                    <!-- Magnetic Scroll Button -->
+                    <div class="magnetic-btn hover-trigger">
+                        <a href="#about"
+                            class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white text-black text-2xl hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-arrow-down"></i>
+                        </a>
+                    </div>
+                    <!-- CTA Button (Optional, aligning with original 'Let's Talk') -->
+                    <div class="magnetic-btn hover-trigger hidden md:block">
+                        <!-- Hidden on mobile to match original behavior -->
+                        <a href="#contact"
+                            class="liquid-glass px-6 py-2 rounded-full font-grotesk text-xs uppercase tracking-wider group overflow-hidden relative">
+                            <span class="relative z-10 group-hover:text-accent transition-colors">Let's Talk</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coordinates (Preserved as-is) -->
+            <div class="absolute bottom-10 left-10 hidden md:block">
+                <div class="font-mono text-xs text-gray-600 flex flex-col gap-1">
+                    <span>LAT: 9.9312° N</span>
+                    <span>LNG: 76.2673° E</span>
+                </div>
+            </div>
+
+            <!-- Hero Stats Card (Aligned with Original) -->
+            <div class="hero-visual absolute right-10 top-1/2 transform -translate-y-1/2 hidden lg:block">
+                <!-- Hidden on small screens -->
+                <div class="hero-card">
+                    <div class="hero-card-content">
+                        <div>
+                            <h3 class="font-grotesk font-bold text-lg mb-5">Impact Metrics</h3>
+                            <div class="hero-stats grid grid-cols-2 gap-4">
+                                <div class="stat-item">
+                                    <div class="stat-number">500+</div>
+                                    <div class="stat-label">Students Mentored</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">4</div>
+                                    <div class="stat-label">HOPE Verticals</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">15+</div>
+                                    <div class="stat-label">Deployed Projects</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">50+</div>
+                                    <div class="stat-label">Technologies & Tools</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-auto">
+                            <img src="/assets/img/me.jpg" alt="Justin Alexia"
+                                class="w-16 h-16 rounded-full border-2 border-white/20 mx-auto mb-2">
+                            <p class="text-xs text-gray-400">Hari Nandan K, A.k.a Justin</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Horizontal Scroll (About & Skills) -->
+        <section id="about" class="relative bg-transparent">
+            <div class="section-header px-4 md:px-0">
+                <div class="section-label">ABOUT ME</div>
+                <h2 class="section-title">Building Systems That Last</h2>
+                <p class="section-subtitle">From discrete spacetime models to rural EdTech infrastructure</p>
+            </div>
+
+            <div class="h-scroll-wrapper" id="pin-container">
+                <div class="h-scroll-container pl-4 md:pl-24 pr-4 md:pr-24 gap-8 md:gap-16">
+                    <!-- Reduced padding for smaller screens -->
+
+                    <!-- Intro Slide -->
+                    <div class="w-[90vw] md:w-[40vw] flex flex-col gap-6 md:gap-8 shrink-0 justify-center z-10">
+                        <h2 class="font-grotesk text-4xl md:text-6xl font-bold text-white leading-tight">
+                            The <span class="text-accent italic">Quantum</span><br>Architect.
+                        </h2>
+                        <p class="text-lg md:text-xl text-gray-300 leading-relaxed max-w-lg">
+                            I operate at the intersection of theoretical physics and applied technology, developing the
+                            Chronon-Super Quantum Level Model while building deployable systems like the IES College
+                            Data Science Portal and ShopRoyince. My work is guided by two missions: <strong>“Secure.
+                                Test. Defend.”</strong> and <strong>“Create. Empower. Evolve.”</strong>
+                        </p>
+                        <div class="w-16 md:w-24 h-0.5 md:h-1 bg-accent mt-4"></div>
+
+                        <!-- Mission Highlights (Aligned with original) -->
+                        <div class="about-highlights mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="highlight-item">
+                                <div class="highlight-icon">
+                                    <i class="fas fa-atom"></i>
+                                </div>
+                                <div class="highlight-text">
+                                    <h4>Theoretical Physics</h4>
+                                    <p>Quantum Gravity, Discrete Spacetime</p>
+                                </div>
+                            </div>
+                            <div class="highlight-item">
+                                <div class="highlight-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <div class="highlight-text">
+                                    <h4>Cybersecurity</h4>
+                                    <p>Red Teaming, IoT Hardening</p>
+                                </div>
+                            </div>
+                            <div class="highlight-item">
+                                <div class="highlight-icon">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <div class="highlight-text">
+                                    <h4>Full-Stack Development</h4>
+                                    <p>Web, mobile (Flutter), and IoT systems</p>
+                                </div>
+                            </div>
+                            <div class="highlight-item">
+                                <div class="highlight-icon">
+                                    <i class="fas fa-graduation-cap"></i>
+                                </div>
+                                <div class="highlight-text">
+                                    <h4>Technical Education</h4>
+                                    <p>Mentorship, curriculum design, CTF labs</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Skill Card: Physics -->
+                    <div
+                        class="liquid-glass w-[90vw] md:w-[30vw] h-[50vh] md:h-[60vh] rounded-3xl p-6 md:p-8 flex flex-col justify-between shrink-0 hover-trigger group">
+                        <div>
+                            <div
+                                class="w-10 md:w-12 h-10 md:h-12 rounded-full bg-orange-500/20 flex items-center justify-center mb-4 md:mb-8 text-accent group-hover:scale-110 transition-transform">
+                                <i class="fas fa-atom text-xl md:text-2xl"></i>
+                            </div>
+                            <h3 class="font-grotesk text-2xl md:text-3xl font-bold mb-4 md:mb-6">Theoretical Physics
+                            </h3>
+                            <ul class="font-light text-gray-300 space-y-2 md:space-y-3">
+                                <li class="flex items-start gap-3"> <!-- Changed to items-start for alignment -->
+                                    <span class="w-1.5 h-1.5 bg-gray-600 rounded-full mt-2 flex-shrink-0"></span>
+                                    <!-- Dot aligned top -->
+                                    <span>Chronon-Super Quantum Level Model</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="w-1.5 h-1.5 bg-gray-600 rounded-full mt-2 flex-shrink-0"></span>
+                                    <span>Hilbert Space Mathematics</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="w-1.5 h-1.5 bg-gray-600 rounded-full mt-2 flex-shrink-0"></span>
+                                    <span>Discrete Spacetime & Quantum Gravity</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="text-6xl md:text-8xl font-bold text-white/5 absolute bottom-4 right-4">01</div>
+                    </div>
+
+                    <!-- Skill Card: Security -->
+                    <div
+                        class="liquid-glass w-[90vw] md:w-[30vw] h-[50vh] md:h-[60vh] rounded-3xl p-6 md:p-8 flex flex-col justify-between shrink-0 hover-trigger group">
+                        <div>
+                            <div
+                                class="w-10 md:w-12 h-10 md:h-12 rounded-full bg-green-500/20 flex items-center justify-center mb-4 md:mb-8 text-green-400 group-hover:scale-110 transition-transform">
+                                <i class="fas fa-shield-virus text-xl md:text-2xl"></i>
+                            </div>
+                            <h3 class="font-grotesk text-2xl md:text-3xl font-bold mb-4 md:mb-6">Cybersecurity</h3>
+                            <ul class="font-light text-gray-300 space-y-2 md:space-y-3">
+                                <li class="flex items-start gap-3">
+                                    <span class="w-1.5 h-1.5 bg-gray-600 rounded-full mt-2 flex-shrink-0"></span>
+                                    <span>Red Teaming Operations & Pentesting</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="w-1.5 h-1.5 bg-gray-600 rounded-full mt-2 flex-shrink-0"></span>
+                                    <span>IoT Vulnerability Assessment & Hardening</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="w-1.5 h-1.5 bg-gray-600 rounded-full mt-2 flex-shrink-0"></span>
+                                    <span>Q-SAFE Framework Development</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="text-6xl md:text-8xl font-bold text-white/5 absolute bottom-4 right-4">02</div>
+                    </div>
+
+                    <!-- Skill Card: Dev -->
+                    <div
+                        class="liquid-glass w-[90vw] md:w-[30vw] h-[50vh] md:h-[60vh] rounded-3xl p-6 md:p-8 flex flex-col justify-between shrink-0 hover-trigger group">
+                        <div>
+                            <div
+                                class="w-10 md:w-12 h-10 md:h-12 rounded-full bg-blue-500/20 flex items-center justify-center mb-4 md:mb-8 text-blue-400 group-hover:scale-110 transition-transform">
+                                <i class="fas fa-code text-xl md:text-2xl"></i>
+                            </div>
+                            <h3 class="font-grotesk text-2xl md:text-3xl font-bold mb-4 md:mb-6">Full Stack & AI</h3>
+                            <ul class="font-light text-gray-300 space-y-2 md:space-y-3">
+                                <li class="flex items-start gap-3">
+                                    <span class="w-1.5 h-1.5 bg-gray-600 rounded-full mt-2 flex-shrink-0"></span>
+                                    <span>HOPE Platform (EdTech & E-Commerce)</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="w-1.5 h-1.5 bg-gray-600 rounded-full mt-2 flex-shrink-0"></span>
+                                    <span>Flutter, Firebase, Three.js</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="w-1.5 h-1.5 bg-gray-600 rounded-full mt-2 flex-shrink-0"></span>
+                                    <span>Gemini AI Integration (HOPE-INT-CORE)</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="text-6xl md:text-8xl font-bold text-white/5 absolute bottom-4 right-4">03</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- About Visual Section (Aligned with Original) -->
+            <div class="px-4 md:px-0 mt-16 max-w-6xl mx-auto">
+                <div class="about-visual">
+                    <div class="about-image-container"
+                        style="position: relative; width: 100%; height: 400px; border-radius: 8px; overflow: hidden;">
+                        <!-- Image Slides -->
+                        <div id="image-slides" style="position: relative; width: 100%; height: 100%;">
+                            <img src="/assets/img/me.jpg" alt="Justin Alexia - Cybersecurity" class="about-image-slide"
+                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 1; transition: opacity 0.8s ease-in-out;">
+                            <img src="/assets/img/bng1.jpeg" alt="HOPE IoT Camp" class="about-image-slide"
+                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.8s ease-in-out;">
+                            <img src="/assets/img/bng3.jpeg" alt="Quantum Research" class="about-image-slide"
+                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.8s ease-in-out;">
+                            <img src="/assets/img/bng4.jpeg" alt="TexidoMeg Platform" class="about-image-slide"
+                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.8s ease-in-out;">
+                            <img src="/assets/img/bng5.png" alt="Keltron Internship" class="about-image-slide"
+                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.8s ease-in-out;">
+                        </div>
+                        <!-- Overlay -->
+                        <div class="about-image-overlay"
+                            style="position: absolute; bottom: 0; left: 0; width: 100%; padding: 1.5rem; background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);">
+                            <p class="about-quote"
+                                style="color: white; font-size: 1.1rem; margin: 0; text-align: center;">"Secure by
+                                design. Built to last."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Add the image rotation script if not already present -->
+        <script>
+                (function () {
+                    const slides = document.querySelectorAll('.about-image-slide');
+                    let currentIndex = 0;
+
+                    function showNext() {
+                        slides[currentIndex].style.opacity = 0;
+                        currentIndex = (currentIndex + 1) % slides.length;
+                        slides[currentIndex].style.opacity = 1;
+                    }
+
+                    // Start auto-rotation every 4 seconds
+                    setInterval(showNext, 4000);
+                })();
+        </script>
+
+        <!-- Selected Works (Stacked) -->
+        <section id="projects" class="py-24 px-4 md:px-0 relative">
+            <!-- Changed ID to 'projects' to match original nav -->
+            <div class="max-w-6xl mx-auto">
+
+                <!-- Section Header (Aligned with Original) -->
+                <div class="section-header mb-16"> <!-- Reduced bottom margin for tighter stacking -->
+                    <div class="section-label">SELECTED WORKS</div>
+                    <h2 class="section-title">Deployed Systems & Innovations</h2>
+                    <p class="section-subtitle">A showcase of impactful projects spanning research, security, and
+                        development</p>
+                </div>
+
+                <!-- Project Grid (Aligned with Original) -->
+                <div class="projects-container">
+                    <div class="projects-grid">
+
+                        <!-- Project 1: HOPE Platform -->
+                        <div class="project-card" data-category="edtech">
+                            <div class="project-image">
+                                <img src="https://firebasestorage.googleapis.com/v0/b/texidomeg-v8.appspot.com/o/me.jpeg?alt=media&token=dd967713-6f64-4cc7-8017-dfa41dfca7db"
+                                    alt="HOPE Platform">
+                                <div class="project-overlay">
+                                    <div style="color: white;">
+                                        <h3>HOPE Platform</h3>
+                                        <p>Social startup ecosystem</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-content">
+                                <div class="project-category">EDTECH</div>
+                                <h3 class="project-title">HOPE Platform</h3>
+                                <p class="project-description">Social startup with four integrated verticals: Education
+                                    (TexidoMeg, IoT Camps), E-Commerce (ShopRoyince), IoT systems, and Theoretical
+                                    Research.</p>
+                                <div class="project-tags">
+                                    <span class="tag">Full-stack</span>
+                                    <span class="tag">Flutter</span>
+                                    <span class="tag">Firebase</span>
+                                    <span class="tag">Mentorship</span>
+                                </div>
+                                <a href="https://hope-ppt.vercel.app/wiki.htm" class="project-link" target="_blank">View
+                                    Project <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+
+                        <!-- Project 2: TexidoMeg -->
+                        <div class="project-card" data-category="edtech">
+                            <div class="project-image">
+                                <img src="/assets/img/2.png" alt="TexidoMeg">
+                                <div class="project-overlay">
+                                    <div style="color: white;">
+                                        <h3>TexidoMeg</h3>
+                                        <p>Cybersecurity & programming training</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-content">
+                                <div class="project-category">EDTECH</div>
+                                <h3 class="project-title">TexidoMeg</h3>
+                                <p class="project-description">Comprehensive training platform under HOPE, designed to
+                                    guide individuals from beginner to advanced cybersecurity and programming skills.
+                                </p>
+                                <div class="project-tags">
+                                    <span class="tag">Cybersecurity</span>
+                                    <span class="tag">Training</span>
+                                    <span class="tag">Web Development</span>
+                                </div>
+                                <a href="#" class="project-link">View Project <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+
+                        <!-- Project 3: ShopRoyince -->
+                        <div class="project-card" data-category="ecommerce">
+                            <div class="project-image">
+                                <img src="/assets/img/3.png" alt="ShopRoyince">
+                                <div class="project-overlay">
+                                    <div style="color: white;">
+                                        <h3>ShopRoyince</h3>
+                                        <p>E-commerce platform</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-content">
+                                <div class="project-category">E-COMMERCE</div>
+                                <h3 class="project-title">ShopRoyince</h3>
+                                <p class="project-description">E-commerce vertical of HOPE, focusing on secure
+                                    transactions and user-centric design.</p>
+                                <div class="project-tags">
+                                    <span class="tag">E-commerce</span>
+                                    <span class="tag">UI/UX</span>
+                                    <span class="tag">Security</span>
+                                </div>
+                                <a href="#" class="project-link">View Project <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+
+                        <!-- Project 4: HOPE-INT-CORE -->
+                        <div class="project-card" data-category="ai">
+                            <div class="project-image">
+                                <img src="/assets/img/4.png" alt="HOPE-INT-CORE Platform">
+                                <div class="project-overlay">
+                                    <div style="color: white;">
+                                        <h3>HOPE-INT-CORE</h3>
+                                        <p>Gemini AI integration</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-content">
+                                <div class="project-category">AI</div>
+                                <h3 class="project-title">HOPE-INT-CORE Platform</h3>
+                                <p class="project-description">AI-powered content generation and processing hub,
+                                    leveraging Google's Gemini AI for dynamic, context-aware outputs.</p>
+                                <div class="project-tags">
+                                    <span class="tag">AI Integration</span>
+                                    <span class="tag">Google Gemini</span>
+                                    <span class="tag">Content Generation</span>
+                                </div>
+                                <a href="https://hope-ppt.vercel.app/wiki.htm" class="project-link" target="_blank">View
+                                    Project <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+
+                        <!-- Project 5: IoT Botnet Detection -->
+                        <div class="project-card" data-category="security">
+                            <div class="project-image">
+                                <img src="/assets/img/5.png" alt="IoT Botnet Detection System">
+                                <div class="project-overlay">
+                                    <div style="color: white;">
+                                        <h3>IoT Botnet Detection</h3>
+                                        <p>MQTT Traffic Analysis</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-content">
+                                <div class="project-category">SECURITY</div>
+                                <h3 class="project-title">IoT Botnet Detection</h3>
+                                <p class="project-description">Machine Learning powered intrusion detection system
+                                    specifically designed for MQTT traffic in smart city infrastructures.</p>
+                                <div class="project-tags">
+                                    <span class="tag">Python</span>
+                                    <span class="tag">Scikit-learn</span>
+                                    <span class="tag">MQTT</span>
+                                    <span class="tag">Anomaly Detection</span>
+                                </div>
+                                <a href="#" class="project-link">View Project <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+
+                        <!-- Project 6: HOPE Summer IoT Camp -->
+                        <div class="project-card" data-category="iot">
+                            <div class="project-image">
+                                <img src="/assets/img/5.png" alt="HOPE Summer IoT Camp">
+                                <div class="project-overlay">
+                                    <div style="color: white;">
+                                        <h3>HOPE IoT Camp</h3>
+                                        <p>Hands-on embedded systems training</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-content">
+                                <div class="project-category">IOT</div>
+                                <h3 class="project-title">HOPE Summer IoT Camp</h3>
+                                <p class="project-description">Annual intensive camp teaching Arduino, ESP32, sensors,
+                                    and actuators through project-based learning and mentorship since 2017.</p>
+                                <div class="project-tags">
+                                    <span class="tag">Arduino</span>
+                                    <span class="tag">ESP32</span>
+                                    <span class="tag">C++</span>
+                                    <span class="tag">Python</span>
+                                </div>
+                                <a href="#" class="project-link">View Project <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Project 3: Chronon-SQL Model (As a separate showcase, aligned with Research style) -->
+                <div class="mt-32">
+                    <div class="research-showcase" style="padding: 40px; border-radius: 20px;">
+                        <div class="research-header">
+                            <h3 class="research-title">Chronon-SQL Model</h3>
+                            <div class="research-status">
+                                <i class="fas fa-circle" style="font-size: 0.5rem;"></i>
+                                <span>Theoretical Physics</span>
+                            </div>
+                        </div>
+                        <div class="research-content">
+                            <div class="research-description">
+                                <p>A theoretical framework attempting to reconcile General Relativity with Quantum
+                                    Mechanics via discrete spacetime units. This model explores the fundamental
+                                    structure of spacetime at the Planck scale.</p>
+                                <p class="mt-4"><strong>Core Focus:</strong> Quantum Gravity, Discrete Spacetime,
+                                    Hilbert Space Mathematics.</p>
+                            </div>
+                            <div class="research-metrics">
+                                <div class="metric-card">
+                                    <div class="metric-value">Mathematics</div>
+                                    <div class="metric-label">Primary Tool</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-value">Simulation</div>
+                                    <div class="metric-label">Method</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-value">LaTeX</div>
+                                    <div class="metric-label">Documentation</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Research Grid -->
+        <section id="research" class="py-24 px-4 md:px-0">
+            <div class="max-w-6xl mx-auto">
+
+                <!-- Section Header (Aligned with Original) -->
+                <div class="section-header mb-16">
+                    <div class="section-label">RESEARCH</div>
+                    <h2 class="section-title">Active Research Lines</h2>
+                    <p class="section-subtitle">Theoretical physics and applied security investigations</p>
+                </div>
+
+                <!-- Research Grid (Aligned with Original) -->
+                <div class="research-grid">
+
+                    <!-- Research 1: Chronon-SQL Model -->
+                    <div class="research-showcase liquid-glass p-8 md:p-12 rounded-3xl hover-trigger">
+                        <div class="research-header mb-6">
+                            <h3 class="research-title font-grotesk text-2xl md:text-3xl font-bold">Chronon-SQL Model
+                            </h3>
+                            <div
+                                class="research-status flex items-center gap-3 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/30 text-green-400 text-sm">
+                                <i class="fas fa-circle text-[6px]"></i>
+                                <span>Active Research</span>
+                            </div>
+                        </div>
+                        <div class="research-content">
+                            <div class="research-description mb-6">
+                                <p class="text-gray-300 leading-relaxed">
+                                    Theoretical framework exploring discrete spacetime models and quantum gravity
+                                    through mathematical unification of quantum mechanics and general relativity.
+                                    Focuses on pre-geometric structures, Hilbert spaces, and quantized time at the
+                                    Planck scale.
+                                </p>
+                                <p class="text-gray-300 leading-relaxed mt-3">
+                                    This work investigates foundational questions in physics using discrete mathematics
+                                    and differential geometry, aiming to develop a consistent model where quantum
+                                    indeterminacy and gravitational curvature coexist without contradiction.
+                                </p>
+                            </div>
+                            <div class="research-metrics flex flex-wrap gap-4">
+                                <div
+                                    class="metric-card bg-white/5 border border-white/10 rounded-xl p-4 text-center min-w-[100px]">
+                                    <div class="metric-value text-2xl font-bold text-accent">1</div>
+                                    <div class="metric-label text-xs text-gray-400">Core Framework</div>
+                                </div>
+                                <div
+                                    class="metric-card bg-white/5 border border-white/10 rounded-xl p-4 text-center min-w-[100px]">
+                                    <div class="metric-value text-2xl font-bold text-accent">3+</div>
+                                    <div class="metric-label text-xs text-gray-400">Active Domains</div>
+                                </div>
+                                <div
+                                    class="metric-card bg-white/5 border border-white/10 rounded-xl p-4 text-center min-w-[100px]">
+                                    <div class="metric-value text-2xl font-bold text-accent">Ongoing</div>
+                                    <div class="metric-label text-xs text-gray-400">Development</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Research 2: Q-SAFE Framework -->
+                    <div class="research-showcase liquid-glass p-8 md:p-12 rounded-3xl hover-trigger">
+                        <div class="research-header mb-6">
+                            <h3 class="research-title font-grotesk text-2xl md:text-3xl font-bold">Q-SAFE Framework</h3>
+                            <div
+                                class="research-status flex items-center gap-3 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-sm">
+                                <i class="fas fa-circle text-[6px]"></i>
+                                <span>Framework Development</span>
+                            </div>
+                        </div>
+                        <div class="research-content">
+                            <div class="research-description mb-6">
+                                <p class="text-gray-300 leading-relaxed">
+                                    Q-SAFE is a security-by-design framework for educational and grassroots technology
+                                    platforms, integrating offensive security testing, data privacy controls, and
+                                    policy-aware deployment practices.
+                                </p>
+                                <p class="text-gray-300 leading-relaxed mt-3">
+                                    Built to address the unique threat landscape of rural EdTech systems, Q-SAFE
+                                    combines vulnerability scanning, secure authentication, and institutional compliance
+                                    checks ensuring technology remains both accessible and defensible.
+                                </p>
+                            </div>
+                            <div class="research-metrics flex flex-wrap gap-4">
+                                <div
+                                    class="metric-card bg-white/5 border border-white/10 rounded-xl p-4 text-center min-w-[100px]">
+                                    <div class="metric-value text-2xl font-bold text-accent">EdTech</div>
+                                    <div class="metric-label text-xs text-gray-400">Primary Domain</div>
+                                </div>
+                                <div
+                                    class="metric-card bg-white/5 border border-white/10 rounded-xl p-4 text-center min-w-[100px]">
+                                    <div class="metric-value text-2xl font-bold text-accent">Red Team</div>
+                                    <div class="metric-label text-xs text-gray-400">Validation Method</div>
+                                </div>
+                                <div
+                                    class="metric-card bg-white/5 border border-white/10 rounded-xl p-4 text-center min-w-[100px]">
+                                    <div class="metric-value text-2xl font-bold text-accent">Policy-Aware</div>
+                                    <div class="metric-label text-xs text-gray-400">Design Principle</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Research 3: IoT Botnet Detection -->
+                    <div class="research-showcase liquid-glass p-8 md:p-12 rounded-3xl hover-trigger">
+                        <div class="research-header mb-6">
+                            <h3 class="research-title font-grotesk text-2xl md:text-3xl font-bold">IoT Botnet Detection
+                                Using Machine Learning</h3>
+                            <div
+                                class="research-status flex items-center gap-3 px-4 py-2 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-400 text-sm">
+                                <i class="fas fa-circle text-[6px]"></i>
+                                <span>Completed Research</span>
+                            </div>
+                        </div>
+                        <div class="research-content">
+                            <div class="research-description mb-6">
+                                <p class="text-gray-300 leading-relaxed">
+                                    Investigated anomaly-based detection of IoT botnets by analyzing network traffic
+                                    patterns, particularly MQTT protocol behavior. Developed machine learning models to
+                                    identify compromised devices in real time.
+                                </p>
+                                <p class="text-gray-300 leading-relaxed mt-3">
+                                    Used Python, Scikit-learn, and Pandas to train classifiers on simulated botnet
+                                    traffic captured via Wireshark. Evaluated performance using precision, recall, and
+                                    F1-score metrics under varying network conditions.
+                                </p>
+                            </div>
+                            <div class="research-metrics flex flex-wrap gap-4">
+                                <div
+                                    class="metric-card bg-white/5 border border-white/10 rounded-xl p-4 text-center min-w-[100px]">
+                                    <div class="metric-value text-2xl font-bold text-accent">Python</div>
+                                    <div class="metric-label text-xs text-gray-400">Primary Tool</div>
+                                </div>
+                                <div
+                                    class="metric-card bg-white/5 border border-white/10 rounded-xl p-4 text-center min-w-[100px]">
+                                    <div class="metric-value text-2xl font-bold text-accent">MQTT</div>
+                                    <div class="metric-label text-xs text-gray-400">Protocol Focus</div>
+                                </div>
+                                <div
+                                    class="metric-card bg-white/5 border border-white/10 rounded-xl p-4 text-center min-w-[100px]">
+                                    <div class="metric-value text-2xl font-bold text-accent">Scikit-learn</div>
+                                    <div class="metric-label text-xs text-gray-400">ML Library</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Research 4: Cybersecurity R&D -->
+                    <div class="research-showcase liquid-glass p-8 md:p-12 rounded-3xl hover-trigger md:col-span-2">
+                        <!-- Full width on desktop -->
+                        <div class="research-header mb-6">
+                            <h3 class="research-title font-grotesk text-2xl md:text-3xl font-bold">Cybersecurity R&D:
+                                Emerging Threats & Offensive Tools</h3>
+                            <div
+                                class="research-status flex items-center gap-3 px-4 py-2 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 text-sm">
+                                <i class="fas fa-circle text-[6px]"></i>
+                                <span>Ongoing Initiative</span>
+                            </div>
+                        </div>
+                        <div class="research-content">
+                            <div class="research-description mb-6">
+                                <p class="text-gray-300 leading-relaxed">
+                                    Continuous research into novel attack vectors, mobile penetration testing toolchains
+                                    (Termux/Parrot OS), and automation of vulnerability discovery. Includes development
+                                    of custom payloads and AWT MODS for field testing.
+                                </p>
+                                <p class="text-gray-300 leading-relaxed mt-3">
+                                    Focus areas include red team simulation fidelity, privacy-preserving reconnaissance,
+                                    and hardening of embedded/IoT systems against supply-chain and runtime exploits.
+                                </p>
+                            </div>
+                            <div class="research-metrics flex flex-wrap gap-4">
+                                <div
+                                    class="metric-card bg-white/5 border border-white/10 rounded-xl p-4 text-center min-w-[100px]">
+                                    <div class="metric-value text-2xl font-bold text-accent">Red Team</div>
+                                    <div class="metric-label text-xs text-gray-400">Focus Area</div>
+                                </div>
+                                <div
+                                    class="metric-card bg-white/5 border border-white/10 rounded-xl p-4 text-center min-w-[100px]">
+                                    <div class="metric-value text-2xl font-bold text-accent">95%</div>
+                                    <div class="metric-label text-xs text-gray-400">Pentest Proficiency</div>
+                                </div>
+                                <div
+                                    class="metric-card bg-white/5 border border-white/10 rounded-xl p-4 text-center min-w-[100px]">
+                                    <div class="metric-value text-2xl font-bold text-accent">85%</div>
+                                    <div class="metric-label text-xs text-gray-400">Red Teaming</div>
+                                </div>
+                                <div
+                                    class="metric-card bg-white/5 border border-white/10 rounded-xl p-4 text-center min-w-[100px]">
+                                    <div class="metric-value text-2xl font-bold text-accent">80%</div>
+                                    <div class="metric-label text-xs text-gray-400">IoT Security</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer / Contact -->
+        <section id="contact" class="py-24 px-4 md:px-0">
+            <div class="max-w-6xl mx-auto">
+
+                <!-- Section Header (Aligned with Original) -->
+                <div class="section-header mb-16 text-center">
+                    <div class="section-label">CONNECT</div>
+                    <h2 class="section-title">Let's Collaborate</h2>
+                    <p class="section-subtitle">Open to research partnerships and consulting opportunities</p>
+                </div>
+
+                <div class="contact-container grid md:grid-cols-2 gap-20 items-center">
+
+                    <!-- Contact Info -->
+                    <div class="contact-info space-y-10">
+                        <div class="contact-card liquid-glass p-8 rounded-3xl">
+                            <h3 class="contact-title font-grotesk text-2xl font-bold mb-4">Get In Touch</h3>
+                            <p class="contact-description text-gray-300 leading-relaxed mb-6">
+                                I'm open to collaborations in cybersecurity, theoretical physics, EdTech, and IoT
+                                systems especially projects that combine technical depth with social impact.
+                            </p>
+
+                            <!-- Contact Details -->
+                            <div class="space-y-6">
+                                <div class="contact-item flex items-center gap-6">
+                                    <div
+                                        class="contact-icon w-14 h-14 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
+                                        <i class="fas fa-envelope text-lg"></i>
+                                    </div>
+                                    <div class="contact-text">
+                                        <h4 class="font-grotesk font-semibold text-white">Email</h4>
+                                        <p class="text-gray-400">harinandan.ofc@gmail.com</p>
+                                    </div>
+                                </div>
+
+                                <div class="contact-item flex items-center gap-6">
+                                    <div
+                                        class="contact-icon w-14 h-14 rounded-xl bg-green-500/10 border border-green-500/20 flex items-center justify-center text-green-400">
+                                        <i class="fas fa-map-marker-alt text-lg"></i>
+                                    </div>
+                                    <div class="contact-text">
+                                        <h4 class="font-grotesk font-semibold text-white">Location</h4>
+                                        <p class="text-gray-400">Kozhikode, Kerala, India</p>
+                                    </div>
+                                </div>
+
+                                <div class="contact-item flex items-center gap-6">
+                                    <div
+                                        class="contact-icon w-14 h-14 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-400">
+                                        <i class="fas fa-clock text-lg"></i>
+                                    </div>
+                                    <div class="contact-text">
+                                        <h4 class="font-grotesk font-semibold text-white">Availability</h4>
+                                        <p class="text-gray-400">Available for technical and research collaborations</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Social Links -->
+                            <div class="social-links flex gap-4 mt-8">
+                                <a href="https://github.com/justi-io"
+                                    class="social-link w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-300 hover-trigger magnetic-target hover:bg-accent/20 hover:border-accent/40 transition-colors">
+                                    <i class="fab fa-github text-base"></i>
+                                </a>
+                                <a href="phy.htm"
+                                    class="social-link w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-300 hover-trigger magnetic-target hover:bg-purple-500/20 hover:border-purple-500/40 transition-colors">
+                                    <i class="fas fa-atom text-base"></i> <!-- Link to Theoretical Physics -->
+                                </a>
+                                <a href="cyb.htm"
+                                    class="social-link w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-300 hover-trigger magnetic-target hover:bg-green-500/20 hover:border-green-500/40 transition-colors">
+                                    <i class="fas fa-shield-alt text-base"></i> <!-- Link to Cybersecurity -->
+                                </a>
+                                <a href="dev.htm"
+                                    class="social-link w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-300 hover-trigger magnetic-target hover:bg-blue-500/20 hover:border-blue-500/40 transition-colors">
+                                    <i class="fas fa-code text-base"></i> <!-- Link to Development -->
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Form -->
+                    <div class="contact-form liquid-glass p-8 md:p-12 rounded-3xl">
+                        <h3 class="contact-title font-grotesk text-2xl font-bold mb-6">Send Message</h3>
+                        <form action="https://getform.io/f/161d40d2-275f-4027-b38d-926c67413486" method="POST"
+                            id="contactForm">
+                            <div class="space-y-6">
+                                <div class="form-group">
+                                    <label for="name" class="block text-sm font-medium text-gray-400 mb-2">Your
+                                        Name</label>
+                                    <input type="text" id="name" name="name" required
+                                        class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="block text-sm font-medium text-gray-400 mb-2">Email
+                                        Address</label>
+                                    <input type="email" id="email" name="email" required
+                                        class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent">
+                                </div>
+                                <div class="form-group">
+                                    <label for="subject"
+                                        class="block text-sm font-medium text-gray-400 mb-2">Subject</label>
+                                    <input type="text" id="subject" name="subject" required
+                                        class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent">
+                                </div>
+                                <div class="form-group">
+                                    <label for="message"
+                                        class="block text-sm font-medium text-gray-400 mb-2">Message</label>
+                                    <textarea id="message" name="message" rows="5" required
+                                        class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent"></textarea>
+                                </div>
+                                <button type="submit"
+                                    class="form-submit w-full py-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-xl font-bold hover:from-orange-600 hover:to-orange-700 transition-all duration-300 magnetic-btn hover-trigger">
+                                    <i class="fas fa-paper-plane mr-2"></i> Send Message
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Your Original Fullscreen Contact (Preserved as Alternative) -->
+                <div class="mt-20 hidden md:block"> <!-- Hidden on mobile to avoid duplication -->
+                    <div class="min-h-[60vh] flex items-center justify-center px-4 relative overflow-hidden">
+                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                            <div class="w-[600px] h-[600px] bg-accent/5 rounded-full blur-[100px]"></div>
+                        </div>
+
+                        <div class="text-center z-10">
+                            <h2 class="font-sync text-4xl md:text-7xl font-bold mb-8 text-white tracking-tight">COLLAPSE
+                                THE <br>WAVE FUNCTION</h2>
+
+                            <div class="flex flex-col md:flex-row gap-6 justify-center items-center mb-16">
+                                <div class="magnetic-btn hover-trigger">
+                                    <a href="mailto:harinandan.ofc@gmail.com"
+                                        class="px-8 py-4 bg-white text-black rounded-full font-bold text-lg tracking-wider hover:bg-gray-200 transition-colors">
+                                        INITIATE CONTACT
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-center gap-12 text-2xl text-gray-500 mb-12">
+                                <a href="https://github.com/justi-io"
+                                    class="hover:text-white transition-colors hover-trigger magnetic-target"><i
+                                        class="fab fa-github"></i></a>
+                                <a href="phy.htm"
+                                    class="hover:text-white transition-colors hover-trigger magnetic-target"><i
+                                        class="fas fa-atom"></i></a> <!-- Physics -->
+                                <a href="cyb.htm"
+                                    class="hover:text-white transition-colors hover-trigger magnetic-target"><i
+                                        class="fas fa-shield-alt"></i></a> <!-- Security -->
+                                <a href="dev.htm"
+                                    class="hover:text-white transition-colors hover-trigger magnetic-target"><i
+                                        class="fas fa-code"></i></a> <!-- Dev -->
+                            </div>
+
+                            <p class="font-mono text-xs text-gray-600">
+                                &copy; 2025 HARI NANDAN K. ALL RIGHTS RESERVED.<br>
+                                SYSTEM VERSION 2.0
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Post Processing -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+    <!-- Added missing shader -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+
+    <!-- GSAP & Lenis -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+
+    <script>
+        /* =================================================================
+           1. LOADER & ENTRANCE
+           ================================================================= */
+        const loaderBar = document.getElementById('loader-bar');
+        const preloader = document.getElementById('preloader');
+
+        let loadProgress = 0;
+        const interval = setInterval(() => {
+            loadProgress += Math.random() * 15;
+            if (loadProgress > 100) loadProgress = 100;
+            loaderBar.style.width = `${loadProgress}%`;
+
+            if (loadProgress === 100) {
+                clearInterval(interval);
+                setTimeout(initSite, 500);
+            }
+        }, 100);
+
+        function initSite() {
+            const tl = gsap.timeline();
+
+            tl.to(preloader, {
+                yPercent: -100,
+                duration: 1.2,
+                ease: "power4.inOut"
+            })
+                .from(".hero-line", {
+                    y: 100,
+                    opacity: 0,
+                    duration: 1,
+                    stagger: 0.2,
+                    ease: "power3.out"
+                }, "-=0.5")
+                .from(".hero-desc", {
+                    opacity: 0,
+                    y: 20,
+                    duration: 1
+                }, "-=0.5");
+        }
+
+        /* =================================================================
+           2. SMOOTH SCROLLING (LENIS)
+           ================================================================= */
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            smooth: true
+        });
+
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => lenis.raf(time * 1000));
+        gsap.ticker.lagSmoothing(0);
+
+        /* =================================================================
+           3. LIQUID GLASS HOVER EFFECT (MOUSE TRACKING)
+           ================================================================= */
+        const glassPanels = document.querySelectorAll('.liquid-glass');
+
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+
+            glassPanels.forEach(panel => {
+                const rect = panel.getBoundingClientRect();
+                const xLocal = x - rect.left;
+                const yLocal = y - rect.top;
+                panel.style.setProperty('--mouse-x', `${xLocal}px`);
+                panel.style.setProperty('--mouse-y', `${yLocal}px`);
+            });
+        });
+
+        /* =================================================================
+           4. ADVANCED CURSOR & MAGNETIC BUTTONS
+           ================================================================= */
+        const cursor = document.getElementById('cursor');
+        const cursorDot = document.getElementById('cursor-dot');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+        let isHovering = false;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursorDot.style.left = mouseX + 'px';
+            cursorDot.style.top = mouseY + 'px';
+
+            // Check for hover triggers
+            const target = e.target.closest('.hover-trigger');
+            if (target && !isHovering) {
+                isHovering = true;
+                document.body.classList.add('hovering');
+            } else if (!target && isHovering) {
+                isHovering = false;
+                document.body.classList.remove('hovering');
+            }
+        });
+
+        function animateCursor() {
+            let distX = mouseX - cursorX;
+            let distY = mouseY - cursorY;
+
+            cursorX += distX * 0.15;
+            cursorY += distY * 0.15;
+
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // Magnetic Logic
+        const magneticBtns = document.querySelectorAll('.magnetic-target, .magnetic-btn');
+        magneticBtns.forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+
+                gsap.to(btn, {
+                    x: x * 0.3,
+                    y: y * 0.3,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+            });
+
+            btn.addEventListener('mouseleave', () => {
+                gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" });
+            });
+        });
+
+        /* =================================================================
+           5. SCROLL TRIGGERS & NAVIGATION HIGHLIGHTING
+           ================================================================= */
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Horizontal Scroll Trigger
+        const scrollContainer = document.querySelector(".h-scroll-container");
+        const scrollWrapper = document.querySelector(".h-scroll-wrapper");
+
+        function getScrollAmount() {
+            let containerWidth = scrollContainer.scrollWidth;
+            return -(containerWidth - window.innerWidth);
+        }
+
+        const tween = gsap.to(scrollContainer, {
+            x: getScrollAmount,
+            ease: "none"
+        });
+
+        ScrollTrigger.create({
+            trigger: ".h-scroll-wrapper",
+            start: "top top",
+            end: () => `+=${getScrollAmount() * -1}`,
+            pin: true,
+            animation: tween,
+            scrub: 1,
+            invalidateOnRefresh: true
+        });
+
+        // Navigation Highlighting Logic
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        function setActiveNav(id) {
+            navLinks.forEach(link => {
+                link.classList.remove('nav-active');
+                if (link.getAttribute('href') === `#${id}`) {
+                    link.classList.add('nav-active');
+                }
+            });
+        }
+
+        const sections = ['about', 'work', 'research'];
+        sections.forEach(id => {
+            ScrollTrigger.create({
+                trigger: `#${id}`,
+                start: "top center",
+                end: "bottom center",
+                onEnter: () => setActiveNav(id),
+                onEnterBack: () => setActiveNav(id),
+                onLeaveBack: () => {
+                    if (id === 'about') setActiveNav(null); // Clear when going back to hero
+                }
+            });
+        });
+
+        /* =================================================================
+           6. THREE.JS VISUALS (OPTIMIZED ACCRETION DISK)
+           ================================================================= */
+        const scene = new THREE.Scene();
+        // Fog to blend into background
+        scene.fog = new THREE.FogExp2(0x030303, 0.02);
+
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 8;
+        camera.position.y = 1;
+
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)); // Optimize performance
+        document.getElementById('webgl-container').appendChild(renderer.domElement);
+
+        // -- Objects --
+        // 1. Black Hole Sphere
+        const sphereGeo = new THREE.SphereGeometry(2, 64, 64);
+        const sphereMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
+        const blackHole = new THREE.Mesh(sphereGeo, sphereMat);
+        scene.add(blackHole);
+
+        // 2. Accretion Disk (Particles for fluid look)
+        const particleCount = 4000;
+        const posArray = new Float32Array(particleCount * 3);
+        const sizeArray = new Float32Array(particleCount);
+
+        for (let i = 0; i < particleCount; i++) {
+            // Spiral distribution
+            const angle = Math.random() * Math.PI * 2;
+            const radius = 2.5 + Math.random() * 6;
+            const spiralOffset = angle + radius * 0.5;
+
+            posArray[i * 3] = Math.cos(spiralOffset) * radius;
+            posArray[i * 3 + 1] = (Math.random() - 0.5) * 0.5; // Flat disk with slight volume
+            posArray[i * 3 + 2] = Math.sin(spiralOffset) * radius;
+
+            sizeArray[i] = Math.random() * 1.5;
+        }
+
+        const particleGeo = new THREE.BufferGeometry();
+        particleGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        particleGeo.setAttribute('aSize', new THREE.BufferAttribute(sizeArray, 1));
+
+        // Custom Shader for Fluid Particles
+        const particleMat = new THREE.ShaderMaterial({
+            uniforms: {
+                uTime: { value: 0 },
+                uColor: { value: new THREE.Color('#ffaa00') }
+            },
+            transparent: true,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false,
+            vertexShader: `
+                uniform float uTime;
+                attribute float aSize;
+                varying float vAlpha;
+                
+                void main() {
+                    vec3 pos = position;
+                    
+                    // Rotate
+                    float angle = uTime * 0.1 + (length(pos.xz) * 0.2);
+                    float c = cos(angle);
+                    float s = sin(angle);
+                    vec3 rotatedPos = vec3(
+                        pos.x * c - pos.z * s,
+                        pos.y + sin(uTime * 2.0 + pos.x) * 0.1, // Waviness
+                        pos.x * s + pos.z * c
+                    );
+                    
+                    vec4 mvPosition = modelViewMatrix * vec4(rotatedPos, 1.0);
+                    gl_Position = projectionMatrix * mvPosition;
+                    gl_PointSize = aSize * (100.0 / -mvPosition.z);
+                    
+                    // Alpha based on distance from center
+                    float dist = length(pos.xz);
+                    vAlpha = smoothstep(9.0, 2.5, dist); 
+                }
+            `,
+            fragmentShader: `
+                uniform vec3 uColor;
+                varying float vAlpha;
+                
+                void main() {
+                    // Circular particle
+                    float r = distance(gl_PointCoord, vec2(0.5));
+                    if (r > 0.5) discard;
+                    
+                    // Glow center
+                    float glow = 1.0 - (r * 2.0);
+                    glow = pow(glow, 1.5);
+                    
+                    gl_FragColor = vec4(uColor, vAlpha * glow);
+                }
+            `
+        });
+
+        const diskSystem = new THREE.Points(particleGeo, particleMat);
+        diskSystem.rotation.x = 0.3;
+        scene.add(diskSystem);
+
+        // Post Processing
+        const renderScene = new THREE.RenderPass(scene, camera);
+        const bloomPass = new THREE.UnrealBloomPass(
+            new THREE.Vector2(window.innerWidth, window.innerHeight),
+            1.2, 0.4, 0.85
+        ); // Strength, radius, threshold
+
+        const composer = new THREE.EffectComposer(renderer);
+        composer.addPass(renderScene);
+        composer.addPass(bloomPass);
+
+        // Animate
+        let time = 0;
+        function animateThree() {
+            requestAnimationFrame(animateThree);
+            time += 0.01;
+
+            particleMat.uniforms.uTime.value = time;
+
+            // Slight camera movement based on mouse
+            camera.position.x += (mouseX / window.innerWidth - 0.5 - camera.position.x) * 0.05;
+            camera.position.y += (-(mouseY / window.innerHeight - 0.5) + 1 - camera.position.y) * 0.05;
+            camera.lookAt(0, 0, 0);
+
+            composer.render();
+        }
+        animateThree();
+
+        // Resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            composer.setSize(window.innerWidth, window.innerHeight);
+            ScrollTrigger.refresh();
+        });
+
+    </script>
+</body>
+
+</html>

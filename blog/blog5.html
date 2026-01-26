@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agents in 2026: From Chatbots to Executors | Blog</title>
+    <meta name="theme-color" content="#040404">
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400&display=swap"
+        rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="../assets/css/style-custom.css?v=2">
+    <!-- Premium Blog CSS -->
+    <link rel="stylesheet" href="../assets/css/blog-pro.css?v=1">
+</head>
+
+<body>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <div id="canvas-container" style="position: fixed; inset: 0; z-index: -1;"></div>
+
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">JA</div>
+            <ul class="nav-links">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="../tools.html" class="nav-link">Utilities</a></li>
+                <li><a href="../blog.html" class="nav-link active">Blog</a></li>
+                <li><a href="../bio.htm" class="nav-link">Bio</a></li>
+            </ul>
+            <div class="menu-toggle"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+            <!-- Article Hero -->
+            <header class="article-hero">
+                <a href="../blog.html" class="blog-read-more" style="margin-bottom: 30px; display: inline-flex;"><i
+                        class="fas fa-arrow-left"></i> Back to Intelligence</a>
+                <br>
+                <span class="article-category-badge">Artificial Intelligence</span>
+                <h1 class="article-main-title">AI Agents in 2026: From Chatbots to Executors</h1>
+
+                <div class="article-meta-info">
+                    <span><i class="far fa-calendar"></i> Dec 25, 2024</span>
+                    <span><i class="far fa-user"></i> Hari Nandan K</span>
+                    <span><i class="far fa-clock"></i> 5 Min Read</span>
+                </div>
+
+                <div class="article-featured-image-container">
+                    <img src="../assets/img/blog/blog5.png" alt="AI Agents in 2026: From Chatbots to Executors"
+                        class="article-featured-image">
+                </div>
+            </header>
+
+            <!-- Article Content -->
+            <div class="article-body">
+                <p class="article-lead">We spent 2023 and 2024 amazed that computers could write poetry and code. In
+                    2026, the novelty of generation has worn off. The focus has shifted to 'Agency'—the ability of an AI
+                    not just to talk, but to do.</p>
+
+                <p>An Agentic AI differs from a Chatbot in its loop. A chatbot waits for input, processes it, and
+                    outputs text. An agent has a goal. It breaks that goal into steps, executes actions using external
+                    tools, observes the result, and iterates.</p>
+
+                <h2>Tool Use: The Critical Breakthrough</h2>
+                <p>Giving an LLM access to a calculator, a web browser, a Python REPL, or a bash terminal transforms it
+                    from a philosopher into a worker. It can debug code by actually running it.</p>
+
+                <p>We are seeing frameworks like LangChain and AutoGPT mature into reliable production systems. The
+                    concept of 'Prompt Engineering' is being replaced by 'Flow Engineering'—designing the cognitive
+                    architecture of the agent.</p>
+
+                <h2>Multi-Agent Systems</h2>
+                <p>Multi-Agent systems are the next frontier. Instead of one giant brain, we deploy a team: a Researcher
+                    agent, a Coder agent, and a reviewer agent. They collaborate, critique each other, and produce
+                    higher quality output than any single model.</p>
+
+                <blockquote>"The J.A.R.V.I.S. M1 project I work on is a prime example. It uses a local vision-language
+                    model to 'see' the screen and a shell executor to interact with the OS."</blockquote>
+
+                <p>It can navigate menus and manage files without human intervention. Safety and alignment become
+                    exponentially harder with agents. A chatbot that spews toxicity is bad; an agent that deletes your
+                    production database because it hallucinated a command is catastrophic.</p>
+
+                <h2>Safety & Economics</h2>
+                <p>We are developing 'Constitutional AI' and strict sandbox environments to contain these agents. Every
+                    tool call must be verified or run in a restricted scope.</p>
+
+                <p>The economic impact will be profound. Agents don't just augment labor; they replace entire workflows.
+                    Data entry, basic QA testing, and level-1 support are rapidly being fully automated.</p>
+
+                <p>However, agents currently struggle with long-term planning and getting stuck in loops. They can be
+                    fragile. A slight change in a website's UI can break a browsing agent completely.</p>
+
+                <p>We are moving towards 'General Purpose Action Models.' Soon, you won't write a script to automate a
+                    task; you will simply show the AI a video of you doing it once, and it will learn to replicate the
+                    workflow.</p>
+
+                <!-- Share / Tags -->
+                <div class="share-section">
+                    <div class="tag-cloud">
+                        <span class="tag-chip">#AI</span>
+                        <span class="tag-chip">#Agents</span>
+                        <span class="tag-chip">#Automation</span>
+                    </div>
+
+                    <div class="blog-read-more" style="cursor: pointer;">
+                        Share Article <i class="fas fa-share-alt"></i>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <div class="footer-content"
+            style="text-align: center; padding: 60px 20px; color: var(--text-secondary); border-top: 1px solid rgba(255,255,255,0.05);">
+            <p style="font-family: 'Space Grotesk', sans-serif;">&copy; 2026 Hari Nandan K.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+
+</html>

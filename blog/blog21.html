@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROJECT RETRO-BOT: V12.0 SENTRY EDITION | Blog</title>
+    <meta name="theme-color" content="#040404">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style-custom.css?v=2">
+    <style>
+        .article-header {
+            padding-top: 150px;
+            padding-bottom: 60px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .article-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            line-height: 1.1;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .article-meta {
+            color: var(--text-tertiary);
+            font-size: 0.9rem;
+            margin-bottom: 40px;
+        }
+
+        .article-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            background: rgba(0, 82, 204, 0.2);
+            color: var(--accent);
+            border: 1px solid rgba(0, 82, 204, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .article-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px 100px;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .article-content h2 {
+            color: var(--text-primary);
+            font-family: 'Space Grotesk', sans-serif;
+            margin-top: 50px;
+            margin-bottom: 20px;
+        }
+
+        .article-content h3 {
+            color: var(--text-primary);
+            font-family: 'Space Grotesk', sans-serif;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .article-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin-bottom: 50px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-tertiary);
+            text-decoration: none;
+            margin-bottom: 30px;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            margin-right: 5px;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            color: var(--text-secondary);
+        }
+
+        th,
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: left;
+        }
+
+        th {
+            color: var(--text-primary);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Code Block Styles */
+        pre {
+            background: #111;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 20px;
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            color: #ddd;
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.5);
+            margin: 30px 0;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <div id="canvas-container" style="position: fixed; inset: 0; z-index: -1;"></div>
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">JA</div>
+            <ul class="nav-links">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="../tools.html" class="nav-link">Utilities</a></li>
+                <li><a href="../blog.html" class="nav-link active">Blog</a></li>
+                <li><a href="../bio.htm" class="nav-link">Bio</a></li>
+            </ul>
+            <div class="menu-toggle"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+    <main>
+        <article>
+            <div class="article-header">
+                <a href="../blog.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Blog</a><br>
+                <span class="article-badge">Robotics & IoT</span>
+                <h1 class="article-title">PROJECT RETRO-BOT: V12.0 SENTRY EDITION</h1>
+                <div class="article-meta"><span><i class="far fa-calendar"></i> Jan 22, 2026</span> &bull; <span><i
+                            class="far fa-user"></i> Justin</span></div>
+
+                <!-- Main Header Image Placeholder -->
+                <div class="image-placeholder">[HEADER IMAGE HERE]</div>
+
+                <div style="margin-top: -30px; margin-bottom: 40px;">
+                    <span class='tag'>#ESP32</span><span class='tag'>#Robotics</span><span class='tag'>#IoT</span><span
+                        class='tag'>#Arduino</span>
+                </div>
+            </div>
+            <div class="article-content">
+                <p class="lead" style="font-size: 1.3rem; color: var(--text-primary); margin-bottom: 30px;">
+                    <strong>Developer:</strong> Justin | <strong>Platform:</strong> ESP32 | <strong>Version:</strong>
+                    12.0 (Final)
+                </p>
+
+                <hr style="border-color: rgba(255,255,255,0.1); margin: 40px 0;">
+
+                <h2>1. Project Overview</h2>
+                <p><strong>Retro-Bot</strong> is an advanced desktop companion robot powered by an ESP32
+                    microcontroller. It features a "living" OLED face that reacts to its environment, plays arcade
+                    games, and acts as a security sentry. It is controlled via a local Wi-Fi web dashboard hosted
+                    directly on the robot.</p>
+
+                <h3>Key Features</h3>
+                <ul>
+                    <li><strong>🧠 Emotional AI:</strong> Reacts to temperature, gas, movement, and proximity.</li>
+                    <li><strong>👀 Sentry Mode:</strong> Wakes up when it detects human motion (PIR).</li>
+                    <li><strong>🛡️ Personal Space:</strong> Gets "Suspicious" or "Panicked" if you get too close
+                        (Ultrasonic).</li>
+                    <li><strong>🍔 Hand Feeding:</strong> "Eats" when you hold an object to its mouth (IR Sensor).</li>
+                    <li><strong>🎮 Arcade Console:</strong> Plays Tic-Tac-Toe, Snake, and Pong via phone controller.
+                    </li>
+                    <li><strong>🗣️ Living Face:</strong> Realistic blinking eyes, breathing animation, and talking
+                        text.</li>
+                </ul>
+
+                <hr style="border-color: rgba(255,255,255,0.1); margin: 40px 0;">
+
+                <h2>2. Bill of Materials (Hardware)</h2>
+
+                <div class="image-placeholder">[HARDWARE COMPONENTS IMAGE]</div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Description</th>
+                            <th>Function</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>ESP32 DevKit V1</strong></td>
+                            <td>Microcontroller</td>
+                            <td>The "Brain" + Wi-Fi Server</td>
+                        </tr>
+                        <tr>
+                            <td><strong>OLED Display</strong></td>
+                            <td>1.3" I2C (SH1106)</td>
+                            <td>The "Face" and Game Screen</td>
+                        </tr>
+                        <tr>
+                            <td><strong>DHT11</strong></td>
+                            <td>Blue Grid Sensor</td>
+                            <td>Measures Temperature & Humidity</td>
+                        </tr>
+                        <tr>
+                            <td><strong>MQ-135</strong></td>
+                            <td>Gas Sensor</td>
+                            <td>Detects Air Quality / Smoke</td>
+                        </tr>
+                        <tr>
+                            <td><strong>HC-SR04</strong></td>
+                            <td>Ultrasonic Eyes</td>
+                            <td>Measures Distance (0cm - 400cm)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>PIR Sensor</strong></td>
+                            <td>White Dome</td>
+                            <td>Detects Motion (Infrared body heat)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>IR Sensor</strong></td>
+                            <td>Black LED pair</td>
+                            <td>Detects close objects (Feeding)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Active Buzzer</strong></td>
+                            <td>Black Cylinder</td>
+                            <td>Sound Effects & Alarms</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Jumper Wires</strong></td>
+                            <td>M-M, M-F</td>
+                            <td>Connections</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <hr style="border-color: rgba(255,255,255,0.1); margin: 40px 0;">
+
+                <h2>3. Master Wiring Guide</h2>
+                <p><strong>⚠️ IMPORTANT:</strong> The ESP32 uses 3.3V logic, but the <code>VIN</code> pin provides 5V
+                    from USB. Most sensors need 5V (VIN), but the OLED works best on 3.3V.</p>
+
+                <div class="image-placeholder">[WIRING DIAGRAM IMAGE]</div>
+
+                <h3>Power Rails</h3>
+                <ul>
+                    <li><strong>ESP32 GND</strong> → Breadboard <strong>Blue (-) Rail</strong></li>
+                    <li><strong>ESP32 VIN (5V)</strong> → Breadboard <strong>Red (+) Rail</strong></li>
+                </ul>
+
+                <h3>Pin Connections Table</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Component Pin</th>
+                            <th>ESP32 Pin</th>
+                            <th>Note</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>OLED Screen</strong></td>
+                            <td>SDA</td>
+                            <td><strong>GPIO 21</strong></td>
+                            <td>Data Line</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>SCL</td>
+                            <td><strong>GPIO 22</strong></td>
+                            <td>Clock Line</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>VCC</td>
+                            <td><strong>3V3</strong></td>
+                            <td><strong>Do not use 5V for Screen</strong></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>GND</td>
+                            <td>GND</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>DHT11 (Temp)</strong></td>
+                            <td>DATA / OUT</td>
+                            <td><strong>GPIO 4</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>MQ-135 (Gas)</strong></td>
+                            <td>A0 / Analog</td>
+                            <td><strong>GPIO 34</strong></td>
+                            <td>Analog Input Only</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Buzzer</strong></td>
+                            <td>POS (+)</td>
+                            <td><strong>GPIO 5</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>PIR (Motion)</strong></td>
+                            <td>OUT (Middle)</td>
+                            <td><strong>GPIO 13</strong></td>
+                            <td>Digital Signal</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ultrasonic</strong></td>
+                            <td>TRIG</td>
+                            <td><strong>GPIO 18</strong></td>
+                            <td>Output Pulse</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>ECHO</td>
+                            <td><strong>GPIO 19</strong></td>
+                            <td>Input Echo</td>
+                        </tr>
+                        <tr>
+                            <td><strong>IR (Feeding)</strong></td>
+                            <td>OUT</td>
+                            <td><strong>GPIO 23</strong></td>
+                            <td>Digital Signal (LOW = Active)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <hr style="border-color: rgba(255,255,255,0.1); margin: 40px 0;">
+
+                <h2>4. Software & Installation</h2>
+
+                <h3>Required Libraries</h3>
+                <p>Install these via Arduino IDE Library Manager:</p>
+                <ol>
+                    <li><strong><code>Adafruit GFX Library</code></strong> (Core graphics)</li>
+                    <li><strong><code>Adafruit SH110X</code></strong> (Screen Driver - <em>Crucial for removing
+                            static</em>)</li>
+                    <li><strong><code>DHT sensor library</code></strong> (by Adafruit)</li>
+                    <li><strong><code>Adafruit Unified Sensor</code></strong></li>
+                </ol>
+
+                <h3>Upload Settings</h3>
+                <ul>
+                    <li><strong>Board:</strong> DOIT ESP32 DEVKIT V1</li>
+                    <li><strong>Upload Speed:</strong> 921600</li>
+                    <li><strong>Flash Frequency:</strong> 80MHz</li>
+                </ul>
+
+                <h3>Troubleshooting "Static/Snow" on Screen</h3>
+                <p>If the screen looks grainy:</p>
+                <ol>
+                    <li>Ensure you are using <code>Adafruit_SH1106G</code> in the code (V12 code does this).</li>
+                    <li>Twist the <strong>SDA (Yellow)</strong> and <strong>SCL (Blue)</strong> wires together to cancel
+                        electrical noise.</li>
+                </ol>
+
+                <hr style="border-color: rgba(255,255,255,0.1); margin: 40px 0;">
+
+                <h2>5. User Guide: How to Use Retro-Bot</h2>
+
+                <div class="image-placeholder">[USER INTERFACE / DASHBOARD IMAGE]</div>
+
+                <h3>A. Connecting</h3>
+                <ol>
+                    <li>Power on the robot.</li>
+                    <li>On your phone/PC, connect to Wi-Fi: <strong><code>RetroBot_AP</code></strong> (No password).
+                    </li>
+                    <li>Open browser to: <strong><code>192.168.4.1</code></strong></li>
+                </ol>
+
+                <h3>B. Dashboard Controls</h3>
+                <ul>
+                    <li><strong>HAPPY:</strong> Forces normal mode.</li>
+                    <li><strong>FEED:</strong> Triggers "Eating" animation manually.</li>
+                    <li><strong>PANIC:</strong> Triggers alarm mode manually.</li>
+                    <li><strong>SLEEP:</strong> Turns off screen and waits for motion (Sentry Mode).</li>
+                    <li><strong>GAME MODE:</strong> Switches the face to the Game Menu.</li>
+                </ul>
+
+                <h3>C. Sensor Behaviors (Autonomous Mode)</h3>
+                <ul>
+                    <li><strong>Motion (PIR):</strong> If sleeping, any movement wakes the robot up.</li>
+                    <li><strong>Feeding (IR):</strong> Place finger 2cm from mouth → Robot eats ("YUMMY!").</li>
+                    <li><strong>Distance (Sonar):</strong>
+                        <ul>
+                            <li><strong>&lt; 25cm:</strong> Robot gets Suspicious (Squinting eyes).</li>
+                            <li><strong>&lt; 10cm:</strong> Robot Panics (Screaming + Beeping).</li>
+                        </ul>
+                    </li>
+                    <li><strong>Air Quality (Gas):</strong> High gas levels trigger Panic mode.</li>
+                </ul>
+
+                <hr style="border-color: rgba(255,255,255,0.1); margin: 40px 0;">
+
+                <h2>Source Code</h2>
+                <div class="image-placeholder">[SOURCE CODE PREVIEW IMAGE (Optional)]</div>
+                <p>Below is the placeholder for the source code. You can paste your Arduino sketch here.</p>
+                <pre><code>#include &lt;WiFi.h&gt;
+#include &lt;WebServer.h&gt;
+#include &lt;Wire.h&gt;
+#include &lt;Adafruit_GFX.h&gt;
+#include &lt;Adafruit_SH110X.h&gt;
+#include &lt;DHT.h&gt;
+const char* ssid     = &quot;RetroBot_AP&quot;; 
+const char* password = &quot;&quot;;            
+#define PIN_BUZZER    5
+#define PIN_DHT       4
+#define PIN_MQ135     34
+#define PIN_PIR       13   
+#define PIN_TRIG      18   
+#define PIN_ECHO      19   
+#define OLED_SDA      21 
+#define OLED_SCL      22 
+#define SCREEN_WIDTH  128
+#define SCREEN_HEIGHT 64
+#define SCREEN_ADDRESS 0x3C
+Adafruit_SH1106G display = Adafruit_SH1106G(SCREEN_WIDTH, SCREEN_HEIGHT, &amp;Wire, -1);
+DHT dht(PIN_DHT, DHT11);
+WebServer server(80);
+enum EyeLidShape { LID_FLAT, LID_ANGRY, LID_SAD, LID_TIRED };
+float temp = 0;
+int gasLevel = 0;
+long dist_cm = 0;
+long prev_dist_cm = 0; 
+String currentMood = &quot;HAPPY&quot;;
+unsigned long manualOverrideTimer = 0;
+bool isSleeping = false;
+String overrideText = &quot;&quot;; 
+unsigned long overrideTextTimer = 0;
+unsigned long unixTime = 0;
+unsigned long lastSyncMillis = 0;
+bool timeSynced = false;
+int gasBaseline = 0;
+float tempBaseline = 0;
+long lastDistChangeTime = 0;
+unsigned long lastMotionTime = 0;
+const unsigned long SLEEP_TIMEOUT = 10000; 
+bool showBigText = false;
+bool isFocusMode = false;
+unsigned long focusStartTime = 0;
+unsigned long focusDuration = 0;
+const unsigned long DISTRACTION_THRESHOLD = 6000; 
+const char* txt_MOTIVATION[] = {&quot;FOCUS!&quot;, &quot;DO IT NOW&quot;, &quot;EYES HERE&quot;, &quot;NO PHONES&quot;, &quot;STAY HARD&quot;, &quot;GRIND&quot;, &quot;WORK WAR&quot;, &quot;LOCK IN&quot;};
+unsigned long lastDHTRead = 0;
+unsigned long lastDistRead = 0;
+const int GAS_SAMPLES = 5; 
+int gasReadings[GAS_SAMPLES];
+int gasIndex = 0; int totalGas = 0; int averageGas = 0;
+int GAS_THRESHOLD_OFFSET = 200; 
+const int DIST_PANIC = 10; 
+const int DIST_SUS = 20;   
+const int DIST_TOUCH = 4; 
+const int DIST_VELOCITY_TRIGGER = -10; 
+int breathVal = 0; bool breathIn = true;
+String currentDisplayText = &quot;Just chillin&quot;; 
+unsigned long lastTextUpdate = 0;
+const char* txt_HAPPY[] = {&quot;Hello friend!&quot;, &quot;Happy to help&quot;, &quot;Wonderful day&quot;, &quot;Ready for you&quot;, &quot;All systems go&quot;, &quot;Smiling rn&quot;, &quot;Peaceful here&quot;, &quot;Hi there!&quot;};
+const char* txt_SUS[] = {&quot;Oh, hello?&quot;, &quot;Who is there?&quot;, &quot;Identifying...&quot;, &quot;May I help?&quot;, &quot;Curious...&quot;, &quot;Just checking&quot;, &quot;New friend?&quot;, &quot;I see you&quot;};
+const char* txt_PANIC[] = {&quot;Oh dear!&quot;, &quot;Too close pls&quot;, &quot;Please step back&quot;, &quot;Safety first&quot;, &quot;Bit crowded&quot;, &quot;Excuse me!&quot;, &quot;Need space&quot;, &quot;Careful!&quot;};
+const char* txt_ANGRY[] = {&quot;Please stop&quot;, &quot;Not nice&quot;, &quot;Feeling blue&quot;, &quot;System upset&quot;, &quot;Be kind pls&quot;, &quot;I need space&quot;, &quot;Boundaries&quot;, &quot;Hmph...&quot;};
+const char* txt_SWEAT[] = {&quot;It&#x27;s warm!&quot;, &quot;Whew hot!&quot;, &quot;Need a fan&quot;, &quot;Staying cool&quot;, &quot;Oh my circuits&quot;, &quot;Toasty here&quot;, &quot;Summer vibes&quot;, &quot;Phew!&quot;};
+const char* txt_LOVE[] = {&quot;You&#x27;re great!&quot;, &quot;So kind!&quot;, &quot;Best friends&quot;, &quot;Lovely day&quot;, &quot;Heart you&quot;, &quot;Thank you!&quot;, &quot;Sending joy&quot;, &quot;You shine!&quot;};
+const char* txt_CONFUSED[] = {&quot;I&#x27;m not sure&quot;, &quot;Say again?&quot;, &quot;Hmm...&quot;, &quot;Thinking...&quot;, &quot;One moment&quot;, &quot;Processing&quot;, &quot;Trying my best&quot;, &quot;Oh?&quot;};
+int phraseIndex = 0; 
+unsigned long lastBlink = 0; bool eyesOpen = true;
+float pupilSize = 3.5; 
+float eyeX = 0; float eyeY = 0; 
+int activeGame = 0; int score = 0;
+struct Player { bool active; int x; int y; int input; };
+Player p1 = {false,0,0,0}; Player p2 = {false,0,0,0}; 
+int ttt_board[9]; int ttt_status = 0; int ttt_turn = 1; 
+const int SNAKE_MAX_LEN=100; int snakeX[SNAKE_MAX_LEN]; int snakeY[SNAKE_MAX_LEN]; int snakeLen=3; int snakeDir=1; int foodX=0, foodY=0; bool snakeGameOver=false; unsigned long lastSnakeMove=0;
+float ballX=64, ballY=32; float ballVX=2, ballVY=2; int paddle1Y=24; int paddle2Y=24; int p1Score=0; int p2Score=0; bool pongGameOver=false;
+int dinoY=50; float dinoV=0; bool dinoGrounded=true; int cactusX=128; int dinoScore=0; bool dinoOver=false;
+int shipX=64; int bulletX=-1; int bulletY=-1; int enemyX[5]; int enemyY[5]; bool enemyAlive[5]; int invScore=0; bool invOver=false; unsigned long lastInvMove=0; int invDir=1;
+int tankWinner=0; 
+bool brk[5][10]; int bBallX=64, bBallY=50; float bVelX=2, bVelY=-2;
+int pipeX=128; int pipeGap=20;
+int mazeX=2, mazeY=2; int mazeW=64, mazeH=32;
+float landX=64, landY=10, landVX=0, landVY=0, landFuel=100; bool landCrashed=false, landLanded=false;
+
+const char index_html[] PROGMEM = R&quot;rawliteral(
+&lt;!DOCTYPE HTML&gt;&lt;html&gt;
+&lt;head&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;title&gt;RetroBot Sentry&lt;/title&gt;
+&lt;style&gt;
+body{font-family:&#x27;Courier New&#x27;, monospace;background-color:#000;color:#fff;text-align:center;margin:0;padding:10px;}
+h1{margin:10px 0;color:#00ff00;text-shadow:0 0 5px #00ff00;}
+h2{margin:5px 0;}
+h3{border-bottom:2px solid #555;padding-bottom:5px;margin-top:15px;color:#aaa;font-size:16px;}
+button{background:#222;color:#0f0;border:1px solid #0f0;padding:15px;margin:4px;font-family:inherit;font-size:16px;width:45%;cursor:pointer;border-radius:5px;}
+button:active{background:#0f0;color:#000;}
+.red{color:#f00;border-color:#f00;}
+.red:active{background:#f00;color:#fff;}
+.p{border:1px solid #333;padding:10px;margin:10px 0;border-radius:8px;background:#111;}
+.s-box{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.v{font-size:24px;font-weight:bold;}
+.l{font-size:12px;color:#888;}
+.h{display:none;}
+.dpad{display:grid;grid-template-columns:50px 50px 50px;grid-template-rows:50px 50px 50px;gap:5px;justify-content:center;margin:0 auto;}
+.btn-arr{width:100% !important;height:100% !important;padding:0 !important;font-size:24px !important;margin:0 !important;}
+input{font-family:inherit;font-size:16px;}
+.a{background:#300 !important;border-color:#f00 !important;}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;RetroBot Sentry&lt;/h1&gt;
+  &lt;div id=&quot;mU&quot;&gt;
+    &lt;div class=&quot;p&quot;&gt;&lt;h3&gt;STATUS: &lt;span id=&quot;st&quot;&gt;LOADING...&lt;/span&gt;&lt;/h3&gt;&lt;div&gt;&lt;div id=&quot;cT&quot; class=&quot;c&quot;&gt;TEMP&lt;br&gt;&lt;span id=&quot;t&quot;&gt;--&lt;/span&gt;C&lt;/div&gt;&lt;div id=&quot;cG&quot; class=&quot;c&quot;&gt;AIR&lt;br&gt;&lt;span id=&quot;g&quot;&gt;--&lt;/span&gt;&lt;/div&gt;&lt;div id=&quot;cD&quot; class=&quot;c&quot;&gt;DIST&lt;br&gt;&lt;span id=&quot;d&quot;&gt;--&lt;/span&gt;cm&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;div class=&quot;p&quot; style=&quot;border:2px solid #0f0;box-shadow:0 0 10px #0f0&quot;&gt;&lt;h3&gt;FOCUS TIMER&lt;/h3&gt;
+       &lt;div style=&quot;display:flex;justify-content:center;gap:5px;margin-bottom:10px&quot;&gt;
+          &lt;button onclick=&quot;sF(1,25)&quot; style=&quot;width:30%&quot;&gt;25m&lt;/button&gt;
+          &lt;button onclick=&quot;sF(1,45)&quot; style=&quot;width:30%&quot;&gt;45m&lt;/button&gt;
+          &lt;button onclick=&quot;sF(1,60)&quot; style=&quot;width:30%&quot;&gt;1h&lt;/button&gt;
+       &lt;/div&gt;
+       &lt;div style=&quot;display:flex;justify-content:center;gap:5px&quot;&gt;
+          &lt;input id=&quot;fm&quot; type=&quot;number&quot; placeholder=&quot;Min&quot; style=&quot;width:30%;padding:10px;background:#222;color:#0f0;border:1px solid #0f0;text-align:center;border-radius:5px&quot;&gt;
+          &lt;button onclick=&quot;sF(1,0)&quot; style=&quot;width:60%;background:#004400;color:#0f0;border:1px solid #0f0;font-weight:bold&quot;&gt;START SESSION&lt;/button&gt;
+       &lt;/div&gt;
+       &lt;button class=&quot;red&quot; onclick=&quot;sF(0,0)&quot; style=&quot;width:95%;margin-top:10px;box-shadow:0 0 5px red&quot;&gt;STOP FOCUS&lt;/button&gt;
+       &lt;div id=&quot;fStat&quot; style=&quot;margin-top:10px;font-size:14px;font-weight:bold;color:#888;text-transform:uppercase&quot;&gt;STATUS: IDLE&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;p&quot; style=&quot;border:1px solid #00f&quot;&gt;&lt;h3&gt;ARCADE MENU&lt;/h3&gt;
+      &lt;div style=&quot;display:grid;grid-template-columns:1fr 1fr;gap:8px&quot;&gt;
+        &lt;button onclick=&quot;lG(1)&quot;&gt;❌ TTT (vs CPU)&lt;/button&gt;
+        &lt;button onclick=&quot;lG(2)&quot;&gt;🐍 SNAKE&lt;/button&gt;
+        &lt;button onclick=&quot;lG(3)&quot;&gt;🏓 PONG (vs AI)&lt;/button&gt;
+        &lt;button onclick=&quot;lG(4)&quot;&gt;🦖 DINO RUN&lt;/button&gt;
+        &lt;button onclick=&quot;lG(5)&quot;&gt;👾 INVADERS&lt;/button&gt;
+        &lt;button onclick=&quot;lG(6)&quot;&gt;🧱 BREAKOUT&lt;/button&gt;
+        &lt;button onclick=&quot;lG(7)&quot;&gt;🐦 FLAPPY&lt;/button&gt;
+        &lt;button onclick=&quot;lG(8)&quot;&gt;🕸 MAZE&lt;/button&gt;
+        &lt;button style=&quot;grid-column:span 2&quot; onclick=&quot;lG(9)&quot;&gt; LUNAR LANDER&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;p&quot; style=&quot;border-color:#f0f&quot;&gt;&lt;h3&gt;MULTIPLAYER SETUP&lt;/h3&gt;
+      &lt;button id=&quot;bp1&quot; onclick=&quot;join(1)&quot;&gt;JOIN AS P1 (LEFT)&lt;/button&gt;
+      &lt;button id=&quot;bp2&quot; onclick=&quot;join(2)&quot;&gt;JOIN AS P2 (RIGHT)&lt;/button&gt;
+      &lt;div id=&quot;pstat&quot; style=&quot;font-size:10px;margin-top:5px&quot;&gt;NOT CONNECTED&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div id=&quot;tU&quot; class=&quot;h&quot;&gt;&lt;h2&gt;TIC-TAC-TOE&lt;/h2&gt;&lt;div id=&quot;tM&quot; style=&quot;color:yellow&quot;&gt;YOUR TURN (X)&lt;/div&gt;&lt;div class=&quot;grid&quot;&gt;&lt;div class=&quot;cell&quot; onclick=&quot;tMv(0)&quot; id=&quot;c0&quot;&gt;&lt;/div&gt;&lt;div class=&quot;cell&quot; onclick=&quot;tMv(1)&quot; id=&quot;c1&quot;&gt;&lt;/div&gt;&lt;div class=&quot;cell&quot; onclick=&quot;tMv(2)&quot; id=&quot;c2&quot;&gt;&lt;/div&gt;&lt;div class=&quot;cell&quot; onclick=&quot;tMv(3)&quot; id=&quot;c3&quot;&gt;&lt;/div&gt;&lt;div class=&quot;cell&quot; onclick=&quot;tMv(4)&quot; id=&quot;c4&quot;&gt;&lt;/div&gt;&lt;div class=&quot;cell&quot; onclick=&quot;tMv(5)&quot; id=&quot;c5&quot;&gt;&lt;/div&gt;&lt;div class=&quot;cell&quot; onclick=&quot;tMv(6)&quot; id=&quot;c6&quot;&gt;&lt;/div&gt;&lt;div class=&quot;cell&quot; onclick=&quot;tMv(7)&quot; id=&quot;c7&quot;&gt;&lt;/div&gt;&lt;div class=&quot;cell&quot; onclick=&quot;tMv(8)&quot; id=&quot;c8&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;button class=&quot;red&quot; onclick=&quot;xG()&quot;&gt;EXIT&lt;/button&gt;&lt;/div&gt;
+  &lt;div id=&quot;sU&quot; class=&quot;h&quot;&gt;&lt;h2 style=&quot;color:#0f0&quot;&gt;SNAKE&lt;/h2&gt;&lt;h3 id=&quot;sc&quot;&gt;SCORE: 0&lt;/h3&gt;&lt;div class=&quot;dpad&quot;&gt;&lt;div&gt;&lt;/div&gt;&lt;button class=&quot;btn-arr&quot; onclick=&quot;nk(0)&quot;&gt;▲&lt;/button&gt;&lt;div&gt;&lt;/div&gt;&lt;button class=&quot;btn-arr&quot; onclick=&quot;nk(3)&quot;&gt;◀&lt;/button&gt;&lt;button class=&quot;btn-arr red&quot; onclick=&quot;nk(9)&quot;&gt;R&lt;/button&gt;&lt;button class=&quot;btn-arr&quot; onclick=&quot;nk(1)&quot;&gt;▶&lt;/button&gt;&lt;div&gt;&lt;/div&gt;&lt;button class=&quot;btn-arr&quot; onclick=&quot;nk(2)&quot;&gt;▼&lt;/button&gt;&lt;div&gt;&lt;/div&gt;&lt;/div&gt;&lt;br&gt;&lt;button class=&quot;red&quot; onclick=&quot;xG()&quot;&gt;EXIT&lt;/button&gt;&lt;/div&gt;
+  &lt;div id=&quot;pU&quot; class=&quot;h&quot;&gt;&lt;h2 style=&quot;color:cyan&quot;&gt;PONG 1P&lt;/h2&gt;&lt;h3&gt;SCORE: &lt;span id=&quot;ps&quot;&gt;0&lt;/span&gt;&lt;/h3&gt;&lt;div style=&quot;display:flex;justify-content:center;gap:10px&quot;&gt;&lt;button style=&quot;padding:30px&quot; onclick=&quot;pg(-1)&quot;&gt;▲ UP&lt;/button&gt;&lt;button style=&quot;padding:30px&quot; onclick=&quot;pg(1)&quot;&gt;▼ DOWN&lt;/button&gt;&lt;/div&gt;&lt;br&gt;&lt;button class=&quot;red&quot; onclick=&quot;xG()&quot;&gt;EXIT&lt;/button&gt;&lt;/div&gt;
+  &lt;div id=&quot;dU&quot; class=&quot;h&quot;&gt;&lt;h2 style=&quot;color:#fa0&quot;&gt;DINO RUN&lt;/h2&gt;&lt;h3&gt;SCORE: &lt;span id=&quot;ds&quot;&gt;0&lt;/span&gt;&lt;/h3&gt;&lt;button style=&quot;padding:40px;width:80%;font-size:20px&quot; onmousedown=&quot;dn(1)&quot;&gt;[JUMP!]&lt;/button&gt;&lt;br&gt;&lt;br&gt;&lt;button class=&quot;red&quot; onclick=&quot;xG()&quot;&gt;EXIT&lt;/button&gt;&lt;/div&gt;
+  &lt;div id=&quot;iU&quot; class=&quot;h&quot;&gt;&lt;h2 style=&quot;color:#0f0&quot;&gt;INVADERS&lt;/h2&gt;&lt;h3&gt;SCORE: &lt;span id=&quot;is&quot;&gt;0&lt;/span&gt;&lt;/h3&gt;&lt;div style=&quot;display:flex;justify-content:center;gap:5px&quot;&gt;&lt;button style=&quot;padding:20px&quot; onclick=&quot;iv(-1)&quot;&gt;[L]&lt;/button&gt;&lt;button style=&quot;padding:20px;background:#f00;color:white&quot; onclick=&quot;iv(10)&quot;&gt;[FIRE]&lt;/button&gt;&lt;button style=&quot;padding:20px&quot; onclick=&quot;iv(1)&quot;&gt;[R]&lt;/button&gt;&lt;/div&gt;&lt;br&gt;&lt;button class=&quot;red&quot; onclick=&quot;xG()&quot;&gt;EXIT&lt;/button&gt;&lt;/div&gt;
+  &lt;div id=&quot;tkU&quot; class=&quot;h&quot;&gt;&lt;h2 style=&quot;color:#fa0&quot;&gt;BREAKOUT&lt;/h2&gt;&lt;h3&gt;SCORE: &lt;span id=&quot;bks&quot;&gt;0&lt;/span&gt;&lt;/h3&gt;&lt;div style=&quot;display:flex;justify-content:center;gap:20px&quot;&gt;&lt;button style=&quot;padding:30px&quot; onmousedown=&quot;bk(-1)&quot;&gt;◀ LEFT&lt;/button&gt;&lt;button style=&quot;padding:30px&quot; onmousedown=&quot;bk(1)&quot;&gt;RIGHT ▶&lt;/button&gt;&lt;/div&gt;&lt;br&gt;&lt;button class=&quot;red&quot; onclick=&quot;xG()&quot;&gt;EXIT&lt;/button&gt;&lt;/div&gt;
+  &lt;div id=&quot;fbU&quot; class=&quot;h&quot;&gt;&lt;h2 style=&quot;color:#0f0&quot;&gt;FLAPPY&lt;/h2&gt;&lt;h3&gt;SCORE: &lt;span id=&quot;fbs&quot;&gt;0&lt;/span&gt;&lt;/h3&gt;&lt;button style=&quot;padding:50px;width:90%;font-size:24px;border:2px solid #0f0&quot; onmousedown=&quot;fb(1)&quot;&gt;[ FLAP! ]&lt;/button&gt;&lt;br&gt;&lt;br&gt;&lt;button class=&quot;red&quot; onclick=&quot;xG()&quot;&gt;EXIT&lt;/button&gt;&lt;/div&gt;
+  &lt;div id=&quot;mzU&quot; class=&quot;h&quot;&gt;&lt;h2 style=&quot;color:#0ff&quot;&gt;MAZE RUN&lt;/h2&gt;&lt;div class=&quot;dpad&quot;&gt;&lt;div&gt;&lt;/div&gt;&lt;button class=&quot;btn-arr&quot; onmousedown=&quot;mz(0)&quot;&gt;▲&lt;/button&gt;&lt;div&gt;&lt;/div&gt;&lt;button class=&quot;btn-arr&quot; onmousedown=&quot;mz(3)&quot;&gt;◀&lt;/button&gt;&lt;div&gt;&lt;/div&gt;&lt;button class=&quot;btn-arr&quot; onmousedown=&quot;mz(1)&quot;&gt;▶&lt;/button&gt;&lt;div&gt;&lt;/div&gt;&lt;button class=&quot;btn-arr&quot; onmousedown=&quot;mz(2)&quot;&gt;▼&lt;/button&gt;&lt;div&gt;&lt;/div&gt;&lt;/div&gt;&lt;br&gt;&lt;button class=&quot;red&quot; onclick=&quot;xG()&quot;&gt;EXIT&lt;/button&gt;&lt;/div&gt;
+  &lt;div id=&quot;ldU&quot; class=&quot;h&quot;&gt;&lt;h2 style=&quot;color:#fff&quot;&gt;LUNAR LANDER&lt;/h2&gt;&lt;h3&gt;FUEL: &lt;span id=&quot;ldf&quot;&gt;100&lt;/span&gt;&lt;/h3&gt;&lt;div style=&quot;display:flex;justify-content:center;gap:5px&quot;&gt;&lt;button style=&quot;padding:20px&quot; onmousedown=&quot;ld(3)&quot;&gt;◀&lt;/button&gt;&lt;button style=&quot;padding:20px;background:#fa0&quot; onmousedown=&quot;ld(0)&quot;&gt;🔥 THRUST&lt;/button&gt;&lt;button style=&quot;padding:20px&quot; onmousedown=&quot;ld(1)&quot;&gt;▶&lt;/button&gt;&lt;/div&gt;&lt;br&gt;&lt;button class=&quot;red&quot; onclick=&quot;xG()&quot;&gt;EXIT&lt;/button&gt;&lt;/div&gt;
+&lt;script&gt;
+function syncTime() {
+  const now = Math.floor(Date.now() / 1000);
+  const offset = new Date().getTimezoneOffset() * -60; 
+  fetch(&#x27;/sync?t=&#x27; + (now + offset)).then(()=&gt; {
+    document.getElementById(&#x27;pstat&#x27;).innerHTML += &quot; | &lt;span style=&#x27;color:#0f0&#x27;&gt;TIME SYNCED ✔&lt;/span&gt;&quot;;
+  });
+}
+window.onload = syncTime;
+setInterval(()=&gt;{
+  if(document.getElementById(&#x27;mU&#x27;).style.display!==&#x27;none&#x27;){
+    fetch(&#x27;/stat&#x27;).then(r=&gt;r.json()).then(d=&gt;{
+      document.getElementById(&#x27;t&#x27;).innerText=d.t.toFixed(1);
+      document.getElementById(&#x27;g&#x27;).innerText=d.g;
+      document.getElementById(&#x27;d&#x27;).innerText=d.d;
+      document.getElementById(&#x27;st&#x27;).innerText=d.m;
+      if(d.f) document.getElementById(&#x27;fStat&#x27;).innerHTML = &quot;&lt;span style=&#x27;color:#0f0&#x27;&gt;FOCUSING...&lt;/span&gt;&quot;;
+      else document.getElementById(&#x27;fStat&#x27;).innerText = &quot;IDLE&quot;;
+      if(d.t&gt;32)document.getElementById(&#x27;cT&#x27;).classList.add(&#x27;a&#x27;);else document.getElementById(&#x27;cT&#x27;).classList.remove(&#x27;a&#x27;);
+      if(d.g&gt;2200)document.getElementById(&#x27;cG&#x27;).classList.add(&#x27;a&#x27;);else document.getElementById(&#x27;cG&#x27;).classList.remove(&#x27;a&#x27;);
+      if(d.d&lt;25)document.getElementById(&#x27;cD&#x27;).classList.add(&#x27;a&#x27;);else document.getElementById(&#x27;cD&#x27;).classList.remove(&#x27;a&#x27;);
+    });
+  }
+  if(!document.getElementById(&#x27;sU&#x27;).classList.contains(&#x27;h&#x27;)){fetch(&#x27;/snakeScore&#x27;).then(r=&gt;r.text()).then(s=&gt;{document.getElementById(&#x27;sc&#x27;).innerText=&quot;SCORE: &quot;+s});}
+  if(!document.getElementById(&#x27;pU&#x27;).classList.contains(&#x27;h&#x27;)){fetch(&#x27;/pongScore&#x27;).then(r=&gt;r.text()).then(s=&gt;{document.getElementById(&#x27;ps&#x27;).innerText=s});}
+  if(!document.getElementById(&#x27;dU&#x27;).classList.contains(&#x27;h&#x27;)){fetch(&#x27;/dinoScore&#x27;).then(r=&gt;r.text()).then(s=&gt;{document.getElementById(&#x27;ds&#x27;).innerText=s});}
+  if(!document.getElementById(&#x27;iU&#x27;).classList.contains(&#x27;h&#x27;)){fetch(&#x27;/invScore&#x27;).then(r=&gt;r.text()).then(s=&gt;{document.getElementById(&#x27;is&#x27;).innerText=s});}
+  if(!document.getElementById(&#x27;tkU&#x27;).classList.contains(&#x27;h&#x27;)){fetch(&#x27;/bkScore&#x27;).then(r=&gt;r.text()).then(s=&gt;{document.getElementById(&#x27;bks&#x27;).innerText=s});}
+  if(!document.getElementById(&#x27;fbU&#x27;).classList.contains(&#x27;h&#x27;)){fetch(&#x27;/fbScore&#x27;).then(r=&gt;r.text()).then(s=&gt;{document.getElementById(&#x27;fbs&#x27;).innerText=s});}
+  if(!document.getElementById(&#x27;ldU&#x27;).classList.contains(&#x27;h&#x27;)){fetch(&#x27;/ldFuel&#x27;).then(r=&gt;r.text()).then(s=&gt;{document.getElementById(&#x27;ldf&#x27;).innerText=s});}
+},500);
+// GAME LOGIC MAPPING
+// lG = Load Game, xG = Exit Game
+// sF = Start Focus, s = Set Mood
+// tMv = TicTacToe Move
+// nk = Snake Input (0=U,1=R,2=D,3=L)
+// pg = Pong Input (-1=Up, 1=Down)
+// dn = Dino Input (1=Jump)
+// iv = Invaders Input (-1=L, 1=R, 10=Fire)
+// bk = Breakout Input (-1=L, 1=R)
+// fb = Flappy Input (1=Flap)
+// mz = Maze Input (0=U,1=R,2=D,3=L)
+// ld = Lander Input (0=Thrust, 3=Left, 1=Right)
+
+function lG(id){
+  document.getElementById(&#x27;mU&#x27;).classList.add(&#x27;h&#x27;);
+  document.querySelectorAll(&#x27;.game-ui&#x27;).forEach(e=&gt;e.classList.add(&#x27;h&#x27;)); // Hide all first
+  
+  if(id==1){document.getElementById(&#x27;tU&#x27;).classList.remove(&#x27;h&#x27;);fetch(&#x27;/game?g=1&amp;act=start&#x27;).then(uT);}
+  if(id==2){document.getElementById(&#x27;sU&#x27;).classList.remove(&#x27;h&#x27;);fetch(&#x27;/game?g=2&amp;act=start&#x27;);}
+  if(id==3){document.getElementById(&#x27;pU&#x27;).classList.remove(&#x27;h&#x27;);fetch(&#x27;/game?g=3&amp;act=start&#x27;);}
+  if(id==4){document.getElementById(&#x27;dU&#x27;).classList.remove(&#x27;h&#x27;);fetch(&#x27;/game?g=4&amp;act=start&#x27;);}
+  if(id==5){document.getElementById(&#x27;iU&#x27;).classList.remove(&#x27;h&#x27;);fetch(&#x27;/game?g=5&amp;act=start&#x27;);}
+  if(id==6){document.getElementById(&#x27;tkU&#x27;).classList.remove(&#x27;h&#x27;);fetch(&#x27;/game?g=6&amp;act=start&#x27;);}
+  if(id==7){document.getElementById(&#x27;fbU&#x27;).classList.remove(&#x27;h&#x27;);fetch(&#x27;/game?g=7&amp;act=start&#x27;);}
+  if(id==8){document.getElementById(&#x27;mzU&#x27;).classList.remove(&#x27;h&#x27;);fetch(&#x27;/game?g=8&amp;act=start&#x27;);}
+  if(id==9){document.getElementById(&#x27;ldU&#x27;).classList.remove(&#x27;h&#x27;);fetch(&#x27;/game?g=9&amp;act=start&#x27;);}
+}
+
+function xG(){
+  document.querySelectorAll(&#x27;.h&#x27;).forEach(e=&gt;e.classList.add(&#x27;h&#x27;)); // Reset hidden
+  document.getElementById(&#x27;mU&#x27;).classList.remove(&#x27;h&#x27;); // Show menu
+  
+  // Hide all specific game UIs manually to be safe
+  const uis = [&#x27;tU&#x27;,&#x27;sU&#x27;,&#x27;pU&#x27;,&#x27;dU&#x27;,&#x27;iU&#x27;,&#x27;tkU&#x27;,&#x27;fbU&#x27;,&#x27;mzU&#x27;,&#x27;ldU&#x27;];
+  uis.forEach(id =&gt; { if(document.getElementById(id)) document.getElementById(id).classList.add(&#x27;h&#x27;); });
+  
+  fetch(&#x27;/game?g=0&amp;act=exit&#x27;);
+}
+
+// Input Handlers
+function s(m){fetch(&#x27;/set?m=&#x27;+m);}
+function sF(a,mVal){
+  let m=mVal;
+  if(a==1 &amp;&amp; m==0) m=document.getElementById(&#x27;fm&#x27;).value; 
+  if(!m) m=25; 
+  console.log(&quot;Focus:&quot;, a, m);
+  fetch(&#x27;/focus?act=&#x27;+a+&#x27;&amp;m=&#x27;+m);
+}
+// Game Inputs
+function tMv(id){fetch(&#x27;/game?g=1&amp;act=move&amp;c=&#x27;+id).then(r=&gt;r.json()).then(uT2);}
+function uT(r){r.json().then(uT2);}
+function uT2(d){for(let i=0;i&lt;9;i++){let t=&quot;&quot;;if(d.b[i]==1)t=&quot;X&quot;;if(d.b[i]==2)t=&quot;O&quot;;document.getElementById(&#x27;c&#x27;+i).innerText=t;}let m=document.getElementById(&#x27;tM&#x27;);if(d.s==1)m.innerText=&quot;YOU WIN!&quot;;else if(d.s==2)m.innerText=&quot;ROBOT WINS!&quot;;else m.innerText=&quot;YOUR TURN&quot;;}
+function nk(d){console.log(&#x27;Snake:&#x27;,d); fetch(&#x27;/game?g=2&amp;act=input&amp;d=&#x27;+d);}
+function pg(d){console.log(&#x27;Pong:&#x27;,d); fetch(&#x27;/game?g=3&amp;act=input&amp;p=&#x27;+myP+&#x27;&amp;d=&#x27;+d);}
+function dn(d){console.log(&#x27;Dino:&#x27;,d); fetch(&#x27;/game?g=4&amp;act=input&amp;d=&#x27;+d);}
+function iv(d){console.log(&#x27;Invaders:&#x27;,d); fetch(&#x27;/game?g=5&amp;act=input&amp;d=&#x27;+d);}
+function bk(d){console.log(&#x27;Breakout:&#x27;,d); fetch(&#x27;/game?g=6&amp;act=input&amp;d=&#x27;+d);}
+function fb(d){console.log(&#x27;Flappy:&#x27;,d); fetch(&#x27;/game?g=7&amp;act=input&amp;d=&#x27;+d);}
+function mz(d){console.log(&#x27;Maze:&#x27;,d); fetch(&#x27;/game?g=8&amp;act=input&amp;d=&#x27;+d);}
+function ld(d){console.log(&#x27;Lander:&#x27;,d); fetch(&#x27;/game?g=9&amp;act=input&amp;d=&#x27;+d);}
+var myP=0;
+function join(p){myP=p;document.getElementById(&#x27;pstat&#x27;).innerText=&quot;YOU ARE PLAYER &quot;+p; 
+  if(p==1)document.getElementById(&#x27;bp1&#x27;).style.borderColor=&quot;#0f0&quot;;
+  if(p==2)document.getElementById(&#x27;bp2&#x27;).style.borderColor=&quot;#0f0&quot;;
+}
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;
+)rawliteral&quot;;
+
+void drawFace(); void drawHappy(); void drawPanic(); void drawSus(); void drawSweat(); void drawAngry(); void drawLove(); void drawConfused();     
+void drawEyeV2(int cx, int cy, int r, float p, int lx, int ly, float closePercent, bool angryBrow);
+void drawEyeMetric(int cx, int cy, int r, float pupil, int lx, int ly, float lidTopP, float lidBotP, EyeLidShape shape, bool glasses);
+void drawTTT(); int checkTTTWin(); void initSnake(); void updateSnake(); void drawSnake(); void initPong(); void updatePong(); void drawPong();
+void initDino(); void updateDino(); void drawDino(); void initInvaders(); void updateInvaders(); void drawInvaders();
+void initBreakout(); void updateBreakout(); void drawBreakout();
+void initFlappy(); void updateFlappy(); void drawFlappy();
+void initMaze(); void updateMaze(); void drawMaze();
+void initLander(); void updateLander(); void drawLander();
+void drawClock();
+void setup() {
+  Serial.begin(115200); 
+  pinMode(PIN_BUZZER, OUTPUT); pinMode(PIN_MQ135, INPUT); 
+  pinMode(PIN_PIR, INPUT); 
+  pinMode(PIN_TRIG, OUTPUT); pinMode(PIN_ECHO, INPUT);
+  dht.begin();
+  for(int i=0; i&lt;GAS_SAMPLES; i++) gasReadings[i]=0;
+  Wire.begin(OLED_SDA, OLED_SCL); Wire.setClock(400000); 
+  if(!display.begin(SCREEN_ADDRESS, true)) for(;;);
+  display.setRotation(2);
+  display.clearDisplay(); display.setTextSize(1); display.setTextColor(SH110X_WHITE); display.setCursor(30,30); display.println(&quot;SENTRY MODE...&quot;); display.display();
+  gasBaseline = analogRead(PIN_MQ135);
+  delay(100);
+  float t_init = dht.readTemperature();
+  if(!isnan(t_init)) tempBaseline = t_init; else tempBaseline = 25.0;
+  WiFi.softAP(ssid, password);
+  server.on(&quot;/&quot;, [](){ server.send_P(200, &quot;text/html&quot;, index_html); });
+  server.on(&quot;/stat&quot;, [](){ String json=&quot;{\&quot;t\&quot;:&quot;+String(temp)+&quot;,\&quot;g\&quot;:&quot;+String(gasLevel)+&quot;,\&quot;d\&quot;:&quot;+String(dist_cm)+&quot;,\&quot;m\&quot;:\&quot;&quot;+currentMood+&quot;\&quot;,\&quot;f\&quot;:&quot;+String(isFocusMode)+&quot;}&quot;; server.send(200, &quot;application/json&quot;, json); });
+  server.on(&quot;/sync&quot;, [](){ if(server.hasArg(&quot;t&quot;)) { unixTime = server.arg(&quot;t&quot;).toInt(); lastSyncMillis = millis(); timeSynced = true; } server.send(200, &quot;text/plain&quot;, &quot;OK&quot;); });
+  server.on(&quot;/snakeScore&quot;, [](){ server.send(200, &quot;text/plain&quot;, String(score)); });
+  server.on(&quot;/pongScore&quot;, [](){ server.send(200, &quot;text/plain&quot;, String(p1Score)+&quot; - &quot;+String(p2Score)); });
+  server.on(&quot;/set&quot;, [](){ if(server.hasArg(&quot;m&quot;)) { currentMood=server.arg(&quot;m&quot;); if(currentMood==&quot;SLEEP&quot;) isSleeping=true; else {isSleeping=false; activeGame=0;} manualOverrideTimer=millis()+5000; } server.send(200, &quot;text/plain&quot;, &quot;OK&quot;); });
+  server.on(&quot;/focus&quot;, [](){ 
+    if(server.hasArg(&quot;act&quot;)) { 
+       int a=server.arg(&quot;act&quot;).toInt(); 
+       if(a==1 &amp;&amp; server.hasArg(&quot;m&quot;)) { isFocusMode=true; focusDuration=server.arg(&quot;m&quot;).toInt()*60000; focusStartTime=millis(); isSleeping=false; lastMotionTime=millis(); activeGame=0; }
+       else { isFocusMode=false; }
+    }
+    server.send(200, &quot;text/plain&quot;, &quot;OK&quot;); 
+  });
+  server.on(&quot;/game&quot;, [](){
+    int g=server.arg(&quot;g&quot;).toInt(); String act=server.arg(&quot;act&quot;); activeGame=g;
+    if(act==&quot;exit&quot;) { activeGame=0; }
+    if(g==1) {
+      if(act==&quot;start&quot;) { ttt_status=0; for(int i=0;i&lt;9;i++) ttt_board[i]=0; }
+      if(act==&quot;move&quot; &amp;&amp; ttt_status==0) { int c=server.arg(&quot;c&quot;).toInt(); if(ttt_board[c]==0) { ttt_board[c]=1; if(checkTTTWin()==1) ttt_status=1; else { int move=-1; for(int i=0;i&lt;50;i++){ int r=random(0,9); if(ttt_board[r]==0){move=r; break;} } if(move!=-1){ ttt_board[move]=2; if(checkTTTWin()==2) ttt_status=2; } } } }
+      String j=&quot;{\&quot;s\&quot;:&quot;+String(ttt_status)+&quot;,\&quot;b\&quot;:[&quot;; for(int i=0;i&lt;9;i++){ j+=String(ttt_board[i]); if(i&lt;8)j+=&quot;,&quot;; } j+=&quot;]}&quot;; server.send(200, &quot;application/json&quot;, j); return;
+    }
+    if(g==2) { if(act==&quot;start&quot;) { snakeLen=3; score=0; snakeDir=1; snakeGameOver=false; snakeX[0]=30; snakeY[0]=30; snakeX[1]=26; snakeY[1]=30; snakeX[2]=22; snakeY[2]=30; foodX=random(1,30)*4; foodY=random(1,15)*4; } if(act==&quot;input&quot;) { int d=server.arg(&quot;d&quot;).toInt(); if(d==9) {snakeLen=3; score=0; snakeDir=1; snakeGameOver=false; snakeX[0]=30; snakeY[0]=30; snakeX[1]=26; snakeY[1]=30; snakeX[2]=22; snakeY[2]=30; foodX=random(1,30)*4; foodY=random(1,15)*4;} else if(d==0&amp;&amp;snakeDir!=2) snakeDir=0; else if(d==1&amp;&amp;snakeDir!=3) snakeDir=1; else if(d==2&amp;&amp;snakeDir!=0) snakeDir=2; else if(d==3&amp;&amp;snakeDir!=1) snakeDir=3; } }
+    if(g==3) { if(act==&quot;start&quot;) {ballX=64;ballY=32;ballVX=2.5;ballVY=2.5;p1Score=0;p2Score=0;pongGameOver=false;paddle1Y=24;paddle2Y=24;} if(act==&quot;input&quot;) { int p=server.arg(&quot;p&quot;).toInt(); int d=server.arg(&quot;d&quot;).toInt(); if(p==1)paddle1Y+=d*5; if(p==2)paddle2Y+=d*5; } }
+    if(g==4) { if(act==&quot;start&quot;) initDino(); if(act==&quot;input&quot;) { if(dinoGrounded) { dinoV = -6; dinoGrounded=false; } if(dinoOver) initDino(); } }
+    if(g==5) { if(act==&quot;start&quot;) initInvaders(); if(act==&quot;input&quot;) { int d=server.arg(&quot;d&quot;).toInt(); if(d==10 &amp;&amp; bulletY==-1) { bulletX=shipX+3; bulletY=50; } else { shipX+=d*5; if(shipX&lt;0)shipX=0; if(shipX&gt;120)shipX=120; } if(invOver) initInvaders(); } }
+    if(g==6) { if(act==&quot;start&quot;) initBreakout(); if(act==&quot;input&quot;) { int d=server.arg(&quot;d&quot;).toInt(); if(d==-1)paddle1Y-=4; else paddle1Y+=4; } } 
+    if(g==7) { if(act==&quot;start&quot;) initFlappy(); if(act==&quot;input&quot;) { dinoV = -3.5; } } 
+    if(g==8) { if(act==&quot;start&quot;) initMaze(); if(act==&quot;input&quot;) { int d=server.arg(&quot;d&quot;).toInt(); if(d==0)mazeY-=2; if(d==1)mazeX+=2; if(d==2)mazeY+=2; if(d==3)mazeX-=2; } }
+    if(g==9) { if(act==&quot;start&quot;) initLander(); if(act==&quot;input&quot;) { int d=server.arg(&quot;d&quot;).toInt(); if(d==0)landVY-=0.5; if(d==1)landVX+=0.5; if(d==3)landVX-=0.5; landFuel-=2; } }
+    server.send(200, &quot;text/plain&quot;, &quot;OK&quot;);
+  });
+  server.on(&quot;/pongScore&quot;, [](){ server.send(200, &quot;text/plain&quot;, String(p1Score)+&quot; - &quot;+String(p2Score)); });
+  server.on(&quot;/bkScore&quot;, [](){ server.send(200, &quot;text/plain&quot;, String(score)); });
+  server.on(&quot;/fbScore&quot;, [](){ server.send(200, &quot;text/plain&quot;, String(score)); });
+  server.on(&quot;/dinoScore&quot;, [](){ server.send(200, &quot;text/plain&quot;, String(dinoScore)); });
+  server.on(&quot;/invScore&quot;, [](){ server.send(200, &quot;text/plain&quot;, String(invScore)); });
+  server.on(&quot;/ldFuel&quot;, [](){ server.send(200, &quot;text/plain&quot;, String((int)landFuel)); });
+  server.begin();
+}
+void loop() {
+  server.handleClient();
+  if(millis()-lastDHTRead&gt;1000){float t=dht.readTemperature();if(!isnan(t))temp=t*10; 
+     if(temp&lt;10) temp+=20; 
+  lastDHTRead=millis();}
+  if(millis()-lastDistRead&gt;60) {
+    digitalWrite(PIN_TRIG, LOW); delayMicroseconds(2); digitalWrite(PIN_TRIG, HIGH); delayMicroseconds(10); digitalWrite(PIN_TRIG, LOW);
+    long duration = pulseIn(PIN_ECHO, HIGH, 18000); 
+    long new_dist = (duration&gt;0) ? (duration*0.034/2) : 999;
+    long delta = new_dist - prev_dist_cm;
+    if(new_dist &lt; 50 &amp;&amp; delta &lt; DIST_VELOCITY_TRIGGER &amp;&amp; activeGame==0) { 
+      if(currentMood != &quot;PANIC&quot;) { currentMood=&quot;ANGRY&quot;; manualOverrideTimer=millis()+2000; } 
+    }
+    prev_dist_cm = dist_cm;
+    dist_cm = new_dist;
+    lastDistRead=millis();
+  }
+  int rawGas = analogRead(PIN_MQ135);
+  averageGas = (rawGas * 0.2) + (averageGas * 0.8);
+  gasLevel = averageGas;
+  if(millis() % 1000 == 0) {
+    if(averageGas &lt; gasBaseline) gasBaseline--; 
+    else if(averageGas &gt; gasBaseline + 100) gasBaseline++; 
+  }
+  bool pir = digitalRead(PIN_PIR);
+  if(pir == HIGH) lastMotionTime = millis();
+  if(isFocusMode) {
+      if(millis() - focusStartTime &gt; focusDuration) { isFocusMode = false; showBigText=true; overrideText=&quot;DONE!&quot;; overrideTextTimer=millis()+5000; }
+      else {
+           display.clearDisplay();
+           unsigned long timeElap = millis() - lastMotionTime;
+           if(timeElap &gt; DISTRACTION_THRESHOLD) {
+                display.setTextSize(2); display.setCursor(10, 20); 
+                int qIdx = (millis()/1000) % 8;
+                display.print(txt_MOTIVATION[qIdx]);
+                digitalWrite(PIN_BUZZER, (millis()%500 &lt; 250) ? HIGH : LOW);
+           } else {
+                digitalWrite(PIN_BUZZER, LOW); 
+                display.drawCircle(64, 32, 30, SH110X_WHITE); 
+                float prog = (float)(millis() - focusStartTime) / (float)focusDuration;
+                int fillH = (int)(60 * prog); 
+                int waterLevel = 32 + 30 - fillH; 
+                float phase = (millis() / 200.0); 
+                for(int x = 64-28; x &lt; 64+28; x++) {
+                    int waveY = waterLevel + sin((x * 0.2) + phase) * 2; 
+                    int R = 28;
+                    int dx = x - 64; 
+                    if(abs(dx) &gt;= R) continue; 
+                    int semiCircleH = sqrt(R*R - dx*dx);
+                    int circleBottomY = 32 + semiCircleH;
+                    int circleTopY = 32 - semiCircleH;
+                    if(waveY &lt; circleTopY) waveY = circleTopY;
+                    if(waveY &gt; circleBottomY) waveY = circleBottomY;
+                    if(waveY &lt; circleBottomY) {
+                       display.drawFastVLine(x, waveY, circleBottomY - waveY, SH110X_WHITE);
+                    }
+                }
+                if((millis()/50) % 4 == 0) {
+                   int bx = random(64-20, 64+20);
+                   int by = random(waterLevel, 32+25);
+                   if(by &gt; waterLevel + 4) display.drawPixel(bx, by, SH110X_INVERSE);
+                }
+                unsigned long remMs = focusDuration - (millis()-focusStartTime);
+                int remM = remMs / 60000;
+                int remS = (remMs % 60000) / 1000;
+                display.setTextSize(1);
+                display.setTextColor(SH110X_WHITE);
+                display.setCursor(90, 54); 
+                if(remM&lt;10) display.print(&quot;0&quot;); display.print(remM);
+                display.print(&quot;:&quot;);
+                if(remS&lt;10) display.print(&quot;0&quot;); display.print(remS);
+           }
+           display.display();
+           delay(50);
+           return; 
+      }
+  }
+  if(!isSleeping &amp;&amp; millis() - lastMotionTime &gt; SLEEP_TIMEOUT &amp;&amp; activeGame == 0) {
+      isSleeping = true;
+      currentMood = &quot;SLEEP&quot;;
+  }
+  if(isSleeping) {
+     display.clearDisplay(); display.display();
+     if(pir == HIGH) {
+        isSleeping = false;
+        overrideText = &quot;Hi Sir&quot;;
+        showBigText = true;
+        overrideTextTimer = millis() + 3000;
+        currentMood = &quot;HAPPY&quot;;
+     }
+     delay(50);
+     return; 
+  }
+  if(activeGame==0 &amp;&amp; millis()&gt;manualOverrideTimer) {
+     if(dist_cm &lt; 18) { 
+        currentMood = &quot;PANIC&quot;; 
+     } 
+     else if(dist_cm &lt; 40) { 
+        currentMood = &quot;SUS&quot;;   
+     } 
+     else {
+        currentMood = &quot;HAPPY&quot;; 
+     }
+  }
+  static int breathDir = 1; static unsigned long lastBreath = 0;
+  if(millis() - lastBreath &gt; 150) { breathVal += breathDir; if(breathVal &gt; 2) breathDir = -1; if(breathVal &lt; 0) breathDir = 1; lastBreath = millis(); }
+  if(activeGame == 0 &amp;&amp; !isSleeping) {
+     if(gasLevel &gt; 2800) { 
+        digitalWrite(PIN_BUZZER, (millis() % 200 &lt; 100) ? HIGH : LOW);
+     }
+     else if(dist_cm &lt; DIST_TOUCH) { 
+        digitalWrite(PIN_BUZZER, (millis() % 100 &lt; 50) ? HIGH : LOW); 
+     }
+     else {
+        digitalWrite(PIN_BUZZER, LOW); 
+     }
+  }
+  display.clearDisplay();
+  if(activeGame==0) {
+        unsigned long cycle = millis() % 37000; 
+        if (cycle &lt; 30000 || currentMood == &quot;PANIC&quot;) {
+            if(millis() &lt; overrideTextTimer) {
+               currentDisplayText = overrideText;
+               if(showBigText) {
+                   display.setTextSize(2);
+                   display.setCursor(10, 20); 
+                   display.print(currentDisplayText);
+                   display.setTextSize(1);
+                   display.display(); 
+                   delay(50);
+                   return; 
+               }
+            } 
+            else if(millis() - lastTextUpdate &gt; 3000) {
+               showBigText = false; 
+               lastTextUpdate = millis();
+               if(random(0,100) &lt; 30) {
+                  int r = random(0,3);
+                  if(r==0) currentDisplayText = &quot;It&#x27;s &quot; + String(temp,1) + &quot;C in here&quot;;
+                  else if(r==1) currentDisplayText = String(&quot;Air looks &quot;) + (gasLevel&lt;2000 ? &quot;Clean&quot; : &quot;Kinda sus&quot;);
+                  else currentDisplayText = String(&quot;Object at &quot;) + (dist_cm&gt;900 ? &quot;far far away&quot; : String(dist_cm)+&quot;cm&quot;);
+               } else {
+                  int idx = random(0, 8);
+                  if(currentMood == &quot;HAPPY&quot;) currentDisplayText = txt_HAPPY[idx];
+                  else if(currentMood == &quot;SUS&quot;) {
+                     static int infoState = 0;
+                     if(infoState == 0) currentDisplayText = &quot;Wifi: &quot; + String(ssid);
+                     else if(infoState == 1) currentDisplayText = &quot;IP: 192.168.4.1&quot;;
+                     else currentDisplayText = &quot;Open Browser &amp; Play!&quot;;
+                     infoState = (infoState + 1) % 3;
+                  }
+                  else if(currentMood == &quot;PANIC&quot;) currentDisplayText = txt_PANIC[idx];
+                  else if(currentMood == &quot;ANGRY&quot;) currentDisplayText = txt_ANGRY[idx];
+                  else if(currentMood == &quot;SWEAT&quot;) currentDisplayText = txt_SWEAT[idx];
+                  else if(currentMood == &quot;LOVE&quot;) currentDisplayText = txt_LOVE[idx];
+                  else if(currentMood == &quot;CONFUSED&quot;) currentDisplayText = txt_CONFUSED[idx];
+                  else currentDisplayText = txt_HAPPY[idx];
+               }
+            }
+            display.setCursor(0,0); display.setTextSize(1); display.print(currentDisplayText);
+            drawFace();
+        } 
+        else {
+            drawClock();
+        }
+  } else if(activeGame==1) drawTTT(); else if(activeGame==2) {updateSnake();drawSnake();} else if(activeGame==3) {updatePong();drawPong();}
+    else if(activeGame==4) {updateDino();drawDino();} else if(activeGame==5) {updateInvaders();drawInvaders();}
+    else if(activeGame==6) {updateBreakout();drawBreakout();} else if(activeGame==7) {updateFlappy();drawFlappy();}
+    else if(activeGame==8) {drawMaze();} else if(activeGame==9) {updateLander();drawLander();}
+  display.display(); delay(50); 
+}
+
+void drawFace() { 
+  if(currentMood==&quot;HAPPY&quot;) drawHappy();
+  else if(currentMood==&quot;PANIC&quot;) drawPanic();
+  else if(currentMood==&quot;SUS&quot;) drawSus();
+  else if(currentMood==&quot;SWEAT&quot;) drawSweat();
+  else if(currentMood==&quot;ANGRY&quot;) drawAngry();
+  else if(currentMood==&quot;LOVE&quot;) drawLove();
+  else if(currentMood==&quot;CONFUSED&quot;) drawConfused();
+  else drawHappy(); 
+}
+void drawEyeMetric(int cx, int cy, int r, float pupil, int lx, int ly, float lidTopP, float lidBotP, EyeLidShape shape, bool glasses) {
+  display.fillCircle(cx, cy, r, SH110X_WHITE);
+  int irisR = r - 3;
+  int ix = cx + lx; int iy = cy + ly;
+  display.fillCircle(ix, iy, irisR, SH110X_BLACK);
+  display.drawCircle(ix, iy, irisR-2, SH110X_WHITE);
+  if(pupil &lt; 1) pupil = 1;
+  display.fillCircle(ix, iy, (int)pupil, SH110X_BLACK);
+  display.fillCircle(ix + irisR/3, iy - irisR/3, 2, SH110X_WHITE);
+  if(lidTopP &gt; 0) {
+     int h = (int)(r * 2 * lidTopP);
+     int topY = cy - r - 2;
+     if(shape == LID_ANGRY) {
+         int yOffset = (cx &lt; 64) ? 5 : -5; 
+         bool isLeft = (cx &lt; 64);
+         int inY = topY + h + 4; int outY = topY + h - 2;
+         if(!isLeft) { int t=inY; inY=outY; outY=t; } 
+         if(isLeft) display.fillTriangle(cx-r-2, topY+h-3, cx+r+2, topY+h+5, cx-r, cy-r-5, SH110X_BLACK);
+         else       display.fillTriangle(cx-r-2, topY+h+5, cx+r+2, topY+h-3, cx+r, cy-r-5, SH110X_BLACK);
+     } else if (shape == LID_SAD) {
+         bool isLeft = (cx &lt; 64);
+         if(isLeft) display.fillTriangle(cx-r-2, topY+h+4, cx+r+2, topY+h-3, cx, cy-r-5, SH110X_BLACK); 
+         else       display.fillTriangle(cx-r-2, topY+h-3, cx+r+2, topY+h+4, cx, cy-r-5, SH110X_BLACK);
+     } else {
+         display.fillRect(cx - r - 2, topY, r*2 + 4, h, SH110X_BLACK);
+     }
+  }
+  if(lidBotP &gt; 0) {
+     int h = (int)(r * 2 * lidBotP);
+     display.fillRect(cx - r - 2, cy + r - h + 2, r*2 + 4, h, SH110X_BLACK);
+  }
+  if(glasses) {
+     display.drawRect(cx - r - 4, cy - r - 4, r*2 + 8, r*2 + 8, SH110X_WHITE);
+     if(cx &lt; 64) display.drawLine(cx+r+4, cy, cx+r+10, cy, SH110X_WHITE); 
+  }
+  if(shape == LID_TIRED) {
+      display.drawLine(cx-r, cy+r+2, cx+r, cy+r+2, SH110X_WHITE);
+  }
+}
+void drawEyeV2(int cx, int cy, int r, float p, int lx, int ly, float closePercent, bool angryBrow) {
+  EyeLidShape s = angryBrow ? LID_ANGRY : LID_FLAT;
+  drawEyeMetric(cx, cy, r, p, lx, ly, closePercent, 0, s, false);
+}
+void drawHappy() {
+  if(millis() - lastBlink &gt; 3500 + random(0, 2000)) {
+     eyesOpen = false;
+     if(millis() - lastBlink &gt; 3650 + random(0, 2000)) { lastBlink = millis(); eyesOpen = true; }
+  }
+  float blink = eyesOpen ? 0.0 : 1.0;
+  static int lookX = 0; static int lookY = 0;
+  static unsigned long nextGazeMove = 0;
+  if(millis() &gt; nextGazeMove) {
+     if(random(0,10) &lt; 6) { lookX = random(-5,6); lookY = random(-3,4); } 
+     else { lookX = 0; lookY = 0; } 
+     nextGazeMove = millis() + random(1000, 4000); 
+  }
+  static float curX = 0; static float curY = 0;
+  curX += (lookX - curX) * 0.1; 
+  curY += (lookY - curY) * 0.1;
+  static bool singing = false; static unsigned long singTimer = 0;
+  if(millis() &gt; singTimer) {
+     singing = !singing;
+     singTimer = millis() + (singing ? random(2000, 5000) : random(3000, 8000));
+  }
+  int mouthH = 0;
+  if(singing) {
+     float t = millis() / 150.0;
+     mouthH = abs(sin(t) * 5) + random(0, 3);
+  }
+  pupilSize += (3.5 - pupilSize) * 0.1; 
+  int by = breathVal;
+  drawEyeV2(35+(int)curX, 25+by+(int)curY, 12, pupilSize, (int)curX, (int)curY, blink, false);
+  drawEyeV2(93+(int)curX, 25+by+(int)curY, 12, pupilSize, (int)curX, (int)curY, blink, false);
+  int mx = 64; int my = 45+by;
+  if(mouthH == 0) {
+      display.drawLine(mx-10, my, mx-5, my+3, SH110X_WHITE); 
+      display.drawLine(mx-5, my+3, mx+5, my+3, SH110X_WHITE); 
+      display.drawLine(mx+5, my+3, mx+10, my, SH110X_WHITE);
+  } else {
+      display.drawRect(mx-6, my, 12, mouthH, SH110X_WHITE);
+      display.fillRect(mx-4, my+1, 8, mouthH-2, SH110X_BLACK); 
+  }
+}
+void drawPanic() {
+  pupilSize = 2.0; 
+  int shiver = random(-1,2);
+  drawEyeV2(35+shiver, 25, 14, 1, 0, 0, 0.0, false);
+  drawEyeV2(93+shiver, 25, 14, 1, 0, 0, 0.0, false);
+  display.drawRect(54+shiver, 45, 20, 10, SH110X_WHITE); display.fillRect(57+shiver, 47, 14, 6, SH110X_BLACK);
+}
+void drawSus() {
+  static int lx = 6;
+  drawEyeV2(35, 25, 12, 3, lx, 0, 0.6, true);
+  drawEyeV2(93, 25, 12, 3, lx, 0, 0.6, true);
+  display.drawLine(54, 50, 74, 50, SH110X_WHITE);
+}
+void drawAngry() {
+  drawEyeV2(35, 25, 12, 5, 0, 0, 0.2, true);
+  drawEyeV2(93, 25, 12, 5, 0, 0, 0.2, true);
+  display.drawTriangle(54, 55, 64, 48, 74, 55, SH110X_WHITE);
+}
+void drawLove() {
+  int cy = 25+breathVal;
+  display.fillCircle(30, cy, 6, SH110X_WHITE); display.fillCircle(40, cy, 6, SH110X_WHITE); display.fillTriangle(24, cy+2, 46, cy+2, 35, cy+14, SH110X_WHITE);
+  display.fillCircle(88, cy, 6, SH110X_WHITE); display.fillCircle(98, cy, 6, SH110X_WHITE); display.fillTriangle(82, cy+2, 104, cy+2, 93, cy+14, SH110X_WHITE);
+  display.fillCircle(64, 48+breathVal, 4, SH110X_WHITE);
+}
+void drawConfused() {
+  drawEyeV2(35, 25, 14, 3, 0, -2, 0.0, false); 
+  drawEyeV2(93, 25, 10, 3, 0, 2, 0.5, false); 
+  int y = 50; display.drawLine(54, y, 59, y-3, SH110X_WHITE); display.drawLine(59, y-3, 64, y+3, SH110X_WHITE); display.drawLine(64, y+3, 69, y-3, SH110X_WHITE); display.drawLine(69, y-3, 74, y, SH110X_WHITE);
+}
+void drawSweat() {
+  static int dropY = 15; dropY += 2; if(dropY &gt; 40) dropY = 15;
+  drawEyeV2(35, 27, 12, 3, 0, 2, 0.4, false); drawEyeV2(93, 27, 12, 3, 0, 2, 0.4, false);
+  display.fillCircle(110, dropY, 3, SH110X_WHITE); display.fillTriangle(107, dropY, 113, dropY, 110, dropY-5, SH110X_WHITE);
+  display.drawLine(58, 52, 70, 52, SH110X_WHITE);
+}
+void drawTTT() { int sx=32;int w=64;int step=21;display.drawLine(sx+step,0,sx+step,63,SH110X_WHITE);display.drawLine(sx+step*2,0,sx+step*2,63,SH110X_WHITE);display.drawLine(sx,step,sx+w,step,SH110X_WHITE);display.drawLine(sx,step*2,sx+w,step*2,SH110X_WHITE);for(int i=0;i&lt;9;i++){if(ttt_board[i]==0)continue;int r=i/3;int c=i%3;int cx=sx+c*step+10;int cy=r*step+10;if(ttt_board[i]==1){display.drawLine(cx-4,cy-4,cx+4,cy+4,SH110X_WHITE);display.drawLine(cx+4,cy-4,cx-4,cy+4,SH110X_WHITE);}else display.drawCircle(cx,cy,5,SH110X_WHITE);} }
+int checkTTTWin() { int w[8][3]={{0,1,2},{3,4,5},{6,7,8},{0,3,6},{1,4,7},{2,5,8},{0,4,8},{2,4,6}}; for(int i=0;i&lt;8;i++){int a=w[i][0],b=w[i][1],c=w[i][2];if(ttt_board[a]!=0&amp;&amp;ttt_board[a]==ttt_board[b]&amp;&amp;ttt_board[a]==ttt_board[c])return ttt_board[a];} return 0; }
+void updateSnake() { if(snakeGameOver||millis()-lastSnakeMove&lt;150)return; lastSnakeMove=millis(); for(int i=snakeLen-1;i&gt;0;i--){snakeX[i]=snakeX[i-1];snakeY[i]=snakeY[i-1];} if(snakeDir==0)snakeY[0]-=4; if(snakeDir==1)snakeX[0]+=4; if(snakeDir==2)snakeY[0]+=4; if(snakeDir==3)snakeX[0]-=4; if(snakeX[0]&lt;0||snakeX[0]&gt;124||snakeY[0]&lt;0||snakeY[0]&gt;60){snakeGameOver=true;digitalWrite(PIN_BUZZER,HIGH);delay(100);digitalWrite(PIN_BUZZER,LOW);} for(int i=1;i&lt;snakeLen;i++)if(snakeX[0]==snakeX[i]&amp;&amp;snakeY[0]==snakeY[i])snakeGameOver=true; if(abs(snakeX[0]-foodX)&lt;4&amp;&amp;abs(snakeY[0]-foodY)&lt;4){snakeLen++;score+=10;if(snakeLen&gt;=SNAKE_MAX_LEN)snakeLen=SNAKE_MAX_LEN-1;foodX=random(1,30)*4;foodY=random(1,15)*4;digitalWrite(PIN_BUZZER,HIGH);delay(20);digitalWrite(PIN_BUZZER,LOW);} }
+void drawSnake() { display.drawRect(0,0,128,64,SH110X_WHITE); if(snakeGameOver){display.setCursor(35,25);display.setTextSize(1);display.print(&quot;GAME OVER&quot;);display.setCursor(40,35);display.print(&quot;SCORE:&quot;);display.print(score);return;} for(int i=0;i&lt;snakeLen;i++)display.fillRect(snakeX[i],snakeY[i],3,3,SH110X_WHITE); display.drawCircle(foodX+1,foodY+1,2,SH110X_WHITE); }
+void initSnake() { snakeLen=3; score=0; snakeDir=1; snakeGameOver=false; snakeX[0]=30; snakeY[0]=30; snakeX[1]=26; snakeY[1]=30; snakeX[2]=22; snakeY[2]=30; foodX=random(1,30)*4; foodY=random(1,15)*4; }
+void initPong() { ballX=64;ballY=32;ballVX=2.5;ballVY=2.5;p1Score=0;p2Score=0;pongGameOver=false;paddle1Y=24;paddle2Y=24; }
+void updatePong() { 
+  if(pongGameOver)return; ballX+=ballVX;ballY+=ballVY; 
+  if(ballY&lt;=0||ballY&gt;=64)ballVY*=-1; 
+  if(ballX&lt;=5){if(abs(ballY-(paddle1Y+8))&lt;12){ballVX*=-1;ballX=6;digitalWrite(PIN_BUZZER,HIGH);delay(10);digitalWrite(PIN_BUZZER,LOW);}else{p2Score++;ballX=64;ballY=32;ballVX=2;}} 
+  if(ballY &gt; paddle2Y + 6) paddle2Y += 2;
+  else if(ballY &lt; paddle2Y + 6) paddle2Y -= 2;
+  if(ballX&gt;=118){if(abs(ballY-(paddle2Y+8))&lt;12){ballVX*=-1;ballX=117;digitalWrite(PIN_BUZZER,HIGH);delay(10);digitalWrite(PIN_BUZZER,LOW);}else{p1Score++;ballX=64;ballY=32;ballVX=-2;}} 
+  if(p1Score&gt;4 || p2Score&gt;4) pongGameOver=true;
+}
+void drawPong() { 
+  if(pongGameOver){display.setCursor(35,25);display.print(&quot;GAME OVER&quot;);display.setCursor(20,35);display.print(&quot;P1: &quot;+String(p1Score)+&quot; P2: &quot;+String(p2Score));return;} 
+  display.drawRect(0,0,128,64,SH110X_WHITE); for(int i=0;i&lt;64;i+=4)display.drawPixel(64,i,SH110X_WHITE); 
+  display.fillRect(2,paddle1Y,3,16,SH110X_WHITE); display.fillRect(123,paddle2Y,3,16,SH110X_WHITE); 
+  display.fillCircle((int)ballX,(int)ballY,2,SH110X_WHITE); 
+}
+void initDino() { dinoY=50; dinoV=0; dinoGrounded=true; cactusX=128; dinoScore=0; dinoOver=false; }
+void updateDino() {
+  if(dinoOver) return;
+  dinoY += (int)dinoV;
+  dinoV += 0.6; 
+  if(dinoY &gt;= 50) { dinoY=50; dinoV=0; dinoGrounded=true; }
+  cactusX -= 4; 
+  if(cactusX &lt; -10) { cactusX = 128 + random(0,40); dinoScore++; digitalWrite(PIN_BUZZER,HIGH); delay(10); digitalWrite(PIN_BUZZER,LOW); }
+  if(abs(10-cactusX)&lt;5 &amp;&amp; dinoY&gt;40) { dinoOver=true; digitalWrite(PIN_BUZZER,HIGH); delay(500); digitalWrite(PIN_BUZZER,LOW); }
+}
+void drawDino() {
+  if(dinoOver) { display.setCursor(40,30); display.print(&quot;GAME OVER&quot;); display.setCursor(45,40); display.print(dinoScore); return; }
+  display.drawLine(0,60,128,60,SH110X_WHITE); 
+  display.fillRect(10, dinoY, 8, 10, SH110X_WHITE); 
+  display.fillRect(cactusX, 52, 6, 8, SH110X_WHITE); 
+  display.setCursor(110,0); display.print(dinoScore);
+}
+void initInvaders() { 
+  shipX=64; bulletX=-1; bulletY=-1; invScore=0; invOver=false; invDir=1;
+  for(int i=0;i&lt;5;i++) { enemyX[i]=10 + i*20; enemyY[i]=5; enemyAlive[i]=true; }
+}
+void updateInvaders() {
+  if(invOver) return;
+  if(bulletY != -1) {
+    bulletY -= 5;
+    if(bulletY &lt; 0) bulletY = -1;
+    for(int i=0;i&lt;5;i++) {
+      if(enemyAlive[i] &amp;&amp; abs(bulletX-enemyX[i])&lt;6 &amp;&amp; abs(bulletY-enemyY[i])&lt;6) {
+        enemyAlive[i]=false; bulletY=-1; invScore++; digitalWrite(PIN_BUZZER,HIGH); delay(10); digitalWrite(PIN_BUZZER,LOW); 
+      }
+    }
+  }
+  if(millis() - lastInvMove &gt; 200) {
+    bool drop = false;
+    for(int i=0;i&lt;5;i++) {
+       if(enemyAlive[i]) {
+          enemyX[i] += invDir * 4;
+          if(enemyX[i] &gt; 120 || enemyX[i] &lt; 5) drop=true;
+       }
+    }
+    if(drop) { invDir *= -1; for(int i=0;i&lt;5;i++) enemyY[i]+=4; }
+    lastInvMove=millis();
+    bool allDead = true; for(int i=0;i&lt;5;i++) if(enemyAlive[i]) allDead=false;
+    if(allDead) { for(int i=0;i&lt;5;i++) { enemyX[i]=10 + i*20; enemyY[i]=5; enemyAlive[i]=true; } }
+    for(int i=0;i&lt;5;i++) if(enemyAlive[i] &amp;&amp; enemyY[i] &gt; 50) invOver=true;
+  }
+}
+void drawInvaders() {
+  if(invOver) { display.setCursor(40,30); display.print(&quot;GAME OVER&quot;); return; }
+  display.fillTriangle(shipX, 60, shipX-4, 63, shipX+4, 63, SH110X_WHITE);
+  if(bulletY != -1) display.drawLine(bulletX, bulletY, bulletX, bulletY+3, SH110X_WHITE);
+  for(int i=0;i&lt;5;i++) {
+    if(enemyAlive[i]) {
+      display.fillRect(enemyX[i]-3, enemyY[i]-3, 6, 6, SH110X_WHITE);
+      if((millis()/500)%2==0) { display.drawPixel(enemyX[i]-2,enemyY[i]+4,SH110X_WHITE); display.drawPixel(enemyX[i]+2,enemyY[i]+4,SH110X_WHITE); }
+      else { display.drawPixel(enemyX[i]-1,enemyY[i]+4,SH110X_WHITE); display.drawPixel(enemyX[i]+1,enemyY[i]+4,SH110X_WHITE); }
+    }
+  }
+}
+void initBreakout() { 
+  paddle1Y=50; 
+  bBallX=64; bBallY=40; bVelX=2; bVelY=-2; score=0; 
+  for(int r=0;r&lt;5;r++) for(int c=0;c&lt;10;c++) brk[r][c]=true;
+}
+void updateBreakout() {
+  if(score==50) return;
+  bBallX += bVelX; bBallY += bVelY;
+  if(bBallX&lt;=0 || bBallX&gt;=128) bVelX*=-1;
+  if(bBallY&lt;=0) bVelY*=-1;
+  if(bBallY&gt;=64) { initBreakout(); score=0; } 
+  if(bBallY&gt;=60 &amp;&amp; bBallY&lt;=62 &amp;&amp; bBallX&gt;=paddle1Y &amp;&amp; bBallX&lt;=paddle1Y+20) {
+      bVelY*=-1; float hitPt = bBallX - (paddle1Y+10); bVelX = hitPt * 0.3; 
+      digitalWrite(PIN_BUZZER,HIGH); delay(10); digitalWrite(PIN_BUZZER,LOW);
+  }
+  int brC = bBallX / 13; int brR = bBallY / 6;
+  if(brR &gt;=0 &amp;&amp; brR &lt; 5 &amp;&amp; brC &gt;= 0 &amp;&amp; brC &lt; 10) {
+     if(brk[brR][brC]) {
+         brk[brR][brC]=false; score++; bVelY*=-1;
+         digitalWrite(PIN_BUZZER,HIGH); delay(10); digitalWrite(PIN_BUZZER,LOW);
+     }
+  }
+}
+void drawBreakout() {
+  if(score==50) { display.setCursor(40,30); display.print(&quot;WINNER!&quot;); return; }
+  display.fillRect(paddle1Y, 61, 20, 3, SH110X_WHITE);
+  display.fillCircle((int)bBallX, (int)bBallY, 2, SH110X_WHITE);
+  for(int r=0;r&lt;5;r++) for(int c=0;c&lt;10;c++) {
+     if(brk[r][c]) display.fillRect(c*13, r*6, 12, 5, SH110X_WHITE);
+  }
+  display.setCursor(0,0); display.print(score);
+}
+void initFlappy() { dinoY=32; dinoV=0; pipeX=128; pipeGap=20; score=0; dinoOver=false; }
+void updateFlappy() {
+  if(dinoOver) { if(millis()-lastInvMove&gt;1000) initFlappy(); return; } 
+  dinoV += 0.4; 
+  dinoY += (int)dinoV;
+  pipeX -= 2;
+  if(pipeX &lt; -10) { pipeX=128; pipeGap = random(10, 40); score++; digitalWrite(PIN_BUZZER,HIGH); delay(20); digitalWrite(PIN_BUZZER,LOW); }
+  if(dinoY&gt;64 || dinoY&lt;0) dinoOver=true;
+  if(pipeX&lt;14 &amp;&amp; pipeX&gt;0) {
+      if(dinoY &lt; pipeGap || dinoY &gt; pipeGap+25) { 
+         dinoOver=true; digitalWrite(PIN_BUZZER,HIGH); delay(200); digitalWrite(PIN_BUZZER,LOW); lastInvMove=millis(); 
+      }
+  }
+}
+void drawFlappy() {
+  if(dinoOver) { display.setCursor(40,30); display.print(&quot;GAME OVER&quot;); display.setCursor(55,40); display.print(score); return; }
+  display.fillCircle(10, dinoY, 3, SH110X_WHITE);
+  display.fillRect(pipeX, 0, 10, pipeGap, SH110X_WHITE); 
+  display.fillRect(pipeX, pipeGap+25, 10, 64-(pipeGap+25), SH110X_WHITE); 
+  display.setCursor(110,0); display.print(score);
+}
+void initMaze() { mazeX=2; mazeY=2; }
+void drawMaze() {
+   for(int x=0;x&lt;128;x+=16) display.drawLine(x,0,x,64,SH110X_WHITE);
+   for(int y=0;y&lt;64;y+=16) display.drawLine(0,y,128,y,SH110X_WHITE);
+   for(int x=0;x&lt;8;x++) for(int y=0;y&lt;4;y++) {
+      if(((x+y)%3)==0) display.fillRect(x*16+2, y*16+2, 12, 12, SH110X_WHITE);
+   }
+   display.fillCircle(mazeX, mazeY, 2, SH110X_INVERSE);
+   display.setTextSize(1); display.setCursor(120,55); display.print(&quot;G&quot;);
+   if(abs(mazeX-120)&lt;5 &amp;&amp; abs(mazeY-55)&lt;5) { display.setCursor(40,30); display.print(&quot;WIN!&quot;); }
+}
+void initLander() { landX=64; landY=10; landVX=0; landVY=0; landFuel=100; landCrashed=false; landLanded=false; }
+void updateLander() {
+  if(landCrashed || landLanded) return;
+  landVY += 0.05; 
+  landX += landVX; landY += landVY;
+  if(landY &gt;= 60) {
+      if(landVY &gt; 1.5 || abs(landVX) &gt; 1.0) { landCrashed=true; digitalWrite(PIN_BUZZER,HIGH); delay(500); digitalWrite(PIN_BUZZER,LOW); }
+      else { landLanded=true; }
+      landY = 60; landVY=0; landVX=0;
+  }
+}
+void drawLander() {
+  if(landCrashed) { display.setCursor(40,30); display.print(&quot;CRASH!&quot;); return; }
+  if(landLanded) { display.setCursor(40,30); display.print(&quot;LANDED!&quot;); return; }
+  display.drawLine(0,63,128,63,SH110X_WHITE);
+  display.drawRect(50, 63, 28, 1, SH110X_WHITE); 
+  display.drawRect((int)landX-3, (int)landY-3, 6, 6, SH110X_WHITE);
+  display.drawLine((int)landX-3, (int)landY+3, (int)landX-5, (int)landY+6, SH110X_WHITE); 
+  display.drawLine((int)landX+3, (int)landY+3, (int)landX+5, (int)landY+6, SH110X_WHITE);
+  display.setCursor(0,0); display.print(&quot;F:&quot;); display.print((int)landFuel);
+  display.setCursor(100,0); display.print(&quot;v:&quot;); display.print(landVY);
+}
+void drawClock() {
+  unsigned long currentUnix = unixTime + (millis() - lastSyncMillis) / 1000;
+  int h_raw = (currentUnix / 3600) % 24;
+  int m = (currentUnix / 60) % 60;
+  int s = (currentUnix) % 60;
+  bool isPm = (h_raw &gt;= 12);
+  int h = h_raw % 12;
+  if(h == 0) h = 12;
+  for(int x=0; x&lt;128; x+=8) for(int y=0; y&lt;64; y+=8) display.drawPixel(x,y,SH110X_WHITE);
+  display.drawRect(0, 0, 128, 64, SH110X_WHITE);
+  display.fillRect(0, 0, 128, 11, SH110X_WHITE); 
+  display.setTextColor(SH110X_BLACK);
+  display.setTextSize(1);
+  display.setCursor(4, 2);
+  display.print(timeSynced ? &quot;SYNC&quot; : &quot;NC&quot;);
+  display.setCursor(85, 2);
+  display.print(String(temp,0) + &quot;C&quot;);
+  display.setTextColor(SH110X_WHITE);
+  display.setTextSize(4);
+  int tx = 8; int ty = 18;
+  display.setCursor(tx, ty);
+  if(h &lt; 10) display.print(&quot;0&quot;); display.print(h);
+  display.print(&quot;:&quot;);
+  if(m &lt; 10) display.print(&quot;0&quot;); display.print(m);
+  display.setTextSize(1);
+  display.setCursor(110, 40);
+  display.print(isPm ? &quot;PM&quot; : &quot;AM&quot;);
+  int barW = map(s, 0, 59, 0, 120);
+  display.drawRect(4, 54, 120, 6, SH110X_WHITE);
+  display.fillRect(4, 54, barW, 6, SH110X_WHITE);
+  display.drawLine(0,0,5,0,SH110X_WHITE); display.drawLine(0,0,0,5,SH110X_WHITE);
+}
+
+</code></pre>
+
+            </div>
+        </article>
+    </main>
+    <footer>
+        <div class="footer-content" style="text-align: center; padding: 40px; color: var(--text-secondary);">
+            <p>&copy; 2026 Hari Nandan K.</p>
+        </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+
+</html>

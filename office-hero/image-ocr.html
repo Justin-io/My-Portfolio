@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image OCR | Office Hero</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap">
+    <link rel="stylesheet" href="css/style.css">
+    <script src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js'></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="back-nav">
+            <a href="../index.html#utilities" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Tools
+            </a>
+        </div>
+
+        <header>
+            <div class="icon-box" style="margin: 0 auto 1.5rem auto;">
+                <i class="fas fa-eye"></i>
+            </div>
+            <h1 class="brand">Image to Text (OCR)</h1>
+            <p class="tagline">Extract text from images, scans, or photos instantly.</p>
+        </header>
+
+        <div class="tool-interface">
+            <div class="drop-zone" id="drop-zone">
+                <i class="fas fa-image" style="font-size: 3rem; color: var(--text-secondary); margin-bottom: 1rem;"></i>
+                <p id="file-label">Upload an Image (PNG, JPG, BMP)</p>
+                <input type="file" id="file-input" accept="image/*" style="display: none;">
+            </div>
+
+            <div id="preview-area" style="margin-bottom: 2rem; display: none;">
+                <img id="image-preview" src="" alt="Preview" class="preview-image">
+            </div>
+
+            <button id="extract-btn" class="btn-action" disabled>Extract Text</button>
+
+            <div class="result-area" id="result-area">
+                <div class="result-header">
+                    <h3>Extracted Text:</h3>
+                    <button class="btn-action btn-sm" id="copy-btn">Copy</button>
+                </div>
+                <textarea id="output-text" class="text-area-styled" readonly></textarea>
+                <div id="progress-bar" class="progress-container">
+                    <div id="progress-fill" class="progress-fill"></div>
+                </div>
+                <p id="status-text" class="status-text"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-input');
+        const previewArea = document.getElementById('preview-area');
+        const imagePreview = document.getElementById('image-preview');
+        const extractBtn = document.getElementById('extract-btn');
+        const resultArea = document.getElementById('result-area');
+        const outputText = document.getElementById('output-text');
+        const copyBtn = document.getElementById('copy-btn');
+        const progressBar = document.getElementById('progress-bar');
+        const progressFill = document.getElementById('progress-fill');
+        const statusText = document.getElementById('status-text');
+
+        let currentFile = null;
+
+        dropZone.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+
+        function handleFile(file) {
+            if (!file || !file.type.startsWith('image/')) return;
+            currentFile = file;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                imagePreview.src = e.target.result;
+                previewArea.style.display = 'block';
+                extractBtn.disabled = false;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        extractBtn.addEventListener('click', async () => {
+            if (!currentFile) return;
+
+            extractBtn.disabled = true;
+            resultArea.style.display = 'block';
+            progressBar.style.display = 'block';
+            outputText.value = "";
+            statusText.innerText = "Initializing Tesseract...";
+
+            try {
+                const worker = await Tesseract.createWorker({
+                    logger: m => {
+                        if (m.status === 'recognizing text') {
+                            progressFill.style.width = (m.progress * 100) + '%';
+                            statusText.innerText = `Recognizing Text... ${Math.round(m.progress * 100)}%`;
+                        } else {
+                            statusText.innerText = m.status;
+                        }
+                    }
+                });
+
+                await worker.loadLanguage('eng');
+                await worker.initialize('eng');
+
+                const { data: { text } } = await worker.recognize(currentFile);
+
+                outputText.value = text;
+                statusText.innerText = "Extraction Complete.";
+                progressFill.style.width = '100%';
+
+                await worker.terminate();
+            } catch (err) {
+                console.error(err);
+                statusText.innerText = "Error extracting text.";
+            } finally {
+                extractBtn.disabled = false;
+            }
+        });
+
+        copyBtn.addEventListener('click', () => {
+            outputText.select();
+            document.execCommand('copy');
+            const originalText = copyBtn.innerText;
+            copyBtn.innerText = "Copied!";
+            setTimeout(() => copyBtn.innerText = originalText, 2000);
+        });
+    </script>
+</body>
+
+</html>

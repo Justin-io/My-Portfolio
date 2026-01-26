@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Merger | Office Hero</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/downloadjs/1.4.8/download.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="back-nav">
+            <a href="../index.html#utilities" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Tools
+            </a>
+        </div>
+
+        <header>
+            <div class="icon-box" style="margin: 0 auto 1.5rem auto;">
+                <i class="fas fa-object-group"></i>
+            </div>
+            <h1 class="brand">PDF Merger</h1>
+            <p class="tagline">Select multiple PDF files and merge them into one.</p>
+        </header>
+
+        <div class="tool-interface">
+            <div class="drop-zone" id="drop-zone">
+                <i class="fas fa-cloud-upload-alt"
+                    style="font-size: 3rem; color: var(--text-secondary); margin-bottom: 1rem;"></i>
+                <p>Drag & Drop PDF files here or click to browse</p>
+                <input type="file" id="file-input" multiple accept=".pdf" style="display: none;">
+            </div>
+
+            <div id="file-list" style="text-align: left; margin-bottom: 2rem;"></div>
+
+            <button id="merge-btn" class="btn-action" disabled>Merge PDFs</button>
+
+            <div class="result-area" id="result-area">
+                <i class="fas fa-check-circle" style="color: #4ade80; font-size: 2rem; margin-bottom: 1rem;"></i>
+                <h3>Success!</h3>
+                <p>Your merged PDF is ready.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-input');
+        const fileList = document.getElementById('file-list');
+        const mergeBtn = document.getElementById('merge-btn');
+        let selectedFiles = [];
+
+        dropZone.addEventListener('click', () => fileInput.click());
+
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('dragover');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            handleFiles(e.dataTransfer.files);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        function handleFiles(files) {
+            const pdfFiles = Array.from(files).filter(f => f.type === 'application/pdf');
+            if (pdfFiles.length === 0) {
+                alert('Please select PDF files.');
+                return;
+            }
+            selectedFiles = [...selectedFiles, ...pdfFiles];
+            updateFileList();
+        }
+
+        function updateFileList() {
+            fileList.innerHTML = selectedFiles.map((f, i) => `
+                <div class="file-item" style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-radius: 12px; margin-bottom: 0.5rem;">
+                    <span style="display: flex; align-items: center; gap: 10px; font-weight: 500;">
+                        <i class="fas fa-file-pdf" style="color: #ef4444; font-size: 1.2rem;"></i> 
+                        ${f.name}
+                    </span>
+                    <i class="fas fa-times delete-icon" style="cursor: pointer; opacity: 0.7; transition: 0.2s;" onclick="removeFile(${i})"></i>
+                </div>
+            `).join('');
+            mergeBtn.disabled = selectedFiles.length < 2;
+        }
+
+        window.removeFile = (index) => {
+            selectedFiles.splice(index, 1);
+            updateFileList();
+        };
+
+        mergeBtn.addEventListener('click', async () => {
+            if (selectedFiles.length < 2) return;
+
+            const btnText = mergeBtn.innerText;
+            mergeBtn.innerText = 'Merging...';
+            mergeBtn.disabled = true;
+
+            try {
+                const PDFDocument = PDFLib.PDFDocument;
+                const mergedPdf = await PDFDocument.create();
+
+                for (const file of selectedFiles) {
+                    const arrayBuffer = await file.arrayBuffer();
+                    const pdf = await PDFDocument.load(arrayBuffer);
+                    const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+                    copiedPages.forEach((page) => mergedPdf.addPage(page));
+                }
+
+                const pdfBytes = await mergedPdf.save();
+                download(pdfBytes, "office-hero-merged.pdf", "application/pdf");
+
+                document.getElementById('result-area').classList.add('active');
+            } catch (err) {
+                console.error(err);
+                alert('An error occurred while merging.');
+            } finally {
+                mergeBtn.innerText = btnText;
+                mergeBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+
+</html>

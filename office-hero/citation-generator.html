@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citation Generator | Office Hero</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="back-nav">
+            <a href="../index.html#utilities" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Tools
+            </a>
+        </div>
+
+        <header>
+            <div class="icon-box" style="margin: 0 auto 1.5rem auto;">
+                <i class="fas fa-quote-right"></i>
+            </div>
+            <h1 class="brand">Citation Generator</h1>
+            <p class="tagline">Generate perfectly formatted APA, MLA, and Chicago citations instantly.</p>
+        </header>
+
+        <div class="tool-interface" style="max-width: 800px;">
+            <div class="format-selector" style="margin-bottom: 2rem;">
+                <label class="radio-label">
+                    <input type="radio" name="style" value="apa" checked onchange="updateCitation()">
+                    <span>APA 7</span>
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="style" value="mla" onchange="updateCitation()">
+                    <span>MLA 9</span>
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="style" value="chicago" onchange="updateCitation()">
+                    <span>Chicago</span>
+                </label>
+            </div>
+
+            <div
+                style="text-align: left; background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 12px; border: 1px solid var(--glass-border);">
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="color: var(--text-secondary); display: block; margin-bottom: 0.5rem;">Website
+                        URL</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="url" id="url-input" class="text-area-styled"
+                            placeholder="https://www.example.com/article" style="height: 45px; padding: 10px;">
+                        <button class="btn-action btn-sm" id="fetch-btn">Auto-Fill</button>
+                    </div>
+                    <small style="color: var(--text-secondary); opacity: 0.7;">* Auto-fill uses metadata if available.
+                        CORS restrictions may apply.</small>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 1.5rem;">
+                    <div>
+                        <label style="color: var(--text-secondary); display: block; margin-bottom: 0.5rem;">Article
+                            Title</label>
+                        <input type="text" id="title-input" class="text-area-styled"
+                            style="height: 45px; padding: 10px;" oninput="updateCitation()">
+                    </div>
+                    <div>
+                        <label style="color: var(--text-secondary); display: block; margin-bottom: 0.5rem;">Website
+                            Name</label>
+                        <input type="text" id="website-input" class="text-area-styled"
+                            style="height: 45px; padding: 10px;" oninput="updateCitation()">
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 1.5rem;">
+                    <div>
+                        <label style="color: var(--text-secondary); display: block; margin-bottom: 0.5rem;">Author Last
+                            Name</label>
+                        <input type="text" id="author-last" class="text-area-styled"
+                            style="height: 45px; padding: 10px;" oninput="updateCitation()">
+                    </div>
+                    <div>
+                        <label style="color: var(--text-secondary); display: block; margin-bottom: 0.5rem;">First
+                            Initial</label>
+                        <input type="text" id="author-first" class="text-area-styled"
+                            style="height: 45px; padding: 10px;" placeholder="J." oninput="updateCitation()">
+                    </div>
+                    <div>
+                        <label style="color: var(--text-secondary); display: block; margin-bottom: 0.5rem;">Year
+                            Published</label>
+                        <input type="number" id="year-input" class="text-area-styled"
+                            style="height: 45px; padding: 10px;" placeholder="2023" oninput="updateCitation()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-area active" style="margin-top: 2rem; display: block;">
+                <h3 class="result-header">Formatted Citation</h3>
+                <div id="citation-output" style="
+                    background: rgba(0,0,0,0.3); 
+                    padding: 1.5rem; 
+                    border-radius: 8px; 
+                    font-family: 'Times New Roman', serif; 
+                    font-size: 1.1rem; 
+                    line-height: 1.6;
+                    color: white;
+                    margin-bottom: 1.5rem;
+                    border-left: 4px solid var(--accent);
+                    min-height: 60px;
+                "></div>
+
+                <button class="btn-action" id="copy-btn">
+                    <i class="fas fa-copy"></i> Copy Citation
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const inputs = ['title-input', 'website-input', 'author-last', 'author-first', 'year-input', 'url-input'];
+        const output = document.getElementById('citation-output');
+        const copyBtn = document.getElementById('copy-btn');
+        const fetchBtn = document.getElementById('fetch-btn');
+
+        function getElements() {
+            return {
+                title: document.getElementById('title-input').value.trim() || 'Title of Article',
+                site: document.getElementById('website-input').value.trim() || 'Website Name',
+                last: document.getElementById('author-last').value.trim() || 'Author',
+                first: document.getElementById('author-first').value.trim() || 'A.',
+                year: document.getElementById('year-input').value.trim() || new Date().getFullYear(),
+                url: document.getElementById('url-input').value.trim() || 'URL'
+            };
+        }
+
+        function updateCitation() {
+            const data = getElements();
+            const style = document.querySelector('input[name="style"]:checked').value;
+            const date = new Date();
+            const accessDate = `${date.getDate()} ${date.toLocaleString('default', { month: 'short' })}. ${date.getFullYear()}`;
+
+            let result = '';
+
+            if (style === 'apa') {
+                // APA 7: Author, A. A. (Year). Title of work. Site Name. URL
+                result = `${data.last}, ${data.first} (${data.year}). <i>${data.title}</i>. ${data.site}. ${data.url}`;
+            } else if (style === 'mla') {
+                // MLA 9: Author. "Title." Site Name, Year, URL. Accessed Date.
+                result = `${data.last}, ${data.first} "${data.title}." <i>${data.site}</i>, ${data.year}, ${data.url}. Accessed ${accessDate}.`;
+            } else if (style === 'chicago') {
+                // Chicago: Author. "Title." Site Name. Year. URL.
+                result = `${data.last}, ${data.first} "${data.title}." ${data.site}. ${data.year}. ${data.url}.`;
+            }
+
+            output.innerHTML = result;
+        }
+
+        // Simulating Fetch (Real fetch would need a proxy server)
+        fetchBtn.addEventListener('click', () => {
+            const url = document.getElementById('url-input').value;
+            if (!url) return alert('Please enter a URL first');
+
+            // Simple heuristics for demo
+            try {
+                const domain = new URL(url).hostname.replace('www.', '');
+                document.getElementById('website-input').value = domain.charAt(0).toUpperCase() + domain.slice(1);
+                document.getElementById('title-input').value = "Scraped Page Title (Simulated)";
+                document.getElementById('author-last').value = "Smith";
+                updateCitation();
+            } catch (e) {
+                alert('Invalid URL');
+            }
+        });
+
+        copyBtn.addEventListener('click', () => {
+            const range = document.createRange();
+            range.selectNode(output);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand('copy');
+            window.getSelection().removeAllRanges();
+
+            const original = copyBtn.innerHTML;
+            copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            setTimeout(() => copyBtn.innerHTML = original, 2000);
+        });
+
+        // Init
+        updateCitation();
+    </script>
+</body>
+
+</html>

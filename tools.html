@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Office Hero Utilities | Hari Nandan K</title>
+    <meta name="description"
+        content="A suite of browser-based tools for productivity and document management. PDF Merger, OCR, Image Tools, and more.">
+    <meta name="theme-color" content="#040404">
+
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="assets/css/style-custom.css?v=2">
+    <link rel="stylesheet" href="style.css?v=2">
+
+    <style>
+        /* Tools Specific Styles */
+        .tools-header {
+            padding-top: 150px;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .tools-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tools-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- Three.js Canvas Background -->
+    <div id="canvas-container"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">JA</div>
+            <ul class="nav-links">
+                <li><a href="index.html#home" class="nav-link">Home</a></li>
+                <li><a href="index.html#about" class="nav-link">About Me</a></li>
+                <li><a href="tools.html" class="nav-link active">Utilities</a></li>
+                <li><a href="index.html#projects" class="nav-link">Projects</a></li>
+                <li><a href="index.html#research" class="nav-link">Research</a></li>
+                <li><a href="index.html#skills" class="nav-link">Skills</a></li>
+                <li><a href="index.html#achievements" class="nav-link">Achievements</a></li>
+                <li><a href="index.html#timeline" class="nav-link">My Journey</a></li>
+                <li><a href="bio.htm" class="nav-link">Bio</a></li>
+                <li><a href="index.html#contact" class="nav-link">Contact Me</a></li>
+            </ul>
+            <a href="index.html#contact" class="nav-cta">Let's Talk</a><br>
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <section class="tools-header">
+            <h1 class="tools-title">Office Hero Utilities</h1>
+            <p class="section-subtitle">A suite of browser-based tools for productivity and document management</p>
+        </section>
+
+        <!-- Utilities Grid -->
+        <div class="tools-content">
+            <div class="utilities-grid">
+                <!-- PDF Merger -->
+                <a href="office-hero/pdf-merger.html" class="utility-card">
+                    <div class="utility-icon">
+                        <i class="fas fa-object-group"></i>
+                    </div>
+                    <h3 class="utility-title">PDF Merger</h3>
+                    <p class="utility-desc">Combine multiple PDF documents into a single file instantly. Drag, drop, and
+                        merge.</p>
+                </a>
+
+                <!-- PDF to Word/Excel -->
+                <a href="office-hero/pdf-converter.html" class="utility-card">
+                    <div class="utility-icon">
+                        <i class="fas fa-file-word"></i>
+                    </div>
+                    <h3 class="utility-title">PDF to Office</h3>
+                    <p class="utility-desc">Convert PDFs to editable Word/Excel formats. Client-side processing for
+                        privacy.
+                    </p>
+                </a>
+
+                <!-- PDF E-Signer -->
+                <a href="office-hero/pdf-signer.html" class="utility-card">
+                    <div class="utility-icon">
+                        <i class="fas fa-signature"></i>
+                    </div>
+                    <h3 class="utility-title">PDF E-Signer</h3>
+                    <p class="utility-desc">Sign contracts digitally. Draw your signature and embed it securely.</p>
+                </a>
+
+                <!-- OCR -->
+                <a href="office-hero/image-ocr.html" class="utility-card">
+                    <div class="utility-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3 class="utility-title">Image OCR</h3>
+                    <p class="utility-desc">Extract text from images or scanned documents using AI-powered recognition.
+                    </p>
+                </a>
+
+                <!-- Social Resizer -->
+                <a href="office-hero/image-resizer.html" class="utility-card">
+                    <div class="utility-icon">
+                        <i class="fas fa-crop-alt"></i>
+                    </div>
+                    <h3 class="utility-title">Social Resizer</h3>
+                    <p class="utility-desc">Crop images for Instagram, LinkedIn, and Stories in one click.</p>
+                </a>
+
+                <!-- Video to GIF -->
+                <a href="office-hero/video-to-gif.html" class="utility-card">
+                    <div class="utility-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3 class="utility-title">Video to GIF</h3>
+                    <p class="utility-desc">Convert video clips into shareable, high-quality GIFs instantly.</p>
+                </a>
+
+                <!-- Background Remover -->
+                <a href="office-hero/bg-remover.html" class="utility-card">
+                    <div class="utility-icon">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                    <h3 class="utility-title">BG Remover</h3>
+                    <p class="utility-desc">Remove image backgrounds automatically with AI precision.</p>
+                </a>
+
+                <!-- Bulk Compressor -->
+                <a href="office-hero/image-compressor.html" class="utility-card">
+                    <div class="utility-icon">
+                        <i class="fas fa-compress-arrows-alt"></i>
+                    </div>
+                    <h3 class="utility-title">Bulk Compressor</h3>
+                    <p class="utility-desc">Compress unlimited images at once to save space without quality loss.</p>
+                </a>
+
+                <!-- JSON Converter -->
+                <a href="office-hero/json-converter.html" class="utility-card">
+                    <div class="utility-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <h3 class="utility-title">Data Converter</h3>
+                    <p class="utility-desc">Convert between JSON, XML, and YAML formats instantly.</p>
+                </a>
+
+                <!-- JWT Debugger -->
+                <a href="office-hero/jwt-debugger.html" class="utility-card">
+                    <div class="utility-icon">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <h3 class="utility-title">JWT Debugger</h3>
+                    <p class="utility-desc">Decode and inspect JSON Web Tokens safely in your browser.</p>
+                </a>
+
+                <!-- SQL Formatter -->
+                <a href="office-hero/sql-formatter.html" class="utility-card">
+                    <div class="utility-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3 class="utility-title">SQL Formatter</h3>
+                    <p class="utility-desc">Beautify and indent messy SQL queries for better readability.</p>
+                </a>
+
+                <!-- Diff Checker -->
+                <a href="office-hero/diff-checker.html" class="utility-card">
+                    <div class="utility-icon">
+                        <i class="fas fa-columns"></i>
+                    </div>
+                    <h3 class="utility-title">Diff Checker</h3>
+                    <p class="utility-desc">Compare two text blocks and highlight the differences.</p>
+                </a>
+
+                <!-- Citation Generator -->
+                <a href="office-hero/citation-generator.html" class="utility-card">
+                    <div class="utility-icon">
+                        <i class="fas fa-quote-right"></i>
+                    </div>
+                    <h3 class="utility-title">Citation Generator</h3>
+                    <p class="utility-desc">Generate APA, MLA, and Chicago citations for websites instantly.</p>
+                </a>
+
+                <!-- Case Converter -->
+                <a href="office-hero/case-converter.html" class="utility-card">
+                    <div class="utility-icon">
+                        <i class="fas fa-font"></i>
+                    </div>
+                    <h3 class="utility-title">Case Converter</h3>
+                    <p class="utility-desc">Convert text to Uppercase, Lowercase, Title Case, and more.</p>
+                </a>
+
+                <!-- Voice to Text -->
+                <a href="office-hero/transcription-tool.html" class="utility-card">
+                    <div class="utility-icon">
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                    <h3 class="utility-title">Voice to Text</h3>
+                    <p class="utility-desc">Transcribe speech or audio files to text in real-time.</p>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 Hari Nandan K. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <!-- Libraries needed for animations etc if used -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="assets/js/performance.js"></script>
+    <script src="assets/js/main.js?v=2"></script>
+</body>
+
+</html>

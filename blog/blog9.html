@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Server Components: The Pendulum Swings | Blog</title>
+    <meta name="theme-color" content="#040404">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style-custom.css?v=2">
+    <style>
+        .article-header { padding-top: 150px; padding-bottom: 60px; text-align: center; max-width: 800px; margin: 0 auto; }
+        .article-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 20px; background: linear-gradient(135deg, #fff 0%, #aaa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .article-meta { color: var(--text-tertiary); font-size: 0.9rem; margin-bottom: 40px; }
+        .article-badge { display: inline-block; padding: 5px 15px; border-radius: 20px; background: rgba(0, 82, 204, 0.2); color: var(--accent); border: 1px solid rgba(0, 82, 204, 0.3); margin-bottom: 20px; }
+        .article-content { max-width: 800px; margin: 0 auto; padding: 0 20px 100px; color: var(--text-secondary); font-size: 1.1rem; line-height: 1.8; }
+        .article-content h2 { color: var(--text-primary); font-family: 'Space Grotesk', sans-serif; margin-top: 50px; margin-bottom: 20px; }
+        .article-image { width: 100%; height: 400px; object-fit: cover; border-radius: 20px; margin-bottom: 50px; border: 1px solid var(--glass-border); }
+        .back-link { display: inline-flex; align-items: center; gap: 10px; color: var(--text-tertiary); text-decoration: none; margin-bottom: 30px; transition: color 0.3s; }
+        .back-link:hover { color: var(--accent); }
+        .tag { background: rgba(255,255,255,0.05); padding: 5px 10px; border-radius: 5px; font-size: 0.8rem; margin-right: 5px; }
+    </style>
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <div id="canvas-container" style="position: fixed; inset: 0; z-index: -1;"></div>
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">JA</div>
+            <ul class="nav-links">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="../tools.html" class="nav-link">Utilities</a></li>
+                <li><a href="../blog.html" class="nav-link active">Blog</a></li>
+                <li><a href="../bio.htm" class="nav-link">Bio</a></li>
+            </ul>
+             <div class="menu-toggle"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+    <main>
+        <article>
+            <div class="article-header">
+                <a href="../blog.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Blog</a><br>
+                <span class="article-badge">Web Development</span>
+                <h1 class="article-title">React Server Components: The Pendulum Swings</h1>
+                <div class="article-meta"><span><i class="far fa-calendar"></i> Dec 10, 2024</span> &bull; <span><i class="far fa-user"></i> Hari Nandan K</span></div>
+                <img src="../assets/img/blog/blog9.png" alt="React Server Components: The Pendulum Swings" class="article-image">
+                <div style="margin-top: -30px; margin-bottom: 40px;">
+                    <span class='tag'>#React</span><span class='tag'>#Next.js</span><span class='tag'>#Frontend</span>
+                </div>
+            </div>
+            <div class="article-content">
+                <p class="lead" style="font-size: 1.3rem; color: var(--text-primary); margin-bottom: 30px;">Web development moves in cycles. In the PHP era, everything was Server-Side Rendered (SSR). Then came Angular and React, pushing everything to the Client (CSR). Now, with React Server Components (RSC), we are finding the middle ground.</p>
+                <p>The problem with pure SPA (Single Page Applications) is the 'Waterfalls'. The client loads JS, then fetches data, then renders. This leads to slow TTI (Time to Interactive) and poor SEO.</p><p>RSC allows components to render exclusively on the server. They have direct access to the database and file system. They send zero JavaScript to the client, only the HTML result.</p><p>This significantly reduces bundle size. Heavy libraries like `moment.js` or `markdown-parser` can stay on the server. The user's browser never has to download or execute them.</p><p>We can now mix Server and Client components. Server components handle data fetching, while Client components (`'use client'`) handle interactivity like clicks and state.</p><p>Next.js App Router is the flagship implementation of this. It forces you to think about the boundary between server and client. It’s a mental shift from 'everything is a component' to 'where does this component live?'</p><p>Streaming is a huge benefit relative to Suspense. We can send the page shell immediately and stream in the heavy data-dependent parts as they finish rendering. The user sees progress instantly.</p><p>SEO is automatic. Since the initial payload is HTML, crawlers can read the content perfectly without needing complex hydration steps.</p><p>However, the complexity has increased. Caching, revalidation, and passing serializable data between the boundary are new pain points for developers.</p><p>Is it PHP 2.0? In a way, yes. But it's PHP with the component model and interactivity of React. It’s the best of both worlds.</p><p>This architecture is the future of the React ecosystem, optimizing for user experience (speed) and developer experience (direct backend access) simultaneously.</p>
+            </div>
+        </article>
+    </main>
+    <footer><div class="footer-content" style="text-align: center; padding: 40px; color: var(--text-secondary);"><p>&copy; 2026 Hari Nandan K.</p></div></footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

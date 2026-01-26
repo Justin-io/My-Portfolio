@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duty Leave Request - Smart Node Project</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --paper-width: 210mm;
+            --paper-height: 297mm;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f0f2f5;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        /* The A4 Paper Container */
+        .page {
+            background-color: white;
+            width: var(--paper-width);
+            min-height: var(--paper-height);
+            padding: 25mm;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styling */
+        header {
+            text-align: right;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 20px;
+        }
+
+        .date-placeholder {
+            font-weight: bold;
+            color: var(--primary-color);
+            display: inline-block;
+            min-width: 150px;
+            border-bottom: 1px dotted #999;
+        }
+
+        /* To Section */
+        .recipient-details {
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .recipient-details p {
+            margin-bottom: 5px;
+        }
+
+        /* Subject */
+        .subject {
+            font-weight: bold;
+            text-decoration: underline;
+            margin-bottom: 25px;
+            font-size: 1.1em;
+        }
+
+        /* Body Content */
+        .letter-body {
+            text-align: justify;
+            margin-bottom: 40px;
+        }
+
+        .letter-body p {
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #000;
+        }
+
+        .project-box {
+            background-color: #f9f9f9;
+            border-left: 4px solid var(--accent-color);
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.95em;
+            color: #555;
+        }
+
+        /* Signature Section */
+        .signature-area {
+            margin-top: auto;
+            /* Pushes to bottom */
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .signature-block {
+            display: flex;
+            justify-content: flex-end;
+            flex-direction: column;
+            align-items: flex-end;
+            width: 100%;
+        }
+
+        .signatures-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .student-sig {
+            text-align: center;
+            width: 45%;
+        }
+
+        .sign-line {
+            display: block;
+            width: 100%;
+            border-top: 1px solid #333;
+            margin-top: 60px;
+            /* Space for physical signature */
+            padding-top: 5px;
+            font-weight: bold;
+        }
+
+        /* Tutor Section */
+        .tutor-section {
+            margin-top: 60px;
+            border-top: 1px dashed #ccc;
+            padding-top: 30px;
+        }
+
+        .tutor-sig-block {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .tutor-input-line {
+            border-top: 1px solid #333;
+            width: 300px;
+            margin-top: 50px;
+        }
+
+        /* Print Button */
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: sans-serif;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s;
+            z-index: 1000;
+        }
+
+        .print-btn:hover {
+            background-color: #2980b9;
+        }
+
+        /* Print Specific Styles */
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+            }
+
+            .page {
+                box-shadow: none;
+                margin: 0;
+                width: 100%;
+                min-height: auto;
+                padding: 0;
+            }
+
+            .print-btn {
+                display: none;
+            }
+
+            .date-placeholder {
+                border-bottom: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Print Button -->
+    <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+
+    <div class="page">
+        <!-- Date -->
+        <header>
+            Date: <span class="date-placeholder">30/12/2025</span>
+        </header>
+
+        <!-- Recipient -->
+        <div class="recipient-details">
+            <p>To,</p>
+            <p>The Head of Department,</p>
+            <p>Department of Data Science,</p>
+            <p>IES College of Engineering,</p>
+            <p>Thrissur.</p>
+        </div>
+
+        <!-- Subject -->
+        <div class="subject">
+            Subject: Request for Duty Leave to Meet EEE HOD regarding Project Technical Review
+        </div>
+
+        <!-- Body -->
+        <div class="letter-body">
+            <p>Respected Sir/Madam,</p>
+
+            <p>We, <span class="highlight">Hari Nandan K</span> and <span class="highlight">Thanay Krishna C U</span>,
+                students of the S4 Batch (Data Science Department), are writing to respectfully request duty leave for
+                <strong>2 periods this afternoon</strong>.
+            </p>
+
+            <p>As part of our Mini-Project, we are currently developing the <strong>"Smart-Node Class Display"</strong>,
+                an Embedded IoT system designed to function as a standalone local server for classroom schedules.</p>
+
+            <div class="project-box">
+                <strong>Project Context:</strong> The project utilizes an ESP32 microcontroller and a P10 LED Matrix
+                Display. Since the hardware architecture involves specific power regulation (5V 5A SMPS) and signal
+                timing (HUB12 interface), we require expert guidance on the integration of the LittleFS file system and
+                the DMD32 library from a hardware perspective.
+            </div>
+
+            <p>We have scheduled a meeting with <strong>Dr. John Chembukkavu Sir</strong> (HOD, EEE Department) to
+                discuss the technical feasibility of the hardware interfacing and to review our Bill of Materials. This
+                meeting is crucial to ensure the stability of the device before we proceed to the implementation phase.
+            </p>
+
+            <p>We kindly request you to grant us permission to be excused from two periods this afternoon to facilitate
+                this technical discussion. We assure you that we will make up for any academic work missed during this
+                time.</p>
+
+            <p>Thanking you,</p>
+        </div>
+
+        <!-- Signatures -->
+        <div class="signature-area">
+
+            <div class="signatures-row">
+                <div class="student-sig">
+                    <span class="sign-line">Hari Nandan K</span>
+                    <p style="font-size: 0.9em;">S4 Data Science</p>
+                </div>
+                <div class="student-sig">
+                    <span class="sign-line">Thanay Krishna C U</span>
+                    <p style="font-size: 0.9em;">S4 Data Science</p>
+                </div>
+            </div>
+
+            <!-- Tutor Recommendation Section -->
+            <div class="tutor-section">
+                <div class="tutor-sig-block">
+                    <div>
+                        <p style="margin-bottom: 10px;"><strong>Forwarded by Class Tutor:</strong></p>
+                        <p style="font-size: 0.9em; color: #666;">The students have a genuine academic requirement to
+                            consult the EEE department regarding their Embedded Hardware project.</p>
+                    </div>
+                    <div style="text-align: right;">
+                        <div class="tutor-input-line"></div>
+                        <p style="margin-top: 5px; font-weight: bold;">(Signature of Tutor)</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

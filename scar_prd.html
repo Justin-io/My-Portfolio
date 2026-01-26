@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project SCAR | Requirement Document</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --accent: #06b6d4;
+            --dark: #0f172a;
+            --dark-surface: #1e293b;
+            --light: #f8fafc;
+            --text-main: #334155;
+            --text-light: #94a3b8;
+            --success: #10b981;
+
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+            --font-main: 'Outfit', sans-serif;
+            --font-heading: 'Space Grotesk', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 2rem;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            background: linear-gradient(to right, var(--dark), var(--dark-surface));
+            color: white;
+            padding: 4rem 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+            opacity: 0.2;
+            filter: blur(60px);
+        }
+
+        .hero-content {
+            flex: 1;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            background: linear-gradient(to right, #fff, #bfdbfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .hero h2 {
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero p {
+            color: #94a3b8;
+            font-size: 1.1rem;
+            max-width: 500px;
+        }
+
+        .hero-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 2;
+            background: #000;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Content Sections */
+        .section {
+            padding: 3rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-title::before {
+            content: '';
+            display: block;
+            width: 6px;
+            height: 32px;
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-sm);
+            border-color: var(--primary);
+        }
+
+        .card h3 {
+            color: var(--primary-dark);
+            margin-bottom: 0.75rem;
+            font-size: 1.2rem;
+        }
+
+        .card p,
+        .card li {
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        /* Table Styling */
+        .table-container {
+            overflow-x: auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            -webkit-overflow-scrolling: touch;
+            /* Smooth scroll on iOS */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            min-width: 600px;
+            /* Ensure table doesn't squash too much */
+        }
+
+        th {
+            background: #f1f5f9;
+            color: var(--dark);
+            font-weight: 600;
+            text-align: left;
+            padding: 1rem 1.5rem;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #f1f5f9;
+            color: var(--text-main);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr.total-row {
+            background: #f8fafc;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        tr.total-row td {
+            font-size: 1.1rem;
+            color: var(--primary-dark);
+        }
+
+        /* Connection Map */
+        .connection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .connection-block {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .connection-block h4 {
+            margin-bottom: 1rem;
+            color: var(--dark);
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+        }
+
+        .pin-list {
+            list-style: none;
+        }
+
+        .pin-list li {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+
+        .pin-list li:last-child {
+            border-bottom: none;
+        }
+
+        .pin-name {
+            font-weight: 500;
+        }
+
+        .pin-loc {
+            color: var(--primary);
+            font-family: monospace;
+            font-weight: 600;
+        }
+
+        /* Software Stack */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .tech-pill {
+            background: white;
+            padding: 0.75rem 1.25rem;
+            border-radius: 50px;
+            border: 1px solid #e2e8f0;
+            font-weight: 500;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tech-pill span {
+            color: var(--text-light);
+            font-size: 0.8rem;
+            font-weight: 400;
+        }
+
+        /* MOBILE RESPONSIVE OVERRIDES */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .container {
+                border-radius: 16px;
+            }
+
+            .hero {
+                flex-direction: column-reverse;
+                text-align: center;
+                padding: 2.5rem 1.5rem;
+                gap: 2rem;
+            }
+
+            .hero-content {
+                width: 100%;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                margin: 0 auto;
+            }
+
+            .hero-image {
+                width: 100%;
+                max-width: 250px;
+                height: auto;
+                aspect-ratio: 1/1;
+                margin: 0 auto;
+            }
+
+            .section {
+                padding: 2rem 1.25rem;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .connection-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .connection-block {
+                border-left: none;
+                border-top: 4px solid var(--accent);
+            }
+
+            .tech-stack {
+                justify-content: center;
+            }
+
+            .tech-pill {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            /* Responsive Table Card View */
+            .table-container {
+                box-shadow: none;
+                background: transparent;
+                border: none;
+                overflow-x: visible;
+            }
+
+            table {
+                min-width: auto;
+                width: 100%;
+                display: block;
+            }
+
+            thead {
+                display: none;
+            }
+
+            tbody tr {
+                display: block;
+                background: white;
+                border-radius: 16px;
+                padding: 1.25rem;
+                margin-bottom: 1.25rem;
+                border: 1px solid #e2e8f0;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            }
+
+            td {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                padding: 0.75rem 0;
+                border-bottom: 1px solid #f1f5f9;
+                text-align: right;
+                gap: 1rem;
+            }
+
+            td:last-child {
+                border-bottom: none;
+            }
+
+            td::before {
+                content: attr(data-label);
+                font-weight: 600;
+                font-size: 0.75rem;
+                text-transform: uppercase;
+                color: var(--text-light);
+                text-align: left;
+                min-width: 100px;
+                flex-shrink: 0;
+            }
+
+            tr.total-row {
+                background: var(--dark-surface);
+            }
+
+            tr.total-row td {
+                color: var(--accent);
+                border-color: rgba(255, 255, 255, 0.1);
+            }
+
+            tr.total-row td::before {
+                color: rgba(255, 255, 255, 0.6);
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                color: black;
+                padding: 0;
+            }
+
+            .container {
+                box-shadow: none;
+                border: none;
+                max-width: 100%;
+                margin: 0;
+                border-radius: 0;
+            }
+
+            .hero {
+                background: white;
+                color: black;
+                padding: 1rem 0;
+                border-bottom: 2px solid black;
+            }
+
+            .hero h1 {
+                -webkit-text-fill-color: black;
+                font-size: 2.5rem;
+            }
+
+            .hero p,
+            .hero h2 {
+                color: #333;
+            }
+
+            .hero-image {
+                display: none;
+            }
+
+            .section {
+                break-inside: avoid;
+                padding: 1.5rem 0;
+                border-bottom: 1px solid #ccc;
+            }
+
+            .card {
+                border: 1px solid #000;
+                box-shadow: none;
+                break-inside: avoid;
+            }
+
+            th {
+                background: #eee !important;
+                color: black;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .tech-pill {
+                border: 1px solid #000;
+            }
+
+            .hero::before {
+                display: none;
+            }
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            background: #f8fafc;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            border-top: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header class="hero">
+            <div class="hero-content">
+                <h2>Project Requirement Document</h2>
+                <h1>SCAR</h1>
+                <p><strong>Smart Classroom Assistant Robot</strong><br>
+                    Target Location: Thrissur, Kerala</p>
+            </div>
+            <div class="hero-image">
+                <img src="assets/img/scar_robot_concept.png" alt="SCAR Robot Concept">
+            </div>
+        </header>
+
+        <section class="section">
+            <h2 class="section-title">Executive Summary</h2>
+            <p style="font-size: 1.1rem; max-width: 800px;">
+                The SCAR is an autonomous classroom robot powered by a Raspberry Pi. It replaces old "remote control"
+                logic with AI-driven autonomy. Designed for the modern Indian classroom, it features face recognition,
+                directional student counting, air quality monitoring, and text-to-speech announcements.
+            </p>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">System Architecture</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>The Brain</h3>
+                    <p><strong>Raspberry Pi 4 (4GB RAM)</strong><br>Running Raspberry Pi OS. Handles all AI processing
+                        and logic.</p>
+                </div>
+                <div class="card">
+                    <h3>The Eyes</h3>
+                    <p><strong>Pi Camera Module 3</strong><br>High-quality vision for OpenCV-based face recognition.</p>
+                </div>
+                <div class="card">
+                    <h3>The Nervous System</h3>
+                    <p><strong>Sensors:</strong> MQ-135 (Air Quality), DHT22 (Temp & Humidity), Dual IR Sensors
+                        (Counting).</p>
+                </div>
+                <div class="card">
+                    <h3>The Muscles</h3>
+                    <p><strong>Actuation:</strong> Pan-Tilt mechanism with MG996R Servos driven by PCA9685.</p>
+                </div>
+                <div class="card">
+                    <h3>User Interface</h3>
+                    <p><strong>Web Dashboard:</strong> Local Flask-based site accessible via classroom Wi-Fi.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Bill of Materials & Budget</h2>
+            <p style="margin-bottom: 1rem; font-style: italic; font-size: 0.9rem; color: #64748b;">
+                Estimates based on Indian market (Robu.in, Thingbits) and local Thrissur shops.
+            </p>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Specification</th>
+                            <th>Est. Price (₹)</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-label="Component">Raspberry Pi 4 Model B</td>
+                            <td data-label="Specification">4GB RAM</td>
+                            <td data-label="Est. Price (₹)">₹5,300 - ₹6,000</td>
+                            <td data-label="Notes">2GB works if 4GB OOS.</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Component">Pi Camera Module 3</td>
+                            <td data-label="Specification">Standard/Wide</td>
+                            <td data-label="Est. Price (₹)">₹2,400 - ₹2,800</td>
+                            <td data-label="Notes">Auto-focus enabled.</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Component">MicroSD Card</td>
+                            <td data-label="Specification">32GB Class 10</td>
+                            <td data-label="Est. Price (₹)">₹400 - ₹500</td>
+                            <td data-label="Notes">SanDisk Recommended.</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Component">Power Supply</td>
+                            <td data-label="Specification">5V 3A USB-C</td>
+                            <td data-label="Est. Price (₹)">₹500 - ₹700</td>
+                            <td data-label="Notes">Official/High quality required.</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Component">PCA9685 Driver</td>
+                            <td data-label="Specification">16-Channel</td>
+                            <td data-label="Est. Price (₹)">₹250 - ₹350</td>
+                            <td data-label="Notes">Servo controller.</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Component">Servo Motors (x2)</td>
+                            <td data-label="Specification">MG996R (Metal)</td>
+                            <td data-label="Est. Price (₹)">₹500 - ₹600</td>
+                            <td data-label="Notes">Stronger than SG90.</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Component">Pan/Tilt Bracket</td>
+                            <td data-label="Specification">Plastic Kit</td>
+                            <td data-label="Est. Price (₹)">₹200 - ₹300</td>
+                            <td data-label="Notes">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Component">MCP3008 ADC</td>
+                            <td data-label="Specification">8-Channel 10-bit</td>
+                            <td data-label="Est. Price (₹)">₹250 - ₹300</td>
+                            <td data-label="Notes">For Analog sensors.</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Component">MQ-135 Sensor</td>
+                            <td data-label="Specification">Gas/Air Quality</td>
+                            <td data-label="Est. Price (₹)">₹120 - ₹150</td>
+                            <td data-label="Notes">Detects Smoke, CO2, etc.</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Component">DHT22 Sensor</td>
+                            <td data-label="Specification">Temp/Humidity</td>
+                            <td data-label="Est. Price (₹)">₹350 - ₹450</td>
+                            <td data-label="Notes">Better than DHT11.</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Component">IR Sensors (x2)</td>
+                            <td data-label="Specification">Proximity</td>
+                            <td data-label="Est. Price (₹)">₹150 - ₹200</td>
+                            <td data-label="Notes">For door counting.</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Component">Misc (Wires/Breadboard)</td>
+                            <td data-label="Specification">M-M, M-F, F-F</td>
+                            <td data-label="Est. Price (₹)">₹250 - ₹350</td>
+                            <td data-label="Notes">Prototyping essentials.</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td data-label="Component">TOTAL ESTIMATE</td>
+                            <td data-label="Specification"></td>
+                            <td data-label="Est. Price (₹)">₹11,670 - ₹14,100</td>
+                            <td data-label="Notes">Excl. optional power bank</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Hardware Connection Map</h2>
+            <div class="connection-grid">
+                <div class="connection-block">
+                    <h4>🔌 Power Distribution</h4>
+                    <ul class="pin-list">
+                        <li><span class="pin-name">PCA9685 Driver</span> <span class="pin-loc">5V Ext. + GND</span></li>
+                        <li><span class="pin-name">Sensors</span> <span class="pin-loc">3.3V / 5V Rail</span></li>
+                    </ul>
+                </div>
+
+                <div class="connection-block">
+                    <h4>⚡ I2C Bus (Pins 3 & 5)</h4>
+                    <ul class="pin-list">
+                        <li><span class="pin-name">PCA9685 SDA</span> <span class="pin-loc">Pin 3</span></li>
+                        <li><span class="pin-name">PCA9685 SCL</span> <span class="pin-loc">Pin 5</span></li>
+                    </ul>
+                </div>
+
+                <div class="connection-block">
+                    <h4>📡 SPI Bus (ADC)</h4>
+                    <ul class="pin-list">
+                        <li><span class="pin-name">MISO</span> <span class="pin-loc">Pin 21</span></li>
+                        <li><span class="pin-name">MOSI</span> <span class="pin-loc">Pin 19</span></li>
+                        <li><span class="pin-name">SCLK</span> <span class="pin-loc">Pin 23</span></li>
+                        <li><span class="pin-name">CS/CE0</span> <span class="pin-loc">Pin 24</span></li>
+                    </ul>
+                </div>
+
+                <div class="connection-block">
+                    <h4>🕹️ Sensor Inputs (GPIO)</h4>
+                    <ul class="pin-list">
+                        <li><span class="pin-name">MQ-135 (Analog)</span> <span class="pin-loc">ADC Ch 0</span></li>
+                        <li><span class="pin-name">DHT22 Data</span> <span class="pin-loc">GPIO 4</span></li>
+                        <li><span class="pin-name">IR Entry</span> <span class="pin-loc">GPIO 17</span></li>
+                        <li><span class="pin-name">IR Exit</span> <span class="pin-loc">GPIO 27</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Software Stack</h2>
+            <p style="margin-bottom: 1rem;">Core logic in <strong>Python 3</strong>.</p>
+            <div class="tech-stack">
+                <div class="tech-pill">OpenCV (cv2) <span>Face Rec</span></div>
+                <div class="tech-pill">Face_Recognition <span>Face ID Lib</span></div>
+                <div class="tech-pill">Adafruit PCA9685 <span>Servo Ctrl</span></div>
+                <div class="tech-pill">Adafruit DHT <span>Temp/Hum</span></div>
+                <div class="tech-pill">Flask <span>Web UI</span></div>
+                <div class="tech-pill">gTTS <span>Speech</span></div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>SCAR Project | Generated by AI Assistant | 2026</p>
+        </footer>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q-SAFE: A Zero-Overhead Runtime Enforcement Framework</title>
+    <meta name="description"
+        content="My research paper on Q-SAFE, a zero-overhead runtime enforcement framework for control flow integrity using LLM-synthesized context hashing.">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --success-color: #27ae60;
+            --danger-color: #c0392b;
+            --bg-color: #f8f9fa;
+            --paper-color: #ffffff;
+            --text-color: #333333;
+            --border-color: #e0e0e0;
+            --code-bg: #282c34;
+            --code-text: #abb2bf;
+            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: 'Consolas', 'Monaco', 'Courier New', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--paper-color);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+            padding: 40px 60px;
+        }
+
+        /* Header */
+        header {
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .meta {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .meta strong {
+            color: var(--text-color);
+        }
+
+        .disclaimer {
+            font-size: 0.85rem;
+            color: #888;
+            margin-top: 20px;
+            padding: 10px;
+            background: #f0f0f0;
+            border-left: 4px solid #999;
+        }
+
+        /* Navigation */
+        nav {
+            margin-bottom: 40px;
+            background: #f1f4f8;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--accent-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+
+        /* Content Sections */
+        section {
+            margin-bottom: 50px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: #444;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        ul,
+        ol {
+            margin-bottom: 15px;
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        strong {
+            color: var(--primary-color);
+        }
+
+        /* SVG Diagrams */
+        .diagram-container {
+            margin: 30px 0;
+            text-align: center;
+            background: #fdfdfd;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .diagram-container svg {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .diagram-caption {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 15px;
+            font-style: italic;
+            font-weight: 500;
+        }
+
+        /* Code Block */
+        pre {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            margin: 20px 0;
+            border-left: 5px solid var(--accent-color);
+        }
+
+        code {
+            font-family: var(--font-mono);
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9rem;
+        }
+
+        th,
+        td {
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        tr:hover {
+            background-color: #eef2f7;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.8rem;
+            color: #888;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Q-SAFE: A Zero-Overhead, Runtime Enforcement Framework for Control Flow Integrity using LLM-Synthesized
+                Context Hashing</h1>
+            <div class="meta"><strong>Author:</strong> HARI NANDAN K</div>
+            <div class="meta"><strong>Date:</strong> December 2025</div>
+            <div class="meta"><strong>Field:</strong> Adaptive Cyber Defense / Kernel-Level Security</div>
+
+            <div class="disclaimer">
+                <strong>Copyright Notice:</strong> Copyright © December 2025 by HARI NANDAN K. All rights reserved. This
+                document is protected under international copyright laws. No part of this paper may be reproduced
+                without prior written permission.
+            </div>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="#abstract">Abstract</a></li>
+                <li><a href="#intro">1. Introduction</a></li>
+                <li><a href="#threat-model">2. Threat Model</a></li>
+                <li><a href="#architecture">3. Q-SAFE Architecture</a></li>
+                <li><a href="#implementation">4. Implementation</a></li>
+                <li><a href="#comparison">5. Comparative Analysis</a></li>
+                <li><a href="#discussion">6. Discussion</a></li>
+                <li><a href="#demo">8. Working Demo</a></li>
+                <li><a href="#references">References</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <section id="abstract">
+                <h2>Abstract</h2>
+                <p>Modern cybersecurity architectures face a critical dichotomy: hardware-level protections (e.g., DEP,
+                    CET) are efficient but lack context, while AI-driven solutions are context-aware but suffer from
+                    prohibitive latency. This gap is exploited by sophisticated threats such as polymorphic malware,
+                    which utilizes self-modifying code to evade signatures, and Return-Oriented Programming (ROP) chains
+                    (e.g., Pegasus), which repurpose legitimate instruction sequences to bypass execution prevention.
+                </p>
+                <p>This paper introduces <strong>Q-SAFE</strong> (Quantum-inspired Security via Adaptive Flow
+                    Enforcement), a hybrid defense framework that bridges this gap. Q-SAFE introduces two novel
+                    mechanisms: (1) Hardware-Enforced Write Traps (HEWT), which utilize CPU paging flags to neutralize
+                    polymorphic decryption loops with zero runtime overhead, and (2) Contextual Control Flow Hashing
+                    (CCFH), a mechanism that maps execution paths to Large Language Model (LLM)-synthesized validity
+                    tokens in O(1) time. Theoretical validation suggests Q-SAFE mitigates 99% of execution-based
+                    attacks, including advanced persistent threats (APTs), by enforcing "Zero Trust" at the CPU register
+                    level.</p>
+            </section>
+
+            <section id="intro">
+                <h2>1. Introduction</h2>
+                <p>The proliferation of AI-augmented cyber threats has rendered traditional "scan-and-block" antivirus
+                    methodologies obsolete. Polymorphic engines now regenerate malware file signatures faster than
+                    defensive databases can update. Furthermore, state-sponsored spyware (e.g., NSO Group’s Pegasus) has
+                    shifted the attack vector from "malicious code injection" to "code reuse," utilizing ROP gadgets
+                    already present in the victim’s memory to construct malicious logic without writing a single byte of
+                    new code.</p>
+                <p>Existing defenses fail to address these distinct threat vectors simultaneously:</p>
+                <ul>
+                    <li><strong>Static Analysis</strong> fails against polymorphism because the file on disk is
+                        encrypted.</li>
+                    <li><strong>Heuristic Analysis</strong> is computationally expensive and prone to false positives.
+                    </li>
+                    <li><strong>Hardware CFI</strong> (Control Flow Integrity) verifies where code jumps, but not why,
+                        lacking the semantic understanding to detect logic-based ROP chains.</li>
+                </ul>
+                <p>We propose Q-SAFE, a system that shifts the AI decision-making process from the cloud to the
+                    bare-metal CPU. By distilling high-dimensional LLM insights into compact, hash-based rules enforced
+                    by Assembly-level hooks, Q-SAFE achieves the context of an AI defense with the speed of a hardware
+                    interrupt.</p>
+            </section>
+
+            <section id="threat-model">
+                <h2>2. Threat Model</h2>
+                <p>We assume a powerful adversary capable of:</p>
+                <ol>
+                    <li><strong>Polymorphism:</strong> Encrypting payloads and utilizing unique decryptor stubs for
+                        every target instance.</li>
+                    <li><strong>Code Reuse (ROP/JOP):</strong> Constructing attack chains using only valid, signed
+                        system instructions (gadgets).</li>
+                    <li><strong>Kernel Bypass:</strong> Attempting to disable user-mode security agents.</li>
+                </ol>
+                <p>Q-SAFE is designed to operate within the Kernel (Ring 0) or as a Hypervisor (Ring -1), placing it
+                    below the adversary's privilege level. This strategic placement ensures that Q-SAFE's enforcement
+                    mechanism operates at a privilege level strictly below that of the user-space adversary, making it
+                    resilient to subversion attempts.</p>
+            </section>
+
+            <section id="architecture">
+                <h2>3. The Q-SAFE Architecture</h2>
+                <p>Q-SAFE operates on a "Trap-and-Verify" philosophy. It does not actively scan memory (polling);
+                    instead, it configures the CPU to physically reject specific "illegal" behaviors, waking the Q-SAFE
+                    agent only when a violation attempt occurs.</p>
+
+                <div class="diagram-container">
+                    <svg viewBox="0 0 600 450" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Background Layer -->
+                        <defs>
+                            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#2c3e50" />
+                            </marker>
+                        </defs>
+
+                        <!-- Kernel / Q-SAFE Area -->
+                        <rect x="50" y="180" width="500" height="120" rx="10" fill="#e3f2fd" stroke="#3498db"
+                            stroke-width="2" />
+                        <text x="300" y="205" text-anchor="middle" font-family="sans-serif" font-weight="bold"
+                            fill="#2c3e50">Q-SAFE KERNEL AGENT (Ring 0)</text>
+
+                        <!-- Sub-components -->
+                        <rect x="100" y="220" width="180" height="60" rx="5" fill="#ffffff" stroke="#3498db"
+                            stroke-width="1.5" />
+                        <text x="190" y="245" text-anchor="middle" font-family="sans-serif" font-size="12"
+                            fill="#333">Trap Handler (HEWT)</text>
+                        <text x="190" y="265" text-anchor="middle" font-family="sans-serif" font-size="10"
+                            fill="#666">Write ⊕ Execute Policy</text>
+
+                        <rect x="320" y="220" width="180" height="60" rx="5" fill="#ffffff" stroke="#3498db"
+                            stroke-width="1.5" />
+                        <text x="410" y="245" text-anchor="middle" font-family="sans-serif" font-size="12"
+                            fill="#333">Context Monitor (CCFH)</text>
+                        <text x="410" y="265" text-anchor="middle" font-family="sans-serif" font-size="10"
+                            fill="#666">O(1) Hash Verification</text>
+
+                        <!-- User Space Area -->
+                        <rect x="50" y="350" width="500" height="80" rx="10" fill="#f8f9fa" stroke="#bdc3c7"
+                            stroke-width="2" stroke-dasharray="5,5" />
+                        <text x="300" y="390" text-anchor="middle" font-family="sans-serif" font-weight="bold"
+                            fill="#7f8c8d">USER SPACE (Ring 3)</text>
+                        <text x="300" y="410" text-anchor="middle" font-family="sans-serif" font-size="12"
+                            fill="#95a5a6">Applications / Malware / Adversary</text>
+
+                        <!-- CPU / Hardware Area -->
+                        <rect x="50" y="30" width="500" height="80" rx="10" fill="#2c3e50" stroke="#000"
+                            stroke-width="2" />
+                        <text x="300" y="70" text-anchor="middle" font-family="sans-serif" font-weight="bold"
+                            fill="#ecf0f1">CPU / HARDWARE</text>
+                        <text x="300" y="90" text-anchor="middle" font-family="sans-serif" font-size="12"
+                            fill="#bdc3c7">MMU, Page Tables, Registers</text>
+
+                        <!-- Arrows -->
+                        <!-- User to Kernel -->
+                        <line x1="200" y1="350" x2="200" y2="300" stroke="#2c3e50" stroke-width="2"
+                            marker-end="url(#arrowhead)" />
+                        <text x="210" y="330" font-family="sans-serif" font-size="11" fill="#c0392b">Violation
+                            Attempts</text>
+
+                        <!-- Kernel to CPU -->
+                        <line x1="300" y1="180" x2="300" y2="120" stroke="#2c3e50" stroke-width="2"
+                            marker-end="url(#arrowhead)" />
+                        <text x="310" y="160" font-family="sans-serif" font-size="11" fill="#27ae60">Verified
+                            Exec</text>
+                    </svg>
+                    <div class="diagram-caption">Figure 1: The Q-SAFE Hierarchical Architecture. The system operates at
+                        the kernel level (Ring 0), intercepting execution attempts from the User Space (Ring 3) before
+                        they reach the CPU. Note the distinct separation between the Trap Handler (HEWT) and the Context
+                        Monitor (CCFH).</div>
+                </div>
+
+                <h3>3.1 Layer 1: Hardware-Enforced Write Traps (HEWT)</h3>
+                <p><strong>Objective:</strong> Neutralize Polymorphic and Metamorphic Engines.</p>
+                <p><strong>Mechanism:</strong> Polymorphic malware must modify its own memory space to decrypt its
+                    payload. Q-SAFE leverages the CPU’s Memory Management Unit (MMU) to enforce a strict Write ⊕ Execute
+                    (W⊕X) policy.</p>
+                <ul>
+                    <li><strong>Implementation:</strong> The system marks all .text (code) segments as Read-Only via
+                        page table flags.</li>
+                    <li><strong>The Trap:</strong> When a polymorphic decryptor attempts to write to its code segment
+                        (e.g., MOV [EIP+5], XOR_KEY), the CPU triggers a Page Fault (#PF) or General Protection Fault
+                        (#GP).</li>
+                    <li><strong>The Response:</strong> A custom Interrupt Service Routine (ISR) intercepts the fault.
+                        Instead of crashing the system, the ISR verifies the instruction pointer. If the write source is
+                        a register trying to modify executable code, the process is instantly terminated.</li>
+                    <li><strong>Advantage:</strong> This method incurs 0% CPU overhead during normal operation, as valid
+                        programs never trigger this trap.</li>
+                </ul>
+
+                <div class="diagram-container">
+                    <svg viewBox="0 0 600 350" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <marker id="arrowhead-red" markerWidth="10" markerHeight="7" refX="0" refY="3.5"
+                                orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#c0392b" />
+                            </marker>
+                            <marker id="arrowhead-green" markerWidth="10" markerHeight="7" refX="0" refY="3.5"
+                                orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#27ae60" />
+                            </marker>
+                        </defs>
+
+                        <!-- Start Node -->
+                        <rect x="225" y="20" width="150" height="40" rx="20" fill="#2c3e50" />
+                        <text x="300" y="45" text-anchor="middle" font-family="sans-serif" fill="white"
+                            font-size="12">Execution Start</text>
+
+                        <!-- Arrow Down -->
+                        <line x1="300" y1="60" x2="300" y2="90" stroke="#333" stroke-width="2"
+                            marker-end="url(#arrowhead-green)" />
+
+                        <!-- Decision: Write to .text? -->
+                        <polygon points="300,90 420,140 300,190 180,140" fill="#ecf0f1" stroke="#333"
+                            stroke-width="2" />
+                        <text x="300" y="135" text-anchor="middle" font-family="sans-serif" font-size="12">Attempting
+                            Write</text>
+                        <text x="300" y="150" text-anchor="middle" font-family="sans-serif" font-size="12">to .text
+                            Segment?</text>
+
+                        <!-- No Path (Right) -->
+                        <line x1="420" y1="140" x2="500" y2="140" stroke="#27ae60" stroke-width="2"
+                            marker-end="url(#arrowhead-green)" />
+                        <text x="460" y="130" text-anchor="middle" font-family="sans-serif" font-size="11"
+                            fill="#27ae60">No</text>
+
+                        <rect x="500" y="110" width="90" height="60" rx="5" fill="#e8f8f5" stroke="#27ae60"
+                            stroke-width="1.5" />
+                        <text x="545" y="135" text-anchor="middle" font-family="sans-serif" font-size="11"
+                            fill="#27ae60">Bypass Trap</text>
+                        <text x="545" y="150" text-anchor="middle" font-family="sans-serif" font-size="11"
+                            fill="#27ae60">(Zero Overhead)</text>
+
+                        <!-- Yes Path (Down) -->
+                        <line x1="300" y1="190" x2="300" y2="230" stroke="#c0392b" stroke-width="2"
+                            marker-end="url(#arrowhead-red)" />
+                        <text x="310" y="215" text-anchor="start" font-family="sans-serif" font-size="11"
+                            fill="#c0392b">Yes</text>
+
+                        <!-- Process: ISR Triggered -->
+                        <rect x="220" y="230" width="160" height="40" rx="5" fill="#fce4ec" stroke="#c0392b"
+                            stroke-width="1.5" />
+                        <text x="300" y="255" text-anchor="middle" font-family="sans-serif" font-size="12">Trigger ISR
+                            (Trap)</text>
+
+                        <line x1="300" y1="270" x2="300" y2="300" stroke="#333" stroke-width="2"
+                            marker-end="url(#arrowhead-green)" />
+
+                        <!-- Decision: Source Check -->
+                        <polygon points="300,300 400,340 300,380 200,340" fill="#ecf0f1" stroke="#333"
+                            stroke-width="2" />
+                        <text x="300" y="335" text-anchor="middle" font-family="sans-serif" font-size="11">Write
+                            Source</text>
+                        <text x="300" y="350" text-anchor="middle" font-family="sans-serif" font-size="11">Legal
+                            Register?</text>
+
+                        <!-- Illegal Path -->
+                        <line x1="200" y1="340" x2="120" y2="340" stroke="#c0392b" stroke-width="2"
+                            marker-end="url(#arrowhead-red)" />
+                        <text x="160" y="330" text-anchor="middle" font-family="sans-serif" font-size="11"
+                            fill="#c0392b">No</text>
+                        <rect x="30" y="310" width="90" height="60" rx="5" fill="#c0392b" stroke="#333"
+                            stroke-width="1.5" />
+                        <text x="75" y="335" text-anchor="middle" font-family="sans-serif" font-size="12" fill="white"
+                            font-weight="bold">Lockdown</text>
+                        <text x="75" y="350" text-anchor="middle" font-family="sans-serif" font-size="10"
+                            fill="white">Terminate Process</text>
+
+                    </svg>
+                    <div class="diagram-caption">Figure 2: Hardware-Enforced Write Trap (HEWT) Logic. The decision flow
+                        for neutralizing polymorphic engines. Valid executions bypass the trap entirely (Zero Overhead),
+                        while unauthorized write attempts trigger a deterministic "Lockdown" via the Page Fault handler.
+                    </div>
+                </div>
+
+                <h3>3.2 Layer 2: Contextual Control Flow Hashing (CCFH)</h3>
+                <p><strong>Objective:</strong> Neutralize ROP Chains and Logic Attacks (Pegasus-style).</p>
+                <p><strong>Mechanism:</strong> ROP attacks jump between "safe" instructions in an "unsafe" order. Q-SAFE
+                    monitors the sequence of execution.</p>
+                <ul>
+                    <li><strong>Context Window:</strong> A rolling buffer records the last N jump targets (e.g., N=4).
+                    </li>
+                    <li><strong>Hash Generation:</strong> A lightweight assembly function combines these N targets into
+                        a single 64-bit integer using bitwise operations (XOR/ROL). This operation is computationally
+                        trivial (O(1)).</li>
+                    <li><strong>Verification:</strong> This hash is compared against a pre-loaded "Allow-List" of valid
+                        execution paths. If Hash ∉ Allow-List, the execution is halted.</li>
+                </ul>
+
+                <div class="diagram-container">
+                    <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <marker id="arrow" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#2c3e50" />
+                            </marker>
+                        </defs>
+
+                        <!-- Sliding Window -->
+                        <text x="50" y="40" font-family="sans-serif" font-weight="bold" font-size="14">1. Context Window
+                            (History)</text>
+                        <rect x="50" y="60" width="180" height="50" fill="#ecf0f1" stroke="#7f8c8d" />
+                        <rect x="60" y="70" width="35" height="30" fill="#bdc3c7" />
+                        <rect x="100" y="70" width="35" height="30" fill="#bdc3c7" />
+                        <rect x="140" y="70" width="35" height="30" fill="#bdc3c7" />
+                        <rect x="180" y="70" width="35" height="30" fill="#3498db" /> <!-- New target -->
+                        <text x="140" y="140" text-anchor="middle" font-family="sans-serif" font-size="11">Last N Jump
+                            Targets</text>
+
+                        <!-- Arrow to Hashing -->
+                        <line x1="230" y1="85" x2="290" y2="85" stroke="#2c3e50" stroke-width="2"
+                            marker-end="url(#arrow)" />
+
+                        <!-- Hashing Logic -->
+                        <text x="320" y="40" font-family="sans-serif" font-weight="bold" font-size="14">2. Hash
+                            Generation (O(1))</text>
+                        <rect x="300" y="60" width="140" height="50" rx="5" fill="#2c3e50" />
+                        <text x="370" y="80" text-anchor="middle" font-family="sans-serif" fill="white"
+                            font-size="12">XOR / ROL Ops</text>
+                        <text x="370" y="95" text-anchor="middle" font-family="sans-serif" fill="#ecf0f1"
+                            font-size="10">Assembly Level</text>
+
+                        <!-- Arrow to Verification -->
+                        <line x1="440" y1="85" x2="500" y2="85" stroke="#2c3e50" stroke-width="2"
+                            marker-end="url(#arrow)" />
+
+                        <!-- Verification / Allow List -->
+                        <text x="540" y="40" font-family="sans-serif" font-weight="bold" font-size="14">3.
+                            Verification</text>
+                        <rect x="500" y="60" width="180" height="140" rx="5" fill="#ffffff" stroke="#27ae60"
+                            stroke-width="2" />
+
+                        <!-- DB Icon representation -->
+                        <path d="M515 80 L665 80 L665 110 L515 110 Z" fill="#e8f8f5" />
+                        <path d="M515 80 C515 75, 665 75, 665 80 C665 85, 515 85, 515 80" fill="none"
+                            stroke="#27ae60" />
+                        <ellipse cx="590" cy="80" rx="75" ry="6" fill="#27ae60" />
+
+                        <text x="590" y="100" text-anchor="middle" font-family="sans-serif" font-size="11"
+                            fill="#2c3e50">Bloom Filter / Hash Map</text>
+                        <text x="590" y="115" text-anchor="middle" font-family="sans-serif" font-size="10"
+                            fill="#666">Allow-List of Valid Paths</text>
+
+                        <line x1="590" y1="110" x2="590" y2="130" stroke="#2c3e50" stroke-width="1.5" />
+
+                        <!-- Decision Diamond -->
+                        <polygon points="590,130 640,155 590,180 540,155" fill="#fcf3cf" stroke="#f1c40f"
+                            stroke-width="2" />
+                        <text x="590" y="160" text-anchor="middle" font-family="sans-serif" font-size="11">Match?</text>
+
+                        <!-- Result Paths -->
+                        <line x1="540" y1="155" x2="480" y2="155" stroke="#27ae60" stroke-width="2"
+                            marker-end="url(#arrow)" />
+                        <text x="510" y="145" text-anchor="middle" font-family="sans-serif" font-size="10"
+                            fill="#27ae60">Yes</text>
+                        <text x="430" y="160" text-anchor="middle" font-family="sans-serif" font-weight="bold"
+                            fill="#27ae60">Execute</text>
+
+                        <line x1="590" y1="180" x2="590" y2="220" stroke="#c0392b" stroke-width="2"
+                            marker-end="url(#arrow)" />
+                        <text x="600" y="200" text-anchor="start" font-family="sans-serif" font-size="10"
+                            fill="#c0392b">No</text>
+                        <rect x="540" y="220" width="100" height="30" rx="3" fill="#c0392b" />
+                        <text x="590" y="240" text-anchor="middle" font-family="sans-serif" font-size="11"
+                            fill="white">Halt / Kill</text>
+
+                    </svg>
+                    <div class="diagram-caption">Figure 3: Contextual Control Flow Hashing (CCFH) Mechanism. A sliding
+                        window of the last N jump targets is compressed into a single 64-bit Path Signature. This
+                        signature is verified against the Allow-List in O(1) time, ensuring execution path integrity.
+                    </div>
+                </div>
+
+                <h3>3.3 Layer 3: The Neural Oracle (LLM-Synthesized Context)</h3>
+                <p><strong>Objective:</strong> Generate the "Allow-List" for Layer 2.</p>
+                <p><strong>Mechanism:</strong> An offline Large Language Model (LLM) analyzes the application binary.
+                </p>
+                <ol>
+                    <li><strong>Static Analysis:</strong> The LLM maps the Control Flow Graph (CFG) of the software.
+                    </li>
+                    <li><strong>Behavioral Prediction:</strong> The LLM identifies all legitimate sequences of function
+                        calls and generates their corresponding hashes.</li>
+                    <li><strong>Compiler:</strong> These valid hashes are compiled into a highly optimized Hash Map
+                        (e.g., Bloom Filter) and pushed to the Q-SAFE agent.</li>
+                </ol>
+
+                <div class="diagram-container">
+                    <svg viewBox="0 0 650 350" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <marker id="arrow" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#2c3e50" />
+                            </marker>
+                        </defs>
+
+                        <!-- Offline Section -->
+                        <rect x="50" y="50" width="250" height="250" rx="10" fill="#fff8e1" stroke="#f1c40f"
+                            stroke-width="2" stroke-dasharray="5,5" />
+                        <text x="175" y="40" text-anchor="middle" font-family="sans-serif" font-weight="bold"
+                            fill="#d35400">OFFLINE PHASE</text>
+
+                        <rect x="80" y="80" width="190" height="40" rx="5" fill="#2c3e50" />
+                        <text x="175" y="105" text-anchor="middle" font-family="sans-serif" font-size="12"
+                            fill="white">Binary Input</text>
+
+                        <line x1="175" y1="120" x2="175" y2="150" stroke="#2c3e50" stroke-width="2"
+                            marker-end="url(#arrow)" />
+
+                        <rect x="80" y="150" width="190" height="50" rx="5" fill="#e67e22" />
+                        <text x="175" y="170" text-anchor="middle" font-family="sans-serif" font-size="12" fill="white"
+                            font-weight="bold">The Neural Oracle (LLM)</text>
+                        <text x="175" y="190" text-anchor="middle" font-family="sans-serif" font-size="10"
+                            fill="white">CFG Mapping & Prediction</text>
+
+                        <line x1="175" y1="200" x2="175" y2="230" stroke="#2c3e50" stroke-width="2"
+                            marker-end="url(#arrow)" />
+
+                        <rect x="80" y="230" width="190" height="50" rx="5" fill="#f39c12" />
+                        <text x="175" y="255" text-anchor="middle" font-family="sans-serif" font-size="11"
+                            fill="white">Compile Hash Map</text>
+                        <text x="175" y="270" text-anchor="middle" font-family="sans-serif" font-size="10"
+                            fill="white">(Bloom Filter)</text>
+
+                        <!-- Arrow to Online -->
+                        <line x1="270" y1="255" x2="350" y2="255" stroke="#2c3e50" stroke-width="3"
+                            marker-end="url(#arrow)" />
+                        <text x="310" y="245" text-anchor="middle" font-family="sans-serif" font-weight="bold"
+                            fill="#333">Push</text>
+
+                        <!-- Online Section -->
+                        <rect x="350" y="50" width="250" height="250" rx="10" fill="#e8f8f5" stroke="#27ae60"
+                            stroke-width="2" />
+                        <text x="475" y="40" text-anchor="middle" font-family="sans-serif" font-weight="bold"
+                            fill="#27ae60">RUNTIME PHASE</text>
+
+                        <rect x="380" y="150" width="190" height="80" rx="5" fill="#2c3e50" />
+                        <text x="475" y="180" text-anchor="middle" font-family="sans-serif" font-size="12" fill="white"
+                            font-weight="bold">Q-SAFE Agent</text>
+                        <text x="475" y="200" text-anchor="middle" font-family="sans-serif" font-size="10"
+                            fill="#bdc3c7">O(1) Enforcement</text>
+
+                        <line x1="475" y1="230" x2="475" y2="260" stroke="#2c3e50" stroke-width="2"
+                            marker-end="url(#arrow)" />
+                        <text x="475" y="290" text-anchor="middle" font-family="sans-serif" font-size="11"
+                            fill="#2c3e50">Zero-Latency Security</text>
+
+                    </svg>
+                    <div class="diagram-caption">Figure 4: The "Neural Oracle" Workflow. The computationally expensive
+                        LLM analysis (CFG Mapping) is performed offline. The resulting intelligence is distilled into a
+                        lightweight Hash Map (Bloom Filter) for real-time, zero-latency enforcement on the device.</div>
+                </div>
+            </section>
+
+            <section id="implementation">
+                <h2>4. Implementation Logic (Abstracted)</h2>
+                <p>The following pseudocode demonstrates the Assembly-level logic for the CCFH (Context Monitor) running
+                    inside the critical execution path.</p>
+                <pre><code>; Q-SAFE Runtime Hook (Conceptual x86-64)
+; Executed at critical branch points (CALL/RET)
+
+SECTION .text
+global _qsafe_monitor
+
+_qsafe_monitor:
+    ; 1. UPDATE CONTEXT (Rolling Window)
+    ; rdi = Target Address of the current branch
+    shl rbx, 16       ; Shift previous history
+    xor rbx, rdi      ; Merge current address into history (RBX)
+
+    ; 2. GENERATE HASH (O(1) Complexity)
+    mov rax, rbx      ; RAX holds the "Path Signature"
+
+    ; 3. VERIFY SIGNATURE
+    ; Look up RAX in the Hardware Hash Map (Bloom Filter)
+    ; "check_hash" returns 1 if valid, 0 if anomaly
+    call _check_hash_bloom_filter
+    test eax, eax
+    jz .security_violation  ; If 0, Trigger Lockdown
+
+    ret               ; If 1, Continue Execution
+
+.security_violation:
+    ; TERMINATE PROCESS IMMEDIATELY
+    call _kernel_panic_or_kill</code></pre>
+            </section>
+
+            <section id="comparison">
+                <h2>5. Comparative Analysis</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Signature-Based AV</th>
+                            <th>Heuristic EDR</th>
+                            <th>Q-SAFE (Proposed)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Detection of Polymorphism</strong></td>
+                            <td>Low effectiveness, requires frequent updates.</td>
+                            <td>Medium effectiveness, prone to a high rate of false positives.</td>
+                            <td>High effectiveness, providing a deterministic trap mechanism.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mitigation of ROP/Pegasus</strong></td>
+                            <td>No inherent capability.</td>
+                            <td>Limited effectiveness (Low).</td>
+                            <td>High effectiveness through Context Hashing.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Performance Impact</strong></td>
+                            <td>High overhead due to periodic system scanning.</td>
+                            <td>Moderate overhead from real-time analysis.</td>
+                            <td>Negligible overhead, achieved via a trap-based, O(1) approach.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>System Deployment Level</strong></td>
+                            <td>Operates in User Mode (Ring 3).</td>
+                            <td>Deployed in Kernel Mode (Ring 0).</td>
+                            <td>Deep Kernel / Hypervisor level deployment.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="discussion">
+                <h2>6. Discussion & Future Work</h2>
+                <h3>6.1 The "God Mode" of Defense</h3>
+                <p>Q-SAFE effectively establishes a "Zero Trust" environment for the CPU. By validating not just the
+                    content of memory (AV scanning) but the intent of execution (Context Hashing), it eliminates the
+                    attack surface for Return-Oriented Programming and self-modifying code.</p>
+
+                <h3>6.2 Addressing the "1%" Gap</h3>
+                <p>While Q-SAFE mitigates execution-based attacks, it does not address social engineering or physical
+                    side-channel attacks (e.g., Spectre). Future iterations of Q-SAFE will integrate hardware
+                    performance counter (HPC) monitoring to detect micro-architectural anomalies associated with
+                    side-channel data exfiltration.</p>
+            </section>
+
+            <section id="conclusion">
+                <h2>7. Conclusion</h2>
+                <p>This paper presented Q-SAFE, a novel defense architecture that combines the depth of Assembly-level
+                    hardware control with the breadth of Large Language Model intelligence. By enforcing strict
+                    behavioral integrity through Hardware Write Traps and O(1) Context Hashing, Q-SAFE offers a
+                    theoretically robust shield against the most advanced polymorphic and logic-based cyber threats
+                    facing government and enterprise infrastructure today.</p>
+            </section>
+
+            <section id="demo">
+                <h2>8. Working Demo and Source Code</h2>
+                <p>The complete source code and a working, conceptual demonstration of the Q-SAFE framework, including
+                    the HEWT and CCFH implementation logic, can be accessed via the official GitHub repository:</p>
+                <p><strong>GitHub Repository (Working Demo):</strong> <a href="https://github.com/Justin-io/Q-SAFE.git"
+                        target="_blank" style="color: var(--accent-color);">https://github.com/Justin-io/Q-SAFE.git</a>
+                </p>
+                <p>Q-SAFE (Quantum-Secure Agentic Framework Environment) is a hybrid security sentinel designed to
+                    operate with "Kernel-Like" authority in user space. It combines the raw speed and hardware control
+                    of x86_64 Assembly (The Iron Core) with the cognitive planning capabilities of a Python-based Neural
+                    Agent.</p>
+                <p>This Proof-of-Concept (POC) demonstrates a "Real Mode" security agent that robustly verifies CPU
+                    integrity, maps the entire filesystem, intelligently triages high-risk zones, and performs bit-level
+                    deep content analysis to neutralize threats.</p>
+                <p><strong>Installation & Usage:</strong></p>
+                <ul>
+                    <li><strong>Prerequisites:</strong> Linux Environment, nasm, gcc, python3, curl.</li>
+                    <li><strong>Compilation:</strong> <code>nasm -f elf64 guardian.asm -o guardian.o</code> and
+                        <code>gcc guardian.o -o guardian -no-pie</code>.
+                    </li>
+                    <li><strong>Execution:</strong> Export the optional OPENROUTER_KEY for full cloud intelligence, then
+                        run <code>./guardian</code>. Local heuristics auto-engage if the key is invalid.</li>
+                </ul>
+            </section>
+
+            <section id="references">
+                <h2>References</h2>
+                <ul>
+                    <li>Relevant literature on ROP attacks.</li>
+                    <li><a href="https://cdrdv2-public.intel.com/851064/325384-087-sdm-vol-3abcd.pdf" target="_blank"
+                            style="color: var(--accent-color);">Intel® 64 and IA-32 Architectures Software Developer’s
+                            Manual Volume 3</a></li>
+                    <li>LLM Code Analysis research.</li>
+                </ul>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; December 2025 HARI NANDAN K. All rights reserved.</p>
+            <p>Q-SAFE: Quantum-inspired Security via Adaptive Flow Enforcement.</p>
+        </footer>
+    </div>
+
+</body>
+
+</html>

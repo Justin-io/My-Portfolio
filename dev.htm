@@ -1,29 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Harinandan K | Physicist, Developer, Innovator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <style>
         :root {
             --dark-bg: #040404;
             --glass-bg: rgba(255, 255, 255, 0.08);
             --glass-border: rgba(255, 255, 255, 0.1);
-            --accent: #18d26e; /* Green */
-            --accent-secondary: #6a5acd; /* Slate Blue - for physics */
-            --accent-tertiary: #ff6b6b; /* Coral - for passion/innovation */
+            --accent: #18d26e;
+            /* Green */
+            --accent-secondary: #6a5acd;
+            /* Slate Blue - for physics */
+            --accent-tertiary: #ff6b6b;
+            /* Coral - for passion/innovation */
             --accent-hover: #35e888;
             --text-light: #ffffff;
             --text-secondary: #cccccc;
             --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             font-family: 'Poppins', sans-serif;
             background: var(--dark-bg);
@@ -32,6 +40,7 @@
             overflow-x: hidden;
             position: relative;
         }
+
         body::before {
             content: '';
             position: fixed;
@@ -41,20 +50,23 @@
             height: 100%;
             /* Enhanced gradients with more depth */
             background: radial-gradient(circle at 10% 20%, rgba(24, 210, 110, 0.15) 0%, rgba(4, 4, 4, 0) 25%),
-                        radial-gradient(circle at 90% 80%, rgba(106, 90, 205, 0.15) 0%, rgba(4, 4, 4, 0) 25%);
+                radial-gradient(circle at 90% 80%, rgba(106, 90, 205, 0.15) 0%, rgba(4, 4, 4, 0) 25%);
             z-index: -1;
             pointer-events: none;
         }
+
         .dev-section {
             padding: 80px 20px;
             position: relative;
             overflow: hidden;
         }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
             position: relative;
-            z-index: 2; /* Ensure content is above particles */
+            z-index: 2;
+            /* Ensure content is above particles */
         }
 
         /* === Particle Canvas === */
@@ -64,8 +76,10 @@
             height: 100%;
             top: 0;
             left: 0;
-            z-index: 0; /* Behind everything */
+            z-index: 0;
+            /* Behind everything */
         }
+
         /* ====================== */
 
 
@@ -79,16 +93,22 @@
             margin-bottom: 60px;
             /* Enhanced Glassmorphism */
             background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
-            backdrop-filter: blur(15px); /* Increased blur */
-            -webkit-backdrop-filter: blur(15px); /* For Safari */
+            backdrop-filter: blur(15px);
+            /* Increased blur */
+            -webkit-backdrop-filter: blur(15px);
+            /* For Safari */
             border: 1px solid var(--glass-border);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4); /* Enhanced shadow */
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            /* Enhanced shadow */
             animation: floatIn 1s ease-out;
         }
+
         .hero-content {
             position: relative;
-            z-index: 3; /* Above particles and background effects */
+            z-index: 3;
+            /* Above particles and background effects */
         }
+
         .hero h1 {
             font-size: 2.8rem;
             margin-bottom: 25px;
@@ -101,12 +121,14 @@
             letter-spacing: -0.5px;
             animation: textGlow 3s infinite alternate;
         }
+
         .hero .tagline {
-             font-size: 1.4rem;
-             margin-bottom: 20px;
-             color: var(--accent-tertiary);
-             font-weight: 600;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: var(--accent-tertiary);
+            font-weight: 600;
         }
+
         .hero p {
             font-size: 1.2rem;
             line-height: 1.7;
@@ -114,18 +136,21 @@
             margin: 0 auto 40px;
             color: var(--text-secondary);
         }
+
         .hero .contact-info {
             font-size: 1rem;
             margin-bottom: 20px;
             color: var(--text-secondary);
         }
-         .hero .contact-info a {
+
+        .hero .contact-info a {
             color: var(--accent);
             text-decoration: none;
-         }
-         .hero .contact-info a:hover {
+        }
+
+        .hero .contact-info a:hover {
             text-decoration: underline;
-         }
+        }
 
         /* === Hero Image Section === */
         .hero-image-container {
@@ -139,15 +164,19 @@
             position: relative;
             z-index: 3;
         }
+
         .hero-image-container img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Ensures image fills container */
+            object-fit: cover;
+            /* Ensures image fills container */
             transition: transform 0.5s ease;
         }
+
         .hero-image-container:hover img {
             transform: scale(1.05);
         }
+
         /* ========================= */
 
 
@@ -159,6 +188,7 @@
             gap: 15px;
             margin: 40px 0;
         }
+
         .chip {
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(10px);
@@ -172,8 +202,10 @@
             position: relative;
             overflow: hidden;
             z-index: 1;
-            cursor: default; /* Indicate it's not a link */
+            cursor: default;
+            /* Indicate it's not a link */
         }
+
         .chip::before {
             content: '';
             position: absolute;
@@ -186,14 +218,17 @@
             transition: transform 0.6s ease;
             z-index: -1;
         }
+
         .chip:hover {
             transform: translateY(-5px) scale(1.05);
             box-shadow: 0 10px 25px rgba(24, 210, 110, 0.2);
             border-color: rgba(24, 210, 110, 0.3);
         }
+
         .chip:hover::before {
             transform: translateX(100%);
         }
+
         /* CTA Button */
         .cta-button {
             display: inline-block;
@@ -213,6 +248,7 @@
             overflow: hidden;
             z-index: 1;
         }
+
         .cta-button::before {
             content: '';
             position: absolute;
@@ -225,12 +261,14 @@
             transition: transform 0.8s ease;
             z-index: -1;
         }
+
         .cta-button:hover {
             background: rgba(24, 210, 110, 0.2);
             transform: translateY(-5px) scale(1.05);
             box-shadow: 0 15px 35px rgba(24, 210, 110, 0.3);
             color: #fff;
         }
+
         .cta-button:hover::before {
             transform: translateX(100%);
         }
@@ -243,19 +281,23 @@
             gap: 40px;
             margin: 80px 0;
         }
+
         .service-box {
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)); /* Enhanced glass */
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+            /* Enhanced glass */
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border-radius: 25px;
             padding: 40px 30px;
             transition: var(--transition);
             border: 1px solid var(--glass-border);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4); /* Enhanced shadow */
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            /* Enhanced shadow */
             position: relative;
             overflow: hidden;
             z-index: 1;
         }
+
         .service-box::before {
             content: '';
             position: absolute;
@@ -264,27 +306,35 @@
             width: 100%;
             height: 100%;
             /* Gradient changes based on service type */
-            background: linear-gradient(135deg, transparent, rgba(24, 210, 110, 0.1), transparent); /* Default green */
+            background: linear-gradient(135deg, transparent, rgba(24, 210, 110, 0.1), transparent);
+            /* Default green */
             transform: translateX(-100%);
             transition: transform 0.8s ease;
             z-index: -1;
         }
+
         .service-box.research::before {
-             background: linear-gradient(135deg, transparent, rgba(106, 90, 205, 0.1), transparent); /* Blue for research */
+            background: linear-gradient(135deg, transparent, rgba(106, 90, 205, 0.1), transparent);
+            /* Blue for research */
         }
+
         .service-box.entrepreneurship::before {
-             background: linear-gradient(135deg, transparent, rgba(255, 107, 107, 0.1), transparent); /* Coral for entrepreneurship */
+            background: linear-gradient(135deg, transparent, rgba(255, 107, 107, 0.1), transparent);
+            /* Coral for entrepreneurship */
         }
 
         .service-box:hover {
             transform: translateY(-10px);
-            box-shadow: 0 18px 45px rgba(24, 210, 110, 0.25); /* Enhanced hover shadow */
+            box-shadow: 0 18px 45px rgba(24, 210, 110, 0.25);
+            /* Enhanced hover shadow */
             border-color: rgba(24, 210, 110, 0.25);
         }
+
         .service-box.research:hover {
             box-shadow: 0 18px 45px rgba(106, 90, 205, 0.25);
             border-color: rgba(106, 90, 205, 0.25);
         }
+
         .service-box.entrepreneurship:hover {
             box-shadow: 0 18px 45px rgba(255, 107, 107, 0.25);
             border-color: rgba(255, 107, 107, 0.25);
@@ -293,69 +343,89 @@
         .service-box:hover::before {
             transform: translateX(100%);
         }
+
         .service-box .icon {
             font-size: 3.5rem;
             margin-bottom: 25px;
-            color: var(--accent); /* Default green */
+            color: var(--accent);
+            /* Default green */
             transition: var(--transition);
         }
+
         .service-box.research .icon {
-            color: var(--accent-secondary); /* Blue for research */
+            color: var(--accent-secondary);
+            /* Blue for research */
         }
+
         .service-box.entrepreneurship .icon {
-            color: var(--accent-tertiary); /* Coral for entrepreneurship */
+            color: var(--accent-tertiary);
+            /* Coral for entrepreneurship */
         }
+
         .service-box:hover .icon {
             transform: scale(1.1) rotate(5deg);
         }
+
         .service-box h3 {
             font-size: 1.8rem;
             margin-bottom: 20px;
             font-weight: 600;
         }
+
         .service-box p {
             color: var(--text-secondary);
             line-height: 1.7;
             margin-bottom: 25px;
         }
+
         .service-box ul {
             list-style: none;
             padding-left: 0;
         }
+
         .service-box ul li {
             margin-bottom: 15px;
             padding-left: 25px;
             position: relative;
             color: var(--text-secondary);
         }
+
         .service-box ul li::before {
             content: '▹';
             position: absolute;
             left: 0;
-            color: var(--accent); /* Default green */
+            color: var(--accent);
+            /* Default green */
             font-weight: bold;
         }
+
         .service-box.research ul li::before {
-            color: var(--accent-secondary); /* Blue for research */
+            color: var(--accent-secondary);
+            /* Blue for research */
         }
+
         .service-box.entrepreneurship ul li::before {
-            color: var(--accent-tertiary); /* Coral for entrepreneurship */
+            color: var(--accent-tertiary);
+            /* Coral for entrepreneurship */
         }
 
         /* New Section: Personal Info & Overview */
         .overview-section {
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)); /* Enhanced glass */
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+            /* Enhanced glass */
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border-radius: 25px;
             padding: 40px 30px;
             margin: 60px 0;
             border: 1px solid var(--glass-border);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4); /* Enhanced shadow */
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            /* Enhanced shadow */
             position: relative;
             overflow: hidden;
             z-index: 1;
         }
+
         .overview-section::before {
             content: '';
             position: absolute;
@@ -368,31 +438,39 @@
             transition: transform 0.8s ease;
             z-index: -1;
         }
+
         .overview-section:hover::before {
             transform: translateX(100%);
         }
+
         .overview-section h2 {
             font-size: 2rem;
             margin-bottom: 20px;
             color: var(--accent);
         }
+
         .overview-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
         }
+
         .overview-item h3 {
             font-size: 1.3rem;
             margin-bottom: 10px;
             color: var(--accent-secondary);
         }
-        .overview-item p, .overview-item ul {
+
+        .overview-item p,
+        .overview-item ul {
             color: var(--text-secondary);
             line-height: 1.6;
         }
+
         .overview-item ul {
             padding-left: 20px;
         }
+
         .overview-item li {
             margin-bottom: 8px;
         }
@@ -404,6 +482,7 @@
             margin: 80px 0 50px;
             position: relative;
         }
+
         .section-title::after {
             content: '';
             position: absolute;
@@ -415,25 +494,30 @@
             background: var(--accent);
             border-radius: 2px;
         }
+
         .project-cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 40px;
             margin-bottom: 80px;
         }
+
         .project-card {
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)); /* Enhanced glass */
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+            /* Enhanced glass */
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border-radius: 25px;
             padding: 35px;
             transition: var(--transition);
             border: 1px solid var(--glass-border);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4); /* Enhanced shadow */
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            /* Enhanced shadow */
             position: relative;
             overflow: hidden;
             z-index: 1;
         }
+
         .project-card::before {
             content: '';
             position: absolute;
@@ -446,11 +530,14 @@
             transition: transform 0.8s ease;
             z-index: -1;
         }
+
         .project-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 18px 45px rgba(24, 210, 110, 0.25); /* Enhanced hover shadow */
+            box-shadow: 0 18px 45px rgba(24, 210, 110, 0.25);
+            /* Enhanced hover shadow */
             border-color: rgba(24, 210, 110, 0.25);
         }
+
         .project-card:hover::before {
             transform: translateX(100%);
         }
@@ -462,7 +549,8 @@
             border-radius: 15px;
             overflow: hidden;
             margin-bottom: 20px;
-            background: rgba(0, 0, 0, 0.2); /* Placeholder background */
+            background: rgba(0, 0, 0, 0.2);
+            /* Placeholder background */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -470,15 +558,19 @@
             font-size: 0.9rem;
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
+
         .project-image-container img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Ensures image fills container */
+            object-fit: cover;
+            /* Ensures image fills container */
             transition: transform 0.5s ease;
         }
+
         .project-card:hover .project-image-container img {
             transform: scale(1.05);
         }
+
         /* ========================= */
 
         .project-card h3 {
@@ -486,26 +578,31 @@
             margin-bottom: 15px;
             color: var(--accent);
         }
+
         .project-card .type {
             font-style: italic;
             color: var(--text-secondary);
             margin-bottom: 20px;
             font-size: 0.95rem;
         }
+
         .project-card .desc {
             margin-bottom: 20px;
             line-height: 1.7;
         }
+
         .project-card .tech,
         .project-card .features {
             margin-bottom: 15px;
             font-size: 0.95rem;
             color: var(--text-secondary);
         }
+
         .project-card .tech strong,
         .project-card .features strong {
             color: #fff;
         }
+
         .project-link {
             display: inline-block;
             margin-top: 15px;
@@ -516,6 +613,7 @@
             position: relative;
             padding-right: 25px;
         }
+
         .project-link::after {
             content: '→';
             position: absolute;
@@ -525,10 +623,12 @@
             opacity: 0;
             transition: var(--transition);
         }
+
         .project-link:hover {
             color: var(--accent-hover);
             padding-right: 30px;
         }
+
         .project-link:hover::after {
             opacity: 1;
             right: -5px;
@@ -541,19 +641,23 @@
             gap: 30px;
             margin-top: 50px;
         }
+
         .skill {
             margin-bottom: 25px;
         }
+
         .skill p {
             margin-bottom: 12px;
             font-size: 1.05rem;
             display: flex;
             justify-content: space-between;
         }
+
         .skill .percentage {
             color: var(--accent);
             font-weight: 600;
         }
+
         .progress-bar {
             height: 12px;
             background: rgba(255, 255, 255, 0.08);
@@ -562,6 +666,7 @@
             position: relative;
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
         }
+
         .progress-bar::before {
             content: '';
             position: absolute;
@@ -572,6 +677,7 @@
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
             animation: progressShine 2s infinite;
         }
+
         .bar {
             height: 100%;
             background: linear-gradient(90deg, var(--accent), #35e888);
@@ -580,6 +686,7 @@
             width: 0;
             transition: width 1.5s cubic-bezier(0.22, 0.61, 0.36, 1);
         }
+
         .bar::after {
             content: '';
             position: absolute;
@@ -595,14 +702,17 @@
         .tools-section {
             margin: 80px 0;
         }
+
         .tools-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             gap: 25px;
             margin-top: 40px;
         }
+
         .tool-card {
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)); /* Enhanced glass */
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+            /* Enhanced glass */
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border-radius: 20px;
@@ -610,10 +720,12 @@
             text-align: center;
             transition: var(--transition);
             border: 1px solid var(--glass-border);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4); /* Enhanced shadow */
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            /* Enhanced shadow */
             position: relative;
             overflow: hidden;
         }
+
         .tool-card::before {
             content: '';
             position: absolute;
@@ -626,19 +738,24 @@
             transition: transform 0.8s ease;
             z-index: -1;
         }
+
         .tool-card:hover {
             transform: translateY(-8px) scale(1.05);
-            box-shadow: 0 18px 45px rgba(24, 210, 110, 0.25); /* Enhanced hover shadow */
+            box-shadow: 0 18px 45px rgba(24, 210, 110, 0.25);
+            /* Enhanced hover shadow */
             border-color: rgba(24, 210, 110, 0.25);
         }
+
         .tool-card:hover::before {
             transform: translateX(100%);
         }
+
         .tool-card i {
             font-size: 2.5rem;
             margin-bottom: 15px;
             color: var(--accent);
         }
+
         .tool-card span {
             display: block;
             font-size: 0.9rem;
@@ -649,11 +766,13 @@
         .timeline-section {
             margin: 80px 0;
         }
+
         .timeline {
             position: relative;
             max-width: 800px;
             margin: 50px auto 0;
         }
+
         .timeline::after {
             content: '';
             position: absolute;
@@ -665,6 +784,7 @@
             margin-left: -2px;
             border-radius: 2px;
         }
+
         .timeline-item {
             padding: 20px 40px;
             position: relative;
@@ -674,26 +794,33 @@
             transform: translateY(30px);
             transition: all 0.6s ease;
         }
+
         .timeline-item.visible {
             opacity: 1;
             transform: translateY(0);
         }
+
         .timeline-item:nth-child(odd) {
             left: 0;
         }
+
         .timeline-item:nth-child(even) {
             left: 50%;
         }
+
         .timeline-content {
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)); /* Enhanced glass */
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+            /* Enhanced glass */
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border-radius: 20px;
             padding: 30px;
             border: 1px solid var(--glass-border);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4); /* Enhanced shadow */
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            /* Enhanced shadow */
             position: relative;
         }
+
         .timeline-content::before {
             content: '';
             position: absolute;
@@ -704,22 +831,27 @@
             border-radius: 50%;
             z-index: 1;
         }
+
         .timeline-item:nth-child(odd) .timeline-content::before {
             right: -50px;
         }
+
         .timeline-item:nth-child(even) .timeline-content::before {
             left: -50px;
         }
+
         .timeline-content h3 {
             margin-bottom: 10px;
             color: var(--accent);
         }
+
         .timeline-content .date {
             color: var(--text-secondary);
             font-size: 0.9rem;
             margin-bottom: 15px;
             display: block;
         }
+
         .timeline-content p {
             line-height: 1.6;
         }
@@ -729,29 +861,35 @@
             text-align: center;
             margin: 100px 0 50px;
             padding: 50px;
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)); /* Enhanced glass */
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+            /* Enhanced glass */
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border-radius: 30px;
             border: 1px solid var(--glass-border);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4); /* Enhanced shadow */
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            /* Enhanced shadow */
         }
+
         .contact-section h2 {
             font-size: 2.2rem;
             margin-bottom: 20px;
         }
+
         .contact-section p {
             max-width: 600px;
             margin: 0 auto 30px;
             color: var(--text-secondary);
             line-height: 1.7;
         }
+
         .social-links {
             display: flex;
             justify-content: center;
             gap: 25px;
             margin-top: 30px;
         }
+
         .social-link {
             display: flex;
             align-items: center;
@@ -767,6 +905,7 @@
             transition: var(--transition);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
+
         .social-link:hover {
             transform: translateY(-8px) scale(1.1);
             background: rgba(24, 210, 110, 0.2);
@@ -780,27 +919,33 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             100% {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
+
         @keyframes textGlow {
             0% {
                 text-shadow: 0 0 5px rgba(24, 210, 110, 0.3), 0 0 5px rgba(106, 90, 205, 0.3);
             }
+
             100% {
                 text-shadow: 0 0 20px rgba(24, 210, 110, 0.7), 0 0 20px rgba(106, 90, 205, 0.7);
             }
         }
+
         @keyframes progressShine {
             0% {
                 transform: translateX(-100%);
             }
+
             100% {
                 transform: translateX(100%);
             }
         }
+
         /* Floating Elements */
         .floating {
             position: absolute;
@@ -809,6 +954,7 @@
             z-index: 1;
             pointer-events: none;
         }
+
         .floating:nth-child(1) {
             width: 300px;
             height: 300px;
@@ -816,6 +962,7 @@
             left: 5%;
             animation: float 15s infinite ease-in-out;
         }
+
         .floating:nth-child(2) {
             width: 200px;
             height: 200px;
@@ -825,6 +972,7 @@
             animation-delay: 2s;
             background: radial-gradient(circle, rgba(106, 90, 205, 0.2) 0%, transparent 70%);
         }
+
         .floating:nth-child(3) {
             width: 150px;
             height: 150px;
@@ -834,16 +982,20 @@
             animation-delay: 4s;
             background: radial-gradient(circle, rgba(255, 107, 107, 0.2) 0%, transparent 70%);
         }
+
         @keyframes float {
             0% {
                 transform: translate(0, 0) rotate(0deg);
             }
+
             33% {
                 transform: translate(20px, -30px) rotate(10deg);
             }
+
             66% {
                 transform: translate(-20px, 20px) rotate(-10deg);
             }
+
             100% {
                 transform: translate(0, 0) rotate(0deg);
             }
@@ -851,10 +1003,19 @@
 
         /* Pulse Animation for Key Elements */
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
         }
+
         .pulse {
             animation: pulse 2s infinite;
         }
@@ -865,11 +1026,13 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
+
         .fade-in-up {
             animation: fadeInUp 0.8s ease-out forwards;
         }
@@ -879,31 +1042,39 @@
             .hero h1 {
                 font-size: 2.2rem;
             }
+
             .hero .tagline {
                 font-size: 1.2rem;
             }
+
             .hero p {
                 font-size: 1rem;
             }
+
             .services-grid,
             .project-cards,
             .overview-grid {
                 grid-template-columns: 1fr;
             }
+
             .section-title {
                 font-size: 2rem;
             }
+
             .timeline::after {
                 left: 31px;
             }
+
             .timeline-item {
                 width: 100%;
                 padding-left: 70px;
                 padding-right: 25px;
             }
+
             .timeline-item:nth-child(even) {
                 left: 0;
             }
+
             .timeline-item:nth-child(odd) .timeline-content::before,
             .timeline-item:nth-child(even) .timeline-content::before {
                 left: -50px;
@@ -912,6 +1083,62 @@
         }
     </style>
 </head>
+<script>
+
+    // Disable right-click context menu
+    document.addEventListener('contextmenu', (event) => event.preventDefault());
+
+    // Prevent F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+S
+    document.addEventListener('keydown', (event) => {
+        if (
+            event.key === 'F12' || // F12
+            (event.ctrlKey && event.shiftKey && event.key === 'I') || // Ctrl+Shift+I
+            (event.ctrlKey && event.shiftKey && event.key === 'J') || // Ctrl+Shift+J
+            (event.ctrlKey && event.key === 'U') || // Ctrl+U
+            (event.ctrlKey && event.key === 'S') // Ctrl+S
+        ) {
+            event.preventDefault();
+        }
+    });
+
+    // Detect and block the opening of developer tools
+    (function detectDevTools() {
+        const devToolsCheck = new Function('debugger');
+        setInterval(() => {
+            const start = performance.now();
+            devToolsCheck();
+            if (performance.now() - start > 100) {
+                alert('Developer tools are not allowed on this page.');
+                window.close(); // Close the tab
+            }
+        }, 500);
+    })();
+
+    // Disable drag-and-drop actions
+    document.addEventListener('dragstart', (event) => event.preventDefault());
+
+    // Disable copying, cutting, or pasting
+    document.addEventListener('copy', (event) => event.preventDefault());
+    document.addEventListener('cut', (event) => event.preventDefault());
+    document.addEventListener('paste', (event) => event.preventDefault());
+
+    // Hide the source code
+    document.onkeydown = function (e) {
+        if (e.ctrlKey && e.key === 'P') {
+            // Disable Print
+            e.preventDefault();
+        }
+    };
+    document.addEventListener('DOMContentLoaded', () => {
+        document.body.style.userSelect = 'none';
+        document.body.style.webkitUserSelect = 'none';
+        document.body.style.mozUserSelect = 'none';
+        document.body.style.msUserSelect = 'none';
+    });
+
+
+</script>
+
 <body>
     <!-- === Particle Canvas === -->
     <div id="particles-js"></div>
@@ -926,23 +1153,28 @@
             <!-- Hero/Open Section -->
             <div class="hero fade-in-up">
                 <div class="hero-content">
-                     <!-- === Hero Image === -->
+                    <!-- === Hero Image === -->
                     <div class="hero-image-container">
                         <img src="assets/img/me.jpg" alt="Harinandan K">
                     </div>
                     <!-- ================= -->
                     <h1>Harinandan K</h1>
-                    <p class="tagline">Theoretical Physicist | Quantum Computing Enthusiast | Full-Stack Developer | IoT Innovator | Tech Educator | Technopreneur</p>
+                    <h2>Theoretical Physicist | Quantum Computing Enthusiast | Full-Stack Developer | IoT Innovator |
+                        Tech Educator | Technopreneur</h2>
                     <p class="contact-info">
                         <i class='bx bx-map'></i> Kozhikode, Kerala, India |
-                        <i class='bx bx-calendar'></i> 7 Apr 2005 (19 years old) |
+                        <i class='bx bx-calendar'></i> 7 Apr 2005 |
                         <i class='bx bx-phone'></i> <a href="tel:+917510155646">+91 75101 55646</a> |
-                        <i class='bx bx-envelope'></i> <a href="mailto:harinandankofficial@tuta.io">harinandankofficial@tuta.io</a>
+                        <i class='bx bx-envelope'></i> <a
+                            href="mailto:harinandankofficial@tuta.io">harinandankofficial@tuta.io</a>
                     </p>
                     <p>
-                        Passionate creator, theoretical physicist, and technology enthusiast dedicated to building meaningful digital solutions, advancing fundamental physics research, and nurturing the next generation of innovators. Purpose-driven technopreneur and visionary behind the HOPE platform.
+                        I am a passionate creator, theoretical physicist, and technology enthusiast dedicated to
+                        building meaningful digital solutions, advancing fundamental physics research, and nurturing the
+                        next generation of innovators. I work as a purpose-driven technopreneur and am the visionary
+                        behind the HOPE platform.
                     </p>
-                     <p><strong>Mission:</strong> Create. Empower. Evolve.</p>
+                    <p><strong>Mission:</strong> Create. Empower. Evolve.</p>
                     <!-- Key Skills Chips -->
                     <div class="skills-chips">
                         <span class="chip">Theoretical Physics</span>
@@ -965,35 +1197,40 @@
             <div class="overview-section fade-in-up">
                 <h2>About Me</h2>
                 <div class="overview-grid">
-                     <div class="overview-item">
-                         <h3>Professional Snapshot</h3>
-                         <ul>
-                             <li><strong>Roles:</strong> Founder & CEO (HOPE), Full-Stack Developer, IoT Innovator, Tech Educator</li>
-                             <li><strong>Education:</strong> B.Tech in Data Science (Currently Pursuing)</li>
-                             <li><strong>Experience:</strong> 5+ years research, 7+ years technical</li>
-                             <li><strong>Availability:</strong> Open to Research & Projects, Collaboration</li>
-                         </ul>
-                     </div>
-                     <div class="overview-item">
-                         <h3>Research Focus</h3>
-                         <p>
-                             My current research delves into the mathematical frameworks for discrete spacetime models and quantum gravity approaches through the <strong>Chronon-Super Quantum Level paradigm</strong>. This work explores the intersection of Quantum Mechanics, General Relativity, and foundational mathematics.
-                         </p>
-                         <p><strong>Active Domains:</strong> Quantum Gravity, Pre-geometric Theories, Discrete Mathematics</p>
-                     </div>
-                     <div class="overview-item">
-                         <h3>Key Areas of Work</h3>
-                         <ul>
-                             <li>Theoretical Physics Research (QM, GR, Discrete Spacetime)</li>
-                             <li>Full-Stack Web Development (HTML/CSS, JS, Python, Flask)</li>
-                             <li>Mobile App Development (Android, Flutter)</li>
-                             <li>IoT Systems (Raspberry Pi, Arduino, ESP32)</li>
-                             <li>AI & Edge Computing (Computer Vision, ML Basics)</li>
-                             <li>Cybersecurity & Ethical Hacking</li>
-                             <li>Entrepreneurial Leadership (HOPE Platform)</li>
-                             <li>Tech Education & Mentorship</li>
-                         </ul>
-                     </div>
+                    <div class="overview-item">
+                        <h3>My Snapshot</h3>
+                        <ul>
+                            <li><strong>Roles:</strong> Founder & CEO (HOPE), Full-Stack Developer, IoT Innovator, Tech
+                                Educator</li>
+                            <li><strong>Education:</strong> B.Tech in Data Science (Currently Pursuing)</li>
+                            <li><strong>Experience:</strong> 5+ years research, 7+ years technical</li>
+                            <li><strong>Availability:</strong> Open to Research & Projects, Collaboration</li>
+                        </ul>
+                    </div>
+                    <div class="overview-item">
+                        <h3>Research Focus</h3>
+                        <p>
+                            My current research delves into the mathematical frameworks for discrete spacetime models
+                            and quantum gravity approaches through the <strong>Chronon-Super Quantum Level
+                                paradigm</strong>. This work explores the intersection of Quantum Mechanics, General
+                            Relativity, and foundational mathematics.
+                        </p>
+                        <p><strong>Active Domains:</strong> Quantum Gravity, Pre-geometric Theories, Discrete
+                            Mathematics</p>
+                    </div>
+                    <div class="overview-item">
+                        <h3>My Key Areas of Work</h3>
+                        <ul>
+                            <li>Theoretical Physics Research (QM, GR, Discrete Spacetime)</li>
+                            <li>Full-Stack Web Development (HTML/CSS, JS, Python, Flask)</li>
+                            <li>Mobile App Development (Android, Flutter)</li>
+                            <li>IoT Systems (Raspberry Pi, Arduino, ESP32)</li>
+                            <li>AI & Edge Computing (Computer Vision, ML Basics)</li>
+                            <li>Cybersecurity & Ethical Hacking</li>
+                            <li>Entrepreneurial Leadership (HOPE Platform)</li>
+                            <li>Tech Education & Mentorship</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
@@ -1003,44 +1240,62 @@
                 <div class="service-box research fade-in-up">
                     <div class="icon"><i class='bx bx-atom'></i></div>
                     <h3>Theoretical Physics Research</h3>
-                    <p>Exploring the frontiers of fundamental physics, focusing on quantum gravity, discrete spacetime models, and the mathematical foundations linking quantum mechanics and general relativity.</p>
+                    <p>I explore the frontiers of fundamental physics, focusing on quantum gravity, discrete spacetime
+                        models, and the mathematical foundations linking quantum mechanics and general relativity.</p>
                     <ul>
-                        <li><strong>Focus Areas:</strong> Quantum Gravity & the Problem of Time, Pre-geometric Theories & Causal Graphs, Discrete Mathematics & Hilbert Spaces.</li>
-                        <li><strong>Specific Work:</strong> Developing the Chronon-Super Quantum Level Model, studying Emergent Spacetime Theories, Modified Dispersion Relations, and Modified uncertainty principles.</li>
-                        <li><strong>Methodologies:</strong> Mathematical Derivation, Literature Review, Conceptual Innovation, Interdisciplinary Synthesis (QM, GR, Thermodynamics, Information Theory).</li>
+                        <li><strong>Focus Areas:</strong> Quantum Gravity & the Problem of Time, Pre-geometric Theories
+                            & Causal Graphs, Discrete Mathematics & Hilbert Spaces.</li>
+                        <li><strong>Specific Work:</strong> Developing the Chronon-Super Quantum Level Model, studying
+                            Emergent Spacetime Theories, Modified Dispersion Relations, and Modified uncertainty
+                            principles.</li>
+                        <li><strong>Methodologies:</strong> Mathematical Derivation, Literature Review, Conceptual
+                            Innovation, Interdisciplinary Synthesis (QM, GR, Thermodynamics, Information Theory).</li>
                     </ul>
                 </div>
                 <!-- Web Dev Box -->
                 <div class="service-box fade-in-up">
                     <div class="icon"><i class='bx bx-code-alt'></i></div>
                     <h3>Web Development</h3>
-                    <p>Create dynamic, responsive, and scalable websites and web apps using modern technologies, ensuring a seamless digital experience across all devices and platforms.</p>
+                    <p>I create dynamic, responsive, and scalable websites and web apps using modern technologies,
+                        ensuring a seamless digital experience across all devices and platforms.</p>
                     <ul>
-                        <li><strong>Technologies:</strong> HTML5, CSS3, JavaScript (ES6+), Bootstrap, Flask, WordPress (CMS & WooCommerce), Firebase, React, Node.js.</li>
-                        <li><strong>Capabilities:</strong> Responsive design, full-stack development, CMS integration, REST API development, Progressive Web Apps (PWA).</li>
-                        <li><strong>Reference Projects:</strong> IES College DS Portal, ShopRoyince, Candle Institute GUI, E-commerce Platform.</li>
+                        <li><strong>Technologies:</strong> HTML5, CSS3, JavaScript (ES6+), Bootstrap, Flask, WordPress
+                            (CMS & WooCommerce), Firebase, React, Node.js.</li>
+                        <li><strong>Capabilities:</strong> Responsive design, full-stack development, CMS integration,
+                            REST API development, Progressive Web Apps (PWA).</li>
+                        <li><strong>Reference Projects:</strong> IES College DS Portal, ShopRoyince, Candle Institute
+                            GUI, E-commerce Platform.</li>
                     </ul>
                 </div>
                 <!-- App Dev Box -->
                 <div class="service-box fade-in-up">
                     <div class="icon"><i class='bx bx-mobile'></i></div>
                     <h3>App Development</h3>
-                    <p>Design and build custom Android applications with powerful features, smooth user experience, and reliable performance, tailored to meet your specific business and user needs.</p>
+                    <p>I design and build custom Android applications with powerful features, smooth user experience,
+                        and reliable performance, tailored to meet your specific business and user needs.</p>
                     <ul>
-                        <li><strong>Technologies:</strong> Android Development, Flutter, Dart, Java, Kotlin, Firebase, REST APIs.</li>
-                        <li><strong>Capabilities:</strong> Cross-platform apps (Flutter), Native Android apps, Intuitive UI/UX, Performance Optimization, Real-time Data Sync.</li>
-                        <li><strong>Reference Projects:</strong> HOPE platform components, Educational Apps, Productivity Tools.</li>
+                        <li><strong>Technologies:</strong> Android Development, Flutter, Dart, Java, Kotlin, Firebase,
+                            REST APIs.</li>
+                        <li><strong>Capabilities:</strong> Cross-platform apps (Flutter), Native Android apps, Intuitive
+                            UI/UX, Performance Optimization, Real-time Data Sync.</li>
+                        <li><strong>Reference Projects:</strong> HOPE platform components, Educational Apps,
+                            Productivity Tools.</li>
                     </ul>
                 </div>
                 <!-- Entrepreneurship Box -->
                 <div class="service-box entrepreneurship fade-in-up">
                     <div class="icon"><i class='bx bx-bulb'></i></div>
                     <h3>Entrepreneurial Leadership</h3>
-                    <p>Driving innovation through technology ventures. Founded and leading the HOPE platform, a social startup tackling hunger/poverty with four verticals: Education, E-Commerce, IoT, and Research.</p>
+                    <p>I drive innovation through technology ventures. I founded and lead the HOPE platform, a social
+                        startup tackling hunger/poverty with four verticals: Education, E-Commerce, IoT, and Research.
+                    </p>
                     <ul>
-                        <li><strong>Leadership:</strong> Managing Web Tech, IoT, and E-Commerce sectors within HOPE; mentoring interns/developers.</li>
-                        <li><strong>Other Ventures:</strong> TexidoMeg (cybersecurity/coding training), ShopRoyince (edu products), IES DS Portal (academic hub).</li>
-                        <li><strong>Educational Impact:</strong> Designed IoT courses, 20-day internship programs, provides project mentorship and academic resources, HOPE Summer IoT Camp.</li>
+                        <li><strong>Leadership:</strong> Managing Web Tech, IoT, and E-Commerce sectors within HOPE;
+                            mentoring interns/developers.</li>
+                        <li><strong>Other Ventures:</strong> TexidoMeg (cybersecurity/coding training), ShopRoyince (edu
+                            products), IES DS Portal (academic hub).</li>
+                        <li><strong>Educational Impact:</strong> Designed IoT courses, 20-day internship programs,
+                            provides project mentorship and academic resources, HOPE Summer IoT Camp.</li>
                     </ul>
                 </div>
             </div>
@@ -1050,83 +1305,104 @@
             <div class="project-cards">
                 <!-- Project 1 -->
                 <div class="project-card fade-in-up">
-                     <!-- === Project Image === -->
+                    <!-- === Project Image === -->
                     <div class="project-image-container">
                         <img src="https://placehold.co/600x400/6a5acd/ffffff?text=HOPE+Platform" alt="HOPE Platform">
                     </div>
                     <!-- =================== -->
                     <h3>HOPE Platform</h3>
                     <p class="type">Social Startup / Multi-Vertical Ecosystem</p>
-                    <p class="desc">Founder & CEO of HOPE, a social startup tackling hunger/poverty through four integrated verticals: Education (TexidoMeg, IoT Camps), E-Commerce (ShopRoyince), IoT (smart systems), and Research (fundamental physics).</p>
-                    <p class="tech"><strong>Technologies/Concepts:</strong> Full-stack web dev, Mobile app dev (Flutter), IoT platforms, Research frameworks, Educational tools.</p>
-                    <p class="features"><strong>Features:</strong> Centralized academic resources, E-commerce for local needs, AI-integrated robotics, Research publications, Mentorship programs.</p>
+                    <p class="desc">I am the Founder & CEO of HOPE, a social startup tackling hunger/poverty through
+                        four integrated verticals: Education (TexidoMeg, IoT Camps), E-Commerce (ShopRoyince), IoT
+                        (smart systems), and Research (fundamental physics).</p>
+                    <p class="tech"><strong>Technologies/Concepts:</strong> Full-stack web dev, Mobile app dev
+                        (Flutter), IoT platforms, Research frameworks, Educational tools.</p>
+                    <p class="features"><strong>Features:</strong> Centralized academic resources, E-commerce for local
+                        needs, AI-integrated robotics, Research publications, Mentorship programs.</p>
                 </div>
                 <!-- Project 2 -->
                 <div class="project-card fade-in-up">
-                     <!-- === Project Image === -->
+                    <!-- === Project Image === -->
                     <div class="project-image-container">
-                        <img src="https://placehold.co/600x400/18d26e/040404?text=IES+DS+Portal" alt="IES College Data Science Portal">
+                        <img src="https://placehold.co/600x400/18d26e/040404?text=IES+DS+Portal"
+                            alt="IES College Data Science Portal">
                     </div>
                     <!-- =================== -->
                     <h3>IES College Data Science Portal</h3>
                     <p class="type">Web Application / Academic Hub</p>
-                    <p class="desc">Centralized Academic Hub developed as part of the IES College Data Science department initiative. Provides students with access to resources, assignments, and course materials in one place.</p>
+                    <p class="desc">I developed this centralized academic hub as part of the IES College Data Science
+                        department initiative. It provides students with access to resources, assignments, and course
+                        materials in one place.</p>
                     <p class="tech"><strong>Technologies:</strong> HTML/CSS/JS, Flask, Firebase, Bootstrap</p>
-                    <p class="features"><strong>Features:</strong> Centralized resource access, Assignment submission, Course tracking, User authentication.</p>
+                    <p class="features"><strong>Features:</strong> Centralized resource access, Assignment submission,
+                        Course tracking, User authentication.</p>
                     <a href="https://s1dsa-ies.web.app" target="_blank" class="project-link">Live Preview</a>
                 </div>
                 <!-- Project 3 -->
                 <div class="project-card fade-in-up">
-                     <!-- === Project Image === -->
+                    <!-- === Project Image === -->
                     <div class="project-image-container">
                         <img src="https://placehold.co/600x400/ff6b6b/ffffff?text=ShopRoyince" alt="ShopRoyince">
                     </div>
                     <!-- =================== -->
                     <h3>ShopRoyince</h3>
                     <p class="type">E-commerce Website</p>
-                    <p class="desc">A beta-stage e-commerce solution developed under government support for local academic institutions. The project aimed to streamline notebook and study material distribution in rural campuses.</p>
-                    <p class="tech"><strong>Technologies:</strong> HTML/CSS/JS, Vercel Deployment, Firebase, Payment Integration</p>
-                    <p class="features"><strong>Features:</strong> Product catalog, Shopping cart, Secure checkout, Order tracking, Admin dashboard.</p>
+                    <p class="desc">I developed this beta-stage e-commerce solution under government support for local
+                        academic institutions. The project aimed to streamline notebook and study material distribution
+                        in rural campuses.</p>
+                    <p class="tech"><strong>Technologies:</strong> HTML/CSS/JS, Vercel Deployment, Firebase, Payment
+                        Integration</p>
+                    <p class="features"><strong>Features:</strong> Product catalog, Shopping cart, Secure checkout,
+                        Order tracking, Admin dashboard.</p>
                     <a href="https://shoproyince.vercel.app" target="_blank" class="project-link">Live Preview</a>
                 </div>
                 <!-- Project 4 -->
                 <div class="project-card fade-in-up">
-                     <!-- === Project Image === (Placeholder) -->
+                    <!-- === Project Image === (Placeholder) -->
                     <div class="project-image-container">
                         <span>Research Conceptual Model</span>
                     </div>
                     <!-- =================== -->
                     <h3>Chronon-Super Quantum Level Model</h3>
                     <p class="type">Research Project / Theoretical Framework</p>
-                    <p class="desc">A novel theoretical framework being developed to address fundamental questions in quantum gravity and discrete spacetime. Focuses on mathematical derivations and conceptual innovation.</p>
-                    <p class="tech"><strong>Domains:</strong> Theoretical Physics, Quantum Mechanics, General Relativity, Discrete Mathematics, Hilbert Spaces.</p>
-                    <p class="features"><strong>Features:</strong> Conceptual model for discrete time, Mathematical framework linking QM and GR, Exploration of pre-geometric structures.</p>
+                    <p class="desc">My theoretical framework addresses fundamental questions in quantum gravity and
+                        discrete spacetime, focusing on mathematical derivations and conceptual innovation.</p>
+                    <p class="tech"><strong>Domains:</strong> Theoretical Physics, Quantum Mechanics, General
+                        Relativity, Discrete Mathematics, Hilbert Spaces.</p>
+                    <p class="features"><strong>Features:</strong> Conceptual model for discrete time, Mathematical
+                        framework linking QM and GR, Exploration of pre-geometric structures.</p>
                 </div>
-                 <!-- Project 5 -->
+                <!-- Project 5 -->
                 <div class="project-card fade-in-up">
-                     <!-- === Project Image === (Placeholder) -->
+                    <!-- === Project Image === (Placeholder) -->
                     <div class="project-image-container">
                         <span>IoT Camp Workshop</span>
                     </div>
                     <!-- =================== -->
                     <h3>HOPE Summer IoT Camp</h3>
                     <p class="type">Educational Initiative</p>
-                    <p class="desc">Designed and led an intensive summer camp focused on Internet of Things (IoT) technologies, providing hands-on learning and project development for students.</p>
-                    <p class="tech"><strong>Technologies Taught:</strong> Arduino, ESP32, Raspberry Pi, Sensors, Actuators, Basic Programming (Python, C++).</p>
-                    <p class="features"><strong>Features:</strong> Curriculum design, Hands-on workshops, Project mentorship, Community building.</p>
+                    <p class="desc">I designed and led this intensive summer camp focused on Internet of Things (IoT)
+                        technologies, providing hands-on learning and project development for students.</p>
+                    <p class="tech"><strong>Technologies Taught:</strong> Arduino, ESP32, Raspberry Pi, Sensors,
+                        Actuators, Basic Programming (Python, C++).</p>
+                    <p class="features"><strong>Features:</strong> Curriculum design, Hands-on workshops, Project
+                        mentorship, Community building.</p>
                 </div>
-                 <!-- Project 6 -->
+                <!-- Project 6 -->
                 <div class="project-card fade-in-up">
-                     <!-- === Project Image === (Placeholder) -->
+                    <!-- === Project Image === (Placeholder) -->
                     <div class="project-image-container">
                         <span>AI Robot</span>
                     </div>
                     <!-- =================== -->
                     <h3>AI-Integrated Robotics Projects</h3>
                     <p class="type">Innovation Projects</p>
-                    <p class="desc">Led development of robotics projects integrating artificial intelligence for tasks like object recognition, path planning, and autonomous navigation.</p>
-                    <p class="tech"><strong>Technologies Used:</strong> Python, OpenCV, TensorFlow Lite, Arduino/ESP32, Sensors (Cameras, Ultrasonic).</p>
-                    <p class="features"><strong>Features:</strong> Edge AI implementation, Sensor fusion, Real-time processing, Hardware-software integration.</p>
+                    <p class="desc">I led the development of robotics projects integrating artificial intelligence for
+                        tasks like object recognition, path planning, and autonomous navigation.</p>
+                    <p class="tech"><strong>Technologies Used:</strong> Python, OpenCV, TensorFlow Lite, Arduino/ESP32,
+                        Sensors (Cameras, Ultrasonic).</p>
+                    <p class="features"><strong>Features:</strong> Edge AI implementation, Sensor fusion, Real-time
+                        processing, Hardware-software integration.</p>
                 </div>
             </div>
 
@@ -1135,79 +1411,117 @@
             <div class="skills-container">
                 <div class="skill fade-in-up">
                     <p>HTML5, CSS3 & Bootstrap <span class="percentage">95%</span></p>
-                    <div class="progress-bar"><div class="bar" style="width: 95%;"></div></div>
+                    <div class="progress-bar">
+                        <div class="bar" style="width: 95%;"></div>
+                    </div>
                 </div>
                 <div class="skill fade-in-up">
                     <p>Python & Scientific Libraries <span class="percentage">90%</span></p>
-                    <div class="progress-bar"><div class="bar" style="width: 90%;"></div></div>
+                    <div class="progress-bar">
+                        <div class="bar" style="width: 90%;"></div>
+                    </div>
                 </div>
                 <div class="skill fade-in-up">
                     <p>JavaScript (ES6+), DOM & APIs <span class="percentage">85%</span></p>
-                    <div class="progress-bar"><div class="bar" style="width: 85%;"></div></div>
+                    <div class="progress-bar">
+                        <div class="bar" style="width: 85%;"></div>
+                    </div>
                 </div>
                 <div class="skill fade-in-up">
                     <p>Linear Algebra & Hilbert Spaces <span class="percentage">90%</span></p>
-                    <div class="progress-bar"><div class="bar" style="width: 90%;"></div></div>
+                    <div class="progress-bar">
+                        <div class="bar" style="width: 90%;"></div>
+                    </div>
                 </div>
                 <div class="skill fade-in-up">
-                    <p>IoT Systems – Arduino, ESP32, Pi <span class="percentage">85%</span></p>
-                    <div class="progress-bar"><div class="bar" style="width: 85%;"></div></div>
+                    <p>IoT Systems Arduino, ESP32, Pi <span class="percentage">85%</span></p>
+                    <div class="progress-bar">
+                        <div class="bar" style="width: 85%;"></div>
+                    </div>
                 </div>
                 <div class="skill fade-in-up">
                     <p>Discrete Mathematics & Graph Theory <span class="percentage">85%</span></p>
-                    <div class="progress-bar"><div class="bar" style="width: 85%;"></div></div>
+                    <div class="progress-bar">
+                        <div class="bar" style="width: 85%;"></div>
+                    </div>
                 </div>
                 <div class="skill fade-in-up">
                     <p>Git, GitHub, GitLab <span class="percentage">95%</span></p>
-                    <div class="progress-bar"><div class="bar" style="width: 95%;"></div></div>
+                    <div class="progress-bar">
+                        <div class="bar" style="width: 95%;"></div>
+                    </div>
                 </div>
                 <div class="skill fade-in-up">
                     <p>Calculus & Mathematical Physics <span class="percentage">85%</span></p>
-                    <div class="progress-bar"><div class="bar" style="width: 85%;"></div></div>
+                    <div class="progress-bar">
+                        <div class="bar" style="width: 85%;"></div>
+                    </div>
                 </div>
                 <div class="skill fade-in-up">
                     <p>Research Methodology & Analysis <span class="percentage">85%</span></p>
-                    <div class="progress-bar"><div class="bar" style="width: 85%;"></div></div>
+                    <div class="progress-bar">
+                        <div class="bar" style="width: 85%;"></div>
+                    </div>
                 </div>
                 <div class="skill fade-in-up">
                     <p>Flutter & Cross-Platform Apps <span class="percentage">80%</span></p>
-                    <div class="progress-bar"><div class="bar" style="width: 80%;"></div></div>
+                    <div class="progress-bar">
+                        <div class="bar" style="width: 80%;"></div>
+                    </div>
                 </div>
                 <div class="skill fade-in-up">
                     <p>UI/UX Design Principles <span class="percentage">80%</span></p>
-                    <div class="progress-bar"><div class="bar" style="width: 80%;"></div></div>
+                    <div class="progress-bar">
+                        <div class="bar" style="width: 80%;"></div>
+                    </div>
                 </div>
                 <div class="skill fade-in-up">
                     <p>General Relativity & Differential Geometry <span class="percentage">80%</span></p>
-                    <div class="progress-bar"><div class="bar" style="width: 80%;"></div></div>
+                    <div class="progress-bar">
+                        <div class="bar" style="width: 80%;"></div>
+                    </div>
                 </div>
                 <div class="skill fade-in-up">
                     <p>Scientific Writing & Literature Review <span class="percentage">80%</span></p>
-                    <div class="progress-bar"><div class="bar" style="width: 80%;"></div></div>
+                    <div class="progress-bar">
+                        <div class="bar" style="width: 80%;"></div>
+                    </div>
                 </div>
                 <div class="skill fade-in-up">
                     <p>Firebase & Realtime DB <span class="percentage">80%</span></p>
-                    <div class="progress-bar"><div class="bar" style="width: 80%;"></div></div>
+                    <div class="progress-bar">
+                        <div class="bar" style="width: 80%;"></div>
+                    </div>
                 </div>
                 <div class="skill fade-in-up">
                     <p>Linux, Parrot OS <span class="percentage">80%</span></p>
-                    <div class="progress-bar"><div class="bar" style="width: 80%;"></div></div>
+                    <div class="progress-bar">
+                        <div class="bar" style="width: 80%;"></div>
+                    </div>
                 </div>
                 <div class="skill fade-in-up">
                     <p>Quantum Computing Fundamentals <span class="percentage">75%</span></p>
-                    <div class="progress-bar"><div class="bar" style="width: 75%;"></div></div>
+                    <div class="progress-bar">
+                        <div class="bar" style="width: 75%;"></div>
+                    </div>
                 </div>
                 <div class="skill fade-in-up">
                     <p>Statistical Mechanics <span class="percentage">75%</span></p>
-                    <div class="progress-bar"><div class="bar" style="width: 75%;"></div></div>
+                    <div class="progress-bar">
+                        <div class="bar" style="width: 75%;"></div>
+                    </div>
                 </div>
                 <div class="skill fade-in-up">
                     <p>WordPress (CMS & WooCommerce) <span class="percentage">75%</span></p>
-                    <div class="progress-bar"><div class="bar" style="width: 75%;"></div></div>
+                    <div class="progress-bar">
+                        <div class="bar" style="width: 75%;"></div>
+                    </div>
                 </div>
                 <div class="skill fade-in-up">
                     <p>Docker, Kubernetes, CI/CD <span class="percentage">70%</span></p>
-                    <div class="progress-bar"><div class="bar" style="width: 70%;"></div></div>
+                    <div class="progress-bar">
+                        <div class="bar" style="width: 70%;"></div>
+                    </div>
                 </div>
             </div>
 
@@ -1290,28 +1604,33 @@
                         <div class="timeline-content">
                             <h3>Founder & CEO - HOPE</h3>
                             <span class="date">2020 - Present</span>
-                            <p>Founded and lead the HOPE platform, a social startup tackling hunger/poverty through Education, E-Commerce, IoT, and Research verticals. Managing teams, driving innovation, and leading development efforts.</p>
+                            <p>I founded and lead the HOPE platform, a social startup tackling hunger/poverty through
+                                Education, E-Commerce, IoT, and Research verticals. I manage teams, drive innovation,
+                                and lead development efforts.</p>
                         </div>
                     </div>
                     <div class="timeline-item fade-in-up">
                         <div class="timeline-content">
                             <h3>B.Tech in Data Science (Pursuing)</h3>
                             <span class="date">2022 - Present</span>
-                            <p>Currently pursuing a Bachelor of Technology degree in Data Science at IES College of Engineering, Kottayam.</p>
+                            <p>I am currently pursuing a Bachelor of Technology degree in Data Science at IES College of
+                                Engineering, Kottayam.</p>
                         </div>
                     </div>
                     <div class="timeline-item fade-in-up">
                         <div class="timeline-content">
                             <h3>Intern - Keltron</h3>
                             <span class="date">2024</span>
-                            <p>Conducted peer trainings on Python automation libraries and helped integrate technology into live workflows.</p>
+                            <p>I conducted peer trainings on Python automation libraries and helped integrate technology
+                                into live workflows.</p>
                         </div>
                     </div>
                     <div class="timeline-item fade-in-up">
                         <div class="timeline-content">
                             <h3>Freelance Developer & Researcher</h3>
                             <span class="date">2017 - 2022</span>
-                            <p>Worked on various freelance projects involving web development, app development, IoT systems, and independent theoretical physics research.</p>
+                            <p>I worked on various freelance projects involving web development, app development, IoT
+                                systems, and independent theoretical physics research.</p>
                         </div>
                     </div>
                 </div>
@@ -1320,14 +1639,15 @@
             <!-- Contact Section -->
             <div class="contact-section fade-in-up">
                 <h2>Let's Build Something Amazing Together</h2>
-                <p>Have a project in mind, want to collaborate on research, or discuss potential opportunities? I'm always open to new challenges and partnerships across technology, physics, and education.</p>
-                <div class="social-links">
+                <p>Do you have a project in mind, want to collaborate on research, or discuss potential opportunities? I
+                    am always open to new challenges and partnerships across technology, physics, and education.</p>
+                <!--            <div class="social-links">
                     <a href="#" class="social-link"><i class='bx bxl-github'></i></a>
                     <a href="#" class="social-link"><i class='bx bxl-linkedin'></i></a>
                     <a href="#" class="social-link"><i class='bx bxl-twitter'></i></a>
                     <a href="#" class="social-link"><i class='bx bxl-instagram'></i></a>
-                    <a href="#" class="social-link"><i class='bx bxl-youtube'></i></a> <!-- Added YouTube -->
-                </div>
+                    <a href="#" class="social-link"><i class='bx bxl-youtube'></i></a>  
+                </div>Added YouTube -->
             </div>
         </div>
     </section>
@@ -1336,7 +1656,7 @@
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
         // Initialize Particles.js
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             particlesJS("particles-js", {
                 "particles": {
                     "number": {
@@ -1427,7 +1747,7 @@
             });
         });
         // Animate progress bars when they come into view
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Ensure this runs after particles init
             setTimeout(() => {
                 const progressBars = document.querySelectorAll('.bar');
@@ -1464,7 +1784,7 @@
                 // Fade-in-up animation for other elements
                 const fadeElements = document.querySelectorAll('.fade-in-up:not(.hero)'); // Exclude hero from this observer
                 const fadeObserver = new IntersectionObserver((entries) => {
-                     entries.forEach(entry => {
+                    entries.forEach(entry => {
                         if (entry.isIntersecting) {
                             entry.target.style.opacity = 1;
                             entry.target.style.transform = 'translateY(0)';
@@ -1484,4 +1804,5 @@
         });
     </script>
 </body>
+
 </html>
