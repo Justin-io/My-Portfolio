@@ -2,445 +2,445 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PROJECT RETRO-BOT: V12.0 SENTRY EDITION | Blog</title>
-    <meta name="theme-color" content="#040404">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@500;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../assets/css/style-custom.css?v=2">
-    <style>
-        .article-header {
-            padding-top: 150px;
-            padding-bottom: 60px;
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
-        }
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PROJECT RETRO-BOT: V12.0 SENTRY EDITION | Blog</title>
+  <meta name="theme-color" content="#040404">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@500;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/style-custom.css?v=2">
+  <style>
+    .article-header {
+      padding-top: 150px;
+      padding-bottom: 60px;
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
 
-        .article-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            line-height: 1.1;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #fff 0%, #aaa 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+    .article-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1.1;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-        .article-meta {
-            color: var(--text-tertiary);
-            font-size: 0.9rem;
-            margin-bottom: 40px;
-        }
+    .article-meta {
+      color: var(--text-tertiary);
+      font-size: 0.9rem;
+      margin-bottom: 40px;
+    }
 
-        .article-badge {
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 20px;
-            background: rgba(0, 82, 204, 0.2);
-            color: var(--accent);
-            border: 1px solid rgba(0, 82, 204, 0.3);
-            margin-bottom: 20px;
-        }
+    .article-badge {
+      display: inline-block;
+      padding: 5px 15px;
+      border-radius: 20px;
+      background: rgba(0, 82, 204, 0.2);
+      color: var(--accent);
+      border: 1px solid rgba(0, 82, 204, 0.3);
+      margin-bottom: 20px;
+    }
 
-        .article-content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 20px 100px;
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            line-height: 1.8;
-        }
+    .article-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px 100px;
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
 
-        .article-content h2 {
-            color: var(--text-primary);
-            font-family: 'Space Grotesk', sans-serif;
-            margin-top: 50px;
-            margin-bottom: 20px;
-        }
+    .article-content h2 {
+      color: var(--text-primary);
+      font-family: 'Space Grotesk', sans-serif;
+      margin-top: 50px;
+      margin-bottom: 20px;
+    }
 
-        .article-content h3 {
-            color: var(--text-primary);
-            font-family: 'Space Grotesk', sans-serif;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            font-size: 1.5rem;
-        }
+    .article-content h3 {
+      color: var(--text-primary);
+      font-family: 'Space Grotesk', sans-serif;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      font-size: 1.5rem;
+    }
 
-        .article-image {
-            width: 100%;
-            height: 400px;
-            object-fit: cover;
-            border-radius: 20px;
-            margin-bottom: 50px;
-            border: 1px solid var(--glass-border);
-        }
+    .article-image {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 20px;
+      margin-bottom: 50px;
+      border: 1px solid var(--glass-border);
+    }
 
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--text-tertiary);
-            text-decoration: none;
-            margin-bottom: 30px;
-            transition: color 0.3s;
-        }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-tertiary);
+      text-decoration: none;
+      margin-bottom: 30px;
+      transition: color 0.3s;
+    }
 
-        .back-link:hover {
-            color: var(--accent);
-        }
+    .back-link:hover {
+      color: var(--accent);
+    }
 
-        .tag {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.8rem;
-            margin-right: 5px;
-        }
+    .tag {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 0.8rem;
+      margin-right: 5px;
+    }
 
-        /* Table Styles */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 30px;
-            color: var(--text-secondary);
-        }
+    /* Table Styles */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+      color: var(--text-secondary);
+    }
 
-        th,
-        td {
-            padding: 12px 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: left;
-        }
+    th,
+    td {
+      padding: 12px 15px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: left;
+    }
 
-        th {
-            color: var(--text-primary);
-            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-        }
+    th {
+      color: var(--text-primary);
+      border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    }
 
-        /* Code Block Styles */
-        pre {
-            background: #111;
-            padding: 20px;
-            border-radius: 10px;
-            overflow-x: auto;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: 20px;
-        }
+    /* Code Block Styles */
+    pre {
+      background: #111;
+      padding: 20px;
+      border-radius: 10px;
+      overflow-x: auto;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: 20px;
+    }
 
-        code {
-            font-family: 'Courier New', Courier, monospace;
-            color: #ddd;
-        }
+    code {
+      font-family: 'Courier New', Courier, monospace;
+      color: #ddd;
+    }
 
-        .image-placeholder {
-            width: 100%;
-            height: 300px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px dashed rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: rgba(255, 255, 255, 0.5);
-            margin: 30px 0;
-            font-family: 'Space Grotesk', sans-serif;
-        }
-    </style>
+    .image-placeholder {
+      width: 100%;
+      height: 300px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px dashed rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, 0.5);
+      margin: 30px 0;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="cursor"></div>
-    <div class="cursor-follower"></div>
+  <div class="cursor"></div>
+  <div class="cursor-follower"></div>
 
-    <div id="canvas-container" style="position: fixed; inset: 0; z-index: -1;"></div>
-    <nav id="navbar">
-        <div class="nav-container">
-            <div class="logo">JA</div>
-            <ul class="nav-links">
-                <li><a href="../index.html" class="nav-link">Home</a></li>
-                <li><a href="../tools.html" class="nav-link">Utilities</a></li>
-                <li><a href="../blog.html" class="nav-link active">Blog</a></li>
-                <li><a href="../bio.htm" class="nav-link">Bio</a></li>
-            </ul>
-            <div class="menu-toggle"><span></span><span></span><span></span></div>
+  <div id="canvas-container" style="position: fixed; inset: 0; z-index: -1;"></div>
+  <nav id="navbar">
+    <div class="nav-container">
+      <div class="logo">JA</div>
+      <ul class="nav-links">
+        <li><a href="../index.html" class="nav-link">Home</a></li>
+        <li><a href="../tools.html" class="nav-link">Utilities</a></li>
+        <li><a href="../blog.html" class="nav-link active">Blog</a></li>
+        <li><a href="../bio.htm" class="nav-link">Bio</a></li>
+      </ul>
+      <div class="menu-toggle"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+  <main>
+    <article>
+      <div class="article-header">
+        <a href="../blog.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Blog</a><br>
+        <span class="article-badge">Robotics & IoT</span>
+        <h1 class="article-title">PROJECT RETRO-BOT: V12.0 SENTRY EDITION</h1>
+        <div class="article-meta"><span><i class="far fa-calendar"></i> Jan 22, 2026</span> &bull; <span><i
+              class="far fa-user"></i> Justin</span></div>
+
+        <!-- Main Header Image Placeholder -->
+        <img src="../assets/images/blog21/header.png" alt="Retro-Bot Header" class="article-image">
+
+        <div style="margin-top: -30px; margin-bottom: 40px;">
+          <span class='tag'>#ESP32</span><span class='tag'>#Robotics</span><span class='tag'>#IoT</span><span
+            class='tag'>#Arduino</span>
         </div>
-    </nav>
-    <main>
-        <article>
-            <div class="article-header">
-                <a href="../blog.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Blog</a><br>
-                <span class="article-badge">Robotics & IoT</span>
-                <h1 class="article-title">PROJECT RETRO-BOT: V12.0 SENTRY EDITION</h1>
-                <div class="article-meta"><span><i class="far fa-calendar"></i> Jan 22, 2026</span> &bull; <span><i
-                            class="far fa-user"></i> Justin</span></div>
+      </div>
+      <div class="article-content">
+        <p class="lead" style="font-size: 1.3rem; color: var(--text-primary); margin-bottom: 30px;">
+          <strong>Developer:</strong> Justin | <strong>Platform:</strong> ESP32 | <strong>Version:</strong>
+          12.0 (Final)
+        </p>
 
-                <!-- Main Header Image Placeholder -->
-                <div class="image-placeholder">[HEADER IMAGE HERE]</div>
+        <hr style="border-color: rgba(255,255,255,0.1); margin: 40px 0;">
 
-                <div style="margin-top: -30px; margin-bottom: 40px;">
-                    <span class='tag'>#ESP32</span><span class='tag'>#Robotics</span><span class='tag'>#IoT</span><span
-                        class='tag'>#Arduino</span>
-                </div>
-            </div>
-            <div class="article-content">
-                <p class="lead" style="font-size: 1.3rem; color: var(--text-primary); margin-bottom: 30px;">
-                    <strong>Developer:</strong> Justin | <strong>Platform:</strong> ESP32 | <strong>Version:</strong>
-                    12.0 (Final)
-                </p>
+        <h2>1. Project Overview</h2>
+        <p><strong>Retro-Bot</strong> is an advanced desktop companion robot powered by an ESP32
+          microcontroller. It features a "living" OLED face that reacts to its environment, plays arcade
+          games, and acts as a security sentry. It is controlled via a local Wi-Fi web dashboard hosted
+          directly on the robot.</p>
 
-                <hr style="border-color: rgba(255,255,255,0.1); margin: 40px 0;">
+        <h3>Key Features</h3>
+        <ul>
+          <li><strong>🧠 Emotional AI:</strong> Reacts to temperature, gas, movement, and proximity.</li>
+          <li><strong>👀 Sentry Mode:</strong> Wakes up when it detects human motion (PIR).</li>
+          <li><strong>🛡️ Personal Space:</strong> Gets "Suspicious" or "Panicked" if you get too close
+            (Ultrasonic).</li>
+          <li><strong>🍔 Hand Feeding:</strong> "Eats" when you hold an object to its mouth (IR Sensor).</li>
+          <li><strong>🎮 Arcade Console:</strong> Plays Tic-Tac-Toe, Snake, and Pong via phone controller.
+          </li>
+          <li><strong>🗣️ Living Face:</strong> Realistic blinking eyes, breathing animation, and talking
+            text.</li>
+        </ul>
 
-                <h2>1. Project Overview</h2>
-                <p><strong>Retro-Bot</strong> is an advanced desktop companion robot powered by an ESP32
-                    microcontroller. It features a "living" OLED face that reacts to its environment, plays arcade
-                    games, and acts as a security sentry. It is controlled via a local Wi-Fi web dashboard hosted
-                    directly on the robot.</p>
+        <hr style="border-color: rgba(255,255,255,0.1); margin: 40px 0;">
 
-                <h3>Key Features</h3>
-                <ul>
-                    <li><strong>🧠 Emotional AI:</strong> Reacts to temperature, gas, movement, and proximity.</li>
-                    <li><strong>👀 Sentry Mode:</strong> Wakes up when it detects human motion (PIR).</li>
-                    <li><strong>🛡️ Personal Space:</strong> Gets "Suspicious" or "Panicked" if you get too close
-                        (Ultrasonic).</li>
-                    <li><strong>🍔 Hand Feeding:</strong> "Eats" when you hold an object to its mouth (IR Sensor).</li>
-                    <li><strong>🎮 Arcade Console:</strong> Plays Tic-Tac-Toe, Snake, and Pong via phone controller.
-                    </li>
-                    <li><strong>🗣️ Living Face:</strong> Realistic blinking eyes, breathing animation, and talking
-                        text.</li>
-                </ul>
+        <h2>2. Bill of Materials (Hardware)</h2>
 
-                <hr style="border-color: rgba(255,255,255,0.1); margin: 40px 0;">
+        <img src="../assets/images/blog21/components.png" alt="Retro-Bot Hardware Components" class="article-image">
 
-                <h2>2. Bill of Materials (Hardware)</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Component</th>
+              <th>Description</th>
+              <th>Function</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>ESP32 DevKit V1</strong></td>
+              <td>Microcontroller</td>
+              <td>The "Brain" + Wi-Fi Server</td>
+            </tr>
+            <tr>
+              <td><strong>OLED Display</strong></td>
+              <td>1.3" I2C (SH1106)</td>
+              <td>The "Face" and Game Screen</td>
+            </tr>
+            <tr>
+              <td><strong>DHT11</strong></td>
+              <td>Blue Grid Sensor</td>
+              <td>Measures Temperature & Humidity</td>
+            </tr>
+            <tr>
+              <td><strong>MQ-135</strong></td>
+              <td>Gas Sensor</td>
+              <td>Detects Air Quality / Smoke</td>
+            </tr>
+            <tr>
+              <td><strong>HC-SR04</strong></td>
+              <td>Ultrasonic Eyes</td>
+              <td>Measures Distance (0cm - 400cm)</td>
+            </tr>
+            <tr>
+              <td><strong>PIR Sensor</strong></td>
+              <td>White Dome</td>
+              <td>Detects Motion (Infrared body heat)</td>
+            </tr>
+            <tr>
+              <td><strong>IR Sensor</strong></td>
+              <td>Black LED pair</td>
+              <td>Detects close objects (Feeding)</td>
+            </tr>
+            <tr>
+              <td><strong>Active Buzzer</strong></td>
+              <td>Black Cylinder</td>
+              <td>Sound Effects & Alarms</td>
+            </tr>
+            <tr>
+              <td><strong>Jumper Wires</strong></td>
+              <td>M-M, M-F</td>
+              <td>Connections</td>
+            </tr>
+          </tbody>
+        </table>
 
-                <div class="image-placeholder">[HARDWARE COMPONENTS IMAGE]</div>
+        <hr style="border-color: rgba(255,255,255,0.1); margin: 40px 0;">
 
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Component</th>
-                            <th>Description</th>
-                            <th>Function</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>ESP32 DevKit V1</strong></td>
-                            <td>Microcontroller</td>
-                            <td>The "Brain" + Wi-Fi Server</td>
-                        </tr>
-                        <tr>
-                            <td><strong>OLED Display</strong></td>
-                            <td>1.3" I2C (SH1106)</td>
-                            <td>The "Face" and Game Screen</td>
-                        </tr>
-                        <tr>
-                            <td><strong>DHT11</strong></td>
-                            <td>Blue Grid Sensor</td>
-                            <td>Measures Temperature & Humidity</td>
-                        </tr>
-                        <tr>
-                            <td><strong>MQ-135</strong></td>
-                            <td>Gas Sensor</td>
-                            <td>Detects Air Quality / Smoke</td>
-                        </tr>
-                        <tr>
-                            <td><strong>HC-SR04</strong></td>
-                            <td>Ultrasonic Eyes</td>
-                            <td>Measures Distance (0cm - 400cm)</td>
-                        </tr>
-                        <tr>
-                            <td><strong>PIR Sensor</strong></td>
-                            <td>White Dome</td>
-                            <td>Detects Motion (Infrared body heat)</td>
-                        </tr>
-                        <tr>
-                            <td><strong>IR Sensor</strong></td>
-                            <td>Black LED pair</td>
-                            <td>Detects close objects (Feeding)</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Active Buzzer</strong></td>
-                            <td>Black Cylinder</td>
-                            <td>Sound Effects & Alarms</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Jumper Wires</strong></td>
-                            <td>M-M, M-F</td>
-                            <td>Connections</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <h2>3. Master Wiring Guide</h2>
+        <p><strong>⚠️ IMPORTANT:</strong> The ESP32 uses 3.3V logic, but the <code>VIN</code> pin provides 5V
+          from USB. Most sensors need 5V (VIN), but the OLED works best on 3.3V.</p>
 
-                <hr style="border-color: rgba(255,255,255,0.1); margin: 40px 0;">
+        <img src="../assets/images/blog21/wiring.png" alt="Retro-Bot Wiring Diagram" class="article-image">
 
-                <h2>3. Master Wiring Guide</h2>
-                <p><strong>⚠️ IMPORTANT:</strong> The ESP32 uses 3.3V logic, but the <code>VIN</code> pin provides 5V
-                    from USB. Most sensors need 5V (VIN), but the OLED works best on 3.3V.</p>
+        <h3>Power Rails</h3>
+        <ul>
+          <li><strong>ESP32 GND</strong> → Breadboard <strong>Blue (-) Rail</strong></li>
+          <li><strong>ESP32 VIN (5V)</strong> → Breadboard <strong>Red (+) Rail</strong></li>
+        </ul>
 
-                <div class="image-placeholder">[WIRING DIAGRAM IMAGE]</div>
+        <h3>Pin Connections Table</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Component</th>
+              <th>Component Pin</th>
+              <th>ESP32 Pin</th>
+              <th>Note</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>OLED Screen</strong></td>
+              <td>SDA</td>
+              <td><strong>GPIO 21</strong></td>
+              <td>Data Line</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>SCL</td>
+              <td><strong>GPIO 22</strong></td>
+              <td>Clock Line</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>VCC</td>
+              <td><strong>3V3</strong></td>
+              <td><strong>Do not use 5V for Screen</strong></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>GND</td>
+              <td>GND</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>DHT11 (Temp)</strong></td>
+              <td>DATA / OUT</td>
+              <td><strong>GPIO 4</strong></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>MQ-135 (Gas)</strong></td>
+              <td>A0 / Analog</td>
+              <td><strong>GPIO 34</strong></td>
+              <td>Analog Input Only</td>
+            </tr>
+            <tr>
+              <td><strong>Buzzer</strong></td>
+              <td>POS (+)</td>
+              <td><strong>GPIO 5</strong></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>PIR (Motion)</strong></td>
+              <td>OUT (Middle)</td>
+              <td><strong>GPIO 13</strong></td>
+              <td>Digital Signal</td>
+            </tr>
+            <tr>
+              <td><strong>Ultrasonic</strong></td>
+              <td>TRIG</td>
+              <td><strong>GPIO 18</strong></td>
+              <td>Output Pulse</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>ECHO</td>
+              <td><strong>GPIO 19</strong></td>
+              <td>Input Echo</td>
+            </tr>
+            <tr>
+              <td><strong>IR (Feeding)</strong></td>
+              <td>OUT</td>
+              <td><strong>GPIO 23</strong></td>
+              <td>Digital Signal (LOW = Active)</td>
+            </tr>
+          </tbody>
+        </table>
 
-                <h3>Power Rails</h3>
-                <ul>
-                    <li><strong>ESP32 GND</strong> → Breadboard <strong>Blue (-) Rail</strong></li>
-                    <li><strong>ESP32 VIN (5V)</strong> → Breadboard <strong>Red (+) Rail</strong></li>
-                </ul>
+        <hr style="border-color: rgba(255,255,255,0.1); margin: 40px 0;">
 
-                <h3>Pin Connections Table</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Component</th>
-                            <th>Component Pin</th>
-                            <th>ESP32 Pin</th>
-                            <th>Note</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>OLED Screen</strong></td>
-                            <td>SDA</td>
-                            <td><strong>GPIO 21</strong></td>
-                            <td>Data Line</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>SCL</td>
-                            <td><strong>GPIO 22</strong></td>
-                            <td>Clock Line</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>VCC</td>
-                            <td><strong>3V3</strong></td>
-                            <td><strong>Do not use 5V for Screen</strong></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>GND</td>
-                            <td>GND</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td><strong>DHT11 (Temp)</strong></td>
-                            <td>DATA / OUT</td>
-                            <td><strong>GPIO 4</strong></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td><strong>MQ-135 (Gas)</strong></td>
-                            <td>A0 / Analog</td>
-                            <td><strong>GPIO 34</strong></td>
-                            <td>Analog Input Only</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Buzzer</strong></td>
-                            <td>POS (+)</td>
-                            <td><strong>GPIO 5</strong></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td><strong>PIR (Motion)</strong></td>
-                            <td>OUT (Middle)</td>
-                            <td><strong>GPIO 13</strong></td>
-                            <td>Digital Signal</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Ultrasonic</strong></td>
-                            <td>TRIG</td>
-                            <td><strong>GPIO 18</strong></td>
-                            <td>Output Pulse</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>ECHO</td>
-                            <td><strong>GPIO 19</strong></td>
-                            <td>Input Echo</td>
-                        </tr>
-                        <tr>
-                            <td><strong>IR (Feeding)</strong></td>
-                            <td>OUT</td>
-                            <td><strong>GPIO 23</strong></td>
-                            <td>Digital Signal (LOW = Active)</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <h2>4. Software & Installation</h2>
 
-                <hr style="border-color: rgba(255,255,255,0.1); margin: 40px 0;">
+        <h3>Required Libraries</h3>
+        <p>Install these via Arduino IDE Library Manager:</p>
+        <ol>
+          <li><strong><code>Adafruit GFX Library</code></strong> (Core graphics)</li>
+          <li><strong><code>Adafruit SH110X</code></strong> (Screen Driver - <em>Crucial for removing
+              static</em>)</li>
+          <li><strong><code>DHT sensor library</code></strong> (by Adafruit)</li>
+          <li><strong><code>Adafruit Unified Sensor</code></strong></li>
+        </ol>
 
-                <h2>4. Software & Installation</h2>
+        <h3>Upload Settings</h3>
+        <ul>
+          <li><strong>Board:</strong> DOIT ESP32 DEVKIT V1</li>
+          <li><strong>Upload Speed:</strong> 921600</li>
+          <li><strong>Flash Frequency:</strong> 80MHz</li>
+        </ul>
 
-                <h3>Required Libraries</h3>
-                <p>Install these via Arduino IDE Library Manager:</p>
-                <ol>
-                    <li><strong><code>Adafruit GFX Library</code></strong> (Core graphics)</li>
-                    <li><strong><code>Adafruit SH110X</code></strong> (Screen Driver - <em>Crucial for removing
-                            static</em>)</li>
-                    <li><strong><code>DHT sensor library</code></strong> (by Adafruit)</li>
-                    <li><strong><code>Adafruit Unified Sensor</code></strong></li>
-                </ol>
+        <h3>Troubleshooting "Static/Snow" on Screen</h3>
+        <p>If the screen looks grainy:</p>
+        <ol>
+          <li>Ensure you are using <code>Adafruit_SH1106G</code> in the code (V12 code does this).</li>
+          <li>Twist the <strong>SDA (Yellow)</strong> and <strong>SCL (Blue)</strong> wires together to cancel
+            electrical noise.</li>
+        </ol>
 
-                <h3>Upload Settings</h3>
-                <ul>
-                    <li><strong>Board:</strong> DOIT ESP32 DEVKIT V1</li>
-                    <li><strong>Upload Speed:</strong> 921600</li>
-                    <li><strong>Flash Frequency:</strong> 80MHz</li>
-                </ul>
+        <hr style="border-color: rgba(255,255,255,0.1); margin: 40px 0;">
 
-                <h3>Troubleshooting "Static/Snow" on Screen</h3>
-                <p>If the screen looks grainy:</p>
-                <ol>
-                    <li>Ensure you are using <code>Adafruit_SH1106G</code> in the code (V12 code does this).</li>
-                    <li>Twist the <strong>SDA (Yellow)</strong> and <strong>SCL (Blue)</strong> wires together to cancel
-                        electrical noise.</li>
-                </ol>
+        <h2>5. User Guide: How to Use Retro-Bot</h2>
 
-                <hr style="border-color: rgba(255,255,255,0.1); margin: 40px 0;">
+        <img src="../assets/images/blog21/dashboard.png" alt="Retro-Bot User Interface" class="article-image">
 
-                <h2>5. User Guide: How to Use Retro-Bot</h2>
+        <h3>A. Connecting</h3>
+        <ol>
+          <li>Power on the robot.</li>
+          <li>On your phone/PC, connect to Wi-Fi: <strong><code>RetroBot_AP</code></strong> (No password).
+          </li>
+          <li>Open browser to: <strong><code>192.168.4.1</code></strong></li>
+        </ol>
 
-                <div class="image-placeholder">[USER INTERFACE / DASHBOARD IMAGE]</div>
+        <h3>B. Dashboard Controls</h3>
+        <ul>
+          <li><strong>HAPPY:</strong> Forces normal mode.</li>
+          <li><strong>FEED:</strong> Triggers "Eating" animation manually.</li>
+          <li><strong>PANIC:</strong> Triggers alarm mode manually.</li>
+          <li><strong>SLEEP:</strong> Turns off screen and waits for motion (Sentry Mode).</li>
+          <li><strong>GAME MODE:</strong> Switches the face to the Game Menu.</li>
+        </ul>
 
-                <h3>A. Connecting</h3>
-                <ol>
-                    <li>Power on the robot.</li>
-                    <li>On your phone/PC, connect to Wi-Fi: <strong><code>RetroBot_AP</code></strong> (No password).
-                    </li>
-                    <li>Open browser to: <strong><code>192.168.4.1</code></strong></li>
-                </ol>
+        <h3>C. Sensor Behaviors (Autonomous Mode)</h3>
+        <ul>
+          <li><strong>Motion (PIR):</strong> If sleeping, any movement wakes the robot up.</li>
+          <li><strong>Feeding (IR):</strong> Place finger 2cm from mouth → Robot eats ("YUMMY!").</li>
+          <li><strong>Distance (Sonar):</strong>
+            <ul>
+              <li><strong>&lt; 25cm:</strong> Robot gets Suspicious (Squinting eyes).</li>
+              <li><strong>&lt; 10cm:</strong> Robot Panics (Screaming + Beeping).</li>
+            </ul>
+          </li>
+          <li><strong>Air Quality (Gas):</strong> High gas levels trigger Panic mode.</li>
+        </ul>
 
-                <h3>B. Dashboard Controls</h3>
-                <ul>
-                    <li><strong>HAPPY:</strong> Forces normal mode.</li>
-                    <li><strong>FEED:</strong> Triggers "Eating" animation manually.</li>
-                    <li><strong>PANIC:</strong> Triggers alarm mode manually.</li>
-                    <li><strong>SLEEP:</strong> Turns off screen and waits for motion (Sentry Mode).</li>
-                    <li><strong>GAME MODE:</strong> Switches the face to the Game Menu.</li>
-                </ul>
+        <hr style="border-color: rgba(255,255,255,0.1); margin: 40px 0;">
 
-                <h3>C. Sensor Behaviors (Autonomous Mode)</h3>
-                <ul>
-                    <li><strong>Motion (PIR):</strong> If sleeping, any movement wakes the robot up.</li>
-                    <li><strong>Feeding (IR):</strong> Place finger 2cm from mouth → Robot eats ("YUMMY!").</li>
-                    <li><strong>Distance (Sonar):</strong>
-                        <ul>
-                            <li><strong>&lt; 25cm:</strong> Robot gets Suspicious (Squinting eyes).</li>
-                            <li><strong>&lt; 10cm:</strong> Robot Panics (Screaming + Beeping).</li>
-                        </ul>
-                    </li>
-                    <li><strong>Air Quality (Gas):</strong> High gas levels trigger Panic mode.</li>
-                </ul>
-
-                <hr style="border-color: rgba(255,255,255,0.1); margin: 40px 0;">
-
-                <h2>Source Code</h2>
-                <div class="image-placeholder">[SOURCE CODE PREVIEW IMAGE (Optional)]</div>
-                <p>Below is the placeholder for the source code. You can paste your Arduino sketch here.</p>
-                <pre><code>#include &lt;WiFi.h&gt;
+        <h2>Source Code</h2>
+        <img src="../assets/images/blog21/code.png" alt="Retro-Bot Source Code" class="article-image">
+        <p>Below is the placeholder for the source code. You can paste your Arduino sketch here.</p>
+        <pre><code>#include &lt;WiFi.h&gt;
 #include &lt;WebServer.h&gt;
 #include &lt;Wire.h&gt;
 #include &lt;Adafruit_GFX.h&gt;
@@ -1259,16 +1259,16 @@ void drawClock() {
 
 </code></pre>
 
-            </div>
-        </article>
-    </main>
-    <footer>
-        <div class="footer-content" style="text-align: center; padding: 40px; color: var(--text-secondary);">
-            <p>&copy; 2026 Hari Nandan K.</p>
-        </div>
-    </footer>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="../assets/js/main.js"></script>
+      </div>
+    </article>
+  </main>
+  <footer>
+    <div class="footer-content" style="text-align: center; padding: 40px; color: var(--text-secondary);">
+      <p>&copy; 2026 Hari Nandan K.</p>
+    </div>
+  </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="../assets/js/main.js"></script>
 </body>
 
 </html>
