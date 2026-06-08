@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2 BHK Apartment for Rent — Kozhikode</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { dark: '#2C2420', mid: '#8E8D8A', light: '#D8C3A5', bg: '#EBE9E1' },
+                        accent: { DEFAULT: '#2F3E30', hover: '#243025', light: '#3d5140' }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        ::selection { background: #2F3E30; color: #fff; }
+        body { font-family: 'Inter', sans-serif; background: #EBE9E1; }
+
+        .glass-panel {
+            background: rgba(255,255,255,0.45);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.05);
+        }
+        .glass-card {
+            background: rgba(255,255,255,0.55);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.7);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            background: rgba(255,255,255,0.7);
+            box-shadow: 0 8px 40px rgba(0,0,0,0.07);
+            transform: translateY(-2px);
+        }
+        .glass-static {
+            background: rgba(255,255,255,0.5);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+        }
+
+        .hero-overlay {
+            background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(47,62,48,0.7) 60%, rgba(44,36,32,0.85) 100%);
+        }
+
+        .badge-pill {
+            background: rgba(47,62,48,0.08);
+            color: #2F3E30;
+            border: 1px solid rgba(47,62,48,0.12);
+        }
+
+        .cta-btn {
+            background: #2F3E30;
+            transition: all 0.2s ease;
+        }
+        .cta-btn:hover { background: #243025; transform: translateY(-1px); }
+
+        .floating-bar {
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(255,255,255,0.8);
+            box-shadow: 0 -4px 30px rgba(0,0,0,0.08);
+        }
+
+        .nav-blur {
+            background: rgba(235,233,225,0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(47,62,48,0.12), transparent);
+        }
+
+        .icon-box {
+            background: rgba(47,62,48,0.08);
+            border: 1px solid rgba(47,62,48,0.1);
+        }
+
+        .decorative-bg {
+            background: radial-gradient(circle at 20% 50%, rgba(47,62,48,0.04) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(216,195,165,0.1) 0%, transparent 40%),
+                        radial-gradient(circle at 60% 80%, rgba(47,62,48,0.03) 0%, transparent 40%);
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-up { opacity: 0; animation: fadeUp 0.6s ease forwards; }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+
+        /* Carousel */
+        .carousel-container { overflow: hidden; position: relative; }
+        .carousel-track { display: flex; transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .carousel-track img { min-width: 100%; object-fit: cover; }
+
+        /* Gallery */
+        .gallery-item { overflow: hidden; border-radius: 12px; cursor: pointer; position: relative; }
+        .gallery-item img { transition: transform 0.4s ease; width: 100%; height: 100%; object-fit: cover; }
+        .gallery-item:hover img { transform: scale(1.05); }
+        .gallery-item .gallery-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.5) 100%);
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        .gallery-item:hover .gallery-overlay { opacity: 1; }
+        .gallery-item .gallery-label {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            padding: 12px 16px; color: white;
+            transform: translateY(8px); opacity: 0;
+            transition: all 0.3s ease;
+        }
+        .gallery-item:hover .gallery-label { transform: translateY(0); opacity: 1; }
+
+        .filter-btn { transition: all 0.2s ease; }
+        .filter-btn.active { background: #2F3E30; color: white; border-color: #2F3E30; }
+
+        /* Lightbox */
+        .lightbox {
+            position: fixed; inset: 0; z-index: 100;
+            background: rgba(0,0,0,0.92);
+            backdrop-filter: blur(8px);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .lightbox.open { opacity: 1; pointer-events: all; }
+        .lightbox img {
+            max-width: 90vw; max-height: 80vh;
+            object-fit: contain; border-radius: 8px;
+            transform: scale(0.95); transition: transform 0.3s ease;
+        }
+        .lightbox.open img { transform: scale(1); }
+
+        /* Toast */
+        .toast {
+            transform: translateY(100px); opacity: 0;
+            transition: all 0.3s ease;
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+
+        /* Gallery grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        @media (min-width: 640px) {
+            .gallery-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        }
+        @media (min-width: 1024px) {
+            .gallery-grid { grid-template-columns: repeat(4, 1fr); gap: 16px; }
+        }
+        .gallery-grid .gallery-item { height: 200px; }
+        @media (min-width: 640px) { .gallery-grid .gallery-item { height: 220px; } }
+        @media (min-width: 1024px) { .gallery-grid .gallery-item { height: 260px; } }
+        .gallery-grid .span-2 { grid-column: span 2; grid-row: span 2; height: auto; }
+    </style>
+</head>
+<body class="text-brand-dark decorative-bg">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 nav-blur border-b border-white/50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-lg bg-accent flex items-center justify-center">
+                    <i data-lucide="home" class="w-4 h-4 text-white"></i>
+                </div>
+                <span class="font-semibold text-sm tracking-tight">Binu's Residency</span>
+            </div>
+            <div class="hidden md:flex items-center gap-6 text-xs font-medium text-brand-mid">
+                <a href="#overview" class="hover:text-accent transition-colors">Overview</a>
+                <a href="#gallery" class="hover:text-accent transition-colors">Gallery</a>
+                <a href="#features" class="hover:text-accent transition-colors">Features</a>
+                <a href="#location" class="hover:text-accent transition-colors">Location</a>
+                <a href="#contact" class="cta-btn text-white px-4 py-2 rounded-lg text-xs font-medium">Contact Owner</a>
+            </div>
+            <a href="tel:8089702291" class="md:hidden flex items-center gap-1.5 text-accent text-xs font-medium">
+                <i data-lucide="phone" class="w-3.5 h-3.5"></i> Call
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-14">
+        <div class="relative h-[55vh] sm:h-[65vh] md:h-[80vh] overflow-hidden">
+            <div class="carousel-container absolute inset-0">
+                <div class="carousel-track h-full" id="heroCarousel">
+                    <img src="https://z-cdn-media.chatglm.cn/files/0f7c1cf2-05ec-4054-9028-ac157e3ec092.jpeg?auth_key=1880736727-fb4dd0a53dfe470db545352eb8cb9f0f-0-49ae42a302b2b58d4d328c6399e5fd1e" alt="Building exterior" class="h-full">
+                    <img src="https://z-cdn-media.chatglm.cn/files/937ff69a-864e-4148-8b8f-8f9fd9699c54.jpeg?auth_key=1880736727-c49df2a8c1a741a09d62d87df8ff0366-0-5aeea3de70f6861d67abcfe6a858c8be" alt="Exterior corridor" class="h-full">
+                    <img src="https://z-cdn-media.chatglm.cn/files/7f152175-0c2d-441e-8059-5cb820d946ca.jpeg?auth_key=1880736727-9c29353f10774b57a37a9819aefdec07-0-d5e6a8bbed83e5d7cc2f152e5e1e716d" alt="Living hall" class="h-full">
+                    <img src="https://z-cdn-media.chatglm.cn/files/143b1c03-b6dd-4188-8ac0-bb2bbd20ee2c.jpeg?auth_key=1880736727-6924018805c44414b3fbb1f4e8c6e2a4-0-0964141132ccafb2a3233a66d7a51214" alt="Bedroom with storage" class="h-full">
+                    <img src="https://z-cdn-media.chatglm.cn/files/36a80c91-0669-4d9e-854e-a69e5b6212df.jpeg?auth_key=1880736727-6aedb55d3b164482bc2798fadd6fbe0b-0-a4146de79746e71501fc6f2b8aeb73c2" alt="Kitchen area" class="h-full">
+                </div>
+            </div>
+            <div class="hero-overlay absolute inset-0"></div>
+
+            <!-- Carousel Controls -->
+            <button onclick="heroSlide(-1)" class="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-10 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/25 backdrop-blur-sm border border-white/15 flex items-center justify-center text-white hover:bg-black/40 transition-all">
+                <i data-lucide="chevron-left" class="w-4 h-4"></i>
+            </button>
+            <button onclick="heroSlide(1)" class="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-10 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/25 backdrop-blur-sm border border-white/15 flex items-center justify-center text-white hover:bg-black/40 transition-all">
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            </button>
+
+            <!-- Dots -->
+            <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10" id="heroDots"></div>
+
+            <!-- Hero Content -->
+            <div class="absolute inset-0 flex items-end z-10">
+                <div class="w-full max-w-6xl mx-auto px-4 sm:px-6 pb-10 sm:pb-14">
+                    <div class="animate-fade-up">
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-white/15 backdrop-blur-sm text-white text-[10px] font-semibold uppercase tracking-wider px-3 py-1 rounded-full border border-white/20">2 BHK Apartment</span>
+                            <span class="bg-white/15 backdrop-blur-sm text-white text-[10px] font-semibold uppercase tracking-wider px-3 py-1 rounded-full border border-white/20">Zero Brokerage</span>
+                            <span class="bg-white/15 backdrop-blur-sm text-white text-[10px] font-semibold uppercase tracking-wider px-3 py-1 rounded-full border border-white/20">Pets Allowed</span>
+                        </div>
+                    </div>
+                    <h1 class="animate-fade-up delay-100 font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-white leading-[1.1] tracking-tight mb-4">
+                        Modern Living<br>Near Kozhikode
+                    </h1>
+                    <div class="animate-fade-up delay-200 flex flex-wrap items-center gap-4 text-white/80 text-sm">
+                        <span class="flex items-center gap-1.5"><i data-lucide="map-pin" class="w-4 h-4"></i>8km from Kozhikode City</span>
+                        <span class="flex items-center gap-1.5"><i data-lucide="compass" class="w-4 h-4"></i>West Facing</span>
+                    </div>
+                    <div class="animate-fade-up delay-300 mt-6 flex items-end gap-4 sm:gap-6 flex-wrap">
+                        <div>
+                            <p class="text-white/50 text-xs font-medium uppercase tracking-wider mb-1">Monthly Rent</p>
+                            <p class="text-white text-3xl sm:text-4xl font-semibold tracking-tight">₹12,000</p>
+                        </div>
+                        <div class="mb-1.5 hidden sm:block"><span class="text-white/30 text-xl">|</span></div>
+                        <div class="mb-1.5">
+                            <p class="text-white/50 text-xs font-medium uppercase tracking-wider mb-1">Deposit</p>
+                            <p class="text-white/80 text-lg font-medium">₹50,000 <span class="text-white/40 text-xs font-normal">(Negotiable)</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Stats -->
+    <section class="relative z-10 -mt-6 sm:-mt-8 px-4 sm:px-6">
+        <div class="max-w-4xl mx-auto glass-panel rounded-2xl p-4 sm:p-6">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
+                <div class="text-center">
+                    <p class="text-2xl sm:text-3xl font-semibold text-accent">2</p>
+                    <p class="text-xs text-brand-mid mt-0.5">BHK</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-2xl sm:text-3xl font-semibold text-accent">0</p>
+                    <p class="text-xs text-brand-mid mt-0.5">Brokerage</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-2xl sm:text-3xl font-semibold text-accent">0</p>
+                    <p class="text-xs text-brand-mid mt-0.5">Maintenance</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-2xl sm:text-3xl font-semibold text-accent">24/7</p>
+                    <p class="text-xs text-brand-mid mt-0.5">CCTV</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview -->
+    <section id="overview" class="py-16 sm:py-20 px-4 sm:px-6">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-12">
+                <p class="text-[10px] font-semibold uppercase tracking-[0.15em] text-accent mb-3">Property Overview</p>
+                <h2 class="font-serif text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight text-brand-dark">Comfortable Living,<br>Zero Hassles</h2>
+                <p class="text-sm sm:text-base text-brand-mid mt-4 max-w-xl mx-auto leading-relaxed">A well-maintained 2 BHK apartment with attached bathrooms, reliable well water supply, and all the essentials covered — no brokerage, no maintenance charges.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-5">
+                <div class="glass-card rounded-2xl p-6 sm:p-8">
+                    <div class="icon-box w-11 h-11 rounded-xl flex items-center justify-center mb-4">
+                        <i data-lucide="door-open" class="w-5 h-5 text-accent"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">2 BHK with Attached Bath</h3>
+                    <p class="text-sm text-brand-mid leading-relaxed">Spacious 2 bedroom, hall, and kitchen layout with attached bathrooms for privacy and convenience. West-facing for beautiful evening light.</p>
+                </div>
+                <div class="glass-card rounded-2xl p-6 sm:p-8">
+                    <div class="icon-box w-11 h-11 rounded-xl flex items-center justify-center mb-4">
+                        <i data-lucide="shield-check" class="w-5 h-5 text-accent"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">24/7 CCTV Surveillance</h3>
+                    <p class="text-sm text-brand-mid leading-relaxed">Round-the-clock CCTV monitoring ensures safety and peace of mind for you and your family at all times.</p>
+                </div>
+                <div class="glass-card rounded-2xl p-6 sm:p-8">
+                    <div class="icon-box w-11 h-11 rounded-xl flex items-center justify-center mb-4">
+                        <i data-lucide="droplets" class="w-5 h-5 text-accent"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Well Water Supply</h3>
+                    <p class="text-sm text-brand-mid leading-relaxed">Reliable well water resource ensuring consistent water availability throughout the year without dependency on municipal supply.</p>
+                </div>
+                <div class="glass-card rounded-2xl p-6 sm:p-8">
+                    <div class="icon-box w-11 h-11 rounded-xl flex items-center justify-center mb-4">
+                        <i data-lucide="heart-handshake" class="w-5 h-5 text-accent"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Couple & Pet Friendly</h3>
+                    <p class="text-sm text-brand-mid leading-relaxed">An inclusive space that welcomes couples and your furry companions. No restrictions — everyone in the family is welcome.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-3xl mx-auto"></div>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-16 sm:py-20 px-4 sm:px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-8">
+                <p class="text-[10px] font-semibold uppercase tracking-[0.15em] text-accent mb-3">Gallery</p>
+                <h2 class="font-serif text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight text-brand-dark">Take a Look Inside</h2>
+                <p class="text-sm text-brand-mid mt-3">Real photos of the apartment — what you see is what you get</p>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="flex flex-wrap justify-center gap-2 mb-8">
+                <button onclick="filterGallery('all')" class="filter-btn active px-4 py-1.5 rounded-full text-xs font-medium border border-brand-dark/10 bg-brand-dark/5 text-brand-dark">All</button>
+                <button onclick="filterGallery('exterior')" class="filter-btn px-4 py-1.5 rounded-full text-xs font-medium border border-brand-dark/10 bg-brand-dark/5 text-brand-dark">Exterior</button>
+                <button onclick="filterGallery('living')" class="filter-btn px-4 py-1.5 rounded-full text-xs font-medium border border-brand-dark/10 bg-brand-dark/5 text-brand-dark">Living</button>
+                <button onclick="filterGallery('bedroom')" class="filter-btn px-4 py-1.5 rounded-full text-xs font-medium border border-brand-dark/10 bg-brand-dark/5 text-brand-dark">Bedrooms</button>
+                <button onclick="filterGallery('kitchen')" class="filter-btn px-4 py-1.5 rounded-full text-xs font-medium border border-brand-dark/10 bg-brand-dark/5 text-brand-dark">Kitchen</button>
+                <button onclick="filterGallery('bathroom')" class="filter-btn px-4 py-1.5 rounded-full text-xs font-medium border border-brand-dark/10 bg-brand-dark/5 text-brand-dark">Bathrooms</button>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Exterior -->
+                <div class="gallery-item glass-static span-2" data-category="exterior" onclick="openLightbox(0)">
+                    <img src="https://z-cdn-media.chatglm.cn/files/0f7c1cf2-05ec-4054-9028-ac157e3ec092.jpeg?auth_key=1880736727-fb4dd0a53dfe470db545352eb8cb9f0f-0-49ae42a302b2b58d4d328c6399e5fd1e" alt="Building exterior" loading="lazy">
+                    <div class="gallery-overlay"></div>
+                    <div class="gallery-label"><p class="text-sm font-medium">Building Exterior</p><p class="text-[10px] opacity-70">Modern 3-storey residence</p></div>
+                </div>
+                <div class="gallery-item glass-static" data-category="exterior" onclick="openLightbox(1)">
+                    <img src="https://z-cdn-media.chatglm.cn/files/937ff69a-864e-4148-8b8f-8f9fd9699c54.jpeg?auth_key=1880736727-c49df2a8c1a741a09d62d87df8ff0366-0-5aeea3de70f6861d67abcfe6a858c8be" alt="Exterior corridor" loading="lazy">
+                    <div class="gallery-overlay"></div>
+                    <div class="gallery-label"><p class="text-sm font-medium">Exterior Passage</p></div>
+                </div>
+                <div class="gallery-item glass-static" data-category="exterior" onclick="openLightbox(2)">
+                    <img src="https://z-cdn-media.chatglm.cn/files/111bfcf1-3430-4849-b989-a9e9b3dd57a2.jpeg?auth_key=1880736727-343c9e8d63264a88a0ae9ef36794d6a1-0-cecfff6e71a258da0da9982e80febb3a" alt="Entrance door" loading="lazy">
+                    <div class="gallery-overlay"></div>
+                    <div class="gallery-label"><p class="text-sm font-medium">Entrance Door</p><p class="text-[10px] opacity-70">Unit No. 2</p></div>
+                </div>
+
+                <!-- Living -->
+                <div class="gallery-item glass-static" data-category="living" onclick="openLightbox(3)">
+                    <img src="https://z-cdn-media.chatglm.cn/files/7f152175-0c2d-441e-8059-5cb820d946ca.jpeg?auth_key=1880736727-9c29353f10774b57a37a9819aefdec07-0-d5e6a8bbed83e5d7cc2f152e5e1e716d" alt="Living hall" loading="lazy">
+                    <div class="gallery-overlay"></div>
+                    <div class="gallery-label"><p class="text-sm font-medium">Living Hall</p><p class="text-[10px] opacity-70">Spacious & bright</p></div>
+                </div>
+
+                <!-- Bedrooms -->
+                <div class="gallery-item glass-static" data-category="bedroom" onclick="openLightbox(4)">
+                    <img src="https://z-cdn-media.chatglm.cn/files/98ada578-83d5-4598-be84-f197dd7a6834.jpeg?auth_key=1880736727-e4acd2585f1345399ac1cb4878e4eb2e-0-6b1155fcf593ae39aa12fe2d8dd2bf76" alt="Bedroom 1" loading="lazy">
+                    <div class="gallery-overlay"></div>
+                    <div class="gallery-label"><p class="text-sm font-medium">Bedroom 1</p><p class="text-[10px] opacity-70">Dual windows, well-lit</p></div>
+                </div>
+                <div class="gallery-item glass-static" data-category="bedroom" onclick="openLightbox(5)">
+                    <img src="https://z-cdn-media.chatglm.cn/files/143b1c03-b6dd-4188-8ac0-bb2bbd20ee2c.jpeg?auth_key=1880736727-6924018805c44414b3fbb1f4e8c6e2a4-0-0964141132ccafb2a3233a66d7a51214" alt="Bedroom 2" loading="lazy">
+                    <div class="gallery-overlay"></div>
+                    <div class="gallery-label"><p class="text-sm font-medium">Bedroom 2</p><p class="text-[10px] opacity-70">Built-in storage, garden view</p></div>
+                </div>
+
+                <!-- Kitchen -->
+                <div class="gallery-item glass-static" data-category="kitchen" onclick="openLightbox(6)">
+                    <img src="https://z-cdn-media.chatglm.cn/files/36a80c91-0669-4d9e-854e-a69e5b6212df.jpeg?auth_key=1880736727-6aedb55d3b164482bc2798fadd6fbe0b-0-a4146de79746e71501fc6f2b8aeb73c2" alt="Kitchen area" loading="lazy">
+                    <div class="gallery-overlay"></div>
+                    <div class="gallery-label"><p class="text-sm font-medium">Kitchen / Utility</p><p class="text-[10px] opacity-70">Countertop & blinds</p></div>
+                </div>
+
+                <!-- Bathrooms -->
+                <div class="gallery-item glass-static" data-category="bathroom" onclick="openLightbox(7)">
+                    <img src="https://z-cdn-media.chatglm.cn/files/dd2505ce-e82a-44ba-b8ec-8f77576eaa91.jpeg?auth_key=1880736727-9cad8b5f891c4186a9dae12cee10b2b0-0-a7262cfd5f8bf4a7085826f95f411e75" alt="Wash basin" loading="lazy">
+                    <div class="gallery-overlay"></div>
+                    <div class="gallery-label"><p class="text-sm font-medium">Wash Basin Area</p></div>
+                </div>
+                <div class="gallery-item glass-static" data-category="bathroom" onclick="openLightbox(8)">
+                    <img src="https://z-cdn-media.chatglm.cn/files/567ee623-0253-49c7-8007-931b82230dfc.jpeg?auth_key=1880736727-60640c38f82a4cc98f325685fb7bfcba-0-c5d6ca8092b5966439bac678c076ebae" alt="Bathroom" loading="lazy">
+                    <div class="gallery-overlay"></div>
+                    <div class="gallery-label"><p class="text-sm font-medium">Attached Bathroom</p><p class="text-[10px] opacity-70">Marble finish tiles</p></div>
+                </div>
+                <div class="gallery-item glass-static" data-category="bathroom" onclick="openLightbox(9)">
+                    <img src="https://z-cdn-media.chatglm.cn/files/03737192-2d18-4cc9-a03d-6802df3d9435.jpeg?auth_key=1880736727-a988b86a68c1401ba806d793bbfec01d-0-5849597a54af8d3538fd37f3ad6171fa" alt="Toilet with bidet" loading="lazy">
+                    <div class="gallery-overlay"></div>
+                    <div class="gallery-label"><p class="text-sm font-medium">Bathroom - WC</p><p class="text-[10px] opacity-70">With bidet attachment</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-3xl mx-auto"></div>
+
+    <!-- Features Grid -->
+    <section id="features" class="py-16 sm:py-20 px-4 sm:px-6">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-12">
+                <p class="text-[10px] font-semibold uppercase tracking-[0.15em] text-accent mb-3">Property Details</p>
+                <h2 class="font-serif text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight text-brand-dark">Everything You Need<br>to Know</h2>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
+                <div class="glass-card rounded-xl p-4 sm:p-5 text-center">
+                    <div class="icon-box w-10 h-10 rounded-lg flex items-center justify-center mx-auto mb-3"><i data-lucide="bed-double" class="w-4 h-4 text-accent"></i></div>
+                    <p class="text-xs sm:text-sm font-medium">2 BHK</p>
+                    <p class="text-[10px] text-brand-mid mt-0.5">Attached Bath</p>
+                </div>
+                <div class="glass-card rounded-xl p-4 sm:p-5 text-center">
+                    <div class="icon-box w-10 h-10 rounded-lg flex items-center justify-center mx-auto mb-3"><i data-lucide="building-2" class="w-4 h-4 text-accent"></i></div>
+                    <p class="text-xs sm:text-sm font-medium">Apartment</p>
+                    <p class="text-[10px] text-brand-mid mt-0.5">Building Type</p>
+                </div>
+                <div class="glass-card rounded-xl p-4 sm:p-5 text-center">
+                    <div class="icon-box w-10 h-10 rounded-lg flex items-center justify-center mx-auto mb-3"><i data-lucide="sunset" class="w-4 h-4 text-accent"></i></div>
+                    <p class="text-xs sm:text-sm font-medium">West Facing</p>
+                    <p class="text-[10px] text-brand-mid mt-0.5">Building Direction</p>
+                </div>
+                <div class="glass-card rounded-xl p-4 sm:p-5 text-center">
+                    <div class="icon-box w-10 h-10 rounded-lg flex items-center justify-center mx-auto mb-3"><i data-lucide="droplets" class="w-4 h-4 text-accent"></i></div>
+                    <p class="text-xs sm:text-sm font-medium">Well Water</p>
+                    <p class="text-[10px] text-brand-mid mt-0.5">Water Source</p>
+                </div>
+                <div class="glass-card rounded-xl p-4 sm:p-5 text-center">
+                    <div class="icon-box w-10 h-10 rounded-lg flex items-center justify-center mx-auto mb-3"><i data-lucide="car" class="w-4 h-4 text-accent"></i></div>
+                    <p class="text-xs sm:text-sm font-medium">1 Car Park</p>
+                    <p class="text-[10px] text-brand-mid mt-0.5">Dedicated Slot</p>
+                </div>
+                <div class="glass-card rounded-xl p-4 sm:p-5 text-center">
+                    <div class="icon-box w-10 h-10 rounded-lg flex items-center justify-center mx-auto mb-3"><i data-lucide="bike" class="w-4 h-4 text-accent"></i></div>
+                    <p class="text-xs sm:text-sm font-medium">1 Bike Park</p>
+                    <p class="text-[10px] text-brand-mid mt-0.5">Dedicated Slot</p>
+                </div>
+                <div class="glass-card rounded-xl p-4 sm:p-5 text-center">
+                    <div class="icon-box w-10 h-10 rounded-lg flex items-center justify-center mx-auto mb-3"><i data-lucide="ban" class="w-4 h-4 text-accent"></i></div>
+                    <p class="text-xs sm:text-sm font-medium">Zero Fee</p>
+                    <p class="text-[10px] text-brand-mid mt-0.5">No Brokerage</p>
+                </div>
+                <div class="glass-card rounded-xl p-4 sm:p-5 text-center">
+                    <div class="icon-box w-10 h-10 rounded-lg flex items-center justify-center mx-auto mb-3"><i data-lucide="indian-rupee" class="w-4 h-4 text-accent"></i></div>
+                    <p class="text-xs sm:text-sm font-medium">Zero Fee</p>
+                    <p class="text-[10px] text-brand-mid mt-0.5">No Maintenance</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-3xl mx-auto"></div>
+
+    <!-- Lifestyle Badges -->
+    <section class="py-16 sm:py-20 px-4 sm:px-6">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-12">
+                <p class="text-[10px] font-semibold uppercase tracking-[0.15em] text-accent mb-3">Lifestyle</p>
+                <h2 class="font-serif text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight text-brand-dark">Live Your Way</h2>
+                <p class="text-sm text-brand-mid mt-3">No restrictions. No hidden charges. Just comfortable living.</p>
+            </div>
+            <div class="flex flex-wrap justify-center gap-3 sm:gap-4">
+                <div class="badge-pill px-5 py-2.5 rounded-full flex items-center gap-2 text-sm font-medium"><i data-lucide="paw-print" class="w-4 h-4"></i>Pets Allowed</div>
+                <div class="badge-pill px-5 py-2.5 rounded-full flex items-center gap-2 text-sm font-medium"><i data-lucide="heart" class="w-4 h-4"></i>Couple Friendly</div>
+                <div class="badge-pill px-5 py-2.5 rounded-full flex items-center gap-2 text-sm font-medium"><i data-lucide="cctv" class="w-4 h-4"></i>24/7 Security</div>
+                <div class="badge-pill px-5 py-2.5 rounded-full flex items-center gap-2 text-sm font-medium"><i data-lucide="receipt" class="w-4 h-4"></i>Zero Brokerage</div>
+                <div class="badge-pill px-5 py-2.5 rounded-full flex items-center gap-2 text-sm font-medium"><i data-lucide="wrench" class="w-4 h-4"></i>Zero Maintenance</div>
+                <div class="badge-pill px-5 py-2.5 rounded-full flex items-center gap-2 text-sm font-medium"><i data-lucide="car" class="w-4 h-4"></i>Car Parking</div>
+                <div class="badge-pill px-5 py-2.5 rounded-full flex items-center gap-2 text-sm font-medium"><i data-lucide="droplets" class="w-4 h-4"></i>Well Water</div>
+                <div class="badge-pill px-5 py-2.5 rounded-full flex items-center gap-2 text-sm font-medium"><i data-lucide="handshake" class="w-4 h-4"></i>Direct Owner</div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-3xl mx-auto"></div>
+
+    <!-- Location -->
+    <section id="location" class="py-16 sm:py-20 px-4 sm:px-6">
+        <div class="max-w-5xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <p class="text-[10px] font-semibold uppercase tracking-[0.15em] text-accent mb-3">Location</p>
+                    <h2 class="font-serif text-2xl sm:text-3xl font-semibold tracking-tight text-brand-dark mb-4">Close to the City,<br>Far from the Noise</h2>
+                    <p class="text-sm text-brand-mid leading-relaxed mb-6">Located just 8km from Kozhikode city center — the perfect balance of connectivity and calm. Easy access to shopping, healthcare, and public transport.</p>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3">
+                            <div class="icon-box w-9 h-9 rounded-lg flex items-center justify-center shrink-0"><i data-lucide="map-pin" class="w-4 h-4 text-accent"></i></div>
+                            <div><p class="text-sm font-medium">8km from Kozhikode City</p><p class="text-xs text-brand-mid">Well connected by road</p></div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="icon-box w-9 h-9 rounded-lg flex items-center justify-center shrink-0"><i data-lucide="bus" class="w-4 h-4 text-accent"></i></div>
+                            <div><p class="text-sm font-medium">Public Transport Accessible</p><p class="text-xs text-brand-mid">Bus stops nearby</p></div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="icon-box w-9 h-9 rounded-lg flex items-center justify-center shrink-0"><i data-lucide="trees" class="w-4 h-4 text-accent"></i></div>
+                            <div><p class="text-sm font-medium">Quiet Residential Area</p><p class="text-xs text-brand-mid">Peaceful neighbourhood</p></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-static rounded-2xl overflow-hidden h-64 sm:h-80 md:h-96">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d62518.36637!2d75.76!3d11.26!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba65938563d4747%3A0x326f9a345a4e4e0!2sKozhikode%2C%20Kerala!5e0!3m2!1sen!2sin!4v1" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-3xl mx-auto"></div>
+
+    <!-- Pricing -->
+    <section class="py-16 sm:py-20 px-4 sm:px-6">
+        <div class="max-w-3xl mx-auto text-center">
+            <p class="text-[10px] font-semibold uppercase tracking-[0.15em] text-accent mb-3">Pricing</p>
+            <h2 class="font-serif text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight text-brand-dark mb-10">Transparent & Affordable</h2>
+            <div class="glass-panel rounded-2xl p-6 sm:p-10">
+                <div class="grid sm:grid-cols-3 gap-6 sm:gap-8">
+                    <div>
+                        <p class="text-[10px] font-semibold uppercase tracking-wider text-brand-mid mb-2">Monthly Rent</p>
+                        <p class="text-4xl sm:text-5xl font-semibold text-accent tracking-tight">₹12K</p>
+                        <p class="text-xs text-brand-mid mt-1">per month</p>
+                    </div>
+                    <div class="sm:border-x sm:border-brand-dark/5 flex flex-col items-center justify-center">
+                        <p class="text-[10px] font-semibold uppercase tracking-wider text-brand-mid mb-2">Security Deposit</p>
+                        <p class="text-4xl sm:text-5xl font-semibold text-brand-dark tracking-tight">₹50K</p>
+                        <p class="text-xs text-accent font-medium mt-1">Negotiable</p>
+                    </div>
+                    <div class="flex flex-col items-center justify-center">
+                        <p class="text-[10px] font-semibold uppercase tracking-wider text-brand-mid mb-2">Hidden Charges</p>
+                        <p class="text-4xl sm:text-5xl font-semibold text-brand-dark tracking-tight">₹0</p>
+                        <p class="text-xs text-brand-mid mt-1">No brokerage · No maintenance</p>
+                    </div>
+                </div>
+                <div class="mt-8 pt-6 border-t border-brand-dark/5">
+                    <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs text-brand-mid">
+                        <span class="flex items-center gap-1"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-accent"></i> No brokerage</span>
+                        <span class="flex items-center gap-1"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-accent"></i> Zero maintenance</span>
+                        <span class="flex items-center gap-1"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-accent"></i> Negotiable deposit</span>
+                        <span class="flex items-center gap-1"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-accent"></i> Direct from owner</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-3xl mx-auto"></div>
+
+    <!-- Contact -->
+    <section id="contact" class="py-16 sm:py-20 px-4 sm:px-6">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-12">
+                <p class="text-[10px] font-semibold uppercase tracking-[0.15em] text-accent mb-3">Get in Touch</p>
+                <h2 class="font-serif text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight text-brand-dark">Interested? Let's Talk</h2>
+                <p class="text-sm text-brand-mid mt-3">Contact the owner directly — no middlemen, no extra charges.</p>
+            </div>
+            <div class="max-w-lg mx-auto">
+                <div class="glass-panel rounded-2xl p-6 sm:p-8 text-center">
+                    <div class="w-16 h-16 rounded-full bg-accent/10 border border-accent/10 flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="user" class="w-7 h-7 text-accent"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold">Binu T P</h3>
+                    <p class="text-sm text-brand-mid mt-1">Property Owner</p>
+                    <div class="mt-6 space-y-3">
+                        <a href="tel:8089702291" class="cta-btn w-full flex items-center justify-center gap-2 text-white py-3.5 px-6 rounded-xl font-medium text-sm">
+                            <i data-lucide="phone" class="w-4 h-4"></i> Call 80897 02291
+                        </a>
+                        <a href="https://wa.me/918089702291?text=Hi%20Binu%2C%20I%27m%20interested%20in%20the%202%20BHK%20apartment%20near%20Kozhikode.%20Could%20you%20share%20more%20details%3F" target="_blank" class="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white py-3.5 px-6 rounded-xl font-medium text-sm transition-all hover:-translate-y-0.5">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                            WhatsApp
+                        </a>
+                    </div>
+                    <button onclick="copyNumber()" class="mt-4 text-xs text-brand-mid hover:text-accent transition-colors flex items-center gap-1.5 mx-auto">
+                        <i data-lucide="copy" class="w-3 h-3"></i> Copy phone number
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-brand-dark/5 py-8 px-4 sm:px-6">
+        <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-2">
+                <div class="w-7 h-7 rounded-md bg-accent flex items-center justify-center"><i data-lucide="home" class="w-3.5 h-3.5 text-white"></i></div>
+                <span class="text-sm font-medium">Binu's Residency</span>
+            </div>
+            <p class="text-xs text-brand-mid">2 BHK Apartment · 8km from Kozhikode · ₹12,000/month</p>
+            <p class="text-xs text-brand-mid/60">© 2026 All rights reserved</p> <a href="https://wa.me/917510255646"
+            <p class="text-xs text-brand-mid/60">Developed by Harinandan K</p></a>
+
+        </div>
+    </footer>
+
+    <div class="h-20 md:hidden"></div>
+
+    <!-- Mobile Floating CTA -->
+    <div class="fixed bottom-0 left-0 right-0 z-50 md:hidden floating-bar px-4 py-3">
+        <div class="flex gap-2">
+            <a href="tel:8089702291" class="flex-1 cta-btn flex items-center justify-center gap-2 text-white py-3 rounded-xl text-sm font-medium">
+                <i data-lucide="phone" class="w-4 h-4"></i> Call Now
+            </a>
+            <a href="https://wa.me/918089702291?text=Hi%20Binu%2C%20I%27m%20interested%20in%20the%202%20BHK%20apartment%20near%20Kozhikode.%20Could%20you%20share%20more%20details%3F" target="_blank" class="flex-1 flex items-center justify-center gap-2 bg-[#25D366] text-white py-3 rounded-xl text-sm font-medium">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                WhatsApp
+            </a>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+        <button onclick="closeLightbox(event, true)" class="absolute top-4 right-4 sm:top-6 sm:right-6 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors z-10">
+            <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+        <button onclick="lightboxSlide(-1); event.stopPropagation();" class="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors z-10">
+            <i data-lucide="chevron-left" class="w-5 h-5"></i>
+        </button>
+        <button onclick="lightboxSlide(1); event.stopPropagation();" class="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors z-10">
+            <i data-lucide="chevron-right" class="w-5 h-5"></i>
+        </button>
+        <img id="lightboxImg" src="" alt="Gallery image">
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/60 text-xs" id="lightboxCounter"></div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast fixed bottom-24 left-1/2 -translate-x-1/2 z-[60] glass-panel rounded-xl px-4 py-2.5 text-sm font-medium flex items-center gap-2">
+        <i data-lucide="check-circle" class="w-4 h-4 text-accent"></i>
+        <span id="toastMsg">Copied!</span>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        // ===== HERO CAROUSEL =====
+        const heroImages = document.querySelectorAll('#heroCarousel img');
+        let heroIdx = 0;
+        let heroAuto;
+
+        function buildHeroDots() {
+            const container = document.getElementById('heroDots');
+            container.innerHTML = '';
+            heroImages.forEach((_, i) => {
+                const btn = document.createElement('button');
+                btn.className = `w-2 h-2 rounded-full transition-all ${i === heroIdx ? 'bg-white/90 w-6' : 'bg-white/40'}`;
+                btn.onclick = () => goHeroSlide(i);
+                container.appendChild(btn);
+            });
+        }
+
+        function goHeroSlide(i) {
+            heroIdx = i;
+            document.getElementById('heroCarousel').style.transform = `translateX(-${i * 100}%)`;
+            buildHeroDots();
+            resetHeroAuto();
+        }
+
+        function heroSlide(dir) {
+            heroIdx = (heroIdx + dir + heroImages.length) % heroImages.length;
+            goHeroSlide(heroIdx);
+        }
+
+        function resetHeroAuto() {
+            clearInterval(heroAuto);
+            heroAuto = setInterval(() => heroSlide(1), 5000);
+        }
+
+        // Touch support for hero
+        let hTouchStart = 0;
+        const heroEl = document.querySelector('.carousel-container');
+        heroEl.addEventListener('touchstart', e => { hTouchStart = e.changedTouches[0].screenX; }, { passive: true });
+        heroEl.addEventListener('touchend', e => {
+            const diff = hTouchStart - e.changedTouches[0].screenX;
+            if (Math.abs(diff) > 50) heroSlide(diff > 0 ? 1 : -1);
+        }, { passive: true });
+
+        buildHeroDots();
+        resetHeroAuto();
+
+        // ===== GALLERY =====
+        const galleryImages = [
+            'https://z-cdn-media.chatglm.cn/files/0f7c1cf2-05ec-4054-9028-ac157e3ec092.jpeg?auth_key=1880736727-fb4dd0a53dfe470db545352eb8cb9f0f-0-49ae42a302b2b58d4d328c6399e5fd1e',
+            'https://z-cdn-media.chatglm.cn/files/937ff69a-864e-4148-8b8f-8f9fd9699c54.jpeg?auth_key=1880736727-c49df2a8c1a741a09d62d87df8ff0366-0-5aeea3de70f6861d67abcfe6a858c8be',
+            'https://z-cdn-media.chatglm.cn/files/111bfcf1-3430-4849-b989-a9e9b3dd57a2.jpeg?auth_key=1880736727-343c9e8d63264a88a0ae9ef36794d6a1-0-cecfff6e71a258da0da9982e80febb3a',
+            'https://z-cdn-media.chatglm.cn/files/7f152175-0c2d-441e-8059-5cb820d946ca.jpeg?auth_key=1880736727-9c29353f10774b57a37a9819aefdec07-0-d5e6a8bbed83e5d7cc2f152e5e1e716d',
+            'https://z-cdn-media.chatglm.cn/files/98ada578-83d5-4598-be84-f197dd7a6834.jpeg?auth_key=1880736727-e4acd2585f1345399ac1cb4878e4eb2e-0-6b1155fcf593ae39aa12fe2d8dd2bf76',
+            'https://z-cdn-media.chatglm.cn/files/143b1c03-b6dd-4188-8ac0-bb2bbd20ee2c.jpeg?auth_key=1880736727-6924018805c44414b3fbb1f4e8c6e2a4-0-0964141132ccafb2a3233a66d7a51214',
+            'https://z-cdn-media.chatglm.cn/files/36a80c91-0669-4d9e-854e-a69e5b6212df.jpeg?auth_key=1880736727-6aedb55d3b164482bc2798fadd6fbe0b-0-a4146de79746e71501fc6f2b8aeb73c2',
+            'https://z-cdn-media.chatglm.cn/files/dd2505ce-e82a-44ba-b8ec-8f77576eaa91.jpeg?auth_key=1880736727-9cad8b5f891c4186a9dae12cee10b2b0-0-a7262cfd5f8bf4a7085826f95f411e75',
+            'https://z-cdn-media.chatglm.cn/files/567ee623-0253-49c7-8007-931b82230dfc.jpeg?auth_key=1880736727-60640c38f82a4cc98f325685fb7bfcba-0-c5d6ca8092b5966439bac678c076ebae',
+            'https://z-cdn-media.chatglm.cn/files/03737192-2d18-4cc9-a03d-6802df3d9435.jpeg?auth_key=1880736727-a988b86a68c1401ba806d793bbfec01d-0-5849597a54af8d3538fd37f3ad6171fa'
+        ];
+
+        const galleryLabels = [
+            'Building Exterior', 'Exterior Passage', 'Entrance Door',
+            'Living Hall', 'Bedroom 1', 'Bedroom 2',
+            'Kitchen / Utility', 'Wash Basin Area', 'Attached Bathroom', 'Bathroom - WC'
+        ];
+
+        // Gallery filter
+        function filterGallery(cat) {
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.textContent.trim().toLowerCase() === cat || (cat === 'all' && btn.textContent.trim().toLowerCase() === 'all'));
+            });
+
+            const items = document.querySelectorAll('.gallery-item');
+            items.forEach(item => {
+                const show = cat === 'all' || item.dataset.category === cat;
+                item.style.display = show ? '' : 'none';
+            });
+        }
+
+        // ===== LIGHTBOX =====
+        let lbIdx = 0;
+        // Track which images are currently visible (for filtered navigation)
+        function getVisibleIndices() {
+            const items = document.querySelectorAll('.gallery-item');
+            const indices = [];
+            items.forEach((item, i) => {
+                if (item.style.display !== 'none') indices.push(i);
+            });
+            return indices;
+        }
+
+        function openLightbox(idx) {
+            lbIdx = idx;
+            updateLightbox();
+            document.getElementById('lightbox').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox(e, force) {
+            if (force || e.target === document.getElementById('lightbox')) {
+                document.getElementById('lightbox').classList.remove('open');
+                document.body.style.overflow = '';
+            }
+        }
+
+        function lightboxSlide(dir) {
+            const visible = getVisibleIndices();
+            const currentPos = visible.indexOf(lbIdx);
+            const newPos = (currentPos + dir + visible.length) % visible.length;
+            lbIdx = visible[newPos];
+            updateLightbox();
+        }
+
+        function updateLightbox() {
+            document.getElementById('lightboxImg').src = galleryImages[lbIdx];
+            document.getElementById('lightboxImg').alt = galleryLabels[lbIdx];
+            const visible = getVisibleIndices();
+            const pos = visible.indexOf(lbIdx);
+            document.getElementById('lightboxCounter').textContent = `${pos + 1} / ${visible.length}`;
+        }
+
+        // Keyboard nav for lightbox
+        document.addEventListener('keydown', e => {
+            if (!document.getElementById('lightbox').classList.contains('open')) return;
+            if (e.key === 'Escape') closeLightbox(e, true);
+            if (e.key === 'ArrowLeft') lightboxSlide(-1);
+            if (e.key === 'ArrowRight') lightboxSlide(1);
+        });
+
+        // Touch support for lightbox
+        let lbTouchStart = 0;
+        document.getElementById('lightbox').addEventListener('touchstart', e => {
+            lbTouchStart = e.changedTouches[0].screenX;
+        }, { passive: true });
+        document.getElementById('lightbox').addEventListener('touchend', e => {
+            const diff = lbTouchStart - e.changedTouches[0].screenX;
+            if (Math.abs(diff) > 50) lightboxSlide(diff > 0 ? 1 : -1);
+        }, { passive: true });
+
+        // ===== UTILITIES =====
+        function copyNumber() {
+            navigator.clipboard.writeText('8089702291').then(() => showToast('Phone number copied!')).catch(() => {
+                const ta = document.createElement('textarea');
+                ta.value = '8089702291';
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                showToast('Phone number copied!');
+            });
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({ top: target.getBoundingClientRect().top + window.pageYOffset - 70, behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Nav shadow on scroll
+        const nav = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            nav.style.boxShadow = window.scrollY > 10 ? '0 1px 20px rgba(0,0,0,0.06)' : 'none';
+        }, { passive: true });
+
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+
+        document.querySelectorAll('.glass-card, .badge-pill, .gallery-item').forEach((el, i) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(15px)';
+            el.style.transition = `opacity 0.5s ease ${Math.min(i * 0.04, 0.4)}s, transform 0.5s ease ${Math.min(i * 0.04, 0.4)}s`;
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
