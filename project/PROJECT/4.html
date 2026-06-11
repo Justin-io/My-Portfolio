@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miziz Taste — Order Authentic Kerala Homemade Pickles Online</title>
+    <meta name="description" content="Order authentic Kerala homemade pickles, curry mixes & delicacies. Interactive cart, custom delivery notes. Tuna Fish Pickle, Nadan Achar & more.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        kerala: { 50:'#FDF8F0', 100:'#FAF0E1', 200:'#F0DDB8', 300:'#E0C48E', 400:'#C8962E', 500:'#A67C20', 600:'#8B6518', 700:'#6B4D12', 800:'#2D1810', 900:'#1A0F08' },
+                        leaf: { 50:'#F0F7F2', 100:'#D6EADD', 200:'#A8D5B3', 300:'#6BB87E', 400:'#3D8B5A', 500:'#1A4D2E', 600:'#153D24' },
+                        spice: { 400:'#E85D3A', 500:'#C4391A' }
+                    },
+                    fontFamily: { sans:['Inter','sans-serif'], serif:['Playfair Display','serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::selection { background:#C8962E; color:#fff; }
+        ::-webkit-scrollbar { width:6px; }
+        ::-webkit-scrollbar-track { background:#FDF8F0; }
+        ::-webkit-scrollbar-thumb { background:#C8962E; border-radius:3px; }
+
+        .fade-up { opacity:0; transform:translateY(24px); transition:opacity 0.7s ease, transform 0.7s ease; }
+        .fade-up.visible { opacity:1; transform:translateY(0); }
+        .stagger-1{transition-delay:.08s} .stagger-2{transition-delay:.16s} .stagger-3{transition-delay:.24s} .stagger-4{transition-delay:.32s}
+
+        .product-card { transition: all 0.4s cubic-bezier(0.4,0,0.2,1); }
+        .product-card:hover { transform:translateY(-5px); box-shadow:0 20px 40px rgba(45,24,16,0.1); }
+
+        .hero-img { transition:transform 7s ease-out; }
+        .hero-img:hover { transform:scale(1.03); }
+
+        .nav-blur { backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); }
+        .text-gradient-gold { background:linear-gradient(135deg,#C8962E,#E0C48E,#C8962E); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+        .filter-btn { transition: all 0.25s ease; }
+        .filter-btn.active { background:#1A4D2E; color:#fff; border-color:#1A4D2E; }
+
+        .product-hidden { display:none; }
+
+        .line-draw { width:0; transition:width 0.8s ease; }
+        .line-draw.visible { width:50px; }
+
+        .badge-shimmer { background:linear-gradient(110deg,#C8962E 0%,#E0C48E 45%,#C8962E 55%,#C8962E 100%); background-size:200% 100%; animation:shimmer 3s ease-in-out infinite; }
+        @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+        .star-filled { color:#C8962E; }
+
+        /* Cart Drawer */
+        .cart-backdrop { opacity:0; pointer-events:none; transition:opacity 0.3s ease; }
+        .cart-backdrop.open { opacity:1; pointer-events:auto; }
+        .cart-drawer { transform:translateX(100%); transition:transform 0.35s cubic-bezier(0.4,0,0.2,1); }
+        .cart-backdrop.open .cart-drawer { transform:translateX(0); }
+
+        /* Cart badge bounce */
+        .cart-badge { transition:transform 0.3s cubic-bezier(0.68,-0.55,0.265,1.55); }
+        .cart-badge.bounce { transform:scale(1.4); }
+
+        /* Add-to-cart button feedback */
+        .atc-btn { transition: all 0.3s ease; }
+        .atc-btn.added { background:#1A4D2E !important; color:#fff !important; border-color:#1A4D2E !important; }
+
+        /* Quantity controls */
+        .qty-btn { transition: background 0.15s ease; }
+        .qty-btn:active { background:#C8962E; color:#fff; }
+
+        /* Toast */
+        .toast { transform:translateY(20px); opacity:0; transition: all 0.4s cubic-bezier(0.4,0,0.2,1); }
+        .toast.show { transform:translateY(0); opacity:1; }
+
+        /* Delivery notes expand */
+        .notes-expand { max-height:0; overflow:hidden; transition:max-height 0.4s ease; }
+        .notes-expand.open { max-height:200px; }
+
+        .cart-item-enter { animation: cartItemIn 0.3s ease forwards; }
+        @keyframes cartItemIn { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:translateX(0); } }
+
+        .empty-cart-bounce { animation: emptyBounce 2s ease-in-out infinite; }
+        @keyframes emptyBounce { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-6px); } }
+    </style>
+</head>
+<body class="bg-kerala-50 text-kerala-800 font-sans antialiased overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 nav-blur bg-kerala-50/85 border-b border-kerala-200/40">
+        <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-20">
+                <a href="#" class="flex items-center gap-2.5">
+                    <div class="w-9 h-9 sm:w-10 sm:h-10 bg-leaf-500 rounded-full flex items-center justify-center">
+                        <span class="text-white font-serif text-sm sm:text-base font-semibold">M</span>
+                    </div>
+                    <div class="flex flex-col leading-tight">
+                        <span class="text-lg sm:text-xl font-serif font-semibold text-kerala-800 tracking-tight">Miziz Taste</span>
+                        <span class="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-kerala-400">നാടൻ രുചി</span>
+                    </div>
+                </a>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#products" class="text-sm text-kerala-600 hover:text-kerala-800 transition-colors">Products</a>
+                    <a href="#story" class="text-sm text-kerala-600 hover:text-kerala-800 transition-colors">Our Story</a>
+                    <a href="#testimonials" class="text-sm text-kerala-600 hover:text-kerala-800 transition-colors">Reviews</a>
+                    <a href="https://wa.me/919999999999?text=Hi%20Miziz%20Taste!" target="_blank" class="text-sm text-kerala-600 hover:text-kerala-800 transition-colors">Contact</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <!-- Cart Button -->
+                    <button onclick="openCart()" class="relative w-10 h-10 sm:w-11 sm:h-11 bg-kerala-100 rounded-full flex items-center justify-center text-kerala-700 hover:bg-kerala-200 transition-colors">
+                        <span class="iconify" data-icon="mdi:shopping-outline" data-width="20"></span>
+                        <span id="cartBadge" class="cart-badge absolute -top-1 -right-1 w-5 h-5 bg-spice-500 text-white text-[10px] font-semibold rounded-full flex items-center justify-center hidden">0</span>
+                    </button>
+                    <!-- Mobile menu -->
+                    <button id="mobileMenuBtn" class="md:hidden w-10 h-10 flex items-center justify-center text-kerala-800">
+                        <span class="iconify" data-icon="mdi:menu" data-width="24"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="fixed inset-y-0 right-0 w-72 bg-kerala-50 z-50 shadow-2xl p-8 flex flex-col transform translate-x-full transition-transform duration-300">
+        <button id="closeMobileMenu" class="self-end mb-8 text-kerala-800"><span class="iconify" data-icon="mdi:close" data-width="24"></span></button>
+        <div class="flex flex-col gap-6">
+            <a href="#products" class="mobile-nav-link text-lg font-serif text-kerala-800">Products</a>
+            <a href="#story" class="mobile-nav-link text-lg font-serif text-kerala-800">Our Story</a>
+            <a href="#testimonials" class="mobile-nav-link text-lg font-serif text-kerala-800">Reviews</a>
+        </div>
+        <div class="mt-auto">
+            <a href="https://wa.me/919999999999" target="_blank" class="inline-flex items-center justify-center gap-2 w-full bg-[#25D366] text-white text-sm font-medium uppercase tracking-wider px-5 py-3 rounded-full">
+                <span class="iconify" data-icon="mdi:whatsapp" data-width="18"></span> WhatsApp Us
+            </a>
+        </div>
+    </div>
+    <div id="mobileOverlay" class="fixed inset-0 bg-black/20 z-40 hidden"></div>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-[85vh] sm:min-h-screen flex items-center pt-20 pb-12 overflow-hidden">
+        <div class="absolute inset-0 opacity-[0.03]" style="background-image:url('data:image/svg+xml,<svg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;><circle cx=&quot;30&quot; cy=&quot;30&quot; r=&quot;1.5&quot; fill=&quot;%231A4D2E&quot;/></svg>');"></div>
+        <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 w-full">
+            <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+                <div class="order-2 lg:order-1 text-center lg:text-left">
+                    <div class="fade-up">
+                        <span class="inline-flex items-center gap-2 bg-leaf-50 text-leaf-500 text-[10px] sm:text-xs font-medium uppercase tracking-[0.2em] px-4 py-1.5 rounded-full border border-leaf-200 mb-6">
+                            <span class="w-1.5 h-1.5 bg-leaf-400 rounded-full"></span> Made in Kerala · 100% Natural
+                        </span>
+                    </div>
+                    <h1 class="fade-up stagger-1 font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold leading-[1.1] tracking-tight text-kerala-800 mb-4">
+                        A Taste of<br><span class="text-gradient-gold">Home</span> Remembered
+                    </h1>
+                    <p class="fade-up stagger-2 text-base sm:text-lg text-kerala-500 font-light leading-relaxed max-w-lg mx-auto lg:mx-0 mb-3">
+                        Authentic Kerala homemade pickles & delicacies — crafted with traditional recipes, just like <em class="font-serif not-italic text-kerala-700">Ammumma</em> used to make.
+                    </p>
+                    <p class="fade-up stagger-2 text-sm text-kerala-400 font-light mb-8">തനതായ നാടൻ രുചിക്കൂട്ടുകൾ — അമ്മുമ്മയുടെ രുചി വീണ്ടും</p>
+                    <div class="fade-up stagger-3 flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
+                        <a href="#products" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-kerala-800 text-kerala-50 text-sm font-medium uppercase tracking-wider px-8 py-4 rounded-full hover:bg-kerala-900 transition-all shadow-lg shadow-kerala-800/20">
+                            Browse & Order <span class="iconify" data-icon="mdi:arrow-right" data-width="18"></span>
+                        </a>
+                        <a href="https://wa.me/919999999999?text=Hi%20Miziz%20Taste!" target="_blank" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#25D366] text-white text-sm font-medium uppercase tracking-wider px-8 py-4 rounded-full hover:bg-[#1da851] transition-all shadow-lg shadow-[#25D366]/20">
+                            <span class="iconify" data-icon="mdi:whatsapp" data-width="20"></span> WhatsApp Us
+                        </a>
+                    </div>
+                </div>
+                <div class="order-1 lg:order-2 fade-up">
+                    <div class="relative">
+                        <div class="absolute -inset-3 sm:-inset-5 border border-kerala-200/30 rounded-[2rem]"></div>
+                        <div class="relative rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden shadow-2xl shadow-kerala-800/10">
+                            <img src="images/hero_pickle.png" 
+                                 alt="Miziz Taste - Crafted with Tradition" class="hero-img w-full aspect-[4/5] sm:aspect-[3/4] object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-kerala-900/30 via-transparent to-transparent"></div>
+                        </div>
+                        <div class="absolute -bottom-3 -right-3 sm:-bottom-5 sm:-right-5 w-20 h-20 sm:w-24 sm:h-24 border border-kerala-400/20 rounded-full"></div>
+                        <div class="absolute -top-3 -left-3 sm:-top-5 sm:-left-5 w-16 h-16 sm:w-20 sm:h-20 bg-kerala-400/10 rounded-full"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Catalog -->
+    <section id="products" class="py-20 sm:py-28 bg-white">
+        <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
+                <div class="fade-up">
+                    <span class="text-[10px] sm:text-xs font-medium uppercase tracking-[0.2em] text-kerala-400 mb-3 block">Order Online</span>
+                    <div class="line-draw h-px bg-kerala-400 mx-auto mb-5"></div>
+                </div>
+                <h2 class="fade-up stagger-1 font-serif text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight tracking-tight text-kerala-800 mb-4">
+                    From Our Kitchen to Your Table
+                </h2>
+                <p class="fade-up stagger-2 text-kerala-500 font-light">Add items to your cart, add delivery notes, and order via WhatsApp.</p>
+            </div>
+
+            <!-- Category Filters -->
+            <div class="fade-up stagger-2 flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-10 sm:mb-14">
+                <button onclick="filterProducts('all')" class="filter-btn active text-xs font-medium uppercase tracking-wider px-5 py-2.5 rounded-full border border-kerala-200 text-kerala-600">All</button>
+                <button onclick="filterProducts('fish')" class="filter-btn text-xs font-medium uppercase tracking-wider px-5 py-2.5 rounded-full border border-kerala-200 text-kerala-600">Fish Pickles</button>
+                <button onclick="filterProducts('veg')" class="filter-btn text-xs font-medium uppercase tracking-wider px-5 py-2.5 rounded-full border border-kerala-200 text-kerala-600">Veg Pickles</button>
+                <button onclick="filterProducts('mix')" class="filter-btn text-xs font-medium uppercase tracking-wider px-5 py-2.5 rounded-full border border-kerala-200 text-kerala-600">Curry Mixes</button>
+            </div>
+
+            <!-- Product Grid -->
+            <div id="productGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+
+                <!-- Tuna Fish Pickle -->
+                <div class="product-card fade-up bg-kerala-50 rounded-2xl overflow-hidden border border-kerala-200/50 group" data-category="fish" data-id="tuna">
+                    <div class="relative overflow-hidden">
+                        <img src="images/tuna_pickle.png" 
+                             alt="Tuna Fish Pickle" class="w-full h-64 sm:h-72 object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute top-4 left-4 flex gap-2">
+                            <span class="bg-spice-500 text-white text-[10px] font-medium uppercase tracking-wider px-3 py-1 rounded-full">Popular</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-[10px] uppercase tracking-[0.2em] text-kerala-400 block mb-1">Fish Pickle · ട്യൂണ ഫിഷ് അച്ചാർ</span>
+                        <h3 class="font-serif text-xl font-semibold text-kerala-800 mb-1">Tuna Fish Pickle</h3>
+                        <p class="text-sm text-kerala-500 font-light leading-relaxed mb-4">Premium tuna in traditional Kerala spices & cold-pressed oil.</p>
+                        <div class="flex items-center gap-2 mb-5">
+                            <span class="bg-leaf-50 text-leaf-500 text-[10px] font-medium px-2.5 py-1 rounded-full">400g</span>
+                            <span class="bg-spice-400/10 text-spice-500 text-[10px] font-medium px-2.5 py-1 rounded-full">Spicy 🌶️🌶️🌶️</span>
+                            <span class="bg-kerala-100 text-kerala-600 text-[10px] font-medium px-2.5 py-1 rounded-full">6 months</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <p class="font-serif text-lg font-semibold text-kerala-800">₹350</p>
+                            <button onclick="addToCart('tuna')" id="atc-tuna" class="atc-btn inline-flex items-center gap-2 bg-kerala-800 text-white text-[11px] font-medium uppercase tracking-wider px-5 py-2.5 rounded-full hover:bg-kerala-900 transition-colors">
+                                <span class="iconify" data-icon="mdi:plus" data-width="14"></span> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Classic Fish Pickle -->
+                <div class="product-card fade-up stagger-1 bg-kerala-50 rounded-2xl overflow-hidden border border-kerala-200/50 group" data-category="fish" data-id="fish">
+                    <div class="relative overflow-hidden">
+                        <img src="images/fish_pickle.png" 
+                             alt="Classic Fish Pickle" class="w-full h-64 sm:h-72 object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute top-4 left-4 flex gap-2">
+                            <span class="bg-kerala-400 text-white text-[10px] font-medium uppercase tracking-wider px-3 py-1 rounded-full">Homemade</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-[10px] uppercase tracking-[0.2em] text-kerala-400 block mb-1">Fish Pickle · മീൻ അച്ചാർ</span>
+                        <h3 class="font-serif text-xl font-semibold text-kerala-800 mb-1">Classic Fish Pickle</h3>
+                        <p class="text-sm text-kerala-500 font-light leading-relaxed mb-4">Time-honored recipe with the perfect balance of spice and tang.</p>
+                        <div class="flex items-center gap-2 mb-5">
+                            <span class="bg-leaf-50 text-leaf-500 text-[10px] font-medium px-2.5 py-1 rounded-full">400g</span>
+                            <span class="bg-kerala-100 text-kerala-600 text-[10px] font-medium px-2.5 py-1 rounded-full">Medium 🌶️🌶️</span>
+                            <span class="bg-kerala-100 text-kerala-600 text-[10px] font-medium px-2.5 py-1 rounded-full">6 months</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <p class="font-serif text-lg font-semibold text-kerala-800">₹320</p>
+                            <button onclick="addToCart('fish')" id="atc-fish" class="atc-btn inline-flex items-center gap-2 bg-kerala-800 text-white text-[11px] font-medium uppercase tracking-wider px-5 py-2.5 rounded-full hover:bg-kerala-900 transition-colors">
+                                <span class="iconify" data-icon="mdi:plus" data-width="14"></span> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nadan Mango Pickle -->
+                <div class="product-card fade-up stagger-2 bg-kerala-50 rounded-2xl overflow-hidden border border-kerala-200/50 group" data-category="veg" data-id="mango">
+                    <div class="relative overflow-hidden">
+                        <img src="images/mango_pickle.png" 
+                             alt="Nadan Mango Pickle" class="w-full h-64 sm:h-72 object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute top-4 left-4 flex gap-2">
+                            <span class="bg-leaf-500 text-white text-[10px] font-medium uppercase tracking-wider px-3 py-1 rounded-full">Veg</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-[10px] uppercase tracking-[0.2em] text-kerala-400 block mb-1">Veg Pickle · മാങ്ങാ അച്ചാർ</span>
+                        <h3 class="font-serif text-xl font-semibold text-kerala-800 mb-1">Nadan Mango Pickle</h3>
+                        <p class="text-sm text-kerala-500 font-light leading-relaxed mb-4">Raw mangoes in sesame oil with fenugreek & red chili.</p>
+                        <div class="flex items-center gap-2 mb-5">
+                            <span class="bg-leaf-50 text-leaf-500 text-[10px] font-medium px-2.5 py-1 rounded-full">400g</span>
+                            <span class="bg-spice-400/10 text-spice-500 text-[10px] font-medium px-2.5 py-1 rounded-full">Spicy 🌶️🌶️🌶️</span>
+                            <span class="bg-kerala-100 text-kerala-600 text-[10px] font-medium px-2.5 py-1 rounded-full">8 months</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <p class="font-serif text-lg font-semibold text-kerala-800">₹280</p>
+                            <button onclick="addToCart('mango')" id="atc-mango" class="atc-btn inline-flex items-center gap-2 bg-kerala-800 text-white text-[11px] font-medium uppercase tracking-wider px-5 py-2.5 rounded-full hover:bg-kerala-900 transition-colors">
+                                <span class="iconify" data-icon="mdi:plus" data-width="14"></span> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nadan Lime Pickle -->
+                <div class="product-card fade-up bg-kerala-50 rounded-2xl overflow-hidden border border-kerala-200/50 group" data-category="veg" data-id="lime">
+                    <div class="relative overflow-hidden">
+                        <img src="images/lime_pickle.png" 
+                             alt="Nadan Lime Pickle" class="w-full h-64 sm:h-72 object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute top-4 left-4 flex gap-2">
+                            <span class="bg-leaf-500 text-white text-[10px] font-medium uppercase tracking-wider px-3 py-1 rounded-full">Veg</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-[10px] uppercase tracking-[0.2em] text-kerala-400 block mb-1">Veg Pickle · നാരങ്ങാ അച്ചാർ</span>
+                        <h3 class="font-serif text-xl font-semibold text-kerala-800 mb-1">Nadan Lime Pickle</h3>
+                        <p class="text-sm text-kerala-500 font-light leading-relaxed mb-4">Tangy lime with bird's eye chili & curry leaves.</p>
+                        <div class="flex items-center gap-2 mb-5">
+                            <span class="bg-leaf-50 text-leaf-500 text-[10px] font-medium px-2.5 py-1 rounded-full">350g</span>
+                            <span class="bg-kerala-100 text-kerala-600 text-[10px] font-medium px-2.5 py-1 rounded-full">Medium 🌶️🌶️</span>
+                            <span class="bg-kerala-100 text-kerala-600 text-[10px] font-medium px-2.5 py-1 rounded-full">10 months</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <p class="font-serif text-lg font-semibold text-kerala-800">₹260</p>
+                            <button onclick="addToCart('lime')" id="atc-lime" class="atc-btn inline-flex items-center gap-2 bg-kerala-800 text-white text-[11px] font-medium uppercase tracking-wider px-5 py-2.5 rounded-full hover:bg-kerala-900 transition-colors">
+                                <span class="iconify" data-icon="mdi:plus" data-width="14"></span> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fish Curry Mix -->
+                <div class="product-card fade-up stagger-1 bg-kerala-50 rounded-2xl overflow-hidden border border-kerala-200/50 group" data-category="mix" data-id="fishmix">
+                    <div class="relative overflow-hidden">
+                        <img src="images/fish_curry_mix.png" 
+                             alt="Fish Curry Mix" class="w-full h-64 sm:h-72 object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute top-4 left-4 flex gap-2">
+                            <span class="badge-shimmer text-white text-[10px] font-medium uppercase tracking-wider px-3 py-1 rounded-full">New</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-[10px] uppercase tracking-[0.2em] text-kerala-400 block mb-1">Curry Mix · മീൻ കറി മിക്സ്</span>
+                        <h3 class="font-serif text-xl font-semibold text-kerala-800 mb-1">Fish Curry Mix</h3>
+                        <p class="text-sm text-kerala-500 font-light leading-relaxed mb-4">Ready-to-cook blend. Just add fish & water.</p>
+                        <div class="flex items-center gap-2 mb-5">
+                            <span class="bg-leaf-50 text-leaf-500 text-[10px] font-medium px-2.5 py-1 rounded-full">200g</span>
+                            <span class="bg-spice-400/10 text-spice-500 text-[10px] font-medium px-2.5 py-1 rounded-full">Spicy 🌶️🌶️🌶️</span>
+                            <span class="bg-kerala-100 text-kerala-600 text-[10px] font-medium px-2.5 py-1 rounded-full">4 months</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <p class="font-serif text-lg font-semibold text-kerala-800">₹180</p>
+                            <button onclick="addToCart('fishmix')" id="atc-fishmix" class="atc-btn inline-flex items-center gap-2 bg-kerala-800 text-white text-[11px] font-medium uppercase tracking-wider px-5 py-2.5 rounded-full hover:bg-kerala-900 transition-colors">
+                                <span class="iconify" data-icon="mdi:plus" data-width="14"></span> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chicken Curry Mix -->
+                <div class="product-card fade-up stagger-2 bg-kerala-50 rounded-2xl overflow-hidden border border-kerala-200/50 group" data-category="mix" data-id="chickenmix">
+                    <div class="relative overflow-hidden">
+                        <img src="images/chicken_curry_mix.png" 
+                             alt="Chicken Curry Mix" class="w-full h-64 sm:h-72 object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute top-4 left-4 flex gap-2">
+                            <span class="bg-leaf-500 text-white text-[10px] font-medium uppercase tracking-wider px-3 py-1 rounded-full">Ready to Cook</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-[10px] uppercase tracking-[0.2em] text-kerala-400 block mb-1">Curry Mix · ചിക്കൻ കറി മിക്സ്</span>
+                        <h3 class="font-serif text-xl font-semibold text-kerala-800 mb-1">Chicken Curry Mix</h3>
+                        <p class="text-sm text-kerala-500 font-light leading-relaxed mb-4">Rich, aromatic blend for Kerala-style chicken curry.</p>
+                        <div class="flex items-center gap-2 mb-5">
+                            <span class="bg-leaf-50 text-leaf-500 text-[10px] font-medium px-2.5 py-1 rounded-full">200g</span>
+                            <span class="bg-kerala-100 text-kerala-600 text-[10px] font-medium px-2.5 py-1 rounded-full">Medium 🌶️🌶️</span>
+                            <span class="bg-kerala-100 text-kerala-600 text-[10px] font-medium px-2.5 py-1 rounded-full">4 months</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <p class="font-serif text-lg font-semibold text-kerala-800">₹200</p>
+                            <button onclick="addToCart('chickenmix')" id="atc-chickenmix" class="atc-btn inline-flex items-center gap-2 bg-kerala-800 text-white text-[11px] font-medium uppercase tracking-wider px-5 py-2.5 rounded-full hover:bg-kerala-900 transition-colors">
+                                <span class="iconify" data-icon="mdi:plus" data-width="14"></span> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Story Section -->
+    <section id="story" class="py-20 sm:py-28 bg-kerala-50">
+        <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                <div class="fade-up relative">
+                    <div class="rounded-[1.5rem] overflow-hidden shadow-xl shadow-kerala-800/8">
+                        <img src="images/story_prep.png" 
+                             alt="Traditional Preparation" class="w-full aspect-[4/3] object-cover hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <div class="absolute -bottom-4 -right-4 sm:-bottom-6 sm:-right-6 bg-leaf-500 text-white rounded-2xl p-5 shadow-xl max-w-[180px]">
+                        <p class="font-serif text-2xl font-semibold mb-1">3+</p>
+                        <p class="text-[10px] text-leaf-100 uppercase tracking-wider leading-tight">Generations of recipes</p>
+                    </div>
+                </div>
+                <div>
+                    <div class="fade-up"><span class="text-[10px] sm:text-xs font-medium uppercase tracking-[0.2em] text-kerala-400 mb-3 block">Our Story</span><div class="line-draw h-px bg-kerala-400 mb-5"></div></div>
+                    <h2 class="fade-up stagger-1 font-serif text-3xl sm:text-4xl font-semibold leading-tight tracking-tight text-kerala-800 mb-6">Crafted with Tradition.<br><span class="text-kerala-400">Loved for Generations.</span></h2>
+                    <div class="fade-up stagger-2 space-y-4 text-kerala-500 font-light leading-relaxed">
+                        <p>Miziz Taste brings the authentic flavors of Kerala's home kitchens to your table. Every jar is handcrafted using time-honored recipes — the same care, the same spices, the same love.</p>
+                        <p>We source local ingredients from Kerala's finest. No preservatives, no shortcuts — just pure, homemade goodness that tastes exactly like <em class="font-serif not-italic text-kerala-700">Ammumma</em> used to make.</p>
+                        <p class="text-sm text-kerala-400 italic font-serif">ഓരോ കഷ്ണത്തിലും കേരളത്തിന്റെ തനതായ രുചി — Authentic taste of Kerala in every bite.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="py-20 sm:py-28 bg-white">
+        <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+                <div class="fade-up"><span class="text-[10px] sm:text-xs font-medium uppercase tracking-[0.2em] text-kerala-400 mb-3 block">Testimonials</span><div class="line-draw h-px bg-kerala-400 mx-auto mb-5"></div></div>
+                <h2 class="fade-up stagger-1 font-serif text-3xl sm:text-4xl font-semibold leading-tight tracking-tight text-kerala-800">What Our Customers Say</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6 sm:gap-8">
+                <div class="fade-up bg-kerala-50 p-6 sm:p-8 rounded-2xl border border-kerala-200/50">
+                    <div class="flex items-center gap-1 mb-4"><span class="iconify star-filled" data-icon="mdi:star" data-width="16"></span><span class="iconify star-filled" data-icon="mdi:star" data-width="16"></span><span class="iconify star-filled" data-icon="mdi:star" data-width="16"></span><span class="iconify star-filled" data-icon="mdi:star" data-width="16"></span><span class="iconify star-filled" data-icon="mdi:star" data-width="16"></span></div>
+                    <p class="text-sm text-kerala-600 font-light leading-relaxed mb-6">"The Tuna Fish Pickle reminded me of my grandmother's kitchen. Absolutely authentic taste. I've already ordered three more jars!"</p>
+                    <div class="flex items-center gap-3"><div class="w-10 h-10 bg-leaf-100 rounded-full flex items-center justify-center"><span class="font-serif text-sm font-semibold text-leaf-500">RS</span></div><div><p class="text-sm font-medium text-kerala-800">Resmi S.</p><p class="text-[11px] text-kerala-400">Kochi, Kerala</p></div></div>
+                </div>
+                <div class="fade-up stagger-1 bg-kerala-50 p-6 sm:p-8 rounded-2xl border border-kerala-200/50">
+                    <div class="flex items-center gap-1 mb-4"><span class="iconify star-filled" data-icon="mdi:star" data-width="16"></span><span class="iconify star-filled" data-icon="mdi:star" data-width="16"></span><span class="iconify star-filled" data-icon="mdi:star" data-width="16"></span><span class="iconify star-filled" data-icon="mdi:star" data-width="16"></span><span class="iconify star-filled" data-icon="mdi:star" data-width="16"></span></div>
+                    <p class="text-sm text-kerala-600 font-light leading-relaxed mb-6">"Finally, a homemade pickle without preservatives! The Mango Pickle is outstanding. Ordering was so easy via WhatsApp."</p>
+                    <div class="flex items-center gap-3"><div class="w-10 h-10 bg-kerala-100 rounded-full flex items-center justify-center"><span class="font-serif text-sm font-semibold text-kerala-500">AP</span></div><div><p class="text-sm font-medium text-kerala-800">Arun P.</p><p class="text-[11px] text-kerala-400">Trivandrum, Kerala</p></div></div>
+                </div>
+                <div class="fade-up stagger-2 bg-kerala-50 p-6 sm:p-8 rounded-2xl border border-kerala-200/50">
+                    <div class="flex items-center gap-1 mb-4"><span class="iconify star-filled" data-icon="mdi:star" data-width="16"></span><span class="iconify star-filled" data-icon="mdi:star" data-width="16"></span><span class="iconify star-filled" data-icon="mdi:star" data-width="16"></span><span class="iconify star-filled" data-icon="mdi:star" data-width="16"></span><span class="iconify star-filled" data-icon="mdi:star-half-full" data-width="16"></span></div>
+                    <p class="text-sm text-kerala-600 font-light leading-relaxed mb-6">"I sent the Fish Curry Mix to my daughter in Dubai. She said it tasted just like home. Thank you, Miziz Taste! നന്ദി!"</p>
+                    <div class="flex items-center gap-3"><div class="w-10 h-10 bg-spice-400/10 rounded-full flex items-center justify-center"><span class="font-serif text-sm font-semibold text-spice-500">LK</span></div><div><p class="text-sm font-medium text-kerala-800">Latha K.</p><p class="text-[11px] text-kerala-400">Kozhikode, Kerala</p></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-20 sm:py-28 bg-kerala-800 text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-5" style="background-image:url('data:image/svg+xml,<svg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;><circle cx=&quot;30&quot; cy=&quot;30&quot; r=&quot;1&quot; fill=&quot;white&quot;/></svg>');"></div>
+        <div class="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 text-center relative">
+            <h2 class="fade-up font-serif text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight tracking-tight mb-4">Ready to Taste the Tradition?</h2>
+            <p class="fade-up stagger-1 text-kerala-300 font-light leading-relaxed mb-8 max-w-lg mx-auto">Add items to your cart, customize your delivery notes, and order via WhatsApp. It's that simple.</p>
+            <div class="fade-up stagger-2 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#products" class="inline-flex items-center gap-2 bg-white text-kerala-800 text-sm font-medium uppercase tracking-wider px-8 py-4 rounded-full hover:bg-kerala-100 transition-all">
+                    Browse Products <span class="iconify" data-icon="mdi:arrow-right" data-width="18"></span>
+                </a>
+                <a href="https://wa.me/919999999999?text=Hi%20Miziz%20Taste!" target="_blank" class="inline-flex items-center gap-2 bg-[#25D366] text-white text-sm font-medium uppercase tracking-wider px-8 py-4 rounded-full hover:bg-[#1da851] transition-all shadow-lg shadow-[#25D366]/30">
+                    <span class="iconify" data-icon="mdi:whatsapp" data-width="20"></span> WhatsApp Us
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-kerala-900 text-kerala-300 py-12 sm:py-16">
+        <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div class="sm:col-span-2 lg:col-span-1">
+                    <div class="flex items-center gap-2.5 mb-4"><div class="w-9 h-9 bg-leaf-500 rounded-full flex items-center justify-center"><span class="text-white font-serif text-sm font-semibold">M</span></div><span class="text-lg font-serif font-semibold text-white tracking-tight">Miziz Taste</span></div>
+                    <p class="text-sm text-kerala-500 font-light leading-relaxed max-w-xs">Authentic Kerala homemade pickles & delicacies. തനതായ നാടൻ രുചിക്കൂട്ടുകൾ.</p>
+                </div>
+                <div><h4 class="text-xs font-medium uppercase tracking-wider text-kerala-400 mb-4">Quick Links</h4><ul class="space-y-2.5"><li><a href="#products" class="text-sm text-kerala-500 hover:text-kerala-300 transition-colors">Products</a></li><li><a href="#story" class="text-sm text-kerala-500 hover:text-kerala-300 transition-colors">Our Story</a></li><li><a href="#testimonials" class="text-sm text-kerala-500 hover:text-kerala-300 transition-colors">Reviews</a></li></ul></div>
+                <div><h4 class="text-xs font-medium uppercase tracking-wider text-kerala-400 mb-4">Products</h4><ul class="space-y-2.5"><li><span class="text-sm text-kerala-500">Fish Pickles</span></li><li><span class="text-sm text-kerala-500">Veg Pickles</span></li><li><span class="text-sm text-kerala-500">Curry Mixes</span></li></ul></div>
+                <div><h4 class="text-xs font-medium uppercase tracking-wider text-kerala-400 mb-4">Connect</h4><div class="flex items-center gap-3 mb-4"><a href="https://instagram.com/miziz_taste" target="_blank" class="w-9 h-9 bg-white/5 rounded-full flex items-center justify-center text-kerala-500 hover:text-white hover:bg-white/10 transition-colors"><span class="iconify" data-icon="mdi:instagram" data-width="18"></span></a><a href="https://wa.me/919999999999" target="_blank" class="w-9 h-9 bg-white/5 rounded-full flex items-center justify-center text-kerala-500 hover:text-white hover:bg-white/10 transition-colors"><span class="iconify" data-icon="mdi:whatsapp" data-width="18"></span></a></div><p class="text-xs text-kerala-600">Kerala, India 🇮🇳</p></div>
+            </div>
+            <div class="border-t border-white/5 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p class="text-xs text-kerala-600">© 2025 Miziz Taste. All rights reserved.</p>
+                <p class="text-xs text-kerala-600 font-serif italic">Crafted with Tradition. Loved for Generations.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== CART DRAWER ==================== -->
+    <div id="cartBackdrop" class="cart-backdrop fixed inset-0 z-50 flex justify-end bg-kerala-900/50">
+        <div class="cart-drawer w-full sm:w-[440px] bg-kerala-50 h-full flex flex-col shadow-2xl">
+            
+            <!-- Cart Header -->
+            <div class="flex items-center justify-between px-6 py-5 border-b border-kerala-200/50 bg-white">
+                <div class="flex items-center gap-3">
+                    <span class="iconify text-kerala-800" data-icon="mdi:shopping-outline" data-width="22"></span>
+                    <h3 class="font-serif text-lg font-semibold text-kerala-800">Your Order</h3>
+                    <span id="cartItemCount" class="text-xs text-kerala-400">(0 items)</span>
+                </div>
+                <button onclick="closeCart()" class="w-9 h-9 bg-kerala-100 rounded-full flex items-center justify-center text-kerala-600 hover:bg-kerala-200 transition-colors">
+                    <span class="iconify" data-icon="mdi:close" data-width="18"></span>
+                </button>
+            </div>
+
+            <!-- Cart Items -->
+            <div id="cartItems" class="flex-1 overflow-y-auto px-6 py-4">
+                <!-- Empty State -->
+                <div id="emptyCart" class="flex flex-col items-center justify-center h-full text-center py-12">
+                    <div class="empty-cart-bounce mb-4">
+                        <span class="iconify text-kerala-200" data-icon="mdi:cart-outline" data-width="56"></span>
+                    </div>
+                    <p class="font-serif text-lg text-kerala-400 mb-1">Your cart is empty</p>
+                    <p class="text-sm text-kerala-300 font-light">Browse our products and add items to get started.</p>
+                </div>
+                <!-- Filled items will be injected here -->
+                <div id="cartItemsList" class="space-y-4 hidden"></div>
+            </div>
+
+            <!-- Cart Footer -->
+            <div id="cartFooter" class="hidden border-t border-kerala-200/50 bg-white">
+                <!-- Delivery Notes -->
+                <div class="px-6 pt-5 pb-2">
+                    <button onclick="toggleNotes()" id="notesToggle" class="flex items-center justify-between w-full text-left">
+                        <div class="flex items-center gap-2">
+                            <span class="iconify text-kerala-400" data-icon="mdi:note-edit-outline" data-width="18"></span>
+                            <span class="text-sm font-medium text-kerala-700">Delivery Notes</span>
+                        </div>
+                        <span class="iconify text-kerala-400 transition-transform" data-icon="mdi:chevron-down" data-width="18" id="notesChevron"></span>
+                    </button>
+                    <div id="notesExpand" class="notes-expand">
+                        <div class="pt-3 pb-2 space-y-3">
+                            <textarea id="deliveryName" placeholder="Your name & phone number" class="w-full text-sm bg-kerala-50 border border-kerala-200/80 rounded-xl px-4 py-3 text-kerala-800 placeholder:text-kerala-300 focus:outline-none focus:border-kerala-400 focus:ring-1 focus:ring-kerala-400/30 resize-none" rows="1"></textarea>
+                            <textarea id="deliveryAddress" placeholder="Delivery address" class="w-full text-sm bg-kerala-50 border border-kerala-200/80 rounded-xl px-4 py-3 text-kerala-800 placeholder:text-kerala-300 focus:outline-none focus:border-kerala-400 focus:ring-1 focus:ring-kerala-400/30 resize-none" rows="2"></textarea>
+                            <textarea id="deliveryNotes" placeholder="Any special instructions? (e.g., extra spicy, gift wrapping, preferred delivery time)" class="w-full text-sm bg-kerala-50 border border-kerala-200/80 rounded-xl px-4 py-3 text-kerala-800 placeholder:text-kerala-300 focus:outline-none focus:border-kerala-400 focus:ring-1 focus:ring-kerala-400/30 resize-none" rows="2"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="px-6 py-4 space-y-2">
+                    <div class="flex items-center justify-between text-sm">
+                        <span class="text-kerala-500">Subtotal</span>
+                        <span id="cartSubtotal" class="font-medium text-kerala-800">₹0</span>
+                    </div>
+                    <div class="flex items-center justify-between text-sm">
+                        <span class="text-kerala-500">Delivery</span>
+                        <span class="text-leaf-500 font-medium">To be confirmed</span>
+                    </div>
+                    <div class="flex items-center justify-between pt-2 border-t border-kerala-200/50">
+                        <span class="text-sm font-medium text-kerala-800">Total</span>
+                        <span id="cartTotal" class="font-serif text-xl font-semibold text-kerala-800">₹0</span>
+                    </div>
+                </div>
+
+                <!-- Send Order Button -->
+                <div class="px-6 pb-6 pt-2">
+                    <button onclick="sendWhatsAppOrder()" id="sendOrderBtn" class="w-full inline-flex items-center justify-center gap-2 bg-[#25D366] text-white text-sm font-medium uppercase tracking-wider py-4 rounded-xl hover:bg-[#1da851] transition-colors shadow-lg shadow-[#25D366]/20">
+                        <span class="iconify" data-icon="mdi:whatsapp" data-width="22"></span>
+                        Send Order via WhatsApp
+                    </button>
+                    <p class="text-[10px] text-kerala-400 text-center mt-2">Payment on delivery · Cash or UPI</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast fixed bottom-24 sm:bottom-8 left-1/2 -translate-x-1/2 z-50 bg-kerala-800 text-white text-sm font-medium px-6 py-3 rounded-full shadow-xl flex items-center gap-2">
+        <span class="iconify" data-icon="mdi:check-circle" data-width="18"></span>
+        <span id="toastText">Added to cart</span>
+    </div>
+
+    <script>
+        // ========== PRODUCT DATA ==========
+        const productData = {
+            tuna:       { name:'Tuna Fish Pickle', ml:'ട്യൂണ ഫിഷ് അച്ചാർ', price:350, weight:'400g' },
+            fish:       { name:'Classic Fish Pickle', ml:'മീൻ അച്ചാർ', price:320, weight:'400g' },
+            mango:      { name:'Nadan Mango Pickle', ml:'മാങ്ങാ അച്ചാർ', price:280, weight:'400g' },
+            lime:       { name:'Nadan Lime Pickle', ml:'നാരങ്ങാ അച്ചാർ', price:260, weight:'350g' },
+            fishmix:    { name:'Fish Curry Mix', ml:'മീൻ കറി മിക്സ്', price:180, weight:'200g' },
+            chickenmix: { name:'Chicken Curry Mix', ml:'ചിക്കൻ കറി മിക്സ്', price:200, weight:'200g' }
+        };
+
+        // ========== CART STATE ==========
+        let cart = {};
+
+        function addToCart(id) {
+            if (cart[id]) {
+                cart[id].qty++;
+            } else {
+                cart[id] = { qty: 1 };
+            }
+            updateCartUI();
+            animateATC(id);
+            showToast(`${productData[id].name} added`);
+            bounceBadge();
+        }
+
+        function removeFromCart(id) {
+            if (cart[id]) {
+                cart[id].qty--;
+                if (cart[id].qty <= 0) delete cart[id];
+            }
+            updateCartUI();
+        }
+
+        function updateQty(id, delta) {
+            if (!cart[id]) return;
+            cart[id].qty += delta;
+            if (cart[id].qty <= 0) delete cart[id];
+            updateCartUI();
+        }
+
+        function clearCart() {
+            cart = {};
+            updateCartUI();
+        }
+
+        // ========== UI UPDATES ==========
+        function updateCartUI() {
+            const items = Object.keys(cart);
+            const totalItems = items.reduce((sum, id) => sum + cart[id].qty, 0);
+            const subtotal = items.reduce((sum, id) => sum + (cart[id].qty * productData[id].price), 0);
+
+            // Badge
+            const badge = document.getElementById('cartBadge');
+            if (totalItems > 0) {
+                badge.classList.remove('hidden');
+                badge.textContent = totalItems;
+            } else {
+                badge.classList.add('hidden');
+            }
+
+            // Item count
+            document.getElementById('cartItemCount').textContent = `(${totalItems} item${totalItems !== 1 ? 's' : ''})`;
+
+            // Cart items list
+            const listEl = document.getElementById('cartItemsList');
+            const emptyEl = document.getElementById('emptyCart');
+            const footerEl = document.getElementById('cartFooter');
+
+            if (items.length === 0) {
+                listEl.classList.add('hidden');
+                emptyEl.style.display = '';
+                footerEl.classList.add('hidden');
+            } else {
+                listEl.classList.remove('hidden');
+                emptyEl.style.display = 'none';
+                footerEl.classList.remove('hidden');
+
+                listEl.innerHTML = items.map(id => {
+                    const p = productData[id];
+                    const itemTotal = p.price * cart[id].qty;
+                    return `
+                        <div class="cart-item-enter bg-white rounded-xl p-4 border border-kerala-200/50">
+                            <div class="flex items-start justify-between mb-3">
+                                <div class="flex-1 min-w-0 pr-3">
+                                    <h4 class="text-sm font-medium text-kerala-800 truncate">${p.name}</h4>
+                                    <p class="text-[11px] text-kerala-400">${p.ml} · ${p.weight} · ₹${p.price}</p>
+                                </div>
+                                <button onclick="removeFromCart('${id}')" class="w-7 h-7 flex items-center justify-center text-kerala-300 hover:text-spice-500 hover:bg-spice-400/10 rounded-lg transition-colors shrink-0">
+                                    <span class="iconify" data-icon="mdi:delete-outline" data-width="16"></span>
+                                </button>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center bg-kerala-50 rounded-lg border border-kerala-200/50">
+                                    <button onclick="updateQty('${id}', -1)" class="qty-btn w-8 h-8 flex items-center justify-center text-kerala-600 hover:text-kerala-800 rounded-l-lg">
+                                        <span class="iconify" data-icon="mdi:minus" data-width="16"></span>
+                                    </button>
+                                    <span class="w-8 h-8 flex items-center justify-center text-sm font-medium text-kerala-800">${cart[id].qty}</span>
+                                    <button onclick="updateQty('${id}', 1)" class="qty-btn w-8 h-8 flex items-center justify-center text-kerala-600 hover:text-kerala-800 rounded-r-lg">
+                                        <span class="iconify" data-icon="mdi:plus" data-width="16"></span>
+                                    </button>
+                                </div>
+                                <span class="font-serif text-base font-semibold text-kerala-800">₹${itemTotal}</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            // Totals
+            document.getElementById('cartSubtotal').textContent = `₹${subtotal}`;
+            document.getElementById('cartTotal').textContent = `₹${subtotal}`;
+        }
+
+        // ========== CART DRAWER ==========
+        function openCart() {
+            document.getElementById('cartBackdrop').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeCart() {
+            document.getElementById('cartBackdrop').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        document.getElementById('cartBackdrop').addEventListener('click', function(e) {
+            if (e.target === this) closeCart();
+        });
+
+        // ========== DELIVERY NOTES ==========
+        function toggleNotes() {
+            const expand = document.getElementById('notesExpand');
+            const chevron = document.getElementById('notesChevron');
+            expand.classList.toggle('open');
+            chevron.style.transform = expand.classList.contains('open') ? 'rotate(180deg)' : '';
+        }
+
+        // ========== SEND WHATSAPP ORDER ==========
+        function sendWhatsAppOrder() {
+            const items = Object.keys(cart);
+            if (items.length === 0) return;
+
+            const name = document.getElementById('deliveryName').value.trim();
+            const address = document.getElementById('deliveryAddress').value.trim();
+            const notes = document.getElementById('deliveryNotes').value.trim();
+
+            const subtotal = items.reduce((sum, id) => sum + (cart[id].qty * productData[id].price), 0);
+
+            let message = `🛒 *New Order — Miziz Taste*\n`;
+            message += `━━━━━━━━━━━━━━━━━━\n\n`;
+
+            items.forEach(id => {
+                const p = productData[id];
+                const itemTotal = p.price * cart[id].qty;
+                message += `▸ ${p.name} (${p.weight})\n  Qty: ${cart[id].qty} × ₹${p.price} = ₹${itemTotal}\n\n`;
+            });
+
+            message += `━━━━━━━━━━━━━━━━━━\n`;
+            message += `💰 *Subtotal: ₹${subtotal}*\n`;
+            message += `🚚 Delivery: To be confirmed\n\n`;
+
+            if (name) message += `👤 ${name}\n`;
+            if (address) message += `📍 ${address}\n`;
+            if (notes) message += `📝 ${notes}\n`;
+
+            message += `\n━━━━━━━━━━━━━━━━━━\n`;
+            message += `Payment: Cash/UPI on delivery`;
+
+            const url = `https://wa.me/919999999999?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+        }
+
+        // ========== ANIMATIONS ==========
+        function animateATC(id) {
+            const btn = document.getElementById(`atc-${id}`);
+            if (!btn) return;
+            btn.classList.add('added');
+            btn.innerHTML = '<span class="iconify" data-icon="mdi:check" data-width="14"></span> Added';
+            setTimeout(() => {
+                btn.classList.remove('added');
+                btn.innerHTML = '<span class="iconify" data-icon="mdi:plus" data-width="14"></span> Add';
+            }, 1200);
+        }
+
+        function bounceBadge() {
+            const badge = document.getElementById('cartBadge');
+            badge.classList.add('bounce');
+            setTimeout(() => badge.classList.remove('bounce'), 300);
+        }
+
+        let toastTimer;
+        function showToast(text) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastText').textContent = text;
+            toast.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        // ========== CATEGORY FILTER ==========
+        function filterProducts(category) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            document.querySelectorAll('#productGrid > div').forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.classList.remove('product-hidden');
+                } else {
+                    card.classList.add('product-hidden');
+                }
+            });
+        }
+
+        // ========== SCROLL ANIMATIONS ==========
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.fade-up, .line-draw').forEach(el => observer.observe(el));
+
+        // ========== MOBILE MENU ==========
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            mobileMenu.style.transform = 'translateX(0)';
+            mobileOverlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+        function closeMobileMenu() {
+            mobileMenu.style.transform = 'translateX(100%)';
+            mobileOverlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+        document.getElementById('closeMobileMenu').addEventListener('click', closeMobileMenu);
+        mobileOverlay.addEventListener('click', closeMobileMenu);
+        document.querySelectorAll('.mobile-nav-link').forEach(l => l.addEventListener('click', closeMobileMenu));
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const t = document.querySelector(this.getAttribute('href'));
+                if (t) window.scrollTo({ top: t.offsetTop - 80, behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
