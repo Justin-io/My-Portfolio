@@ -197,9 +197,11 @@
             border: 2px solid var(--accent);
             border-radius: 50%;
             position: fixed;
+            left: 0;
+            top: 0;
             pointer-events: none;
             z-index: 100000;
-            transition: all 0.1s ease;
+            transition: width 0.2s ease, height 0.2s ease, background 0.2s ease, border-color 0.2s ease;
             transform: translate(-50%, -50%);
         }
 
@@ -209,9 +211,11 @@
             background: rgba(0, 102, 255, 0.1);
             border-radius: 50%;
             position: fixed;
+            left: 0;
+            top: 0;
             pointer-events: none;
             z-index: 99999;
-            transition: all 0.3s ease;
+            transition: width 0.3s ease, height 0.3s ease, background 0.3s ease;
             transform: translate(-50%, -50%);
         }
 
@@ -2586,4 +2590,77 @@
             100% {
                 transform: translateX(-50%);
             }
+        }
+
+        /* -------------------------------------------------------------
+         * Immersive High-Tech / 3D Scene / Hologram Styling Overrides
+         * ------------------------------------------------------------- */
+        #about-3d-arm-container {
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            background: radial-gradient(circle, rgba(0, 102, 255, 0.05) 0%, transparent 80%);
+            border-radius: 20px;
+            box-shadow: inset 0 0 20px rgba(0, 212, 255, 0.1);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #research {
+            position: relative;
+        }
+
+        #research-3d-spacetime-container {
+            pointer-events: none;
+            mix-blend-mode: screen;
+        }
+
+        /* Sci-Fi Hologram Panel scanlines effect */
+        .holo-panel {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 100, 0.2) !important;
+            background: rgba(10, 15, 12, 0.85) !important;
+            box-shadow: 0 0 25px rgba(0, 255, 100, 0.05) !important;
+        }
+
+        .holo-panel::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 4px, 6px 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* Green digital text glow */
+        .cyber-text {
+            font-family: 'JetBrains Mono', monospace !important;
+            color: #00ff64 !important;
+            text-shadow: 0 0 8px rgba(0, 255, 100, 0.6);
+        }
+
+        /* Holographic pulsing overlay */
+        @keyframes holo-flicker {
+            0% { opacity: 0.95; }
+            50% { opacity: 1; }
+            100% { opacity: 0.95; }
+        }
+
+        .holo-flicker {
+            animation: holo-flicker 4s infinite ease-in-out;
+        }
+
+        /* Pulse glow animation for LEDs */
+        @keyframes led-pulse {
+            0% { box-shadow: 0 0 5px #00ff64, inset 0 0 5px #00ff64; }
+            50% { box-shadow: 0 0 15px #00ff64, inset 0 0 10px #00ff64; }
+            100% { box-shadow: 0 0 5px #00ff64, inset 0 0 5px #00ff64; }
+        }
+
+        .wt-dot {
+            background-color: #00ff64 !important;
+            animation: led-pulse 2s infinite ease-in-out;
         }

@@ -1,11 +1,11 @@
-const CACHE_NAME = 'portfolio-v2-update-fix';
+const CACHE_NAME = 'portfolio-v4';
 const urlsToCache = [
     '/',
     '/index.html',
     '/assets/css/style-custom.css',
     // '/assets/js/security.js',
     '/assets/js/main.js',
-    '/assets/img/20240421_174638.png'
+    '/assets/img/20240421_174638.webp'
 ];
 
 self.addEventListener('install', event => {

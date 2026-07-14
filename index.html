@@ -50,8 +50,8 @@
     <link rel="canonical" href="index.html" />
 
     <!-- Favicons -->
-    <link href="assets/img/20240421_174638.png" rel="icon">
-    <link href="assets/img/20240421_174638.png" rel="apple-touch-icon">
+    <link href="assets/img/20240421_174638.webp" rel="icon">
+    <link href="assets/img/20240421_174638.webp" rel="apple-touch-icon">
 
     <!-- Fonts -->
     <link
@@ -81,7 +81,16 @@
     <!-- <script src="assets/js/security.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.181.0/build/three.webgpu.min.js",
+        "three/webgpu": "https://cdn.jsdelivr.net/npm/three@0.181.0/build/three.webgpu.min.js",
+        "three/tsl": "https://cdn.jsdelivr.net/npm/three@0.181.0/build/three.tsl.min.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.181.0/examples/jsm/"
+      }
+    }
+    </script>
 
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -105,12 +114,18 @@
         "jobTitle": "Theoretical Physicist, Full-Stack Developer, Cybersecurity Specialist",
         "url": "index.html",
         "sameAs": [
-          "https://github.com/justi-io",
+          "https://github.com/Justin-io",
+          "https://github.com/Justin-io/Chameleon-P2P",
+          "https://github.com/Justin-io/Chronon-Theory-Of-Super-Quantum-Level-",
+          "https://github.com/Justin-io/BLOOMWATCH-PRO",
+          "https://github.com/Justin-io/GH05T-INSTA",
+          "https://github.com/Justin-io/Embedded-Thermostat-with-Hysteresis-Control",
+          "https://github.com/Justin-io/F.R.I.D.A.Y",
           "dev.htm",
           "cyb.htm",
           "phy.htm"
         ],
-        "description": "I develop the Chronon-Super Quantum Level Model   a novel framework for quantum gravity. I build full-stack apps and lead cybersecurity teams.",
+        "description": "Developer and researcher working on the Chronon-Super Quantum Level Model (discrete spacetime lattices) and custom security/P2P system tools.",
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "Kozhikode",
@@ -351,7 +366,7 @@
 
                         <div style="text-align: center; margin-bottom: 24px;">
                             <div class="hero-profile-container" id="hero-profile-container">
-                                <img src="/assets/img/me.jpg" alt="Hari Nandan K / Justin Alexia" id="hero-main-img" class="hero-profile-img">
+                                <img src="/assets/img/me.webp" alt="Hari Nandan K / Justin Alexia" id="hero-main-img" class="hero-profile-img">
                             </div>
                         </div>
 
@@ -377,17 +392,10 @@
         <div class="about-grid">
             <div class="about-content">
                 <p class="about-text">
-                    I work at the intersection of theoretical physics and applied technology. I am currently developing
-                    the
-                    Chronon-Super Quantum Level Model while building practical systems like the IES College Data
-                    Science Portal and ShopRoyince. My missions are simple: <strong>“Secure. Test.
-                        Defend.”</strong> and <strong>“Create. Empower. Evolve.”</strong>
+                    I work at the intersection of theoretical physics and applied technology. I am currently developing the Chronon-Super Quantum Level Model (simulating discrete space-time structures) and building practical systems like the IES College Data Science Portal and ShopRoyince.
                 </p>
                 <p class="about-text">
-                    I founded the HOPE platform to integrate Education, E-Commerce, IoT, and Research. Through this, I
-                    have had
-                    the privilege of mentoring over 500 students in cybersecurity and development through hands-on,
-                    project-based learning.
+                    Founded the HOPE platform comprising HOPE-Ecom (the ShopRoyince e-commerce project) and educational programming modules. Mentored 430+ students in cybersecurity labs and IoT embedded programming (ESP32, Arduino).
                 </p>
                 <div class="about-highlights">
                     <div class="highlight-item">
@@ -433,16 +441,16 @@
                     style="position: relative; overflow: hidden; border-radius: 30px; height: 500px;">
                     <!-- Image Slides -->
                     <div id="image-slides" style="position: relative; width: 100%; height: 100%;">
-                        <img src="assets/img/me.jpg" alt="Justin Alexia - Cybersecurity"
+                        <img src="assets/img/me.webp" alt="Justin Alexia - Cybersecurity"
                             class="about-image-slide active"
                             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 1; transition: opacity 1s ease-in-out;">
-                        <img src="assets/img/bng1.jpeg" alt="HOPE IoT Camp" class="about-image-slide"
+                        <img src="assets/img/bng1.webp" alt="HOPE IoT Camp" class="about-image-slide"
                             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1s ease-in-out;">
-                        <img src="assets/img/bng3.jpeg" alt="Quantum Research" class="about-image-slide"
+                        <img src="assets/img/bng3.webp" alt="Quantum Research" class="about-image-slide"
                             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1s ease-in-out;">
-                        <img src="assets/img/bng4.jpeg" alt="TexidoMeg Platform" class="about-image-slide"
+                        <img src="assets/img/bng4.webp" alt="TexidoMeg Platform" class="about-image-slide"
                             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1s ease-in-out;">
-                        <img src="assets/img/bng5.png" alt="Keltron Internship" class="about-image-slide"
+                        <img src="assets/img/bng5.webp" alt="Keltron Internship" class="about-image-slide"
                             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1s ease-in-out;">
                     </div>
 
@@ -454,6 +462,7 @@
                         </p>
                     </div>
                 </div>
+                <div id="about-3d-arm-container" style="width: 100%; height: 350px; margin-top: 30px; position: relative;"></div>
 
                 <script>
                     // Simple Crossover Slideshow Logic
@@ -502,7 +511,7 @@
 
                 <div class="project-card" data-category="edtech">
                     <div class="project-image">
-                        <img src="/assets/img/1.png" alt="HOPE Platform">
+                        <img src="/assets/img/1.webp" alt="HOPE Platform">
                         <div class="project-overlay">
                             <div style="color: white;">
                                 <h3>HOPE Platform</h3>
@@ -514,9 +523,7 @@
                         <div class="project-category">EDTECH</div>
                         <h3 class="project-title">HOPE Platform</h3>
                         <p class="project-description">
-                            I built this social startup to integrate four verticals: Education (TexidoMeg, IoT Camps),
-                            E-Commerce
-                            (ShopRoyince), IoT systems, and Theoretical Research.
+                            Software ecosystem integrating educational services, the ShopRoyince e-commerce pipeline, IoT embedded controller networks, and physics simulations.
                         </p>
                         <div class="project-tags">
                             <span class="tag">Full-stack</span>
@@ -524,12 +531,14 @@
                             <span class="tag">Firebase</span>
                             <span class="tag">Mentorship</span>
                         </div>
-
+                        <a href="https://github.com/Justin-io/HOPE" class="project-link" target="_blank">
+                            View on GitHub <i class="fas fa-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
                 <div class="project-card" data-category="edtech">
                     <div class="project-image">
-                        <img src="/assets/img/hope_ppt.png" alt="HOPE-PPT Project">
+                        <img src="/assets/img/hope_ppt.webp" alt="HOPE-PPT Project">
                         <div class="project-overlay">
                             <div style="color: white;">
                                 <h3>HOPE-PPT</h3>
@@ -541,8 +550,7 @@
                         <div class="project-category">EDTECH / AI</div>
                         <h3 class="project-title">HOPE-PPT</h3>
                         <p class="project-description">
-                            I designed this prototype interface to help students. It generates 3D presentations,
-                            detailed reports, and assignments using AI-driven content generation.
+                            Client-side presentation generator built with HTML5 and CSS. Automates report structuring and slides outline rendering using REST integrations to LLM APIs.
                         </p>
                         <div class="project-tags">
                             <span class="tag">HTML5</span>
@@ -558,7 +566,7 @@
 
                 <div class="project-card" data-category="edtech">
                     <div class="project-image">
-                        <img src="/assets/img/2.png" alt="TexidoMeg">
+                        <img src="/assets/img/2.webp" alt="TexidoMeg">
                         <div class="project-overlay">
                             <div style="color: white;">
                                 <h3>TexidoMeg</h3>
@@ -570,9 +578,7 @@
                         <div class="project-category">EDTECH</div>
                         <h3 class="project-title">TexidoMeg</h3>
                         <p class="project-description">
-                            I created this open-learning platform to offer structured cybersecurity curriculum, CTF
-                            labs, Parrot OS
-                            training, and mentorship for over 500 students.
+                            Educational directory and repository hosting cybersecurity modules, Linux security configurations, and CTF training materials.
                         </p>
                         <div class="project-tags">
                             <span class="tag">Web Security</span>
@@ -580,15 +586,15 @@
                             <span class="tag">Python</span>
                             <span class="tag">CTF Labs</span>
                         </div>
-                        <a href="#" class="project-link">
-                            View Project <i class="fas fa-arrow-right"></i>
+                        <a href="https://github.com/Justin-io/infect" class="project-link" target="_blank">
+                            View on GitHub <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
                 </div>
 
                 <div class="project-card" data-category="research">
                     <div class="project-image">
-                        <img src="/assets/img/3.png" alt="Chronon-Super Quantum Level Model">
+                        <img src="/assets/img/3.webp" alt="Chronon-Super Quantum Level Model">
                         <div class="project-overlay">
                             <div style="color: white;">
                                 <h3>Chronon Model</h3>
@@ -600,8 +606,7 @@
                         <div class="project-category">RESEARCH</div>
                         <h3 class="project-title">Chronon-Super Quantum Level Model</h3>
                         <p class="project-description">
-                            My theoretical framework exploring discrete spacetime, pre-geometric structures, and
-                            mathematical unification of quantum mechanics and general relativity.
+                            Research code simulating discrete spacetime lattices and quantum gravity models. Focuses on pre-geometric state equations and Planck-scale metrics.
                         </p>
                         <div class="project-tags">
                             <span class="tag">Quantum Gravity</span>
@@ -609,15 +614,15 @@
                             <span class="tag">Discrete Math</span>
                             <span class="tag">GR + QM</span>
                         </div>
-                        <a href="#" class="project-link">
-                            View Project <i class="fas fa-arrow-right"></i>
+                        <a href="https://github.com/Justin-io/Chronon-Theory-Of-Super-Quantum-Level-" class="project-link" target="_blank">
+                            View on GitHub <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
                 </div>
 
                 <div class="project-card" data-category="research">
                     <div class="project-image">
-                        <img src="/assets/img/friday.png" alt="F.R.I.D.A.Y. Project">
+                        <img src="/assets/img/friday.webp" alt="F.R.I.D.A.Y. Project">
                         <div class="project-overlay">
                             <div style="color: white;">
                                 <h3>F.R.I.D.A.Y.</h3>
@@ -629,10 +634,7 @@
                         <div class="project-category">EXPERIMENTAL / AI</div>
                         <h3 class="project-title">F.R.I.D.A.Y.</h3>
                         <p class="project-description">
-                            I built this experimental, zero-dependency personal assistant capable of running entirely
-                            within a
-                            single HTML file. It features PWA support, a specialized voice interface, and local
-                            persistence.
+                            Zero-dependency client-side assistant compiled into a single HTML document. Employs Web Speech API for voice interactions and localStorage for configuration states.
                         </p>
                         <div class="project-tags">
                             <span class="tag">JavaScript</span>
@@ -648,7 +650,7 @@
 
                 <div class="project-card" data-category="research">
                     <div class="project-image">
-                        <img src="/assets/img/jarvis.png" alt="J.A.R.V.I.S. M1 Project">
+                        <img src="/assets/img/jarvis.webp" alt="J.A.R.V.I.S. M1 Project">
                         <div class="project-overlay">
                             <div style="color: white;">
                                 <h3>J.A.R.V.I.S. M1</h3>
@@ -660,9 +662,7 @@
                         <div class="project-category">AI / AUTOMATION</div>
                         <h3 class="project-title">J.A.R.V.I.S. M1</h3>
                         <p class="project-description">
-                            I developed this advanced voice-activated Linux assistant featuring a hybrid AI core
-                            (Ollama),
-                            real-time 3D neural interface, and autonomous agentic workflows for complete system control.
+                            Local voice-activated system utility. Interfaces with local Ollama APIs and uses Three.js for rendering neural signal node visualizations.
                         </p>
                         <div class="project-tags">
                             <span class="tag">Python</span>
@@ -678,7 +678,7 @@
 
                 <div class="project-card" data-category="security">
                     <div class="project-image">
-                        <img src="/assets/img/red_queen.png" alt="RED QUEEN Project">
+                        <img src="/assets/img/red_queen.webp" alt="RED QUEEN Project">
                         <div class="project-overlay">
                             <div style="color: white;">
                                 <h3>THE RED QUEEN</h3>
@@ -690,9 +690,7 @@
                         <div class="project-category">SECURITY / AI</div>
                         <h3 class="project-title">THE RED QUEEN</h3>
                         <p class="project-description">
-                            I created this autonomous offensive security agent to bridge vulnerability detection and
-                            exploitation
-                            using an OODA loop. It features concurrent Rust scanning and AI-driven payload generation.
+                            Security audit program containing concurrent network ports scanning logic written in Rust, paired with Python routines for custom payload testing.
                         </p>
                         <div class="project-tags">
                             <span class="tag">Rust</span>
@@ -708,7 +706,7 @@
 
                 <div class="project-card" data-category="research">
                     <div class="project-image">
-                        <img src="/assets/img/qsafe.png" alt="Q-SAFE Project">
+                        <img src="/assets/img/qsafe.webp" alt="Q-SAFE Project">
                         <div class="project-overlay">
                             <div style="color: white;">
                                 <h3>Q-SAFE</h3>
@@ -720,9 +718,7 @@
                         <div class="project-category">QUANTUM SECURITY</div>
                         <h3 class="project-title">Q-SAFE</h3>
                         <p class="project-description">
-                            I designed this hybrid "Sentinel" framework combining x86_64 Assembly for raw speed and a
-                            Python Neural
-                            Oracle for AI reasoning. It bridges kernel-like integrity checks with agentic intelligence.
+                            System security prototype. Uses x86 Assembly for kernel-level integrity checking routines and Python-based classifier models to evaluate system event records.
                         </p>
                         <div class="project-tags">
                             <span class="tag">Assembly</span>
@@ -738,7 +734,7 @@
 
                 <div class="project-card" data-category="research">
                     <div class="project-image">
-                        <img src="/assets/img/bloomwatch.png" alt="BLOOMWATCH-PRO Project">
+                        <img src="/assets/img/bloomwatch.webp" alt="BLOOMWATCH-PRO Project">
                         <div class="project-overlay">
                             <div style="color: white;">
                                 <h3>BLOOMWATCH-PRO</h3>
@@ -750,10 +746,7 @@
                         <div class="project-category">SPACE TECH / AI</div>
                         <h3 class="project-title">BLOOMWATCH-PRO</h3>
                         <p class="project-description">
-                            My team and I built this platform, which won a NASA Space Apps award. It tracks global plant
-                            life cycles using satellite data
-                            (MODIS, VIIRS) and citizen science, featuring interactive 3D visualizations and AI phenology
-                            prediction.
+                            Web application mapping vegetation phenology using MODIS and VIIRS satellite data. Awarded local winner in NASA Space Apps Hackathon. Built with Python backend.
                         </p>
                         <div class="project-tags">
                             <span class="tag">NASA Data</span>
@@ -769,7 +762,7 @@
 
                 <div class="project-card" data-category="security">
                     <div class="project-image">
-                        <img src="/assets/img/j_random.png" alt="J-Random Project">
+                        <img src="/assets/img/j_random.webp" alt="J-Random Project">
                         <div class="project-overlay">
                             <div style="color: white;">
                                 <h3>J-RANDOM</h3>
@@ -781,9 +774,7 @@
                         <div class="project-category">SECURITY / TOOLS</div>
                         <h3 class="project-title">J-RANDOM</h3>
                         <p class="project-description">
-                            I wrote this secure, glass-morphic desktop password generator using Java 17 and Swing. It
-                            features
-                            cryptographic randomness, local MariaDB storage, and real-time strength visualization.
+                            Desktop security utility developed in Java 17 and Swing. Implements java.security.SecureRandom for entropy, with local MariaDB storage hooks.
                         </p>
                         <div class="project-tags">
                             <span class="tag">Java 17</span>
@@ -800,7 +791,7 @@
 
                 <div class="project-card" data-category="security">
                     <div class="project-image">
-                        <img src="/assets/img/4.png" alt="Automated Vulnerability Scanner">
+                        <img src="/assets/img/4.webp" alt="Automated Vulnerability Scanner">
                         <div class="project-overlay">
                             <div style="color: white;">
                                 <h3>Vulnerability Scanner</h3>
@@ -812,9 +803,7 @@
                         <div class="project-category">SECURITY</div>
                         <h3 class="project-title">Automated Vulnerability Scanner</h3>
                         <p class="project-description">
-                            I wrote this Python-based scanner which integrates Nmap and web tools for multi-threaded
-                            network and
-                            application vulnerability detection with report generation.
+                            Multi-threaded network scanner script written in Python. Automates Nmap scans and checks web applications for target vulnerabilities.
                         </p>
                         <div class="project-tags">
                             <span class="tag">Python</span>
@@ -822,15 +811,15 @@
                             <span class="tag">Flask</span>
                             <span class="tag">SQLite</span>
                         </div>
-                        <a href="#" class="project-link">
-                            View Project <i class="fas fa-arrow-right"></i>
+                        <a href="https://github.com/Justin-io/GH05T-INSTA" class="project-link" target="_blank">
+                            View on GitHub <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
                 </div>
 
                 <div class="project-card" data-category="iot">
                     <div class="project-image">
-                        <img src="/assets/img/5.png" alt="HOPE Summer IoT Camp">
+                        <img src="/assets/img/5.webp" alt="HOPE Summer IoT Camp">
                         <div class="project-overlay">
                             <div style="color: white;">
                                 <h3>HOPE IoT Camp</h3>
@@ -842,8 +831,7 @@
                         <div class="project-category">IOT</div>
                         <h3 class="project-title">HOPE Summer IoT Camp</h3>
                         <p class="project-description">
-                            Intensive camp teaching Arduino, ESP32, sensors, and actuators through project-based
-                            learning and mentorship in 2026.
+                            Instructional repository hosting source codes for ESP32 and Arduino setups, sensor reading algorithms, and network transmission codes.
                         </p>
                         <div class="project-tags">
                             <span class="tag">Arduino</span>
@@ -851,44 +839,43 @@
                             <span class="tag">C++</span>
                             <span class="tag">Python</span>
                         </div>
-                        <a href="#" class="project-link">
-                            View Project <i class="fas fa-arrow-right"></i>
+                        <a href="https://github.com/Justin-io/Embedded-Thermostat-with-Hysteresis-Control" class="project-link" target="_blank">
+                            View on GitHub <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
                 </div>
 
                 <div class="project-card" data-category="security">
                     <div class="project-image">
-                        <img src="/assets/img/6.png" alt="IoT Botnet Detection">
+                        <img src="/assets/img/generated/recon_framework.webp" alt="Chameleon-P2P">
                         <div class="project-overlay">
                             <div style="color: white;">
-                                <h3>IoT Botnet Detection</h3>
-                                <p>ML-based threat detection</p>
+                                <h3>Chameleon-P2P</h3>
+                                <p>Stealth Ephemeral messaging</p>
                             </div>
                         </div>
                     </div>
                     <div class="project-content">
-                        <div class="project-category">SECURITY</div>
-                        <h3 class="project-title">IoT Botnet Detection Research</h3>
+                        <div class="project-category">SECURITY / P2P</div>
+                        <h3 class="project-title">Chameleon-P2P</h3>
                         <p class="project-description">
-                            Machine learning model analyzing network traffic (MQTT) to detect anomalous behavior and
-                            mitigate botnet propagation in IoT environments.
+                            Peer-to-peer messaging program in TypeScript. Operates as a mock JSON formatter UI, routing encrypted payload channels to configured target peers.
                         </p>
                         <div class="project-tags">
-                            <span class="tag">Scikit-learn</span>
-                            <span class="tag">Pandas</span>
-                            <span class="tag">Wireshark</span>
-                            <span class="tag">MQTT</span>
+                            <span class="tag">TypeScript</span>
+                            <span class="tag">P2P</span>
+                            <span class="tag">Encryption</span>
+                            <span class="tag">Stealth-First</span>
                         </div>
-                        <a href="#" class="project-link">
-                            View Project <i class="fas fa-arrow-right"></i>
+                        <a href="https://github.com/Justin-io/Chameleon-P2P" class="project-link" target="_blank">
+                            View on GitHub <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
                 </div>
 
                 <div class="project-card" data-category="ai">
                     <div class="project-image">
-                        <img src="/assets/img/generated/lexiquery_ai.png" alt="LexiQuery AI">
+                        <img src="/assets/img/generated/lexiquery_ai.webp" alt="LexiQuery AI">
                         <div class="project-overlay">
                             <div style="color: white;">
                                 <h3>LexiQuery AI</h3>
@@ -900,8 +887,7 @@
                         <div class="project-category">AI / RAG</div>
                         <h3 class="project-title">LexiQuery AI</h3>
                         <p class="project-description">
-                            Advanced Legal Document Question-Answering Bot using RAG and semantic analysis for fast
-                            legal query processing.
+                            RAG-based query tool parsing legal documents. Uses vector embeddings to retrieve relevant text segments and query LLM models.
                         </p>
                         <div class="project-tags">
                             <span class="tag">TypeScript</span>
@@ -916,7 +902,7 @@
 
                 <div class="project-card" data-category="ai">
                     <div class="project-image">
-                        <img src="/assets/img/generated/agentic_sales.png" alt="Sales Email AI">
+                        <img src="/assets/img/generated/agentic_sales.webp" alt="Sales Email AI">
                         <div class="project-overlay">
                             <div style="color: white;">
                                 <h3>Agentic Sales AI</h3>
@@ -928,8 +914,7 @@
                         <div class="project-category">AI / AGENTIC</div>
                         <h3 class="project-title">Sales Email Agent</h3>
                         <p class="project-description">
-                            Autonomous sales email generator leveraging Llama 3 and Agentic workflows for deep
-                            search-driven personalization.
+                            Python pipeline orchestrating custom search queries to gather context and draft tailored correspondence templates.
                         </p>
                         <div class="project-tags">
                             <span class="tag">Python</span>
@@ -945,7 +930,7 @@
 
                 <div class="project-card" data-category="security">
                     <div class="project-image">
-                        <img src="/assets/img/generated/recon_framework.png" alt="Subdomain Enumerator">
+                        <img src="/assets/img/generated/recon_framework.webp" alt="Subdomain Enumerator">
                         <div class="project-overlay">
                             <div style="color: white;">
                                 <h3>Subdomain Enumerator</h3>
@@ -957,8 +942,7 @@
                         <div class="project-category">SECURITY</div>
                         <h3 class="project-title">Recon Framework</h3>
                         <p class="project-description">
-                            Powerful security tool designed for authorized infrastructure mapping and multi-threaded
-                            reconnaissance.
+                            Multi-threaded domain intelligence tool written in Python. Collects subdomains via public APIs and verifies target hostname resolution.
                         </p>
                         <div class="project-tags">
                             <span class="tag">Python</span>
@@ -974,7 +958,7 @@
 
                 <div class="project-card" data-category="iot">
                     <div class="project-image">
-                        <img src="/assets/img/generated/riscv_thermostat.png" alt="RISC-V Thermostat">
+                        <img src="/assets/img/generated/riscv_thermostat.webp" alt="RISC-V Thermostat">
                         <div class="project-overlay">
                             <div style="color: white;">
                                 <h3>RISC-V Control</h3>
@@ -986,8 +970,7 @@
                         <div class="project-category">IOT / LOW-LEVEL</div>
                         <h3 class="project-title">RISC-V Thermostat</h3>
                         <p class="project-description">
-                            Implementing hysteresis control logic entirely in RISC-V Assembly for embedded temperature
-                            management systems.
+                            Low-level logic controller code written in RISC-V assembly. Simulates thermodynamic hysteresis rules for temperature stabilization.
                         </p>
                         <div class="project-tags">
                             <span class="tag">Assembly</span>
@@ -1003,7 +986,7 @@
 
                 <div class="project-card" data-category="web">
                     <div class="project-image">
-                        <img src="/assets/img/generated/aura_ap.png" alt="AURA_AP Project">
+                        <img src="/assets/img/generated/aura_ap.webp" alt="AURA_AP Project">
                         <div class="project-overlay">
                             <div style="color: white;">
                                 <h3>AURA_AP</h3>
@@ -1015,8 +998,7 @@
                         <div class="project-category">WEB</div>
                         <h3 class="project-title">AURA_AP</h3>
                         <p class="project-description">
-                            Custom web application environment built for high performance and unique interface
-                            interactions.
+                            Browser-based interface codebase containing custom DOM manipulation patterns and CSS styles.
                         </p>
                         <div class="project-tags">
                             <span class="tag">HTML5</span>
@@ -1031,7 +1013,7 @@
 
                 <div class="project-card" data-category="web">
                     <div class="project-image">
-                        <img src="/assets/img/generated/trip_doc.png" alt="Trip Documentation">
+                        <img src="/assets/img/generated/trip_doc.webp" alt="Trip Documentation">
                         <div class="project-overlay">
                             <div style="color: white;">
                                 <h3>Trip-Doc</h3>
@@ -1043,8 +1025,7 @@
                         <div class="project-category">WEB</div>
                         <h3 class="project-title">Trip-Doc</h3>
                         <p class="project-description">
-                            Personal secure platform for managing travel logs and technical documentation in a
-                            structured web format.
+                            Static HTML and CSS compilation for archiving local journey records and technical notes.
                         </p>
                         <div class="project-tags">
                             <span class="tag">HTML5</span>
@@ -1059,7 +1040,7 @@
 
                 <div class="project-card" data-category="security">
                     <div class="project-image">
-                        <img src="/assets/img/generated/roadmap_ceh.png" alt="CEH Roadmap">
+                        <img src="/assets/img/generated/roadmap_ceh.webp" alt="CEH Roadmap">
                         <div class="project-overlay">
                             <div style="color: white;">
                                 <h3>RoadMapCEH</h3>
@@ -1087,7 +1068,7 @@
 
                 <div class="project-card" data-category="ai">
                     <div class="project-image">
-                        <img src="/assets/img/generated/jarvis_web.png" alt="J.A.R.V.I.S-in-Web">
+                        <img src="/assets/img/generated/jarvis_web.webp" alt="J.A.R.V.I.S-in-Web">
                         <div class="project-overlay">
                             <div style="color: white;">
                                 <h3>J.A.R.V.I.S-in-Web</h3>
@@ -1115,7 +1096,7 @@
 
                 <div class="project-card" data-category="research">
                     <div class="project-image">
-                        <img src="/assets/img/generated/ai_hub.png" alt="AI Research Hub">
+                        <img src="/assets/img/generated/ai_hub.webp" alt="AI Research Hub">
                         <div class="project-overlay">
                             <div style="color: white;">
                                 <h3>AI-BULDING</h3>
@@ -1143,7 +1124,7 @@
 
                 <div class="project-card" data-category="web">
                     <div class="project-image">
-                        <img src="/assets/img/generated/the_lab.png" alt="Scripting Lab">
+                        <img src="/assets/img/generated/the_lab.webp" alt="Scripting Lab">
                         <div class="project-overlay">
                             <div style="color: white;">
                                 <h3>The Lab</h3>
@@ -1175,7 +1156,8 @@
     <!-- Research Section -->
     <!-- Research Section -->
     <!-- Research Section -->
-    <section id="research" style="position: relative; padding: 100px 0;">
+    <section id="research" style="position: relative; padding: 100px 0; overflow: hidden;">
+        <div id="research-3d-spacetime-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.4; pointer-events: none;"></div>
         <div class="section-header">
             <div class="section-label">INNOVATION</div>
             <h2 class="section-title">My Research</h2>
@@ -1235,7 +1217,7 @@
                 <!-- Image Container -->
                 <div class="card-image" style="height: 200px; width: 100%; overflow: hidden; position: relative;">
                     <!-- Using FontAwesome icon overlay on specific background or the image if available -->
-                    <img src="assets/img/qsafe_paper.png" alt="Q-SAFE"
+                    <img src="assets/img/qsafe_paper.webp" alt="Q-SAFE"
                         style="width: 100%; height: 100%; object-fit: cover; opacity: 0.8; transition: transform 0.5s ease;">
                     <div
                         style="position: absolute; top: 15px; right: 15px; background: var(--accent); color: #fff; padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; box-shadow: 0 4px 10px rgba(99, 102, 241, 0.4);">
@@ -1821,7 +1803,7 @@
                 <div class="achievement-date">2019</div>
                 <h3 class="achievement-title">Certified Ethical Hacker</h3>
                 <div class="achievement-preview" style="margin-top: 10px; border-radius: 8px; overflow: hidden; height: 80px;">
-                    <img src="/assets/img/generated/roadmap_ceh.png" alt="CEH Image" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.8;">
+                    <img src="/assets/img/generated/roadmap_ceh.webp" alt="CEH Image" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.8;">
                 </div>
                 <p class="achievement-description">I earned my foundation certification in ethical hacking, marking the
                     start of my cybersecurity journey.</p>
@@ -1844,7 +1826,7 @@
                 <div class="timeline-content">
                     <div class="timeline-media-container" id="timeline-media-sinova">
                         <div class="timeline-carousel">
-                            <img src="/assets/img/generated/timeline_sinova.png" alt="SINOVA 26 Winner" class="timeline-img active">
+                            <img src="/assets/img/generated/timeline_sinova.webp" alt="SINOVA 26 Winner" class="timeline-img active">
                         </div>
                     </div>
                     <div class="timeline-text-wrapper">
@@ -1865,7 +1847,7 @@
                 <div class="timeline-content">
                     <div class="timeline-media-container" id="timeline-media-nasa">
                         <div class="timeline-carousel">
-                            <img src="/assets/img/generated/timeline_nasa.png" alt="NASA Space Apps 2025"
+                            <img src="/assets/img/generated/timeline_nasa.webp" alt="NASA Space Apps 2025"
                                 class="timeline-img active">
                         </div>
                     </div>
@@ -1888,9 +1870,9 @@
                     <div class="timeline-media-container" id="timeline-media-2026"
                         onclick="openAlbum('timeline-media-2026')">
                         <div class="timeline-carousel">
-                            <img src="/assets/img/generated/timeline_hope.png" alt="HOPE INT CORE Platform" class="timeline-img active">
-                            <img src="assets/img/timeline/hope_2.png" alt="Strategy Meeting" class="timeline-img">
-                            <img src="assets/img/timeline/hope_3.png" alt="Future Vision" class="timeline-img">
+                            <img src="/assets/img/generated/timeline_hope.webp" alt="HOPE INT CORE Platform" class="timeline-img active">
+                            <img src="assets/img/timeline/hope_2.webp" alt="Strategy Meeting" class="timeline-img">
+                            <img src="assets/img/timeline/hope_3.webp" alt="Future Vision" class="timeline-img">
                         </div>
                     </div>
                     <div class="timeline-text-wrapper">
@@ -1911,10 +1893,10 @@
                     <div class="timeline-media-container" id="timeline-media-2024"
                         onclick="openAlbum('timeline-media-2024')">
                         <div class="timeline-carousel">
-                            <img src="/assets/img/generated/timeline_research_2024.png" alt="Spacetime Research Visualization" class="timeline-img active">
-                            <img src="assets/img/timeline/research_2.png" alt="NASA Space Apps Presentation"
+                            <img src="/assets/img/generated/timeline_research_2024.webp" alt="Spacetime Research Visualization" class="timeline-img active">
+                            <img src="assets/img/timeline/research_2.webp" alt="NASA Space Apps Presentation"
                                 class="timeline-img">
-                            <img src="assets/img/timeline/research_3.png" alt="Q-SAFE Security Framework Dashboard"
+                            <img src="assets/img/timeline/research_3.webp" alt="Q-SAFE Security Framework Dashboard"
                                 class="timeline-img">
                         </div>
                     </div>
@@ -1936,11 +1918,11 @@
                     <div class="timeline-media-container" id="timeline-media-2023"
                         onclick="openAlbum('timeline-media-2023')">
                         <div class="timeline-carousel">
-                            <img src="/assets/img/generated/timeline_shoproyince.png" alt="ShopRoyince E-Commerce Platform"
+                            <img src="/assets/img/generated/timeline_shoproyince.webp" alt="ShopRoyince E-Commerce Platform"
                                 class="timeline-img active">
-                            <img src="assets/img/timeline/shop_2.png" alt="Startup Brainstorming Session"
+                            <img src="assets/img/timeline/shop_2.webp" alt="Startup Brainstorming Session"
                                 class="timeline-img">
-                            <img src="assets/img/timeline/shop_3.png" alt="Winning the State Vocational Expo"
+                            <img src="assets/img/timeline/shop_3.webp" alt="Winning the State Vocational Expo"
                                 class="timeline-img">
                         </div>
                     </div>
@@ -1962,11 +1944,11 @@
                     <div class="timeline-media-container" id="timeline-media-2022"
                         onclick="openAlbum('timeline-media-2022')">
                         <div class="timeline-carousel">
-                            <img src="assets/img/timeline/texido_1.png" alt="TexidoMeg Cybersecurity Training"
+                            <img src="assets/img/timeline/texido_1.webp" alt="TexidoMeg Cybersecurity Training"
                                 class="timeline-img active">
-                            <img src="assets/img/timeline/texido_2.png" alt="Advanced Threat Monitoring"
+                            <img src="assets/img/timeline/texido_2.webp" alt="Advanced Threat Monitoring"
                                 class="timeline-img">
-                            <img src="assets/img/timeline/texido_1.png" alt="Cybersecurity Lab Session"
+                            <img src="assets/img/timeline/texido_1.webp" alt="Cybersecurity Lab Session"
                                 class="timeline-img">
                         </div>
                     </div>
@@ -1988,11 +1970,11 @@
                     <div class="timeline-media-container" id="timeline-media-2019"
                         onclick="openAlbum('timeline-media-2019')">
                         <div class="timeline-carousel">
-                            <img src="/assets/img/generated/the_lab.png" alt="The Spark: My First Code"
+                            <img src="/assets/img/generated/the_lab.webp" alt="The Spark: My First Code"
                                 class="timeline-img active">
-                            <img src="/assets/img/generated/roadmap_ceh.png" alt="Certified Ethical Hacker Certification"
+                            <img src="/assets/img/generated/roadmap_ceh.webp" alt="Certified Ethical Hacker Certification"
                                 class="timeline-img">
-                            <img src="assets/img/timeline/ceh_3.png" alt="System Hardening" class="timeline-img">
+                            <img src="assets/img/timeline/ceh_3.webp" alt="System Hardening" class="timeline-img">
                         </div>
                     </div>
                     <div class="timeline-text-wrapper">
@@ -2013,10 +1995,10 @@
                     <div class="timeline-media-container" id="timeline-media-2018"
                         onclick="openAlbum('timeline-media-2018')">
                         <div class="timeline-carousel">
-                            <img src="assets/img/timeline/ds_1.png" alt="Early Reverse Engineering with Assembly"
+                            <img src="assets/img/timeline/ds_1.webp" alt="Early Reverse Engineering with Assembly"
                                 class="timeline-img active">
-                            <img src="assets/img/timeline/ds_1.png" alt="Low-Level Code Analysis" class="timeline-img">
-                            <img src="assets/img/timeline/ds_1.png" alt="The Spark of Innovation" class="timeline-img">
+                            <img src="assets/img/timeline/ds_1.webp" alt="Low-Level Code Analysis" class="timeline-img">
+                            <img src="assets/img/timeline/ds_1.webp" alt="The Spark of Innovation" class="timeline-img">
                         </div>
                     </div>
                     <div class="timeline-text-wrapper">
@@ -2196,6 +2178,7 @@
 
     <script src="assets/js/performance.js"></script>
     <script src="assets/js/main.js?v=2"></script>
+    <script type="module" src="assets/js/three-scenes.js?v=11"></script>
 
 
     <script>

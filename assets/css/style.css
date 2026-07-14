@@ -10,7 +10,7 @@ body {
 body::before {
   content: "";
   position: fixed;
-  background: #040404 url("../img/bng.jpeg") top right no-repeat;
+  background: #040404 url("../img/bng.webp") top right no-repeat;
   background-size: cover;
   left: 0;
   right: 0;
@@ -31,14 +31,14 @@ body::before {
 
 /* Slideshow Keyframes */
 @keyframes slideshow {
-  0%   { background-image: url("../img/bng0.jpeg"); opacity: 1; }
-  20%  { background-image: url("../img/bng0.jpeg"); opacity: 1; }
-  25%  { background-image: url("../img/bng1.jpeg"); opacity: 0.8; }
-  45%  { background-image: url("../img/bng1.jpeg"); opacity: 1; }
-  50%  { background-image: url("../img/bng3.jpeg"); opacity: 0.8; }
-  70%  { background-image: url("../img/bng3.jpeg"); opacity: 1; }
-  75%  { background-image: url("../img/bng4.jpeg"); opacity: 0.8; }
-  95%  { background-image: url("../img/bng4.jpeg"); opacity: 1; }
+  0%   { background-image: url("../img/bng0.webp"); opacity: 1; }
+  20%  { background-image: url("../img/bng0.webp"); opacity: 1; }
+  25%  { background-image: url("../img/bng1.webp"); opacity: 0.8; }
+  45%  { background-image: url("../img/bng1.webp"); opacity: 1; }
+  50%  { background-image: url("../img/bng3.webp"); opacity: 0.8; }
+  70%  { background-image: url("../img/bng3.webp"); opacity: 1; }
+  75%  { background-image: url("../img/bng4.webp"); opacity: 0.8; }
+  95%  { background-image: url("../img/bng4.webp"); opacity: 1; }
   100% { background-image: url("../img/bng5.jpeg"); opacity: 1; }
 }
 

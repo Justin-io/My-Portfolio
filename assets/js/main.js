@@ -14,15 +14,33 @@ window.addEventListener('load', () => {
 const cursor = document.querySelector('.cursor');
 const cursorFollower = document.querySelector('.cursor-follower');
 
-document.addEventListener('mousemove', (e) => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
+if (cursor && cursorFollower && typeof gsap !== 'undefined') {
+    // Set GSAP percentage transforms to keep cursor centered
+    gsap.set(cursor, { xPercent: -50, yPercent: -50 });
+    gsap.set(cursorFollower, { xPercent: -50, yPercent: -50 });
 
-    setTimeout(() => {
+    // Hardware-accelerated quick interpolations
+    const cursorX = gsap.quickTo(cursor, "x", { duration: 0.08, ease: "power3.out" });
+    const cursorY = gsap.quickTo(cursor, "y", { duration: 0.08, ease: "power3.out" });
+
+    const followerX = gsap.quickTo(cursorFollower, "x", { duration: 0.35, ease: "power3.out" });
+    const followerY = gsap.quickTo(cursorFollower, "y", { duration: 0.35, ease: "power3.out" });
+
+    document.addEventListener('mousemove', (e) => {
+        cursorX(e.clientX);
+        cursorY(e.clientY);
+        followerX(e.clientX);
+        followerY(e.clientY);
+    });
+} else if (cursor && cursorFollower) {
+    // Fallback if GSAP is not loaded
+    document.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
         cursorFollower.style.left = e.clientX + 'px';
         cursorFollower.style.top = e.clientY + 'px';
-    }, 100);
-});
+    });
+}
 
 // Add hover effect to interactive elements
 const interactiveElements = document.querySelectorAll('a, button, .project-card, .skill-card');
@@ -32,147 +50,10 @@ interactiveElements.forEach(elem => {
 });
 
 
-// Advanced Three.js Background
-function initThreeJS() {
-    const config = window.performanceManager.config;
+// Advanced Three.js Background - Disabled in favor of unified three-scenes.js
+function initThreeJS() {}
 
-    if (!config.enableThreeJS) {
-        console.log('Three.js disabled due to performance settings.');
-        document.body.classList.add('no-webgl'); // Add class for CSS fallback if needed
-        return;
-    }
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: config.tier === 'HIGH' }); // Antialias only on high tier if we wanted, but config doesn't have tier. Let's stick to true or use config. 
-    // Better: antialias: true is standard, maybe false for medium? Let's just keep true for now or strictly follow config if we added it.
-
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Limit pixel ratio for performance
-    document.getElementById('canvas-container').appendChild(renderer.domElement);
-
-    // Create advanced particle system
-    const particlesGeometry = new THREE.BufferGeometry();
-    const particlesCount = config.particleCount; // Use dynamic count
-    const posArray = new Float32Array(particlesCount * 3);
-    const colorsArray = new Float32Array(particlesCount * 3);
-
-    for (let i = 0; i < particlesCount * 3; i += 3) {
-        posArray[i] = (Math.random() - 0.5) * 20;
-        posArray[i + 1] = (Math.random() - 0.5) * 20;
-        posArray[i + 2] = (Math.random() - 0.5) * 20;
-
-        const color = new THREE.Color();
-        color.setHSL(Math.random() * 0.2 + 0.5, 0.8, 0.6);
-        colorsArray[i] = color.r;
-        colorsArray[i + 1] = color.g;
-        colorsArray[i + 2] = color.b;
-    }
-
-    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-    particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorsArray, 3));
-
-    const particlesMaterial = new THREE.PointsMaterial({
-        size: 0.008,
-        vertexColors: true,
-        transparent: true,
-        opacity: 0.8,
-        blending: THREE.AdditiveBlending
-    });
-
-    const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-    scene.add(particlesMesh);
-
-    // Create geometric shapes
-    const geometry1 = new THREE.IcosahedronGeometry(2, 1);
-    const material1 = new THREE.MeshPhongMaterial({
-        color: 0x0066ff,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.1
-    });
-
-    const mesh1 = new THREE.Mesh(geometry1, material1);
-    scene.add(mesh1);
-
-    const geometry2 = new THREE.TorusKnotGeometry(1, 0.3, 100, 16);
-    const material2 = new THREE.MeshPhongMaterial({
-        color: 0x00d4ff,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.1
-    });
-
-    const mesh2 = new THREE.Mesh(geometry2, material2);
-    mesh2.position.x = 5;
-    scene.add(mesh2);
-
-    // Add lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-    scene.add(ambientLight);
-
-    const pointLight1 = new THREE.PointLight(0x0066ff, 1);
-    pointLight1.position.set(5, 5, 5);
-    scene.add(pointLight1);
-
-    const pointLight2 = new THREE.PointLight(0x00d4ff, 1);
-    pointLight2.position.set(-5, -5, -5);
-    scene.add(pointLight2);
-
-    camera.position.z = 8;
-
-    // Mouse interaction
-    let mouseX = 0;
-    let mouseY = 0;
-    let targetX = 0;
-    let targetY = 0;
-
-    document.addEventListener('mousemove', (event) => {
-        mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-        mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
-    });
-
-    // Animation loop
-    function animate() {
-        requestAnimationFrame(animate);
-
-        // Smooth mouse following
-        targetX += (mouseX - targetX) * 0.05;
-        targetY += (mouseY - targetY) * 0.05;
-
-        particlesMesh.rotation.x += 0.0005;
-        particlesMesh.rotation.y += 0.0005;
-
-        mesh1.rotation.x += 0.001;
-        mesh1.rotation.y += 0.001;
-        mesh1.position.x = targetX * 2;
-        mesh1.position.y = targetY * 2;
-
-        mesh2.rotation.x -= 0.001;
-        mesh2.rotation.y -= 0.001;
-        mesh2.position.x = -targetX * 2;
-        mesh2.position.y = -targetY * 2;
-
-        renderer.render(scene, camera);
-    }
-
-    animate();
-
-    // Handle window resize
-    window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-}
-
-// Initialize Three.js based on Performance Config
-if (window.performanceManager) {
-    initThreeJS();
-} else {
-    // Fallback if script didn't load for some reason, default to full
-    window.addEventListener('load', initThreeJS);
-}
+// Initialize Three.js has been moved to assets/js/three-scenes.js
 
 // Navigation scroll effect
 window.addEventListener('scroll', () => {
@@ -660,6 +541,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeBtn = document.getElementById('close-chat');
     const bubble = document.getElementById('ai-notification-bubble');
     const messagesContainer = document.getElementById('chat-messages');
+    const suggestionsContainer = document.getElementById('chat-suggestions');
 
     // --- API & State Management ---
     let apiKeys = {
@@ -667,6 +549,8 @@ document.addEventListener('DOMContentLoaded', () => {
         gemini: localStorage.getItem('gemini_key') || '',
         openrouter: localStorage.getItem('openrouter_key') || ''
     };
+
+    const defaultChips = ['Who is Justin?', 'Tell me about Q-SAFE', 'Tech Stack?', 'Chameleon-P2P', 'BLOOMWATCH-PRO'];
 
     // Settings Modal
     const settingsModal = document.getElementById('api-settings-modal');
@@ -755,7 +639,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let hasGreeted = false;
     let thinkingTimeout = null; // Track thinking timer
 
-    const HERO_IMAGE_ORIGINAL = 'assets/img/me.jpg';
+    const HERO_IMAGE_ORIGINAL = 'assets/img/me.webp';
     let heroInterval = null;
 
     // Add click listener to Hero Image for manual summoning
@@ -782,7 +666,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         heroInterval = setInterval(() => {
             const currentSrc = heroImg.src;
-            const nextSrc = currentSrc.includes('me.jpg') ? FAB_IMAGE_REST : HERO_IMAGE_ORIGINAL;
+            const nextSrc = currentSrc.includes('me.webp') ? FAB_IMAGE_REST : HERO_IMAGE_ORIGINAL;
 
             // Simple Fade Animation
             heroImg.classList.add('switching');
@@ -814,7 +698,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let walkthroughStep = 0;
     let walkthroughTimer = null;
     const sectionsOrder = ['home', 'about', 'skills', 'projects', 'experience', 'contact'];
-    const FAB_IMAGE_EXPLAIN = 'assets/img/explain.png';
+    const FAB_IMAGE_EXPLAIN = 'assets/img/explain.webp';
 
     function startWalkthrough() {
         walkthroughActive = true;
@@ -1162,6 +1046,12 @@ document.addEventListener('DOMContentLoaded', () => {
             response = "You can reach me at **harinandan.ofc@gmail.com** or use the contact form at the bottom of the page. 📧";
         } else if (lowerText.includes("q-safe")) {
             response = "**Q-SAFE** is my flagship research project: a Hybrid 'Sentinel' framework. It uses an **x86 Assembly core** for speed and a **Python Neural Oracle** to detect threats agentically.";
+        } else if (lowerText.includes("chameleon")) {
+            response = "**Chameleon-P2P** is an ephemeral messaging system featuring a Stealth-First design (disguised as a JSON formatter) with end-to-end encrypted tunnels. Check it out on [GitHub](https://github.com/Justin-io/Chameleon-P2P).";
+        } else if (lowerText.includes("bloomwatch")) {
+            response = "**BLOOMWATCH-PRO** won the NASA Local Hackathon! It tracks global phenology cycles using MODIS/VIIRS satellite datasets. Check it on [GitHub](https://github.com/Justin-io/BLOOMWATCH-PRO).";
+        } else if (lowerText.includes("ghost") || lowerText.includes("insta")) {
+            response = "**GH05T-INSTA** is a cybersecurity tool package for Kali Linux and Termux that conducts credential audit simulation and passive vulnerability reports. Check it on [GitHub](https://github.com/Justin-io/GH05T-INSTA).";
         } else if (lowerText.includes("tech stack") || lowerText.includes("skills")) {
             response = "My arsenal includes:\n- **Languages**: Python, Rust, C++, JavaScript, Assembly (x86)\n- **AI**: PyTorch, TensorFlow, Ollama\n- **Security**: Metasploit, Wireshark, Burp Suite";
         } else if (lowerText.includes("office hero") || lowerText.includes("utilities")) {
@@ -1186,6 +1076,18 @@ document.addEventListener('DOMContentLoaded', () => {
         addMessage(text, 'user');
         if (suggestionsContainer) suggestionsContainer.style.display = 'none';
         processBotResponse(text);
+    }
+
+    function renderChips(chipsList) {
+        if (!suggestionsContainer) return;
+        suggestionsContainer.innerHTML = '';
+        chipsList.forEach(text => {
+            const chip = document.createElement('button');
+            chip.className = 'chat-chip';
+            chip.innerText = text;
+            chip.addEventListener('click', () => handleChipClick(text));
+            suggestionsContainer.appendChild(chip);
+        });
     }
 
     // --- API Functions ---
