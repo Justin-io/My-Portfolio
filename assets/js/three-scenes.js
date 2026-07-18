@@ -10,14 +10,9 @@ import { bloom } from 'three/addons/tsl/display/BloomNode.js';
 // PERFORMANCE TIER DETECT
 // ============================================================================
 
-const LOW = (() => {
-  const m = navigator.deviceMemory;
-  const c = navigator.hardwareConcurrency || 4;
-  const isMobile = /Mobi|Android|iP(hone|od|ad)/i.test(navigator.userAgent);
-  return (m !== undefined && m <= 4) || c <= 4 || isMobile || window.innerWidth < 768;
-})();
+const LOW = false;
 
-const stepCount = LOW ? 18 : 32;
+const stepCount = LOW ? 28 : 32;
 
 // ============================================================================
 // CONFIGURATION (hardcoded defaults, no UI)
@@ -398,14 +393,23 @@ if (container) {
   const OX = 2.5; // Offset X to keep the black hole shifted to the right
 
   function positionCamera(ease) {
-    const d = C.cur.dist;
+    const aspect = window.innerWidth / window.innerHeight;
+    const isMobile = window.innerWidth < 768;
+    
+    // Scale camera distance inversely with aspect ratio to maintain size,
+    // using a smaller desktopAspect reference to keep the black hole closer (larger).
+    const desktopAspect = 1.15;
+    const distanceScale = Math.max(1.0, desktopAspect / aspect);
+    
+    // Dynamically scale step size to match the camera distance scale
+    uniforms.stepSize.value = config.stepSize * distanceScale;
+    
+    const d = C.cur.dist * distanceScale;
     const theta = C.thetaBase + ease * C.thetaPlunge;
     
-    // Check if on a mobile screen (width < 768px)
-    const isMobileScreen = window.innerWidth < 768;
-    // Apply a steeper upward tilt angle on mobile to see the accretion disk clearly
-    const currentTiltBase = isMobileScreen ? -0.45 : C.tiltBase;
-    const currentTiltTarget = isMobileScreen ? -0.35 : C.tiltTarget;
+    // Apply moderate tilt on mobile to show the accretion disk's structure and opening clearly
+    const currentTiltBase = isMobile ? -0.22 : C.tiltBase;
+    const currentTiltTarget = isMobile ? -0.15 : C.tiltTarget;
     const tilt = THREE.MathUtils.lerp(currentTiltBase, currentTiltTarget, ease);
     
     // Position camera on a spiraling orbit and add mouse parallax
@@ -419,9 +423,8 @@ if (container) {
     const forward = new THREE.Vector3().copy(camera.position).negate().normalize();
     const right = new THREE.Vector3().crossVectors(new THREE.Vector3(0, 1, 0), forward).normalize();
     
-    // Offset look direction to the left so black hole (0,0,0) is pushed to the right side of the screen.
-    // On mobile, keep it more centered (reduce OX offset) so it fits on vertical screen.
-    const currentOX = isMobileScreen ? 0.8 : OX;
+    // Scale the horizontal offset with the distance to preserve screen-space placement
+    const currentOX = OX * distanceScale;
     const target = new THREE.Vector3(0, 0, 0).addScaledVector(right, -currentOX);
     
     camera.lookAt(target);
