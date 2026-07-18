@@ -18,7 +18,6 @@ const LOW = (() => {
   return (m !== undefined && m <= 4) || c <= 4 || isMobile || window.innerWidth < 768;
 })();
 
-// Drastically reduced step count for mobile/low-end to prevent GPU hang
 const stepCount = LOW ? 12 : 32;
 
 // ============================================================================
@@ -58,7 +57,6 @@ const config = {
   nebula2Density: 0.05,
   nebula2Brightness: 0.21,
   nebula2Color: '#010615',
-  // Disable bloom entirely on low-end to save massive GPU memory and bandwidth
   bloomStrength: LOW ? 0.0 : 0.68,
   bloomRadius: 0,
   bloomThreshold: 0.45
@@ -110,8 +108,6 @@ const fbm = Fn(([p, lacunarity, persistence]) => {
   value.addAssign(noise3D(pos).mul(amplitude));
   pos.mulAssign(lacunarity); amplitude.mulAssign(persistence);
   value.addAssign(noise3D(pos).mul(amplitude));
-
-  // Only compile higher octaves on desktop/high-end systems
   if (!LOW) {
     pos.mulAssign(lacunarity); amplitude.mulAssign(persistence);
     value.addAssign(noise3D(pos).mul(amplitude));
@@ -124,8 +120,7 @@ const fbm = Fn(([p, lacunarity, persistence]) => {
 const blackbodyColor = Fn(([tempK]) => {
   const t = clamp(tempK.sub(1000.0).div(9000.0), float(0.0), float(1.0));
   const red = clamp(float(1.0).sub(t.sub(0.8).mul(2.0)), float(0.5), float(1.0));
-  const green = smoothstep(float(0.0), float(0.5), t)
-    .mul(float(1.0).sub(t.sub(0.7).mul(0.3).max(0.0)));
+  const green = smoothstep(float(0.0), float(0.5), t).mul(float(1.0).sub(t.sub(0.7).mul(0.3).max(0.0)));
   const blue = smoothstep(float(0.3), float(1.0), t).mul(t);
   return vec3(red, green, blue);
 });
@@ -172,50 +167,51 @@ const uniforms = {
   cameraPosition: uniform(new THREE.Vector3(0, 5, 20)),
   cameraTarget: uniform(new THREE.Vector3(0, 0, 0)),
   tesseractStrength: uniform(0.0),
-  radiationStrength: uniform(0.0)
+  sparkStrength: uniform(0.0),     // NEW: Controls fire sparks
+  fallSpeed: uniform(0.0)          // NEW: Controls falling illusion speed
 };
 
 // ============================================================================
-// HAWKING RADIATION PARTICLES (Core to Screen)
+// FIRE SPARKS (Only appears inside black hole)
 // ============================================================================
 
-const radiationParticles = Fn(([rayDir, camPos]) => {
+const fireSparks = Fn(([rayDir, camPos]) => {
   const theta = atan(rayDir.z, rayDir.x);
   const phi = asin(clamp(rayDir.y, float(-1.0), float(1.0)));
 
-  // Ultra-low density on mobile to save fill rate and ALU
-  const density = LOW ? float(4.0) : float(12.0);
+  const density = LOW ? float(6.0) : float(15.0);
   const grid = vec2(theta, phi).mul(density);
   const id = floor(grid);
-  const uv = fract(grid).sub(0.5);
+
+  // Erratic jitter for ember-like movement
+  const jitter = vec2(
+    sin(uniforms.time.mul(8.0).add(hash21(id).mul(10.0))).mul(0.15),
+    cos(uniforms.time.mul(11.0).add(hash21(id.add(1.0)).mul(10.0))).mul(0.15)
+  );
+  const uv = fract(grid).sub(0.5).add(jitter);
 
   const hash = hash21(id);
 
-  // Speed increases dramatically as tesseract engages (sudden fall illusion)
-  const speed = hash.mul(2.0).add(3.0).add(uniforms.tesseractStrength.mul(15.0));
-  const progress = fract(uniforms.time.mul(speed).mul(0.4).add(hash));
+  // Fast, erratic spark speed
+  const speed = hash.mul(8.0).add(12.0);
+  const progress = fract(uniforms.time.mul(speed).add(hash));
   const dist = progress;
 
-  // Particle size grows massively as it approaches the screen (camera)
-  const streamSize = float(0.04).div(dist.add(0.05));
+  // Tiny but sharp glowing core
+  const streamSize = float(0.015).div(dist.add(0.08));
   const pGlow = smoothstep(streamSize, float(0.0), length(uv));
 
-  // Brightness peaks in the middle and fades at the very end
-  const fade = sin(progress.mul(Math.PI));
+  // Rapid flicker effect
+  const flicker = sin(uniforms.time.mul(30.0).add(hash.mul(20.0))).mul(0.5).add(0.5);
 
-  // Color shifts from electric blue (core) to white-hot (screen)
-  const coreColor = vec3(0.1, 0.4, 1.0);
-  const nearColor = vec3(0.9, 0.95, 1.0);
-  const color = mix(coreColor, nearColor, progress);
+  // Fire colors: deep red/orange to bright yellow/white
+  const coreColor = vec3(1.0, 0.15, 0.0);
+  const tipColor = vec3(1.0, 0.9, 0.3);
+  const color = mix(coreColor, tipColor, progress);
 
-  // Radial falloff: much brighter when looking directly at the core
-  const coreDir = camPos.normalize().negate();
-  const angleToCore = dot(rayDir, coreDir);
-  const coreFocus = smoothstep(0.0, 1.0, angleToCore);
+  const intensity = pGlow.mul(flicker).mul(20.0).div(dist.add(0.15));
 
-  const intensity = mix(1.0, 5.0, uniforms.tesseractStrength).mul(coreFocus.add(0.2));
-
-  return color.mul(pGlow).mul(fade).mul(8.0).div(dist.add(0.1)).mul(intensity);
+  return color.mul(intensity).mul(uniforms.sparkStrength);
 });
 
 // ============================================================================
@@ -275,11 +271,7 @@ const accretionDiskColor = Fn(([hitR, hitAngle, time, rayDir]) => {
   const diskColor = blackbodyColor(tempK).toVar('diskColor');
 
   const rotationSign = sign(uniforms.diskRotationSpeed);
-  const velocityDir = vec3(
-    sin(hitAngle).negate().mul(rotationSign),
-    float(0.0),
-    cos(hitAngle).mul(rotationSign)
-  );
+  const velocityDir = vec3(sin(hitAngle).negate().mul(rotationSign), float(0.0), cos(hitAngle).mul(rotationSign));
   const velocityMagnitude = float(1.0).div(sqrt(hitR.div(innerR)));
   const beta = velocityMagnitude.mul(0.3);
   const cosTheta = dot(velocityDir, rayDir);
@@ -298,16 +290,8 @@ const accretionDiskColor = Fn(([hitR, hitAngle, time, rayDir]) => {
   const keplerianPhase2 = cyclicTime.add(cycleLength).mul(uniforms.diskRotationSpeed).div(pow(hitR, float(1.5)));
   const rotatedAngle1 = hitAngle.add(keplerianPhase1);
   const rotatedAngle2 = hitAngle.add(keplerianPhase2);
-  const noiseCoord1 = vec3(
-    hitR.mul(uniforms.turbulenceScale),
-    cos(rotatedAngle1).div(uniforms.turbulenceStretch.max(0.1)),
-    sin(rotatedAngle1).div(uniforms.turbulenceStretch.max(0.1))
-  );
-  const noiseCoord2 = vec3(
-    hitR.mul(uniforms.turbulenceScale),
-    cos(rotatedAngle2).div(uniforms.turbulenceStretch.max(0.1)),
-    sin(rotatedAngle2).div(uniforms.turbulenceStretch.max(0.1))
-  );
+  const noiseCoord1 = vec3(hitR.mul(uniforms.turbulenceScale), cos(rotatedAngle1).div(uniforms.turbulenceStretch.max(0.1)), sin(rotatedAngle1).div(uniforms.turbulenceStretch.max(0.1)));
+  const noiseCoord2 = vec3(hitR.mul(uniforms.turbulenceScale), cos(rotatedAngle2).div(uniforms.turbulenceStretch.max(0.1)), sin(rotatedAngle2).div(uniforms.turbulenceStretch.max(0.1)));
   const turbulence1 = fbm(noiseCoord1, uniforms.turbulenceLacunarity, uniforms.turbulencePersistence);
   const turbulence2 = fbm(noiseCoord2, uniforms.turbulenceLacunarity, uniforms.turbulencePersistence);
   const turbulence = mix(turbulence2, turbulence1, blendFactor);
@@ -319,7 +303,7 @@ const accretionDiskColor = Fn(([hitR, hitAngle, time, rayDir]) => {
 });
 
 // ============================================================================
-// TESSERACT SHADER (Infinite Falling Illusion)
+// TESSERACT SHADER (Infinite Falling -> STUCK)
 // ============================================================================
 
 const tesseractShader = Fn(([rayPos, rayDir]) => {
@@ -328,16 +312,13 @@ const tesseractShader = Fn(([rayPos, rayDir]) => {
   const hit = float(0.0).toVar('hit');
   const pos = vec3(0.0).toVar('pos');
 
-  // Sudden infinite falling illusion: speed ramps up to 50x when tesseract engages
-  const fallSpeed = mix(2.0, 50.0, uniforms.tesseractStrength);
-  const fallOffset = vec3(0.0, 0.0, uniforms.time.mul(fallSpeed));
+  // Fall speed is driven by uniform, allowing us to smoothly stop it
+  const fallOffset = vec3(0.0, 0.0, uniforms.time.mul(uniforms.fallSpeed));
 
-  // Spherical warp effect: makes the grid look like it's bulging out of the black hole sphere initially
   const warpAmount = mix(0.8, 0.0, uniforms.tesseractStrength);
   const centerDir = rayPos.normalize();
   const warpedDir = normalize(rayDir.add(centerDir.mul(warpAmount)));
 
-  // Extremely low step count for mobile to prevent thermal throttling
   const maxSteps = LOW ? 8 : 30;
 
   Loop(maxSteps, () => {
@@ -366,10 +347,7 @@ const tesseractShader = Fn(([rayPos, rayDir]) => {
       const u = mix(pos.y, pos.x, isX);
       const v = mix(pos.z, pos.y, isZ);
 
-      const slats = sin(u.mul(50.0)).mul(0.25)
-        .add(sin(v.mul(50.0)).mul(0.25))
-        .add(0.5);
-
+      const slats = sin(u.mul(50.0)).mul(0.25).add(sin(v.mul(50.0)).mul(0.25)).add(0.5);
       const woodColor = mix(vec3(0.04, 0.02, 0.01), vec3(0.3, 0.2, 0.1), slats);
 
       const timeScale = uniforms.time.mul(mix(1.5, 5.0, uniforms.tesseractStrength));
@@ -392,7 +370,6 @@ const tesseractShader = Fn(([rayPos, rayDir]) => {
       const surfaceColor = mix(woodColor.mul(diff).add(lightColor), glowHaze, distFade);
 
       const ao = float(1.0).div(float(1.0).add(dist.mul(0.06)));
-
       col.assign(surfaceColor.mul(ao));
       Break();
     });
@@ -400,7 +377,6 @@ const tesseractShader = Fn(([rayPos, rayDir]) => {
     dist.addAssign(sdf.max(0.03));
   });
 
-  // Fade to deep infinite void if no hit
   const voidColor = vec3(0.01, 0.005, 0.005).mul(float(1.0).sub(dist.div(60.0).min(1.0)));
   col.assign(mix(col, voidColor, step(hit, 0.5)));
 
@@ -431,12 +407,10 @@ const runBlackHoleRaymarch = Fn(([camPos, rayDirIn, rayDirTesseract]) => {
     const r = length(rayPos);
 
     If(r.lessThan(rs.mul(1.01)), () => {
-      // Tesseract emerges from the core in a spherical shape
       const tsColor = tesseractShader(rayPos, rayDirTesseract);
-      // Blend between pure black (singularity) and tesseract based on tesseractStrength
       const visibility = uniforms.tesseractStrength;
       color.assign(mix(vec3(0.0), tsColor.xyz, visibility));
-      alpha.assign(1.0); // Always capture the ray once inside event horizon
+      alpha.assign(1.0);
       captured.assign(1.0);
       Break();
     });
@@ -481,7 +455,6 @@ const runBlackHoleRaymarch = Fn(([camPos, rayDirIn, rayDirTesseract]) => {
     });
     If(uniforms.nebulaEnabled.greaterThan(0.5), () => {
       if (LOW) {
-        // Optimized single-octave nebula for extreme mobile performance
         const noisePos1 = rayDir.mul(uniforms.nebula1Scale);
         const n1 = noise3D(noisePos1).mul(uniforms.nebula1Density);
         bgColor.addAssign(uniforms.nebula1Color.mul(n1).mul(uniforms.nebula1Brightness));
@@ -494,9 +467,9 @@ const runBlackHoleRaymarch = Fn(([camPos, rayDirIn, rayDirTesseract]) => {
 
   const finalColor = pow(color, vec3(1.0 / 2.2));
 
-  // Overlay Hawking radiation particles emitting towards the screen
-  const rad = radiationParticles(rayDirIn, camPos).mul(uniforms.radiationStrength);
-  return vec4(finalColor.add(rad), 1.0);
+  // ONLY add fire sparks if we are captured (inside the black hole)
+  const sparks = fireSparks(rayDirIn, camPos);
+  return vec4(finalColor.add(sparks), 1.0);
 });
 
 // ============================================================================
@@ -516,14 +489,9 @@ const blackHoleShader = Fn(() => {
   const camUp = cross(camForward, camRight);
 
   const fov = float(1.0);
-  const rayDir = normalize(
-    camForward.mul(fov).add(camRight.mul(screenPos.x)).add(camUp.mul(screenPos.y))
-  );
-
+  const rayDir = normalize(camForward.mul(fov).add(camRight.mul(screenPos.x)).add(camUp.mul(screenPos.y)));
   const fovTesseract = float(0.35);
-  const rayDirTesseract = normalize(
-    camForward.mul(fovTesseract).add(camRight.mul(screenPos.x)).add(camUp.mul(screenPos.y))
-  );
+  const rayDirTesseract = normalize(camForward.mul(fovTesseract).add(camRight.mul(screenPos.x)).add(camUp.mul(screenPos.y)));
 
   const finalColor = vec4(0.0).toVar('finalColor');
 
@@ -553,7 +521,7 @@ if (container) {
 
   const C = {
     dist: 22.0,
-    minDist: 0.1,     // Plunge deep inside the singularity
+    minDist: 0.1,
     tiltBase: -0.10,
     tiltTarget: -0.05,
     thetaBase: 1.8,
@@ -567,32 +535,33 @@ if (container) {
   function positionCamera(ease) {
     const aspect = window.innerWidth / window.innerHeight;
     const isMobile = window.innerWidth < 768;
-
     const desktopAspect = 1.15;
     const distanceScale = Math.max(1.0, desktopAspect / aspect);
 
     uniforms.stepSize.value = config.stepSize * distanceScale;
 
-    // Radiation peaks as we approach the core, stays high during the fall
-    let radStrength = 0.0;
-    if (ease > 0.60 && ease < 0.90) {
-      radStrength = 1.0 - Math.abs((ease - 0.75) / 0.15);
-      radStrength = Math.max(0.0, radStrength);
-    }
-    if (ease >= 0.90) radStrength = 1.0;
-    uniforms.radiationStrength.value = radStrength;
+    // SEQUENCE TIMELINE:
+    // 0.00 - 0.85 : Approaching
+    // 0.85 - 0.90 : Crossing horizon (Pure black transition)
+    // 0.90 - 0.96 : Fire sparks erupt inside the black hole
+    // 0.96 - 0.98 : Pure black silence
+    // 0.98 - 1.00 : Tesseract appears and falling begins
 
-    // Sudden falling illusion: cubic ease-in for tesseract engagement past 0.85
-    let tStrength = 0.0;
-    if (ease > 0.85) {
-      const localEase = (ease - 0.85) / 0.15;
-      tStrength = localEase * localEase * localEase;
+    let sparkStrength = 0.0;
+    if (ease > 0.88 && ease < 0.96) {
+      const t = (ease - 0.88) / 0.08;
+      sparkStrength = Math.sin(t * Math.PI); // Smooth peak
     }
-    uniforms.tesseractStrength.value = tStrength;
+    uniforms.sparkStrength.value = sparkStrength;
+
+    let tStrength = 0.0;
+    if (ease > 0.97) {
+      tStrength = Math.min(1.0, (ease - 0.97) / 0.03);
+    }
+    uniforms.tesseractStrength.value = tStrength * tStrength * (3 - 2 * tStrength);
 
     const d = C.cur.dist * distanceScale;
     const theta = C.thetaBase + ease * C.thetaPlunge;
-
     const currentTiltBase = isMobile ? -0.22 : C.tiltBase;
     const currentTiltTarget = isMobile ? -0.15 : C.tiltTarget;
     const tilt = THREE.MathUtils.lerp(currentTiltBase, currentTiltTarget, ease);
@@ -605,17 +574,14 @@ if (container) {
 
     const forward = new THREE.Vector3().copy(camera.position).negate().normalize();
     const right = new THREE.Vector3().crossVectors(new THREE.Vector3(0, 1, 0), forward).normalize();
-
     const currentOX = OX * distanceScale;
     const target = new THREE.Vector3(0, 0, 0).addScaledVector(right, -currentOX);
 
     camera.lookAt(target);
-
     const roll = -0.28 - ease * 0.35;
     camera.rotateZ(roll);
   }
 
-  // Aggressive mobile optimization: half resolution, no antialias
   const renderer = new THREE.WebGPURenderer({ antialias: !LOW });
   renderer.setSize(window.innerWidth, window.innerHeight);
   const pixelRatio = LOW ? 0.5 : Math.min(window.devicePixelRatio, 1.25);
@@ -631,10 +597,6 @@ if (container) {
   mesh.frustumCulled = false;
   scene.add(mesh);
 
-  // ============================================================================
-  // SCROLL & MOUSE LISTENERS
-  // ============================================================================
-
   document.addEventListener('mousemove', e => {
     C.mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
     C.mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
@@ -648,18 +610,14 @@ if (container) {
     if (rafPend) return;
     rafPend = true;
     requestAnimationFrame(() => {
-      scrollRaw = Math.min(1,
-        window.scrollY / Math.max(1, document.body.scrollHeight - window.innerHeight));
+      scrollRaw = Math.min(1, window.scrollY / Math.max(1, document.body.scrollHeight - window.innerHeight));
       rafPend = false;
     });
   }, { passive: true });
 
-  // ============================================================================
-  // ANIMATION
-  // ============================================================================
-
   let postProcessing = null;
   let lastFrameTime = performance.now();
+  let fallStartTime = 0; // Tracks when the 3-second stop timer begins
 
   function updateCamera() {
     uniforms.cameraPosition.value.copy(camera.position);
@@ -682,28 +640,47 @@ if (container) {
     C.cur.dist += (targetDist - C.cur.dist) * 0.038;
     positionCamera(ease);
 
-    // Violent camera shake during peak plunge and sudden fall
-    let shakeStrength = 0.0;
-    if (ease > 0.70 && ease < 0.95) {
-      shakeStrength = 1.0 - Math.pow((ease - 0.825) / 0.125, 2.0);
-      shakeStrength = Math.max(0.0, shakeStrength);
-    }
+    // Manage Falling Illusion & 3-Second Stop
+    let currentFallSpeed = 0.0;
+    if (ease > 0.97) {
+      if (fallStartTime === 0) fallStartTime = currentTime;
+      const elapsed = (currentTime - fallStartTime) / 1000;
 
-    // Persistent violent rumble when tesseract fully engages
-    if (ease > 0.90) {
-      shakeStrength = 0.5 + Math.sin(currentTime * 0.08) * 0.3;
+      if (elapsed < 3.0) {
+        // Accelerate falling violently
+        currentFallSpeed = 15.0 + elapsed * 20.0;
+      } else {
+        // Smoothly grind to a halt over 0.8 seconds to feel "stuck"
+        const stopProgress = Math.min(1.0, (elapsed - 3.0) / 0.8);
+        const maxSpeed = 15.0 + 3.0 * 20.0;
+        currentFallSpeed = maxSpeed * (1.0 - stopProgress);
+        if (currentFallSpeed < 0.1) currentFallSpeed = 0.0;
+      }
+    } else {
+      fallStartTime = 0;
+    }
+    uniforms.fallSpeed.value = currentFallSpeed;
+
+    // Camera shake: violent during fall, abrupt micro-jitters when stopping
+    let shakeStrength = 0.0;
+    if (ease > 0.97 && fallStartTime > 0) {
+      const elapsed = (currentTime - fallStartTime) / 1000;
+      if (elapsed < 3.0) {
+        shakeStrength = 0.8 + (elapsed / 3.0) * 0.7; // Ramping shake
+      } else {
+        // Sudden stop jolt, then settling to near-zero
+        const stopProgress = Math.min(1.0, (elapsed - 3.0) / 0.8);
+        shakeStrength = 1.5 * (1.0 - stopProgress);
+      }
     }
 
     if (shakeStrength > 0.0) {
-      const shakeAmt = shakeStrength * (ease > 0.90 ? 1.5 : 0.8);
-      camera.position.x += (Math.random() - 0.5) * shakeAmt;
-      camera.position.y += (Math.random() - 0.5) * shakeAmt;
-      camera.position.z += (Math.random() - 0.5) * shakeAmt;
-
-      // Rotation shake for visceral disorientation
-      camera.rotation.x += (Math.random() - 0.5) * shakeStrength * 0.03;
-      camera.rotation.y += (Math.random() - 0.5) * shakeStrength * 0.03;
-      camera.rotation.z += (Math.random() - 0.5) * shakeStrength * 0.05;
+      camera.position.x += (Math.random() - 0.5) * shakeStrength * 0.6;
+      camera.position.y += (Math.random() - 0.5) * shakeStrength * 0.6;
+      camera.position.z += (Math.random() - 0.5) * shakeStrength * 0.6;
+      camera.rotation.x += (Math.random() - 0.5) * shakeStrength * 0.02;
+      camera.rotation.y += (Math.random() - 0.5) * shakeStrength * 0.02;
+      camera.rotation.z += (Math.random() - 0.5) * shakeStrength * 0.04;
     }
 
     uniforms.time.value += deltaTime;
