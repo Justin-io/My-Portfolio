@@ -2,7 +2,7 @@ import * as THREE from 'three/webgpu';
 import { pass, uniform, Fn, Loop, Break, If, screenUV,
   vec2, vec3, vec4, float,
   length, normalize, cross, dot, sin, cos, atan, asin, sqrt, pow,
-  fract, clamp, smoothstep, mix, floor, step, sign
+  fract, clamp, smoothstep, mix, floor, step, sign, min, max
 } from 'three/tsl';
 import { bloom } from 'three/addons/tsl/display/BloomNode.js';
 
@@ -162,7 +162,8 @@ const uniforms = {
   time: uniform(0),
   resolution: uniform(new THREE.Vector2(window.innerWidth, window.innerHeight)),
   cameraPosition: uniform(new THREE.Vector3(0, 5, 20)),
-  cameraTarget: uniform(new THREE.Vector3(0, 0, 0))
+  cameraTarget: uniform(new THREE.Vector3(0, 0, 0)),
+  tesseractStrength: uniform(0.0)
 };
 
 // ============================================================================
@@ -270,27 +271,92 @@ const accretionDiskColor = Fn(([hitR, hitAngle, time, rayDir]) => {
 });
 
 // ============================================================================
-// MAIN RAYMARCHING SHADER
+// TESSERACT SHADER (Cinematic 5D Room)
 // ============================================================================
 
-const blackHoleShader = Fn(() => {
+const tesseractShader = Fn(([rayPos, rayDir]) => {
+  const col = vec3(0.0).toVar('col');
+  const dist = float(0.0).toVar('dist');
+  const hit = float(0.0).toVar('hit');
+  const pos = vec3(0.0).toVar('pos');
+  
+  Loop(40, () => {
+    If(dist.greaterThan(40.0).or(hit.greaterThan(0.5)), () => {
+      Break();
+    });
+    
+    pos.assign(rayPos.add(rayDir.mul(dist)));
+    
+    // Grid coordinate repetition: cell size is 4.0
+    const cellPos = fract(pos.div(4.0)).sub(0.5).mul(4.0); // local coordinates in [-2, 2]
+    
+    // Beams of thickness 0.4
+    const w = float(0.4);
+    
+    // Distances to beams along each axis
+    const dx = length(cellPos.yz).sub(w);
+    const dy = length(cellPos.xz).sub(w);
+    const dz = length(cellPos.xy).sub(w);
+    
+    const sdf = min(dx, min(dy, dz));
+    
+    If(sdf.lessThan(0.01), () => {
+      hit.assign(1.0);
+      
+      const isX = step(dx, min(dy, dz));
+      const isY = step(dy, min(dx, dz));
+      const isZ = step(dz, min(dx, dy));
+      
+      // Select texture coordinates along the hit beam
+      const u = mix(pos.y, pos.x, isX);
+      const v = mix(pos.z, pos.y, isZ);
+      
+      // Wood grain / slat stripes
+      const grain = sin(u.mul(30.0)).mul(0.15)
+        .add(sin(v.mul(30.0)).mul(0.15))
+        .add(sin(pos.x.add(pos.y).add(pos.z).mul(300.0)).mul(0.1))
+        .add(0.5);
+        
+      const woodColor = mix(vec3(0.12, 0.07, 0.04), vec3(0.42, 0.28, 0.16), grain);
+      
+      // Interstellar glowing light bars/streaks
+      const timeScale = uniforms.time.mul(1.5);
+      const lightStreaks = sin(pos.x.mul(0.5).sub(timeScale)).mul(0.3)
+        .add(sin(pos.y.mul(0.5).add(timeScale)).mul(0.3))
+        .add(sin(pos.z.mul(0.5).sub(timeScale)).mul(0.3));
+        
+      const streakGlow = smoothstep(0.45, 0.75, lightStreaks);
+      const lightColor = vec3(1.0, 0.72, 0.42).mul(streakGlow).mul(3.5);
+      
+      // Lighting
+      const norm = normalize(mix(
+        vec3(0.0, cellPos.y, cellPos.z),
+        mix(vec3(cellPos.x, 0.0, cellPos.z), vec3(cellPos.x, cellPos.y, 0.0), isZ),
+        isY
+      ));
+      
+      const diff = clamp(dot(norm, rayDir.negate()), float(0.1), float(1.0));
+      
+      // Ambient occlusion / depth fog
+      const ao = float(1.0).div(float(1.0).add(dist.mul(0.06)));
+      
+      col.assign(woodColor.mul(diff).add(lightColor).mul(ao));
+      Break();
+    });
+    
+    dist.addAssign(sdf.max(0.02));
+  });
+  
+  return vec4(col, 1.0);
+});
+
+// ============================================================================
+// BLACK HOLE RAYMARCHING CORE
+// ============================================================================
+
+const runBlackHoleRaymarch = Fn(([camPos, rayDirIn]) => {
   const rs = uniforms.blackHoleMass.mul(2.0);
-  const uv = screenUV.sub(0.5).mul(2.0);
-  const aspect = uniforms.resolution.x.div(uniforms.resolution.y);
-  const screenPos = vec2(uv.x.mul(aspect), uv.y);
-
-  const camPos = uniforms.cameraPosition;
-  const camTarget = uniforms.cameraTarget;
-  const camForward = normalize(camTarget.sub(camPos));
-  const worldUp = vec3(0.0, 1.0, 0.0);
-  const camRight = normalize(cross(worldUp, camForward));
-  const camUp = cross(camForward, camRight);
-
-  const fov = float(1.0);
-  const rayDir = normalize(
-    camForward.mul(fov).add(camRight.mul(screenPos.x)).add(camUp.mul(screenPos.y))
-  ).toVar('rayDir');
-
+  const rayDir = rayDirIn.toVar('rayDir');
   const rayPos = camPos.toVar('rayPos');
   const prevPos = camPos.toVar('prevPos');
   const color = vec3(0.0, 0.0, 0.0).toVar('color');
@@ -365,6 +431,42 @@ const blackHoleShader = Fn(() => {
 
   const finalColor = pow(color, vec3(1.0 / 2.2));
   return vec4(finalColor, 1.0);
+});
+
+// ============================================================================
+// MAIN RAYMARCHING SHADER
+// ============================================================================
+
+const blackHoleShader = Fn(() => {
+  const uv = screenUV.sub(0.5).mul(2.0);
+  const aspect = uniforms.resolution.x.div(uniforms.resolution.y);
+  const screenPos = vec2(uv.x.mul(aspect), uv.y);
+
+  const camPos = uniforms.cameraPosition;
+  const camTarget = uniforms.cameraTarget;
+  const camForward = normalize(camTarget.sub(camPos));
+  const worldUp = vec3(0.0, 1.0, 0.0);
+  const camRight = normalize(cross(worldUp, camForward));
+  const camUp = cross(camForward, camRight);
+
+  const fov = float(1.0);
+  const rayDir = normalize(
+    camForward.mul(fov).add(camRight.mul(screenPos.x)).add(camUp.mul(screenPos.y))
+  );
+
+  const finalColor = vec4(0.0).toVar('finalColor');
+
+  If(uniforms.tesseractStrength.lessThan(0.01), () => {
+    finalColor.assign(runBlackHoleRaymarch(camPos, rayDir));
+  }).ElseIf(uniforms.tesseractStrength.greaterThan(0.99), () => {
+    finalColor.assign(tesseractShader(camPos, rayDir));
+  }).Else(() => {
+    const bh = runBlackHoleRaymarch(camPos, rayDir);
+    const ts = tesseractShader(camPos, rayDir);
+    finalColor.assign(mix(bh, ts, uniforms.tesseractStrength));
+  });
+
+  return finalColor;
 })();
 
 // ============================================================================
@@ -381,7 +483,7 @@ if (container) {
   // Scroll & Parallax Control Variables
   const C = {
     dist: 22.0,       // Starting/maximum camera distance
-    minDist: 2.2,     // Minimum distance on full scroll
+    minDist: 0.1,     // Plunge deep inside the singularity
     tiltBase: -0.10,  // Slightly below the disk plane (opposite side, about -5.7 degrees)
     tiltTarget: -0.05,// Stays slightly below the disk plane during plunge (about -2.8 degrees)
     thetaBase: 1.8,   // Initial orbital rotation angle
@@ -403,6 +505,15 @@ if (container) {
     
     // Dynamically scale step size to match the camera distance scale
     uniforms.stepSize.value = config.stepSize * distanceScale;
+    
+    // Calculate tesseract transition strength:
+    // Plunge starts at ease > 0.90, smoothly scaling up to 1.0 at ease = 1.0.
+    let tStrength = 0.0;
+    if (ease > 0.90) {
+      tStrength = Math.min(1.0, (ease - 0.90) / 0.10);
+    }
+    const tStrengthEase = tStrength * tStrength * (3 - 2 * tStrength);
+    uniforms.tesseractStrength.value = tStrengthEase;
     
     const d = C.cur.dist * distanceScale;
     const theta = C.thetaBase + ease * C.thetaPlunge;
