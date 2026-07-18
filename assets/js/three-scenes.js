@@ -400,7 +400,13 @@ if (container) {
   function positionCamera(ease) {
     const d = C.cur.dist;
     const theta = C.thetaBase + ease * C.thetaPlunge;
-    const tilt = THREE.MathUtils.lerp(C.tiltBase, C.tiltTarget, ease);
+    
+    // Check if on a mobile screen (width < 768px)
+    const isMobileScreen = window.innerWidth < 768;
+    // Apply a steeper upward tilt angle on mobile to see the accretion disk clearly
+    const currentTiltBase = isMobileScreen ? -0.45 : C.tiltBase;
+    const currentTiltTarget = isMobileScreen ? -0.35 : C.tiltTarget;
+    const tilt = THREE.MathUtils.lerp(currentTiltBase, currentTiltTarget, ease);
     
     // Position camera on a spiraling orbit and add mouse parallax
     camera.position.set(
@@ -412,8 +418,11 @@ if (container) {
     // Calculate the camera's lookAt target dynamically relative to camera position
     const forward = new THREE.Vector3().copy(camera.position).negate().normalize();
     const right = new THREE.Vector3().crossVectors(new THREE.Vector3(0, 1, 0), forward).normalize();
-    // Offset look direction to the left so black hole (0,0,0) is pushed to the right side of the screen
-    const target = new THREE.Vector3(0, 0, 0).addScaledVector(right, -OX);
+    
+    // Offset look direction to the left so black hole (0,0,0) is pushed to the right side of the screen.
+    // On mobile, keep it more centered (reduce OX offset) so it fits on vertical screen.
+    const currentOX = isMobileScreen ? 0.8 : OX;
+    const target = new THREE.Vector3(0, 0, 0).addScaledVector(right, -currentOX);
     
     camera.lookAt(target);
 
