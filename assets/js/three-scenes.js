@@ -1,5 +1,6 @@
 import * as THREE from 'three/webgpu';
-import { pass, uniform, Fn, Loop, Break, If, screenUV,
+import {
+  pass, uniform, Fn, Loop, Break, If, screenUV,
   vec2, vec3, vec4, float,
   length, normalize, cross, dot, sin, cos, atan, asin, sqrt, pow,
   fract, clamp, smoothstep, mix, floor, step, sign, min, max
@@ -7,15 +8,21 @@ import { pass, uniform, Fn, Loop, Break, If, screenUV,
 import { bloom } from 'three/addons/tsl/display/BloomNode.js';
 
 // ============================================================================
-// PERFORMANCE TIER DETECT
+// PERFORMANCE TIER DETECT (Aggressive Mobile/Low-RAM Optimization)
 // ============================================================================
 
-const LOW = false;
+const LOW = (() => {
+  const m = navigator.deviceMemory;
+  const c = navigator.hardwareConcurrency || 4;
+  const isMobile = /Mobi|Android|iP(hone|od|ad)/i.test(navigator.userAgent);
+  return (m !== undefined && m <= 4) || c <= 4 || isMobile || window.innerWidth < 768;
+})();
 
-const stepCount = LOW ? 28 : 32;
+// Drastically reduced step count for mobile/low-end to prevent GPU hang
+const stepCount = LOW ? 12 : 32;
 
 // ============================================================================
-// CONFIGURATION (hardcoded defaults, no UI)
+// CONFIGURATION
 // ============================================================================
 
 const config = {
@@ -39,7 +46,7 @@ const config = {
   stepSize: 1,
   starsEnabled: true,
   starBackgroundColor: '#000000',
-  starDensity: LOW ? 0.05 : 0.1,
+  starDensity: LOW ? 0.03 : 0.1,
   starSize: 1.2,
   starBrightness: 0.1,
   nebulaEnabled: true,
@@ -51,7 +58,8 @@ const config = {
   nebula2Density: 0.05,
   nebula2Brightness: 0.21,
   nebula2Color: '#010615',
-  bloomStrength: LOW ? 0.4 : 0.68,
+  // Disable bloom entirely on low-end to save massive GPU memory and bandwidth
+  bloomStrength: LOW ? 0.0 : 0.68,
   bloomRadius: 0,
   bloomThreshold: 0.45
 };
@@ -163,8 +171,52 @@ const uniforms = {
   resolution: uniform(new THREE.Vector2(window.innerWidth, window.innerHeight)),
   cameraPosition: uniform(new THREE.Vector3(0, 5, 20)),
   cameraTarget: uniform(new THREE.Vector3(0, 0, 0)),
-  tesseractStrength: uniform(0.0)
+  tesseractStrength: uniform(0.0),
+  radiationStrength: uniform(0.0)
 };
+
+// ============================================================================
+// HAWKING RADIATION PARTICLES (Core to Screen)
+// ============================================================================
+
+const radiationParticles = Fn(([rayDir, camPos]) => {
+  const theta = atan(rayDir.z, rayDir.x);
+  const phi = asin(clamp(rayDir.y, float(-1.0), float(1.0)));
+
+  // Ultra-low density on mobile to save fill rate and ALU
+  const density = LOW ? float(4.0) : float(12.0);
+  const grid = vec2(theta, phi).mul(density);
+  const id = floor(grid);
+  const uv = fract(grid).sub(0.5);
+
+  const hash = hash21(id);
+
+  // Speed increases dramatically as tesseract engages (sudden fall illusion)
+  const speed = hash.mul(2.0).add(3.0).add(uniforms.tesseractStrength.mul(15.0));
+  const progress = fract(uniforms.time.mul(speed).mul(0.4).add(hash));
+  const dist = progress;
+
+  // Particle size grows massively as it approaches the screen (camera)
+  const streamSize = float(0.04).div(dist.add(0.05));
+  const pGlow = smoothstep(streamSize, float(0.0), length(uv));
+
+  // Brightness peaks in the middle and fades at the very end
+  const fade = sin(progress.mul(Math.PI));
+
+  // Color shifts from electric blue (core) to white-hot (screen)
+  const coreColor = vec3(0.1, 0.4, 1.0);
+  const nearColor = vec3(0.9, 0.95, 1.0);
+  const color = mix(coreColor, nearColor, progress);
+
+  // Radial falloff: much brighter when looking directly at the core
+  const coreDir = camPos.normalize().negate();
+  const angleToCore = dot(rayDir, coreDir);
+  const coreFocus = smoothstep(0.0, 1.0, angleToCore);
+
+  const intensity = mix(1.0, 5.0, uniforms.tesseractStrength).mul(coreFocus.add(0.2));
+
+  return color.mul(pGlow).mul(fade).mul(8.0).div(dist.add(0.1)).mul(intensity);
+});
 
 // ============================================================================
 // STAR FIELD
@@ -216,14 +268,12 @@ const accretionDiskColor = Fn(([hitR, hitAngle, time, rayDir]) => {
   const outerR = uniforms.diskOuterRadius;
   const normR = clamp(hitR.sub(innerR).div(outerR.sub(innerR)), float(0.0), float(1.0));
 
-  // Blackbody color
   const peakTempK = uniforms.diskTemperature.mul(1000.0);
   const outerTempK = float(1500.0);
   const tempFalloff = pow(innerR.div(hitR), uniforms.temperatureFalloff);
   const tempK = mix(outerTempK, peakTempK, tempFalloff);
   const diskColor = blackbodyColor(tempK).toVar('diskColor');
 
-  // Doppler beaming
   const rotationSign = sign(uniforms.diskRotationSpeed);
   const velocityDir = vec3(
     sin(hitAngle).negate().mul(rotationSign),
@@ -237,11 +287,9 @@ const accretionDiskColor = Fn(([hitR, hitAngle, time, rayDir]) => {
   const dopplerBoost = pow(dopplerFactor, float(3.0).mul(uniforms.dopplerStrength));
   diskColor.mulAssign(clamp(dopplerBoost, float(0.1), float(5.0)));
 
-  // Edge falloff
   const edgeFalloff = smoothstep(float(0.0), uniforms.diskEdgeSoftnessInner, normR)
     .mul(smoothstep(float(1.0), float(1.0).sub(uniforms.diskEdgeSoftnessOuter), normR));
 
-  // Turbulence
   const ringOpacity = float(1.0).toVar('ringOpacity');
   const cycleLength = uniforms.turbulenceCycleTime;
   const cyclicTime = time.mod(cycleLength);
@@ -271,7 +319,7 @@ const accretionDiskColor = Fn(([hitR, hitAngle, time, rayDir]) => {
 });
 
 // ============================================================================
-// TESSERACT SHADER (Cinematic 5D Room)
+// TESSERACT SHADER (Infinite Falling Illusion)
 // ============================================================================
 
 const tesseractShader = Fn(([rayPos, rayDir]) => {
@@ -279,79 +327,83 @@ const tesseractShader = Fn(([rayPos, rayDir]) => {
   const dist = float(0.0).toVar('dist');
   const hit = float(0.0).toVar('hit');
   const pos = vec3(0.0).toVar('pos');
-  
-  Loop(40, () => {
-    If(dist.greaterThan(40.0).or(hit.greaterThan(0.5)), () => {
+
+  // Sudden infinite falling illusion: speed ramps up to 50x when tesseract engages
+  const fallSpeed = mix(2.0, 50.0, uniforms.tesseractStrength);
+  const fallOffset = vec3(0.0, 0.0, uniforms.time.mul(fallSpeed));
+
+  // Spherical warp effect: makes the grid look like it's bulging out of the black hole sphere initially
+  const warpAmount = mix(0.8, 0.0, uniforms.tesseractStrength);
+  const centerDir = rayPos.normalize();
+  const warpedDir = normalize(rayDir.add(centerDir.mul(warpAmount)));
+
+  // Extremely low step count for mobile to prevent thermal throttling
+  const maxSteps = LOW ? 8 : 30;
+
+  Loop(maxSteps, () => {
+    If(dist.greaterThan(60.0).or(hit.greaterThan(0.5)), () => {
       Break();
     });
-    
-    pos.assign(rayPos.add(rayDir.mul(dist)));
-    
-    // Grid coordinate repetition: cell size is 3.0
-    const cellPos = fract(pos.div(3.0)).sub(0.5).mul(3.0); // local coordinates in [-1.5, 1.5]
-    
-    // Thin bars of thickness 0.18
-    const w = float(0.18);
-    
-    // Distances to beams along each axis
+
+    pos.assign(rayPos.add(fallOffset).add(warpedDir.mul(dist)));
+
+    const cellPos = fract(pos.div(3.0)).sub(0.5).mul(3.0);
+    const w = float(0.12);
+
     const dx = length(cellPos.yz).sub(w);
     const dy = length(cellPos.xz).sub(w);
     const dz = length(cellPos.xy).sub(w);
-    
+
     const sdf = min(dx, min(dy, dz));
-    
-    If(sdf.lessThan(0.01), () => {
+
+    If(sdf.lessThan(0.015), () => {
       hit.assign(1.0);
-      
+
       const isX = step(dx, min(dy, dz));
       const isY = step(dy, min(dx, dz));
       const isZ = step(dz, min(dx, dy));
-      
-      // Select texture coordinates along the hit beam
+
       const u = mix(pos.y, pos.x, isX);
       const v = mix(pos.z, pos.y, isZ);
-      
-      // High-frequency wooden slats texture
-      const slats = sin(u.mul(80.0)).mul(0.25)
-        .add(sin(v.mul(80.0)).mul(0.25))
-        .add(sin(pos.x.add(pos.y).add(pos.z).mul(200.0)).mul(0.15))
+
+      const slats = sin(u.mul(50.0)).mul(0.25)
+        .add(sin(v.mul(50.0)).mul(0.25))
         .add(0.5);
-        
-      const woodColor = mix(vec3(0.08, 0.05, 0.03), vec3(0.45, 0.32, 0.18), slats);
-      
-      // Moving golden light streaks (gravity waves)
-      const timeScale = uniforms.time.mul(2.0);
+
+      const woodColor = mix(vec3(0.04, 0.02, 0.01), vec3(0.3, 0.2, 0.1), slats);
+
+      const timeScale = uniforms.time.mul(mix(1.5, 5.0, uniforms.tesseractStrength));
       const lightStreaks = sin(pos.x.mul(0.3).sub(timeScale)).mul(0.35)
         .add(sin(pos.y.mul(0.3).add(timeScale)).mul(0.35))
         .add(sin(pos.z.mul(0.3).sub(timeScale)).mul(0.35));
-        
-      const streakGlow = smoothstep(0.4, 0.75, lightStreaks);
-      const lightColor = vec3(1.0, 0.75, 0.45).mul(streakGlow).mul(4.0);
-      
-      // Lighting
+
+      const streakGlow = smoothstep(0.4, 0.8, lightStreaks);
+      const lightColor = vec3(1.0, 0.8, 0.5).mul(streakGlow).mul(mix(2.0, 8.0, uniforms.tesseractStrength));
+
       const norm = normalize(mix(
         vec3(0.0, cellPos.y, cellPos.z),
         mix(vec3(cellPos.x, 0.0, cellPos.z), vec3(cellPos.x, cellPos.y, 0.0), isZ),
         isY
       ));
-      
-      const diff = clamp(dot(norm, rayDir.negate()), float(0.1), float(1.0));
-      
-      // Depth fade into warm golden-brown ambient haze to represent simplified distant detail
+
+      const diff = clamp(dot(norm, warpedDir.negate()), float(0.1), float(1.0));
       const distFade = dist.mul(0.025).min(1.0);
-      const glowHaze = vec3(0.22, 0.15, 0.08);
+      const glowHaze = vec3(0.1, 0.05, 0.02);
       const surfaceColor = mix(woodColor.mul(diff).add(lightColor), glowHaze, distFade);
-      
-      // Ambient occlusion / depth fog
-      const ao = float(1.0).div(float(1.0).add(dist.mul(0.05)));
-      
+
+      const ao = float(1.0).div(float(1.0).add(dist.mul(0.06)));
+
       col.assign(surfaceColor.mul(ao));
       Break();
     });
-    
-    dist.addAssign(sdf.max(0.02));
+
+    dist.addAssign(sdf.max(0.03));
   });
-  
+
+  // Fade to deep infinite void if no hit
+  const voidColor = vec3(0.01, 0.005, 0.005).mul(float(1.0).sub(dist.div(60.0).min(1.0)));
+  col.assign(mix(col, voidColor, step(hit, 0.5)));
+
   return vec4(col, 1.0);
 });
 
@@ -359,7 +411,7 @@ const tesseractShader = Fn(([rayPos, rayDir]) => {
 // BLACK HOLE RAYMARCHING CORE
 // ============================================================================
 
-const runBlackHoleRaymarch = Fn(([camPos, rayDirIn]) => {
+const runBlackHoleRaymarch = Fn(([camPos, rayDirIn, rayDirTesseract]) => {
   const rs = uniforms.blackHoleMass.mul(2.0);
   const rayDir = rayDirIn.toVar('rayDir');
   const rayPos = camPos.toVar('rayPos');
@@ -379,6 +431,12 @@ const runBlackHoleRaymarch = Fn(([camPos, rayDirIn]) => {
     const r = length(rayPos);
 
     If(r.lessThan(rs.mul(1.01)), () => {
+      // Tesseract emerges from the core in a spherical shape
+      const tsColor = tesseractShader(rayPos, rayDirTesseract);
+      // Blend between pure black (singularity) and tesseract based on tesseractStrength
+      const visibility = uniforms.tesseractStrength;
+      color.assign(mix(vec3(0.0), tsColor.xyz, visibility));
+      alpha.assign(1.0); // Always capture the ray once inside event horizon
       captured.assign(1.0);
       Break();
     });
@@ -423,7 +481,7 @@ const runBlackHoleRaymarch = Fn(([camPos, rayDirIn]) => {
     });
     If(uniforms.nebulaEnabled.greaterThan(0.5), () => {
       if (LOW) {
-        // Optimized single-octave nebula for performance
+        // Optimized single-octave nebula for extreme mobile performance
         const noisePos1 = rayDir.mul(uniforms.nebula1Scale);
         const n1 = noise3D(noisePos1).mul(uniforms.nebula1Density);
         bgColor.addAssign(uniforms.nebula1Color.mul(n1).mul(uniforms.nebula1Brightness));
@@ -435,7 +493,10 @@ const runBlackHoleRaymarch = Fn(([camPos, rayDirIn]) => {
   });
 
   const finalColor = pow(color, vec3(1.0 / 2.2));
-  return vec4(finalColor, 1.0);
+
+  // Overlay Hawking radiation particles emitting towards the screen
+  const rad = radiationParticles(rayDirIn, camPos).mul(uniforms.radiationStrength);
+  return vec4(finalColor.add(rad), 1.0);
 });
 
 // ============================================================================
@@ -459,7 +520,6 @@ const blackHoleShader = Fn(() => {
     camForward.mul(fov).add(camRight.mul(screenPos.x)).add(camUp.mul(screenPos.y))
   );
 
-  // Compute a separate wide-angle ray direction for the tesseract (fov = 0.35 for wider view)
   const fovTesseract = float(0.35);
   const rayDirTesseract = normalize(
     camForward.mul(fovTesseract).add(camRight.mul(screenPos.x)).add(camUp.mul(screenPos.y))
@@ -468,11 +528,11 @@ const blackHoleShader = Fn(() => {
   const finalColor = vec4(0.0).toVar('finalColor');
 
   If(uniforms.tesseractStrength.lessThan(0.01), () => {
-    finalColor.assign(runBlackHoleRaymarch(camPos, rayDir));
+    finalColor.assign(runBlackHoleRaymarch(camPos, rayDir, rayDirTesseract));
   }).ElseIf(uniforms.tesseractStrength.greaterThan(0.99), () => {
     finalColor.assign(tesseractShader(camPos, rayDirTesseract));
   }).Else(() => {
-    const bh = runBlackHoleRaymarch(camPos, rayDir);
+    const bh = runBlackHoleRaymarch(camPos, rayDir, rayDirTesseract);
     const ts = tesseractShader(camPos, rayDirTesseract);
     finalColor.assign(mix(bh, ts, uniforms.tesseractStrength));
   });
@@ -491,80 +551,79 @@ if (container) {
 
   const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-  // Scroll & Parallax Control Variables
   const C = {
-    dist: 22.0,       // Starting/maximum camera distance
+    dist: 22.0,
     minDist: 0.1,     // Plunge deep inside the singularity
-    tiltBase: -0.10,  // Slightly below the disk plane (opposite side, about -5.7 degrees)
-    tiltTarget: -0.05,// Stays slightly below the disk plane during plunge (about -2.8 degrees)
-    thetaBase: 1.8,   // Initial orbital rotation angle
-    thetaPlunge: 5.5, // Total revolving angle (about 0.9 turns around origin)
+    tiltBase: -0.10,
+    tiltTarget: -0.05,
+    thetaBase: 1.8,
+    thetaPlunge: 5.5,
     cur: { dist: 22.0 },
     mouse: { x: 0, y: 0 }
   };
 
-  const OX = 2.5; // Offset X to keep the black hole shifted to the right
+  const OX = 2.5;
 
   function positionCamera(ease) {
     const aspect = window.innerWidth / window.innerHeight;
     const isMobile = window.innerWidth < 768;
-    
-    // Scale camera distance inversely with aspect ratio to maintain size,
-    // using a smaller desktopAspect reference to keep the black hole closer (larger).
+
     const desktopAspect = 1.15;
     const distanceScale = Math.max(1.0, desktopAspect / aspect);
-    
-    // Dynamically scale step size to match the camera distance scale
+
     uniforms.stepSize.value = config.stepSize * distanceScale;
-    
-    // Calculate tesseract transition strength:
-    // Plunge starts at ease > 0.35, smoothly scaling up to 1.0 at ease = 1.0.
-    let tStrength = 0.0;
-    if (ease > 0.35) {
-      tStrength = Math.min(1.0, (ease - 0.35) / 0.65);
+
+    // Radiation peaks as we approach the core, stays high during the fall
+    let radStrength = 0.0;
+    if (ease > 0.60 && ease < 0.90) {
+      radStrength = 1.0 - Math.abs((ease - 0.75) / 0.15);
+      radStrength = Math.max(0.0, radStrength);
     }
-    const tStrengthEase = tStrength * tStrength * (3 - 2 * tStrength);
-    uniforms.tesseractStrength.value = tStrengthEase;
-    
+    if (ease >= 0.90) radStrength = 1.0;
+    uniforms.radiationStrength.value = radStrength;
+
+    // Sudden falling illusion: cubic ease-in for tesseract engagement past 0.85
+    let tStrength = 0.0;
+    if (ease > 0.85) {
+      const localEase = (ease - 0.85) / 0.15;
+      tStrength = localEase * localEase * localEase;
+    }
+    uniforms.tesseractStrength.value = tStrength;
+
     const d = C.cur.dist * distanceScale;
     const theta = C.thetaBase + ease * C.thetaPlunge;
-    
-    // Apply moderate tilt on mobile to show the accretion disk's structure and opening clearly
+
     const currentTiltBase = isMobile ? -0.22 : C.tiltBase;
     const currentTiltTarget = isMobile ? -0.15 : C.tiltTarget;
     const tilt = THREE.MathUtils.lerp(currentTiltBase, currentTiltTarget, ease);
-    
-    // Position camera on a spiraling orbit and add mouse parallax
+
     camera.position.set(
       d * Math.cos(tilt) * Math.sin(theta) + C.mouse.x * 0.4,
       d * Math.sin(tilt) + C.mouse.y * 0.3,
       d * Math.cos(tilt) * Math.cos(theta)
     );
-    
-    // Calculate the camera's lookAt target dynamically relative to camera position
+
     const forward = new THREE.Vector3().copy(camera.position).negate().normalize();
     const right = new THREE.Vector3().crossVectors(new THREE.Vector3(0, 1, 0), forward).normalize();
-    
-    // Scale the horizontal offset with the distance to preserve screen-space placement
+
     const currentOX = OX * distanceScale;
     const target = new THREE.Vector3(0, 0, 0).addScaledVector(right, -currentOX);
-    
+
     camera.lookAt(target);
 
-    // Roll/tilt the camera to match the slanted cinematic angle
-    const roll = -0.28 - ease * 0.35; // Banks from ~16 to ~36 degrees
+    const roll = -0.28 - ease * 0.35;
     camera.rotateZ(roll);
   }
 
+  // Aggressive mobile optimization: half resolution, no antialias
   const renderer = new THREE.WebGPURenderer({ antialias: !LOW });
   renderer.setSize(window.innerWidth, window.innerHeight);
-  const pixelRatio = LOW ? 0.85 : Math.min(window.devicePixelRatio, 1.25);
+  const pixelRatio = LOW ? 0.5 : Math.min(window.devicePixelRatio, 1.25);
   renderer.setPixelRatio(pixelRatio);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   container.appendChild(renderer.domElement);
 
-  // Create black hole mesh (skybox sphere)
-  const geometry = new THREE.SphereGeometry(100, 32, 32);
+  const geometry = new THREE.SphereGeometry(100, LOW ? 16 : 32, LOW ? 16 : 32);
   geometry.scale(-1, 1, 1);
   const material = new THREE.MeshBasicNodeMaterial();
   material.colorNode = blackHoleShader;
@@ -616,14 +675,36 @@ if (container) {
     const deltaTime = Math.min((currentTime - lastFrameTime) / 1000, 0.033);
     lastFrameTime = currentTime;
 
-    // Smooth scroll easing
     scrollEase += (scrollRaw - scrollEase) * 0.022;
     const ease = scrollEase * scrollEase * (3 - 2 * scrollEase);
 
-    // Camera zoom control
     const targetDist = C.dist - ease * (C.dist - C.minDist);
     C.cur.dist += (targetDist - C.cur.dist) * 0.038;
     positionCamera(ease);
+
+    // Violent camera shake during peak plunge and sudden fall
+    let shakeStrength = 0.0;
+    if (ease > 0.70 && ease < 0.95) {
+      shakeStrength = 1.0 - Math.pow((ease - 0.825) / 0.125, 2.0);
+      shakeStrength = Math.max(0.0, shakeStrength);
+    }
+
+    // Persistent violent rumble when tesseract fully engages
+    if (ease > 0.90) {
+      shakeStrength = 0.5 + Math.sin(currentTime * 0.08) * 0.3;
+    }
+
+    if (shakeStrength > 0.0) {
+      const shakeAmt = shakeStrength * (ease > 0.90 ? 1.5 : 0.8);
+      camera.position.x += (Math.random() - 0.5) * shakeAmt;
+      camera.position.y += (Math.random() - 0.5) * shakeAmt;
+      camera.position.z += (Math.random() - 0.5) * shakeAmt;
+
+      // Rotation shake for visceral disorientation
+      camera.rotation.x += (Math.random() - 0.5) * shakeStrength * 0.03;
+      camera.rotation.y += (Math.random() - 0.5) * shakeStrength * 0.03;
+      camera.rotation.z += (Math.random() - 0.5) * shakeStrength * 0.05;
+    }
 
     uniforms.time.value += deltaTime;
     updateCamera();
@@ -642,23 +723,22 @@ if (container) {
     uniforms.resolution.value.set(window.innerWidth, window.innerHeight);
   });
 
-  // Initialize WebGPU Renderer
   renderer.init().then(() => {
-    postProcessing = new THREE.PostProcessing(renderer);
-    const scenePass = pass(scene, camera);
-    const scenePassColor = scenePass.getTextureNode();
-    const bloomPass = bloom(scenePassColor);
-    bloomPass.threshold.value = config.bloomThreshold;
-    bloomPass.strength.value = config.bloomStrength;
-    bloomPass.radius.value = config.bloomRadius;
-    postProcessing.outputNode = scenePassColor.add(bloomPass);
-    
-    // Set initial camera position and start animation
+    if (!LOW) {
+      postProcessing = new THREE.PostProcessing(renderer);
+      const scenePass = pass(scene, camera);
+      const scenePassColor = scenePass.getTextureNode();
+      const bloomPass = bloom(scenePassColor);
+      bloomPass.threshold.value = config.bloomThreshold;
+      bloomPass.strength.value = config.bloomStrength;
+      bloomPass.radius.value = config.bloomRadius;
+      postProcessing.outputNode = scenePassColor.add(bloomPass);
+    }
+
     positionCamera(0);
     animate();
   }).catch(err => {
     console.error('WebGPU/WebGL init failed:', err);
-    // Gracefully hide canvas container instead of breaking the entire page
     container.style.display = 'none';
   });
 }
