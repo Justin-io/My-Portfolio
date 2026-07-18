@@ -287,11 +287,11 @@ const tesseractShader = Fn(([rayPos, rayDir]) => {
     
     pos.assign(rayPos.add(rayDir.mul(dist)));
     
-    // Grid coordinate repetition: cell size is 4.0
-    const cellPos = fract(pos.div(4.0)).sub(0.5).mul(4.0); // local coordinates in [-2, 2]
+    // Grid coordinate repetition: cell size is 3.0
+    const cellPos = fract(pos.div(3.0)).sub(0.5).mul(3.0); // local coordinates in [-1.5, 1.5]
     
-    // Beams of thickness 0.4
-    const w = float(0.4);
+    // Thin bars of thickness 0.18
+    const w = float(0.18);
     
     // Distances to beams along each axis
     const dx = length(cellPos.yz).sub(w);
@@ -311,22 +311,22 @@ const tesseractShader = Fn(([rayPos, rayDir]) => {
       const u = mix(pos.y, pos.x, isX);
       const v = mix(pos.z, pos.y, isZ);
       
-      // Wood grain / slat stripes
-      const grain = sin(u.mul(30.0)).mul(0.15)
-        .add(sin(v.mul(30.0)).mul(0.15))
-        .add(sin(pos.x.add(pos.y).add(pos.z).mul(300.0)).mul(0.1))
+      // High-frequency wooden slats texture
+      const slats = sin(u.mul(80.0)).mul(0.25)
+        .add(sin(v.mul(80.0)).mul(0.25))
+        .add(sin(pos.x.add(pos.y).add(pos.z).mul(200.0)).mul(0.15))
         .add(0.5);
         
-      const woodColor = mix(vec3(0.12, 0.07, 0.04), vec3(0.42, 0.28, 0.16), grain);
+      const woodColor = mix(vec3(0.08, 0.05, 0.03), vec3(0.45, 0.32, 0.18), slats);
       
-      // Interstellar glowing light bars/streaks
-      const timeScale = uniforms.time.mul(1.5);
-      const lightStreaks = sin(pos.x.mul(0.5).sub(timeScale)).mul(0.3)
-        .add(sin(pos.y.mul(0.5).add(timeScale)).mul(0.3))
-        .add(sin(pos.z.mul(0.5).sub(timeScale)).mul(0.3));
+      // Moving golden light streaks (gravity waves)
+      const timeScale = uniforms.time.mul(2.0);
+      const lightStreaks = sin(pos.x.mul(0.3).sub(timeScale)).mul(0.35)
+        .add(sin(pos.y.mul(0.3).add(timeScale)).mul(0.35))
+        .add(sin(pos.z.mul(0.3).sub(timeScale)).mul(0.35));
         
-      const streakGlow = smoothstep(0.45, 0.75, lightStreaks);
-      const lightColor = vec3(1.0, 0.72, 0.42).mul(streakGlow).mul(3.5);
+      const streakGlow = smoothstep(0.4, 0.75, lightStreaks);
+      const lightColor = vec3(1.0, 0.75, 0.45).mul(streakGlow).mul(4.0);
       
       // Lighting
       const norm = normalize(mix(
@@ -337,10 +337,15 @@ const tesseractShader = Fn(([rayPos, rayDir]) => {
       
       const diff = clamp(dot(norm, rayDir.negate()), float(0.1), float(1.0));
       
-      // Ambient occlusion / depth fog
-      const ao = float(1.0).div(float(1.0).add(dist.mul(0.06)));
+      // Depth fade into warm golden-brown ambient haze to represent simplified distant detail
+      const distFade = dist.mul(0.025).min(1.0);
+      const glowHaze = vec3(0.22, 0.15, 0.08);
+      const surfaceColor = mix(woodColor.mul(diff).add(lightColor), glowHaze, distFade);
       
-      col.assign(woodColor.mul(diff).add(lightColor).mul(ao));
+      // Ambient occlusion / depth fog
+      const ao = float(1.0).div(float(1.0).add(dist.mul(0.05)));
+      
+      col.assign(surfaceColor.mul(ao));
       Break();
     });
     
@@ -454,15 +459,21 @@ const blackHoleShader = Fn(() => {
     camForward.mul(fov).add(camRight.mul(screenPos.x)).add(camUp.mul(screenPos.y))
   );
 
+  // Compute a separate wide-angle ray direction for the tesseract (fov = 0.35 for wider view)
+  const fovTesseract = float(0.35);
+  const rayDirTesseract = normalize(
+    camForward.mul(fovTesseract).add(camRight.mul(screenPos.x)).add(camUp.mul(screenPos.y))
+  );
+
   const finalColor = vec4(0.0).toVar('finalColor');
 
   If(uniforms.tesseractStrength.lessThan(0.01), () => {
     finalColor.assign(runBlackHoleRaymarch(camPos, rayDir));
   }).ElseIf(uniforms.tesseractStrength.greaterThan(0.99), () => {
-    finalColor.assign(tesseractShader(camPos, rayDir));
+    finalColor.assign(tesseractShader(camPos, rayDirTesseract));
   }).Else(() => {
     const bh = runBlackHoleRaymarch(camPos, rayDir);
-    const ts = tesseractShader(camPos, rayDir);
+    const ts = tesseractShader(camPos, rayDirTesseract);
     finalColor.assign(mix(bh, ts, uniforms.tesseractStrength));
   });
 
@@ -507,10 +518,10 @@ if (container) {
     uniforms.stepSize.value = config.stepSize * distanceScale;
     
     // Calculate tesseract transition strength:
-    // Plunge starts at ease > 0.90, smoothly scaling up to 1.0 at ease = 1.0.
+    // Plunge starts at ease > 0.35, smoothly scaling up to 1.0 at ease = 1.0.
     let tStrength = 0.0;
-    if (ease > 0.90) {
-      tStrength = Math.min(1.0, (ease - 0.90) / 0.10);
+    if (ease > 0.35) {
+      tStrength = Math.min(1.0, (ease - 0.35) / 0.65);
     }
     const tStrengthEase = tStrength * tStrength * (3 - 2 * tStrength);
     uniforms.tesseractStrength.value = tStrengthEase;
