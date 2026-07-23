@@ -141,7 +141,7 @@ const uniforms = {
   gravitationalLensing: uniform(config.gravitationalLensing),
   dopplerStrength: uniform(config.dopplerStrength),
   stepSize: uniform(config.stepSize),
-  starsEnabled: uniform(config.starsEnabled ? 1.0 : 0.0),
+  starsEnabled: uniform((config.starsEnabled && !isMobile) ? 1.0 : 0.0),
   starBackgroundColor: uniform(new THREE.Color(config.starBackgroundColor)),
   starDensity: uniform(config.starDensity),
   starSize: uniform(config.starSize),
