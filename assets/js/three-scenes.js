@@ -11,14 +11,9 @@ import { bloom } from 'three/addons/tsl/display/BloomNode.js';
 // PERFORMANCE TIER DETECT (Aggressive Mobile/Low-RAM Optimization)
 // ============================================================================
 
-const LOW = (() => {
-  const m = navigator.deviceMemory;
-  const c = navigator.hardwareConcurrency || 4;
-  const isMobile = /Mobi|Android|iP(hone|od|ad)/i.test(navigator.userAgent);
-  return (m !== undefined && m <= 4) || c <= 4 || isMobile || window.innerWidth < 768;
-})();
+const LOW = false;
 
-const stepCount = LOW ? 12 : 32;
+const stepCount = 32;
 
 // ============================================================================
 // CONFIGURATION
@@ -45,7 +40,7 @@ const config = {
   stepSize: 1,
   starsEnabled: true,
   starBackgroundColor: '#000000',
-  starDensity: LOW ? 0.03 : 0.1,
+  starDensity: 0.1,
   starSize: 1.2,
   starBrightness: 0.1,
   nebulaEnabled: true,
@@ -57,7 +52,7 @@ const config = {
   nebula2Density: 0.05,
   nebula2Brightness: 0.21,
   nebula2Color: '#010615',
-  bloomStrength: LOW ? 0.0 : 0.68,
+  bloomStrength: 0.68,
   bloomRadius: 0,
   bloomThreshold: 0.45
 };
@@ -108,12 +103,10 @@ const fbm = Fn(([p, lacunarity, persistence]) => {
   value.addAssign(noise3D(pos).mul(amplitude));
   pos.mulAssign(lacunarity); amplitude.mulAssign(persistence);
   value.addAssign(noise3D(pos).mul(amplitude));
-  if (!LOW) {
-    pos.mulAssign(lacunarity); amplitude.mulAssign(persistence);
-    value.addAssign(noise3D(pos).mul(amplitude));
-    pos.mulAssign(lacunarity); amplitude.mulAssign(persistence);
-    value.addAssign(noise3D(pos).mul(amplitude));
-  }
+  pos.mulAssign(lacunarity); amplitude.mulAssign(persistence);
+  value.addAssign(noise3D(pos).mul(amplitude));
+  pos.mulAssign(lacunarity); amplitude.mulAssign(persistence);
+  value.addAssign(noise3D(pos).mul(amplitude));
   return value;
 });
 
@@ -179,7 +172,7 @@ const fireSparks = Fn(([rayDir, camPos]) => {
   const theta = atan(rayDir.z, rayDir.x);
   const phi = asin(clamp(rayDir.y, float(-1.0), float(1.0)));
 
-  const density = LOW ? float(6.0) : float(15.0);
+  const density = float(15.0);
   const grid = vec2(theta, phi).mul(density);
   const id = floor(grid);
 
@@ -283,18 +276,14 @@ const accretionDiskColor = Fn(([hitR, hitAngle, time, rayDir]) => {
     .mul(smoothstep(float(1.0), float(1.0).sub(uniforms.diskEdgeSoftnessOuter), normR));
 
   const ringOpacity = float(1.0).toVar('ringOpacity');
-  const cycleLength = uniforms.turbulenceCycleTime;
-  const cyclicTime = time.mod(cycleLength);
-  const blendFactor = cyclicTime.div(cycleLength);
-  const keplerianPhase1 = cyclicTime.mul(uniforms.diskRotationSpeed).div(pow(hitR, float(1.5)));
-  const keplerianPhase2 = cyclicTime.add(cycleLength).mul(uniforms.diskRotationSpeed).div(pow(hitR, float(1.5)));
-  const rotatedAngle1 = hitAngle.add(keplerianPhase1);
-  const rotatedAngle2 = hitAngle.add(keplerianPhase2);
-  const noiseCoord1 = vec3(hitR.mul(uniforms.turbulenceScale), cos(rotatedAngle1).div(uniforms.turbulenceStretch.max(0.1)), sin(rotatedAngle1).div(uniforms.turbulenceStretch.max(0.1)));
-  const noiseCoord2 = vec3(hitR.mul(uniforms.turbulenceScale), cos(rotatedAngle2).div(uniforms.turbulenceStretch.max(0.1)), sin(rotatedAngle2).div(uniforms.turbulenceStretch.max(0.1)));
-  const turbulence1 = fbm(noiseCoord1, uniforms.turbulenceLacunarity, uniforms.turbulencePersistence);
-  const turbulence2 = fbm(noiseCoord2, uniforms.turbulenceLacunarity, uniforms.turbulencePersistence);
-  const turbulence = mix(turbulence2, turbulence1, blendFactor);
+  const keplerianPhase = time.mul(uniforms.diskRotationSpeed).div(pow(hitR, float(1.5)));
+  const rotatedAngle = hitAngle.add(keplerianPhase);
+  const noiseCoord = vec3(
+    hitR.mul(uniforms.turbulenceScale),
+    cos(rotatedAngle).div(uniforms.turbulenceStretch.max(0.1)),
+    sin(rotatedAngle).div(uniforms.turbulenceStretch.max(0.1))
+  );
+  const turbulence = fbm(noiseCoord, uniforms.turbulenceLacunarity, uniforms.turbulencePersistence);
   ringOpacity.assign(pow(clamp(turbulence, float(0.0), float(1.0)), uniforms.turbulenceSharpness));
 
   const finalOpacity = ringOpacity.mul(edgeFalloff);
@@ -319,7 +308,7 @@ const tesseractShader = Fn(([rayPos, rayDir]) => {
   const centerDir = rayPos.normalize();
   const warpedDir = normalize(rayDir.add(centerDir.mul(warpAmount)));
 
-  const maxSteps = LOW ? 8 : 30;
+  const maxSteps = 30;
 
   Loop(maxSteps, () => {
     If(dist.greaterThan(60.0).or(hit.greaterThan(0.5)), () => {
@@ -425,8 +414,9 @@ const runBlackHoleRaymarch = Fn(([camPos, rayDirIn, rayDirTesseract]) => {
     rayDir.addAssign(toCenter.mul(bendStrength));
     rayDir.assign(normalize(rayDir));
 
+    const curStep = mix(uniforms.stepSize, uniforms.stepSize.mul(1.5), smoothstep(float(15.0), float(35.0), r));
     prevPos.assign(rayPos);
-    rayPos.addAssign(rayDir.mul(uniforms.stepSize));
+    rayPos.addAssign(rayDir.mul(curStep));
 
     const crossedPlane = prevPos.y.mul(rayPos.y).lessThan(0.0);
     If(crossedPlane.and(alpha.lessThan(0.99)), () => {
@@ -454,21 +444,18 @@ const runBlackHoleRaymarch = Fn(([camPos, rayDirIn, rayDirTesseract]) => {
       bgColor.addAssign(starField(rayDir));
     });
     If(uniforms.nebulaEnabled.greaterThan(0.5), () => {
-      if (LOW) {
-        const noisePos1 = rayDir.mul(uniforms.nebula1Scale);
-        const n1 = noise3D(noisePos1).mul(uniforms.nebula1Density);
-        bgColor.addAssign(uniforms.nebula1Color.mul(n1).mul(uniforms.nebula1Brightness));
-      } else {
-        bgColor.addAssign(nebulaField(rayDir));
-      }
+      bgColor.addAssign(nebulaField(rayDir));
     });
     color.addAssign(bgColor.mul(float(1.0).sub(alpha)));
   });
 
   const finalColor = pow(color, vec3(1.0 / 2.2));
 
-  // ONLY add fire sparks if we are captured (inside the black hole)
-  const sparks = fireSparks(rayDirIn, camPos);
+  // ONLY add fire sparks if sparkStrength > 0
+  const sparks = vec3(0.0).toVar('sparks');
+  If(uniforms.sparkStrength.greaterThan(0.001), () => {
+    sparks.assign(fireSparks(rayDirIn, camPos));
+  });
   return vec4(finalColor.add(sparks), 1.0);
 });
 
@@ -538,7 +525,7 @@ if (container) {
     const desktopAspect = 1.15;
     const distanceScale = Math.max(1.0, desktopAspect / aspect);
 
-    uniforms.stepSize.value = config.stepSize * distanceScale;
+    uniforms.stepSize.value = config.stepSize;
 
     // SEQUENCE TIMELINE:
     // 0.00 - 0.85 : Approaching
@@ -582,14 +569,15 @@ if (container) {
     camera.rotateZ(roll);
   }
 
-  const renderer = new THREE.WebGPURenderer({ antialias: !LOW });
+  const isMobileDevice = /Mobi|Android|iP(hone|od|ad)/i.test(navigator.userAgent) || window.innerWidth < 768;
+  const renderer = new THREE.WebGPURenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
-  const pixelRatio = LOW ? 0.5 : Math.min(window.devicePixelRatio, 1.25);
+  const pixelRatio = Math.min(window.devicePixelRatio, isMobileDevice ? 1.5 : 2.0);
   renderer.setPixelRatio(pixelRatio);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   container.appendChild(renderer.domElement);
 
-  const geometry = new THREE.SphereGeometry(100, LOW ? 16 : 32, LOW ? 16 : 32);
+  const geometry = new THREE.SphereGeometry(100, 32, 32);
   geometry.scale(-1, 1, 1);
   const material = new THREE.MeshBasicNodeMaterial();
   material.colorNode = blackHoleShader;
@@ -696,21 +684,25 @@ if (container) {
   window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
+    const isMobileNow = /Mobi|Android|iP(hone|od|ad)/i.test(navigator.userAgent) || window.innerWidth < 768;
+    const pr = Math.min(window.devicePixelRatio, isMobileNow ? 1.5 : 2.0);
+    renderer.setPixelRatio(pr);
     renderer.setSize(window.innerWidth, window.innerHeight);
+    if (postProcessing && postProcessing.setSize) {
+      postProcessing.setSize(window.innerWidth, window.innerHeight);
+    }
     uniforms.resolution.value.set(window.innerWidth, window.innerHeight);
   });
 
   renderer.init().then(() => {
-    if (!LOW) {
-      postProcessing = new THREE.PostProcessing(renderer);
-      const scenePass = pass(scene, camera);
-      const scenePassColor = scenePass.getTextureNode();
-      const bloomPass = bloom(scenePassColor);
-      bloomPass.threshold.value = config.bloomThreshold;
-      bloomPass.strength.value = config.bloomStrength;
-      bloomPass.radius.value = config.bloomRadius;
-      postProcessing.outputNode = scenePassColor.add(bloomPass);
-    }
+    postProcessing = new THREE.PostProcessing(renderer);
+    const scenePass = pass(scene, camera);
+    const scenePassColor = scenePass.getTextureNode();
+    const bloomPass = bloom(scenePassColor);
+    bloomPass.threshold.value = config.bloomThreshold;
+    bloomPass.strength.value = config.bloomStrength;
+    bloomPass.radius.value = config.bloomRadius;
+    postProcessing.outputNode = scenePassColor.add(bloomPass);
 
     positionCamera(0);
     animate();
