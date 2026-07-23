@@ -11,9 +11,9 @@ import { bloom } from 'three/addons/tsl/display/BloomNode.js';
 // PERFORMANCE TIER DETECT (Aggressive Mobile/Low-RAM Optimization)
 // ============================================================================
 
-const LOW = false;
+const isMobile = /Mobi|Android|iP(hone|od|ad)/i.test(navigator.userAgent) || window.innerWidth < 768;
 
-const stepCount = 32;
+const stepCount = isMobile ? 18 : 32;
 
 // ============================================================================
 // CONFIGURATION
@@ -572,7 +572,7 @@ if (container) {
   const isMobileDevice = /Mobi|Android|iP(hone|od|ad)/i.test(navigator.userAgent) || window.innerWidth < 768;
   const renderer = new THREE.WebGPURenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
-  const pixelRatio = Math.min(window.devicePixelRatio, isMobileDevice ? 1.5 : 2.0);
+  const pixelRatio = Math.min(window.devicePixelRatio, isMobileDevice ? 1.0 : 2.0);
   renderer.setPixelRatio(pixelRatio);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   container.appendChild(renderer.domElement);
@@ -603,6 +603,16 @@ if (container) {
     });
   }, { passive: true });
 
+  let isVisible = true;
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        isVisible = entry.isIntersecting;
+      });
+    }, { threshold: 0.01 });
+    observer.observe(container);
+  }
+
   let postProcessing = null;
   let lastFrameTime = performance.now();
   let fallStartTime = 0; // Tracks when the 3-second stop timer begins
@@ -617,6 +627,8 @@ if (container) {
 
   function animate() {
     requestAnimationFrame(animate);
+    if (!isVisible) return;
+
     const currentTime = performance.now();
     const deltaTime = Math.min((currentTime - lastFrameTime) / 1000, 0.033);
     lastFrameTime = currentTime;
@@ -685,7 +697,7 @@ if (container) {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     const isMobileNow = /Mobi|Android|iP(hone|od|ad)/i.test(navigator.userAgent) || window.innerWidth < 768;
-    const pr = Math.min(window.devicePixelRatio, isMobileNow ? 1.5 : 2.0);
+    const pr = Math.min(window.devicePixelRatio, isMobileNow ? 1.0 : 2.0);
     renderer.setPixelRatio(pr);
     renderer.setSize(window.innerWidth, window.innerHeight);
     if (postProcessing && postProcessing.setSize) {
@@ -695,14 +707,16 @@ if (container) {
   });
 
   renderer.init().then(() => {
-    postProcessing = new THREE.PostProcessing(renderer);
-    const scenePass = pass(scene, camera);
-    const scenePassColor = scenePass.getTextureNode();
-    const bloomPass = bloom(scenePassColor);
-    bloomPass.threshold.value = config.bloomThreshold;
-    bloomPass.strength.value = config.bloomStrength;
-    bloomPass.radius.value = config.bloomRadius;
-    postProcessing.outputNode = scenePassColor.add(bloomPass);
+    if (!isMobileDevice) {
+      postProcessing = new THREE.PostProcessing(renderer);
+      const scenePass = pass(scene, camera);
+      const scenePassColor = scenePass.getTextureNode();
+      const bloomPass = bloom(scenePassColor);
+      bloomPass.threshold.value = config.bloomThreshold;
+      bloomPass.strength.value = config.bloomStrength;
+      bloomPass.radius.value = config.bloomRadius;
+      postProcessing.outputNode = scenePassColor.add(bloomPass);
+    }
 
     positionCamera(0);
     animate();
