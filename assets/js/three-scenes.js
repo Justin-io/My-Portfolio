@@ -141,7 +141,7 @@ const uniforms = {
   gravitationalLensing: uniform(config.gravitationalLensing),
   dopplerStrength: uniform(config.dopplerStrength),
   stepSize: uniform(config.stepSize),
-  starsEnabled: uniform((config.starsEnabled && !isMobile) ? 1.0 : 0.0),
+  starsEnabled: uniform(config.starsEnabled ? 1.0 : 0.0),
   starBackgroundColor: uniform(new THREE.Color(config.starBackgroundColor)),
   starDensity: uniform(config.starDensity),
   starSize: uniform(config.starSize),
@@ -547,7 +547,8 @@ if (container) {
     }
     uniforms.tesseractStrength.value = tStrength * tStrength * (3 - 2 * tStrength);
 
-    const d = C.cur.dist * distanceScale;
+    const effectiveDistanceScale = isMobile ? Math.min(distanceScale, 1.25) : distanceScale;
+    const d = C.cur.dist * effectiveDistanceScale;
     const theta = C.thetaBase + ease * C.thetaPlunge;
     const currentTiltBase = isMobile ? -0.22 : C.tiltBase;
     const currentTiltTarget = isMobile ? -0.15 : C.tiltTarget;
@@ -561,7 +562,8 @@ if (container) {
 
     const forward = new THREE.Vector3().copy(camera.position).negate().normalize();
     const right = new THREE.Vector3().crossVectors(new THREE.Vector3(0, 1, 0), forward).normalize();
-    const currentOX = OX * distanceScale;
+    const baseOX = isMobile ? 0.5 : OX;
+    const currentOX = baseOX * effectiveDistanceScale;
     const target = new THREE.Vector3(0, 0, 0).addScaledVector(right, -currentOX);
 
     camera.lookAt(target);
