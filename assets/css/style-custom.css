@@ -512,14 +512,16 @@
         }
 
         .hero-card {
-            width: 400px;
-            height: 500px;
+            width: 100%;
+            max-width: 440px;
+            height: auto;
+            min-height: 480px;
             background: var(--glass-bg);
             backdrop-filter: blur(25px) saturate(180%);
             border: 1px solid var(--glass-border);
             box-shadow: var(--shadow-glow);
             border-radius: 30px;
-            padding: 40px;
+            padding: 35px 30px;
             position: relative;
             overflow: hidden;
             transform: perspective(1000px) rotateY(-5deg);
@@ -2428,21 +2430,23 @@
             display: inline-block;
             overflow: hidden;
             border-radius: 50%;
+            margin-top: 20px;
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
         }
 
         .hero-profile-container:hover {
             transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(0, 102, 255, 0.2);
+            box-shadow: 0 12px 30px rgba(255, 255, 255, 0.2);
         }
 
         .hero-profile-img {
-            width: 120px;
-            height: 120px;
+            width: 140px;
+            height: 140px;
             object-fit: cover;
-            border: 2px solid var(--glass-border);
+            border: 2px solid rgba(255, 255, 255, 0.25);
             border-radius: 50%;
+            display: block;
             transition: opacity 0.5s ease-in-out, transform 0.5s ease;
         }
 

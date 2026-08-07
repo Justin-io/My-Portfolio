@@ -170,55 +170,55 @@ document.getElementById('contactForm').addEventListener('submit', (e) => {
 if (window.performanceManager && window.performanceManager.config.enableComplexAnimations) {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Hero animations
+    // Hero animations - Fast entrance
     gsap.from('.hero-badge', {
         opacity: 0,
-        y: 30,
-        duration: 1,
-        delay: 2.5
+        y: 20,
+        duration: 0.4,
+        delay: 0.2
     });
 
     gsap.from('.hero h1', {
         opacity: 0,
-        y: 50,
-        duration: 1,
-        delay: 2.7
+        y: 30,
+        duration: 0.4,
+        delay: 0.3
     });
 
     gsap.from('.hero .subtitle', {
         opacity: 0,
-        y: 30,
-        duration: 1,
-        delay: 2.9
+        y: 20,
+        duration: 0.4,
+        delay: 0.4
     });
 
     gsap.from('.hero-buttons', {
         opacity: 0,
-        y: 30,
-        duration: 1,
-        delay: 3.1
+        y: 20,
+        duration: 0.4,
+        delay: 0.5
     });
 
     gsap.from('.hero-card', {
         opacity: 0,
-        x: 100,
-        rotation: 5,
-        duration: 1,
-        delay: 3.3
+        x: 40,
+        rotation: 3,
+        duration: 0.4,
+        delay: 0.6
     });
 
-    // Section animations
+    // Section animations - Fast snappy scroll reveal
     gsap.utils.toArray('.section-header').forEach(header => {
         gsap.from(header.children, {
             scrollTrigger: {
                 trigger: header,
-                start: 'top 80%',
+                start: 'top 92%',
                 toggleActions: 'play none none reverse'
             },
             opacity: 0,
-            y: 30,
-            duration: 0.8,
-            stagger: 0.2
+            y: 20,
+            duration: 0.3,
+            stagger: 0.08
         });
     });
 
@@ -226,52 +226,52 @@ if (window.performanceManager && window.performanceManager.config.enableComplexA
     gsap.from('.about-content', {
         scrollTrigger: {
             trigger: '.about-content',
-            start: 'top 80%',
+            start: 'top 90%',
             toggleActions: 'play none none reverse'
         },
         opacity: 0,
-        x: -50,
-        duration: 1
+        x: -30,
+        duration: 0.35
     });
 
     gsap.from('.about-visual', {
         scrollTrigger: {
             trigger: '.about-visual',
-            start: 'top 80%',
+            start: 'top 90%',
             toggleActions: 'play none none reverse'
         },
         opacity: 0,
-        x: 50,
-        duration: 1
+        x: 30,
+        duration: 0.35
     });
 
-    // Project cards animation
+    // Project cards animation - Fast staggered reveal
     gsap.utils.toArray('.project-card').forEach((card, index) => {
         gsap.from(card, {
             scrollTrigger: {
                 trigger: card,
-                start: 'top 85%',
+                start: 'top 92%',
                 toggleActions: 'play none none reverse'
             },
             opacity: 0,
-            y: 50,
-            duration: 0.8,
-            delay: index * 0.1
+            y: 30,
+            duration: 0.3,
+            delay: Math.min(index * 0.04, 0.2)
         });
     });
 
-    // Skill cards animation
+    // Skill cards animation - Fast staggered reveal
     gsap.utils.toArray('.skill-card').forEach((card, index) => {
         gsap.from(card, {
             scrollTrigger: {
                 trigger: card,
-                start: 'top 85%',
+                start: 'top 92%',
                 toggleActions: 'play none none reverse'
             },
             opacity: 0,
-            scale: 0.9,
-            duration: 0.8,
-            delay: index * 0.1
+            scale: 0.95,
+            duration: 0.3,
+            delay: Math.min(index * 0.04, 0.2)
         });
     });
 
@@ -280,12 +280,12 @@ if (window.performanceManager && window.performanceManager.config.enableComplexA
         gsap.from(item, {
             scrollTrigger: {
                 trigger: item,
-                start: 'top 80%',
+                start: 'top 90%',
                 toggleActions: 'play none none reverse'
             },
             opacity: 0,
-            x: index % 2 === 0 ? -50 : 50,
-            duration: 0.8
+            x: index % 2 === 0 ? -30 : 30,
+            duration: 0.35
         });
     });
 
@@ -293,23 +293,23 @@ if (window.performanceManager && window.performanceManager.config.enableComplexA
     gsap.from('.contact-info', {
         scrollTrigger: {
             trigger: '.contact-info',
-            start: 'top 80%',
+            start: 'top 90%',
             toggleActions: 'play none none reverse'
         },
         opacity: 0,
-        x: -50,
-        duration: 1
+        x: -30,
+        duration: 0.35
     });
 
     gsap.from('.contact-form', {
         scrollTrigger: {
             trigger: '.contact-form',
-            start: 'top 80%',
+            start: 'top 90%',
             toggleActions: 'play none none reverse'
         },
         opacity: 0,
-        x: 50,
-        duration: 1
+        x: 30,
+        duration: 0.35
     });
 }
 
@@ -530,8 +530,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!chatContainer) return;
 
     // --- FAB Configuration ---
-    // Set to true to use a static image instead of the Lottie animation
-    const USE_FAB_IMAGE = true;
+    // Set to false to use Font Awesome icon
+    const USE_FAB_IMAGE = false;
     const FAB_IMAGE_REST = 'assets/img/hi.webp';  // Default "Rest" state
     const FAB_IMAGE_THINK = 'assets/img/think.webp'; // "Thinking" state
     // -------------------------
@@ -823,13 +823,13 @@ document.addEventListener('DOMContentLoaded', () => {
         modeContainer.style.justifyContent = 'center';
 
         const apiBtn = document.createElement('button');
-        apiBtn.innerText = 'Use API Key 🧠';
+        apiBtn.innerText = 'Use API Key';
         apiBtn.className = 'chat-chip';
         apiBtn.style.background = 'var(--gradient-1)'; // Highlight
         apiBtn.onclick = () => handleModeChoice('api');
 
         const localBtn = document.createElement('button');
-        localBtn.innerText = 'Local Mode ⚡';
+        localBtn.innerText = 'Local Mode';
         localBtn.className = 'chat-chip';
         localBtn.onclick = () => handleModeChoice('local');
 
@@ -883,7 +883,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (inputContainer) inputContainer.style.display = 'flex';
                 if (!hasGreeted) {
                     addMessage("Welcome back! Systems online.", 'bot');
-                    renderChips(['Start Tour 🚀', ...defaultChips]);
+                    renderChips(['Start Tour', ...defaultChips]);
                     hasGreeted = true;
                 }
             } else {
@@ -1000,7 +1000,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (suggestionsContainer) {
                 suggestionsContainer.innerHTML = '';
                 // Only show tour chips if not typing purely custom
-                renderChips(['Start Tour 🚀', ...defaultChips]);
+                renderChips(['Start Tour', ...defaultChips]);
                 suggestionsContainer.style.display = 'flex';
             }
         }, 2000);
@@ -1041,9 +1041,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (lowerText.includes("who is justin") || lowerText.includes("about you")) {
             response = "I'm a **theoretical physicist** and **cybersecurity specialist**. I build systems that bridge the gap between abstract theory and robust application, from **Quantum Gravity** to **Offensive Security**.";
         } else if (lowerText.includes("resume") || lowerText.includes("cv")) {
-            response = "You can view my full resume/CV by contacting me directly. I'm happy to share it for relevant opportunities! 📄";
+            response = "You can view my full resume/CV by contacting me directly. I'm happy to share it for relevant opportunities!";
         } else if (lowerText.includes("email") || lowerText.includes("contact")) {
-            response = "You can reach me at **harinandan.ofc@gmail.com** or use the contact form at the bottom of the page. 📧";
+            response = "You can reach me at **harinandan.ofc@gmail.com** or use the contact form at the bottom of the page.";
         } else if (lowerText.includes("q-safe")) {
             response = "**Q-SAFE** is my flagship research project: a Hybrid 'Sentinel' framework. It uses an **x86 Assembly core** for speed and a **Python Neural Oracle** to detect threats agentically.";
         } else if (lowerText.includes("chameleon")) {
@@ -1060,7 +1060,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const section = lowerText.replace("explain ", "").trim();
             response = summaries[section] || summaries[currentSection] || "This section showcases my work.";
         } else {
-            response = "I'm currently in **Local Mode** ⚡. I can answer questions about my skills, projects (Q-SAFE, HOPE), or contact info. Connect an API key for full intelligence!";
+            response = "I'm currently in **Local Mode**. I can answer questions about my skills, projects (Q-SAFE, HOPE), or contact info. Connect an API key for full intelligence!";
         }
 
         const formatted = parseMarkdown(response);
