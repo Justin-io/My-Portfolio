@@ -1,5 +1,20 @@
 [
     {
+        "id": "22",
+        "title": "A Note on NEUROBOTS 2026",
+        "subtitle": "On building something real on a day that wasn't.",
+        "date": "August 2026",
+        "category": "Hackathons",
+        "excerpt": "On building something real on a day that wasn't. A reflection on AEGIS-X, live incident response, and building anyway.",
+        "image": "../assets/img/generated/aegis_x.png",
+        "file": "blog22.html",
+        "tags": [
+            "Hackathons",
+            "Security",
+            "Reflection"
+        ]
+    },
+    {
         "id": "1",
         "title": "The Quantum Internet: Entanglement Distribution",
         "date": "Jan 08, 2026",

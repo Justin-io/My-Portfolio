@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Note on NEUROBOTS 2026 | Blog</title>
+    <meta name="description" content="On building something real on a day that wasn't. A reflection on AEGIS-X, live incident response, and building anyway.">
+    <meta name="theme-color" content="#040404">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style-custom.css?v=2">
+    <style>
+        .article-header {
+            padding-top: 150px;
+            padding-bottom: 40px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .article-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            line-height: 1.15;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .article-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        .article-meta {
+            color: var(--text-tertiary);
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+        }
+
+        .article-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            background: rgba(0, 82, 204, 0.2);
+            color: var(--accent);
+            border: 1px solid rgba(0, 82, 204, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .article-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px 100px;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.85;
+        }
+
+        .article-content p {
+            margin-bottom: 24px;
+        }
+
+        .article-image {
+            width: 100%;
+            height: 380px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-tertiary);
+            text-decoration: none;
+            margin-bottom: 30px;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            margin-right: 8px;
+            color: var(--text-tertiary);
+            border: 1px solid var(--glass-border);
+        }
+
+        .related-projects {
+            margin-top: 60px;
+            padding: 30px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <div id="canvas-container" style="position: fixed; inset: 0; z-index: -1;"></div>
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">JA</div>
+            <ul class="nav-links">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="../tools.html" class="nav-link">Utilities</a></li>
+                <li><a href="../blog.html" class="nav-link active">Blog</a></li>
+                <li><a href="../bio.htm" class="nav-link">Bio</a></li>
+            </ul>
+            <div class="menu-toggle"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+    <main>
+        <article>
+            <div class="article-header">
+                <a href="../blog.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Articles</a><br>
+                <span class="article-badge">Hackathons · Security · Reflection</span>
+                <h1 class="article-title">A Note on NEUROBOTS 2026</h1>
+                <p class="article-subtitle">On building something real on a day that wasn't.</p>
+                <div class="article-meta">
+                    <span><i class="far fa-calendar"></i> August 2026</span> &bull; 
+                    <span><i class="far fa-clock"></i> 2 min read</span> &bull; 
+                    <span><i class="far fa-user"></i> Hari Nandan K</span>
+                </div>
+                <img src="../assets/img/generated/aegis_x.png" alt="AEGIS-X System Dashboard" class="article-image">
+                <div style="margin-top: -20px; margin-bottom: 30px;">
+                    <span class="tag">#Hackathons</span>
+                    <span class="tag">#Security</span>
+                    <span class="tag">#Reflection</span>
+                </div>
+            </div>
+            <div class="article-content">
+                <p>Aug 7–8, 2026. Over 24 hours at IES College of Engineering for NEUROBOTS 2026, Anjaleena and I built AEGIS-X. It’s an autonomous multi-agent Security Operations Center designed to handle enterprise threat triage without human bottlenecking. Under the hood, it runs a cascading inference router—stepping from fast deterministic rules down through a quantized local model (Qwen3-0.6B via llama.cpp), Groq Llama 3.3 70B, and Gemini 2.5 Pro—with conformal-gated edge triage. The core investigation pipeline uses LangGraph with log-odds Bayesian fusion and a dissent-gated approval mechanism, alongside a Chronon damped-wave equation to model and forecast lateral movement across the network graph. Anjaleena owned the experience layer and frontend architecture; I built the intelligence core and backend inference router. The full build is live at <a href="https://soc-rust.vercel.app" target="_blank" style="color: var(--accent);">soc-rust.vercel.app</a>, and the code is open on <a href="https://github.com/Justin-io/AEGIS-X" target="_blank" style="color: var(--accent);">GitHub</a>.</p>
+
+                <p>On event day, reality interrupted. As the hackathon kicked off, the event infrastructure buckled under load in a DDoS-style platform collapse. The room devolved into quiet chaos, the judging schedule slipped by nearly three hours, and attendees were left waiting while servers burned. Seeing the operational gridlock, I stepped in alongside the organizing team to help triage the live infrastructure incident. When an engine is overheating right in front of you, sitting on your hands feels worse than rolling up your sleeves. It was simply the right thing to do in the moment.</p>
+
+                <p>By the time the judges finally reached our desk, the timeline was severely compressed. Our demo was rushed through in a fraction of the time needed to properly demonstrate a multi-agent system with conformal edge triage and sub-500ms p95 latency. The work didn't get the full evaluation we had spent weeks preparing for. That part stings—I am not going to pretend it didn't hurt to watch a production-grade system get skimmed over in ninety seconds. But the system works, the code is public, and the live incident response was as real as it gets.</p>
+
+                <p>There is a distinct weight to watching the work you poured your heart into get swallowed by circumstances completely outside your control. You sit there with chai in hand, feeling a bit battered by the noise. Yet, stepping back, a familiar pattern emerges. The very traits that sometimes make you seem stubborn in peacetime—demanding system reliability, calling out brittle architecture, refusing to handwave flaws—are precisely the traits people rely on when everything breaks down.</p>
+
+                <p>The effort wasn't wasted. The code is committed, the math stands, and the architecture runs end-to-end. Someone reading the repo down the line will find the Bayesian fusion logic or the wave-equation forecasting and build something even better on top of it. The lesson here isn't bitter or complicated: build the thing anyway. The noise of an event fades within days, but solid code outlasts the room it was written in.</p>
+
+                <p>To the organizers: thanks for the invitation, and for pulling me into the trenches when the servers choked. On to the next build.</p>
+
+                <!-- Related Projects -->
+                <div class="related-projects">
+                    <h3 style="margin-top: 0; color: var(--text-primary); font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem;">Related Projects</h3>
+                    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px; margin-top: 15px;">
+                        <div>
+                            <h4 style="margin: 0; color: var(--text-primary); font-size: 1.15rem;">AEGIS-X</h4>
+                            <p style="margin: 4px 0 0 0; color: var(--text-tertiary); font-size: 0.9rem;">Autonomous Multi-Agent SOC with Physics-Inspired Threat Forecasting</p>
+                        </div>
+                        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                            <a href="https://soc-rust.vercel.app" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 0.9rem;">
+                                Live Demo <i class="fas fa-external-link-alt"></i>
+                            </a>
+                            <a href="https://github.com/Justin-io/AEGIS-X" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 0.9rem;">
+                                View Source <i class="fas fa-arrow-right"></i>
+                            </a>
+                            <a href="../index.html#projects" style="color: var(--text-secondary); text-decoration: none; font-weight: 600; font-size: 0.9rem;">
+                                Portfolio Card <i class="fas fa-layer-group"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </main>
+    <footer>
+        <div class="footer-content" style="text-align: center; padding: 40px; color: var(--text-secondary);">
+            <p>&copy; 2026 Hari Nandan K. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+
+</html>
