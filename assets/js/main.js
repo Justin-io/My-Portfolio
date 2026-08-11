@@ -1050,6 +1050,8 @@ document.addEventListener('DOMContentLoaded', () => {
             response = "**Chameleon-P2P** is an ephemeral messaging system featuring a Stealth-First design (disguised as a JSON formatter) with end-to-end encrypted tunnels. Check it out on [GitHub](https://github.com/Justin-io/Chameleon-P2P).";
         } else if (lowerText.includes("bloomwatch")) {
             response = "**BLOOMWATCH-PRO** won the NASA Local Hackathon! It tracks global phenology cycles using MODIS/VIIRS satellite datasets. Check it on [GitHub](https://github.com/Justin-io/BLOOMWATCH-PRO).";
+        } else if (lowerText.includes("whatsapp") || lowerText.includes("feedback")) {
+            response = "**WhatsApp Automation Suite** is an open-source campaign & feedback automation platform featuring Baileys multi-device socket engine, anti-spam rate limiting, 24-hour follow-up scheduler, auto opt-out blacklist, and live inbox UI. Check it out on [GitHub](https://github.com/Justin-io/whatsapp-automation-suite).";
         } else if (lowerText.includes("ghost") || lowerText.includes("insta")) {
             response = "**GH05T-INSTA** is a cybersecurity tool package for Kali Linux and Termux that conducts credential audit simulation and passive vulnerability reports. Check it on [GitHub](https://github.com/Justin-io/GH05T-INSTA).";
         } else if (lowerText.includes("tech stack") || lowerText.includes("skills")) {
