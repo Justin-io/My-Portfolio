@@ -3,60 +3,110 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Simulation Hypothesis: Are We NPCs? | Blog</title>
+    <title>The Simulation Hypothesis: Computational Limits | Hari Nandan K</title>
+    <meta name="description" content="The Simulation Hypothesis: Computational Limits - Deep technical analysis by Hari Nandan K.">
     <meta name="theme-color" content="#040404">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/style-custom.css?v=2">
-    <style>
-        .article-header { padding-top: 150px; padding-bottom: 60px; text-align: center; max-width: 800px; margin: 0 auto; }
-        .article-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 20px; background: linear-gradient(135deg, #fff 0%, #aaa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .article-meta { color: var(--text-tertiary); font-size: 0.9rem; margin-bottom: 40px; }
-        .article-badge { display: inline-block; padding: 5px 15px; border-radius: 20px; background: rgba(0, 82, 204, 0.2); color: var(--accent); border: 1px solid rgba(0, 82, 204, 0.3); margin-bottom: 20px; }
-        .article-content { max-width: 800px; margin: 0 auto; padding: 0 20px 100px; color: var(--text-secondary); font-size: 1.1rem; line-height: 1.8; }
-        .article-content h2 { color: var(--text-primary); font-family: 'Space Grotesk', sans-serif; margin-top: 50px; margin-bottom: 20px; }
-        .article-image { width: 100%; height: 400px; object-fit: cover; border-radius: 20px; margin-bottom: 50px; border: 1px solid var(--glass-border); }
-        .back-link { display: inline-flex; align-items: center; gap: 10px; color: var(--text-tertiary); text-decoration: none; margin-bottom: 30px; transition: color 0.3s; }
-        .back-link:hover { color: var(--accent); }
-        .tag { background: rgba(255,255,255,0.05); padding: 5px 10px; border-radius: 5px; font-size: 0.8rem; margin-right: 5px; }
-    </style>
+    <link rel="stylesheet" href="../assets/css/blog-pro.css?v=2">
 </head>
 <body>
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
-
     <div id="canvas-container" style="position: fixed; inset: 0; z-index: -1;"></div>
+
     <nav id="navbar">
         <div class="nav-container">
             <div class="logo">JA</div>
             <ul class="nav-links">
                 <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="../index.html#about" class="nav-link">About Me</a></li>
                 <li><a href="../tools.html" class="nav-link">Utilities</a></li>
                 <li><a href="../blog.html" class="nav-link active">Blog</a></li>
-                <li><a href="../CV.pdf" class="nav-link">Resume</a></li>
+                <li><a href="../CV.pdf" class="nav-link" target="_blank">Resume</a></li>
             </ul>
-             <div class="menu-toggle"><span></span><span></span><span></span></div>
+            <div class="menu-toggle"><span></span><span></span><span></span></div>
         </div>
     </nav>
+
     <main>
-        <article>
-            <div class="article-header">
-                <a href="../blog.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Blog</a><br>
-                <span class="article-badge">Physics</span>
-                <h1 class="article-title">The Simulation Hypothesis: Are We NPCs?</h1>
-                <div class="article-meta"><span><i class="far fa-calendar"></i> Dec 18, 2024</span> &bull; <span><i class="far fa-user"></i> Hari Nandan K</span></div>
-                <img src="../assets/img/blog/blog7.webp" alt="The Simulation Hypothesis: Are We NPCs?" class="article-image">
-                <div style="margin-top: -30px; margin-bottom: 40px;">
-                    <span class='tag'>#Philosophy</span><span class='tag'>#Simulation</span><span class='tag'>#Physics</span>
-                </div>
+        <article class="blog-banner-header">
+            <div class="blog-banner-glow"></div>
+            <a href="../blog.html" class="back-link" style="display:inline-flex; align-items:center; gap:8px; color:var(--text-tertiary); text-decoration:none; margin-bottom:25px;"><i class="fas fa-arrow-left"></i> Back to Knowledge Base</a>
+            
+            <div class="blog-banner-badge-row">
+                <span class="blog-banner-badge">Theoretical Physics</span>
+                <span class="blog-banner-reading-time"><i class="far fa-clock"></i> 6 min read</span>
             </div>
-            <div class="article-content">
-                <p class="lead" style="font-size: 1.3rem; color: var(--text-primary); margin-bottom: 30px;">Elon Musk thinks there's a 'one in billions' chance we are in base reality. Is this just tech-bro philosophy, or is there hard physics to back it up? The Simulation Hypothesis proposes that our universe is a computed simulation by a higher intelligence.</p>
-                <p>Nick Bostrom's trilemma states one of three things must be true: 1) Civilizations go extinct before reaching post-human stages. 2) Post-human civilizations have no interest in running ancestor simulations. 3) We are almost certainly living in a simulation.</p><p>Computing power is the main argument. If computing continues to grow according to Moore's Law (or its successors), we will eventually be able to simulate every atom in a human brain, and then the entire earth.</p><p>But does physics support this? Quantum Mechanics offers a clue. The fact that particles do not have definite states until observed sounds suspiciously like 'lazy loading' or 'frustum culling' in a video game engine. Why render the whole universe if no one is looking?</p><p>The Planck Length is another hint. Our universe is pixelated. There is a minimum resolution to space and time. This suggests a grid-based computation rather than a continuous analog reality.</p><p>However, calculating the complexity of the universe is daunting. Simulating just a few hundred electrons fully requires more memory than there are atoms in the visible universe. Unless... the simulation uses shortcuts.</p><p>We might look for 'glitches' or round-off errors in the fundamental constants of nature. If the speed of light is the max clock speed of the processor, are there inconsistencies at high energies?</p><p>The Holographic Principle also aligns with this. It suggests that the 3D volume of space is actually a projection of 2D information encoded on a cosmological horizon. We might be a hologram.</p><p>Critics argue that consciousness cannot be computed. This leads to the 'Hard Problem' of consciousness. Can an NPC feel pain? If we are simulations, are we 'p-zombies' or conscious entities?</p><p>From a researcher's perspective, I treat this as a thought experiment to probe the limits of computation. If the universe creates complexity from simple rules (like Cellular Automata), it is indeed algorithmic.</p><p>Ultimately, if the simulation is perfect, we can never prove we are inside it from the inside. But the search for the 'source code' of physics drives us forward.</p>
+
+            <h1 class="blog-banner-title">The Simulation Hypothesis: Computational Limits</h1>
+
+            <div class="blog-banner-meta">
+                <span><i class="far fa-calendar"></i> Dec 18, 2024</span>
+                <span><i class="far fa-user"></i> Hari Nandan K</span>
+                <span><i class="fas fa-microchip"></i> Lab Ref: 2026-B07</span>
+            </div>
+
+            <div class="blog-banner-visual">
+                <img src="../assets/img/blog/banners/blog7.svg" alt="The Simulation Hypothesis: Computational Limits" class="article-featured-image">
+            </div>
+
+            <div class="article-body">
+                <div class="blog-callout">
+                    <div class="blog-callout-title"><i class="fas fa-shield-alt"></i> Architectural Takeaway</div>
+                    <p style="margin: 0; color: #cbd5e1;">If our universe is computational, physics predicts hard bounds: the Bekenstein bound on information density, the Planck length as minimum spatial resolution, and the speed of light as clock rate.</p>
+                </div>
+
+                <h2>1. Bostrom Trilemma and Computational Feasibility</h2>
+                <p>Elon Musk thinks there's a 'one in billions' chance we are in base reality. Is this just tech-bro philosophy, or is there hard physics to back it up? The Simulation Hypothesis proposes that our universe is a computed simulation by a higher intelligence.</p><p>Nick Bostrom's trilemma states one of three things must be true: 1) Civilizations go extinct before reaching post-human stages. 2) Post-human civilizations have no interest in running ancestor simulations. 3) We are almost certainly living in a simulation.</p>
+
+                <h2>2. Information as the Fundamental Substance: "It from Bit"</h2>
+                <p>Computing power is the main argument. If computing continues to grow according to Moore's Law (or its successors), we will eventually be able to simulate every atom in a human brain, and then the entire earth.</p><p>But does physics support this? Quantum Mechanics offers a clue. The fact that particles do not have definite states until observed sounds suspiciously like 'lazy loading' or 'frustum culling' in a video game engine. Why render the whole universe if no one is looking?</p>
+
+                <h3 style="color: #fff; margin-top: 40px;">Comparative Empirical Analysis: Physical Constants as Computational Architecture</h3>
+                <div class="blog-table-wrapper">
+    <table class="blog-data-table">
+        <thead>
+            <tr><th>Physical Constant</th><th>Conventional Physics Interpretation</th><th>Computational Hypothesis Analogy</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Speed of Light (c)</td><td>Universal maximum velocity</td><td>Global clock frequency / bus transfer limit</td></tr>
+<tr><td>Planck Length (ℓ_P)</td><td>Scale of quantum spacetime foam (~1.6e-35 m)</td><td>Minimum rendering spatial resolution (voxel)</td></tr>
+<tr><td>Bekenstein Bound</td><td>Maximum entropy in a given volume</td><td>Maximum memory storage per discrete sector</td></tr>
+<tr><td>Observer Effect</td><td>Wavefunction collapse upon measurement</td><td>Lazy evaluation / Just-in-time rendering optimization</td></tr>
+
+        </tbody>
+    </table>
+</div>
+
+                <h2>3. Physical Constraints on Simulating Quantum Many-Body Systems</h2>
+                <p>The Planck Length is another hint. Our universe is pixelated. There is a minimum resolution to space and time. This suggests a grid-based computation rather than a continuous analog reality.</p><p>However, calculating the complexity of the universe is daunting. Simulating just a few hundred electrons fully requires more memory than there are atoms in the visible universe. Unless... the simulation uses shortcuts.</p>
+
+                <h2>4. Experimental Searches for Grid Discreteness and Lattice Anisotropy</h2>
+                <p>We might look for 'glitches' or round-off errors in the fundamental constants of nature. If the speed of light is the max clock speed of the processor, are there inconsistencies at high energies?</p><p>The Holographic Principle also aligns with this. It suggests that the 3D volume of space is actually a projection of 2D information encoded on a cosmological horizon. We might be a hologram.</p><p>Critics argue that consciousness cannot be computed. This leads to the 'Hard Problem' of consciousness. Can an NPC feel pain? If we are simulations, are we 'p-zombies' or conscious entities?</p><p>From a researcher's perspective, I treat this as a thought experiment to probe the limits of computation. If the universe creates complexity from simple rules (like Cellular Automata), it is indeed algorithmic.</p><p>Ultimately, if the simulation is perfect, we can never prove we are inside it from the inside. But the search for the 'source code' of physics drives us forward.</p>
+
+                <div class="share-section">
+                    <div class="tag-cloud">
+                        <span class='tag-chip'>#Physics</span><span class='tag-chip'>#Philosophy</span><span class='tag-chip'>#Information Theory</span><span class='tag-chip'>#Computation</span>
+                    </div>
+                </div>
+
+                <div class="blog-nav-row">
+                    <a href="blog6.html" class="blog-nav-btn"><i class="fas fa-chevron-left"></i> Previous Article</a>
+                    <a href="../blog.html" class="blog-nav-btn"><i class="fas fa-th-large"></i> All Articles</a>
+                    <a href="blog8.html" class="blog-nav-btn">Next Article <i class="fas fa-chevron-right"></i></a>
+                </div>
             </div>
         </article>
     </main>
-    <footer><div class="footer-content" style="text-align: center; padding: 40px; color: var(--text-secondary);"><p>&copy; 2026 Hari Nandan K.</p></div></footer>
+
+    <footer>
+        <div class="footer-content" style="text-align: center; padding: 50px 20px; color: var(--text-secondary); border-top: 1px solid rgba(255,255,255,0.05); background: #020202;">
+            <p style="font-family: 'Space Grotesk', sans-serif;">&copy; 2026 Hari Nandan K. Theoretical Physics & Cybersecurity Research.</p>
+        </div>
+    </footer>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="../assets/js/main.js"></script>
 </body>

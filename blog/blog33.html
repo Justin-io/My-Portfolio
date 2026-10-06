@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Memory Exploitation &amp; Mitigation | Hari Nandan K</title>
+    <meta name="description" content="Bypassing ASLR, DEP, Shadow Stacks, and Defeating Control Flow Guard in Modern Binaries">
+    <meta name="theme-color" content="#040404">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style-custom.css?v=2">
+    <link rel="stylesheet" href="../assets/css/blog-pro.css?v=2">
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    <div id="canvas-container" style="position: fixed; inset: 0; z-index: -1;"></div>
+
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">JA</div>
+            <ul class="nav-links">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="../index.html#about" class="nav-link">About Me</a></li>
+                <li><a href="../tools.html" class="nav-link">Utilities</a></li>
+                <li><a href="../blog.html" class="nav-link active">Blog</a></li>
+                <li><a href="../CV.pdf" class="nav-link" target="_blank">Resume</a></li>
+            </ul>
+            <div class="menu-toggle"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="blog-banner-header">
+            <div class="blog-banner-glow"></div>
+            <a href="../blog.html" class="back-link" style="display:inline-flex; align-items:center; gap:8px; color:var(--text-tertiary); text-decoration:none; margin-bottom:25px;"><i class="fas fa-arrow-left"></i> Back to Knowledge Base</a>
+            
+            <div class="blog-banner-badge-row">
+                <span class="blog-banner-badge">CYBERSECURITY</span>
+                <span class="blog-banner-reading-time"><i class="far fa-clock"></i> 9 min read</span>
+            </div>
+
+            <h1 class="blog-banner-title">Modern Memory Exploitation & Mitigation</h1>
+
+            <div class="blog-banner-meta">
+                <span><i class="far fa-calendar"></i> Aug 20, 2026</span>
+                <span><i class="far fa-user"></i> Hari Nandan K</span>
+                <span><i class="fas fa-microchip"></i> Lab Ref: 2026-B33</span>
+            </div>
+
+            <div class="blog-banner-visual">
+                <img src="../assets/img/blog/banners/blog33.svg" alt="Modern Memory Exploitation &amp; Mitigation" class="article-featured-image">
+            </div>
+
+            <div class="article-body">
+                <p class="article-lead" style="font-size: 1.25rem; color: #f1f5f9; line-height: 1.8; margin-bottom: 35px;">Bypassing ASLR, DEP, Shadow Stacks, and Defeating Control Flow Guard in Modern Binaries</p>
+
+                <div class="blog-callout">
+                    <div class="blog-callout-title"><i class="fas fa-shield-alt"></i> Security Architecture Takeaway</div>
+                    <p style="margin: 0; color: #cbd5e1;">Modern memory corruption is an arms race between mitigation technologies (ASLR, DEP, CET Shadow Stacks) and exploitation primitives (ROP, JOP, COP). Bypassing modern defenses requires turning information disclosures into arbitrary read/write primitives.</p>
+                </div>
+
+                <h3 style="color: #fff; margin-top: 40px;">Empirical Threat & Architecture Analysis: Defensive Mitigations vs. Adversarial Bypass Strategies</h3>
+                <div class="blog-table-wrapper">
+    <table class="blog-data-table">
+        <thead>
+            <tr><th>Security Mitigation</th><th>Intended Protection Mechanism</th><th>Adversarial Bypass Technique</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>DEP / NX (Data Execution Prevention)</td><td>Marks stack and heap pages as non-executable</td><td>Return-Oriented Programming (ROP) using executable code gadgets</td></tr>
+<tr><td>ASLR (Address Space Layout Randomization)</td><td>Randomizes base addresses of stack, heap, and libraries</td><td>Information leak via uninitialized memory or format strings</td></tr>
+<tr><td>Stack Canaries</td><td>Places random integer before return pointer</td><td>Canary leaking or overwriting SEH / function pointers before return</td></tr>
+<tr><td>Intel CET Shadow Stack</td><td>Hardware-enforced return address stack</td><td>Data-Only Attacks (DOP) altering critical variable flags without hijacking RIP</td></tr>
+<tr><td>Control Flow Guard (CFG / Clang CFI)</td><td>Validates indirect call targets against bitmap</td><td>Invoking legal export targets with controlled arguments or JOP gadgetry</td></tr>
+
+        </tbody>
+    </table>
+</div>
+
+                <h2>1. The Anatomy of Modern Stack-Based Vulnerabilities</h2>
+The era of simple `strcpy` buffer overflows jumping directly onto shellcode in the stack ended with the widespread deployment of Data Execution Prevention (DEP/NX). Modern binary exploitation requires constructing Return-Oriented Programming (ROP) chains.
+             An attacker searches existing executable pages (such as `libc` or `ntdll`) for instruction sequences ending in a `ret` opcode (`0xC3`). By arranging gadget addresses on the stack, the attacker chains sequences together to call `mprotect()` or `VirtualProtect()`, flipping shellcode pages to `PAGE_EXECUTE_READWRITE`.
+
+<h2>2. Bypassing ASLR via Memory Disclosure Leaks</h2>
+Address Space Layout Randomization (ASLR) randomizes memory base offsets upon execution. To deploy a functional ROP chain, an attacker must first defeat ASLR by discovering the base address of a loaded module.
+             This is achieved via information disclosure primitives:
+             <pre><code>// Example format string memory leak exploitation
+char buffer[128];
+// Vulnerable print call without format specifier
+printf(user_supplied_input); 
+
+// Exploit string: "%p %p %p %p %p %p"
+// Leaks saved base pointers, libc return addresses, and stack canaries!</code></pre>
+             By calculating the fixed offset between the leaked function pointer and the module base (`Module_Base = Leaked_Addr - Function_Offset`), the entire address space is de-randomized in memory.
+
+<h2>3. Intel CET and The Shift to Data-Only Programming (DOP)</h2>
+Intel Control-flow Enforcement Technology (CET) introduces a hardware Shadow Stack. Every `call` instruction pushes the return address to both the data stack and the hardware-isolated shadow stack. When `ret` executes, the CPU asserts that both addresses match, immediately terminating ROP chains with a `#CP` (Control Protection) exception.
+             Faced with hardware shadow stacks, exploit development has shifted toward Data-Only Programming (DOP). Instead of altering instruction pointers, attackers corrupt critical state booleans (e.g., `is_admin = 1`), loop counters, or file descriptors, achieving unauthorized actions without violating control flow integrity.
+
+<h2>4. Compiler Sanitizers and Memory-Safe Migration</h2>
+While ASAN (AddressSanitizer) and MSAN catch memory corruption in development, production mitigation requires architectural transition. The ultimate defense against memory exploitation is replacing legacy C/C++ network daemons with memory-safe languages like Rust and Zig, permanently eliminating spatial and temporal memory corruption classes.
+
+
+
+                <div class="share-section">
+                    <div class="tag-cloud">
+                        <span class='tag-chip'>#Exploitation</span><span class='tag-chip'>#Memory Safety</span><span class='tag-chip'>#ROP</span><span class='tag-chip'>#ASLR</span><span class='tag-chip'>#Binary Analysis</span>
+                    </div>
+                </div>
+
+                <div class="blog-nav-row">
+                    <a href="blog32.html" class="blog-nav-btn"><i class="fas fa-chevron-left"></i> Previous Article</a>
+                    <a href="../blog.html" class="blog-nav-btn"><i class="fas fa-th-large"></i> All Articles</a>
+                    <a href="blog34.html" class="blog-nav-btn">Next Article <i class="fas fa-chevron-right"></i></a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <div class="footer-content" style="text-align: center; padding: 50px 20px; color: var(--text-secondary); border-top: 1px solid rgba(255,255,255,0.05); background: #020202;">
+            <p style="font-family: 'Space Grotesk', sans-serif;">&copy; 2026 Hari Nandan K. Theoretical Physics & Cybersecurity Research.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

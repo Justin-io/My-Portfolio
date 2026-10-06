@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAN Bus Protocol Reverse Engineering | Hari Nandan K</title>
+    <meta name="description" content="Vehicle OBD-II Telemetry Sniffing, CAN ID Arbitration, Frame Injection, and ECU Spoofing">
+    <meta name="theme-color" content="#040404">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style-custom.css?v=2">
+    <link rel="stylesheet" href="../assets/css/blog-pro.css?v=2">
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    <div id="canvas-container" style="position: fixed; inset: 0; z-index: -1;"></div>
+
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">JA</div>
+            <ul class="nav-links">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="../index.html#about" class="nav-link">About Me</a></li>
+                <li><a href="../tools.html" class="nav-link">Utilities</a></li>
+                <li><a href="../blog.html" class="nav-link active">Blog</a></li>
+                <li><a href="../CV.pdf" class="nav-link" target="_blank">Resume</a></li>
+            </ul>
+            <div class="menu-toggle"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="blog-banner-header">
+            <div class="blog-banner-glow"></div>
+            <a href="../blog.html" class="back-link" style="display:inline-flex; align-items:center; gap:8px; color:var(--text-tertiary); text-decoration:none; margin-bottom:25px;"><i class="fas fa-arrow-left"></i> Back to Knowledge Base</a>
+            
+            <div class="blog-banner-badge-row">
+                <span class="blog-banner-badge">ROBOTICS & HARDWARE</span>
+                <span class="blog-banner-reading-time"><i class="far fa-clock"></i> 8 min read</span>
+            </div>
+
+            <h1 class="blog-banner-title">CAN Bus Protocol Reverse Engineering</h1>
+
+            <div class="blog-banner-meta">
+                <span><i class="far fa-calendar"></i> Jun 04, 2026</span>
+                <span><i class="far fa-user"></i> Hari Nandan K</span>
+                <span><i class="fas fa-microchip"></i> Lab Ref: 2026-B52</span>
+            </div>
+
+            <div class="blog-banner-visual">
+                <img src="../assets/img/blog/banners/blog52.svg" alt="CAN Bus Protocol Reverse Engineering" class="article-featured-image">
+            </div>
+
+            <div class="article-body">
+                <p class="article-lead" style="font-size: 1.25rem; color: #f1f5f9; line-height: 1.8; margin-bottom: 35px;">Vehicle OBD-II Telemetry Sniffing, CAN ID Arbitration, Frame Injection, and ECU Spoofing</p>
+
+                <div class="blog-callout">
+                    <div class="blog-callout-title"><i class="fas fa-microchip"></i> Hardware & Systems Takeaway</div>
+                    <p style="margin: 0; color: #cbd5e1;">Controller Area Network (CAN) is the nervous system of modern automobiles. Designed in the 1980s for fault tolerance, CAN bus lacks authentication and encryption: any device connected to the OBD-II port can read vehicle telemetry and inject spoofed steering or braking packets.</p>
+                </div>
+
+                <h3 style="color: #fff; margin-top: 40px;">Empirical Architecture Comparison: CAN Bus Protocol Architecture vs. Traditional Serial Networks</h3>
+                <div class="blog-table-wrapper">
+    <table class="blog-data-table">
+        <thead>
+            <tr><th>Protocol Attribute</th><th>Standard UART / RS-232</th><th>Controller Area Network (CAN 2.0B)</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Signaling Medium</td><td>Single-ended voltage (Sensitive to noise)</td><td>Differential balanced pair (CAN_High &amp; CAN_Low; immune to EM noise)</td></tr>
+<tr><td>Addressing Scheme</td><td>Point-to-point / Master-Slave device addresses</td><td>Message-based arbitration IDs (No device addresses; broadcast network)</td></tr>
+<tr><td>Bus Contention</td><td>Collisions corrupt transmissions</td><td>Non-destructive bitwise arbitration (Dominant 0 overwrites Recessive 1)</td></tr>
+<tr><td>Error Handling</td><td>Manual parity checking</td><td>Hardware bit-stuffing, 15-bit CRC, frame check, and automatic fault confinement</td></tr>
+<tr><td>Security</td><td>Unencrypted point-to-point</td><td>Broadcast medium; zero authentication, zero encryption on standard bus</td></tr>
+
+        </tbody>
+    </table>
+</div>
+
+                <h2>1. The Physical and Data Link Layers of CAN</h2>
+Vehicular electronic control units (ECUs)—governing everything from the engine and transmission to ABS and power steering—communicate over a two-wire twisted pair: CAN High and CAN Low.
+             Logical values are differential voltages:
+             <ul>
+                 <li><strong>Recessive Bit (Logical 1):</strong> Both wires sit at $2.5$V (Differential voltage $\Delta V = 0$V).</li>
+                 <li><strong>Dominant Bit (Logical 0):</strong> CAN_H rises to $3.5$V and CAN_L drops to $1.5$V (Differential voltage $\Delta V = 2.0$V).</li>
+             </ul>
+             Because dominant bits electrically override recessive bits on the bus wire, nodes with lower numerical Arbitration IDs (e.g., $0x001$ Emergency Brake vs. $0x3F2$ Air Conditioning) win bus arbitration without packet collision.
+
+<h2>2. Sniffing Vehicle Traffic with SocketCAN and Cangaroo</h2>
+Accessing vehicular network telemetry requires tapping into the internal High-Speed CAN bus (500 kbps) via the under-dash OBD-II diagnostic port (Pins 6 and 14).
+             Using a USB-CAN adapter (such as a Canable running candlelight firmware), Linux exposes the bus as a standard network interface:
+             <pre><code># Setting up SocketCAN interface in Linux
+sudo ip link set can0 type can bitrate 500000
+sudo ip link set up can0
+
+# Dumping live vehicular telemetry frames
+candump can0
+
+# Example output stream:
+# can0  0C9   [8]  20 00 1A 4F 00 00 18 90
+# can0  1A4   [4]  FF 02 12 00
+# can0  280   [8]  10 24 10 24 00 00 00 00</code></pre>
+
+<h2>3. Reverse Engineering Proprietary Payloads via Differential Analysis</h2>
+Because manufacturers keep CAN DBC (Database CAN) matrices strictly confidential, reverse engineering requires differential packet analysis:
+             <ol>
+                 <li><strong>Idle Baseline:</strong> Record 60 seconds of traffic with vehicle engine idling in park.</li>
+                 <li><strong>Action Capture:</strong> Press the accelerator pedal to 50% while capturing packets.</li>
+                 <li><strong>Delta Isolation:</strong> Tools like `cansniffer` highlight bytes that change dynamically with pedal movement. A 2-byte integer in CAN ID `0x1DC` scaling from `0x0000` to `0x7FFF` isolates the accelerator pedal position sensor.</li>
+             </ol>
+
+<h2>4. Packet Injection Attacks & Modern SecOC Defenses</h2>
+Because CAN bus does not authenticate sender identity, an attacker injecting spoofed CAN frames at higher frequencies ($100$ Hz) than legitimate ECUs can override vehicular controls (e.g., injecting speedometer spoofing or lane-keep steering nudges).
+             Modern automotive security combats this via AUTOSAR SecOC (Secure Onboard Communication), which appends an 8-byte Message Authentication Code (MAC) and freshness sequence counter to every frame, ensuring unauthorized frames are discarded at the transceiver.
+
+
+
+                <div class="share-section">
+                    <div class="tag-cloud">
+                        <span class='tag-chip'>#CAN Bus</span><span class='tag-chip'>#Automotive</span><span class='tag-chip'>#Reverse Engineering</span><span class='tag-chip'>#Car Hacking</span><span class='tag-chip'>#Hardware</span>
+                    </div>
+                </div>
+
+                <div class="blog-nav-row">
+                    <a href="blog51.html" class="blog-nav-btn"><i class="fas fa-chevron-left"></i> Previous Article</a>
+                    <a href="../blog.html" class="blog-nav-btn"><i class="fas fa-th-large"></i> All Articles</a>
+                    <a href="blog53.html" class="blog-nav-btn">Next Article <i class="fas fa-chevron-right"></i></a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <div class="footer-content" style="text-align: center; padding: 50px 20px; color: var(--text-secondary); border-top: 1px solid rgba(255,255,255,0.05); background: #020202;">
+            <p style="font-family: 'Space Grotesk', sans-serif;">&copy; 2026 Hari Nandan K. Theoretical Physics & Cybersecurity Research.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

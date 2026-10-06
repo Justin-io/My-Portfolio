@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEGIS-X: Autonomous Incident Triage Engine | Hari Nandan K</title>
+    <meta name="description" content="Sub-Second Anomaly Response, Bayesian Fusion, and Physics-Inspired Lateral Movement Forecasting">
+    <meta name="theme-color" content="#040404">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style-custom.css?v=2">
+    <link rel="stylesheet" href="../assets/css/blog-pro.css?v=2">
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    <div id="canvas-container" style="position: fixed; inset: 0; z-index: -1;"></div>
+
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">JA</div>
+            <ul class="nav-links">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="../index.html#about" class="nav-link">About Me</a></li>
+                <li><a href="../tools.html" class="nav-link">Utilities</a></li>
+                <li><a href="../blog.html" class="nav-link active">Blog</a></li>
+                <li><a href="../CV.pdf" class="nav-link" target="_blank">Resume</a></li>
+            </ul>
+            <div class="menu-toggle"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="blog-banner-header">
+            <div class="blog-banner-glow"></div>
+            <a href="../blog.html" class="back-link" style="display:inline-flex; align-items:center; gap:8px; color:var(--text-tertiary); text-decoration:none; margin-bottom:25px;"><i class="fas fa-arrow-left"></i> Back to Knowledge Base</a>
+            
+            <div class="blog-banner-badge-row">
+                <span class="blog-banner-badge">CYBERSECURITY</span>
+                <span class="blog-banner-reading-time"><i class="far fa-clock"></i> 9 min read</span>
+            </div>
+
+            <h1 class="blog-banner-title">AEGIS-X: Autonomous Incident Triage Engine</h1>
+
+            <div class="blog-banner-meta">
+                <span><i class="far fa-calendar"></i> Aug 29, 2026</span>
+                <span><i class="far fa-user"></i> Hari Nandan K</span>
+                <span><i class="fas fa-microchip"></i> Lab Ref: 2026-B31</span>
+            </div>
+
+            <div class="blog-banner-visual">
+                <img src="../assets/img/blog/banners/blog31.svg" alt="AEGIS-X: Autonomous Incident Triage Engine" class="article-featured-image">
+            </div>
+
+            <div class="article-body">
+                <p class="article-lead" style="font-size: 1.25rem; color: #f1f5f9; line-height: 1.8; margin-bottom: 35px;">Sub-Second Anomaly Response, Bayesian Fusion, and Physics-Inspired Lateral Movement Forecasting</p>
+
+                <div class="blog-callout">
+                    <div class="blog-callout-title"><i class="fas fa-shield-alt"></i> Security Architecture Takeaway</div>
+                    <p style="margin: 0; color: #cbd5e1;">AEGIS-X eliminates the human alert triage bottleneck by combining conformal-gated edge inference with an autonomous multi-agent graph router, achieving a sub-500ms P95 response latency across enterprise telemetry streams.</p>
+                </div>
+
+                <h3 style="color: #fff; margin-top: 40px;">Empirical Threat & Architecture Analysis: Traditional Tier-1 Human SOC vs. AEGIS-X Autonomous Architecture</h3>
+                <div class="blog-table-wrapper">
+    <table class="blog-data-table">
+        <thead>
+            <tr><th>Dimension</th><th>Traditional SOC Tier-1 Operator</th><th>AEGIS-X Autonomous Engine</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Mean Time to Triage (MTTT)</td><td>15 - 45 minutes per alert</td><td>&lt; 420 milliseconds (P95)</td></tr>
+<tr><td>Alert Fatigue Drop Rate</td><td>30% - 50% alerts ignored or closed</td><td>0% dropped; 100% evaluated with conformal guarantees</td></tr>
+<tr><td>Inference Routing</td><td>Single manual analyst review</td><td>Cascading router: Local Qwen3-0.6B -&gt; Groq 70B -&gt; Gemini Pro</td></tr>
+<tr><td>Forecasting Model</td><td>Static heuristic IOC correlation</td><td>Damped wave equation modeling lateral graph traversal</td></tr>
+<tr><td>Action Execution</td><td>Manual ticketing and ticket handoffs</td><td>Automated containment via eBPF network socket teardowns</td></tr>
+
+        </tbody>
+    </table>
+</div>
+
+                <h2>1. The Architecture of Multi-Agent Incident Triage</h2>
+Modern enterprise networks generate upwards of 100,000 security alerts daily. Tier-1 human analysts quickly succumb to cognitive fatigue, dropping critical low-signal anomalies that conceal advanced persistent threats (APTs).
+             AEGIS-X solves this via a hierarchical multi-agent state machine built on LangGraph. Incoming alerts enter an ingestion buffer where deterministic signature rules immediately filter known noise. Borderline anomalies are routed through a cascading inference pipeline:
+             <pre><code>// Rust router pipeline excerpt
+pub async fn route_threat_telemetry(event: &SecurityEvent) -> TriageDecision {
+    if let Some(rule_hit) = fast_deterministic_filter(event) {
+        return rule_hit;
+    }
+    // Conformal edge evaluation
+    let (confidence, edge_pred) = local_quantized_qwen_evaluate(event).await;
+    if confidence >= CONFORMAL_EPSILON_THRESHOLD {
+        return edge_pred;
+    }
+    // High-ambiguity escalation to deep reasoning swarm
+    orchestrate_deep_swarm_analysis(event).await
+}</code></pre>
+
+<h2>2. Log-Odds Bayesian Fusion & Dissent-Gated Consensus</h2>
+When multiple detection agents analyze an unfolding incident (network telemetry, host process tree, cloud IAM audit), their findings are fused using log-odds Bayesian belief updating:
+             $$L(T | E_{1\dots n}) = L_0(T) + \sum_{i=1}^n \ln\left( \frac{P(E_i | T)}{P(E_i | \neg T)} \right)$$
+             To prevent hallucinations from precipitating premature host shutdowns, AEGIS-X enforces a strict Dissent-Gated Consensus protocol: destructive containment actions (such as isolating domain controllers) require non-zero consensus across at least three decoupled evaluators.
+
+<h2>3. Modeling Lateral Movement via Wave Equations</h2>
+Lateral movement across enterprise Active Directory graphs mirrors energy propagation across physical lattices. AEGIS-X models attacker traversal using a damped wave equation applied to graph Laplacian operators $\mathcal{L}$:
+             $$\frac{\partial^2 \Phi}{\partial t^2} + \gamma \frac{\partial \Phi}{\partial t} + c^2 \mathcal{L} \Phi = S(t)$$
+             where $\Phi_i(t)$ represents the predicted compromise probability of asset node $i$. By calculating wave fronts across the credential adjacency graph, the system dynamically isolates high-value targets (Crown Jewels) before the attacker completes privilege escalation.
+
+<h2>4. Live Production Validation & Open Source Ecosystem</h2>
+During live deployment at NEUROBOTS 2026, AEGIS-X demonstrated real-time telemetry processing under platform DDoS pressure, autonomously tracing credential stuffing patterns while simultaneously keeping operational latency under 500ms. The production system is accessible at <a href="https://soc-rust.vercel.app" target="_blank" style="color:var(--accent);">soc-rust.vercel.app</a> and GitHub.
+
+
+
+                <div class="share-section">
+                    <div class="tag-cloud">
+                        <span class='tag-chip'>#AEGIS-X</span><span class='tag-chip'>#SOC</span><span class='tag-chip'>#Incident Response</span><span class='tag-chip'>#AI Security</span><span class='tag-chip'>#Autonomous</span>
+                    </div>
+                </div>
+
+                <div class="blog-nav-row">
+                    <a href="blog30.html" class="blog-nav-btn"><i class="fas fa-chevron-left"></i> Previous Article</a>
+                    <a href="../blog.html" class="blog-nav-btn"><i class="fas fa-th-large"></i> All Articles</a>
+                    <a href="blog32.html" class="blog-nav-btn">Next Article <i class="fas fa-chevron-right"></i></a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <div class="footer-content" style="text-align: center; padding: 50px 20px; color: var(--text-secondary); border-top: 1px solid rgba(255,255,255,0.05); background: #020202;">
+            <p style="font-family: 'Space Grotesk', sans-serif;">&copy; 2026 Hari Nandan K. Theoretical Physics & Cybersecurity Research.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

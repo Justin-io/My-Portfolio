@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Topological Quantum Computing &amp; Anyons | Hari Nandan K</title>
+    <meta name="description" content="Non-Abelian Anyonic Braiding and Hardware-Level Fault Tolerance with Majorana Zero Modes">
+    <meta name="theme-color" content="#040404">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style-custom.css?v=2">
+    <link rel="stylesheet" href="../assets/css/blog-pro.css?v=2">
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    <div id="canvas-container" style="position: fixed; inset: 0; z-index: -1;"></div>
+
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">JA</div>
+            <ul class="nav-links">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="../index.html#about" class="nav-link">About Me</a></li>
+                <li><a href="../tools.html" class="nav-link">Utilities</a></li>
+                <li><a href="../blog.html" class="nav-link active">Blog</a></li>
+                <li><a href="../CV.pdf" class="nav-link" target="_blank">Resume</a></li>
+            </ul>
+            <div class="menu-toggle"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="blog-banner-header">
+            <div class="blog-banner-glow"></div>
+            <a href="../blog.html" class="back-link" style="display:inline-flex; align-items:center; gap:8px; color:var(--text-tertiary); text-decoration:none; margin-bottom:25px;"><i class="fas fa-arrow-left"></i> Back to Knowledge Base</a>
+            
+            <div class="blog-banner-badge-row">
+                <span class="blog-banner-badge">QUANTUM PHYSICS</span>
+                <span class="blog-banner-reading-time"><i class="far fa-clock"></i> 8 min read</span>
+            </div>
+
+            <h1 class="blog-banner-title">Topological Quantum Computing & Anyons</h1>
+
+            <div class="blog-banner-meta">
+                <span><i class="far fa-calendar"></i> Sep 10, 2026</span>
+                <span><i class="far fa-user"></i> Hari Nandan K</span>
+                <span><i class="fas fa-microchip"></i> Lab Ref: 2026-B28</span>
+            </div>
+
+            <div class="blog-banner-visual">
+                <img src="../assets/img/blog/banners/blog28.svg" alt="Topological Quantum Computing &amp; Anyons" class="article-featured-image">
+            </div>
+
+            <div class="article-body">
+                <p class="article-lead" style="font-size: 1.25rem; color: #f1f5f9; line-height: 1.8; margin-bottom: 35px;">Non-Abelian Anyonic Braiding and Hardware-Level Fault Tolerance with Majorana Zero Modes</p>
+
+                <div class="blog-callout">
+                    <div class="blog-callout-title"><i class="fas fa-atom"></i> Theoretical Formulation</div>
+                    <p style="margin: 0; color: #cbd5e1;">Unlike conventional qubits that require active error correction to fight local dephasing noise, topological qubits store quantum information non-locally in the braid trajectories of non-Abelian anyons, making them intrinsically immune to local environmental perturbations.</p>
+                </div>
+
+                <h3 style="color: #fff; margin-top: 40px;">Empirical Architecture Comparison: Conventional Qubits vs. Topological Majorana Qubits</h3>
+                <div class="blog-table-wrapper">
+    <table class="blog-data-table">
+        <thead>
+            <tr><th>Dimension</th><th>Conventional Qubits (Transmons / Ions)</th><th>Topological Qubits (Majorana Zero Modes)</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Information Storage</td><td>Local physical state (charges, spins, photon states)</td><td>Non-local topological braiding state of separated anyons</td></tr>
+<tr><td>Error Mechanism</td><td>Local magnetic/electric fluctuations cause dephasing</td><td>Requires macroscopic topological defect or thermal quasiparticle</td></tr>
+<tr><td>Error Correction</td><td>Active surface code requiring continuous syndrome measurement</td><td>Intrinsically protected at the physical hardware layer</td></tr>
+<tr><td>Quantum Logic Gate</td><td>Microwave/laser pulses tuned to precise duration and phase</td><td>Physical spatial braiding of anyon world-lines</td></tr>
+<tr><td>Material Platform</td><td>Al/AlOx Josephson junctions or trapped ions</td><td>InAs/InSb semiconductor nanowires coupled to s-wave superconductors</td></tr>
+
+        </tbody>
+    </table>
+</div>
+
+                <h2>1. Beyond Bosons and Fermions: The Physics of 2D Anyons</h2>
+In 3D space, exchanging two identical particles twice is topologically equivalent to the identity ($SO(3)$ fundamental group is $\mathbb{Z}_2$), constraining all particles to fermions ($\psi \to -\psi$) or bosons ($\psi \to +\psi$). In two dimensions, particle exchange world-lines form knots and braids classified by the braid group $\mathcal{B}_n$.
+             Non-Abelian anyons carry degenerate ground state manifolds. Exchanging two anyons applies a unitary matrix rotation $\rho(\sigma_i)$ onto this degenerate space:
+             $$\psi_a \to \sum_b [R_{12}]_a^b \psi_b$$
+             Because the outcome depends solely on the topological winding knot of the braid, infinitesimal noise perturbations along the trajectory cannot alter the final quantum state.
+
+<h2>2. Majorana Zero Modes in Hybrid Semiconductor Nanowires</h2>
+The most promising realization of non-Abelian anyons is the Majorana Zero Mode (MZM). Proposed by Alexei Kitaev, MZMs emerge at the ends of 1D topological superconducting wires:
+             $$\gamma_1 = \gamma_1^\dagger, \quad \gamma_2 = \gamma_2^\dagger, \quad \{\gamma_i, \gamma_j\} = 2\delta_{ij}$$
+             A single standard Dirac fermion operator is split into two spatially separated halves: $c = \frac{1}{2}(\gamma_1 + i\gamma_2)$. By placing a high spin-orbit coupling InAs nanowire in proximity to an s-wave superconductor under an external Zeeman magnetic field $B > B_c = \sqrt{\Delta^2 + \mu^2}$, the wire undergoes a topological phase transition into a p-wave topological superconductor hosting isolated MZMs at its wire tips.
+
+<h2>3. Braiding Protocols in Nanowire T-Junctions</h2>
+To execute non-Abelian braiding operations, MZMs must be swapped in physical space without colliding. Alice and Bob cannot simply pass through each other in 1D; they require T-junction network geometries.
+             By tuning electrostatic gate voltages beneath the junction arms, researchers adiabatically shuttle MZMs around corners. Braiding two Majorana modes generates a Clifford group phase gate:
+             $$U_{12} = \exp\left( \frac{\pi}{4} \gamma_1 \gamma_2 \right) = \frac{1}{\sqrt{2}}(1 + \gamma_1 \gamma_2)$$
+             Repeated braiding sequences synthesize Clifford gates, while non-Clifford operations (like the $T$-gate $\pi/8$) are injected via magic state distillation.
+
+<h2>4. Experimental Milestones: Conductance Quantization & Parity Readout</h2>
+The key experimental signature of MZMs is the zero-bias conductance peak (ZBCP) of height $2e^2/h$ in tunneling spectroscopy. Recent breakthroughs using ultra-clean epitaxially grown Al-InAs nanowires demonstrate topological gap opening and parity measurement via dispersively coupled quantum dots, moving topological computing from theoretical curiosity to experimental reality.
+
+
+
+                <div class="share-section">
+                    <div class="tag-cloud">
+                        <span class='tag-chip'>#Topological</span><span class='tag-chip'>#Majorana</span><span class='tag-chip'>#Anyons</span><span class='tag-chip'>#Quantum Hardware</span><span class='tag-chip'>#Braid Group</span>
+                    </div>
+                </div>
+
+                <div class="blog-nav-row">
+                    <a href="blog27.html" class="blog-nav-btn"><i class="fas fa-chevron-left"></i> Previous Article</a>
+                    <a href="../blog.html" class="blog-nav-btn"><i class="fas fa-th-large"></i> All Articles</a>
+                    <a href="blog29.html" class="blog-nav-btn">Next Article <i class="fas fa-chevron-right"></i></a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <div class="footer-content" style="text-align: center; padding: 50px 20px; color: var(--text-secondary); border-top: 1px solid rgba(255,255,255,0.05); background: #020202;">
+            <p style="font-family: 'Space Grotesk', sans-serif;">&copy; 2026 Hari Nandan K. Theoretical Physics & Cybersecurity Research.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

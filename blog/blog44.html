@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distributed Consensus: Raft vs. Paxos vs. PBFT | Hari Nandan K</title>
+    <meta name="description" content="Leader Election, Quorum Quakes, State Machine Replication, and Byzantine Fault Tolerance">
+    <meta name="theme-color" content="#040404">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style-custom.css?v=2">
+    <link rel="stylesheet" href="../assets/css/blog-pro.css?v=2">
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    <div id="canvas-container" style="position: fixed; inset: 0; z-index: -1;"></div>
+
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">JA</div>
+            <ul class="nav-links">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="../index.html#about" class="nav-link">About Me</a></li>
+                <li><a href="../tools.html" class="nav-link">Utilities</a></li>
+                <li><a href="../blog.html" class="nav-link active">Blog</a></li>
+                <li><a href="../CV.pdf" class="nav-link" target="_blank">Resume</a></li>
+            </ul>
+            <div class="menu-toggle"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="blog-banner-header">
+            <div class="blog-banner-glow"></div>
+            <a href="../blog.html" class="back-link" style="display:inline-flex; align-items:center; gap:8px; color:var(--text-tertiary); text-decoration:none; margin-bottom:25px;"><i class="fas fa-arrow-left"></i> Back to Knowledge Base</a>
+            
+            <div class="blog-banner-badge-row">
+                <span class="blog-banner-badge">DISTRIBUTED SYSTEMS</span>
+                <span class="blog-banner-reading-time"><i class="far fa-clock"></i> 8 min read</span>
+            </div>
+
+            <h1 class="blog-banner-title">Distributed Consensus: Raft vs. Paxos vs. PBFT</h1>
+
+            <div class="blog-banner-meta">
+                <span><i class="far fa-calendar"></i> Jul 06, 2026</span>
+                <span><i class="far fa-user"></i> Hari Nandan K</span>
+                <span><i class="fas fa-microchip"></i> Lab Ref: 2026-B44</span>
+            </div>
+
+            <div class="blog-banner-visual">
+                <img src="../assets/img/blog/banners/blog44.svg" alt="Distributed Consensus: Raft vs. Paxos vs. PBFT" class="article-featured-image">
+            </div>
+
+            <div class="article-body">
+                <p class="article-lead" style="font-size: 1.25rem; color: #f1f5f9; line-height: 1.8; margin-bottom: 35px;">Leader Election, Quorum Quakes, State Machine Replication, and Byzantine Fault Tolerance</p>
+
+                <div class="blog-callout">
+                    <div class="blog-callout-title"><i class="fas fa-network-wired"></i> Distributed Architecture Takeaway</div>
+                    <p style="margin: 0; color: #cbd5e1;">Distributed consensus is the bedrock of reliable cloud infrastructure. Whether orchestrating Kubernetes via etcd (Raft) or securing decentralized ledgers (PBFT), consensus algorithms guarantee that distributed state machines agree on log order despite node crashes.</p>
+                </div>
+
+                <h3 style="color: #fff; margin-top: 40px;">Empirical Architecture Comparison: Consensus Protocol Matrix: Paxos, Raft, and PBFT</h3>
+                <div class="blog-table-wrapper">
+    <table class="blog-data-table">
+        <thead>
+            <tr><th>Protocol Attribute</th><th>Multi-Paxos</th><th>Raft (etcd / Consul)</th><th>Practical Byzantine Fault Tolerance (PBFT)</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Fault Model</td><td>Crash-Fault-Tolerant (CFT)</td><td>Crash-Fault-Tolerant (CFT)</td><td>Byzantine-Fault-Tolerant (BFT - Malicious/Lying nodes)</td></tr>
+<tr><td>Fault Tolerance Quorum</td><td>$N \ge 2F + 1$ (Tolerates $F$ crash failures)</td><td>$N \ge 2F + 1$ (Tolerates $F$ crash failures)</td><td>$N \ge 3F + 1$ (Tolerates $F$ malicious Byzantine nodes)</td></tr>
+<tr><td>Leader Role</td><td>Weak leader or leaderless</td><td>Strong leader: All writes flow strictly through leader</td><td>Primary node with multi-phase view change protocol</td></tr>
+<tr><td>Message Complexity</td><td>$O(N)$ normal case, $O(N^2)$ recovery</td><td>$O(N)$ heartbeat and append entries</td><td>$O(N^2)$ due to Prepare and Commit broadcast phases</td></tr>
+<tr><td>Understandability</td><td>Notoriously difficult to understand/implement</td><td>Designed explicitly for understandability and decomposition</td><td>Complex 3-phase commit state machine</td></tr>
+
+        </tbody>
+    </table>
+</div>
+
+                <h2>1. The Fundamental Consensus Problem in Asynchronous Networks</h2>
+In 1985, Fischer, Lynch, and Paterson (FLP Impossibility Result) proved that in an asynchronous network, no deterministic consensus protocol can guarantee both Safety and Liveness if even a single node can experience unannounced crash failures.
+             Practical distributed protocols sidestep FLP by introducing weak synchrony assumptions—specifically, partial synchrony where message delivery delays are bounded by an unknown upper limit $\Delta$.
+
+<h2>2. The Raft Protocol: Strong Leader and Log Invariants</h2>
+Designed by Diego Ongaro and John Ousterhout at Stanford, Raft decomposes consensus into three discrete sub-problems:
+             <ul>
+                 <li><strong>Leader Election:</strong> Nodes operate in one of three states: Follower, Candidate, or Leader. If heartbeat timeouts expire, a follower increments its term and requests votes. A candidate wins if it secures votes from a majority of nodes: $\lfloor N/2 \rfloor + 1$.</li>
+                 <li><strong>Log Replication:</strong> The leader accepts client proposals, writes them to its local append-only WAL, and sends `AppendEntries` RPCs to followers.</li>
+                 <li><strong>Safety Invariant:</strong> If a log entry is committed at term $T$, it will be present in the logs of all leaders for all terms $> T$.</li>
+             </ul>
+
+<h2>3. Network Partitions & Split-Brain Mitigation</h2>
+Consider a 5-node cluster $\{A, B, C, D, E\}$ partitioned into two subnets: $\{A, B\}$ and $\{C, D, E\}$. If node $A$ was leader, it cannot commit any client transactions because it can only communicate with $B$ ($2/5$ nodes, failing the majority quorum requirement).
+             Meanwhile, partition $\{C, D, E\}$ holds $3/5$ nodes, elects a new leader (e.g., node $C$), and continues committing transactions safely. When the network partition heals, nodes $A$ and $B$ detect the higher term number from $C$, step down to followers, and truncate uncommitted log entries to match the authoritative leader log.
+
+<h2>4. Practical Byzantine Fault Tolerance (PBFT) in Hostile Environments</h2>
+Crash fault tolerance assumes nodes are honest (they either execute correctly or crash silently). In adversarial environments, compromised nodes can transmit conflicting messages to different peers (Byzantine behavior).
+             PBFT resolves this using a three-phase commit process: Pre-Prepare, Prepare, and Commit. Nodes broadcast signed cryptographic votes at every phase. Because $N \ge 3F + 1$, the intersection of any two quorums contains at least $F + 1$ honest nodes, guaranteeing deterministic agreement even if $F$ nodes act maliciously.
+
+
+
+                <div class="share-section">
+                    <div class="tag-cloud">
+                        <span class='tag-chip'>#Consensus</span><span class='tag-chip'>#Raft</span><span class='tag-chip'>#Paxos</span><span class='tag-chip'>#PBFT</span><span class='tag-chip'>#Distributed Systems</span>
+                    </div>
+                </div>
+
+                <div class="blog-nav-row">
+                    <a href="blog43.html" class="blog-nav-btn"><i class="fas fa-chevron-left"></i> Previous Article</a>
+                    <a href="../blog.html" class="blog-nav-btn"><i class="fas fa-th-large"></i> All Articles</a>
+                    <a href="blog45.html" class="blog-nav-btn">Next Article <i class="fas fa-chevron-right"></i></a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <div class="footer-content" style="text-align: center; padding: 50px 20px; color: var(--text-secondary); border-top: 1px solid rgba(255,255,255,0.05); background: #020202;">
+            <p style="font-family: 'Space Grotesk', sans-serif;">&copy; 2026 Hari Nandan K. Theoretical Physics & Cybersecurity Research.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

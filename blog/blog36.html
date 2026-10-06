@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Red Team Infrastructure as Code | Hari Nandan K</title>
+    <meta name="description" content="Automating Malleable C2 Profiles, Multi-Tier Redirectors, and Terraform-Provisioned Domain Fronting">
+    <meta name="theme-color" content="#040404">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style-custom.css?v=2">
+    <link rel="stylesheet" href="../assets/css/blog-pro.css?v=2">
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    <div id="canvas-container" style="position: fixed; inset: 0; z-index: -1;"></div>
+
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">JA</div>
+            <ul class="nav-links">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="../index.html#about" class="nav-link">About Me</a></li>
+                <li><a href="../tools.html" class="nav-link">Utilities</a></li>
+                <li><a href="../blog.html" class="nav-link active">Blog</a></li>
+                <li><a href="../CV.pdf" class="nav-link" target="_blank">Resume</a></li>
+            </ul>
+            <div class="menu-toggle"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="blog-banner-header">
+            <div class="blog-banner-glow"></div>
+            <a href="../blog.html" class="back-link" style="display:inline-flex; align-items:center; gap:8px; color:var(--text-tertiary); text-decoration:none; margin-bottom:25px;"><i class="fas fa-arrow-left"></i> Back to Knowledge Base</a>
+            
+            <div class="blog-banner-badge-row">
+                <span class="blog-banner-badge">CYBERSECURITY</span>
+                <span class="blog-banner-reading-time"><i class="far fa-clock"></i> 8 min read</span>
+            </div>
+
+            <h1 class="blog-banner-title">Red Team Infrastructure as Code</h1>
+
+            <div class="blog-banner-meta">
+                <span><i class="far fa-calendar"></i> Aug 08, 2026</span>
+                <span><i class="far fa-user"></i> Hari Nandan K</span>
+                <span><i class="fas fa-microchip"></i> Lab Ref: 2026-B36</span>
+            </div>
+
+            <div class="blog-banner-visual">
+                <img src="../assets/img/blog/banners/blog36.svg" alt="Red Team Infrastructure as Code" class="article-featured-image">
+            </div>
+
+            <div class="article-body">
+                <p class="article-lead" style="font-size: 1.25rem; color: #f1f5f9; line-height: 1.8; margin-bottom: 35px;">Automating Malleable C2 Profiles, Multi-Tier Redirectors, and Terraform-Provisioned Domain Fronting</p>
+
+                <div class="blog-callout">
+                    <div class="blog-callout-title"><i class="fas fa-shield-alt"></i> Security Architecture Takeaway</div>
+                    <p style="margin: 0; color: #cbd5e1;">Modern red team operations cannot rely on fragile manual servers. Using Infrastructure as Code (Terraform & Ansible), operators provision disposable, multi-tier command-and-control redirectors in minutes, complete with TLS certificates and traffic sanitization.</p>
+                </div>
+
+                <h3 style="color: #fff; margin-top: 40px;">Empirical Threat & Architecture Analysis: Ad-Hoc Red Team Setup vs. Automated Multi-Tier IaC</h3>
+                <div class="blog-table-wrapper">
+    <table class="blog-data-table">
+        <thead>
+            <tr><th>Operational Metric</th><th>Ad-Hoc Manual C2 Deployment</th><th>Terraform-Automated Multi-Tier IaC</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Provisioning Time</td><td>4 - 8 hours per campaign</td><td>&lt; 4 minutes via automated scripts</td></tr>
+<tr><td>C2 Server Exposure</td><td>Direct IP connection exposed to defenders</td><td>Fully hidden behind fronted CDN and reverse proxies</td></tr>
+<tr><td>Traffic Sanitization</td><td>None; raw callbacks reach server</td><td>Nginx/Apache rewrite rules drop scrapers, sandboxes, and threat intel bots</td></tr>
+<tr><td>Burn Recovery Time</td><td>Requires full manual server migration</td><td>Single command teardown &amp; re-deploy: terraform destroy &amp;&amp; terraform apply</td></tr>
+<tr><td>Audit Logging</td><td>Fragmented terminal logs</td><td>Centralized encrypted WireGuard logging to SIEM backend</td></tr>
+
+        </tbody>
+    </table>
+</div>
+
+                <h2>1. Multi-Tier Redirection Architecture</h2>
+In professional adversarial simulation, the central Command and Control (C2) server must never be exposed directly to the internet. If incident responders identify and block the callback IP, months of access can be severed instantly.
+             A resilient red team architecture deploys multiple tiers:
+             <ul>
+                 <li><strong>Tier 1: Edge CDN / Fronted Domains:</strong> Public cloud CDNs (Cloudflare, Fastly, Azure) that accept initial HTTPS beaconing.</li>
+                 <li><strong>Tier 2: Filtering Redirectors:</strong> Ephemeral VPS nodes running Nginx or Apache with rewrite rules that inspect User-Agents, IP ranges, and request payloads.</li>
+                 <li><strong>Tier 3: Core C2 Engine:</strong> Isolated backend servers accessible solely through private encrypted WireGuard mesh networks.</li>
+             </ul>
+
+<h2>2. Terraform Declarative Deployment</h2>
+Below is an excerpt of a Terraform HCL configuration provisioning filtering redirectors across diverse cloud providers:
+             <pre><code>resource "digitalocean_droplet" "c2_redirector" {
+  image    = "debian-12-x64"
+  name     = "edge-proxy-${count.index}"
+  region   = "fra1"
+  size     = "s-1vcpu-1gb"
+  count    = 2
+  ssh_keys = [var.ssh_fingerprint]
+
+  provisioner "remote-exec" {
+    inline = [
+      "apt-get update &amp;&amp; apt-get install -y nginx certbot python3-certbot-nginx wireguard",
+      "curl -sSL https://raw.githubusercontent.com/redteam/deploy/main/setup-proxy.sh | bash"
+    ]
+  }
+}</code></pre>
+
+<h2>3. Traffic Sanitization with Apache Rewrite Rules</h2>
+Redirector nodes run custom rewrite rules designed to drop defensive threat intelligence crawlers (VirusTotal, Shodan, Censys) while silently passing valid beacons to the C2 backend:
+             <pre><code># Apache .htaccess filtering rule
+RewriteEngine On
+# Block requests from known security vendor subnets
+RewriteCond %{REMOTE_ADDR} ^(199\.167\.|64\.233\.|66\.249\.) [OR]
+# Block missing or generic User-Agents
+RewriteCond %{HTTP_USER_AGENT} ^$ [OR]
+RewriteCond %{HTTP_USER_AGENT} "(curl|python|wget|nikto|sqlmap)" [NC]
+# Redirect malicious requests to legitimate decoy website
+RewriteRule ^.*$ https://www.microsoft.com [R=302,L]
+
+# Forward valid beacons with exact URI signature to C2 backend
+RewriteRule ^/api/v1/telemetry/(.*)$ http://10.10.0.1:8080/api/v1/telemetry/$1 [P]</code></pre>
+
+<h2>4. Malleable C2 Profiles: Blending with Normal Traffic</h2>
+Network defenses flag beaconing based on periodic intervals and unusual HTTP headers. Operators utilize Malleable C2 profiles to shape network traffic so it mimics standard enterprise SaaS applications (e.g., Microsoft Graph API, Zoom webhooks, or Slack events). By adding randomized jitter (e.g., 20% interval variance), beaconing patterns blend seamlessly into standard enterprise traffic baselines.
+
+
+
+                <div class="share-section">
+                    <div class="tag-cloud">
+                        <span class='tag-chip'>#Red Team</span><span class='tag-chip'>#Infrastructure</span><span class='tag-chip'>#Terraform</span><span class='tag-chip'>#C2</span><span class='tag-chip'>#DevOps</span>
+                    </div>
+                </div>
+
+                <div class="blog-nav-row">
+                    <a href="blog35.html" class="blog-nav-btn"><i class="fas fa-chevron-left"></i> Previous Article</a>
+                    <a href="../blog.html" class="blog-nav-btn"><i class="fas fa-th-large"></i> All Articles</a>
+                    <a href="blog37.html" class="blog-nav-btn">Next Article <i class="fas fa-chevron-right"></i></a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <div class="footer-content" style="text-align: center; padding: 50px 20px; color: var(--text-secondary); border-top: 1px solid rgba(255,255,255,0.05); background: #020202;">
+            <p style="font-family: 'Space Grotesk', sans-serif;">&copy; 2026 Hari Nandan K. Theoretical Physics & Cybersecurity Research.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

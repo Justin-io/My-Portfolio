@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insights & Research | Hari Nandan K</title>
-    <meta name="description" content="Thoughts, tutorials, and insights on AI, Tech, and Product Development.">
+    <title>Insights & Research Archives | Hari Nandan K</title>
+    <meta name="description" content="55 technical papers, deep dives, and research archives on Theoretical Physics, Advanced Cybersecurity, AI Systems, Distributed Platforms, and Robotics.">
     <meta name="theme-color" content="#040404">
 
     <!-- Fonts -->
@@ -20,7 +20,7 @@
     <!-- Main CSS -->
     <link rel="stylesheet" href="assets/css/style-custom.css?v=2">
     <!-- Premium Blog CSS -->
-    <link rel="stylesheet" href="assets/css/blog-pro.css?v=1">
+    <link rel="stylesheet" href="assets/css/blog-pro.css?v=2">
 </head>
 
 <body>
@@ -46,29 +46,39 @@
         <!-- Hero Section -->
         <section class="blog-hero">
             <div style="position: relative; z-index: 2;">
-                <span class="blog-hero-label">Knowledge Base</span>
-                <h1 class="blog-hero-title">Insights & <br>Research</h1>
-                <p class="blog-hero-subtitle">Exploring the frontiers of Quantum Physics, Artificial Intelligence, and
-                    Cybersecurity. Deep dives into the technology shaping our future.</p>
+                <span class="blog-hero-label">55 PEER RESEARCH PAPERS</span>
+                <h1 class="blog-hero-title">Insights &amp;<br>Research</h1>
+                <p class="blog-hero-subtitle">Exploring the frontiers of Theoretical Physics, Zero-Trust Cybersecurity, Autonomous AI Swarms, and Hardware Systems. Grounded in formal mathematics and production code.</p>
             </div>
         </section>
 
-        <!-- Dynamic Filters -->
-        <div class="blog-filters-container" id="blog-filters">
-            <button class="blog-filter-btn active" data-filter="all">All Topics</button>
-            <!-- Categories injected by JS -->
+        <!-- Live Search Bar -->
+        <div class="blog-search-wrapper">
+            <div class="blog-search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="blog-search-input" class="blog-search-input" placeholder="Search 55 technical papers, algorithms, tags, or topics..." autocomplete="off">
+                <span id="search-results-count" style="color: var(--text-tertiary); font-size: 0.85rem; font-family: 'JetBrains Mono', monospace; white-space: nowrap;">55 papers</span>
+            </div>
         </div>
 
+        <!-- Dynamic Category Filters -->
+        <div class="blog-filters-container" id="blog-filters">
+            <!-- Buttons injected by JS with live count badges -->
+        </div>
+
+        <!-- Blog Cards Grid -->
         <div class="blog-grid-pro" id="blog-grid">
-            <div class="loading-spinner" style="color: var(--text-tertiary); text-align: center; grid-column: 1/-1;">
-                Loading intelligence...</div>
+            <div class="loading-spinner" style="color: var(--text-tertiary); text-align: center; grid-column: 1/-1; padding: 60px;">
+                <i class="fas fa-circle-notch fa-spin" style="font-size: 2rem; color: var(--blog-accent); margin-bottom: 15px;"></i><br>
+                Loading intelligence archives...
+            </div>
         </div>
     </main>
 
     <footer>
         <div class="footer-content"
             style="text-align: center; padding: 60px 20px; color: var(--text-secondary); border-top: 1px solid rgba(255,255,255,0.05); background: #020202;">
-            <p style="font-family: 'Space Grotesk', sans-serif;">&copy; 2026 Hari Nandan K. All rights reserved.</p>
+            <p style="font-family: 'Space Grotesk', sans-serif;">&copy; 2026 Hari Nandan K. Theoretical Physics & Cybersecurity Research Archives.</p>
         </div>
     </footer>
 
@@ -79,35 +89,85 @@
         document.addEventListener('DOMContentLoaded', async () => {
             const grid = document.getElementById('blog-grid');
             const filtersContainer = document.getElementById('blog-filters');
+            const searchInput = document.getElementById('blog-search-input');
+            const resultsCount = document.getElementById('search-results-count');
+
+            let allPosts = [];
+            let activeFilter = 'all';
+            let searchQuery = '';
 
             try {
                 // Fetch Manifest
                 const response = await fetch('blog/manifest.json');
                 if (!response.ok) throw new Error('Failed to load blog manifest');
-                const posts = await response.json();
+                allPosts = await response.json();
 
                 // Clear loading
                 grid.innerHTML = '';
 
-                // Extract unique categories
-                const categories = new Set(posts.map(post => post.category));
-                categories.forEach(cat => {
+                // Extract and count categories
+                const catCounts = {};
+                allPosts.forEach(post => {
+                    const cat = post.category || 'Uncategorized';
+                    catCounts[cat] = (catCounts[cat] || 0) + 1;
+                });
+
+                // Create 'All Topics' button
+                filtersContainer.innerHTML = '';
+                const allBtn = document.createElement('button');
+                allBtn.className = 'blog-filter-btn active';
+                allBtn.dataset.filter = 'all';
+                allBtn.innerHTML = `All Topics <span class="blog-count-badge">${allPosts.length}</span>`;
+                filtersContainer.appendChild(allBtn);
+
+                // Create category buttons
+                Object.keys(catCounts).sort().forEach(cat => {
                     const btn = document.createElement('button');
                     btn.className = 'blog-filter-btn';
-                    btn.textContent = cat;
                     btn.dataset.filter = cat;
+                    btn.innerHTML = `${cat} <span class="blog-count-badge">${catCounts[cat]}</span>`;
                     filtersContainer.appendChild(btn);
                 });
 
-                // Render Function
-                function renderPosts(filter = 'all') {
+                // Add Keyframes for JS animation
+                const styleSheet = document.createElement("style");
+                styleSheet.innerText = `
+                    @keyframes fadeInUp {
+                        from { opacity: 0; transform: translateY(20px); }
+                        to { opacity: 1; transform: translateY(0); }
+                    }
+                `;
+                document.head.appendChild(styleSheet);
+
+                // Render Function with Search and Filter
+                function renderPosts() {
                     grid.innerHTML = '';
                     let delay = 0;
+                    let matchesCount = 0;
 
-                    posts.forEach(post => {
-                        if (filter !== 'all' && post.category !== filter) return;
+                    const normalizedQuery = searchQuery.trim().toLowerCase();
 
-                        // Fix image path if relative
+                    allPosts.forEach(post => {
+                        // Category filter check
+                        if (activeFilter !== 'all' && post.category !== activeFilter) {
+                            return;
+                        }
+
+                        // Search query check
+                        if (normalizedQuery) {
+                            const titleMatch = (post.title || '').toLowerCase().includes(normalizedQuery);
+                            const excerptMatch = (post.excerpt || '').toLowerCase().includes(normalizedQuery);
+                            const catMatch = (post.category || '').toLowerCase().includes(normalizedQuery);
+                            const tagsMatch = (post.tags || []).some(t => t.toLowerCase().includes(normalizedQuery));
+
+                            if (!titleMatch && !excerptMatch && !catMatch && !tagsMatch) {
+                                return;
+                            }
+                        }
+
+                        matchesCount++;
+
+                        // Clean image path
                         let imagePath = post.image;
                         if (imagePath.startsWith('../')) {
                             imagePath = imagePath.substring(3);
@@ -117,16 +177,20 @@
                         card.href = 'blog/' + post.file;
                         card.className = 'blog-card-pro';
                         card.style.opacity = '0';
-                        card.style.animation = `fadeInUp 0.6s forwards ${delay}s`;
+                        card.style.animation = `fadeInUp 0.4s forwards ${Math.min(delay, 0.4)}s`;
+
+                        const readTime = post.read_time ? `${post.read_time} min read` : '7 min read';
 
                         card.innerHTML = `
                             <div class="blog-card-image-wrapper">
-                                <img src="${imagePath}" alt="${post.title}" class="blog-card-image" loading="lazy">
+                                <img src="${imagePath}" alt="${post.title}" class="blog-card-image" loading="lazy" onerror="this.src='assets/img/blog/banners/sample.svg'">
                                 <span class="blog-badge-pro">${post.category}</span>
                             </div>
                             <div class="blog-card-content">
                                 <div class="blog-meta-pro">
                                     <span><i class="far fa-calendar"></i> ${post.date}</span>
+                                    <span>&bull;</span>
+                                    <span><i class="far fa-clock"></i> ${readTime}</span>
                                 </div>
                                 <h3 class="blog-title-pro">${post.title}</h3>
                                 <p class="blog-excerpt-pro">${post.excerpt}</p>
@@ -137,39 +201,57 @@
                         `;
 
                         grid.appendChild(card);
-                        delay += 0.05;
+                        delay += 0.03;
                     });
-                }
 
-                // Add Keyframes for JS animation
-                const styleSheet = document.createElement("style");
-                styleSheet.innerText = `
-                    @keyframes fadeInUp {
-                        from { opacity: 0; transform: translateY(30px); }
-                        to { opacity: 1; transform: translateY(0); }
+                    // Update count label
+                    if (resultsCount) {
+                        resultsCount.textContent = `${matchesCount} paper${matchesCount === 1 ? '' : 's'}`;
                     }
-                `;
-                document.head.appendChild(styleSheet);
+
+                    // Empty state
+                    if (matchesCount === 0) {
+                        grid.innerHTML = `
+                            <div style="text-align: center; grid-column: 1/-1; padding: 60px 20px; color: var(--text-tertiary);">
+                                <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 20px; color: rgba(255,255,255,0.1);"></i>
+                                <h3 style="color: #fff; margin-bottom: 10px; font-family: 'Space Grotesk', sans-serif;">No matching research papers found</h3>
+                                <p>Try adjusting your search keywords or switching category filters.</p>
+                            </div>
+                        `;
+                    }
+                }
 
                 // Initial Render
                 renderPosts();
 
-                // Filter Logic
-                const filterBtns = document.querySelectorAll('.blog-filter-btn');
-                filterBtns.forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        // Re-query buttons to include dynamically added ones
-                        const allBtns = document.querySelectorAll('.blog-filter-btn');
-                        allBtns.forEach(b => b.classList.remove('active'));
-                        btn.classList.add('active');
+                // Filter Click Handlers
+                filtersContainer.addEventListener('click', (e) => {
+                    const btn = e.target.closest('.blog-filter-btn');
+                    if (!btn) return;
 
-                        renderPosts(btn.dataset.filter);
-                    });
+                    const allBtns = filtersContainer.querySelectorAll('.blog-filter-btn');
+                    allBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    activeFilter = btn.dataset.filter;
+                    renderPosts();
                 });
+
+                // Live Search Input Handler
+                if (searchInput) {
+                    let debounceTimer;
+                    searchInput.addEventListener('input', (e) => {
+                        clearTimeout(debounceTimer);
+                        debounceTimer = setTimeout(() => {
+                            searchQuery = e.target.value;
+                            renderPosts();
+                        }, 120);
+                    });
+                }
 
             } catch (error) {
                 console.error(error);
-                grid.innerHTML = '<div style="text-align:center; color:red; padding: 40px;">Failed to load intelligence feed. Check console connection.</div>';
+                grid.innerHTML = '<div style="text-align:center; color:#ef4444; padding: 40px;">Failed to load intelligence feed. Check network connection.</div>';
             }
         });
     </script>

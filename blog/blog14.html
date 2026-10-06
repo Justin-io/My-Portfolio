@@ -3,60 +3,110 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social Engineering: Hacking Humans | Blog</title>
+    <title>Social Engineering: Hacking Humans | Hari Nandan K</title>
+    <meta name="description" content="Social Engineering: Hacking Humans - Deep technical analysis by Hari Nandan K.">
     <meta name="theme-color" content="#040404">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/style-custom.css?v=2">
-    <style>
-        .article-header { padding-top: 150px; padding-bottom: 60px; text-align: center; max-width: 800px; margin: 0 auto; }
-        .article-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 20px; background: linear-gradient(135deg, #fff 0%, #aaa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .article-meta { color: var(--text-tertiary); font-size: 0.9rem; margin-bottom: 40px; }
-        .article-badge { display: inline-block; padding: 5px 15px; border-radius: 20px; background: rgba(0, 82, 204, 0.2); color: var(--accent); border: 1px solid rgba(0, 82, 204, 0.3); margin-bottom: 20px; }
-        .article-content { max-width: 800px; margin: 0 auto; padding: 0 20px 100px; color: var(--text-secondary); font-size: 1.1rem; line-height: 1.8; }
-        .article-content h2 { color: var(--text-primary); font-family: 'Space Grotesk', sans-serif; margin-top: 50px; margin-bottom: 20px; }
-        .article-image { width: 100%; height: 400px; object-fit: cover; border-radius: 20px; margin-bottom: 50px; border: 1px solid var(--glass-border); }
-        .back-link { display: inline-flex; align-items: center; gap: 10px; color: var(--text-tertiary); text-decoration: none; margin-bottom: 30px; transition: color 0.3s; }
-        .back-link:hover { color: var(--accent); }
-        .tag { background: rgba(255,255,255,0.05); padding: 5px 10px; border-radius: 5px; font-size: 0.8rem; margin-right: 5px; }
-    </style>
+    <link rel="stylesheet" href="../assets/css/blog-pro.css?v=2">
 </head>
 <body>
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
-
     <div id="canvas-container" style="position: fixed; inset: 0; z-index: -1;"></div>
+
     <nav id="navbar">
         <div class="nav-container">
             <div class="logo">JA</div>
             <ul class="nav-links">
                 <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="../index.html#about" class="nav-link">About Me</a></li>
                 <li><a href="../tools.html" class="nav-link">Utilities</a></li>
                 <li><a href="../blog.html" class="nav-link active">Blog</a></li>
-                <li><a href="../CV.pdf" class="nav-link">Resume</a></li>
+                <li><a href="../CV.pdf" class="nav-link" target="_blank">Resume</a></li>
             </ul>
-             <div class="menu-toggle"><span></span><span></span><span></span></div>
+            <div class="menu-toggle"><span></span><span></span><span></span></div>
         </div>
     </nav>
+
     <main>
-        <article>
-            <div class="article-header">
-                <a href="../blog.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Blog</a><br>
-                <span class="article-badge">Cybersecurity</span>
-                <h1 class="article-title">Social Engineering: Hacking Humans</h1>
-                <div class="article-meta"><span><i class="far fa-calendar"></i> Nov 20, 2024</span> &bull; <span><i class="far fa-user"></i> Hari Nandan K</span></div>
-                <img src="../assets/img/blog/blog14.webp" alt="Social Engineering: Hacking Humans" class="article-image">
-                <div style="margin-top: -30px; margin-bottom: 40px;">
-                    <span class='tag'>#Security</span><span class='tag'>#Social</span><span class='tag'>#Psychology</span>
-                </div>
+        <article class="blog-banner-header">
+            <div class="blog-banner-glow"></div>
+            <a href="../blog.html" class="back-link" style="display:inline-flex; align-items:center; gap:8px; color:var(--text-tertiary); text-decoration:none; margin-bottom:25px;"><i class="fas fa-arrow-left"></i> Back to Knowledge Base</a>
+            
+            <div class="blog-banner-badge-row">
+                <span class="blog-banner-badge">Cybersecurity</span>
+                <span class="blog-banner-reading-time"><i class="far fa-clock"></i> 6 min read</span>
             </div>
-            <div class="article-content">
-                <p class="lead" style="font-size: 1.3rem; color: var(--text-primary); margin-bottom: 30px;">The human is the weakest link. Technical controls fail when an employee holds the door open for a fake repairman. Psychological manipulation is the primary vector.</p>
-                <p>Deep analysis paragraph 1 regarding <strong>Social Engineering: Hacking Humans</strong>. Expanding on the technical details, we find that the underlying principles of Cybersecurity suggest a shift in paradigm. This involves rigorous testing and theoretical application.</p><p>Deep analysis paragraph 2 regarding <strong>Social Engineering: Hacking Humans</strong>. Expanding on the technical details, we find that the underlying principles of Cybersecurity suggest a shift in paradigm. This involves rigorous testing and theoretical application.</p><p>Deep analysis paragraph 3 regarding <strong>Social Engineering: Hacking Humans</strong>. Expanding on the technical details, we find that the underlying principles of Cybersecurity suggest a shift in paradigm. This involves rigorous testing and theoretical application.</p><p>Deep analysis paragraph 4 regarding <strong>Social Engineering: Hacking Humans</strong>. Expanding on the technical details, we find that the underlying principles of Cybersecurity suggest a shift in paradigm. This involves rigorous testing and theoretical application.</p><p>Deep analysis paragraph 5 regarding <strong>Social Engineering: Hacking Humans</strong>. Expanding on the technical details, we find that the underlying principles of Cybersecurity suggest a shift in paradigm. This involves rigorous testing and theoretical application.</p><p>Deep analysis paragraph 6 regarding <strong>Social Engineering: Hacking Humans</strong>. Expanding on the technical details, we find that the underlying principles of Cybersecurity suggest a shift in paradigm. This involves rigorous testing and theoretical application.</p><p>Deep analysis paragraph 7 regarding <strong>Social Engineering: Hacking Humans</strong>. Expanding on the technical details, we find that the underlying principles of Cybersecurity suggest a shift in paradigm. This involves rigorous testing and theoretical application.</p><p>Deep analysis paragraph 8 regarding <strong>Social Engineering: Hacking Humans</strong>. Expanding on the technical details, we find that the underlying principles of Cybersecurity suggest a shift in paradigm. This involves rigorous testing and theoretical application.</p><p>Deep analysis paragraph 9 regarding <strong>Social Engineering: Hacking Humans</strong>. Expanding on the technical details, we find that the underlying principles of Cybersecurity suggest a shift in paradigm. This involves rigorous testing and theoretical application.</p><p>Deep analysis paragraph 10 regarding <strong>Social Engineering: Hacking Humans</strong>. Expanding on the technical details, we find that the underlying principles of Cybersecurity suggest a shift in paradigm. This involves rigorous testing and theoretical application.</p>
+
+            <h1 class="blog-banner-title">Social Engineering: Hacking Humans</h1>
+
+            <div class="blog-banner-meta">
+                <span><i class="far fa-calendar"></i> Nov 20, 2024</span>
+                <span><i class="far fa-user"></i> Hari Nandan K</span>
+                <span><i class="fas fa-microchip"></i> Lab Ref: 2026-B14</span>
+            </div>
+
+            <div class="blog-banner-visual">
+                <img src="../assets/img/blog/banners/blog14.svg" alt="Social Engineering: Hacking Humans" class="article-featured-image">
+            </div>
+
+            <div class="article-body">
+                <div class="blog-callout">
+                    <div class="blog-callout-title"><i class="fas fa-shield-alt"></i> Architectural Takeaway</div>
+                    <p style="margin: 0; color: #cbd5e1;">Attackers do not break 4096-bit RSA keys when they can simply call helpdesk personnel, exploit cognitive cognitive biases, and receive administrative credentials in seconds.</p>
+                </div>
+
+                <h2>1. The Asymmetric Psychology of Human Attack Surfaces</h2>
+                <p>The human is the weakest link. Technical controls fail when an employee holds the door open for a fake repairman. Psychological manipulation is the primary vector.</p><p>Deep analysis paragraph 1 regarding <strong>Social Engineering: Hacking Humans</strong>. Expanding on the technical details, we find that the underlying principles of Cybersecurity suggest a shift in paradigm. This involves rigorous testing and theoretical application.</p>
+
+                <h2>2. The Anatomy of Modern Multi-Channel Social Attacks</h2>
+                <p>Deep analysis paragraph 2 regarding <strong>Social Engineering: Hacking Humans</strong>. Expanding on the technical details, we find that the underlying principles of Cybersecurity suggest a shift in paradigm. This involves rigorous testing and theoretical application.</p><p>Deep analysis paragraph 3 regarding <strong>Social Engineering: Hacking Humans</strong>. Expanding on the technical details, we find that the underlying principles of Cybersecurity suggest a shift in paradigm. This involves rigorous testing and theoretical application.</p>
+
+                <h3 style="color: #fff; margin-top: 40px;">Comparative Empirical Analysis: Psychological Attack Vectors & Defense Mechanisms</h3>
+                <div class="blog-table-wrapper">
+    <table class="blog-data-table">
+        <thead>
+            <tr><th>Attack Vector</th><th>Psychological Trigger</th><th>Technical &amp; Process Defense</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Spear Phishing</td><td>Authority &amp; Urgent Executive Mandates</td><td>FIDO2 Hardware WebAuthn keys &amp; DMARC/DKIM enforcement</td></tr>
+<tr><td>Voice Vishing / AI Clones</td><td>Familial affection or CEO distress</td><td>Out-of-band verification &amp; shared operational passphrases</td></tr>
+<tr><td>Pretexting / Tailgating</td><td>Desire to be polite or helpful</td><td>Strict biometric mantraps &amp; badge verification culture</td></tr>
+<tr><td>Watering Hole Attacks</td><td>Implicit trust in industry resources</td><td>Isolated browser sandboxing &amp; DNS sinkholing</td></tr>
+
+        </tbody>
+    </table>
+</div>
+
+                <h2>3. Deepfakes and Generative AI in Impersonation Campaigns</h2>
+                <p>Deep analysis paragraph 4 regarding <strong>Social Engineering: Hacking Humans</strong>. Expanding on the technical details, we find that the underlying principles of Cybersecurity suggest a shift in paradigm. This involves rigorous testing and theoretical application.</p><p>Deep analysis paragraph 5 regarding <strong>Social Engineering: Hacking Humans</strong>. Expanding on the technical details, we find that the underlying principles of Cybersecurity suggest a shift in paradigm. This involves rigorous testing and theoretical application.</p>
+
+                <h2>4. Designing Zero-Trust Human Workflows and Verification Protocols</h2>
+                <p>Deep analysis paragraph 6 regarding <strong>Social Engineering: Hacking Humans</strong>. Expanding on the technical details, we find that the underlying principles of Cybersecurity suggest a shift in paradigm. This involves rigorous testing and theoretical application.</p><p>Deep analysis paragraph 7 regarding <strong>Social Engineering: Hacking Humans</strong>. Expanding on the technical details, we find that the underlying principles of Cybersecurity suggest a shift in paradigm. This involves rigorous testing and theoretical application.</p><p>Deep analysis paragraph 8 regarding <strong>Social Engineering: Hacking Humans</strong>. Expanding on the technical details, we find that the underlying principles of Cybersecurity suggest a shift in paradigm. This involves rigorous testing and theoretical application.</p><p>Deep analysis paragraph 9 regarding <strong>Social Engineering: Hacking Humans</strong>. Expanding on the technical details, we find that the underlying principles of Cybersecurity suggest a shift in paradigm. This involves rigorous testing and theoretical application.</p><p>Deep analysis paragraph 10 regarding <strong>Social Engineering: Hacking Humans</strong>. Expanding on the technical details, we find that the underlying principles of Cybersecurity suggest a shift in paradigm. This involves rigorous testing and theoretical application.</p>
+
+                <div class="share-section">
+                    <div class="tag-cloud">
+                        <span class='tag-chip'>#Security</span><span class='tag-chip'>#Social</span><span class='tag-chip'>#Psychology</span><span class='tag-chip'>#OSINT</span>
+                    </div>
+                </div>
+
+                <div class="blog-nav-row">
+                    <a href="blog13.html" class="blog-nav-btn"><i class="fas fa-chevron-left"></i> Previous Article</a>
+                    <a href="../blog.html" class="blog-nav-btn"><i class="fas fa-th-large"></i> All Articles</a>
+                    <a href="blog15.html" class="blog-nav-btn">Next Article <i class="fas fa-chevron-right"></i></a>
+                </div>
             </div>
         </article>
     </main>
-    <footer><div class="footer-content" style="text-align: center; padding: 40px; color: var(--text-secondary);"><p>&copy; 2026 Hari Nandan K.</p></div></footer>
+
+    <footer>
+        <div class="footer-content" style="text-align: center; padding: 50px 20px; color: var(--text-secondary); border-top: 1px solid rgba(255,255,255,0.05); background: #020202;">
+            <p style="font-family: 'Space Grotesk', sans-serif;">&copy; 2026 Hari Nandan K. Theoretical Physics & Cybersecurity Research.</p>
+        </div>
+    </footer>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="../assets/js/main.js"></script>
 </body>

@@ -1,311 +1,913 @@
 [
     {
-        "id": "22",
-        "title": "A Note on NEUROBOTS 2026",
-        "subtitle": "On building something real on a day that wasn't.",
-        "date": "August 2026",
-        "category": "Hackathons",
-        "excerpt": "On building something real on a day that wasn't. A reflection on AEGIS-X, live incident response, and building anyway.",
-        "image": "../assets/img/generated/aegis_x.png",
-        "file": "blog22.html",
+        "id": "55",
+        "title": "Autonomous Drone Swarm Navigation",
+        "date": "May 23, 2026",
+        "read_time": "8",
+        "category": "Robotics & Hardware",
+        "excerpt": "Decentralized Reynolds Flocking Rules, Ultra-Wideband (UWB) Relative Positioning, and Collision Avoidance",
+        "image": "../assets/img/blog/banners/blog55.svg",
+        "file": "blog55.html",
         "tags": [
-            "Hackathons",
-            "Security",
-            "Reflection"
+            "Drones",
+            "Swarm",
+            "UWB",
+            "Autonomous",
+            "Robotics"
         ]
     },
     {
-        "id": "1",
-        "title": "The Quantum Internet: Entanglement Distribution",
-        "date": "Jan 08, 2026",
-        "category": "Quantum Physics",
-        "excerpt": "How we are building the unhackable network using quantum entanglement and repeaters.",
-        "image": "../assets/img/blog/blog1.png",
-        "file": "blog1.html",
+        "id": "54",
+        "title": "Battery Management Systems: EKF SoC Estimation",
+        "date": "May 27, 2026",
+        "read_time": "8",
+        "category": "Robotics & Hardware",
+        "excerpt": "Coulomb Counting, Equivalent Circuit Modeling, and Extended Kalman Filter State-of-Charge Calculation",
+        "image": "../assets/img/blog/banners/blog54.svg",
+        "file": "blog54.html",
         "tags": [
-            "Quantum",
-            "Networking",
-            "Future"
+            "BMS",
+            "Battery",
+            "EKF",
+            "Hardware",
+            "Robotics"
         ]
     },
     {
-        "id": "2",
-        "title": "Zero Trust Architecture: Beyond the Firewall",
-        "date": "Jan 05, 2026",
-        "category": "Cybersecurity",
-        "excerpt": "Why the 'castle and moat' security model is dead and how strictly authenticating every request is the only way forward.",
-        "image": "../assets/img/blog/blog2.png",
-        "file": "blog2.html",
+        "id": "53",
+        "title": "RISC-V Custom Instructions in Verilog",
+        "date": "May 31, 2026",
+        "read_time": "8",
+        "category": "Robotics & Hardware",
+        "excerpt": "Synthesizing Hardware Accelerators for SHA-256 and AES into an Open-Source 32-Bit Core",
+        "image": "../assets/img/blog/banners/blog53.svg",
+        "file": "blog53.html",
         "tags": [
-            "Security",
-            "Zero Trust",
-            "Cloud"
+            "RISC-V",
+            "Verilog",
+            "FPGA",
+            "Hardware",
+            "Cryptography"
         ]
     },
     {
-        "id": "3",
-        "title": "Rust for Systems Programming: Safety First",
-        "date": "Jan 03, 2026",
-        "category": "Web Development",
-        "excerpt": "Memory safety without garbage collection? How Rust is rewriting the rules of operating systems and browser engines.",
-        "image": "../assets/img/blog/blog3.png",
-        "file": "blog3.html",
+        "id": "52",
+        "title": "CAN Bus Protocol Reverse Engineering",
+        "date": "Jun 04, 2026",
+        "read_time": "8",
+        "category": "Robotics & Hardware",
+        "excerpt": "Vehicle OBD-II Telemetry Sniffing, CAN ID Arbitration, Frame Injection, and ECU Spoofing",
+        "image": "../assets/img/blog/banners/blog52.svg",
+        "file": "blog52.html",
         "tags": [
+            "CAN Bus",
+            "Automotive",
+            "Reverse Engineering",
+            "Car Hacking",
+            "Hardware"
+        ]
+    },
+    {
+        "id": "51",
+        "title": "Edge Vision Acceleration with TensorRT",
+        "date": "Jun 08, 2026",
+        "read_time": "8",
+        "category": "Robotics & Hardware",
+        "excerpt": "YOLOv10 INT8 Quantization, Calibration Cache Engineering, and Sub-15ms Object Detection on Jetson Orin",
+        "image": "../assets/img/blog/banners/blog51.svg",
+        "file": "blog51.html",
+        "tags": [
+            "Edge AI",
+            "TensorRT",
+            "Jetson",
+            "YOLO",
+            "Computer Vision"
+        ]
+    },
+    {
+        "id": "50",
+        "title": "Deterministic FreeRTOS Scheduling on STM32",
+        "date": "Jun 12, 2026",
+        "read_time": "8",
+        "category": "Robotics & Hardware",
+        "excerpt": "Priority Inversion Prevention, Mutex Protocols, Context Switch Latency, and Hard Real-Time Guarantees",
+        "image": "../assets/img/blog/banners/blog50.svg",
+        "file": "blog50.html",
+        "tags": [
+            "FreeRTOS",
+            "STM32",
+            "ARM",
+            "Real-Time",
+            "Embedded"
+        ]
+    },
+    {
+        "id": "49",
+        "title": "High-Speed PCB Design & Signal Integrity",
+        "date": "Jun 16, 2026",
+        "read_time": "8",
+        "category": "Robotics & Hardware",
+        "excerpt": "Controlled Impedance, Differential Pairs, Microstrip Equations, and 4-Layer Ground Return Topologies",
+        "image": "../assets/img/blog/banners/blog49.svg",
+        "file": "blog49.html",
+        "tags": [
+            "PCB Design",
+            "Hardware",
+            "Signal Integrity",
+            "KiCad",
+            "High Speed"
+        ]
+    },
+    {
+        "id": "48",
+        "title": "HOPE IoT Platform: Low-Power Telemetry",
+        "date": "Jun 20, 2026",
+        "read_time": "8",
+        "category": "Robotics & Hardware",
+        "excerpt": "15\u00b5A Deep Sleep Cycling, MQTT-SN Protocol, and End-to-End Cryptography for Edge Sensor Mesh Networks",
+        "image": "../assets/img/blog/banners/blog48.svg",
+        "file": "blog48.html",
+        "tags": [
+            "IoT",
+            "HOPE Platform",
+            "MQTT-SN",
+            "Low Power",
+            "Embedded"
+        ]
+    },
+    {
+        "id": "47",
+        "title": "ADNR: Autonomous Disaster Navigation Robot",
+        "date": "Jun 24, 2026",
+        "read_time": "8",
+        "category": "Robotics & Hardware",
+        "excerpt": "Indoor SLAM, 2D LiDAR Odometry, and Extended Kalman Filter Sensor Fusion for Search-and-Rescue",
+        "image": "../assets/img/blog/banners/blog47.svg",
+        "file": "blog47.html",
+        "tags": [
+            "Robotics",
+            "SLAM",
+            "LiDAR",
+            "ROS2",
+            "Embedded"
+        ]
+    },
+    {
+        "id": "46",
+        "title": "Local LLM Serving: PagedAttention & vLLM",
+        "date": "Jun 28, 2026",
+        "read_time": "8",
+        "category": "AI Systems",
+        "excerpt": "KV-Cache Paging, AWQ INT4 Quantization, and Tensor Parallelism Across Dual-GPU Workstations",
+        "image": "../assets/img/blog/banners/blog46.svg",
+        "file": "blog46.html",
+        "tags": [
+            "vLLM",
+            "PagedAttention",
+            "Quantization",
+            "Inference",
+            "GPU"
+        ]
+    },
+    {
+        "id": "45",
+        "title": "Vector Databases Benchmarked on HNSW Indexes",
+        "date": "Jul 02, 2026",
+        "read_time": "8",
+        "category": "Distributed Systems",
+        "excerpt": "Milvus, Qdrant, Pinecone, and PGVector Evaluated Across Recall@10, QPS, and Memory Footprint",
+        "image": "../assets/img/blog/banners/blog45.svg",
+        "file": "blog45.html",
+        "tags": [
+            "Vector DB",
+            "HNSW",
+            "Milvus",
+            "Qdrant",
+            "PGVector"
+        ]
+    },
+    {
+        "id": "44",
+        "title": "Distributed Consensus: Raft vs. Paxos vs. PBFT",
+        "date": "Jul 06, 2026",
+        "read_time": "8",
+        "category": "Distributed Systems",
+        "excerpt": "Leader Election, Quorum Quakes, State Machine Replication, and Byzantine Fault Tolerance",
+        "image": "../assets/img/blog/banners/blog44.svg",
+        "file": "blog44.html",
+        "tags": [
+            "Consensus",
+            "Raft",
+            "Paxos",
+            "PBFT",
+            "Distributed Systems"
+        ]
+    },
+    {
+        "id": "43",
+        "title": "Stream Processing at 1M Events/Sec",
+        "date": "Jul 10, 2026",
+        "read_time": "8",
+        "category": "Distributed Systems",
+        "excerpt": "Apache Kafka, Flink, RocksDB State Backend, and Exactly-Once Processing Semantics Under Failure",
+        "image": "../assets/img/blog/banners/blog43.svg",
+        "file": "blog43.html",
+        "tags": [
+            "Kafka",
+            "Flink",
+            "Stream Processing",
+            "Distributed",
+            "High Throughput"
+        ]
+    },
+    {
+        "id": "42",
+        "title": "RAG Evaluation at Scale with RAGAS",
+        "date": "Jul 14, 2026",
+        "read_time": "8",
+        "category": "AI Systems",
+        "excerpt": "Benchmarking Faithfulness, Answer Relevance, and Context Recall with Automated Synthetic Testsets",
+        "image": "../assets/img/blog/banners/blog42.svg",
+        "file": "blog42.html",
+        "tags": [
+            "RAG",
+            "Evaluation",
+            "RAGAS",
+            "LLM",
+            "Information Retrieval"
+        ]
+    },
+    {
+        "id": "41",
+        "title": "Auto-Data-Scientist: Autonomous ML Pipelines",
+        "date": "Jul 18, 2026",
+        "read_time": "8",
+        "category": "AI Systems",
+        "excerpt": "Automated Feature Synthesis, Optuna Hyperparameter Optimization, and Production Model Registry",
+        "image": "../assets/img/blog/banners/blog41.svg",
+        "file": "blog41.html",
+        "tags": [
+            "AutoML",
+            "Data Science",
+            "Optuna",
+            "XGBoost",
+            "Machine Learning"
+        ]
+    },
+    {
+        "id": "40",
+        "title": "Agentic BI Systems: Multi-Agent Consensus",
+        "date": "Jul 22, 2026",
+        "read_time": "8",
+        "category": "AI Systems",
+        "excerpt": "Self-Correcting Text-to-SQL Pipelines, Semantic Vector Memory, and Eliminating Hallucinations",
+        "image": "../assets/img/blog/banners/blog40.svg",
+        "file": "blog40.html",
+        "tags": [
+            "Agentic BI",
+            "Text-to-SQL",
+            "LangGraph",
+            "Multi-Agent",
+            "Enterprise"
+        ]
+    },
+    {
+        "id": "39",
+        "title": "Real-Time Graph Fraud Detection at Scale",
+        "date": "Jul 26, 2026",
+        "read_time": "8",
+        "category": "Distributed Systems",
+        "excerpt": "Sub-10ms Fraud Ring Cycle Detection Using Rust Microservices and Neo4j Graph Databases",
+        "image": "../assets/img/blog/banners/blog39.svg",
+        "file": "blog39.html",
+        "tags": [
+            "Graph",
+            "Fraud Detection",
             "Rust",
-            "Systems",
-            "Programming"
+            "Neo4j",
+            "Distributed"
         ]
     },
     {
-        "id": "4",
-        "title": "General Relativity vs Quantum Loop",
-        "date": "Dec 29, 2024",
-        "category": "Physics",
-        "excerpt": "The clash of the titans. Exploring the conflict between smooth spacetime and discrete quantum chunks.",
-        "image": "../assets/img/blog/blog4.png",
-        "file": "blog4.html",
-        "tags": [
-            "Physics",
-            "Cosmology",
-            "Theory"
-        ]
-    },
-    {
-        "id": "5",
-        "title": "AI Agents in 2026: From Chatbots to Executors",
-        "date": "Dec 25, 2024",
-        "category": "Artificial Intelligence",
-        "excerpt": "LLMs can now use tools. Why autonomous agents taking action is the next massive shift in AI capability.",
-        "image": "../assets/img/blog/blog5.png",
-        "file": "blog5.html",
-        "tags": [
-            "AI",
-            "Agents",
-            "Automation"
-        ]
-    },
-    {
-        "id": "6",
-        "title": "Ethical Hacking: The Recon Phase",
-        "date": "Dec 20, 2024",
+        "id": "38",
+        "title": "Defending Against LLM Prompt Injection",
+        "date": "Jul 30, 2026",
+        "read_time": "8",
         "category": "Cybersecurity",
-        "excerpt": "You can't hack what you can't see. Why 90% of a successful penetration test is passive and active reconnaissance.",
-        "image": "../assets/img/blog/blog6.png",
-        "file": "blog6.html",
+        "excerpt": "Dual-Model Verification, Semantic Sandboxing, Canary Tokens, and Building Robust AI Guardrails",
+        "image": "../assets/img/blog/banners/blog38.svg",
+        "file": "blog38.html",
         "tags": [
-            "Hacking",
-            "Recon",
-            "Tutorial"
+            "AI Security",
+            "LLM",
+            "Prompt Injection",
+            "Guardrails",
+            "Adversarial"
         ]
     },
     {
-        "id": "7",
-        "title": "The Simulation Hypothesis: Are We NPCs?",
-        "date": "Dec 18, 2024",
-        "category": "Physics",
-        "excerpt": "Analyzing Nick Bostrom's argument and the physics limits that might reveal the resolution of our reality.",
-        "image": "../assets/img/blog/blog7.png",
-        "file": "blog7.html",
+        "id": "37",
+        "title": "Guided Binary Fuzzing with AFL++ & LibFuzzer",
+        "date": "Aug 04, 2026",
+        "read_time": "8",
+        "category": "Cybersecurity",
+        "excerpt": "Harness Engineering, Edge Coverage Bitmaps, and Automated Crash Triage with AddressSanitizer",
+        "image": "../assets/img/blog/banners/blog37.svg",
+        "file": "blog37.html",
         "tags": [
-            "Philosophy",
-            "Simulation",
+            "Fuzzing",
+            "AFL++",
+            "LibFuzzer",
+            "Vulnerability Research",
+            "Software Security"
+        ]
+    },
+    {
+        "id": "36",
+        "title": "Red Team Infrastructure as Code",
+        "date": "Aug 08, 2026",
+        "read_time": "8",
+        "category": "Cybersecurity",
+        "excerpt": "Automating Malleable C2 Profiles, Multi-Tier Redirectors, and Terraform-Provisioned Domain Fronting",
+        "image": "../assets/img/blog/banners/blog36.svg",
+        "file": "blog36.html",
+        "tags": [
+            "Red Team",
+            "Infrastructure",
+            "Terraform",
+            "C2",
+            "DevOps"
+        ]
+    },
+    {
+        "id": "35",
+        "title": "Differential Power Analysis on Hardware Cryptography",
+        "date": "Aug 12, 2026",
+        "read_time": "8",
+        "category": "Cybersecurity",
+        "excerpt": "Extracting AES-256 Secret Keys from Physical Power Traces and Electromagnetic Field Leakage",
+        "image": "../assets/img/blog/banners/blog35.svg",
+        "file": "blog35.html",
+        "tags": [
+            "Side-Channel",
+            "DPA",
+            "CPA",
+            "Cryptography",
+            "Hardware Security"
+        ]
+    },
+    {
+        "id": "34",
+        "title": "Hardware Hacking: SPI Flash & JTAG Triage",
+        "date": "Aug 16, 2026",
+        "read_time": "8",
+        "category": "Cybersecurity",
+        "excerpt": "Logic Analyzers, Protocol Sniffing, Microcontroller Extraction, and Reconstructing Encrypted Firmware",
+        "image": "../assets/img/blog/banners/blog34.svg",
+        "file": "blog34.html",
+        "tags": [
+            "Hardware Hacking",
+            "SPI Flash",
+            "JTAG",
+            "UART",
+            "Embedded Security"
+        ]
+    },
+    {
+        "id": "33",
+        "title": "Modern Memory Exploitation & Mitigation",
+        "date": "Aug 20, 2026",
+        "read_time": "9",
+        "category": "Cybersecurity",
+        "excerpt": "Bypassing ASLR, DEP, Shadow Stacks, and Defeating Control Flow Guard in Modern Binaries",
+        "image": "../assets/img/blog/banners/blog33.svg",
+        "file": "blog33.html",
+        "tags": [
+            "Exploitation",
+            "Memory Safety",
+            "ROP",
+            "ASLR",
+            "Binary Analysis"
+        ]
+    },
+    {
+        "id": "32",
+        "title": "eBPF for Real-Time Kernel Threat Hunting",
+        "date": "Aug 25, 2026",
+        "read_time": "8",
+        "category": "Cybersecurity",
+        "excerpt": "Zero-Overhead Syscall Interception, Security Modules (LSM), and Detecting Rootkits Without Kernel Panics",
+        "image": "../assets/img/blog/banners/blog32.svg",
+        "file": "blog32.html",
+        "tags": [
+            "eBPF",
+            "Linux Kernel",
+            "Security",
+            "Rootkits",
+            "Threat Hunting"
+        ]
+    },
+    {
+        "id": "31",
+        "title": "AEGIS-X: Autonomous Incident Triage Engine",
+        "date": "Aug 29, 2026",
+        "read_time": "9",
+        "category": "Cybersecurity",
+        "excerpt": "Sub-Second Anomaly Response, Bayesian Fusion, and Physics-Inspired Lateral Movement Forecasting",
+        "image": "../assets/img/blog/banners/blog31.svg",
+        "file": "blog31.html",
+        "tags": [
+            "AEGIS-X",
+            "SOC",
+            "Incident Response",
+            "AI Security",
+            "Autonomous"
+        ]
+    },
+    {
+        "id": "30",
+        "title": "Cavity QED: Vacuum Rabi Oscillations",
+        "date": "Sep 02, 2026",
+        "read_time": "8",
+        "category": "Quantum Physics",
+        "excerpt": "Coupling Single Atoms to Photons in High-Finesse Optical Resonators and Jaynes-Cummings Dynamics",
+        "image": "../assets/img/blog/banners/blog30.svg",
+        "file": "blog30.html",
+        "tags": [
+            "Cavity QED",
+            "Jaynes-Cummings",
+            "Optics",
+            "Photons",
+            "Quantum"
+        ]
+    },
+    {
+        "id": "29",
+        "title": "CHSH Bell Inequality Polarimeter Tests",
+        "date": "Sep 06, 2026",
+        "read_time": "7",
+        "category": "Quantum Physics",
+        "excerpt": "Experimental Verification of Quantum Non-Locality and Entangled Photon Coincidence Counting",
+        "image": "../assets/img/blog/banners/blog29.svg",
+        "file": "blog29.html",
+        "tags": [
+            "Bell Theorem",
+            "CHSH",
+            "Entanglement",
+            "Non-Locality",
+            "Optics"
+        ]
+    },
+    {
+        "id": "28",
+        "title": "Topological Quantum Computing & Anyons",
+        "date": "Sep 10, 2026",
+        "read_time": "8",
+        "category": "Quantum Physics",
+        "excerpt": "Non-Abelian Anyonic Braiding and Hardware-Level Fault Tolerance with Majorana Zero Modes",
+        "image": "../assets/img/blog/banners/blog28.svg",
+        "file": "blog28.html",
+        "tags": [
+            "Topological",
+            "Majorana",
+            "Anyons",
+            "Quantum Hardware",
+            "Braid Group"
+        ]
+    },
+    {
+        "id": "27",
+        "title": "Superconducting Transmons vs. Trapped-Ion Qubits",
+        "date": "Sep 14, 2026",
+        "read_time": "8",
+        "category": "Quantum Physics",
+        "excerpt": "Coherence Times, Two-Qubit Gate Fidelities, and Scaling Bottlenecks in 2026 Quantum Architectures",
+        "image": "../assets/img/blog/banners/blog27.svg",
+        "file": "blog27.html",
+        "tags": [
+            "Quantum Computing",
+            "Superconducting",
+            "Trapped Ions",
+            "Qubits",
+            "Hardware"
+        ]
+    },
+    {
+        "id": "26",
+        "title": "Quantum Decoherence & Einselection",
+        "date": "Sep 18, 2026",
+        "read_time": "7",
+        "category": "Quantum Physics",
+        "excerpt": "Environment-Induced Superselection and the Emergence of Classical Realism from Quantum Superpositions",
+        "image": "../assets/img/blog/banners/blog26.svg",
+        "file": "blog26.html",
+        "tags": [
+            "Decoherence",
+            "Einselection",
+            "Quantum Foundations",
+            "Zurek",
+            "Measurement"
+        ]
+    },
+    {
+        "id": "25",
+        "title": "The Holographic Principle & AdS/CFT Duality",
+        "date": "Sep 22, 2026",
+        "read_time": "8",
+        "category": "Theoretical Physics",
+        "excerpt": "Bulk Gravity Mapped to Boundary Conformal Field Theories and Black Hole Horizon Thermodynamics",
+        "image": "../assets/img/blog/banners/blog25.svg",
+        "file": "blog25.html",
+        "tags": [
+            "Holography",
+            "AdS/CFT",
+            "String Theory",
+            "Entanglement",
+            "Black Holes"
+        ]
+    },
+    {
+        "id": "24",
+        "title": "Loop Quantum Gravity: Spin Networks & Holonomies",
+        "date": "Sep 26, 2026",
+        "read_time": "8",
+        "category": "Theoretical Physics",
+        "excerpt": "Discrete Area Eigenvalues, Ashtekar-Barbero Connections, and Holonomy Corrections",
+        "image": "../assets/img/blog/banners/blog24.svg",
+        "file": "blog24.html",
+        "tags": [
+            "LQG",
+            "Spin Networks",
+            "Quantum Gravity",
+            "Ashtekar",
             "Physics"
         ]
     },
     {
-        "id": "8",
-        "title": "Dark Matter: The Invisible Galaxy Glue",
-        "date": "Dec 14, 2024",
-        "category": "Physics",
-        "excerpt": "85% of the universe is missing. Looking at WIMPs, Axions, and modified gravity theories.",
-        "image": "../assets/img/blog/blog8.png",
-        "file": "blog8.html",
+        "id": "23",
+        "title": "Chronon-Super Quantum Model: Discrete Spacetime & Temporal Quanta",
+        "date": "Oct 01, 2026",
+        "read_time": "8",
+        "category": "Theoretical Physics",
+        "excerpt": "Mathematical Formulation of Discrete Spacetime Lattices and Non-Commutative Time Operators",
+        "image": "../assets/img/blog/banners/blog23.svg",
+        "file": "blog23.html",
         "tags": [
-            "Space",
-            "Dark Matter",
-            "Research"
+            "Chronon",
+            "Quantum Gravity",
+            "Non-Commutative",
+            "Spacetime",
+            "Theoretical Physics"
         ]
     },
     {
-        "id": "9",
-        "title": "React Server Components: The Pendulum Swings",
-        "date": "Dec 10, 2024",
-        "category": "Web Development",
-        "excerpt": "We moved everything to the client. Now we are moving it back. Understanding the RSC paradigm shift in Next.js.",
-        "image": "../assets/img/blog/blog9.png",
-        "file": "blog9.html",
+        "id": "22",
+        "title": "A Note on NEUROBOTS 2026",
+        "date": "August 14, 2026",
+        "read_time": "4",
+        "category": "Reflections & Projects",
+        "excerpt": "\"The traits that sometimes make you seem stubborn in peacetime\u2014demanding system reliability, calling out brittle architecture, refusing to handwave flaws\u2014are...",
+        "image": "../assets/img/blog/banners/blog22.svg",
+        "file": "blog22.html",
         "tags": [
-            "React",
-            "Next.js",
-            "Frontend"
-        ]
-    },
-    {
-        "id": "10",
-        "title": "Post-Quantum Cryptography: Preparing for Q-Day",
-        "date": "Dec 05, 2024",
-        "category": "Cybersecurity",
-        "excerpt": "Shor's algorithm will eventually break RSA. NIST guidelines and the migration to lattice-based cryptography.",
-        "image": "../assets/img/blog/blog10.png",
-        "file": "blog10.html",
-        "tags": [
-            "Crypto",
-            "Quantum",
-            "Security"
-        ]
-    },
-    {
-        "id": "11",
-        "title": "CI/CD Pipelines: The DevOps Backbone",
-        "date": "Dec 01, 2024",
-        "category": "Web Development",
-        "excerpt": "Automating the path from commit to production. Best practices with GitHub Actions and Docker.",
-        "image": "../assets/img/blog/blog11.png",
-        "file": "blog11.html",
-        "tags": [
-            "DevOps",
-            "CI/CD",
-            "Automation"
-        ]
-    },
-    {
-        "id": "12",
-        "title": "String Theory: Principles and Problems",
-        "date": "Nov 28, 2024",
-        "category": "Physics",
-        "excerpt": "Is everything made of vibrating strings? The elegance and the untestability of the theory of everything.",
-        "image": "../assets/img/blog/blog12.png",
-        "file": "blog12.html",
-        "tags": [
-            "Physics",
-            "String Theory",
-            "Cosmos"
-        ]
-    },
-    {
-        "id": "13",
-        "title": "Neuromorphic Computing: Brain Chips",
-        "date": "Nov 25, 2024",
-        "category": "Artificial Intelligence",
-        "excerpt": "Moving beyond von Neumann architecture. Mimicking neurons and synapses in silicon for efficiency.",
-        "image": "../assets/img/blog/blog13.png",
-        "file": "blog13.html",
-        "tags": [
-            "AI",
-            "Hardware",
-            "Bio-mimicry"
-        ]
-    },
-    {
-        "id": "14",
-        "title": "Social Engineering: Hacking Humans",
-        "date": "Nov 20, 2024",
-        "category": "Cybersecurity",
-        "excerpt": "Why buy a zero-day exploit when you can just ask for the password? Phishing, Vishing, and Tailgating.",
-        "image": "../assets/img/blog/blog14.png",
-        "file": "blog14.html",
-        "tags": [
-            "Security",
-            "Social",
-            "Psychology"
-        ]
-    },
-    {
-        "id": "15",
-        "title": "Kubernetes: Orchestrating Chaos",
-        "date": "Nov 15, 2024",
-        "category": "Web Development",
-        "excerpt": "Managing containers at scale. Pods, Deployments, and Services explained for the uninitiated.",
-        "image": "../assets/img/blog/blog15.png",
-        "file": "blog15.html",
-        "tags": [
-            "DevOps",
-            "K8s",
-            "Cloud"
-        ]
-    },
-    {
-        "id": "16",
-        "title": "Black Holes: The Event Horizon",
-        "date": "Nov 10, 2024",
-        "category": "Physics",
-        "excerpt": "The point of no return. What happens to time and space near a singularity?",
-        "image": "../assets/img/blog/blog12.png",
-        "file": "blog16.html",
-        "tags": [
-            "Space",
-            "Black Holes",
-            "Gravity"
-        ]
-    },
-    {
-        "id": "17",
-        "title": "Blockchain: Sharding & Layer 2",
-        "date": "Nov 05, 2024",
-        "category": "Web Development",
-        "excerpt": "Solving the trilemma of Decentralization, Security, and Scalability. Rollups and Sidechains.",
-        "image": "../assets/img/blog/blog2.png",
-        "file": "blog17.html",
-        "tags": [
-            "Crypto",
-            "Web3",
+            "Reflections & Projects",
+            "Research",
             "Tech"
-        ]
-    },
-    {
-        "id": "18",
-        "title": "WebAssembly: The Universal Binary",
-        "date": "Oct 30, 2024",
-        "category": "Web Development",
-        "excerpt": "Running C++ and Rust in the browser at near-native speed. The end of the JavaScript monopoly?",
-        "image": "../assets/img/blog/blog3.png",
-        "file": "blog18.html",
-        "tags": [
-            "Wasm",
-            "Web",
-            "Performance"
-        ]
-    },
-    {
-        "id": "19",
-        "title": "IoT Firmware Hacking",
-        "date": "Oct 25, 2024",
-        "category": "Cybersecurity",
-        "excerpt": "Extracting filesystems from SPI flash chips and reverse engineering binaries with Ghidra.",
-        "image": "../assets/img/blog/blog6.png",
-        "file": "blog19.html",
-        "tags": [
-            "IoT",
-            "Hacking",
-            "ReverseEng"
-        ]
-    },
-    {
-        "id": "20",
-        "title": "Time Crystals: Perpetual Motion?",
-        "date": "Oct 20, 2024",
-        "category": "Quantum Physics",
-        "excerpt": "A new phase of matter that repeats in time rather than space. Breaking time-translation symmetry.",
-        "image": "../assets/img/blog/blog8.png",
-        "file": "blog20.html",
-        "tags": [
-            "Physics",
-            "Quantum",
-            "Matter"
         ]
     },
     {
         "id": "21",
         "title": "PROJECT RETRO-BOT: V12.0 SENTRY EDITION",
         "date": "Jan 22, 2026",
-        "category": "Robotics",
-        "excerpt": "An advanced desktop companion robot with emotional AI, sentry mode, and arcade games powered by ESP32.",
-        "image": "../assets/img/blog/blog19.png",
+        "read_time": "18",
+        "category": "Robotics & Hardware",
+        "excerpt": "A self-contained embedded companion platform running FreeRTOS on dual-core ESP32, coordinating asynchronous OLED facial graphics, ultrasonic sentry surveilla...",
+        "image": "../assets/img/blog/banners/blog21.svg",
         "file": "blog21.html",
         "tags": [
-            "Robotics",
-            "ESP32",
-            "IoT"
+            "Robotics & Hardware",
+            "Research",
+            "Tech"
+        ]
+    },
+    {
+        "id": "20",
+        "title": "Time Crystals: Breaking Time-Translation Symmetry",
+        "date": "Oct 20, 2024",
+        "read_time": "6",
+        "category": "Quantum Physics",
+        "excerpt": "Unlike spatial crystals that break spatial translation symmetry, Time Crystals break continuous time-translation symmetry, oscillating periodically between q...",
+        "image": "../assets/img/blog/banners/blog20.svg",
+        "file": "blog20.html",
+        "tags": [
+            "Physics",
+            "Quantum",
+            "Matter",
+            "Thermodynamics"
+        ]
+    },
+    {
+        "id": "19",
+        "title": "IoT Firmware Hacking: Hardware to Shell",
+        "date": "Oct 25, 2024",
+        "read_time": "6",
+        "category": "Cybersecurity",
+        "excerpt": "Securing an IoT device requires protecting physical flash chips. An attacker with a $15 SOIC8 clip and a logic analyzer can dump flash, extract credentials, ...",
+        "image": "../assets/img/blog/banners/blog19.svg",
+        "file": "blog19.html",
+        "tags": [
+            "IoT",
+            "Hacking",
+            "Hardware",
+            "ReverseEng"
+        ]
+    },
+    {
+        "id": "18",
+        "title": "WebAssembly: The Universal Binary Sandbox",
+        "date": "Oct 30, 2024",
+        "read_time": "6",
+        "category": "Systems & Cloud",
+        "excerpt": "WebAssembly is not just for the browser. With WASI (WebAssembly System Interface), it provides a secure, portable, capability-based bytecode runtime running ...",
+        "image": "../assets/img/blog/banners/blog18.svg",
+        "file": "blog18.html",
+        "tags": [
+            "Wasm",
+            "Web",
+            "Performance",
+            "Rust"
+        ]
+    },
+    {
+        "id": "17",
+        "title": "Blockchain: Sharding & Layer 2 Protocols",
+        "date": "Nov 05, 2024",
+        "read_time": "6",
+        "category": "Distributed Platforms",
+        "excerpt": "The Blockchain Trilemma states that decentralization, security, and scalability cannot all be maximized on Layer 1. Rollups resolve this by executing off-cha...",
+        "image": "../assets/img/blog/banners/blog17.svg",
+        "file": "blog17.html",
+        "tags": [
+            "Crypto",
+            "Web3",
+            "Tech",
+            "Scalability"
+        ]
+    },
+    {
+        "id": "16",
+        "title": "Black Holes: The Event Horizon & Paradoxes",
+        "date": "Nov 10, 2024",
+        "read_time": "6",
+        "category": "Theoretical Physics",
+        "excerpt": "The Black Hole Information Paradox reveals that either quantum mechanics\u2019 unitary evolution is violated, or general relativity\u2019s equivalence principle breaks...",
+        "image": "../assets/img/blog/banners/blog16.svg",
+        "file": "blog16.html",
+        "tags": [
+            "Space",
+            "Black Holes",
+            "Gravity",
+            "Hawking"
+        ]
+    },
+    {
+        "id": "15",
+        "title": "Kubernetes: Orchestrating Chaos",
+        "date": "Nov 15, 2024",
+        "read_time": "6",
+        "category": "Distributed Platforms",
+        "excerpt": "Kubernetes provides a declarative reconciliation loop: you define the desired state of your cluster, and the control plane constantly executes mutations to e...",
+        "image": "../assets/img/blog/banners/blog15.svg",
+        "file": "blog15.html",
+        "tags": [
+            "DevOps",
+            "K8s",
+            "Cloud",
+            "Distributed"
+        ]
+    },
+    {
+        "id": "14",
+        "title": "Social Engineering: Hacking Humans",
+        "date": "Nov 20, 2024",
+        "read_time": "6",
+        "category": "Cybersecurity",
+        "excerpt": "Attackers do not break 4096-bit RSA keys when they can simply call helpdesk personnel, exploit cognitive cognitive biases, and receive administrative credent...",
+        "image": "../assets/img/blog/banners/blog14.svg",
+        "file": "blog14.html",
+        "tags": [
+            "Security",
+            "Social",
+            "Psychology",
+            "OSINT"
+        ]
+    },
+    {
+        "id": "13",
+        "title": "Neuromorphic Computing: Brain Chips",
+        "date": "Nov 25, 2024",
+        "read_time": "6",
+        "category": "AI Systems",
+        "excerpt": "Von Neumann architectures suffer from memory-bus bottlenecks. Neuromorphic silicon collocates compute and memory in artificial synapses, firing asynchronous ...",
+        "image": "../assets/img/blog/banners/blog13.svg",
+        "file": "blog13.html",
+        "tags": [
+            "AI",
+            "Hardware",
+            "Neuromorphic",
+            "Silicon"
+        ]
+    },
+    {
+        "id": "12",
+        "title": "String Theory: Principles and Problems",
+        "date": "Nov 28, 2024",
+        "read_time": "6",
+        "category": "Theoretical Physics",
+        "excerpt": "By replacing zero-dimensional point particles with 1D vibrating strings, String Theory naturally incorporates a spin-2 graviton, yet faces the massive 10^500...",
+        "image": "../assets/img/blog/banners/blog12.svg",
+        "file": "blog12.html",
+        "tags": [
+            "Physics",
+            "String Theory",
+            "Cosmos",
+            "Unification"
+        ]
+    },
+    {
+        "id": "11",
+        "title": "CI/CD Pipelines: The DevOps Backbone",
+        "date": "Dec 01, 2024",
+        "read_time": "5",
+        "category": "Systems & Cloud",
+        "excerpt": "A resilient deployment pipeline treats infrastructure as code, enforces ephemeral containerized test runners, and signs software supply chain artifacts with ...",
+        "image": "../assets/img/blog/banners/blog11.svg",
+        "file": "blog11.html",
+        "tags": [
+            "DevOps",
+            "CI/CD",
+            "Docker",
+            "Automation"
+        ]
+    },
+    {
+        "id": "10",
+        "title": "Post-Quantum Cryptography: Preparing for Q-Day",
+        "date": "Dec 05, 2024",
+        "read_time": "6",
+        "category": "Cybersecurity",
+        "excerpt": "Shor\u2019s algorithm will render RSA and Elliptic Curve Diffie-Hellman obsolete once fault-tolerant quantum computers arrive. NIST\u2019s lattice-based standards are ...",
+        "image": "../assets/img/blog/banners/blog10.svg",
+        "file": "blog10.html",
+        "tags": [
+            "Crypto",
+            "Quantum",
+            "Security",
+            "Algorithms"
+        ]
+    },
+    {
+        "id": "9",
+        "title": "React Server Components: Architectural Paradigm",
+        "date": "Dec 10, 2024",
+        "read_time": "5",
+        "category": "Systems & Cloud",
+        "excerpt": "RSCs fundamentally separate data-fetching components that run exclusively on the server from interactive client components, delivering zero-bundle-size rende...",
+        "image": "../assets/img/blog/banners/blog9.svg",
+        "file": "blog9.html",
+        "tags": [
+            "React",
+            "Next.js",
+            "Frontend",
+            "Performance"
+        ]
+    },
+    {
+        "id": "8",
+        "title": "Dark Matter: The Invisible Galaxy Glue",
+        "date": "Dec 14, 2024",
+        "read_time": "6",
+        "category": "Theoretical Physics",
+        "excerpt": "Over 85% of cosmic matter is non-baryonic. Galactic rotation curves and gravitational lensing confirm its gravitational signature, but particle detectors con...",
+        "image": "../assets/img/blog/banners/blog8.svg",
+        "file": "blog8.html",
+        "tags": [
+            "Space",
+            "Dark Matter",
+            "Astrophysics",
+            "Cosmology"
+        ]
+    },
+    {
+        "id": "7",
+        "title": "The Simulation Hypothesis: Computational Limits",
+        "date": "Dec 18, 2024",
+        "read_time": "6",
+        "category": "Theoretical Physics",
+        "excerpt": "If our universe is computational, physics predicts hard bounds: the Bekenstein bound on information density, the Planck length as minimum spatial resolution,...",
+        "image": "../assets/img/blog/banners/blog7.svg",
+        "file": "blog7.html",
+        "tags": [
+            "Physics",
+            "Philosophy",
+            "Information Theory",
+            "Computation"
+        ]
+    },
+    {
+        "id": "6",
+        "title": "Ethical Hacking: Active & Passive Reconnaissance",
+        "date": "Dec 20, 2024",
+        "read_time": "6",
+        "category": "Cybersecurity",
+        "excerpt": "Over 90% of successful security breaches are decided during reconnaissance. Mapping attack surfaces without alerting SOC alerts is the primary skill of advan...",
+        "image": "../assets/img/blog/banners/blog6.svg",
+        "file": "blog6.html",
+        "tags": [
+            "Cybersecurity",
+            "Recon",
+            "OSINT",
+            "PenTesting"
+        ]
+    },
+    {
+        "id": "5",
+        "title": "AI Agents in 2026: Autonomous Executors",
+        "date": "Dec 25, 2024",
+        "read_time": "6",
+        "category": "AI Systems",
+        "excerpt": "Language models have transitioned from passive text generators to active tool-using agents equipped with observation-reflection-action loops and external san...",
+        "image": "../assets/img/blog/banners/blog5.svg",
+        "file": "blog5.html",
+        "tags": [
+            "AI",
+            "Agents",
+            "LLM",
+            "Automation"
+        ]
+    },
+    {
+        "id": "4",
+        "title": "General Relativity vs. Quantum Mechanics",
+        "date": "Dec 29, 2024",
+        "read_time": "7",
+        "category": "Theoretical Physics",
+        "excerpt": "The central crisis of modern physics is the clash between smooth pseudo-Riemannian geometry in General Relativity and non-commutative, discrete operator alge...",
+        "image": "../assets/img/blog/banners/blog4.svg",
+        "file": "blog4.html",
+        "tags": [
+            "Physics",
+            "Quantum Gravity",
+            "Relativity",
+            "Cosmology"
+        ]
+    },
+    {
+        "id": "3",
+        "title": "Rust for Systems Programming: Safety First",
+        "date": "Jan 03, 2026",
+        "read_time": "5",
+        "category": "Systems & Cloud",
+        "excerpt": "Rust eliminates entire classes of vulnerabilities (use-after-free, double-free, data races) at compile time without paying the runtime pause tax of a tracing...",
+        "image": "../assets/img/blog/banners/blog3.svg",
+        "file": "blog3.html",
+        "tags": [
+            "Rust",
+            "Systems",
+            "Memory Safety",
+            "Concurrency"
+        ]
+    },
+    {
+        "id": "2",
+        "title": "Zero Trust Architecture: Beyond the Firewall",
+        "date": "Jan 05, 2026",
+        "read_time": "6",
+        "category": "Cybersecurity",
+        "excerpt": "The \"castle and moat\" security perimeter is dead. Zero Trust treats every network segment\u2014from local workstation to Kubernetes cluster\u2014as hostile, enforcing ...",
+        "image": "../assets/img/blog/banners/blog2.svg",
+        "file": "blog2.html",
+        "tags": [
+            "Security",
+            "Zero Trust",
+            "Cloud",
+            "Identity"
+        ]
+    },
+    {
+        "id": "1",
+        "title": "The Quantum Internet: Entanglement Distribution",
+        "date": "Jan 08, 2026",
+        "read_time": "5",
+        "category": "Quantum Physics",
+        "excerpt": "Quantum Key Distribution (QKD) does not simply detect eavesdropping; by the No-Cloning Theorem and state collapse, the laws of physics make unobserved tappin...",
+        "image": "../assets/img/blog/banners/blog1.svg",
+        "file": "blog1.html",
+        "tags": [
+            "Quantum",
+            "Networking",
+            "Entanglement",
+            "Cryptography"
         ]
     }
 ]

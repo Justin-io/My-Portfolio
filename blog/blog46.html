@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local LLM Serving: PagedAttention &amp; vLLM | Hari Nandan K</title>
+    <meta name="description" content="KV-Cache Paging, AWQ INT4 Quantization, and Tensor Parallelism Across Dual-GPU Workstations">
+    <meta name="theme-color" content="#040404">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style-custom.css?v=2">
+    <link rel="stylesheet" href="../assets/css/blog-pro.css?v=2">
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    <div id="canvas-container" style="position: fixed; inset: 0; z-index: -1;"></div>
+
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">JA</div>
+            <ul class="nav-links">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="../index.html#about" class="nav-link">About Me</a></li>
+                <li><a href="../tools.html" class="nav-link">Utilities</a></li>
+                <li><a href="../blog.html" class="nav-link active">Blog</a></li>
+                <li><a href="../CV.pdf" class="nav-link" target="_blank">Resume</a></li>
+            </ul>
+            <div class="menu-toggle"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="blog-banner-header">
+            <div class="blog-banner-glow"></div>
+            <a href="../blog.html" class="back-link" style="display:inline-flex; align-items:center; gap:8px; color:var(--text-tertiary); text-decoration:none; margin-bottom:25px;"><i class="fas fa-arrow-left"></i> Back to Knowledge Base</a>
+            
+            <div class="blog-banner-badge-row">
+                <span class="blog-banner-badge">AI SYSTEMS</span>
+                <span class="blog-banner-reading-time"><i class="far fa-clock"></i> 8 min read</span>
+            </div>
+
+            <h1 class="blog-banner-title">Local LLM Serving: PagedAttention & vLLM</h1>
+
+            <div class="blog-banner-meta">
+                <span><i class="far fa-calendar"></i> Jun 28, 2026</span>
+                <span><i class="far fa-user"></i> Hari Nandan K</span>
+                <span><i class="fas fa-microchip"></i> Lab Ref: 2026-B46</span>
+            </div>
+
+            <div class="blog-banner-visual">
+                <img src="../assets/img/blog/banners/blog46.svg" alt="Local LLM Serving: PagedAttention &amp; vLLM" class="article-featured-image">
+            </div>
+
+            <div class="article-body">
+                <p class="article-lead" style="font-size: 1.25rem; color: #f1f5f9; line-height: 1.8; margin-bottom: 35px;">KV-Cache Paging, AWQ INT4 Quantization, and Tensor Parallelism Across Dual-GPU Workstations</p>
+
+                <div class="blog-callout">
+                    <div class="blog-callout-title"><i class="fas fa-network-wired"></i> Distributed Architecture Takeaway</div>
+                    <p style="margin: 0; color: #cbd5e1;">Standard Transformer inference wastes up to 80% of GPU memory due to KV-cache fragmentation. By adapting virtual memory paging principles from operating systems, PagedAttention (vLLM) enables 4x to 8x higher batch concurrency on local workstations.</p>
+                </div>
+
+                <h3 style="color: #fff; margin-top: 40px;">Empirical Architecture Comparison: HuggingFace Baseline vs. vLLM with PagedAttention and AWQ</h3>
+                <div class="blog-table-wrapper">
+    <table class="blog-data-table">
+        <thead>
+            <tr><th>Serving Engine</th><th>Tokens / Second (Single Stream)</th><th>Throughput at 32 Concurrent Streams</th><th>GPU VRAM Footprint (70B Model)</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Vanilla HuggingFace Transformers (FP16)</td><td>18.4 tokens/sec</td><td>OOM (Out Of Memory Crash at 6 streams)</td><td>140 GB (Requires 2x 80GB A100s)</td></tr>
+<tr><td>HuggingFace + bitsandbytes INT4</td><td>8.2 tokens/sec (Slow dequant)</td><td>110 total tokens/sec</td><td>38 GB VRAM</td></tr>
+<tr><td>vLLM + PagedAttention (FP16)</td><td>42.1 tokens/sec</td><td>620 total tokens/sec</td><td>140 GB (Efficient non-fragmented VRAM)</td></tr>
+<tr><td>vLLM + AWQ INT4 + Tensor Parallelism (TP=2)</td><td>68.5 tokens/sec</td><td>1,420 total tokens/sec</td><td>39 GB total (Runs on 2x RTX 3090/4090!)</td></tr>
+
+        </tbody>
+    </table>
+</div>
+
+                <h2>1. The KV-Cache Bottleneck in Autoregressive Generation</h2>
+During the autoregressive generation phase, an LLM generates tokens sequentially. To avoid recomputing past key and value vectors at every step, past projections are cached in GPU memory (the Key-Value Cache).
+             The memory required for a single request scales linearly with sequence length:
+             $$\text{Memory}_{KV} = 2 \times 2 \times n_{\text{layers}} \times n_{\text{heads}} \times d_{\text{head}} \times \text{seq\_len} \times \text{precision}$$
+             For a 70B parameter model with a 4,096 context window, a single user session consumes over 2.4 GB of VRAM solely for its KV-cache. In standard memory allocators, contiguous memory pre-allocation causes severe internal and external memory fragmentation.
+
+<h2>2. PagedAttention: Operating System Virtual Memory for GPUs</h2>
+Developed by Woosuk Kwon et al. at UC Berkeley, PagedAttention manages the KV-cache using physical memory blocks analogous to OS virtual memory pages.
+             Rather than allocating contiguous physical VRAM for maximum context lengths, PagedAttention allocates fixed-size memory blocks (e.g., 16 tokens per block). A software block table maps logical token positions to non-contiguous physical GPU VRAM slots, reducing memory waste from 80% down to under 4% and enabling dramatic increases in batch size.
+
+<h2>3. Activation-Aware Weight Quantization (AWQ)</h2>
+Quantizing models from FP16 (16-bit floating point) to INT4 (4-bit integer) slashes memory footprints by 75%. However, naive round-to-nearest quantization degrades model reasoning.
+             Activation-Aware Weight Quantization (AWQ) recognizes that not all weights are equally critical:
+             $$\text{Salience}(W) \propto \|X \cdot W\|$$
+             By protecting the 1% most salient weight channels (those corresponding to high-magnitude activation features) and quantizing the remaining 99% to INT4, AWQ preserves FP16 perplexity scores while delivering 2.5x faster matrix multiplication kernels on Tensor Cores.
+
+<h2>4. Tensor Parallelism Across Multi-GPU Nodes</h2>
+When running 70B models locally on multi-GPU developer workstations (e.g., two 24GB RTX 3090s), Tensor Parallelism ($TP=2$) splits individual weight matrices across GPUs via Megatron-LM tensor slicing.
+             Column-parallel linear layers split attention projection heads ($W_q, W_k, W_v$) across GPU 0 and GPU 1, followed by an `All-Reduce` collective communication step over high-speed PCIe 4.0 / NVLink, achieving blistering real-time inference without cloud API dependencies.
+
+
+
+                <div class="share-section">
+                    <div class="tag-cloud">
+                        <span class='tag-chip'>#vLLM</span><span class='tag-chip'>#PagedAttention</span><span class='tag-chip'>#Quantization</span><span class='tag-chip'>#Inference</span><span class='tag-chip'>#GPU</span>
+                    </div>
+                </div>
+
+                <div class="blog-nav-row">
+                    <a href="blog45.html" class="blog-nav-btn"><i class="fas fa-chevron-left"></i> Previous Article</a>
+                    <a href="../blog.html" class="blog-nav-btn"><i class="fas fa-th-large"></i> All Articles</a>
+                    <a href="blog47.html" class="blog-nav-btn">Next Article <i class="fas fa-chevron-right"></i></a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <div class="footer-content" style="text-align: center; padding: 50px 20px; color: var(--text-secondary); border-top: 1px solid rgba(255,255,255,0.05); background: #020202;">
+            <p style="font-family: 'Space Grotesk', sans-serif;">&copy; 2026 Hari Nandan K. Theoretical Physics & Cybersecurity Research.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

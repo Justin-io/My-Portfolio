@@ -3,60 +3,110 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ethical Hacking: The Recon Phase | Blog</title>
+    <title>Ethical Hacking: Active &amp; Passive Reconnaissance | Hari Nandan K</title>
+    <meta name="description" content="Ethical Hacking: Active &amp; Passive Reconnaissance - Deep technical analysis by Hari Nandan K.">
     <meta name="theme-color" content="#040404">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/style-custom.css?v=2">
-    <style>
-        .article-header { padding-top: 150px; padding-bottom: 60px; text-align: center; max-width: 800px; margin: 0 auto; }
-        .article-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 20px; background: linear-gradient(135deg, #fff 0%, #aaa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .article-meta { color: var(--text-tertiary); font-size: 0.9rem; margin-bottom: 40px; }
-        .article-badge { display: inline-block; padding: 5px 15px; border-radius: 20px; background: rgba(0, 82, 204, 0.2); color: var(--accent); border: 1px solid rgba(0, 82, 204, 0.3); margin-bottom: 20px; }
-        .article-content { max-width: 800px; margin: 0 auto; padding: 0 20px 100px; color: var(--text-secondary); font-size: 1.1rem; line-height: 1.8; }
-        .article-content h2 { color: var(--text-primary); font-family: 'Space Grotesk', sans-serif; margin-top: 50px; margin-bottom: 20px; }
-        .article-image { width: 100%; height: 400px; object-fit: cover; border-radius: 20px; margin-bottom: 50px; border: 1px solid var(--glass-border); }
-        .back-link { display: inline-flex; align-items: center; gap: 10px; color: var(--text-tertiary); text-decoration: none; margin-bottom: 30px; transition: color 0.3s; }
-        .back-link:hover { color: var(--accent); }
-        .tag { background: rgba(255,255,255,0.05); padding: 5px 10px; border-radius: 5px; font-size: 0.8rem; margin-right: 5px; }
-    </style>
+    <link rel="stylesheet" href="../assets/css/blog-pro.css?v=2">
 </head>
 <body>
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
-
     <div id="canvas-container" style="position: fixed; inset: 0; z-index: -1;"></div>
+
     <nav id="navbar">
         <div class="nav-container">
             <div class="logo">JA</div>
             <ul class="nav-links">
                 <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="../index.html#about" class="nav-link">About Me</a></li>
                 <li><a href="../tools.html" class="nav-link">Utilities</a></li>
                 <li><a href="../blog.html" class="nav-link active">Blog</a></li>
-                <li><a href="../CV.pdf" class="nav-link">Resume</a></li>
+                <li><a href="../CV.pdf" class="nav-link" target="_blank">Resume</a></li>
             </ul>
-             <div class="menu-toggle"><span></span><span></span><span></span></div>
+            <div class="menu-toggle"><span></span><span></span><span></span></div>
         </div>
     </nav>
+
     <main>
-        <article>
-            <div class="article-header">
-                <a href="../blog.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Blog</a><br>
-                <span class="article-badge">Cybersecurity</span>
-                <h1 class="article-title">Ethical Hacking: The Recon Phase</h1>
-                <div class="article-meta"><span><i class="far fa-calendar"></i> Dec 20, 2024</span> &bull; <span><i class="far fa-user"></i> Hari Nandan K</span></div>
-                <img src="../assets/img/blog/blog6.webp" alt="Ethical Hacking: The Recon Phase" class="article-image">
-                <div style="margin-top: -30px; margin-bottom: 40px;">
-                    <span class='tag'>#Hacking</span><span class='tag'>#Recon</span><span class='tag'>#Tutorial</span>
-                </div>
+        <article class="blog-banner-header">
+            <div class="blog-banner-glow"></div>
+            <a href="../blog.html" class="back-link" style="display:inline-flex; align-items:center; gap:8px; color:var(--text-tertiary); text-decoration:none; margin-bottom:25px;"><i class="fas fa-arrow-left"></i> Back to Knowledge Base</a>
+            
+            <div class="blog-banner-badge-row">
+                <span class="blog-banner-badge">Cybersecurity</span>
+                <span class="blog-banner-reading-time"><i class="far fa-clock"></i> 6 min read</span>
             </div>
-            <div class="article-content">
-                <p class="lead" style="font-size: 1.3rem; color: var(--text-primary); margin-bottom: 30px;">Movies show hackers typing furiously against a deadline. In reality, a professional penetration tester spends days or weeks just watching, scanning, and mapping. Reconnaissance is the most critical phase of any engagement.</p>
-                <p>Reconnaissance consists of two types: Passive and Active. Passive recon involves gathering information without ever touching the target's infrastructure. You are invisible.</p><p>OSINT (Open Source Intelligence) is your best friend. Tools like Shodan, Maltego, and even LinkedIn provide a treasure trove of data. Finding an engineer's resume might reveal the specific version of the database software they use.</p><p>DNS enumeration is a classic passive technique. Subdomain enumeration can reveal forgotten dev servers or admin portals that were never meant to be public. Tools like Sublist3r and Amass automate this scraping.</p><p>Active Recon is where you start poking the bear. This includes port scanning with Nmap. 'Nmap is the stethoscope of the internet.' You are looking for open ports and banners that reveal service versions.</p><p>The goal is to increase the 'Attack Surface.' The more endpoints, parameters, and services you discover, the higher the probability of finding a vulnerability.</p><p>Directory busting with Gobuster or Dirb can find hidden file paths. `admin.php`, `.git/`, or `.env` files left exposed are common wins during this phase.</p><p>Technology fingerprinting answers 'What is this built with?' Wappalyzer or `whatweb` can tell you if the site runs on WordPress, React, or an old version of Apache Struts.</p><p>Social Engineering recon involves mapping the human hierarchy. Who is the CFO? Who is the new IT intern? Phishing attacks are tailored based on this organizational map.</p><p>Documentation involves rigorous note-taking. If you find a potential vector but forget where it was, you've wasted your time. Tools like Obsidian or simplistic Markdown reports are essential.</p><p>Remember, the difference between a script kiddie and a professional is the methodology. We don't just throw exploits at a wall; we surgically identify the weakest link through superior visibility.</p>
+
+            <h1 class="blog-banner-title">Ethical Hacking: Active & Passive Reconnaissance</h1>
+
+            <div class="blog-banner-meta">
+                <span><i class="far fa-calendar"></i> Dec 20, 2024</span>
+                <span><i class="far fa-user"></i> Hari Nandan K</span>
+                <span><i class="fas fa-microchip"></i> Lab Ref: 2026-B06</span>
+            </div>
+
+            <div class="blog-banner-visual">
+                <img src="../assets/img/blog/banners/blog6.svg" alt="Ethical Hacking: Active &amp; Passive Reconnaissance" class="article-featured-image">
+            </div>
+
+            <div class="article-body">
+                <div class="blog-callout">
+                    <div class="blog-callout-title"><i class="fas fa-shield-alt"></i> Architectural Takeaway</div>
+                    <p style="margin: 0; color: #cbd5e1;">Over 90% of successful security breaches are decided during reconnaissance. Mapping attack surfaces without alerting SOC alerts is the primary skill of advanced red teaming.</p>
+                </div>
+
+                <h2>1. The Asymmetric Advantage of Deep Reconnaissance</h2>
+                <p>Movies show hackers typing furiously against a deadline. In reality, a professional penetration tester spends days or weeks just watching, scanning, and mapping. Reconnaissance is the most critical phase of any engagement.</p><p>Reconnaissance consists of two types: Passive and Active. Passive recon involves gathering information without ever touching the target's infrastructure. You are invisible.</p>
+
+                <h2>2. Passive Footprinting: Invisible Intelligence Gathering</h2>
+                <p>OSINT (Open Source Intelligence) is your best friend. Tools like Shodan, Maltego, and even LinkedIn provide a treasure trove of data. Finding an engineer's resume might reveal the specific version of the database software they use.</p><p>DNS enumeration is a classic passive technique. Subdomain enumeration can reveal forgotten dev servers or admin portals that were never meant to be public. Tools like Sublist3r and Amass automate this scraping.</p>
+
+                <h3 style="color: #fff; margin-top: 40px;">Comparative Empirical Analysis: Reconnaissance Phases & Associated Toolchains</h3>
+                <div class="blog-table-wrapper">
+    <table class="blog-data-table">
+        <thead>
+            <tr><th>Stage</th><th>Primary Objectives</th><th>Typical Methodology</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Passive OSINT</td><td>DNS history, ASN mapping, credential leaks</td><td>Certificate Transparency logs, Amass, Shodan</td></tr>
+<tr><td>Active Port Scanning</td><td>Open ports, listening services, OS fingerprint</td><td>SYN stealth scanning, Rustscan, Nmap scripts</td></tr>
+<tr><td>Vulnerability Mapping</td><td>Outdated daemons, CVE matching</td><td>Nuclei templates, automated banner grabs</td></tr>
+<tr><td>Surface Analysis</td><td>API endpoints, subdomains, cloud buckets</td><td>Subfinder, httpx, ffuf directory fuzzing</td></tr>
+
+        </tbody>
+    </table>
+</div>
+
+                <h2>3. Active Scanning: Probing the Digital Perimeter</h2>
+                <p>Active Recon is where you start poking the bear. This includes port scanning with Nmap. 'Nmap is the stethoscope of the internet.' You are looking for open ports and banners that reveal service versions.</p><p>The goal is to increase the 'Attack Surface.' The more endpoints, parameters, and services you discover, the higher the probability of finding a vulnerability.</p>
+
+                <h2>4. Building Actionable Threat Matrices from Raw Data</h2>
+                <p>Directory busting with Gobuster or Dirb can find hidden file paths. `admin.php`, `.git/`, or `.env` files left exposed are common wins during this phase.</p><p>Technology fingerprinting answers 'What is this built with?' Wappalyzer or `whatweb` can tell you if the site runs on WordPress, React, or an old version of Apache Struts.</p><p>Social Engineering recon involves mapping the human hierarchy. Who is the CFO? Who is the new IT intern? Phishing attacks are tailored based on this organizational map.</p><p>Documentation involves rigorous note-taking. If you find a potential vector but forget where it was, you've wasted your time. Tools like Obsidian or simplistic Markdown reports are essential.</p><p>Remember, the difference between a script kiddie and a professional is the methodology. We don't just throw exploits at a wall; we surgically identify the weakest link through superior visibility.</p>
+
+                <div class="share-section">
+                    <div class="tag-cloud">
+                        <span class='tag-chip'>#Cybersecurity</span><span class='tag-chip'>#Recon</span><span class='tag-chip'>#OSINT</span><span class='tag-chip'>#PenTesting</span>
+                    </div>
+                </div>
+
+                <div class="blog-nav-row">
+                    <a href="blog5.html" class="blog-nav-btn"><i class="fas fa-chevron-left"></i> Previous Article</a>
+                    <a href="../blog.html" class="blog-nav-btn"><i class="fas fa-th-large"></i> All Articles</a>
+                    <a href="blog7.html" class="blog-nav-btn">Next Article <i class="fas fa-chevron-right"></i></a>
+                </div>
             </div>
         </article>
     </main>
-    <footer><div class="footer-content" style="text-align: center; padding: 40px; color: var(--text-secondary);"><p>&copy; 2026 Hari Nandan K.</p></div></footer>
+
+    <footer>
+        <div class="footer-content" style="text-align: center; padding: 50px 20px; color: var(--text-secondary); border-top: 1px solid rgba(255,255,255,0.05); background: #020202;">
+            <p style="font-family: 'Space Grotesk', sans-serif;">&copy; 2026 Hari Nandan K. Theoretical Physics & Cybersecurity Research.</p>
+        </div>
+    </footer>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="../assets/js/main.js"></script>
 </body>

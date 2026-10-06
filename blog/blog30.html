@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cavity QED: Vacuum Rabi Oscillations | Hari Nandan K</title>
+    <meta name="description" content="Coupling Single Atoms to Photons in High-Finesse Optical Resonators and Jaynes-Cummings Dynamics">
+    <meta name="theme-color" content="#040404">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style-custom.css?v=2">
+    <link rel="stylesheet" href="../assets/css/blog-pro.css?v=2">
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    <div id="canvas-container" style="position: fixed; inset: 0; z-index: -1;"></div>
+
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">JA</div>
+            <ul class="nav-links">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="../index.html#about" class="nav-link">About Me</a></li>
+                <li><a href="../tools.html" class="nav-link">Utilities</a></li>
+                <li><a href="../blog.html" class="nav-link active">Blog</a></li>
+                <li><a href="../CV.pdf" class="nav-link" target="_blank">Resume</a></li>
+            </ul>
+            <div class="menu-toggle"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="blog-banner-header">
+            <div class="blog-banner-glow"></div>
+            <a href="../blog.html" class="back-link" style="display:inline-flex; align-items:center; gap:8px; color:var(--text-tertiary); text-decoration:none; margin-bottom:25px;"><i class="fas fa-arrow-left"></i> Back to Knowledge Base</a>
+            
+            <div class="blog-banner-badge-row">
+                <span class="blog-banner-badge">QUANTUM PHYSICS</span>
+                <span class="blog-banner-reading-time"><i class="far fa-clock"></i> 8 min read</span>
+            </div>
+
+            <h1 class="blog-banner-title">Cavity QED: Vacuum Rabi Oscillations</h1>
+
+            <div class="blog-banner-meta">
+                <span><i class="far fa-calendar"></i> Sep 02, 2026</span>
+                <span><i class="far fa-user"></i> Hari Nandan K</span>
+                <span><i class="fas fa-microchip"></i> Lab Ref: 2026-B30</span>
+            </div>
+
+            <div class="blog-banner-visual">
+                <img src="../assets/img/blog/banners/blog30.svg" alt="Cavity QED: Vacuum Rabi Oscillations" class="article-featured-image">
+            </div>
+
+            <div class="article-body">
+                <p class="article-lead" style="font-size: 1.25rem; color: #f1f5f9; line-height: 1.8; margin-bottom: 35px;">Coupling Single Atoms to Photons in High-Finesse Optical Resonators and Jaynes-Cummings Dynamics</p>
+
+                <div class="blog-callout">
+                    <div class="blog-callout-title"><i class="fas fa-atom"></i> Theoretical Formulation</div>
+                    <p style="margin: 0; color: #cbd5e1;">When a single atom is placed inside an optical cavity with ultra-high finesse, the atom and the cavity vacuum exchange a single photon back and forth reversibly. This coherent oscillation—Vacuum Rabi Splitting—is the cornerstone of quantum optics.</p>
+                </div>
+
+                <h3 style="color: #fff; margin-top: 40px;">Empirical Architecture Comparison: Weak Coupling Regime vs. Strong Coupling Regime in Cavity QED</h3>
+                <div class="blog-table-wrapper">
+    <table class="blog-data-table">
+        <thead>
+            <tr><th>Characteristic</th><th>Weak Coupling Regime ($g \ll \kappa, \gamma$)</th><th>Strong Coupling Regime ($g \gg \kappa, \gamma$)</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Atom-Photon Dynamics</td><td>Irreversible Purcell emission into cavity mode</td><td>Reversible, coherent quantum Rabi oscillations</td></tr>
+<tr><td>Energy Spectrum</td><td>Single transmission peak widened by decay rates</td><td>Vacuum Rabi doublet split by $2g$ in transmission spectra</td></tr>
+<tr><td>Coupling Constant $g$</td><td>Small electric dipole interaction</td><td>High dipole field $g = \frac{\mu E_{vac}}{\hbar} = \mu \sqrt{\frac{\omega}{2\varepsilon_0 \hbar V}}$</td></tr>
+<tr><td>Quantum Applications</td><td>Enhanced LED emission, classical lasers</td><td>Single-photon switches, deterministic photon guns, quantum logic</td></tr>
+
+        </tbody>
+    </table>
+</div>
+
+                <h2>1. The Jaynes-Cummings Hamiltonian</h2>
+The fundamental interaction between a two-level atom with transition frequency $\omega_0$ and a single quantized electromagnetic cavity mode of frequency $\omega_c$ is described by the Jaynes-Cummings Hamiltonian under the Rotating Wave Approximation (RWA):
+             $$H_{JC} = \hbar \omega_c a^\dagger a + \frac{1}{2}\hbar \omega_0 \sigma_z + \hbar g (a^\dagger \sigma_- + a \sigma_+)$$
+             where $a, a^\dagger$ are photon annihilation/creation operators, $\sigma_+, \sigma_-$ are atomic raising/lowering operators, and $g$ is the vacuum Rabi coupling frequency proportional to the atomic dipole moment $\mu$ and inversely proportional to the square root of the cavity mode volume $V$.
+
+<h2>2. Vacuum Rabi Splitting: The Atom-Cavity Polariton</h2>
+On resonance ($\omega_0 = \omega_c$), the degenerate uncoupled states $|e, n\rangle$ (atom excited, $n$ photons) and $|g, n+1\rangle$ (atom ground, $n+1$ photons) hybridize into entangled dressed states:
+             $$|\pm, n\rangle = \frac{1}{\sqrt{2}}(|e, n\rangle \pm |g, n+1\rangle)$$
+             The energy degeneracy is lifted by an energy gap $\Delta E = 2\hbar g \sqrt{n+1}$. For $n=0$ (pure electromagnetic vacuum), the cavity transmission spectrum splits into a symmetric doublet separated by $2g$, directly proving that the vacuum state possesses real physical fluctuations that perturb atomic energy levels.
+
+<h2>3. The Strong Coupling Condition: Beating Decoherence Rates</h2>
+To achieve coherent control, the vacuum Rabi coupling $g$ must exceed both the cavity photon decay rate $\kappa = \frac{\omega}{2Q}$ and the atomic spontaneous emission rate $\gamma$:
+             $$g \gg (\kappa, \gamma)$$
+             This necessitates ultra-high quality factor mirrors ($Q > 10^8$) and microscopic mode volumes ($V < 10^{-15} \text{ m}^3$). Modern platforms achieve this using Fabry-Pérot microcavities with super-polished mirrors, whispering-gallery mode silica microspheres, and photonic crystal defect nanobeams.
+
+<h2>4. Quantum Information Protocols & Single-Photon Transistors</h2>
+In strong coupling, a single atom acts as a nonlinear optical switch. The presence of one photon inside the cavity blocks subsequent photons from entering—a phenomenon known as Photon Blockade. This provides deterministic single-photon generation, single-atom quantum memory registers, and quantum phase gates linking flying optical qubits with stationary matter qubits in distributed quantum networks.
+
+
+
+                <div class="share-section">
+                    <div class="tag-cloud">
+                        <span class='tag-chip'>#Cavity QED</span><span class='tag-chip'>#Jaynes-Cummings</span><span class='tag-chip'>#Optics</span><span class='tag-chip'>#Photons</span><span class='tag-chip'>#Quantum</span>
+                    </div>
+                </div>
+
+                <div class="blog-nav-row">
+                    <a href="blog29.html" class="blog-nav-btn"><i class="fas fa-chevron-left"></i> Previous Article</a>
+                    <a href="../blog.html" class="blog-nav-btn"><i class="fas fa-th-large"></i> All Articles</a>
+                    <a href="blog31.html" class="blog-nav-btn">Next Article <i class="fas fa-chevron-right"></i></a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <div class="footer-content" style="text-align: center; padding: 50px 20px; color: var(--text-secondary); border-top: 1px solid rgba(255,255,255,0.05); background: #020202;">
+            <p style="font-family: 'Space Grotesk', sans-serif;">&copy; 2026 Hari Nandan K. Theoretical Physics & Cybersecurity Research.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

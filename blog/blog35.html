@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Differential Power Analysis on Hardware Cryptography | Hari Nandan K</title>
+    <meta name="description" content="Extracting AES-256 Secret Keys from Physical Power Traces and Electromagnetic Field Leakage">
+    <meta name="theme-color" content="#040404">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style-custom.css?v=2">
+    <link rel="stylesheet" href="../assets/css/blog-pro.css?v=2">
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    <div id="canvas-container" style="position: fixed; inset: 0; z-index: -1;"></div>
+
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">JA</div>
+            <ul class="nav-links">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="../index.html#about" class="nav-link">About Me</a></li>
+                <li><a href="../tools.html" class="nav-link">Utilities</a></li>
+                <li><a href="../blog.html" class="nav-link active">Blog</a></li>
+                <li><a href="../CV.pdf" class="nav-link" target="_blank">Resume</a></li>
+            </ul>
+            <div class="menu-toggle"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="blog-banner-header">
+            <div class="blog-banner-glow"></div>
+            <a href="../blog.html" class="back-link" style="display:inline-flex; align-items:center; gap:8px; color:var(--text-tertiary); text-decoration:none; margin-bottom:25px;"><i class="fas fa-arrow-left"></i> Back to Knowledge Base</a>
+            
+            <div class="blog-banner-badge-row">
+                <span class="blog-banner-badge">CYBERSECURITY</span>
+                <span class="blog-banner-reading-time"><i class="far fa-clock"></i> 8 min read</span>
+            </div>
+
+            <h1 class="blog-banner-title">Differential Power Analysis on Hardware Cryptography</h1>
+
+            <div class="blog-banner-meta">
+                <span><i class="far fa-calendar"></i> Aug 12, 2026</span>
+                <span><i class="far fa-user"></i> Hari Nandan K</span>
+                <span><i class="fas fa-microchip"></i> Lab Ref: 2026-B35</span>
+            </div>
+
+            <div class="blog-banner-visual">
+                <img src="../assets/img/blog/banners/blog35.svg" alt="Differential Power Analysis on Hardware Cryptography" class="article-featured-image">
+            </div>
+
+            <div class="article-body">
+                <p class="article-lead" style="font-size: 1.25rem; color: #f1f5f9; line-height: 1.8; margin-bottom: 35px;">Extracting AES-256 Secret Keys from Physical Power Traces and Electromagnetic Field Leakage</p>
+
+                <div class="blog-callout">
+                    <div class="blog-callout-title"><i class="fas fa-shield-alt"></i> Security Architecture Takeaway</div>
+                    <p style="margin: 0; color: #cbd5e1;">A cryptographic algorithm may be mathematically unbreakable, but its physical implementation in silicon leaks information. Differential Power Analysis (DPA) correlates microscopic fluctuations in power consumption to recover secret AES keys in minutes.</p>
+                </div>
+
+                <h3 style="color: #fff; margin-top: 40px;">Empirical Threat & Architecture Analysis: Mathematical Security vs. Physical Side-Channel Leakage</h3>
+                <div class="blog-table-wrapper">
+    <table class="blog-data-table">
+        <thead>
+            <tr><th>Dimension</th><th>Cryptographic Mathematical Security</th><th>Side-Channel Physical Security</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Attack Surface</td><td>Ciphertext and plaintext mathematical mappings</td><td>Power consumption traces, EM emissions, timing jitter</td></tr>
+<tr><td>Key Space Resistance</td><td>AES-256 requires $2^{256}$ operations (Brute force impossible)</td><td>DPA breaks key byte-by-byte ($16 \times 256$ operations)</td></tr>
+<tr><td>Required Access</td><td>Only encrypted messages</td><td>Physical access with high-speed digital oscilloscope</td></tr>
+<tr><td>Countermeasure Method</td><td>Increasing key length (e.g., AES-128 to AES-256)</td><td>Hardware masking, shuffling, and power shunt balancing</td></tr>
+
+        </tbody>
+    </table>
+</div>
+
+                <h2>1. The Physics of Side-Channel Leakage in CMOS Logic</h2>
+In CMOS integrated circuits, power consumption is dominated by dynamic switching current when charging and discharging parasitic gate capacitances:
+             $$I_{\text{dynamic}} = C_L V_{DD} f \cdot \alpha$$
+             where $\alpha$ is the switching activity factor. Crucially, transitioning a bit from 0 to 1 consumes significantly more electrical energy than leaving it unchanged. The total power consumed during a clock cycle is directly proportional to the Hamming Distance (HD) between subsequent data states, or the Hamming Weight (HW) of the processed byte:
+             $$P(t) = a \cdot \text{HW}(S) + b + N(t)$$
+             where $N(t)$ represents ambient electronic noise.
+
+<h2>2. Correlation Power Analysis (CPA) Attack Methodology</h2>
+Correlation Power Analysis (CPA) targets the first round of AES-128/256 at the SubBytes operation. The intermediate state is computed as:
+             $$V(k) = \text{SBox}(p \oplus k)$$
+             where $p$ is known plaintext and $k$ is a subkey hypothesis ($0 \dots 255$).
+             The attacker calculates the Pearson correlation coefficient $r$ between theoretical power models $H$ and measured physical power traces $T$ across thousands of encryptions:
+             $$r_{i,j} = \frac{\sum_{n=1}^N (T_{n,i} - \bar{T}_i)(H_{n,j} - \bar{H}_j)}{\sqrt{\sum_{n=1}^N (T_{n,i} - \bar{T}_i)^2 \sum_{n=1}^N (H_{n,j} - \bar{H}_j)^2}}$$
+             The correct key hypothesis produces a distinct correlation spike approaching $r \approx 0.8$, immediately isolating each key byte independently.
+
+<h2>3. Python Implementation of Correlation Engine</h2>
+Below is an optimized Python routine computing CPA correlations across raw oscilloscope power traces:
+             <pre><code>import numpy as np
+
+def run_cpa_attack(traces, plaintexts, sbox):
+    """
+    Computes Pearson correlation for all 256 key guesses on Byte 0.
+    traces: N x S matrix (N traces, S sample points)
+    plaintexts: N array of byte 0 plaintexts
+    """
+    num_traces, num_samples = traces.shape
+    max_corr = np.zeros(256)
+    
+    for k_guess in range(256):
+        # Hypothetical intermediate value
+        hypothetical = np.array([sbox[p ^ k_guess] for p in plaintexts])
+        # Hamming weight model
+        hw = np.array([bin(v).count('1') for v in hypothetical])
+        
+        # Correlate HW against each time point
+        hw_mean = np.mean(hw)
+        hw_diff = hw - hw_mean
+        hw_sq = np.sum(hw_diff ** 2)
+        
+        corrs = np.zeros(num_samples)
+        for s in range(num_samples):
+            t_col = traces[:, s]
+            t_diff = t_col - np.mean(t_col)
+            corrs[s] = np.sum(hw_diff * t_diff) / np.sqrt(hw_sq * np.sum(t_diff ** 2))
+            
+        max_corr[k_guess] = np.max(np.abs(corrs))
+        
+    recovered_key = np.argmax(max_corr)
+    return recovered_key, max_corr</code></pre>
+
+<h2>4. Hardware Countermeasures: Masking & Noise Injection</h2>
+Defending cryptographic accelerators requires Boolean masking: every intermediate cryptographic value is split into randomized shares ($x = x' \oplus m$). Because power leaks only correlate with masked shares containing uniform random noise, first-order DPA is completely defeated. Hardware engineers also deploy dual-rail precharge logic (Sense Amplifier Based Logic - SABL), ensuring power consumption remains identical regardless of whether a bit switches from 0 or 1.
+
+
+
+                <div class="share-section">
+                    <div class="tag-cloud">
+                        <span class='tag-chip'>#Side-Channel</span><span class='tag-chip'>#DPA</span><span class='tag-chip'>#CPA</span><span class='tag-chip'>#Cryptography</span><span class='tag-chip'>#Hardware Security</span>
+                    </div>
+                </div>
+
+                <div class="blog-nav-row">
+                    <a href="blog34.html" class="blog-nav-btn"><i class="fas fa-chevron-left"></i> Previous Article</a>
+                    <a href="../blog.html" class="blog-nav-btn"><i class="fas fa-th-large"></i> All Articles</a>
+                    <a href="blog36.html" class="blog-nav-btn">Next Article <i class="fas fa-chevron-right"></i></a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <div class="footer-content" style="text-align: center; padding: 50px 20px; color: var(--text-secondary); border-top: 1px solid rgba(255,255,255,0.05); background: #020202;">
+            <p style="font-family: 'Space Grotesk', sans-serif;">&copy; 2026 Hari Nandan K. Theoretical Physics & Cybersecurity Research.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

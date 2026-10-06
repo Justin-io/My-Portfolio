@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADNR: Autonomous Disaster Navigation Robot | Hari Nandan K</title>
+    <meta name="description" content="Indoor SLAM, 2D LiDAR Odometry, and Extended Kalman Filter Sensor Fusion for Search-and-Rescue">
+    <meta name="theme-color" content="#040404">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style-custom.css?v=2">
+    <link rel="stylesheet" href="../assets/css/blog-pro.css?v=2">
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    <div id="canvas-container" style="position: fixed; inset: 0; z-index: -1;"></div>
+
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">JA</div>
+            <ul class="nav-links">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="../index.html#about" class="nav-link">About Me</a></li>
+                <li><a href="../tools.html" class="nav-link">Utilities</a></li>
+                <li><a href="../blog.html" class="nav-link active">Blog</a></li>
+                <li><a href="../CV.pdf" class="nav-link" target="_blank">Resume</a></li>
+            </ul>
+            <div class="menu-toggle"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="blog-banner-header">
+            <div class="blog-banner-glow"></div>
+            <a href="../blog.html" class="back-link" style="display:inline-flex; align-items:center; gap:8px; color:var(--text-tertiary); text-decoration:none; margin-bottom:25px;"><i class="fas fa-arrow-left"></i> Back to Knowledge Base</a>
+            
+            <div class="blog-banner-badge-row">
+                <span class="blog-banner-badge">ROBOTICS & HARDWARE</span>
+                <span class="blog-banner-reading-time"><i class="far fa-clock"></i> 8 min read</span>
+            </div>
+
+            <h1 class="blog-banner-title">ADNR: Autonomous Disaster Navigation Robot</h1>
+
+            <div class="blog-banner-meta">
+                <span><i class="far fa-calendar"></i> Jun 24, 2026</span>
+                <span><i class="far fa-user"></i> Hari Nandan K</span>
+                <span><i class="fas fa-microchip"></i> Lab Ref: 2026-B47</span>
+            </div>
+
+            <div class="blog-banner-visual">
+                <img src="../assets/img/blog/banners/blog47.svg" alt="ADNR: Autonomous Disaster Navigation Robot" class="article-featured-image">
+            </div>
+
+            <div class="article-body">
+                <p class="article-lead" style="font-size: 1.25rem; color: #f1f5f9; line-height: 1.8; margin-bottom: 35px;">Indoor SLAM, 2D LiDAR Odometry, and Extended Kalman Filter Sensor Fusion for Search-and-Rescue</p>
+
+                <div class="blog-callout">
+                    <div class="blog-callout-title"><i class="fas fa-microchip"></i> Hardware & Systems Takeaway</div>
+                    <p style="margin: 0; color: #cbd5e1;">In GPS-denied disaster rubble, conventional mobile robots become blinded. The ADNR platform fuses 360-degree 2D LiDAR scans, wheel encoder odometry, and an 9-axis IMU through an Extended Kalman Filter (EKF) to construct real-time 2D occupancy grid maps.</p>
+                </div>
+
+                <h3 style="color: #fff; margin-top: 40px;">Empirical Architecture Comparison: Sensor Fusion Modalities in the ADNR Disaster Platform</h3>
+                <div class="blog-table-wrapper">
+    <table class="blog-data-table">
+        <thead>
+            <tr><th>Sensor Modality</th><th>Update Frequency</th><th>Measurement Contribution</th><th>Noise / Error Characterization</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>RPLiDAR A2 (Laser Scanner)</td><td>10 Hz (8,000 samples/sec)</td><td>Range-bearing scans up to 12 meters</td><td>Gaussian beam noise $\sigma_r \approx 0.5$ cm; failure on mirrors/smoke</td></tr>
+<tr><td>Optical Wheel Encoders</td><td>50 Hz (Hardware interrupts)</td><td>Differential drive linear/angular velocity</td><td>Accumulates unbounded systematic wheel slippage drift</td></tr>
+<tr><td>BNO055 9-DOF IMU</td><td>100 Hz (I2C interface)</td><td>Angular rate (gyro) and linear acceleration</td><td>Gyro zero-bias drift; magnetic distortion from rebar debris</td></tr>
+<tr><td>Fused EKF State Vector</td><td>50 Hz real-time output</td><td>Estimates $[x, y, \theta, v, \omega]^T$</td><td>Bounded covariance ellipse; sub-2cm localization drift</td></tr>
+
+        </tbody>
+    </table>
+</div>
+
+                <h2>1. Navigation in GPS-Denied Hostile Environments</h2>
+During structural collapses, natural earthquakes, and industrial hazmat incidents, human first responders cannot safely enter damaged interiors. The Autonomous Disaster Navigation Robot (ADNR) is engineered for autonomous reconnaissance in rubble-strewn, dark, GPS-denied environments.
+             The chassis utilizes a ruggedized tracked suspension with high-torque planetary DC gearmotors, providing traction over loose concrete fragments, stairs, and uneven terrain.
+
+<h2>2. The Extended Kalman Filter (EKF) Sensor Fusion Architecture</h2>
+Wheel encoders provide high-frequency velocity measurements but suffer from severe drift due to wheel slip over debris. Conversely, LiDAR scan-matching (Hector SLAM / Cartographer) provides absolute spatial fixes but operates at a lower update rate (10 Hz).
+             We couple these streams via an Extended Kalman Filter. The non-linear robot kinematic model is linearized via the Jacobian matrix $F_k$:
+             $$\mathbf{x}_k = f(\mathbf{x}_{k-1}, \mathbf{u}_k) + \mathbf{w}_k, \quad \mathbf{z}_k = h(\mathbf{x}_k) + \mathbf{v}_k$$
+             $$P_k^- = F_k P_{k-1} F_k^T + Q_k$$
+             $$K_k = P_k^- H_k^T (H_k P_k^- H_k^T + R_k)^{-1}$$
+             The EKF innovation update continuously corrects the heading orientation $\theta$ using IMU gyro integration, preventing map warping during fast turns.
+
+<h2>3. ROS2 Nav2 Autonomous Path Planning & Obstacle Costmaps</h2>
+Onboard computation is driven by a Raspberry Pi 5 running Ubuntu 24.04 and ROS2 Jazzy Jalisco.
+             The Navigation 2 (Nav2) stack maintains two distinct costmaps:
+             <ul>
+                 <li><strong>Global Costmap:</strong> Ray-traces 2D occupancy grids (0 = Free space, 100 = Lethal obstacle, -1 = Unknown). Plans optimal trajectories using Smac Planner (Hybrid-A*).</li>
+                 <li><strong>Local Costmap:</strong> 3x3 meter rolling window. Computes dynamic collision avoidance trajectories at 20 Hz using Model Predictive Path Integral (MPPI) control.</li>
+             </ul>
+
+<h2>4. Thermal Imaging & Survivor Detection Payload</h2>
+In addition to SLAM navigation, ADNR carries a FLIR Lepton 3.5 thermal radiometry camera and a non-dispersive infrared (NDIR) CO2 sensor. A lightweight edge computer running MobileNet-SSD detects human heat signatures (36°C - 38°C) through smoke and darkness, transmitting geo-referenced GPS/SLAM coordinates back to rescue command stations via long-range 915 MHz LoRa mesh radio telemetry.
+
+
+
+                <div class="share-section">
+                    <div class="tag-cloud">
+                        <span class='tag-chip'>#Robotics</span><span class='tag-chip'>#SLAM</span><span class='tag-chip'>#LiDAR</span><span class='tag-chip'>#ROS2</span><span class='tag-chip'>#Embedded</span>
+                    </div>
+                </div>
+
+                <div class="blog-nav-row">
+                    <a href="blog46.html" class="blog-nav-btn"><i class="fas fa-chevron-left"></i> Previous Article</a>
+                    <a href="../blog.html" class="blog-nav-btn"><i class="fas fa-th-large"></i> All Articles</a>
+                    <a href="blog48.html" class="blog-nav-btn">Next Article <i class="fas fa-chevron-right"></i></a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <div class="footer-content" style="text-align: center; padding: 50px 20px; color: var(--text-secondary); border-top: 1px solid rgba(255,255,255,0.05); background: #020202;">
+            <p style="font-family: 'Space Grotesk', sans-serif;">&copy; 2026 Hari Nandan K. Theoretical Physics & Cybersecurity Research.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

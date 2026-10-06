@@ -228,6 +228,12 @@
             border-color: rgba(255, 255, 255, 0.6);
         }
 
+        @media (hover: none) and (pointer: coarse), (max-width: 768px) {
+            .cursor, .cursor-follower {
+                display: none !important;
+            }
+        }
+
         /* Loading Screen */
         .loader {
             position: fixed;
