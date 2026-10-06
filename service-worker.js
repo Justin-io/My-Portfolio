@@ -1,24 +1,29 @@
-const CACHE_NAME = 'portfolio-v10';
+const CACHE_NAME = 'portfolio-v11';
 const urlsToCache = [
-    '/',
-    '/index.html',
-    '/assets/css/style-custom.css',
-    // '/assets/js/security.js',
-    '/assets/js/main.js',
-    '/assets/img/20240421_174638.webp'
+    './',
+    './index.html',
+    './assets/css/style-custom.css',
+    './assets/js/main.js',
+    './assets/img/20240421_174638.webp',
+    './assets/img/me.webp'
 ];
 
 self.addEventListener('install', event => {
-    // Force the waiting service worker to become the active service worker
     self.skipWaiting();
     event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then(cache => cache.addAll(urlsToCache))
+        caches.open(CACHE_NAME).then(async cache => {
+            for (const url of urlsToCache) {
+                try {
+                    await cache.add(url);
+                } catch (err) {
+                    console.warn('Service worker cache failed for:', url, err);
+                }
+            }
+        })
     );
 });
 
 self.addEventListener('activate', event => {
-    // Clean up old caches immediately
     event.waitUntil(
         caches.keys().then(cacheNames => {
             return Promise.all(
@@ -28,33 +33,28 @@ self.addEventListener('activate', event => {
                     }
                 })
             );
-        })
+        }).then(() => self.clients.claim())
     );
-    // Take control of all clients immediately
-    self.clients.claim();
 });
 
 self.addEventListener('fetch', event => {
+    // Only handle GET requests and avoid caching external APIs (like Getform, GitHub API)
+    if (event.request.method !== 'GET') return;
+    const url = new URL(event.request.url);
+    if (url.origin !== self.location.origin) return;
+
     event.respondWith(
         fetch(event.request)
             .then(response => {
-                // Check if we received a valid response
                 if (!response || response.status !== 200 || response.type !== 'basic') {
                     return response;
                 }
-
-                // Update the cache with the new response
                 const responseToCache = response.clone();
-                caches.open(CACHE_NAME)
-                    .then(cache => {
-                        cache.put(event.request, responseToCache);
-                    });
-
+                caches.open(CACHE_NAME).then(cache => {
+                    cache.put(event.request, responseToCache);
+                });
                 return response;
             })
-            .catch(() => {
-                // If network fails, fallback to cache
-                return caches.match(event.request);
-            })
+            .catch(() => caches.match(event.request))
     );
 });

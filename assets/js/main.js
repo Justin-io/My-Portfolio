@@ -45,8 +45,8 @@ if (cursor && cursorFollower && typeof gsap !== 'undefined') {
 // Add hover effect to interactive elements
 const interactiveElements = document.querySelectorAll('a, button, .project-card, .skill-card');
 interactiveElements.forEach(elem => {
-    elem.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-    elem.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+    elem.addEventListener('mouseenter', () => { if (cursor) cursor.classList.add('hover'); });
+    elem.addEventListener('mouseleave', () => { if (cursor) cursor.classList.remove('hover'); });
 });
 
 
@@ -136,37 +136,61 @@ filterBtns.forEach(btn => {
     });
 });
 
-// Form submission
-document.getElementById('contactForm').addEventListener('submit', (e) => {
-    e.preventDefault();
+// Form submission with live Getform AJAX integration
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    contactForm.addEventListener('submit', async function handleFormSubmit(e) {
+        e.preventDefault();
+        const form = e.target;
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn ? submitBtn.innerHTML : 'Send Message';
 
-    // Get form data
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData);
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+        }
 
-    // Here you would normally send the data to a server
-    console.log('Form submitted:', data);
+        const formData = new FormData(form);
 
-    // Show success message
-    const form = e.target;
-    const originalContent = form.innerHTML;
-    form.innerHTML = `
-                <div style="text-align: center; padding: 40px;">
-                    <i class="fas fa-check-circle" style="font-size: 4rem; color: #00ff64; margin-bottom: 20px;"></i>
-                    <h3 style="font-size: 1.5rem; margin-bottom: 10px;">Message Sent Successfully!</h3>
-                    <p style="color: var(--text-secondary);">Thank you for reaching out. I'll get back to you within 24 hours.</p>
-                </div>
-            `;
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
 
-    // Reset form after 5 seconds
-    setTimeout(() => {
-        form.innerHTML = originalContent;
-        form.reset();
-
-        // Re-attach event listener
-        document.getElementById('contactForm').addEventListener('submit', arguments.callee);
-    }, 5000);
-});
+            if (response.ok) {
+                const originalContent = form.innerHTML;
+                form.innerHTML = `
+                    <div style="text-align: center; padding: 40px;">
+                        <i class="fas fa-check-circle" style="font-size: 4rem; color: #00ff64; margin-bottom: 20px;"></i>
+                        <h3 style="font-size: 1.5rem; margin-bottom: 10px; color: #fff;">Message Sent Successfully!</h3>
+                        <p style="color: var(--text-secondary);">Thank you for reaching out. I'll get back to you within 24 hours.</p>
+                    </div>
+                `;
+                setTimeout(() => {
+                    form.innerHTML = originalContent;
+                    form.reset();
+                    const restoredForm = document.getElementById('contactForm');
+                    if (restoredForm) {
+                        restoredForm.addEventListener('submit', handleFormSubmit);
+                    }
+                }, 5000);
+            } else {
+                throw new Error('Server returned error ' + response.status);
+            }
+        } catch (err) {
+            console.error('Contact form submission error:', err);
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
+            }
+            alert('Sorry, there was an issue sending your message. Please email directly at harinandan.ofc@gmail.com.');
+        }
+    });
+}
 
 // GSAP Animations
 if (window.performanceManager && window.performanceManager.config.enableComplexAnimations) {
@@ -409,7 +433,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const carousels = document.querySelectorAll('.timeline-carousel');
     carousels.forEach(carousel => {
         const images = carousel.querySelectorAll('.timeline-img');
-        if (images.length === 0) return;
+        if (images.length <= 1) return;
         let currentIndex = 0;
         setInterval(() => {
             images[currentIndex].classList.remove('active');
