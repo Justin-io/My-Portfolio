@@ -114,10 +114,12 @@ filterBtns.forEach(btn => {
         filterBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
 
-        const filter = btn.getAttribute('data-filter');
+        const filter = (btn.getAttribute('data-filter') || 'all').toLowerCase();
 
         projectCards.forEach(card => {
-            if (filter === 'all' || card.getAttribute('data-category') === filter) {
+            const rawCats = (card.getAttribute('data-category') || '').toLowerCase().trim();
+            const categories = rawCats.split(/\s+/);
+            if (filter === 'all' || categories.includes(filter)) {
                 card.style.display = 'block';
                 setTimeout(() => {
                     card.style.opacity = '1';
@@ -1052,6 +1054,18 @@ document.addEventListener('DOMContentLoaded', () => {
             response = "**BLOOMWATCH-PRO** won the NASA Local Hackathon! It tracks global phenology cycles using MODIS/VIIRS satellite datasets. Check it on [GitHub](https://github.com/Justin-io/BLOOMWATCH-PRO).";
         } else if (lowerText.includes("whatsapp") || lowerText.includes("feedback")) {
             response = "**WhatsApp Automation Suite** is an open-source campaign & feedback automation platform featuring Baileys multi-device socket engine, anti-spam rate limiting, 24-hour follow-up scheduler, auto opt-out blacklist, and live inbox UI. Check it out on [GitHub](https://github.com/Justin-io/whatsapp-automation-suite).";
+        } else if (lowerText.includes("fraud") || lowerText.includes("temporal gnn") || lowerText.includes("graph fraud")) {
+            response = "**Real-Time Graph Fraud Platform** is an end-to-end streaming fraud detection platform featuring an 8-model progression, dynamic graph feature store, Temporal-GNN, and sub-50ms latency engineering. Check it out on [GitHub](https://github.com/Justin-io/realtime-graph-fraud-platform).";
+        } else if (lowerText.includes("agentic bi") || lowerText.includes("bi platform") || lowerText.includes("business intelligence")) {
+            response = "**Autonomous Agentic BI** is a conversational analytics platform pairing Power BI-style dashboards with natural language interaction, 16-stage pipeline orchestration, AST SQL validation, and cryptographic evidence verification. Check it on [GitHub](https://github.com/Justin-io/autonomous-agentic-bi).";
+        } else if (lowerText.includes("rag eval") || lowerText.includes("rag benchmark") || lowerText.includes("rag-eval")) {
+            response = "**RAG Scientific Evaluation Platform** rigorously benchmarks 6 canonical architectures (Naive, Hybrid, Reranked, HyDE, GraphRAG, Agentic) across retrieval, grounding, and adversarial resilience. Check it on [GitHub](https://github.com/Justin-io/rag-eval-platform).";
+        } else if (lowerText.includes("data scientist") || lowerText.includes("ai data scientist") || lowerText.includes("autonomous ai")) {
+            response = "**Autonomous AI Data Scientist** is a production platform governed by a 21-state machine with semantic layer grounding, Bayesian hypothesis engine, and causal inference. Check it on [GitHub](https://github.com/Justin-io/autonomous-ai-data-scientist).";
+        } else if (lowerText.includes("adnr") || lowerText.includes("audio workstation") || lowerText.includes("dsp")) {
+            response = "**ADNR Workstation** is a modular desktop audio suite built with Python 3.11+, PySide6, and NumPy/SciPy featuring real-time PortAudio processing and batch WAV cleaning. Check it on [GitHub](https://github.com/Justin-io/adnr-workstation).";
+        } else if (lowerText.includes("safespend") || lowerText.includes("safe spend") || lowerText.includes("finance")) {
+            response = "**SafeSpend** is an AI personal finance and impulse control app with daily safe-spend limits, budget analytics, and Gemini AI assistant built with React and Vite. Check it on [GitHub](https://github.com/Justin-io/safespend).";
         } else if (lowerText.includes("ghost") || lowerText.includes("insta")) {
             response = "**GH05T-INSTA** is a cybersecurity tool package for Kali Linux and Termux that conducts credential audit simulation and passive vulnerability reports. Check it on [GitHub](https://github.com/Justin-io/GH05T-INSTA).";
         } else if (lowerText.includes("tech stack") || lowerText.includes("skills")) {
