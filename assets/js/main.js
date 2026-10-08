@@ -105,37 +105,39 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Project filter
-const filterBtns = document.querySelectorAll('.filter-btn');
-const projectCards = document.querySelectorAll('.project-card');
+// Lab Project filter
+const labSection = document.getElementById('lab');
+if (labSection) {
+    const filterBtns = labSection.querySelectorAll('.filter-btn');
+    const labCards = labSection.querySelectorAll('.project-card');
 
-filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        // Remove active class from all buttons
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
 
-        const filter = (btn.getAttribute('data-filter') || 'all').toLowerCase();
+            const filter = (btn.getAttribute('data-filter') || 'all').toLowerCase();
 
-        projectCards.forEach(card => {
-            const rawCats = (card.getAttribute('data-category') || '').toLowerCase().trim();
-            const categories = rawCats.split(/\s+/);
-            if (filter === 'all' || categories.includes(filter)) {
-                card.style.display = 'block';
-                setTimeout(() => {
-                    card.style.opacity = '1';
-                    card.style.transform = 'scale(1)';
-                }, 10);
-            } else {
-                card.style.opacity = '0';
-                card.style.transform = 'scale(0.8)';
-                setTimeout(() => {
-                    card.style.display = 'none';
-                }, 300);
-            }
+            labCards.forEach(card => {
+                const rawCats = (card.getAttribute('data-category') || '').toLowerCase().trim();
+                const categories = rawCats.split(/\s+/);
+                if (filter === 'all' || categories.includes(filter)) {
+                    card.style.display = 'block';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'scale(1)';
+                    }, 10);
+                } else {
+                    card.style.opacity = '0';
+                    card.style.transform = 'scale(0.8)';
+                    setTimeout(() => {
+                        card.style.display = 'none';
+                    }, 300);
+                }
+            });
         });
     });
-});
+}
 
 // Form submission with live Getform AJAX integration
 const contactForm = document.getElementById('contactForm');
@@ -287,8 +289,8 @@ if (window.performanceManager && window.performanceManager.config.enableComplexA
         });
     });
 
-    // Skill cards animation - Fast staggered reveal
-    gsap.utils.toArray('.skill-card').forEach((card, index) => {
+    // Service, Process, Skill, and Achievement cards animation - Fast staggered reveal
+    gsap.utils.toArray('.service-card, .process-card, .skills-cat-card, .skill-card, .achievement-card').forEach((card, index) => {
         gsap.from(card, {
             scrollTrigger: {
                 trigger: card,
@@ -296,7 +298,8 @@ if (window.performanceManager && window.performanceManager.config.enableComplexA
                 toggleActions: 'play none none reverse'
             },
             opacity: 0,
-            scale: 0.95,
+            y: 20,
+            scale: 0.98,
             duration: 0.3,
             delay: Math.min(index * 0.04, 0.2)
         });
@@ -577,7 +580,7 @@ document.addEventListener('DOMContentLoaded', () => {
         openrouter: localStorage.getItem('openrouter_key') || ''
     };
 
-    const defaultChips = ['Who is Justin?', 'Tell me about Q-SAFE', 'Tech Stack?', 'Chameleon-P2P', 'BLOOMWATCH-PRO'];
+    const defaultChips = ['Who is Hari?', 'Engineering Services', 'Flagship Projects', 'Start a Project', 'Process & Timeline'];
 
     // Settings Modal
     const settingsModal = document.getElementById('api-settings-modal');
@@ -648,17 +651,18 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleBtn.style.boxShadow = 'none'; // Optional: cleaner look for some avatars
     }
 
-    // Section Summaries - Enhanced Content
-    // Section Summaries - Enhanced First-Person POV
+    // Section Summaries - High-Converting Freelance Engineering
     const summaries = {
-        'home': "Welcome to my digital workspace. I'm Justin, a developer obsessed with the intersection of AI, Security, and System Architecture. This portfolio isn't just a showcase; it's a window into my experiments with code and creativity.",
-        'about': "My journey started with a curiosity for how things work under the hood. Now, I specialize in building autonomous agents and secure frameworks. I don't just write code; I architect solutions that think and adapt.",
-        'projects': "These aren't just repos; they're my R&D lab. Q-SAFE, RED-QUEEN, F.R.I.D.A.Y. each represents a challenge I wanted to solve. Whether it's offensive AI or quantum security, I build what I want to see in the world.",
-        'research': "I'm redefining boundaries with Q-SAFE, a Hybrid Sentinel framework, and exploring quantum-time geometry with Chronon-SQL. My research aims to secure the next generation of computing.",
-        'skills': "I believe in the right tool for the job. My stack is heavy on performance (Rust, C++, ASM) and intelligence (Python, AI Agents). I treat languages like superpowers combining them to solve complex problems.",
-        'timeline': "Every milestone has been a lesson. From enhancing global satellite data at NASA Space Apps to founding ShopRoyince, I've applied my skills in high-stakes environments where precision matters.",
-        'utilities': "I've expanded 'Office Hero' into a massive suite of 15 tools. It covers everything: Office (PDFs), Creativity (Images/GIFs), Development (JSON/JWT), and now Academic Writing (Citations, Transcription, Case Reform).",
-        'contact': "Communication is key. If you have an idea, a challenge, or just want to talk shop about the future of AI and security, drop me a message. I'm always open to collaboration."
+        'home': "Welcome! I'm Hari Nandan K, an AI & Full-Stack Systems Engineer. I build production-ready AI applications, intelligent automations, and resilient web platforms for founders and engineering teams.",
+        'work': "Curated case studies solving real commercial bottlenecks: Autonomous Agentic BI (16-stage pipeline & AST SQL validation), Enterprise RAG Evaluation (6 benchmarked architectures), WhatsApp Automation Suite (anti-spam Baileys engine), V.O.I.D.E. (8-layer industrial telemetry anomaly audit), and BLOOMWATCH-PRO (NASA Space Apps 1st Place).",
+        'projects': "Curated case studies solving real commercial bottlenecks: Autonomous Agentic BI (16-stage pipeline & AST SQL validation), Enterprise RAG Evaluation (6 benchmarked architectures), WhatsApp Automation Suite (anti-spam Baileys engine), V.O.I.D.E. (8-layer industrial telemetry anomaly audit), and BLOOMWATCH-PRO (NASA Space Apps 1st Place).",
+        'services': "I offer four specialized engineering services: 1) AI Applications & LLM Systems, 2) Full-Stack Web Products & MVPs, 3) Workflow Automations & Integrations, and 4) Security Engineering & System Hardening.",
+        'process': "A transparent, 5-stage engineering workflow: Discover (scoping & metrics) → Architect (blueprints & schemas) → Build (rapid modular sprints) → Validate (rigorous testing & grounding) → Deploy & Support.",
+        'about': "Combining theoretical rigor with practical execution. Over 430+ developers mentored through the HOPE initiative, 70+ public repos, and a proven track record delivering under strict SLA and security requirements.",
+        'lab': "The Lab showcases my deeper technical research and experimental systems: discrete spacetime lattice simulations (Chronon Model), AEGIS-X autonomous SOC, hardware true random entropy modules, and audio DSP workstations.",
+        'skills': "Structured across four core disciplines: AI & Intelligent Systems (LangGraph, PyTorch, RAG), Full-Stack Web (React, Next.js, Node, TypeScript), Data Systems (Postgres, DuckDB, Kafka), and Security Engineering (Rust, zero-trust, OWASP).",
+        'achievements': "Credibility backed by results: 1st Place & Global Nominee at NASA Space Apps, 430+ engineers trained through HOPE, sub-50ms streaming latency benchmarks, and 55+ technical research publications.",
+        'contact': "Have an ambitious project in mind? Use the Start a Project form with your requirements, timeline, and budget. I personally review and reply to inquiries within 24 hours."
     };
 
     let currentSection = 'home';
@@ -724,7 +728,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let walkthroughPaused = false;
     let walkthroughStep = 0;
     let walkthroughTimer = null;
-    const sectionsOrder = ['home', 'about', 'skills', 'projects', 'experience', 'contact'];
+    const sectionsOrder = ['home', 'work', 'services', 'process', 'about', 'lab', 'contact'];
     const FAB_IMAGE_EXPLAIN = 'assets/img/explain.webp';
 
     function startWalkthrough() {
@@ -841,7 +845,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function askModeSelection() {
         if (messagesContainer.children.length > 0 && hasGreeted) return; // Don't ask if conversation exists
 
-        addMessage("Hello! I'm Justin's Digital Twin. How would you like to proceed?", 'bot');
+        addMessage("Hello! I'm Hari's Digital Twin & Engineering Assistant. How would you like to proceed?", 'bot');
 
         const modeContainer = document.createElement('div');
         modeContainer.style.display = 'flex';
@@ -884,12 +888,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(() => document.getElementById('chat-input').focus(), 100);
             }
         } else {
-            addMessage("Local Mode active. restricted to predefined responses.", 'bot');
+            addMessage("Local Mode active. Ask me about services, projects, process, or starting a contract build.", 'bot');
             // Ensure input is hidden
             const inputContainer = document.querySelector('.chat-input-container');
             if (inputContainer) inputContainer.style.display = 'none';
 
-            renderChips(['Who is Justin?', 'Tell me about Q-SAFE', 'Tech Stack?', 'How to Contact?']);
+            renderChips(['Who is Hari?', 'Engineering Services', 'Flagship Projects', 'Start a Project', 'Process & Timeline']);
         }
     }
 
@@ -1065,24 +1069,32 @@ document.addEventListener('DOMContentLoaded', () => {
         const lowerText = text.toLowerCase();
 
         // Enhanced NLP-ish matching
-        if (lowerText.includes("who is justin") || lowerText.includes("about you")) {
-            response = "I'm a **theoretical physicist** and **cybersecurity specialist**. I build systems that bridge the gap between abstract theory and robust application, from **Quantum Gravity** to **Offensive Security**.";
+        if (lowerText.includes("who is hari") || lowerText.includes("who is justin") || lowerText.includes("about you")) {
+            response = "I'm **Hari Nandan K**, an **AI & Full-Stack Systems Engineer**. I design and build production AI products, workflow automations, internal data platforms, and secure web systems for ambitious companies and startups.";
+        } else if (lowerText.includes("service") || lowerText.includes("what do you offer") || lowerText.includes("what can you build")) {
+            response = "I offer four specialized engineering services:\n1. **AI Applications & LLM Systems** (Autonomous agents, custom RAG, grounded copilots)\n2. **Web Products & MVPs** (Fast, modern full-stack web applications with React/Next.js/Node)\n3. **Workflow Automations & Integrations** (WhatsApp bots, background workers, scrapers, internal tools)\n4. **Security Engineering & System Hardening** (Zero-trust audits, API protection, data privacy architectures).";
+        } else if (lowerText.includes("process") || lowerText.includes("workflow") || lowerText.includes("timeline")) {
+            response = "My engineering process follows 5 disciplined stages:\n- **01. Discover**: Align on product goals, bottlenecks, and success metrics.\n- **02. Architect**: Design system blueprints, schemas, and security boundaries.\n- **03. Build**: Rapid, modular engineering with transparent check-ins.\n- **04. Validate**: Comprehensive testing, security audits, and grounding checks.\n- **05. Deploy & Support**: Production rollout, telemetry, and complete handover.";
+        } else if (lowerText.includes("start a project") || lowerText.includes("hire") || lowerText.includes("pricing") || lowerText.includes("budget")) {
+            response = "Ready to kick off a project? You can submit your requirements, timeline, and budget through the **Start a Project** form at the bottom of the page, or email me directly at **harinandan.ofc@gmail.com**. I personally reply within 24 hours.";
+        } else if (lowerText.includes("voide") || lowerText.includes("v.o.i.d.e")) {
+            response = "**V.O.I.D.E.** is an autonomous industrial telemetry anomaly detection and equipment health monitoring system built for chiller plants and IoT infrastructure. It uses an 8-layer mathematical & physical auditing pipeline, ASHRAE Guideline 14 temporal regression, and zero-trust evidence critic guardrails. Check it out on [GitHub](https://github.com/Justin-io/V.O.I.D.E).";
         } else if (lowerText.includes("resume") || lowerText.includes("cv")) {
-            response = "You can view my full resume/CV by contacting me directly. I'm happy to share it for relevant opportunities!";
+            response = "You can download my latest [Resume / CV](CV.pdf) or reach out directly at **harinandan.ofc@gmail.com** for specific project proposals.";
         } else if (lowerText.includes("email") || lowerText.includes("contact")) {
-            response = "You can reach me at **harinandan.ofc@gmail.com** or use the contact form at the bottom of the page.";
+            response = "You can reach me directly at **harinandan.ofc@gmail.com** or submit an inquiry using the **Start a Project** section below.";
         } else if (lowerText.includes("q-safe")) {
-            response = "**Q-SAFE** is my flagship research project: a Hybrid 'Sentinel' framework. It uses an **x86 Assembly core** for speed and a **Python Neural Oracle** to detect threats agentically.";
+            response = "**Q-SAFE** is a hybrid security sentinel combining an x86 Assembly core with Python neural anomaly detection models. Check it out on [GitHub](https://github.com/Justin-io/Q-SAFE).";
         } else if (lowerText.includes("chameleon")) {
-            response = "**Chameleon-P2P** is an ephemeral messaging system featuring a Stealth-First design (disguised as a JSON formatter) with end-to-end encrypted tunnels. Check it out on [GitHub](https://github.com/Justin-io/Chameleon-P2P).";
+            response = "**Chameleon-P2P** is an ephemeral messaging system featuring a Stealth-First design with end-to-end encrypted tunnels. Check it out on [GitHub](https://github.com/Justin-io/Chameleon-P2P).";
         } else if (lowerText.includes("bloomwatch")) {
-            response = "**BLOOMWATCH-PRO** won the NASA Local Hackathon! It tracks global phenology cycles using MODIS/VIIRS satellite datasets. Check it on [GitHub](https://github.com/Justin-io/BLOOMWATCH-PRO).";
+            response = "**BLOOMWATCH-PRO** won 1st Place at NASA Space Apps (Thrissur) and was selected as a Global Nominee! It maps global vegetation phenology using NASA MODIS & VIIRS telemetry. Check it on [GitHub](https://github.com/Justin-io/BLOOMWATCH-PRO).";
         } else if (lowerText.includes("whatsapp") || lowerText.includes("feedback")) {
-            response = "**WhatsApp Automation Suite** is an open-source campaign & feedback automation platform featuring Baileys multi-device socket engine, anti-spam rate limiting, 24-hour follow-up scheduler, auto opt-out blacklist, and live inbox UI. Check it out on [GitHub](https://github.com/Justin-io/whatsapp-automation-suite).";
+            response = "**WhatsApp Automation Suite** is a production campaign & feedback automation platform featuring Baileys multi-device socket engine, anti-spam rate limiting, 24-hour follow-up scheduler, and live inbox UI. Check it out on [GitHub](https://github.com/Justin-io/whatsapp-automation-suite).";
         } else if (lowerText.includes("fraud") || lowerText.includes("temporal gnn") || lowerText.includes("graph fraud")) {
             response = "**Real-Time Graph Fraud Platform** is an end-to-end streaming fraud detection platform featuring an 8-model progression, dynamic graph feature store, Temporal-GNN, and sub-50ms latency engineering. Check it out on [GitHub](https://github.com/Justin-io/realtime-graph-fraud-platform).";
         } else if (lowerText.includes("agentic bi") || lowerText.includes("bi platform") || lowerText.includes("business intelligence")) {
-            response = "**Autonomous Agentic BI** is a conversational analytics platform pairing Power BI-style dashboards with natural language interaction, 16-stage pipeline orchestration, AST SQL validation, and cryptographic evidence verification. Check it on [GitHub](https://github.com/Justin-io/autonomous-agentic-bi).";
+            response = "**Autonomous Agentic BI** is a conversational analytics platform pairing interactive dashboards with natural language exploration, 16-stage pipeline orchestration, AST SQL validation, and cryptographic evidence verification. Check it on [GitHub](https://github.com/Justin-io/autonomous-agentic-bi).";
         } else if (lowerText.includes("rag eval") || lowerText.includes("rag benchmark") || lowerText.includes("rag-eval")) {
             response = "**RAG Scientific Evaluation Platform** rigorously benchmarks 6 canonical architectures (Naive, Hybrid, Reranked, HyDE, GraphRAG, Agentic) across retrieval, grounding, and adversarial resilience. Check it on [GitHub](https://github.com/Justin-io/rag-eval-platform).";
         } else if (lowerText.includes("data scientist") || lowerText.includes("ai data scientist") || lowerText.includes("autonomous ai")) {
@@ -1091,17 +1103,15 @@ document.addEventListener('DOMContentLoaded', () => {
             response = "**ADNR Workstation** is a modular desktop audio suite built with Python 3.11+, PySide6, and NumPy/SciPy featuring real-time PortAudio processing and batch WAV cleaning. Check it on [GitHub](https://github.com/Justin-io/adnr-workstation).";
         } else if (lowerText.includes("safespend") || lowerText.includes("safe spend") || lowerText.includes("finance")) {
             response = "**SafeSpend** is an AI personal finance and impulse control app with daily safe-spend limits, budget analytics, and Gemini AI assistant built with React and Vite. Check it on [GitHub](https://github.com/Justin-io/safespend).";
-        } else if (lowerText.includes("ghost") || lowerText.includes("insta")) {
-            response = "**GH05T-INSTA** is a cybersecurity tool package for Kali Linux and Termux that conducts credential audit simulation and passive vulnerability reports. Check it on [GitHub](https://github.com/Justin-io/GH05T-INSTA).";
         } else if (lowerText.includes("tech stack") || lowerText.includes("skills")) {
-            response = "My arsenal includes:\n- **Languages**: Python, Rust, C++, JavaScript, Assembly (x86)\n- **AI**: PyTorch, TensorFlow, Ollama\n- **Security**: Metasploit, Wireshark, Burp Suite";
+            response = "My core engineering stack spans:\n- **AI & ML**: Python, LangGraph, LlamaIndex, Ollama, PyTorch, OpenAI / Gemini APIs\n- **Full-Stack**: TypeScript, React, Next.js, Node.js, Express, TailwindCSS\n- **Data Systems**: PostgreSQL, DuckDB, Redis, Apache Kafka, SQLite\n- **Systems & Security**: Rust, C/C++, Linux Systems, Zero-Trust Hardening";
         } else if (lowerText.includes("office hero") || lowerText.includes("utilities")) {
-            response = "**Office Hero** is my 15-tool mega-suite running entirely in your browser. It includes PDF tools, OCR, and even a Citation Generator.";
+            response = "**Utilities & Tools**: Check out [tools.html](tools.html) for a suite of client-side browser tools for PDFs, formatters, and dev utilities.";
         } else if (lowerText.includes("explain") || summaries[lowerText]) {
             const section = lowerText.replace("explain ", "").trim();
-            response = summaries[section] || summaries[currentSection] || "This section showcases my work.";
+            response = summaries[section] || summaries[currentSection] || "This section showcases my engineering work.";
         } else {
-            response = "I'm currently in **Local Mode**. I can answer questions about my skills, projects (Q-SAFE, HOPE), or contact info. Connect an API key for full intelligence!";
+            response = "I'm currently in **Local Mode**. You can ask about my engineering services, flagship projects (Agentic BI, RAG, WhatsApp Automation, V.O.I.D.E.), process, or how to start a project!";
         }
 
         const formatted = parseMarkdown(response);
