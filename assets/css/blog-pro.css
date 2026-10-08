@@ -639,6 +639,7 @@ pre code {
     padding: 13px 18px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     color: var(--text-secondary);
+    vertical-align: middle;
 }
 
 .blog-data-table tr:hover td {
@@ -674,4 +675,56 @@ pre code {
     border-color: var(--blog-accent);
     background: rgba(0, 242, 255, 0.1);
     transform: translateY(-2px);
+}
+
+/* --- MathJax / LaTeX Formula Styling --- */
+mjx-container {
+    color: inherit !important;
+    outline: none !important;
+}
+
+mjx-container[jax="CHTML"][display="true"] {
+    display: block !important;
+    text-align: center;
+    margin: 1.5rem auto !important;
+    padding: 1.2rem 1.5rem !important;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 12px;
+    overflow-x: auto !important;
+    overflow-y: hidden;
+    max-width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(8px);
+    transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+mjx-container[jax="CHTML"][display="true"]:hover {
+    border-color: rgba(0, 242, 255, 0.3);
+    background: rgba(0, 242, 255, 0.02);
+}
+
+/* Custom horizontal scrollbar for mobile / long display equations */
+mjx-container[jax="CHTML"][display="true"]::-webkit-scrollbar {
+    height: 4px;
+}
+
+mjx-container[jax="CHTML"][display="true"]::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 4px;
+}
+
+mjx-container[jax="CHTML"][display="true"]::-webkit-scrollbar-thumb {
+    background: rgba(0, 242, 255, 0.3);
+    border-radius: 4px;
+}
+
+mjx-container[jax="CHTML"]:not([display="true"]) {
+    padding: 0 2px;
+    vertical-align: baseline;
+}
+
+.blog-data-table td mjx-container {
+    vertical-align: middle;
 }

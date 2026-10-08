@@ -612,7 +612,7 @@
         "date": "Oct 25, 2024",
         "read_time": "6",
         "category": "Cybersecurity",
-        "excerpt": "Securing an IoT device requires protecting physical flash chips. An attacker with a $15 SOIC8 clip and a logic analyzer can dump flash, extract credentials, ...",
+        "excerpt": "Securing an IoT device requires protecting physical flash chips. An attacker with a \\$15 SOIC8 clip and a logic analyzer can dump flash, extract credentials, ...",
         "image": "../assets/img/blog/banners/blog19.svg",
         "file": "blog19.html",
         "tags": [

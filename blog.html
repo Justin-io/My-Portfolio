@@ -21,6 +21,25 @@
     <link rel="stylesheet" href="assets/css/style-custom.css?v=2">
     <!-- Premium Blog CSS -->
     <link rel="stylesheet" href="assets/css/blog-pro.css?v=2">
+
+    <!-- MathJax 3 for LaTeX Equation Rendering -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            },
+            chtml: {
+                scale: 1.02
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 
 <body>
@@ -218,6 +237,11 @@
                                 <p>Try adjusting your search keywords or switching category filters.</p>
                             </div>
                         `;
+                    }
+
+                    // Typeset MathJax if dynamic math is present
+                    if (window.MathJax && window.MathJax.typesetPromise) {
+                        window.MathJax.typesetPromise([grid]).catch(function () {});
                     }
                 }
 
