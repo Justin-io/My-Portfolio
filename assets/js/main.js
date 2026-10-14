@@ -199,55 +199,28 @@ if (contactForm) {
 if (window.performanceManager && window.performanceManager.config.enableComplexAnimations) {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Hero animations - Fast entrance
-    gsap.from('.hero-badge', {
+    // Hero animations - Instant snappy entrance without delaying hero-card
+    gsap.from('.hero-badge, .hero h1, .hero .subtitle, .hero-buttons, .hero-card', {
         opacity: 0,
-        y: 20,
-        duration: 0.4,
-        delay: 0.2
+        y: 16,
+        duration: 0.45,
+        stagger: 0.07,
+        ease: 'power2.out',
+        clearProps: 'opacity,transform'
     });
 
-    gsap.from('.hero h1', {
-        opacity: 0,
-        y: 30,
-        duration: 0.4,
-        delay: 0.3
-    });
-
-    gsap.from('.hero .subtitle', {
-        opacity: 0,
-        y: 20,
-        duration: 0.4,
-        delay: 0.4
-    });
-
-    gsap.from('.hero-buttons', {
-        opacity: 0,
-        y: 20,
-        duration: 0.4,
-        delay: 0.5
-    });
-
-    gsap.from('.hero-card', {
-        opacity: 0,
-        x: 40,
-        rotation: 3,
-        duration: 0.4,
-        delay: 0.6
-    });
-
-    // Section animations - Fast snappy scroll reveal
+    // Section animations - Fast snappy scroll reveal with once: true
     gsap.utils.toArray('.section-header').forEach(header => {
-        gsap.from(header.children, {
+        gsap.from(header, {
             scrollTrigger: {
                 trigger: header,
                 start: 'top 92%',
-                toggleActions: 'play none none reverse'
+                once: true
             },
-            opacity: 0,
-            y: 20,
-            duration: 0.3,
-            stagger: 0.08
+            y: 16,
+            duration: 0.35,
+            immediateRender: false,
+            clearProps: 'transform'
         });
     });
 
@@ -256,22 +229,24 @@ if (window.performanceManager && window.performanceManager.config.enableComplexA
         scrollTrigger: {
             trigger: '.about-content',
             start: 'top 90%',
-            toggleActions: 'play none none reverse'
+            once: true
         },
-        opacity: 0,
-        x: -30,
-        duration: 0.35
+        y: 20,
+        duration: 0.35,
+        immediateRender: false,
+        clearProps: 'transform'
     });
 
     gsap.from('.about-visual', {
         scrollTrigger: {
             trigger: '.about-visual',
             start: 'top 90%',
-            toggleActions: 'play none none reverse'
+            once: true
         },
-        opacity: 0,
-        x: 30,
-        duration: 0.35
+        y: 20,
+        duration: 0.35,
+        immediateRender: false,
+        clearProps: 'transform'
     });
 
     // Project cards animation - Fast staggered reveal
@@ -280,28 +255,29 @@ if (window.performanceManager && window.performanceManager.config.enableComplexA
             scrollTrigger: {
                 trigger: card,
                 start: 'top 92%',
-                toggleActions: 'play none none reverse'
+                once: true
             },
-            opacity: 0,
-            y: 30,
+            y: 20,
             duration: 0.3,
-            delay: Math.min(index * 0.04, 0.2)
+            delay: Math.min(index * 0.04, 0.16),
+            immediateRender: false,
+            clearProps: 'transform'
         });
     });
 
     // Service, Process, Skill, and Achievement cards animation - Fast staggered reveal
-    gsap.utils.toArray('.service-card, .process-card, .skills-cat-card, .skill-card, .achievement-card').forEach((card, index) => {
+    gsap.utils.toArray('.service-card, .process-card, .skills-cat-card, .skill-card, .achievement-card, .testimonial-card').forEach((card, index) => {
         gsap.from(card, {
             scrollTrigger: {
                 trigger: card,
                 start: 'top 92%',
-                toggleActions: 'play none none reverse'
+                once: true
             },
-            opacity: 0,
             y: 20,
-            scale: 0.98,
             duration: 0.3,
-            delay: Math.min(index * 0.04, 0.2)
+            delay: Math.min(index * 0.03, 0.12),
+            immediateRender: false,
+            clearProps: 'transform'
         });
     });
 
@@ -311,11 +287,12 @@ if (window.performanceManager && window.performanceManager.config.enableComplexA
             scrollTrigger: {
                 trigger: item,
                 start: 'top 90%',
-                toggleActions: 'play none none reverse'
+                once: true
             },
-            opacity: 0,
-            x: index % 2 === 0 ? -30 : 30,
-            duration: 0.35
+            x: index % 2 === 0 ? -20 : 20,
+            duration: 0.35,
+            immediateRender: false,
+            clearProps: 'transform'
         });
     });
 
@@ -324,22 +301,24 @@ if (window.performanceManager && window.performanceManager.config.enableComplexA
         scrollTrigger: {
             trigger: '.contact-info',
             start: 'top 90%',
-            toggleActions: 'play none none reverse'
+            once: true
         },
-        opacity: 0,
-        x: -30,
-        duration: 0.35
+        y: 20,
+        duration: 0.35,
+        immediateRender: false,
+        clearProps: 'transform'
     });
 
     gsap.from('.contact-form', {
         scrollTrigger: {
             trigger: '.contact-form',
             start: 'top 90%',
-            toggleActions: 'play none none reverse'
+            once: true
         },
-        opacity: 0,
-        x: 30,
-        duration: 0.35
+        y: 20,
+        duration: 0.35,
+        immediateRender: false,
+        clearProps: 'transform'
     });
 }
 
