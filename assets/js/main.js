@@ -105,52 +105,112 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Lab Project filter
+// Command Center The Lab Search & Category Filter System
 const labSection = document.getElementById('lab');
 if (labSection) {
-    const filterBtns = labSection.querySelectorAll('.filter-btn');
-    const labCards = labSection.querySelectorAll('.project-card');
+    const searchInput = document.getElementById('labSearchInput');
+    const searchCount = document.getElementById('labSearchCount');
+    const filterBtns = labSection.querySelectorAll('.lab-filter-btn');
+    const labCards = labSection.querySelectorAll('.lab-card');
+    const emptyState = document.getElementById('labEmptyState');
+    const resetBtn = document.getElementById('labResetBtn');
+
+    let currentFilter = 'all';
+    let searchQuery = '';
+
+    function applyLabFilters() {
+        let visibleCount = 0;
+        const query = searchQuery.trim().toLowerCase();
+
+        labCards.forEach(card => {
+            const rawCats = (card.getAttribute('data-category') || '').toLowerCase();
+            const searchIndex = (card.getAttribute('data-search') || '' + ' ' + card.innerText).toLowerCase();
+
+            const matchesCategory = currentFilter === 'all' || rawCats.includes(currentFilter);
+            const matchesSearch = !query || searchIndex.includes(query);
+
+            if (matchesCategory && matchesSearch) {
+                card.style.display = 'flex';
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 10);
+                visibleCount++;
+            } else {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(10px)';
+                card.style.display = 'none';
+            }
+        });
+
+        if (searchCount) {
+            searchCount.textContent = `Showing ${visibleCount} of ${labCards.length}`;
+        }
+
+        if (emptyState) {
+            emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+    }
+
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value;
+            applyLabFilters();
+        });
+    }
 
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            filterBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            const filter = (btn.getAttribute('data-filter') || 'all').toLowerCase();
-
-            labCards.forEach(card => {
-                const rawCats = (card.getAttribute('data-category') || '').toLowerCase().trim();
-                const categories = rawCats.split(/\s+/);
-                if (filter === 'all' || categories.includes(filter)) {
-                    card.style.display = 'block';
-                    setTimeout(() => {
-                        card.style.opacity = '1';
-                        card.style.transform = 'scale(1)';
-                    }, 10);
-                } else {
-                    card.style.opacity = '0';
-                    card.style.transform = 'scale(0.8)';
-                    setTimeout(() => {
-                        card.style.display = 'none';
-                    }, 300);
-                }
+            filterBtns.forEach(b => {
+                b.classList.remove('active');
+                b.setAttribute('aria-selected', 'false');
             });
+            btn.classList.add('active');
+            btn.setAttribute('aria-selected', 'true');
+            currentFilter = (btn.getAttribute('data-filter') || 'all').toLowerCase();
+            applyLabFilters();
         });
     });
+
+    if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+            if (searchInput) searchInput.value = '';
+            searchQuery = '';
+            currentFilter = 'all';
+            filterBtns.forEach(b => {
+                const isAll = b.getAttribute('data-filter') === 'all';
+                b.classList.toggle('active', isAll);
+                b.setAttribute('aria-selected', isAll ? 'true' : 'false');
+            });
+            applyLabFilters();
+        });
+    }
 }
 
-// Form submission with live Getform AJAX integration
+// Form submission with live Getform AJAX integration and accessible inline feedback
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
+    const statusBox = document.getElementById('contactFormStatus');
+
     contactForm.addEventListener('submit', async function handleFormSubmit(e) {
         e.preventDefault();
         const form = e.target;
         const submitBtn = form.querySelector('button[type="submit"]');
-        const originalBtnText = submitBtn ? submitBtn.innerHTML : 'Send Message';
+        const originalBtnText = submitBtn ? submitBtn.innerHTML : 'Send Project Inquiry';
+
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
 
         if (submitBtn) {
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Transmitting Inquiry...';
+        }
+
+        if (statusBox) {
+            statusBox.style.display = 'none';
+            statusBox.className = '';
         }
 
         const formData = new FormData(form);
@@ -165,22 +225,19 @@ if (contactForm) {
             });
 
             if (response.ok) {
-                const originalContent = form.innerHTML;
-                form.innerHTML = `
-                    <div style="text-align: center; padding: 40px;">
-                        <i class="fas fa-check-circle" style="font-size: 4rem; color: #00ff64; margin-bottom: 20px;"></i>
-                        <h3 style="font-size: 1.5rem; margin-bottom: 10px; color: #fff;">Message Sent Successfully!</h3>
-                        <p style="color: var(--text-secondary);">Thank you for reaching out. I'll get back to you within 24 hours.</p>
-                    </div>
-                `;
-                setTimeout(() => {
-                    form.innerHTML = originalContent;
-                    form.reset();
-                    const restoredForm = document.getElementById('contactForm');
-                    if (restoredForm) {
-                        restoredForm.addEventListener('submit', handleFormSubmit);
-                    }
-                }, 5000);
+                if (statusBox) {
+                    statusBox.className = 'status-success';
+                    statusBox.innerHTML = '<i class="fas fa-circle-check" aria-hidden="true"></i> <strong>Inquiry Received:</strong> Thank you for reaching out. I will review your project requirements and respond within 24 hours.';
+                    statusBox.style.display = 'block';
+                }
+                form.reset();
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-check" aria-hidden="true"></i> Sent Successfully';
+                    setTimeout(() => {
+                        submitBtn.innerHTML = originalBtnText;
+                    }, 4000);
+                }
             } else {
                 throw new Error('Server returned error ' + response.status);
             }
@@ -190,7 +247,11 @@ if (contactForm) {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = originalBtnText;
             }
-            alert('Sorry, there was an issue sending your message. Please email directly at harinandan.ofc@gmail.com.');
+            if (statusBox) {
+                statusBox.className = 'status-error';
+                statusBox.innerHTML = '<i class="fas fa-triangle-exclamation" aria-hidden="true"></i> <strong>Transmission Issue:</strong> Unable to deliver form automatically. Please email directly at <a href="mailto:harinandan.ofc@gmail.com" style="color: inherit; text-decoration: underline; font-weight: 700;">harinandan.ofc@gmail.com</a>.';
+                statusBox.style.display = 'block';
+            }
         }
     });
 }
