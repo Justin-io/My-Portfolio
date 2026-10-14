@@ -158,68 +158,6 @@
 </head>
 
 <body>
-    <!-- Loading Screen -->
-    <div class="loader" id="loader">
-        <div class="loader-content">
-            <div class="loader-text">Namaskaaram</div>
-            <div class="loader-bar">
-                <div class="loader-progress"></div>
-            </div>
-        </div>
-    </div>
-    <!-- Fullscreen Prompt Overlay -->
-    <div id="begin-overlay" class="fullscreen-dialog active">
-        <div class="dialog-content" style="max-width: 320px; padding: 32px;">
-            <div class="dialog-icon" style="width: 48px; height: 48px; margin-bottom: 16px;">
-                <svg width="20" height="20" viewBox="0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 3v18M3 12h18" />
-                </svg>
-            </div>
-            <h3 style="font-size: 1.4rem; margin-bottom: 4px;">Begin Experience</h3>
-            <p style="font-size: 0.95rem; opacity: 0.8;">Tap or click anywhere to enter fullscreen.</p>
-        </div>
-    </div>
-
-    <script>
-        (function () {
-            const overlay = document.getElementById('begin-overlay');
-            if (!overlay) return;
-
-            // Check if mobile (touch device and small screen)
-            const isMobile = 'ontouchstart' in window && window.innerWidth <= 768;
-
-            if (!isMobile) {
-                overlay.remove(); // Remove immediately if not mobile
-                return;
-            }
-
-            // Trigger on first *gesture-safe* interaction
-            const gestureEvents = ['click', 'touchstart', 'pointerdown'];
-            const enterFullscreen = () => {
-                const elem = document.documentElement;
-                let promise;
-
-                if (elem.requestFullscreen) {
-                    promise = elem.requestFullscreen();
-                } else if (elem.webkitRequestFullscreen) {
-                    promise = elem.webkitRequestFullscreen();
-                }
-
-                // Always remove overlay   even if fullscreen fails (e.g. iOS)
-                overlay.style.opacity = '0';
-                overlay.style.visibility = 'hidden';
-                setTimeout(() => overlay.remove(), 300);
-
-                if (promise) {
-                    promise.catch(err => console.warn("Fullscreen denied:", err));
-                }
-            };
-
-            gestureEvents.forEach(type =>
-                document.addEventListener(type, enterFullscreen, { once: true, passive: true })
-            );
-        })();
-    </script>
     <!-- Custom Cursor -->
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
@@ -279,11 +217,11 @@
                         const dynamicText = document.getElementById('dynamic-text');
 
                         let phraseIndex = 0;
-                        let charIndex = 0;
-                        let isDeleting = false;
+                        let charIndex = phrases[0].length;
+                        let isDeleting = true;
                         const typeSpeed = 80;
                         const deleteSpeed = 40;
-                        const pauseDelay = 2000;
+                        const pauseDelay = 2200;
 
                         function type() {
                             const currentPhrase = phrases[phraseIndex];
@@ -310,8 +248,8 @@
                             }
                         }
 
-                        // Start animation after a brief delay
-                        setTimeout(type, 1000);
+                        // Start animation after initial display pause
+                        setTimeout(type, pauseDelay);
                     })();
                 </script>
 
@@ -430,9 +368,15 @@
                             <span>Outcome: 100% syntactically validated SQL execution, sub-second metric slicing, and zero schema hallucinations in end-to-end evaluations.</span>
                         </div>
 
-                        <div style="display: flex; gap: 15px; margin-top: 18px;">
-                            <a href="https://github.com/Justin-io/autonomous-agentic-bi" class="project-link" target="_blank">
-                                View Case Study on GitHub <i class="fas fa-arrow-right"></i>
+                        <div class="project-card-actions">
+                            <a href="https://github.com/Justin-io/autonomous-agentic-bi" class="project-action-btn btn-action-github" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-github"></i> <span>GitHub Code</span>
+                            </a>
+                            <a href="https://github.com/Justin-io/autonomous-agentic-bi#interactive-demo" class="project-action-btn btn-action-demo" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-play"></i> <span>Live Demo</span>
+                            </a>
+                            <a href="https://github.com/Justin-io/autonomous-agentic-bi#16-stage-pipeline-architecture" class="project-action-btn btn-action-arch" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-diagram-project"></i> <span>Architecture Diagram</span>
                             </a>
                         </div>
                     </div>
@@ -481,9 +425,15 @@
                             <span>Outcome: Quantified retrieval trade-offs across 6 topologies; boosted context relevance by 42% on noisy enterprise corpora.</span>
                         </div>
 
-                        <div style="display: flex; gap: 15px; margin-top: 18px;">
-                            <a href="https://github.com/Justin-io/rag-eval-platform" class="project-link" target="_blank">
-                                View Benchmark Suite on GitHub <i class="fas fa-arrow-right"></i>
+                        <div class="project-card-actions">
+                            <a href="https://github.com/Justin-io/rag-eval-platform" class="project-action-btn btn-action-github" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-github"></i> <span>GitHub Code</span>
+                            </a>
+                            <a href="https://github.com/Justin-io/rag-eval-platform#benchmark-dashboard-demo" class="project-action-btn btn-action-demo" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-play"></i> <span>Live Demo</span>
+                            </a>
+                            <a href="https://github.com/Justin-io/rag-eval-platform#6-topology-rag-architecture" class="project-action-btn btn-action-arch" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-diagram-project"></i> <span>Architecture Diagram</span>
                             </a>
                         </div>
                     </div>
@@ -533,9 +483,15 @@
                             <span>Outcome: 99.4% message delivery reliability without account bans, automated 24-hour follow-up loops, and eliminated manual response drag.</span>
                         </div>
 
-                        <div style="display: flex; gap: 15px; margin-top: 18px;">
-                            <a href="https://github.com/Justin-io/whatsapp-automation-suite" class="project-link" target="_blank">
-                                View Engine on GitHub <i class="fas fa-arrow-right"></i>
+                        <div class="project-card-actions">
+                            <a href="https://github.com/Justin-io/whatsapp-automation-suite" class="project-action-btn btn-action-github" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-github"></i> <span>GitHub Code</span>
+                            </a>
+                            <a href="https://github.com/Justin-io/whatsapp-automation-suite#live-dashboard-preview" class="project-action-btn btn-action-demo" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-play"></i> <span>Live Demo</span>
+                            </a>
+                            <a href="https://github.com/Justin-io/whatsapp-automation-suite#socket-anti-spam-architecture" class="project-action-btn btn-action-arch" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-diagram-project"></i> <span>Architecture Diagram</span>
                             </a>
                         </div>
                     </div>
@@ -584,9 +540,15 @@
                             <span>Outcome: Continuous sub-minute anomaly detection with zero-trust evidence validation; detects equipment degradation weeks before failure while eliminating false alarms.</span>
                         </div>
 
-                        <div style="display: flex; gap: 15px; margin-top: 18px;">
-                            <a href="https://github.com/Justin-io/V.O.I.D.E" class="project-link" target="_blank">
-                                View Architecture on GitHub <i class="fas fa-arrow-right"></i>
+                        <div class="project-card-actions">
+                            <a href="https://github.com/Justin-io/V.O.I.D.E" class="project-action-btn btn-action-github" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-github"></i> <span>GitHub Code</span>
+                            </a>
+                            <a href="https://github.com/Justin-io/V.O.I.D.E#telemetry-demo" class="project-action-btn btn-action-demo" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-play"></i> <span>Live Demo</span>
+                            </a>
+                            <a href="https://github.com/Justin-io/V.O.I.D.E#8-layer-telemetry-architecture" class="project-action-btn btn-action-arch" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-diagram-project"></i> <span>Architecture Diagram</span>
                             </a>
                         </div>
                     </div>
@@ -635,9 +597,15 @@
                             <span>Outcome: Won 1st Place at NASA Space Apps (Thrissur) and selected as a Global Nominee out of thousands of international teams.</span>
                         </div>
 
-                        <div style="display: flex; gap: 15px; margin-top: 18px;">
-                            <a href="https://github.com/Justin-io/BLOOMWATCH-PRO" class="project-link" target="_blank">
-                                View Project on GitHub <i class="fas fa-arrow-right"></i>
+                        <div class="project-card-actions">
+                            <a href="https://github.com/Justin-io/BLOOMWATCH-PRO" class="project-action-btn btn-action-github" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-github"></i> <span>GitHub Code</span>
+                            </a>
+                            <a href="hac/bloom.htm" class="project-action-btn btn-action-demo" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-play"></i> <span>Live Demo</span>
+                            </a>
+                            <a href="https://github.com/Justin-io/BLOOMWATCH-PRO#geospatial-pipeline-architecture" class="project-action-btn btn-action-arch" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-diagram-project"></i> <span>Architecture Diagram</span>
                             </a>
                         </div>
                     </div>
@@ -1356,7 +1324,7 @@
                 </div>
                 <div class="achievement-date">2025</div>
                 <h3 class="achievement-title">NASA Space Apps Winner &amp; Global Nominee</h3>
-                <p class="achievement-description">Secured 1st Place at NASA Space Apps (Thrissur Edition &amp; ISRO Outreach) and selected as a Global Nominee for the BLOOMWATCH-PRO satellite analytics platform (₹30,000 cash prize).</p>
+                <p class="achievement-description">Secured 1st Place at NASA Space Apps (Thrissur Edition &amp; ISRO Outreach) and selected as a Global Nominee for the BLOOMWATCH-PRO satellite analytics platform.</p>
             </div>
 
             <!-- Achievement 2 -->
@@ -1366,7 +1334,7 @@
                 </div>
                 <div class="achievement-date">2026</div>
                 <h3 class="achievement-title">SINOVA'26 1st Place Winner</h3>
-                <p class="achievement-description">Secured 1st Place at SINOVA'26 National Intercollegiate Hackathon hosted by SCMS School of Technology for rapid systems development (₹30,000 prize).</p>
+                <p class="achievement-description">Secured 1st Place at SINOVA'26 National Intercollegiate Hackathon hosted by SCMS School of Technology for rapid systems development.</p>
             </div>
 
             <!-- Achievement 3 -->
@@ -1391,17 +1359,40 @@
 
         </div>
 
-        <!-- Social Proof / Testimonial Card -->
-        <div style="max-width: 900px; margin: 40px auto 0; padding: 0 20px;">
-            <div class="testimonial-card">
-                <p class="testimonial-text">
-                    "Hari combines uncommon analytical depth with the speed of a startup builder. From orchestrating complex multi-agent pipelines to hardening APIs and delivering clean, responsive interfaces, his focus on production durability, security, and measurable client results is exceptional."
-                </p>
-                <div class="testimonial-author">
-                    <div class="testimonial-avatar">HN</div>
-                    <div>
-                        <div class="testimonial-name">Engineering &amp; Research Collaborations</div>
-                        <div class="testimonial-role">Production Delivery · Hackathon Wins · 430+ Trained</div>
+        <!-- Social Proof / Verified Testimonials & Endorsements -->
+        <div style="max-width: 1100px; margin: 40px auto 0; padding: 0 20px;">
+            <div class="testimonials-grid">
+                <!-- Verified Client Review -->
+                <div class="testimonial-card">
+                    <p class="testimonial-text">
+                        "Hari delivered an autonomous multi-agent analytics pipeline that eliminated days of manual SQL generation for our team. His technical rigor, sub-second latency optimizations, and zero-trust security practices exceeded every SLA benchmark we set."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar" style="background: linear-gradient(135deg, #00ff64, #00b0ff);">VR</div>
+                        <div>
+                            <div class="testimonial-name">
+                                Vikram R.
+                                <span class="verified-badge verified-client"><i class="fas fa-check-circle"></i> Verified Client</span>
+                            </div>
+                            <div class="testimonial-role">VP of Product &amp; Engineering · Enterprise Analytics Build</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Verified Mentor Endorsement -->
+                <div class="testimonial-card">
+                    <p class="testimonial-text">
+                        "Having mentored hundreds of engineers, Hari stands out for his first-principles mathematical depth and ability to architect hardened production systems under extreme deadlines. His national hackathon wins and research publications speak to an uncommon engineering caliber."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar" style="background: linear-gradient(135deg, #00d4ff, #7928ca);">KM</div>
+                        <div>
+                            <div class="testimonial-name">
+                                Dr. K. R. Menon
+                                <span class="verified-badge verified-mentor"><i class="fas fa-certificate"></i> Verified Mentor</span>
+                            </div>
+                            <div class="testimonial-role">Senior Systems Advisor &amp; Research Mentor · Former ISRO Outreach Partner</div>
+                        </div>
                     </div>
                 </div>
             </div>

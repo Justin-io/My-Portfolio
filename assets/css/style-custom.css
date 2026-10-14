@@ -927,6 +927,69 @@
             gap: 15px;
         }
 
+        .project-card-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .project-action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        .btn-action-github {
+            background: rgba(255, 255, 255, 0.06);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+        }
+
+        .btn-action-github:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.35);
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        .btn-action-demo {
+            background: rgba(0, 255, 100, 0.08);
+            color: #00ff64;
+            border: 1px solid rgba(0, 255, 100, 0.28);
+        }
+
+        .btn-action-demo:hover {
+            background: rgba(0, 255, 100, 0.18);
+            border-color: #00ff64;
+            color: #00ff64;
+            box-shadow: 0 0 16px rgba(0, 255, 100, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .btn-action-arch {
+            background: rgba(0, 212, 255, 0.08);
+            color: #00d4ff;
+            border: 1px solid rgba(0, 212, 255, 0.28);
+        }
+
+        .btn-action-arch:hover {
+            background: rgba(0, 212, 255, 0.18);
+            border-color: #00d4ff;
+            color: #00d4ff;
+            box-shadow: 0 0 16px rgba(0, 212, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
         /* Research Section */
         .research-showcase {
             background: var(--glass-bg);
@@ -3256,9 +3319,44 @@
             font-weight: 700;
             color: #ffffff;
             font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .testimonial-role {
             font-size: 0.82rem;
             color: var(--text-tertiary);
+            margin-top: 2px;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 2px 9px;
+            border-radius: 12px;
+        }
+
+        .verified-client {
+            background: rgba(0, 255, 100, 0.12);
+            color: #00ff64;
+            border: 1px solid rgba(0, 255, 100, 0.28);
+        }
+
+        .verified-mentor {
+            background: rgba(0, 212, 255, 0.12);
+            color: #00d4ff;
+            border: 1px solid rgba(0, 212, 255, 0.28);
         }
