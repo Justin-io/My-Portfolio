@@ -717,7 +717,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const heroMainImg = document.getElementById('hero-main-img');
     const heroGlitchContainer = document.getElementById('hero-glitch-container');
 
-    if (heroMainImg && heroGlitchContainer) {
+    if (heroMainImg) {
         heroMainImg.style.cursor = "pointer";
         heroMainImg.addEventListener('click', () => {
             // Stop auto animation
