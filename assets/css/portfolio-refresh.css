@@ -2213,3 +2213,772 @@ body.command-center-theme > .skip-link {
     opacity: .85 !important;
   }
 }
+
+
+/* ==========================================================================
+   OBSIDIAN v3 — mobile repair, monochrome surface system and curated content
+   ========================================================================== */
+:root {
+  --accent: #d4d4d4;
+  --accent-cyan: #d4d4d4;
+  --accent-emerald: #d4d4d4;
+  --accent-light: #f4f4f5;
+  --line: rgba(255,255,255,.09);
+  --line-strong: rgba(255,255,255,.16);
+  --bg-obsidian: #050505;
+  --bg-navy: #070707;
+  --bg-surface: #0b0b0b;
+  --bg-card: #0a0a0a;
+}
+
+html {
+  scroll-padding-top: 94px !important;
+  background: #050505 !important;
+}
+
+body.command-center-theme {
+  overflow-x: hidden !important;
+  background: #050505 !important;
+  background-image: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,.035), transparent 38%) !important;
+}
+
+/* The animated accretion-disk scene produced bright orange/gold bleed behind
+   transparent content cards. The minimal theme uses a static black canvas. */
+#canvas-container {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+header {
+  position: relative;
+  z-index: 10020 !important;
+}
+
+#navbar,
+nav {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  min-height: 74px;
+  padding: 11px 24px !important;
+  box-sizing: border-box !important;
+  z-index: 10020 !important;
+  background: rgba(5,5,5,.96) !important;
+  border-bottom: 1px solid rgba(255,255,255,.09) !important;
+  backdrop-filter: blur(18px) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+}
+
+#navbar .nav-container,
+nav .nav-container {
+  min-height: 50px;
+  align-items: center !important;
+}
+
+#navbar .logo,
+nav .logo {
+  line-height: 1 !important;
+}
+
+.nav-links {
+  z-index: 10021 !important;
+}
+
+.menu-toggle {
+  position: relative;
+  z-index: 10022 !important;
+  min-width: 48px;
+  min-height: 46px;
+  display: grid;
+  place-content: center;
+  gap: 5px;
+}
+
+main#main {
+  display: flex !important;
+  flex-direction: column !important;
+  min-width: 0;
+}
+
+main#main > section {
+  width: 100%;
+  min-width: 0;
+  order: 20;
+  scroll-margin-top: 98px !important;
+}
+
+#home { order: 0 !important; }
+#work { order: 1 !important; }
+#services { order: 2 !important; }
+#process { order: 3 !important; }
+#about { order: 4 !important; }
+#skills { order: 5 !important; }
+#achievements { order: 6 !important; }
+#lab { order: 7 !important; }
+#contact { order: 8 !important; }
+
+.hero {
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 148px 28px 76px !important;
+  background: transparent !important;
+  overflow: visible !important;
+}
+
+.hero::after {
+  display: none !important;
+}
+
+.hero-container {
+  align-items: center !important;
+  gap: clamp(28px,5vw,72px) !important;
+}
+
+.hero-headline,
+.hero h1 {
+  max-width: 760px;
+  font-size: clamp(2.55rem,5.4vw,5rem) !important;
+  line-height: 1.04 !important;
+  letter-spacing: -.065em !important;
+  overflow-wrap: normal;
+}
+
+.hero .subtitle {
+  color: #a7a7ad !important;
+  max-width: 640px;
+}
+
+.hero-proof-bar {
+  gap: 10px 18px !important;
+  margin-top: 26px !important;
+}
+
+.hero-card,
+.hud-panel {
+  background: #090909 !important;
+  border-color: rgba(255,255,255,.12) !important;
+  box-shadow: 0 18px 48px rgba(0,0,0,.32) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.hud-corners {
+  display: none !important;
+}
+
+.hero .hud-terminal-readout {
+  display: none !important;
+}
+
+main > section:not(.hero) {
+  padding: clamp(52px,6vw,82px) 28px !important;
+  background: transparent !important;
+}
+
+.section-header {
+  max-width: var(--content-width) !important;
+  margin: 0 auto 26px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.section-label {
+  color: #8e8e95 !important;
+}
+
+.section-title {
+  color: #f5f5f5 !important;
+  font-size: clamp(1.9rem,4vw,3rem) !important;
+  line-height: 1.1 !important;
+  letter-spacing: -.055em !important;
+}
+
+.section-subtitle {
+  color: #8f8f96 !important;
+  line-height: 1.7 !important;
+}
+
+/* Uniform black cards: no background show-through and no coloured glass. */
+.flagship-card,
+.service-card,
+.process-card,
+.skills-cat-card,
+.achievement-card,
+.testimonial-card,
+.contact-card,
+.contact-form,
+.lab-card,
+.highlight-item {
+  background: #090909 !important;
+  border: 1px solid rgba(255,255,255,.10) !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.service-card {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  min-width: 0;
+  min-height: 100%;
+  padding: 24px !important;
+}
+
+.service-badge {
+  position: static !important;
+  inset: auto !important;
+  display: inline-flex !important;
+  align-items: center;
+  max-width: 100%;
+  margin: 0 0 18px !important;
+  padding: 5px 9px !important;
+  color: #c3c3c8 !important;
+  background: #111 !important;
+  border: 1px solid rgba(255,255,255,.13) !important;
+  border-radius: 4px !important;
+  line-height: 1.4;
+  white-space: normal;
+}
+
+.service-icon {
+  position: static !important;
+  flex: 0 0 44px;
+  width: 44px !important;
+  height: 44px !important;
+  margin: 0 0 18px !important;
+  color: #ededed !important;
+  background: #121212 !important;
+  border: 1px solid rgba(255,255,255,.13) !important;
+  border-radius: 8px !important;
+  transform: none !important;
+}
+
+.service-title {
+  margin: 0 0 10px !important;
+  color: #f1f1f1 !important;
+  font-size: 1.12rem !important;
+  line-height: 1.3 !important;
+}
+
+.service-desc,
+.service-deliverables li {
+  color: #a2a2a8 !important;
+}
+
+.service-deliverables {
+  width: 100%;
+  margin-top: 16px !important;
+  padding-top: 15px !important;
+  border-top: 1px solid rgba(255,255,255,.08) !important;
+}
+
+.service-deliverables li {
+  padding: 5px 0;
+  line-height: 1.55 !important;
+}
+
+.service-deliverables li i,
+.skills-capability-list li i {
+  color: #d1d1d1 !important;
+}
+
+/* About: readable prose first, quiet proof points second. */
+.about-grid {
+  align-items: start !important;
+  gap: clamp(24px,4vw,54px) !important;
+}
+
+.about-text {
+  margin: 0 0 16px !important;
+  padding: 0 !important;
+  color: #b0b0b6 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  font-size: .94rem !important;
+  line-height: 1.8 !important;
+}
+
+.about-highlights {
+  grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  gap: 10px !important;
+  margin-top: 24px !important;
+}
+
+.highlight-item {
+  align-items: flex-start !important;
+  min-width: 0;
+  padding: 15px !important;
+  border-radius: 8px !important;
+}
+
+.highlight-icon {
+  flex: 0 0 34px !important;
+  width: 34px !important;
+  height: 34px !important;
+  color: #ededed !important;
+  background: #151515 !important;
+  border: 1px solid rgba(255,255,255,.12) !important;
+  border-radius: 7px !important;
+  font-size: .85rem !important;
+}
+
+.highlight-text h4 {
+  color: #ededed !important;
+  font-size: .79rem !important;
+  line-height: 1.4 !important;
+}
+
+.highlight-text p {
+  color: #929299 !important;
+  font-size: .72rem !important;
+  line-height: 1.6 !important;
+}
+
+.about-image-container {
+  max-height: 340px !important;
+  height: 340px !important;
+  border-radius: 9px !important;
+  background: #0b0b0b !important;
+}
+
+/* Details disclosures keep the first screen useful without a never-ending page. */
+.content-disclosure,
+.case-study-accordion {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  margin: 18px 0 0;
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 8px;
+  background: #080808;
+  overflow: clip;
+}
+
+.content-disclosure > summary,
+.case-study-accordion > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 52px;
+  padding: 14px 16px;
+  color: #e6e6e8;
+  background: #0b0b0b;
+  cursor: pointer;
+  list-style: none;
+  font-size: .82rem;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.content-disclosure > summary::-webkit-details-marker,
+.case-study-accordion > summary::-webkit-details-marker {
+  display: none;
+}
+
+.content-disclosure > summary::after,
+.case-study-accordion > summary::after {
+  content: '+';
+  flex: 0 0 auto;
+  color: #bcbcc2;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+
+.content-disclosure[open] > summary::after,
+.case-study-accordion[open] > summary::after {
+  content: '−';
+}
+
+.content-disclosure > summary span,
+.case-study-accordion > summary span {
+  margin-left: auto;
+  color: #74747c;
+  font-size: .66rem;
+  font-weight: 500;
+  text-align: right;
+}
+
+.content-disclosure[open],
+.case-study-accordion[open] {
+  border-color: rgba(255,255,255,.18);
+}
+
+.content-disclosure[open] > summary,
+.case-study-accordion[open] > summary {
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.content-disclosure > .process-container,
+.content-disclosure > .skills-evidence-grid,
+.content-disclosure > .achievements-container,
+.content-disclosure > .projects-container {
+  padding: 14px !important;
+  margin: 0 !important;
+}
+
+.case-study-accordion {
+  margin: 20px 0 4px;
+  border-radius: 6px;
+}
+
+.case-study-accordion > summary {
+  min-height: 44px;
+  padding: 11px 13px;
+  font-size: .74rem;
+  background: #0c0c0c;
+}
+
+.case-study-details {
+  padding: 8px 13px !important;
+  border-top: 0 !important;
+  border-bottom: 0 !important;
+  grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  gap: 0 16px !important;
+}
+
+.case-field {
+  padding: 10px 0 !important;
+  border-bottom: 1px solid rgba(255,255,255,.07) !important;
+}
+
+.case-field:last-child {
+  border-bottom: 0 !important;
+}
+
+.field-content {
+  color: #9b9ba2 !important;
+  line-height: 1.65 !important;
+}
+
+.project-tags {
+  gap: 6px !important;
+}
+
+.tag,
+.stack-tag {
+  color: #b5b5bb !important;
+  background: #111 !important;
+  border-color: rgba(255,255,255,.10) !important;
+}
+
+/* Smaller, coherent cards on the contact end-state. */
+.contact-container {
+  gap: 14px !important;
+  align-items: start !important;
+}
+
+.contact-card,
+.contact-form {
+  height: auto !important;
+  padding: 22px !important;
+  border-radius: 9px !important;
+}
+
+.contact-item {
+  gap: 12px !important;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea,
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  color: #f3f3f3 !important;
+  background: #050505 !important;
+  border-color: rgba(255,255,255,.13) !important;
+  border-radius: 6px !important;
+}
+
+footer {
+  background: #050505 !important;
+}
+
+/* Remove coloured overlays and keep all cards in the same visual system. */
+.flagship-card::after,
+.lab-card::after,
+.service-card::after,
+.process-card::after,
+.skills-cat-card::after,
+.achievement-card::after,
+.testimonial-card::after,
+.contact-card::after {
+  background: none !important;
+}
+
+/* Narrow-screen geometry: one consistent gutter and no content under the nav. */
+@media (max-width: 850px) {
+  #navbar,
+  nav {
+    min-height: 70px !important;
+    padding: 9px 18px !important;
+  }
+
+  #navbar .nav-container,
+  nav .nav-container {
+    min-height: 50px !important;
+  }
+
+  .hero {
+    padding: 132px 20px 54px !important;
+  }
+
+  .hero-container {
+    grid-template-columns: minmax(0,1fr) !important;
+    gap: 30px !important;
+  }
+
+  .hero-content {
+    text-align: left !important;
+    margin: 0 !important;
+  }
+
+  .hero-headline,
+  .hero h1 {
+    font-size: clamp(2.45rem,8.6vw,3.5rem) !important;
+    line-height: 1.06 !important;
+  }
+
+  .hero-visual {
+    justify-content: stretch !important;
+  }
+
+  .hero-card,
+  .hud-panel {
+    max-width: 100% !important;
+  }
+
+  main > section:not(.hero) {
+    padding: 54px 20px !important;
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+    gap: 12px !important;
+  }
+
+  .process-container {
+    grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  }
+
+  .lab-grid {
+    grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  }
+}
+
+@media (max-width: 620px) {
+  html {
+    scroll-padding-top: 82px !important;
+  }
+
+  main > section {
+    scroll-margin-top: 82px !important;
+  }
+
+  #navbar,
+  nav {
+    min-height: 66px !important;
+    padding: 8px 16px !important;
+  }
+
+  #navbar .nav-container,
+  nav .nav-container {
+    min-height: 48px !important;
+  }
+
+  .logo {
+    font-size: 1.45rem !important;
+  }
+
+  .menu-toggle {
+    min-width: 44px !important;
+    min-height: 44px !important;
+    padding: 8px !important;
+  }
+
+  .hero {
+    padding: 112px 18px 44px !important;
+  }
+
+  .hero-badge {
+    margin-bottom: 18px !important;
+    font-size: .61rem !important;
+    letter-spacing: .1em !important;
+  }
+
+  .hero-headline,
+  .hero h1 {
+    font-size: clamp(2.25rem,10.5vw,3.1rem) !important;
+    line-height: 1.04 !important;
+    margin-bottom: 17px !important;
+  }
+
+  .hero .subtitle {
+    font-size: .88rem !important;
+    line-height: 1.7 !important;
+    margin-bottom: 22px !important;
+  }
+
+  .hero-buttons {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+  }
+
+  .hero-buttons .btn:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .hero-buttons .btn {
+    min-height: 44px !important;
+    padding: 11px 10px !important;
+    font-size: .76rem !important;
+  }
+
+  .hero-proof-bar {
+    margin-top: 22px !important;
+    padding-top: 14px !important;
+    gap: 9px 12px !important;
+  }
+
+  .proof-pill {
+    font-size: .59rem !important;
+  }
+
+  .hero-card,
+  .hud-panel {
+    padding: 16px 13px !important;
+  }
+
+  .hero-stats,
+  .hud-stats-grid {
+    grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  }
+
+  .stat-item,
+  .hud-stat {
+    min-height: 96px !important;
+    padding: 11px 6px !important;
+  }
+
+  .stat-number,
+  .hud-stat .stat-number {
+    font-size: clamp(1.25rem,7vw,1.7rem) !important;
+  }
+
+  main > section:not(.hero) {
+    padding: 46px 18px !important;
+  }
+
+  .section-header {
+    margin-bottom: 20px !important;
+  }
+
+  .section-title {
+    font-size: clamp(1.7rem,8.2vw,2.35rem) !important;
+  }
+
+  .section-subtitle {
+    font-size: .82rem !important;
+  }
+
+  .flagship-grid,
+  .flagship-card:first-child {
+    grid-template-columns: 1fr !important;
+  }
+
+  .flagship-card:first-child .flagship-media,
+  .flagship-media,
+  .flagship-img {
+    min-height: 180px !important;
+  }
+
+  .flagship-body {
+    padding: 18px 15px !important;
+  }
+
+  .case-study-details {
+    grid-template-columns: 1fr !important;
+  }
+
+  .services-grid,
+  .process-container,
+  .lab-grid,
+  .achievements-container {
+    grid-template-columns: 1fr !important;
+  }
+
+  .service-card {
+    padding: 18px !important;
+  }
+
+  .service-badge {
+    margin-bottom: 13px !important;
+  }
+
+  .service-icon {
+    margin-bottom: 14px !important;
+  }
+
+  .about-grid,
+  .contact-container {
+    grid-template-columns: 1fr !important;
+  }
+
+  .about-text {
+    font-size: .88rem !important;
+  }
+
+  .about-highlights {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .highlight-item {
+    padding: 13px !important;
+  }
+
+  .about-image-container {
+    height: 250px !important;
+    max-height: 250px !important;
+  }
+
+  .content-disclosure > summary,
+  .case-study-accordion > summary {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 5px 10px;
+  }
+
+  .content-disclosure > summary span,
+  .case-study-accordion > summary span {
+    flex: 1 1 100%;
+    margin-left: 0;
+    text-align: left;
+  }
+
+  .content-disclosure > summary::after,
+  .case-study-accordion > summary::after {
+    margin-left: auto;
+  }
+
+  .contact-card,
+  .contact-form {
+    padding: 18px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+  * { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
