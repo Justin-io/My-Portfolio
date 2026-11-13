@@ -90,8 +90,8 @@ textarea {
 
 /* Preserve the live Three.js background; keep it atmospheric, not dominant. */
 #canvas-container {
-  opacity: .58;
-  filter: saturate(.28) brightness(.62);
+  opacity: .88;
+  filter: none;
   pointer-events: none;
 }
 
@@ -2247,8 +2247,8 @@ body.command-center-theme {
 #canvas-container {
   display: block !important;
   visibility: visible !important;
-  opacity: .56 !important;
-  filter: saturate(.72) brightness(.48) contrast(1.12) !important;
+  opacity: .92 !important;
+  filter: none !important;
   pointer-events: none !important;
 }
 
@@ -2994,9 +2994,9 @@ footer {
   z-index: 0 !important;
   width: 100vw !important;
   height: 100vh !important;
-  opacity: .56 !important;
+  opacity: .92 !important;
   visibility: visible !important;
-  filter: saturate(.72) brightness(.48) contrast(1.12) !important;
+  filter: none !important;
   pointer-events: none !important;
   overflow: hidden !important;
 }
@@ -3015,12 +3015,27 @@ body.command-center-theme > .skip-link {
 }
 @media (max-width: 620px) {
   #canvas-container {
-    opacity: .48 !important;
-    filter: saturate(.68) brightness(.42) contrast(1.1) !important;
+    opacity: .88 !important;
+    filter: none !important;
   }
 }
 @media (prefers-reduced-motion: reduce) {
   #canvas-container {
-    opacity: .38 !important;
+    opacity: .82 !important;
   }
+}
+
+
+/* Crisp black-hole rendering: no CSS blur, no double dimming */
+#canvas-container,
+#canvas-container canvas {
+  filter: none !important;
+  -webkit-filter: none !important;
+  image-rendering: auto;
+}
+#canvas-container {
+  opacity: .92 !important;
+}
+@media (max-width: 620px) {
+  #canvas-container { opacity: .88 !important; }
 }
