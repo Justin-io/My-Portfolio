@@ -572,9 +572,9 @@ if (container) {
   }
 
   const isMobileDevice = /Mobi|Android|iP(hone|od|ad)/i.test(navigator.userAgent) || window.innerWidth < 768;
-  const renderer = new THREE.WebGPURenderer({ antialias: true });
+  const renderer = new THREE.WebGPURenderer({ antialias: true, alpha: false, powerPreference: 'high-performance' });
   renderer.setSize(window.innerWidth, window.innerHeight);
-  const pixelRatio = Math.min(window.devicePixelRatio, isMobileDevice ? 1.0 : 2.0);
+  const pixelRatio = Math.min(window.devicePixelRatio || 1, isMobileDevice ? 1.5 : 2.0);
   renderer.setPixelRatio(pixelRatio);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   container.appendChild(renderer.domElement);
@@ -699,7 +699,7 @@ if (container) {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     const isMobileNow = /Mobi|Android|iP(hone|od|ad)/i.test(navigator.userAgent) || window.innerWidth < 768;
-    const pr = Math.min(window.devicePixelRatio, isMobileNow ? 1.0 : 2.0);
+    const pr = Math.min(window.devicePixelRatio || 1, isMobileNow ? 1.5 : 2.0);
     renderer.setPixelRatio(pr);
     renderer.setSize(window.innerWidth, window.innerHeight);
     if (postProcessing && postProcessing.setSize) {
@@ -723,7 +723,10 @@ if (container) {
     positionCamera(0);
     animate();
   }).catch(err => {
-    console.error('WebGPU/WebGL init failed:', err);
+    console.error('Black-hole WebGPU renderer initialization failed:', err);
+    container.dataset.rendererState = 'failed';
+    container.setAttribute('aria-hidden', 'true');
+    container.style.opacity = '0';
     container.style.display = 'none';
   });
 }
