@@ -75,7 +75,7 @@
     <!-- Main CSS -->
     <link rel="stylesheet" href="./style.css?v=3">
     <link rel="stylesheet" href="assets/css/style-custom.css?v=3">
-    <link rel="stylesheet" href="assets/css/portfolio-refresh.css?v=2">
+    <link rel="stylesheet" href="assets/css/portfolio-refresh.css?v=3">
 
     <style>
         /* Hero Profile & Image Alignment */
@@ -221,22 +221,17 @@
 
     <!-- Custom Cursor -->
     <div class="cursor" aria-hidden="true"></div>
-    <div class="cursor-follower" aria-hidden="true"></div>
-
-    <!-- Three.js Canvas Background -->
-    <div id="canvas-container" aria-hidden="true"></div>
-
-    <!-- Navigation -->
+    <div class="cursor-follower" aria-hidden="true"></div><!-- Navigation -->
     <header>
         <nav id="navbar" aria-label="Main Navigation">
             <div class="nav-container">
                 <a href="#home" class="logo" style="text-decoration: none; font-weight: 800; letter-spacing: 1px;" aria-label="Hari Nandan K Home">HN</a>
                 <ul class="nav-links">
-                    <li><a href="#work" class="nav-link">Flagships</a></li>
-                    <li><a href="#lab" class="nav-link">The Lab (11)</a></li>
+                    <li><a href="#work" class="nav-link">Selected Work</a></li>
                     <li><a href="#services" class="nav-link">Services</a></li>
-                    <li><a href="#process" class="nav-link">Process</a></li>
                     <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#skills" class="nav-link">Technical Stack</a></li>
+                    <li><a href="#lab" class="nav-link">R&amp;D Archive</a></li>
                     <li><a href="#contact" class="nav-link">Contact</a></li>
                 </ul>
                 <div style="display: flex; align-items: center; gap: 12px;">
@@ -381,7 +376,7 @@
                             Production-grade conversational analytics platform that transforms plain-English business inquiries into accurate, interactive dashboards and multi-dimensional metric decompositions.
                         </p>
                         
-                        <div class="case-study-details">
+                        <details class="case-study-accordion"><summary>Technical breakdown <span>Problem · architecture · evidence · constraints</span></summary><div class="case-study-details">
                             <div class="case-field">
                                 <span class="field-label label-problem"><i class="fas fa-triangle-exclamation" aria-hidden="true"></i> Problem</span>
                                 <div class="field-content">Non-technical decision-makers wait days for data engineering teams to write ad-hoc SQL reports, while generic LLM text-to-SQL wrappers hallucinate schemas and produce invalid syntax.</div>
@@ -406,7 +401,7 @@
                                 <span class="field-label label-limit"><i class="fas fa-circle-info" aria-hidden="true"></i> Limitations</span>
                                 <div class="field-content">Optimized for DuckDB and PostgreSQL analytical star/snowflake schemas; complex recursive CTEs require pre-computed materialized views.</div>
                             </div>
-                        </div>
+                        </div></details>
 
                         <div class="project-tags">
                             <span class="tag">Python</span>
@@ -446,7 +441,7 @@
                             Comprehensive evaluation and benchmarking suite designed to stress-test retrieval pipelines against complex enterprise document corpora before production deployment.
                         </p>
                         
-                        <div class="case-study-details">
+                        <details class="case-study-accordion"><summary>Technical breakdown <span>Problem · architecture · evidence · constraints</span></summary><div class="case-study-details">
                             <div class="case-field">
                                 <span class="field-label label-problem"><i class="fas fa-triangle-exclamation" aria-hidden="true"></i> Problem</span>
                                 <div class="field-content">Enterprise engineering teams deploy RAG pipelines blindly without empirical benchmarking, suffering high hallucination rates, fragile retrieval across dense PDFs, and silent production regressions.</div>
@@ -471,7 +466,7 @@
                                 <span class="field-label label-limit"><i class="fas fa-circle-info" aria-hidden="true"></i> Limitations</span>
                                 <div class="field-content">GraphRAG index construction exhibits higher upfront latency during initial document ingestion due to entity resolution overhead (O(V+E)).</div>
                             </div>
-                        </div>
+                        </div></details>
 
                         <div class="project-tags">
                             <span class="tag">Python</span>
@@ -512,7 +507,7 @@
                             Autonomous industrial equipment health auditing and anomaly detection platform engineered for chiller plants, energy infrastructure, and continuous IoT monitoring.
                         </p>
                         
-                        <div class="case-study-details">
+                        <details class="case-study-accordion"><summary>Technical breakdown <span>Problem · architecture · evidence · constraints</span></summary><div class="case-study-details">
                             <div class="case-field">
                                 <span class="field-label label-problem"><i class="fas fa-triangle-exclamation" aria-hidden="true"></i> Problem</span>
                                 <div class="field-content">Industrial chiller plants and critical cooling infrastructure rely on static threshold alarms that constantly trigger false alarms while failing to detect multi-variable equipment wear leading to catastrophic failures.</div>
@@ -537,7 +532,7 @@
                                 <span class="field-label label-limit"><i class="fas fa-circle-info" aria-hidden="true"></i> Limitations</span>
                                 <div class="field-content">Scope restricted strictly to ASHRAE Guideline 14 measurement-and-verification (M&amp;V) thermal efficiency drift; requires 14+ days of baseline sensor calibration data for steady-state thermal profiling.</div>
                             </div>
-                        </div>
+                        </div></details>
 
                         <div class="project-tags">
                             <span class="tag">Python 3.11+</span>
@@ -661,7 +656,7 @@
             <p class="section-subtitle">From initial scoping to production launch, here is how we ensure rapid delivery without sacrificing architectural quality.</p>
         </div>
 
-        <div class="process-container">
+        <details class="content-disclosure"><summary>Explore the delivery process <span>5 stages</span></summary><div class="process-container">
             
             <div class="process-card">
                 <div class="process-step-num">
@@ -718,7 +713,7 @@
                 </p>
             </div>
 
-        </div>
+        </div></details>
     </section>
 
 
@@ -838,7 +833,7 @@
             <p class="section-subtitle">Battle-tested capabilities categorized by domain rather than arbitrary percentage bars.</p>
         </div>
 
-        <div class="skills-evidence-grid">
+        <details class="content-disclosure"><summary>Explore technical capabilities <span>4 domains</span></summary><div class="skills-evidence-grid">
             
             <!-- Category 1 -->
             <div class="skills-cat-card">
@@ -958,7 +953,7 @@
                 </div>
             </div>
 
-        </div>
+        </div></details>
     </section>
 
 
@@ -970,7 +965,7 @@
             <p class="section-subtitle">A searchable space for my deeper technical research, authorized messaging engines, geospatial satellite telemetry, discrete spacetime simulations, and open-source utility engines.</p>
         </div>
 
-        <div class="projects-container">
+        <details class="content-disclosure archive-disclosure"><summary>Open the R&amp;D archive <span>11 prototypes · searchable</span></summary><div class="projects-container">
             <!-- Lab Search & Filter HUD Bar -->
             <div class="lab-controls-panel">
                 <div class="lab-search-wrapper">
@@ -1305,7 +1300,7 @@
                     <a href="tools.html" class="btn btn-secondary"><i class="fas fa-toolbox" aria-hidden="true"></i> 15+ Browser Utilities</a>
                 </div>
             </div>
-        </div>
+        </div></details>
     </section>
 
 
@@ -1316,7 +1311,7 @@
             <h2 class="section-title">Awards &amp; Demonstrated Track Record</h2>
             <p class="section-subtitle">Real-world milestones, competitive awards, and quantified delivery metrics.</p>
         </div>
-        <div class="achievements-container">
+        <details class="content-disclosure"><summary>View awards and milestones <span>Evidence &amp; recognition</span></summary><div class="achievements-container">
 
             <!-- Achievement 1 -->
             <div class="achievement-card">
@@ -1358,7 +1353,7 @@
                 <p class="achievement-description">Earned Certified Ethical Hacker credential at age 14, establishing early depth in low-level systems architecture, vulnerability auditing, and defensive security.</p>
             </div>
 
-        </div>
+        </div></details>
 
         <!-- Social Proof / Verified Testimonials & Endorsements -->
         <div class="testimonials-wrapper">
@@ -1561,11 +1556,7 @@
 
     <script src="assets/js/performance.js"></script>
     <script src="assets/js/main.js?v=2"></script>
-    <script src="assets/js/portfolio-motion.js?v=2" defer></script>
-    <script type="module" src="assets/js/three-scenes.js?v=22"></script>
-
-
-    <script>
+    <script src="assets/js/portfolio-motion.js?v=2" defer></script><script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/service-worker.js')
