@@ -1,5 +1,5 @@
 /*
-  OBSIDIAN — portfolio visual refresh
+  OBSIDIAN - portfolio visual refresh
   A quieter, editorial system built around typography, spacing and evidence.
   The Three.js canvas remains untouched behind the interface.
 */
@@ -1937,7 +1937,7 @@ body.motion-ready [data-motion="reveal"].is-visible {
 
 
 /* ==========================================================================
-   HOTFIX v2 — restore the black-hole scene and correct mobile layout
+   HOTFIX v2 - restore the black-hole scene and correct mobile layout
    These rules intentionally override the earlier refresh layer.
    ========================================================================== */
 
@@ -2216,7 +2216,7 @@ body.command-center-theme > .skip-link {
 
 
 /* ==========================================================================
-   OBSIDIAN v3 — mobile repair, monochrome surface system and curated content
+   OBSIDIAN v3 - mobile repair, monochrome surface system and curated content
    ========================================================================== */
 :root {
   --accent: #d4d4d4;
@@ -2245,9 +2245,11 @@ body.command-center-theme {
 /* The animated accretion-disk scene produced bright orange/gold bleed behind
    transparent content cards. The minimal theme uses a static black canvas. */
 #canvas-container {
-  display: none !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: .56 !important;
+  filter: saturate(.72) brightness(.48) contrast(1.12) !important;
+  pointer-events: none !important;
 }
 
 header {
@@ -2981,4 +2983,44 @@ footer {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto !important; }
   * { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
+
+
+/* Restored black-hole scene behind the restrained monochrome interface */
+#canvas-container {
+  display: block !important;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  opacity: .56 !important;
+  visibility: visible !important;
+  filter: saturate(.72) brightness(.48) contrast(1.12) !important;
+  pointer-events: none !important;
+  overflow: hidden !important;
+}
+#canvas-container canvas {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+body.command-center-theme > header,
+body.command-center-theme > main,
+body.command-center-theme > footer,
+body.command-center-theme > .image-modal,
+body.command-center-theme > .skip-link {
+  position: relative;
+  z-index: 1;
+}
+@media (max-width: 620px) {
+  #canvas-container {
+    opacity: .48 !important;
+    filter: saturate(.68) brightness(.42) contrast(1.1) !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #canvas-container {
+    opacity: .38 !important;
+  }
 }
