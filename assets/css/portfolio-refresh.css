@@ -1934,3 +1934,282 @@ body.motion-ready [data-motion="reveal"].is-visible {
     display: none;
   }
 }
+
+
+/* ==========================================================================
+   HOTFIX v2 — restore the black-hole scene and correct mobile layout
+   These rules intentionally override the earlier refresh layer.
+   ========================================================================== */
+
+/* The canvas must sit ABOVE the body's black paint layer and BELOW the UI.
+   A negative z-index puts it behind the opaque body background (invisible). */
+html,
+body {
+  min-height: 100%;
+  background-color: #050505 !important;
+}
+
+body.command-center-theme {
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip;
+  background-image:
+    radial-gradient(ellipse at 50% -18%, rgba(255,255,255,.035), transparent 48%),
+    linear-gradient(rgba(255,255,255,.009) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.009) 1px, transparent 1px) !important;
+  background-size: auto, 72px 72px, 72px 72px;
+}
+
+#canvas-container {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  display: block !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  filter: none !important;
+  pointer-events: none !important;
+  overflow: hidden !important;
+}
+
+#canvas-container canvas {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+body.command-center-theme > header,
+body.command-center-theme > main,
+body.command-center-theme > footer,
+body.command-center-theme > .image-modal,
+body.command-center-theme > .skip-link {
+  position: relative;
+  z-index: 1;
+}
+
+/* Do not clip the hero when the telemetry card becomes taller on a phone. */
+.hero {
+  min-height: 0 !important;
+  height: auto !important;
+  overflow: visible !important;
+  clip-path: none !important;
+  contain: none !important;
+}
+
+.hero-container {
+  min-height: 0 !important;
+  height: auto !important;
+  align-items: start !important;
+  overflow: visible !important;
+}
+
+.hero-content,
+.hero-visual {
+  min-width: 0;
+  height: auto !important;
+  overflow: visible !important;
+}
+
+.hero-card,
+.hud-panel {
+  width: 100% !important;
+  max-width: 470px !important;
+  min-height: 0 !important;
+  height: auto !important;
+  max-height: none !important;
+  margin: 0 auto !important;
+  overflow: visible !important;
+  box-sizing: border-box !important;
+}
+
+.hero-card-content {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  overflow: visible;
+}
+
+.hero-stats,
+.hud-stats-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 1px !important;
+  width: 100%;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.stat-item,
+.hud-stat {
+  min-width: 0;
+  min-height: 112px;
+  height: auto !important;
+  box-sizing: border-box;
+}
+
+.stat-number {
+  white-space: nowrap;
+}
+
+.stat-label,
+.stat-sub {
+  overflow-wrap: anywhere;
+}
+
+/* Remove the inherited glass capsule around section headings.
+   Keep only the small typographic eyebrow label. */
+.section-header {
+  width: 100% !important;
+  max-width: var(--content-width) !important;
+  min-height: 0 !important;
+  height: auto !important;
+  margin: 0 auto 38px !important;
+  padding: 0 !important;
+  text-align: left !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.section-label {
+  display: block !important;
+  width: fit-content;
+  margin: 0 0 14px !important;
+  padding: 0 !important;
+  color: #a1a1aa !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  font-size: .65rem !important;
+  font-weight: 600 !important;
+  letter-spacing: .16em !important;
+  line-height: 1.5 !important;
+}
+
+@media (max-width: 850px) {
+  .hero {
+    padding-top: 118px !important;
+    padding-bottom: 70px !important;
+  }
+
+  .hero-container {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 34px !important;
+  }
+
+  .hero-visual {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+  }
+
+  .hero-card,
+  .hud-panel {
+    max-width: 620px !important;
+    padding: 22px !important;
+  }
+
+  main > section:not(.hero) {
+    padding-top: 72px !important;
+    padding-bottom: 72px !important;
+  }
+}
+
+@media (max-width: 620px) {
+  .hero {
+    padding: 112px 18px 58px !important;
+  }
+
+  .hero-card,
+  .hud-panel {
+    max-width: none !important;
+    padding: 18px 15px !important;
+    border-radius: 10px !important;
+  }
+
+  .hud-header {
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .hud-id {
+    font-size: .58rem !important;
+    letter-spacing: .08em !important;
+  }
+
+  .hero-profile-container {
+    margin: 18px auto 20px !important;
+  }
+
+  .hero-profile-img {
+    width: 104px !important;
+    height: 104px !important;
+  }
+
+  .hero-stats,
+  .hud-stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .stat-item,
+  .hud-stat {
+    min-height: 108px !important;
+    padding: 13px 7px !important;
+  }
+
+  .stat-number,
+  .hud-stat .stat-number {
+    font-size: clamp(1.35rem, 7vw, 1.8rem) !important;
+  }
+
+  .stat-label,
+  .hud-stat .stat-label {
+    font-size: .65rem !important;
+    line-height: 1.35 !important;
+  }
+
+  .stat-sub,
+  .hud-stat .stat-sub {
+    font-size: .59rem !important;
+    line-height: 1.4 !important;
+  }
+
+  .hud-terminal-readout {
+    margin-top: 16px !important;
+    padding: 12px !important;
+    overflow-wrap: anywhere;
+  }
+
+  .terminal-line {
+    font-size: .58rem !important;
+    line-height: 1.65 !important;
+  }
+
+  main > section:not(.hero) {
+    padding: 64px 18px !important;
+  }
+
+  .section-header {
+    margin-bottom: 28px !important;
+  }
+
+  .section-label {
+    font-size: .6rem !important;
+    letter-spacing: .13em !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #canvas-container {
+    opacity: .85 !important;
+  }
+}
