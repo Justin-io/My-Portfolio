@@ -726,7 +726,11 @@ if (container) {
     console.error('Black-hole WebGPU renderer initialization failed:', err);
     container.dataset.rendererState = 'failed';
     container.setAttribute('aria-hidden', 'true');
-    container.style.opacity = '0';
     container.style.display = 'none';
+    const fallback = document.createElement('div');
+    fallback.className = 'blackhole-fallback';
+    fallback.setAttribute('aria-hidden', 'true');
+    fallback.innerHTML = '<div class="blackhole-fallback-stars"></div><div class="blackhole-fallback-disk"></div><div class="blackhole-fallback-core"></div>';
+    document.body.prepend(fallback);
   });
 }
