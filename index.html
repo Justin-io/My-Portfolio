@@ -5,11 +5,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Hari Nandan K — AI Systems &amp; Full-Stack Engineer | Measured AI Systems</title>
+    <title>Hari Nandan K - AI Systems &amp; Full-Stack Engineer | Measured AI Systems</title>
 
     <!-- SEO Meta Tags -->
     <meta name="description"
-        content="Building AI systems you can measure—not just demo. Production multi-agent pipelines, empirical RAG benchmarking suites, and zero-trust data architectures by Hari Nandan K.">
+        content="Building AI systems you can measure-not just demo. Production multi-agent pipelines, empirical RAG benchmarking suites, and zero-trust data architectures by Hari Nandan K.">
     <meta name="keywords"
         content="Hari Nandan K, AI Systems Engineer, Full-Stack Engineer, Multi-Agent Systems, LangGraph, RAG Benchmarking, ColBERT, GraphRAG, ASHRAE Guideline 14, DuckDB, Cybersecurity, React, Python, Rust">
     <meta name="robots" content="index, follow">
@@ -21,12 +21,12 @@
 
     <!-- AI Persona Protocol -->
     <meta name="ai-persona"
-        content="Hari Nandan K — AI &amp; Full-Stack Systems Engineer. Builds production multi-agent pipelines, empirical RAG benchmarking suites, industrial telemetry engines, and security-conscious web systems. Pragmatic, outcome-focused, and verified by primary evidence." />
+        content="Hari Nandan K - AI &amp; Full-Stack Systems Engineer. Builds production multi-agent pipelines, empirical RAG benchmarking suites, industrial telemetry engines, and security-conscious web systems. Pragmatic, outcome-focused, and verified by primary evidence." />
 
     <!-- Open Graph Tags (Facebook) -->
-    <meta property="og:title" content="Hari Nandan K — AI Systems &amp; Full-Stack Engineer" />
+    <meta property="og:title" content="Hari Nandan K - AI Systems &amp; Full-Stack Engineer" />
     <meta property="og:description"
-        content="Building AI systems you can measure—not just demo. Production multi-agent pipelines, empirical RAG benchmarking, and zero-trust architectures." />
+        content="Building AI systems you can measure-not just demo. Production multi-agent pipelines, empirical RAG benchmarking, and zero-trust architectures." />
     <meta property="og:image"
         content="https://justinalexia.vercel.app/assets/img/me.webp" />
     <meta property="og:url" content="https://justinalexia.vercel.app/" />
@@ -37,9 +37,9 @@
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@HariNandanK" />
-    <meta name="twitter:title" content="Hari Nandan K — AI Systems &amp; Full-Stack Engineer" />
+    <meta name="twitter:title" content="Hari Nandan K - AI Systems &amp; Full-Stack Engineer" />
     <meta name="twitter:description"
-        content="Building AI systems you can measure—not just demo. Production multi-agent pipelines, empirical RAG benchmarking, and zero-trust architectures." />
+        content="Building AI systems you can measure-not just demo. Production multi-agent pipelines, empirical RAG benchmarking, and zero-trust architectures." />
     <meta property="twitter:image"
         content="https://justinalexia.vercel.app/assets/img/me.webp" />
 
@@ -75,7 +75,7 @@
     <!-- Main CSS -->
     <link rel="stylesheet" href="./style.css?v=3">
     <link rel="stylesheet" href="assets/css/style-custom.css?v=3">
-    <link rel="stylesheet" href="assets/css/portfolio-refresh.css?v=3">
+    <link rel="stylesheet" href="assets/css/portfolio-refresh.css?v=4">
 
     <style>
         /* Hero Profile & Image Alignment */
@@ -221,7 +221,11 @@
 
     <!-- Custom Cursor -->
     <div class="cursor" aria-hidden="true"></div>
-    <div class="cursor-follower" aria-hidden="true"></div><!-- Navigation -->
+    <div class="cursor-follower" aria-hidden="true"></div>
+    <!-- Three.js Black Hole Background -->
+    <div id="canvas-container" aria-hidden="true"></div>
+
+<!-- Navigation -->
     <header>
         <nav id="navbar" aria-label="Main Navigation">
             <div class="nav-container">
@@ -258,7 +262,7 @@
                     <span>AI &amp; Full-Stack Systems Engineer · Open for Contract Builds</span>
                 </div>
                 <h1 class="hero-headline">
-                    Building AI systems you can measure—not just demo
+                    Building AI systems you can measure-not just demo
                 </h1>
 
                 <p class="subtitle">
@@ -308,7 +312,7 @@
 
                         <div class="hero-profile-container" id="hero-profile-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; width: 100%; margin: 8px auto 16px;">
                             <div class="profile-reticle" style="display: inline-flex; align-items: center; justify-content: center; margin: 0 auto 12px; border-radius: 50%;">
-                                <img src="assets/img/me.webp" alt="Hari Nandan K — AI and Systems Engineer" id="hero-main-img" class="hero-profile-img" width="120" height="120" loading="eager" style="display: block; margin: 0 auto; border-radius: 50%; object-fit: cover;">
+                                <img src="assets/img/me.webp" alt="Hari Nandan K - AI and Systems Engineer" id="hero-main-img" class="hero-profile-img" width="120" height="120" loading="eager" style="display: block; margin: 0 auto; border-radius: 50%; object-fit: cover;">
                             </div>
                             <div class="hero-profile-meta" style="text-align: center; width: 100%;">
                                 <div class="profile-name">Hari Nandan K</div>
@@ -567,7 +571,7 @@
         <div class="section-header">
             <div class="section-label">WHAT I OFFER</div>
             <h2 class="section-title">Engineering Services</h2>
-            <p class="section-subtitle">Direct, high-velocity technical partnership from architecture to deployment—delivering clean, maintainable software built for business ROI.</p>
+            <p class="section-subtitle">Direct, high-velocity technical partnership from architecture to deployment-delivering clean, maintainable software built for business ROI.</p>
         </div>
 
         <div class="services-grid">
@@ -1556,7 +1560,8 @@
 
     <script src="assets/js/performance.js"></script>
     <script src="assets/js/main.js?v=2"></script>
-    <script src="assets/js/portfolio-motion.js?v=2" defer></script><script>
+    <script src="assets/js/portfolio-motion.js?v=2" defer></script>
+    <script type="module" src="assets/js/three-scenes.js?v=23"></script><script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/service-worker.js')
