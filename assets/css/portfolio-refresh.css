@@ -1934,3 +1934,311 @@ body.motion-ready [data-motion="reveal"].is-visible {
     display: none;
   }
 }
+
+
+/* === MOBILE LAYOUT + BLACK-HOLE CANVAS RESTORE (v2) === */
+
+/* Keep the WebGPU black-hole renderer above the page's opaque body paint,
+   but below every interactive/content layer. */
+#canvas-container {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  display: block !important;
+  opacity: 1 !important;
+  filter: none !important;
+  pointer-events: none !important;
+  overflow: hidden;
+}
+
+#canvas-container canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+body > header,
+body > main,
+body > footer,
+body > .image-modal,
+body > .loader {
+  position: relative;
+  z-index: 1;
+}
+
+body > .image-modal,
+body > .loader {
+  z-index: 10001;
+}
+
+/* Do not clip the telemetry panel or the hero content on short mobile screens. */
+.hero {
+  min-height: 0 !important;
+  max-height: none !important;
+  height: auto !important;
+  overflow: visible !important;
+  padding-top: 118px;
+  padding-bottom: 64px;
+}
+
+.hero-container {
+  min-height: 0;
+  align-items: center;
+}
+
+.hero-content,
+.hero-visual {
+  min-width: 0;
+  align-self: center;
+}
+
+.hero-card,
+.hud-panel {
+  width: 100%;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+.hero-card-content {
+  height: auto !important;
+  gap: 18px;
+}
+
+.hero-profile-container {
+  margin: 14px auto 12px !important;
+}
+
+.hero-profile-img {
+  width: 96px !important;
+  height: 96px !important;
+}
+
+.hud-stats-grid,
+.hero-stats {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 7px !important;
+  margin: 0 !important;
+  padding: 4px !important;
+}
+
+.hud-stat,
+.stat-item {
+  min-width: 0;
+  min-height: 0;
+  padding: 13px 8px !important;
+  border-radius: 9px !important;
+}
+
+.hud-stat .stat-number,
+.stat-number {
+  font-size: clamp(1.45rem, 7vw, 2rem) !important;
+  line-height: 1.1;
+}
+
+.hud-stat .stat-label,
+.stat-label {
+  font-size: .72rem !important;
+  line-height: 1.35;
+}
+
+.hud-stat .stat-sub,
+.stat-sub {
+  font-size: .63rem !important;
+  line-height: 1.4;
+}
+
+.hud-terminal-readout {
+  margin-top: 0;
+  padding: 12px;
+  overflow-wrap: anywhere;
+}
+
+.hud-terminal-readout .terminal-line {
+  font-size: .62rem;
+}
+
+/* Remove the old glass capsule around every section heading.
+   The label itself remains a small editorial eyebrow. */
+.section-header {
+  width: 100%;
+  max-width: var(--content-width) !important;
+  margin: 0 auto 34px !important;
+  padding: 0 !important;
+  text-align: left !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.section-label {
+  display: inline-block;
+  margin: 0 0 14px !important;
+  padding: 0 !important;
+  color: #a1a1aa !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  font-size: .65rem !important;
+  letter-spacing: .16em !important;
+  font-weight: 600;
+}
+
+.section-title {
+  margin: 0 0 12px !important;
+}
+
+.section-subtitle {
+  margin: 0 !important;
+  text-align: left !important;
+}
+
+/* Mobile: one coherent column, compact but never cropped. */
+@media (max-width: 850px) {
+  .hero {
+    padding: 112px 22px 58px;
+  }
+
+  .hero-container {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 30px !important;
+  }
+
+  .hero-content {
+    width: 100%;
+    align-items: flex-start;
+  }
+
+  .hero-visual {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .hero-card,
+  .hud-panel {
+    max-width: none !important;
+    margin: 0 !important;
+  }
+}
+
+@media (max-width: 620px) {
+  .hero {
+    padding: 106px 18px 52px !important;
+  }
+
+  .hero-container {
+    gap: 24px !important;
+  }
+
+  .hero-badge {
+    display: inline-flex !important;
+    margin-bottom: 18px;
+    font-size: .62rem;
+    letter-spacing: .08em;
+  }
+
+  .hero h1,
+  .hero-headline {
+    display: block !important;
+    font-size: clamp(2.35rem, 10vw, 3.25rem) !important;
+    line-height: 1.04 !important;
+    margin-bottom: 14px !important;
+  }
+
+  .hero .subtitle {
+    display: block !important;
+    max-width: 100%;
+    margin-bottom: 20px;
+    font-size: .85rem;
+  }
+
+  .hero-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+  }
+
+  .hero-buttons .btn:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .hero-proof-bar {
+    margin-top: 22px;
+    padding-top: 14px;
+  }
+
+  .hero-card,
+  .hud-panel {
+    padding: 18px 14px !important;
+    border-radius: 10px !important;
+  }
+
+  .hud-header {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .hud-id {
+    font-size: .58rem;
+    letter-spacing: .08em;
+  }
+
+  .hud-status-badge {
+    font-size: .55rem;
+  }
+
+  .hero-profile-img {
+    width: 88px !important;
+    height: 88px !important;
+  }
+
+  .profile-name {
+    font-size: 1.02rem;
+  }
+
+  .profile-title {
+    font-size: .68rem;
+  }
+
+  .hud-stats-grid,
+  .hero-stats {
+    gap: 6px !important;
+  }
+
+  .hud-stat,
+  .stat-item {
+    padding: 12px 6px !important;
+  }
+
+  .hud-stat .stat-number,
+  .stat-number {
+    font-size: clamp(1.35rem, 6.8vw, 1.8rem) !important;
+  }
+
+  .hud-stat .stat-label,
+  .stat-label {
+    font-size: .65rem !important;
+  }
+
+  .hud-stat .stat-sub,
+  .stat-sub {
+    font-size: .58rem !important;
+  }
+
+  .section-header {
+    margin-bottom: 28px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #canvas-container {
+    opacity: .75 !important;
+    filter: none !important;
+  }
+}
