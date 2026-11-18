@@ -643,7 +643,7 @@
                     I care about the engineering beneath the interface: data contracts, state machines, SQL safety, evaluation methodology, provenance, access control, latency budgets and how a system behaves when its assumptions fail.
                 </p>
                 <p class="about-text">
-                    I also work on education and community tooling through the <strong>HOPE</strong> initiative. The goal is to make technical learning more practical through interactive documents, coding tools, project workflows and AI-assisted learning experiences.
+                    I also build client-facing engineering and estimation tooling through <strong>Build with Hari</strong>, alongside education and community products through the <strong>HOPE</strong> initiative. The goal is to make technical work and learning more practical through reviewable product workflows, interactive documents, coding tools and AI-assisted experiences.
                 </p>
                 <p class="about-text">
                     I distinguish a passing test suite from field validation, synthetic data from measured data, and a digital hardware design from a fabricated board. That distinction is part of the engineering, not a footnote.
@@ -779,16 +779,16 @@
             <p class="section-subtitle">A curated view of the broader repository portfolio. Project status, dataset scope and validation limits are stated explicitly; synthetic benchmarks and digital designs are not presented as field deployments.</p>
         </div>
         <details class="content-disclosure archive-disclosure">
-            <summary>Open the R&amp;D archive <span>17 projects · searchable</span></summary>
+            <summary>Open the R&amp;D archive <span>18 projects · searchable</span></summary>
             <div class="projects-container">
                 <div class="lab-controls-panel">
                     <div class="lab-search-wrapper">
                         <i class="fas fa-search lab-search-icon" aria-hidden="true"></i>
-                        <input type="search" id="labSearchInput" class="lab-search-input" placeholder="Search 17 projects by name, method or technology..." aria-label="Search the R&amp;D archive">
-                        <span id="labSearchCount" class="lab-count-pill">Showing 17 of 17</span>
+                        <input type="search" id="labSearchInput" class="lab-search-input" placeholder="Search 18 projects by name, method or technology..." aria-label="Search the R&amp;D archive">
+                        <span id="labSearchCount" class="lab-count-pill">Showing 18 of 18</span>
                     </div>
                     <div class="lab-filters" role="tablist" aria-label="Filter projects by category">
-                        <button class="lab-filter-btn active" data-filter="all" role="tab" aria-selected="true">All (17)</button>
+                        <button class="lab-filter-btn active" data-filter="all" role="tab" aria-selected="true">All (18)</button>
                         <button class="lab-filter-btn" data-filter="ai" role="tab" aria-selected="false">AI &amp; Data</button>
                         <button class="lab-filter-btn" data-filter="security" role="tab" aria-selected="false">Security</button>
                         <button class="lab-filter-btn" data-filter="hardware" role="tab" aria-selected="false">Hardware &amp; DSP</button>
@@ -804,19 +804,19 @@
                 <article class="lab-card" data-category="ai data" data-search="alex nasa modiis viirs modis earth observation active fire satellite harmonization provenance geospatial">
                     <div class="lab-card-image">
                         <img src="assets/img/generated/timeline_nasa.webp" alt="ALEX environmental observation platform" loading="lazy">
-                        <span class="lab-status-badge status-proto"><i class="fas fa-circle-info" aria-hidden="true"></i> Research platform · provider status varies</span>
+                        <span class="lab-status-badge status-proto"><i class="fas fa-circle-info" aria-hidden="true"></i> Research platform · versioned integration evidence</span>
                     </div>
                     <div class="lab-card-content">
                         <div class="lab-card-category">ENVIRONMENTAL INTELLIGENCE / REMOTE SENSING</div>
                         <h4 class="lab-card-title">ALEX — NASA-MODIS / VIIRS Intelligence</h4>
-                        <p class="lab-card-desc">An Earth-observation research platform focused on MODIS and VIIRS fire-observation harmonization, spatial and temporal evidence, provenance, incident workflows and role-based access.</p>
+                        <p class="lab-card-desc">A research platform for harmonizing MODIS and VIIRS active-fire observations across different sensor footprints and orbital passes. It combines footprint-aware spatial association, temporal evidence, cryptographic provenance and incident workflows; derived groupings remain hypotheses rather than confirmed fire events.</p>
                         <div class="project-tags"><span class="tag">TypeScript</span><span class="tag">MODIS / VIIRS</span><span class="tag">Geospatial</span><span class="tag">Provenance</span><span class="tag">RBAC</span></div>
                         <div class="lab-card-actions">
                             <a href="https://github.com/Justin-io/NASA-MODIIS" class="lab-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Source Repository</a>
                         </div>
                         <details class="case-study-accordion">
                             <summary>Scope &amp; limitations <span>Read before interpreting results</span></summary>
-                            <div class="case-study-details"><div class="case-field"><span class="field-label label-limit"><i class="fas fa-circle-info" aria-hidden="true"></i> Evidence boundary</span><div class="field-content">The repository documents a mix of operational, credential-dependent, fail-closed and simulation-mode integrations. External provider availability and live credentials are not implied by this portfolio.</div></div></div>
+                            <div class="case-study-details"><div class="case-field"><span class="field-label label-limit"><i class="fas fa-circle-info" aria-hidden="true"></i> Evidence boundary</span><div class="field-content">The v2.8.0 integration registry reports 49 passing tests and 91 API endpoints; the checked v2.7.0 test report records 43 passing tests. These are versioned repository records, not independently executed verification of the current deployment. Several integrations require external credentials, and provider availability must be checked in the target environment.</div></div></div>
                         </details>
                     </div>
                 </article>
@@ -1141,6 +1141,34 @@
                         </details>
                     </div>
                 </article>
+                <article class="lab-card" data-category="ai systems" data-search="build with hari engineering studio client intake react 19 express cloud run firestore gemini estimation 35 tests">
+                    <div class="lab-card-image">
+                        <img src="assets/img/generated/the_lab.webp" alt="Build with Hari product engineering studio" loading="lazy">
+                        <span class="lab-status-badge status-proto"><i class="fas fa-circle-info" aria-hidden="true"></i> Product engineering platform · 35 tests reported passing</span>
+                    </div>
+                    <div class="lab-card-content">
+                        <div class="lab-card-category">PRODUCT ENGINEERING / CLIENT SYSTEMS</div>
+                        <h4 class="lab-card-title">Build with Hari — Engineering Studio</h4>
+                        <p class="lab-card-desc">A client-intake and estimation platform for independent engineering engagements. It combines a React 19 frontend, Express API, Firestore-backed enquiry records and a Gemini-assisted document and syllabus estimator with a deterministic local rule fallback.</p>
+                        <div class="project-tags"><span class="tag">React 19</span><span class="tag">TypeScript</span><span class="tag">Express</span><span class="tag">Cloud Run</span><span class="tag">Firestore</span><span class="tag">Gemini</span><span class="tag">Zod</span></div>
+                        <div class="lab-card-actions">
+                            <a href="https://github.com/Justin-io/build-with-hari" class="lab-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Source Repository</a>
+                        </div>
+                        <details class="case-study-accordion">
+                            <summary>Scope &amp; limitations <span>Read before interpreting results</span></summary>
+                            <div class="case-study-details">
+                                <div class="case-field">
+                                    <span class="field-label label-eval"><i class="fas fa-vial-circle-check" aria-hidden="true"></i> Repository evidence</span>
+                                    <div class="field-content">The README reports 35 automated tests covering pricing rules, add-ons, quantity bounds, bundle deduplication, rate limiting, validation schemas and HTTP endpoints.</div>
+                                </div>
+                                <div class="case-field">
+                                    <span class="field-label label-limit"><i class="fas fa-circle-info" aria-hidden="true"></i> Evidence boundary</span>
+                                    <div class="field-content">Cloud Run, Firestore, Vercel and Gemini use external configuration and credentials. The documented architecture is not a guarantee that every live resource is currently deployed or available; generated estimates remain subject to human review.</div>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                </article>
                 </div>
                 <div class="lab-archive-panel">
                     <p class="archive-intro">Further reading and tools:</p>
@@ -1229,7 +1257,7 @@
                         </div>
                         <div class="contact-text">
                             <h4>Location</h4>
-                            <p>Kozhikode, Kerala, India (Remote Worldwide)</p>
+                            <p>Kerala, India (Remote Worldwide)</p>
                         </div>
                     </div>
                     <div class="footer-links">
