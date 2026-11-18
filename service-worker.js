@@ -1,9 +1,10 @@
-const CACHE_NAME = 'portfolio-v22';
+const CACHE_NAME = 'portfolio-v23';
 const urlsToCache = [
     './',
     './index.html',
     './assets/css/style-custom.css',
     './assets/css/portfolio-refresh.css',
+    './assets/css/liquid-glass.css',
     './assets/js/portfolio-motion.js',
     './assets/js/main.js',
     './assets/img/20240421_174638.webp',
