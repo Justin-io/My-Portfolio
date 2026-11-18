@@ -5,7 +5,7 @@ Source for [justinalexia.vercel.app](https://justinalexia.vercel.app/), a static
 ## What the site contains
 
 - **Selected engineering work** — three case studies with architecture, repository test evidence and explicit scope limits.
-- **R&D archive** — a searchable selection of 18 repository-backed project entries, including Build with Hari, environmental intelligence, defensive security, P2P systems, DSP and digital hardware research.
+- **R&D archive** — a searchable selection of 22 repository-backed project entries, including AI/data systems, security research, edge vision, personal finance, e-commerce, environmental intelligence, DSP and digital hardware research.
 - **Technical capabilities** — tools and methods observed in the selected project code and documentation.
 - **Engineering evidence** — a distinction between automated tests, synthetic benchmarks, simulations, prototypes and physical validation.
 - **Contact and resume links** — direct project inquiry and CV access.
