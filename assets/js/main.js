@@ -228,7 +228,7 @@ if (contactForm) {
             if (response.ok) {
                 if (statusBox) {
                     statusBox.className = 'status-success';
-                    statusBox.innerHTML = '<i class="fas fa-circle-check" aria-hidden="true"></i> <strong>Inquiry Received:</strong> Thank you for reaching out. I will review your project requirements and respond within 24 hours.';
+                    statusBox.innerHTML = '<i class="fas fa-circle-check" aria-hidden="true"></i> <strong>Inquiry Received:</strong> Thank you for reaching out. I will review your project requirements and follow up using the contact details you provided.';
                     statusBox.style.display = 'block';
                 }
                 form.reset();
