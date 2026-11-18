@@ -501,3 +501,91 @@ summary:focus-visible {
     background: rgba(7,11,18,.92) !important;
   }
 }
+
+
+/*
+ * Full-page viewing pane.
+ * A single, continuous glass surface sits between the Three.js black-hole
+ * scene and the page content. Its low-opacity tint and restrained blur keep
+ * the luminous accretion ring visible instead of burying it under dark panels.
+ */
+body {
+  isolation: isolate;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: clamp(88px, 11vh, 118px) clamp(9px, 1.8vw, 28px) 16px;
+  z-index: 0;
+  pointer-events: none;
+  border: 1px solid rgba(255,255,255,.20);
+  border-radius: clamp(24px, 3vw, 38px);
+  background:
+    radial-gradient(ellipse at 16% 0%, rgba(255,255,255,.105), transparent 38%),
+    radial-gradient(ellipse at 100% 100%, rgba(255,255,255,.035), transparent 42%),
+    linear-gradient(145deg, rgba(255,255,255,.055), rgba(255,255,255,.012) 42%, rgba(5,11,20,.16));
+  -webkit-backdrop-filter: blur(5px) saturate(155%);
+  backdrop-filter: blur(5px) saturate(155%);
+  box-shadow:
+    0 28px 90px rgba(0,0,0,.24),
+    inset 0 1px 0 rgba(255,255,255,.22),
+    inset 0 -1px 0 rgba(255,255,255,.07),
+    0 0 0 1px rgba(255,255,255,.025);
+}
+
+/* Keep the site UI above the glass surface while the Three.js scene stays below it. */
+body > header {
+  position: relative;
+  z-index: 1000;
+}
+
+body > main,
+body > footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* Slightly lighter nested cards: the page-wide black-hole scene should remain visible. */
+.flagship-card,
+.lab-card,
+.service-card,
+.process-card,
+.skills-cat-card,
+.achievement-card,
+.testimonial-card,
+.contact-card,
+.contact-form,
+.timeline-content,
+.lab-controls-panel,
+.content-disclosure,
+.case-study-accordion {
+  background:
+    radial-gradient(ellipse at 12% 0%, rgba(255,255,255,.075), transparent 52%),
+    linear-gradient(145deg, rgba(13,19,29,.69), rgba(7,11,18,.55)) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(145%);
+  backdrop-filter: blur(18px) saturate(145%);
+}
+
+@media (max-width: 600px) {
+  body::before {
+    inset: 82px 7px 8px;
+    border-radius: 22px;
+    -webkit-backdrop-filter: blur(4px) saturate(145%);
+    backdrop-filter: blur(4px) saturate(145%);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  body::before {
+    background: rgba(7,11,18,.88);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  body::before {
+    background: rgba(7,11,18,.28);
+  }
+}
