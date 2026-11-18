@@ -124,7 +124,7 @@ if (labSection) {
 
         labCards.forEach(card => {
             const rawCats = (card.getAttribute('data-category') || '').toLowerCase();
-            const searchIndex = (card.getAttribute('data-search') || '' + ' ' + card.innerText).toLowerCase();
+            const searchIndex = ((card.getAttribute('data-search') || '') + ' ' + card.innerText).toLowerCase();
 
             const matchesCategory = currentFilter === 'all' || rawCats.includes(currentFilter);
             const matchesSearch = !query || searchIndex.includes(query);
@@ -184,6 +184,7 @@ if (labSection) {
             });
             applyLabFilters();
         });
+    applyLabFilters();
     }
 }
 
