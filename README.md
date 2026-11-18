@@ -1,11 +1,11 @@
 # Hari Nandan K — Engineering Portfolio
 
-Source for [justinalexia.vercel.app](https://justinalexia.vercel.app/), a static portfolio covering selected work in applied AI, data systems, retrieval evaluation, defensive security, environmental intelligence, digital signal processing and embedded engineering.
+Source for [justinalexia.vercel.app](https://justinalexia.vercel.app/), a static portfolio covering selected work in applied AI, data systems, retrieval evaluation, product engineering, defensive security, environmental intelligence, digital signal processing and embedded engineering.
 
 ## What the site contains
 
 - **Selected engineering work** — three case studies with architecture, repository test evidence and explicit scope limits.
-- **R&D archive** — a searchable selection of projects from the public GitHub repositories.
+- **R&D archive** — a searchable selection of 18 repository-backed project entries, including Build with Hari, environmental intelligence, defensive security, P2P systems, DSP and digital hardware research.
 - **Technical capabilities** — tools and methods observed in the selected project code and documentation.
 - **Engineering evidence** — a distinction between automated tests, synthetic benchmarks, simulations, prototypes and physical validation.
 - **Contact and resume links** — direct project inquiry and CV access.
