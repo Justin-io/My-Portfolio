@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import {
   ArrowRight,
   ArrowUpRight,
+  GraduationCap,
   Cpu,
   Compass,
   ChevronLeft,
@@ -17,6 +18,7 @@ import { OWNER_CONTACT_INFO } from '../data/experienceAndNotes';
 
 interface HeroProps {
   onNavigate: (path: string, sectionId?: string) => void;
+  onOpenStudentModal?: () => void;
 }
 
 interface PhysicsDustParticle {
@@ -195,7 +197,7 @@ export const HERO_SLIDES: HeroSlide[] = [
   }
 ];
 
-export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
+export const Hero: React.FC<HeroProps> = ({ onNavigate, onOpenStudentModal }) => {
   const [pointerPos, setPointerPos] = useState<{ x: number; y: number }>({ x: 52, y: 48 });
   const [typedLength, setTypedLength] = useState(0);
 
@@ -533,6 +535,27 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
               </span>{' '}
               — turning complex technical ideas into practical engineering projects.
             </p>
+
+            {/* Dedicated Student Project Development Action Pill */}
+            {onOpenStudentModal && (
+              <div className="mt-6">
+                <button
+                  type="button"
+                  onClick={onOpenStudentModal}
+                  className="group inline-flex flex-wrap items-center gap-2.5 px-4 py-2.5 rounded-xl border border-indigo-500/30 bg-indigo-950/30 hover:bg-indigo-900/40 hover:border-indigo-400/50 text-indigo-200 text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer shadow-sm hover:shadow-indigo-500/10 hover:shadow-md text-left"
+                  aria-label="Open Student Project Development Portal"
+                >
+                  <span className="flex items-center justify-center w-6 h-6 rounded-lg bg-indigo-500/20 text-indigo-300 group-hover:scale-105 transition-transform shrink-0">
+                    <GraduationCap className="w-3.5 h-3.5 text-indigo-400" />
+                  </span>
+                  <span>Are you a student looking for project development?</span>
+                  <span className="font-mono text-[11px] px-2 py-0.5 rounded-md bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 group-hover:bg-indigo-500/40 transition-colors inline-flex items-center gap-1 shrink-0">
+                    <span>Build With Hari</span>
+                    <ArrowUpRight className="w-3 h-3" />
+                  </span>
+                </button>
+              </div>
+            )}
           </div>
 
           {/* CTA Action Row */}

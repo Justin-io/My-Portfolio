@@ -13,12 +13,33 @@ import { ProjectCaseStudyView } from './components/ProjectCaseStudyView';
 import { DomainsAndCapabilities } from './components/DomainsAndCapabilities';
 import { ExperienceAndNotes } from './components/ExperienceAndNotes';
 import { ContactAndFooter } from './components/ContactAndFooter';
+import { StudentProjectModal } from './components/StudentProjectModal';
 
 export default function App() {
   const [route, setRoute] = useState<RouteDescriptor>(() =>
     parseRoute(window.location.pathname)
   );
   const [activeSection, setActiveSection] = useState<string>('hero');
+  const [studentModalOpen, setStudentModalOpen] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return false;
+    return new URLSearchParams(window.location.search).get('student') === '1';
+  });
+
+  // Auto-open student bottom sheet after gentle delay on initial visit
+  useEffect(() => {
+    try {
+      const alreadyPrompted = sessionStorage.getItem('hari_student_sheet_shown');
+      if (!alreadyPrompted && route.page === 'home') {
+        const timer = setTimeout(() => {
+          setStudentModalOpen(true);
+          sessionStorage.setItem('hari_student_sheet_shown', 'true');
+        }, 2800);
+        return () => clearTimeout(timer);
+      }
+    } catch {
+      // Ignore sessionStorage errors in restricted contexts
+    }
+  }, [route.page]);
 
   // Update document title dynamically per route for SEO & browser clarity
   useEffect(() => {
@@ -128,7 +149,10 @@ export default function App() {
     // Default: Complete editorial homepage ('/')
     return (
       <>
-        <Hero onNavigate={handleNavigate} />
+        <Hero
+          onNavigate={handleNavigate}
+          onOpenStudentModal={() => setStudentModalOpen(true)}
+        />
         <SelectedWork onNavigate={handleNavigate} />
         <DomainsAndCapabilities onNavigate={handleNavigate} />
         <ExperienceAndNotes onNavigate={handleNavigate} />
@@ -145,6 +169,10 @@ export default function App() {
         onNavigate={handleNavigate}
       />
       <main className="flex-1">{renderMainContent()}</main>
+      <StudentProjectModal
+        isOpen={studentModalOpen}
+        onClose={() => setStudentModalOpen(false)}
+      />
     </div>
   );
 }

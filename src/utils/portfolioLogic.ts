@@ -207,7 +207,10 @@ export const GETFORM_ENDPOINT = 'https://getform.io/f/161d40d2-275f-4027-b38d-92
 export interface ContactFormInput {
   name: string;
   email: string;
-  subject: string;
+  subject?: string;
+  project_type?: string;
+  timeline?: string;
+  budget?: string;
   message: string;
 }
 
@@ -222,10 +225,10 @@ export function validateContactInquiry(
   recipientEmail = 'harinandhan972@gmail.com'
 ): ContactValidationResult {
   const errors: Partial<Record<keyof ContactFormInput, string>> = {};
-  const name = input.name.trim();
-  const email = input.email.trim();
-  const subject = input.subject.trim();
-  const message = input.message.trim();
+  const name = (input.name || '').trim();
+  const email = (input.email || '').trim();
+  const subject = (input.subject || input.project_type || '').trim();
+  const message = (input.message || '').trim();
 
   if (!name) {
     errors.name = 'Please enter your name.';
