@@ -299,6 +299,14 @@ export const NavbarAsciiSnake: React.FC = () => {
 
     const renderFrame = (now: number) => {
       frameTick += 1;
+
+      // When any modal or bottom sheet is active, suppress nanobots completely
+      if (typeof document !== 'undefined' && document.body.getAttribute('data-modal-open') === 'true') {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        rafId = requestAnimationFrame(renderFrame);
+        return;
+      }
+
       const dt = Math.min(0.045, Math.max(0.004, (now - lastFrameTime) / 1000));
       lastFrameTime = now;
       const timeSec = now / 1000;

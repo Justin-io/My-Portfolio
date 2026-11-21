@@ -149,6 +149,13 @@
   animation: cursor-blink 0.95s infinite;
 }
 
+/* Nanobot suppression when modal or bottom sheet is active */
+body[data-modal-open="true"] [data-testid="nanobot-swarm-canvas"] {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
