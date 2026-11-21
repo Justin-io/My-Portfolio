@@ -1,63 +1,23 @@
-const CACHE_NAME = 'portfolio-v24';
-const urlsToCache = [
-    './',
-    './index.html',
-    './assets/css/style-custom.css',
-    './assets/css/portfolio-refresh.css',
-    './assets/css/liquid-glass.css',
-    './assets/js/portfolio-motion.js',
-    './assets/js/main.js',
-    './assets/img/20240421_174638.webp',
-    './assets/img/me.webp'
-];
-
-self.addEventListener('install', event => {
-    self.skipWaiting();
-    event.waitUntil(
-        caches.open(CACHE_NAME).then(async cache => {
-            for (const url of urlsToCache) {
-                try {
-                    await cache.add(url);
-                } catch (err) {
-                    console.warn('Service worker cache failed for:', url, err);
-                }
-            }
-        })
-    );
+// Self-unregister and purge legacy cache for modern SPA migration
+self.addEventListener('install', () => {
+  self.skipWaiting();
 });
 
 self.addEventListener('activate', event => {
-    event.waitUntil(
-        caches.keys().then(cacheNames => {
-            return Promise.all(
-                cacheNames.map(cacheName => {
-                    if (cacheName !== CACHE_NAME) {
-                        return caches.delete(cacheName);
-                    }
-                })
-            );
-        }).then(() => self.clients.claim())
-    );
+  event.waitUntil(
+    caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k))))
+      .then(() => self.registration.unregister())
+      .then(() => self.clients.matchAll())
+      .then(clients => {
+        clients.forEach(client => {
+          if (client.url && 'navigate' in client) {
+            client.navigate(client.url);
+          }
+        });
+      })
+  );
 });
 
 self.addEventListener('fetch', event => {
-    // Only handle GET requests and avoid caching external APIs (like Getform, GitHub API)
-    if (event.request.method !== 'GET') return;
-    const url = new URL(event.request.url);
-    if (url.origin !== self.location.origin) return;
-
-    event.respondWith(
-        fetch(event.request)
-            .then(response => {
-                if (!response || response.status !== 200 || response.type !== 'basic') {
-                    return response;
-                }
-                const responseToCache = response.clone();
-                caches.open(CACHE_NAME).then(cache => {
-                    cache.put(event.request, responseToCache);
-                });
-                return response;
-            })
-            .catch(() => caches.match(event.request))
-    );
+  event.respondWith(fetch(event.request));
 });
