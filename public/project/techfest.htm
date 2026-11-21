@@ -1,0 +1,2303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZENORIX 2025 - Tech Festival</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #00d4ff;
+            --secondary-color: #0066cc;
+            --accent-color: #0099ff;
+            --dark-color: #0a0a0a;
+            --darker-color: #000000;
+            --light-color: rgba(255, 255, 255, 0.1);
+            --text-color: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            overflow-x: hidden !important;
+            width: 100%;
+            max-width: 100vw;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden !important;
+            background-color: var(--darker-color);
+            color: var(--text-color);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 212, 255, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(0, 153, 255, 0.07) 0%, transparent 20%),
+                radial-gradient(circle at 50% 50%, rgba(0, 102, 204, 0.05) 0%, transparent 50%);
+        }
+
+        /* Glassmorphism Effect */
+        .glass {
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 212, 255, 0.1);
+        }
+
+        .glass-light {
+            background: rgba(10, 10, 10, 0.5);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(10, 10, 10, 0.8) !important;
+            backdrop-filter: blur(15px) !important;
+            -webkit-backdrop-filter: blur(15px) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--primary-color) !important;
+        }
+
+        .navbar-nav .nav-link {
+            color: white !important;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .navbar-nav .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 20, 40, 0.8) 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none"/><path d="M0,0 L100,100 M100,0 L0,100" stroke="rgba(0, 212, 255, 0.05)" stroke-width="0.5"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            z-index: 2;
+            position: relative;
+            padding: 20px;
+            width: 100%;
+            max-width: 100vw;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: bold;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+            word-wrap: break-word;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+            }
+            to {
+                text-shadow: 0 0 20px rgba(0, 212, 255, 0.8), 0 0 30px rgba(0, 153, 255, 0.6);
+            }
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            margin-bottom: 2rem;
+            color: var(--text-secondary);
+            word-wrap: break-word;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .btn-hero {
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            min-width: 200px;
+            max-width: 100%;
+        }
+
+        .btn-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            z-index: -1;
+            transition: all 0.3s ease;
+        }
+
+        .btn-hero-primary {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: white !important;
+        }
+
+        .btn-hero-primary:hover {
+            color: var(--darker-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .btn-hero-warning {
+            background: transparent;
+            border: 2px solid var(--accent-color);
+            color: white !important;
+        }
+
+        .btn-hero-warning:hover {
+            color: var(--darker-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 153, 255, 0.3);
+        }
+
+        /* Particles Background */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 60px 0;
+            position: relative;
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .section {
+                padding: 80px 0;
+            }
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .section-title {
+                margin-bottom: 50px;
+            }
+        }
+
+        .section-title h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: bold;
+            color: var(--text-color);
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+            word-wrap: break-word;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 2px;
+        }
+
+        .section-title p {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            word-wrap: break-word;
+        }
+
+        /* Event Cards */
+        .event-card {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 212, 255, 0.1);
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .event-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 212, 255, 0.2);
+            border-color: rgba(0, 212, 255, 0.3);
+        }
+
+        .event-card-img {
+            height: 180px;
+            background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .event-card-img {
+                height: 200px;
+            }
+        }
+
+        .event-card-img::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none"/><path d="M0,0 L100,100 M100,0 L0,100" stroke="rgba(255, 255, 255, 0.1)" stroke-width="0.5"/></svg>');
+            opacity: 0.3;
+        }
+
+        .event-card-body {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .event-card-body {
+                padding: 25px;
+            }
+        }
+
+        .event-category {
+            display: inline-block;
+            padding: 5px 15px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+            align-self: flex-start;
+        }
+
+        .event-card h4 {
+            color: var(--text-color);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            word-wrap: break-word;
+        }
+
+        .event-card p {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            flex-grow: 1;
+            font-size: 0.95rem;
+            word-wrap: break-word;
+        }
+
+        .event-card .btn {
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+            border: none;
+            color: white;
+            transition: all 0.3s ease;
+            align-self: flex-start;
+        }
+
+        .event-card .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+        }
+
+        /* Schedule Timeline */
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--primary-color), var(--accent-color));
+            transform: translateX(-50%);
+        }
+
+        @media (min-width: 768px) {
+            .timeline::before {
+                left: 50%;
+            }
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding-left: 60px;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .timeline-item {
+                padding-left: 0;
+            }
+            .timeline-item:nth-child(odd) {
+                text-align: right;
+                padding-right: 60%;
+            }
+            .timeline-item:nth-child(even) {
+                text-align: left;
+                padding-left: 60%;
+            }
+        }
+
+        .timeline-content {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 212, 255, 0.1);
+            position: relative;
+            width: 100%;
+            word-wrap: break-word;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            border: 4px solid rgba(10, 10, 10, 0.8);
+            box-shadow: 0 0 0 4px rgba(0, 212, 255, 0.2);
+            transform: translateX(-50%);
+        }
+
+        @media (min-width: 768px) {
+            .timeline-item::before {
+                left: 50%;
+            }
+            .timeline-item:nth-child(odd)::before {
+                right: 60%;
+                left: auto;
+                transform: translateX(50%);
+            }
+            .timeline-item:nth-child(even)::before {
+                left: 60%;
+                transform: translateX(-50%);
+            }
+        }
+
+        .timeline-content h5 {
+            color: var(--text-color);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            word-wrap: break-word;
+        }
+
+        .timeline-content p {
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            word-wrap: break-word;
+        }
+
+        /* Registration Section */
+        .registration {
+            background: linear-gradient(135deg, rgba(0, 20, 40, 0.8) 0%, rgba(0, 0, 0, 0.9) 100%);
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            max-width: 100vw;
+        }
+
+        .registration::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none"/><path d="M0,0 L100,100 M100,0 L0,100" stroke="rgba(0, 212, 255, 0.05)" stroke-width="0.5"/></svg>');
+            opacity: 0.3;
+        }
+
+        .registration-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .btn-register {
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            color: white !important;
+            border: none;
+            padding: 18px 35px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+            margin: 15px 8px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            min-width: 250px;
+            max-width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .btn-register {
+                padding: 20px 40px;
+                font-size: 1.3rem;
+                margin: 20px 10px;
+                min-width: 300px;
+            }
+        }
+
+        .btn-register::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: -1;
+        }
+
+        .btn-register:hover::before {
+            transform: translateX(0);
+        }
+
+        .btn-register:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .registration-card {
+            background: rgba(10, 10, 10, 0.4);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            height: 100%;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .registration-card {
+                margin-bottom: 0;
+            }
+        }
+
+        .registration-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 212, 255, 0.3);
+            box-shadow: 0 10px 25px rgba(0, 212, 255, 0.15);
+        }
+
+        /* Sponsors Section */
+        .sponsor-logo {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin: 10px 5px;
+            box-shadow: 0 8px 32px 0 rgba(0, 212, 255, 0.1);
+            transition: all 0.3s ease;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: var(--text-color);
+            text-align: center;
+            width: 100%;
+            word-wrap: break-word;
+        }
+
+        @media (min-width: 768px) {
+            .sponsor-logo {
+                height: 150px;
+                font-size: 1.2rem;
+                margin: 10px;
+            }
+        }
+
+        .sponsor-logo:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 212, 255, 0.3);
+            box-shadow: 0 10px 25px rgba(0, 212, 255, 0.2);
+        }
+
+        /* Map */
+        #map {
+            height: 300px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            #map {
+                height: 400px;
+            }
+        }
+
+        /* FAQ */
+        .accordion-button {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: var(--text-color);
+            font-weight: bold;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px !important;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            word-wrap: break-word;
+        }
+
+        .accordion-button:not(.collapsed) {
+            background: rgba(0, 102, 204, 0.3);
+            color: var(--primary-color);
+            border-color: rgba(0, 212, 255, 0.3);
+        }
+
+        .accordion-body {
+            background: rgba(10, 10, 10, 0.4);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            color: var(--text-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: none;
+            font-size: 0.95rem;
+            word-wrap: break-word;
+        }
+
+        .accordion-item {
+            background: transparent;
+            border: none;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 30px 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 212, 255, 0.1);
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .contact-form {
+                padding: 40px;
+            }
+        }
+
+        .form-control, .form-select {
+            background: rgba(10, 10, 10, 0.4);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            border-radius: 8px;
+            width: 100%;
+        }
+
+        .form-control:focus, .form-select:focus {
+            background: rgba(10, 10, 10, 0.6);
+            border-color: var(--primary-color);
+            color: var(--text-color);
+            box-shadow: 0 0 0 0.25rem rgba(0, 212, 255, 0.25);
+        }
+
+        .form-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            padding: 40px 0;
+            text-align: center;
+            width: 100%;
+        }
+
+        .footer a {
+            color: white !important;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 3D Canvas */
+        #three-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        /* Loading Animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--darker-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loader-content {
+            text-align: center;
+        }
+
+        .spinner {
+            border: 4px solid rgba(0, 212, 255, 0.1);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+            border: none;
+            color: white;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            padding: 10px 20px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+        }
+
+        .btn-outline-primary {
+            border: 2px solid var(--primary-color);
+            color: white !important;
+            background: transparent;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            padding: 10px 20px;
+        }
+
+        .btn-outline-primary:hover {
+            background: var(--primary-color);
+            color: var(--darker-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+        }
+
+        /* Badges */
+        .badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: normal;
+            font-size: 0.8rem;
+        }
+
+        .badge.bg-primary {
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color)) !important;
+        }
+
+        .badge.bg-warning {
+            background: linear-gradient(90deg, #ff9900, #ffcc00) !important;
+            color: var(--darker-color);
+        }
+
+        .badge.bg-success {
+            background: linear-gradient(90deg, #00aa44, #00cc66) !important;
+        }
+
+        .badge.bg-danger {
+            background: linear-gradient(90deg, #cc0000, #ff3333) !important;
+        }
+
+        /* Tabs */
+        .nav-tabs {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .nav-tabs .nav-link {
+            color: var(--text-secondary);
+            border: none;
+            border-bottom: 2px solid transparent;
+            border-radius: 0;
+            padding: 10px 15px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            word-wrap: break-word;
+        }
+
+        @media (min-width: 768px) {
+            .nav-tabs .nav-link {
+                padding: 10px 20px;
+            }
+        }
+
+        .nav-tabs .nav-link:hover {
+            color: var(--primary-color);
+            border-color: transparent;
+        }
+
+        .nav-tabs .nav-link.active {
+            color: var(--primary-color);
+            background: transparent;
+            border-color: var(--primary-color);
+        }
+
+        /* Alert */
+        .alert {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            color: var(--text-color);
+            width: 100%;
+        }
+
+        .alert-warning {
+            background: rgba(255, 204, 0, 0.1);
+            border-color: rgba(255, 204, 0, 0.3);
+            color: #ffcc00;
+        }
+
+        /* Raffle Terms */
+        .raffle-terms {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 25px 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 212, 255, 0.1);
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .raffle-terms {
+                padding: 30px;
+            }
+        }
+
+        .terms-content {
+            background: rgba(10, 10, 10, 0.4);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+        }
+
+        .terms-content ol {
+            color: var(--text-secondary);
+            padding-left: 20px;
+            font-size: 0.95rem;
+            word-wrap: break-word;
+        }
+
+        .terms-content li {
+            margin-bottom: 10px;
+            word-wrap: break-word;
+        }
+
+        /* Contact Info */
+        .contact-info {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 25px 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 212, 255, 0.1);
+            height: 100%;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .contact-info {
+                padding: 30px;
+            }
+        }
+
+        .contact-item {
+            color: var(--text-secondary);
+        }
+
+        .contact-item h5 {
+            color: var(--text-color);
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+            word-wrap: break-word;
+        }
+
+        .contact-item p {
+            font-size: 0.95rem;
+            margin-bottom: 0;
+            word-wrap: break-word;
+        }
+
+        /* Social Links */
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(10, 10, 10, 0.4);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white !important;
+            transition: all 0.3s ease;
+            margin: 0 5px;
+        }
+
+        .social-links a:hover {
+            background: var(--primary-color);
+            color: var(--darker-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+        }
+
+        /* Event Filter Buttons */
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .btn-group .btn {
+            background: rgba(10, 10, 10, 0.4);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            word-wrap: break-word;
+        }
+
+        @media (min-width: 768px) {
+            .btn-group .btn {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+        }
+
+        .btn-group .btn:hover {
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--primary-color);
+            border-color: rgba(0, 212, 255, 0.3);
+        }
+
+        .btn-group .btn.active {
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            border-color: transparent;
+        }
+
+        /* Utility Classes */
+        .text-break {
+            word-break: break-word;
+        }
+
+        .overflow-hidden {
+            overflow: hidden;
+        }
+
+        .width-100 {
+            width: 100%;
+            max-width: 100vw;
+        }
+
+        /* Responsive Spacing */
+        .py-responsive {
+            padding: 40px 0;
+        }
+
+        @media (min-width: 768px) {
+            .py-responsive {
+                padding: 60px 0;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .py-responsive {
+                padding: 80px 0;
+            }
+        }
+
+        /* Responsive Text */
+        .responsive-text {
+            font-size: 0.9rem;
+            word-wrap: break-word;
+        }
+
+        @media (min-width: 768px) {
+            .responsive-text {
+                font-size: 1rem;
+            }
+        }
+
+        /* Responsive Icons */
+        .responsive-icon {
+            font-size: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .responsive-icon {
+                font-size: 2rem;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .responsive-icon {
+                font-size: 3rem;
+            }
+        }
+
+        /* Mobile Specific Fixes */
+        @media (max-width: 767px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .section {
+                padding: 40px 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .btn-hero {
+                font-size: 1rem;
+                padding: 12px 24px;
+                min-width: 180px;
+            }
+            
+            .event-card-img {
+                height: 150px;
+                font-size: 2rem;
+            }
+            
+            .event-card h4 {
+                font-size: 1.1rem;
+            }
+            
+            .event-card p {
+                font-size: 0.9rem;
+            }
+            
+            .sponsor-logo {
+                height: 100px;
+                font-size: 0.9rem;
+            }
+            
+            .timeline-content {
+                font-size: 0.9rem;
+            }
+            
+            .btn-register {
+                font-size: 1rem;
+                padding: 15px 25px;
+                min-width: 200px;
+            }
+            
+            .contact-info {
+                padding: 20px 15px;
+            }
+            
+            .raffle-terms {
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="spinner"></div>
+            <h4>Loading ZENORIX 2025...</h4>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#home">
+                <i class="fas fa-rocket me-2"></i>
+                <span>ZENORIX 2025</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#events">Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#schedule">Schedule</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#registration">Registration</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#sponsors">Sponsors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#venue">Venue</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#faq">FAQ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#raffle">Raffle</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div id="particles-js"></div>
+        <div class="hero-content">
+            <h1 class="text-center" data-aos="fade-up">ZENORIX 2025</h1>
+            <p class="text-center" data-aos="fade-up" data-aos-delay="200">A TWO-day EVENT of COMPETITIONS, FUN activities, and workshops</p>
+            <div class="hero-buttons" data-aos="fade-up" data-aos-delay="400">
+                <a href="#events" class="btn btn-hero-primary btn-hero">
+                    <i class="fas fa-calendar-alt me-2"></i> View Events
+                </a>
+                <a href="#registration" class="btn btn-hero-warning btn-hero">
+                    <i class="fas fa-user-plus me-2"></i> Register Now
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>About ZENORIX 2025</h2>
+                <p class="lead">Experience the future of technology at IES College of Engineering</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 mb-4" data-aos="fade-right">
+                    <div class="glass p-4 h-100">
+                        <h3 class="mb-4">Welcome to ZENORIX 2025</h3>
+                        <p class="responsive-text">ZENORIX 2025 is a premier technical festival organized by the Department of Computer Science and Engineering (Data Science) at IES College of Engineering, Chittilappilly. This two-day extravaganza brings together the brightest minds in technology for competitions, workshops, and interactive experiences.</p>
+                        <p class="responsive-text">Join us on September 26th & 27th, 2025, for an unforgettable journey into the world of innovation, creativity, and technological excellence.</p>
+                        <div class="row mt-4">
+                            <div class="col-6">
+                                <div class="d-flex align-items-start mb-3">
+                                    <i class="fas fa-calendar-check responsive-icon text-primary me-3"></i>
+                                    <div>
+                                        <h5>Date</h5>
+                                        <p class="mb-0">September 26-27, 2025</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="d-flex align-items-start mb-3">
+                                    <i class="fas fa-map-marker-alt responsive-icon text-primary me-3"></i>
+                                    <div>
+                                        <h5>Venue</h5>
+                                        <p class="mb-0">IES College of Engineering</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4" data-aos="fade-left">
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <div class="glass p-4 text-center h-100">
+                                <i class="fas fa-trophy responsive-icon text-warning mb-3"></i>
+                                <h5>Competitions</h5>
+                                <p class="responsive-text mb-0">Test your skills in various technical challenges</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="glass p-4 text-center h-100">
+                                <i class="fas fa-laptop-code responsive-icon text-info mb-3"></i>
+                                <h5>Workshops</h5>
+                                <p class="responsive-text mb-0">Learn from industry experts and innovators</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="glass p-4 text-center h-100">
+                                <i class="fas fa-gamepad responsive-icon text-success mb-3"></i>
+                                <h5>Fun Activities</h5>
+                                <p class="responsive-text mb-0">Enjoy interactive games and experiences</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="glass p-4 text-center h-100">
+                                <i class="fas fa-network-wired responsive-icon text-danger mb-3"></i>
+                                <h5>Networking</h5>
+                                <p class="responsive-text mb-0">Connect with like-minded individuals</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events" class="section">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Events & Activities</h2>
+                <p class="lead">Discover exciting competitions, workshops, and fun activities</p>
+            </div>
+            
+            <!-- Event Categories -->
+            <div class="row mb-4" data-aos="fade-up">
+                <div class="col-12">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn active" onclick="filterEvents('all')">All Events</button>
+                        <button type="button" class="btn" onclick="filterEvents('competitions')">Competitions</button>
+                        <button type="button" class="btn" onclick="filterEvents('workshops')">Workshops</button>
+                        <button type="button" class="btn" onclick="filterEvents('fun')">Fun Activities</button>
+                        <button type="button" class="btn" onclick="filterEvents('exhibitions')">Exhibitions</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Events Grid -->
+            <div class="row" id="events-grid">
+                <!-- Competitions -->
+                <div class="col-lg-4 col-md-6 event-item" data-category="competitions" data-aos="fade-up">
+                    <div class="event-card">
+                        <div class="event-card-img">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="event-card-body">
+                            <span class="event-category">Competition</span>
+                            <h4>Techwhiz</h4>
+                            <p>High energy technical quiz competition designed to test participants' knowledge in core areas of Computer Science and Data Science.</p>
+                            <p><strong>Date:</strong> September 26, 2PM - 4PM</p>
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSerRrL5udMKnyUlwDSAIysgVj4Ng0Wi5weI_JxEHkc8vEc7Kw/viewform?usp=dialog" class="btn btn-primary btn-sm">Register Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 event-item" data-category="competitions" data-aos="fade-up" data-aos-delay="100">
+                    <div class="event-card">
+                        <div class="event-card-img">
+                            <i class="fas fa-puzzle-piece"></i>
+                        </div>
+                        <div class="event-card-body">
+                            <span class="event-category">Competition</span>
+                            <h4>DE_CODE</h4>
+                            <p>Participants will solve complex puzzles and decode encrypted messages, testing their skills in algorithms, cryptography, and problem-solving.</p>
+                            <p><strong>Date:</strong> September 27, 1PM - 4PM</p>
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfodu-xTQ-YFv1GfSATBYbp6WDB2EPQsaZYx-7gwi3yNvaFAg/viewform?usp=dialog" class="btn btn-primary btn-sm">Register Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 event-item" data-category="competitions" data-aos="fade-up" data-aos-delay="200">
+                    <div class="event-card">
+                        <div class="event-card-img">
+                            <i class="fas fa-treasure-chest"></i>
+                        </div>
+                        <div class="event-card-body">
+                            <span class="event-category">Competition</span>
+                            <h4>Data Quest</h4>
+                            <p>A thrilling treasure hunt that blends logic, puzzles, and data science concepts across both days of the festival.</p>
+                            <p><strong>Date:</strong> September 26 & 27</p>
+                            <a href="#registration" class="btn btn-primary btn-sm">Register Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 event-item" data-category="competitions" data-aos="fade-up" data-aos-delay="300">
+                    <div class="event-card">
+                        <div class="event-card-img">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <div class="event-card-body">
+                            <span class="event-category">Competition</span>
+                            <h4>Photography Competition</h4>
+                            <p>Showcase your creativity and eye for detail in our Mobile Photography Competition! No editing, no filters, and absolutely no AI.</p>
+                            <p><strong>Date:</strong> September 26 & 27</p>
+                            <a href="#registration" class="btn btn-primary btn-sm">Register Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Workshops -->
+                <div class="col-lg-4 col-md-6 event-item" data-category="workshops" data-aos="fade-up" data-aos-delay="400">
+                    <div class="event-card">
+                        <div class="event-card-img">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="event-card-body">
+                            <span class="event-category">Workshop</span>
+                            <h4>AI Workshop</h4>
+                            <p>Explore Cutting-Edge technologies and transformative ideas at ECHO-AI INNOVATION SUMMIT 2025. Two sessions available.</p>
+                            <p><strong>Date:</strong> Sept 26 (Forenoon) & Sept 27 (Morning)</p>
+                            <a href="https://www.google.com/url?q=https%3A%2F%2Fjustinalexia.vercel.app%2Fecho.htm&sa=D&sntz=1&usg=AOvVaw08ugu8pnawZWCKaRdylWCn" class="btn btn-primary btn-sm">Register Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fun Activities -->
+                <div class="col-lg-4 col-md-6 event-item" data-category="fun" data-aos="fade-up" data-aos-delay="500">
+                    <div class="event-card">
+                        <div class="event-card-img">
+                            <i class="fas fa-vr-cardboard"></i>
+                        </div>
+                        <div class="event-card-body">
+                            <span class="event-category">Fun Activity</span>
+                            <h4>VR Arena</h4>
+                            <p>An immersive video gaming experience with Sony Playstation Gaming Console and exploration of metaverse.</p>
+                            <p><strong>Date:</strong> September 26 & 27</p>
+                            <span class="badge bg-success">No Registration Required</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 event-item" data-category="fun" data-aos="fade-up" data-aos-delay="600">
+                    <div class="event-card">
+                        <div class="event-card-img">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <div class="event-card-body">
+                            <span class="event-category">Fun Activity</span>
+                            <h4>Mini Games</h4>
+                            <p>A fun zone full of quick and exciting mini games like ball throw, push-up challenge, cup stacking, and more.</p>
+                            <p><strong>Date:</strong> September 26 & 27</p>
+                            <span class="badge bg-success">No Registration Required</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 event-item" data-category="fun" data-aos="fade-up" data-aos-delay="700">
+                    <div class="event-card">
+                        <div class="event-card-img">
+                            <i class="fas fa-camera-retro"></i>
+                        </div>
+                        <div class="event-card-body">
+                            <span class="event-category">Fun Activity</span>
+                            <h4>Snapzone</h4>
+                            <p>It is a themed photo booth designed for students to capture fun and memorable moments at the techfest.</p>
+                            <p><strong>Date:</strong> September 26 & 27</p>
+                            <span class="badge bg-success">No Registration Required</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 event-item" data-category="fun" data-aos="fade-up" data-aos-delay="800">
+                    <div class="event-card">
+                        <div class="event-card-img">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <div class="event-card-body">
+                            <span class="event-category">Fun Activity</span>
+                            <h4>Colour.me</h4>
+                            <p>Fun face-painting stall where students can get creative designs, festive art, or quirky patterns painted on their faces.</p>
+                            <p><strong>Date:</strong> September 26 & 27</p>
+                            <span class="badge bg-success">No Registration Required</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exhibitions -->
+                <div class="col-lg-4 col-md-6 event-item" data-category="exhibitions" data-aos="fade-up" data-aos-delay="900">
+                    <div class="event-card">
+                        <div class="event-card-img">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div class="event-card-body">
+                            <span class="event-category">Exhibition</span>
+                            <h4>Dataverse</h4>
+                            <p>An interactive exhibition room showcasing innovative student projects in the field of Data Science with live demonstrations.</p>
+                            <p><strong>Date:</strong> September 26 & 27</p>
+                            <span class="badge bg-success">No Registration Required</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Schedule Section -->
+    <section id="schedule" class="section">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Event Schedule</h2>
+                <p class="lead">Day-wise timeline of all activities</p>
+            </div>
+
+            <!-- Day Tabs -->
+            <ul class="nav nav-tabs justify-content-center mb-4" id="scheduleTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="day1-tab" data-bs-toggle="tab" data-bs-target="#day1" type="button">
+                        <i class="fas fa-calendar-day me-2"></i> Day 1 - Sept 26
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="day2-tab" data-bs-toggle="tab" data-bs-target="#day2" type="button">
+                        <i class="fas fa-calendar-day me-2"></i> Day 2 - Sept 27
+                    </button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="scheduleTabContent">
+                <!-- Day 1 Schedule -->
+                <div class="tab-pane fade show active" id="day1" role="tabpanel">
+                    <div class="timeline">
+                        <div class="timeline-item" data-aos="fade-right">
+                            <div class="timeline-content">
+                                <h5>AI Workshop - Session 1</h5>
+                                <p><strong>Time:</strong> Forenoon</p>
+                                <p>Explore Cutting-Edge technologies and transformative ideas at ECHO-AI INNOVATION SUMMIT 2025</p>
+                                <span class="badge bg-primary">Workshop</span>
+                            </div>
+                        </div>
+                        <div class="timeline-item" data-aos="fade-left">
+                            <div class="timeline-content">
+                                <h5>Techwhiz Competition</h5>
+                                <p><strong>Time:</strong> 2PM - 4PM</p>
+                                <p>High energy technical quiz competition designed to test participants' knowledge in core areas of Computer Science and Data Science</p>
+                                <span class="badge bg-warning">Competition</span>
+                            </div>
+                        </div>
+                        <div class="timeline-item" data-aos="fade-right">
+                            <div class="timeline-content">
+                                <h5>Data Quest - Day 1</h5>
+                                <p><strong>Time:</strong> Throughout the day</p>
+                                <p>A thrilling treasure hunt that blends logic, puzzles, and data science concepts</p>
+                                <span class="badge bg-warning">Competition</span>
+                            </div>
+                        </div>
+                        <div class="timeline-item" data-aos="fade-left">
+                            <div class="timeline-content">
+                                <h5>Photography Competition - Day 1</h5>
+                                <p><strong>Time:</strong> Throughout the day</p>
+                                <p>Showcase your creativity and eye for detail in our Mobile Photography Competition</p>
+                                <span class="badge bg-warning">Competition</span>
+                            </div>
+                        </div>
+                        <div class="timeline-item" data-aos="fade-right">
+                            <div class="timeline-content">
+                                <h5>Fun Activities - Day 1</h5>
+                                <p><strong>Time:</strong> Throughout the day</p>
+                                <p>VR Arena, Mini Games, Snapzone, Colour.me, and Dataverse exhibition</p>
+                                <span class="badge bg-success">Fun Activities</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 2 Schedule -->
+                <div class="tab-pane fade" id="day2" role="tabpanel">
+                    <div class="timeline">
+                        <div class="timeline-item" data-aos="fade-right">
+                            <div class="timeline-content">
+                                <h5>AI Workshop - Session 2</h5>
+                                <p><strong>Time:</strong> Morning</p>
+                                <p>Explore Cutting-Edge technologies and transformative ideas at ECHO-AI INNOVATION SUMMIT 2025</p>
+                                <span class="badge bg-primary">Workshop</span>
+                            </div>
+                        </div>
+                        <div class="timeline-item" data-aos="fade-left">
+                            <div class="timeline-content">
+                                <h5>DE_CODE Competition</h5>
+                                <p><strong>Time:</strong> 1PM - 4PM</p>
+                                <p>Participants will solve complex puzzles and decode encrypted messages, testing their skills in algorithms, cryptography, and problem-solving</p>
+                                <span class="badge bg-warning">Competition</span>
+                            </div>
+                        </div>
+                        <div class="timeline-item" data-aos="fade-right">
+                            <div class="timeline-content">
+                                <h5>Data Quest - Day 2</h5>
+                                <p><strong>Time:</strong> Throughout the day</p>
+                                <p>A thrilling treasure hunt that blends logic, puzzles, and data science concepts</p>
+                                <span class="badge bg-warning">Competition</span>
+                            </div>
+                        </div>
+                        <div class="timeline-item" data-aos="fade-left">
+                            <div class="timeline-content">
+                                <h5>Photography Competition - Day 2</h5>
+                                <p><strong>Time:</strong> Throughout the day</p>
+                                <p>Showcase your creativity and eye for detail in our Mobile Photography Competition</p>
+                                <span class="badge bg-warning">Competition</span>
+                            </div>
+                        </div>
+                        <div class="timeline-item" data-aos="fade-right">
+                            <div class="timeline-content">
+                                <h5>Fun Activities - Day 2</h5>
+                                <p><strong>Time:</strong> Throughout the day</p>
+                                <p>VR Arena, Mini Games, Snapzone, Colour.me, and Dataverse exhibition</p>
+                                <span class="badge bg-success">Fun Activities</span>
+                            </div>
+                        </div>
+                        <div class="timeline-item" data-aos="fade-left">
+                            <div class="timeline-content">
+                                <h5>Raffle Coupon Draw</h5>
+                                <p><strong>Time:</strong> Closing Ceremony</p>
+                                <p>Buy a raffle coupon and stand a chance to win exciting prizes, including a shining gold coin as the grand reward</p>
+                                <span class="badge bg-danger">Special Event</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registration Section -->
+    <section id="registration" class="section registration">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Registration</h2>
+                <p class="lead text-white">Register for exciting events and workshops</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-10 mx-auto text-center" data-aos="fade-up">
+                    <div class="registration-content">
+                        <h3 class="mb-4">Ready to Join ZENORIX 2025?</h3>
+                        <p class="lead mb-4 responsive-text">Register for your favorite events and workshops through our Google Form. It's quick, easy, and secure!</p>
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="registration-card">
+                                    <i class="fas fa-user-plus responsive-icon mb-3"></i>
+                                    <h5>Individual Registration</h5>
+                                    <p class="responsive-text">Register for specific events and workshops of your choice</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="registration-card">
+                                    <i class="fas fa-users responsive-icon mb-3"></i>
+                                    <h5>Group Registration</h5>
+                                    <p class="responsive-text">Register as a team for competitions and group activities</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="registration-buttons">
+                            <a href="https://forms.gle/your-google-form-link" target="_blank" class="btn-register">
+                                <i class="fas fa-external-link-alt me-2"></i> Register via Google Form
+                            </a>
+                            <a href="#events" class="btn btn-outline-primary">
+                                <i class="fas fa-arrow-left me-2"></i> View Events First
+                            </a>
+                        </div>
+
+                        <div class="glass p-4 mt-4">
+                            <h5>Registration Instructions:</h5>
+                            <ul class="list-unstyled text-start">
+                                <li><i class="fas fa-check-circle me-2"></i> Fill out the Google Form with accurate details</li>
+                                <li><i class="fas fa-check-circle me-2"></i> Select all events you wish to participate in</li>
+                                <li><i class="fas fa-check-circle me-2"></i> Submit the form before the registration deadline</li>
+                                <li><i class="fas fa-check-circle me-2"></i> You'll receive a confirmation email</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sponsors Section -->
+    <section id="sponsors" class="section">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Our Sponsors</h2>
+                <p class="lead">Thank you to our amazing sponsors who make ZENORIX 2025 possible</p>
+            </div>
+            
+            <div class="row" data-aos="fade-up">
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="sponsor-logo">
+                        <i class="fas fa-building fa-2x mb-2"></i>
+                        <div class="text-break">Tech Corp</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="sponsor-logo">
+                        <i class="fas fa-laptop-code fa-2x mb-2"></i>
+                        <div class="text-break">Code Solutions</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="sponsor-logo">
+                        <i class="fas fa-robot fa-2x mb-2"></i>
+                        <div class="text-break">AI Innovations</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="sponsor-logo">
+                        <i class="fas fa-database fa-2x mb-2"></i>
+                        <div class="text-break">Data Systems</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="sponsor-logo">
+                        <i class="fas fa-cloud fa-2x mb-2"></i>
+                        <div class="text-break">Cloud Tech</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="sponsor-logo">
+                        <i class="fas fa-shield-alt fa-2x mb-2"></i>
+                        <div class="text-break">SecureNet</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="sponsor-logo">
+                        <i class="fas fa-mobile-alt fa-2x mb-2"></i>
+                        <div class="text-break">Mobile Dev</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="sponsor-logo">
+                        <i class="fas fa-globe fa-2x mb-2"></i>
+                        <div class="text-break">Web Solutions</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-5" data-aos="fade-up">
+                <h4>Want to Sponsor ZENORIX 2025?</h4>
+                <p class="lead">Join us in supporting the next generation of tech innovators</p>
+                <a href="#contact" class="btn btn-primary btn-lg">
+                    <i class="fas fa-handshake me-2"></i> Become a Sponsor
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Venue Section -->
+    <section id="venue" class="section">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Venue & Location</h2>
+                <p class="lead">IES College of Engineering, Chittilappilly</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-6 mb-4" data-aos="fade-right">
+                    <div id="map"></div>
+                </div>
+                <div class="col-lg-6 mb-4" data-aos="fade-left">
+                    <div class="contact-info">
+                        <h3>Venue Information</h3>
+                        <div class="venue-details">
+                            <div class="d-flex align-items-start mb-3">
+                                <i class="fas fa-map-marker-alt responsive-icon text-primary me-3"></i>
+                                <div>
+                                    <h5>Address</h5>
+                                    <p class="responsive-text mb-0">Department of CSE (Data Science)<br>
+                                    IES College of Engineering<br>
+                                    Chittilappilly, Thrissur, Kerala</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-start mb-3">
+                                <i class="fas fa-phone responsive-icon text-primary me-3"></i>
+                                <div>
+                                    <h5>Contact Numbers</h5>
+                                    <p class="responsive-text mb-0">Student Coordinator: 8089913951<br>
+                                    Faculty Coordinator: 9446090144</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-start mb-3">
+                                <i class="fas fa-bus responsive-icon text-primary me-3"></i>
+                                <div>
+                                    <h5>Transportation</h5>
+                                    <p class="responsive-text mb-0">Easy access from Thrissur city<br>
+                                    Public transport available<br>
+                                    Parking facilities provided</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-start mb-3">
+                                <i class="fas fa-utensils responsive-icon text-primary me-3"></i>
+                                <div>
+                                    <h5>Facilities</h5>
+                                    <p class="responsive-text mb-0">Food court and refreshments<br>
+                                    Rest areas<br>
+                                    Medical assistance available</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="section">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Frequently Asked Questions</h2>
+                <p class="lead">Find answers to common questions about ZENORIX 2025</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-10 mx-auto" data-aos="fade-up">
+                    <div class="accordion" id="faqAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                    What is ZENORIX 2025?
+                                </button>
+                            </h2>
+                            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    ZENORIX 2025 is a two-day technical festival organized by the Department of Computer Science and Engineering (Data Science) at IES College of Engineering, featuring competitions, workshops, and fun activities.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                    How do I register for events?
+                                </button>
+                            </h2>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    You can register for events by clicking the "Register via Google Form" button in the Registration section. Fill out the form with your details and select the events you want to participate in.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                    Is there a registration fee?
+                                </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Registration fees vary by event. Some events are free to attend, while others may have a nominal fee. Please check the event details or contact the organizers for specific fee information.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                    What should I bring to the event?
+                                </button>
+                            </h2>
+                            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Bring a valid ID card, registration confirmation, laptop for technical events, and comfortable clothing. Specific events may require additional materials - check event descriptions for details.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                    Are food and accommodation provided?
+                                </button>
+                            </h2>
+                            <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Food and refreshments will be available at the venue. Accommodation is not provided, but we can assist you in finding nearby hotels if needed.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq6">
+                                    How can I contact the organizers?
+                                </button>
+                            </h2>
+                            <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    You can contact the organizers through the contact form on our website or call directly: Student Coordinator - 8089913951, Faculty Coordinator - 9446090144.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Contact Us</h2>
+                <p class="lead">Get in touch with the ZENORIX 2025 team</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-6 mb-4" data-aos="fade-right">
+                    <div class="contact-form">
+                        <h3 class="mb-4">Send us a Message</h3>
+                        <form id="contactForm">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="subject" class="form-label">Subject</label>
+                                <input type="text" class="form-control" id="subject" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Message</label>
+                                <textarea class="form-control" id="message" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane me-2"></i> Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4" data-aos="fade-left">
+                    <div class="contact-info">
+                        <h3 class="mb-4">Get in Touch</h3>
+                        <div class="contact-item">
+                            <div class="d-flex align-items-start mb-4">
+                                <i class="fas fa-map-marker-alt responsive-icon text-primary me-3"></i>
+                                <div>
+                                    <h5>Address</h5>
+                                    <p class="responsive-text mb-0">Department of CSE (Data Science)<br>
+                                    IES College of Engineering<br>
+                                    Chittilappilly, Thrissur, Kerala</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-start mb-4">
+                                <i class="fas fa-phone responsive-icon text-primary me-3"></i>
+                                <div>
+                                    <h5>Phone</h5>
+                                    <p class="responsive-text mb-0">Student Coordinator: 8089913951<br>
+                                    Faculty Coordinator: 9446090144</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-start mb-4">
+                                <i class="fas fa-envelope responsive-icon text-primary me-3"></i>
+                                <div>
+                                    <h5>Email</h5>
+                                    <p class="responsive-text mb-0">zenorix2025@iesce.ac.in<br>
+                                    info@iesce.ac.in</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-start mb-4">
+                                <i class="fas fa-clock responsive-icon text-primary me-3"></i>
+                                <div>
+                                    <h5>Office Hours</h5>
+                                    <p class="responsive-text mb-0">Monday - Friday: 9:00 AM - 5:00 PM<br>
+                                    Saturday: 9:00 AM - 1:00 PM</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="social-links">
+                            <h5 class="mb-3">Follow Us</h5>
+                            <div class="d-flex justify-content-center gap-2">
+                                <a href="#" class="btn btn-outline-primary btn-sm">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="#" class="btn btn-outline-primary btn-sm">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" class="btn btn-outline-primary btn-sm">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="#" class="btn btn-outline-primary btn-sm">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                                <a href="#" class="btn btn-outline-primary btn-sm">
+                                    <i class="fab fa-youtube"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Raffle T&C Section -->
+    <section id="raffle" class="section">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Raffle Coupon Terms & Conditions</h2>
+                <p class="lead">Important information about our raffle draw</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-10 mx-auto" data-aos="fade-up">
+                    <div class="raffle-terms">
+                        <div class="alert alert-warning mb-4">
+                            <h4><i class="fas fa-gift me-2"></i> Grand Prize: Gold Coin</h4>
+                            <p>Draw Date: September 27, 2025 (Final Day of Techfest)</p>
+                        </div>
+                        
+                        <div class="terms-content">
+                            <h5>Terms & Conditions:</h5>
+                            <ol>
+                                <li>Each raffle coupon is valid for one entry only.</li>
+                                <li>Duplicated, tampered, or illegible coupons will not be accepted.</li>
+                                <li>The raffle draw will be conducted on the final day of the Techfest (27th September) in the presence of the organizing committee.</li>
+                                <li>Winner will be selected randomly and announced during the closing ceremony and through our social media handles.</li>
+                                <li>The decision of the organizers regarding the draw and winner selection is final and binding.</li>
+                                <li>A single winner entitled to receive an authentic Gold Coin.</li>
+                                <li>The gold coin awarded as a prize shall be of the weight, purity, and specifications as declared by the organizers prior to the draw.</li>
+                                <li>The coin shall be sourced from an authorized jeweler/mint and shall carry the certification of purity and weight, as applicable.</li>
+                                <li>The organizers make no warranties, express or implied, regarding the future market value, resale potential, or suitability of the gold coin for any purpose.</li>
+                                <li>No requests for substitution, alteration, or exchange of the gold coin will be entertained under any circumstances.</li>
+                                <li>Acceptance of the prize by the winner constitutes full and final settlement, and the organizers shall bear no further responsibility with respect to the quality, quantity, size, or valuation of the gold coin.</li>
+                                <li>Prizes are non-transferable and cannot be exchanged for cash or alternatives.</li>
+                                <li>Winner must claim their prizes within the specified time frame; unclaimed prizes may be forfeited.</li>
+                                <li>Winner may be required to present their raffle coupon stub along with a valid ID for verification.</li>
+                                <li>Failure to provide proper identification may lead to disqualification.</li>
+                                <li>The organizers are not responsible for lost, stolen, or misplaced raffle coupons.</li>
+                                <li>The Techfest committee reserves the right to substitute prizes with items of similar or greater value if necessary.</li>
+                                <li>By participating, winners agree to allow the Techfest organizers to use their name, photograph, and prize details for promotional purposes without additional compensation.</li>
+                                <li>The organizing committee reserves the right to amend, postpone, or cancel the raffle at its discretion without prior notice.</li>
+                                <li>Participation in the raffle draw implies acceptance of all the above terms and conditions.</li>
+                            </ol>
+                        </div>
+                        
+                        <div class="text-center mt-4">
+                            <a href="#contact" class="btn btn-primary">
+                                <i class="fas fa-phone me-2"></i> Contact for Raffle Coupons
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>ZENORIX 2025</h5>
+                    <p class="responsive-text">A premier technical festival organized by the Department of Computer Science and Engineering (Data Science) at IES College of Engineering.</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#home" class="text-white-50">Home</a></li>
+                        <li><a href="#events" class="text-white-50">Events</a></li>
+                        <li><a href="#schedule" class="text-white-50">Schedule</a></li>
+                        <li><a href="#registration" class="text-white-50">Registration</a></li>
+                        <li><a href="#contact" class="text-white-50">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Connect With Us</h5>
+                    <div class="social-links mb-3 justify-content-center">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook-f fa-2x"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-twitter fa-2x"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-instagram fa-2x"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-linkedin-in fa-2x"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-youtube fa-2x"></i></a>
+                    </div>
+                    <p class="responsive-text">&copy; 2025 ZENORIX. All rights reserved.</p>
+                    <p class="responsive-text">Organized by Department of CSE (Data Science), IES College of Engineering</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Hide loader when page loads
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('loader').style.display = 'none';
+            }, 1000);
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Particles.js configuration
+        particlesJS('particles-js', {
+            particles: {
+                number: {
+                    value: 80,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: '#00d4ff'
+                },
+                shape: {
+                    type: 'circle'
+                },
+                opacity: {
+                    value: 0.5,
+                    random: false
+                },
+                size: {
+                    value: 3,
+                    random: true
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: '#00d4ff',
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 6,
+                    direction: 'none',
+                    random: false,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: 'repulse'
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: 'push'
+                    },
+                    resize: true
+                }
+            },
+            retina_detect: true
+        });
+
+        // Initialize Leaflet Map
+        const map = L.map('map').setView([10.5276, 76.2144], 15);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Add marker for IES College of Engineering
+        const marker = L.marker([10.5276, 76.2144]).addTo(map);
+        marker.bindPopup('<b>IES College of Engineering</b><br>Chittilappilly, Thrissur').openPopup();
+
+        // Event filtering functionality
+        function filterEvents(category) {
+            const events = document.querySelectorAll('.event-item');
+            const buttons = document.querySelectorAll('.btn-group .btn');
+            
+            // Update active button
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Show/hide events based on category
+            events.forEach(event => {
+                if (category === 'all' || event.dataset.category === category) {
+                    event.style.display = 'block';
+                } else {
+                    event.style.display = 'none';
+                }
+            });
+        }
+
+        // Contact form handling
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value
+            };
+            
+            // Here you would typically send the data to a server
+            // For now, we'll just show a success message
+            alert('Thank you for your message! We will get back to you soon.');
+            
+            // Reset form
+            this.reset();
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(10, 10, 10, 0.95)';
+            } else {
+                navbar.style.background = 'rgba(10, 10, 10, 0.8)';
+            }
+        });
+
+        // Three.js 3D Background (optional - can be resource intensive)
+        function init3DBackground() {
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true });
+            
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0x000000, 0);
+            document.getElementById('three-canvas').appendChild(renderer.domElement);
+            
+            // Add some basic 3D objects
+            const geometry = new THREE.BoxGeometry();
+            const material = new THREE.MeshBasicMaterial({ color: 0x00d4ff, wireframe: true });
+            const cube = new THREE.Mesh(geometry, material);
+            scene.add(cube);
+            
+            camera.position.z = 5;
+            
+            function animate() {
+                requestAnimationFrame(animate);
+                cube.rotation.x += 0.01;
+                cube.rotation.y += 0.01;
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+        }
+
+        // Optional: Uncomment to enable 3D background
+        // init3DBackground();
+
+        // Countdown timer (if needed)
+        function updateCountdown() {
+            const eventDate = new Date('September 26, 2025 09:00:00').getTime();
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+            
+            if (distance > 0) {
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                // Update countdown display if element exists
+                const countdownElement = document.getElementById('countdown');
+                if (countdownElement) {
+                    countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+                }
+            }
+        }
+        
+        // Update countdown every second
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>

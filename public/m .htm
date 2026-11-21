@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph Theory Questions and Answers</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #2c3e50;
+        }
+
+        h1 {
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            border-bottom: 1px solid #3498db;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+
+        .question {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .answer {
+            margin-left: 20px;
+            margin-bottom: 30px;
+        }
+
+        .proof {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+
+        .example {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-left: 3px solid #3498db;
+            margin: 10px 0;
+        }
+
+        .definition {
+            background-color: #e8f4fc;
+            padding: 10px;
+            border-left: 3px solid #2980b9;
+            margin: 10px 0;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 15px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .graph-image {
+            text-align: center;
+            margin: 15px 0;
+            font-family: monospace;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Graph Theory Questions and Answers</h1>
+
+    <h2>Module 1</h2>
+
+    <div class="question">1. Prove that the number of vertices of odd degree in a graph is always even. (4 marks)</div>
+    <div class="answer">
+        <p>This theorem is a direct consequence of the <strong>Handshaking Lemma</strong>, which is fundamental in graph
+            theory. Let's break it down step by step:</p>
+
+        <ol>
+            <li><strong>State the Handshaking Lemma</strong>: For any graph \( G = (V, E) \), the sum of the degrees of
+                all vertices equals twice the number of edges:
+                \[ \sum_{v \in V} \deg(v) = 2|E| \]
+            </li>
+            <li><strong>Reasoning</strong>: The right-hand side, \( 2|E| \), is clearly an even number since it's a
+                multiple of 2. Therefore, the sum of all vertex degrees must also be even.</li>
+            <li><strong>Partition the vertices</strong>: Divide the vertex set \( V \) into two subsets:
+                <ul>
+                    <li>\( O \): vertices with odd degree</li>
+                    <li>\( E' \): vertices with even degree</li>
+                </ul>
+            </li>
+            <li><strong>Express the sum</strong>:
+                \[ \sum_{v \in V} \deg(v) = \sum_{v \in O} \deg(v) + \sum_{v \in E'} \deg(v) \]
+            </li>
+            <li><strong>Analyze parity</strong>:
+                <ul>
+                    <li>The sum over \( E' \) (even degrees) is even (sum of even numbers).</li>
+                    <li>For the total sum to be even, the sum over \( O \) must also be even.</li>
+                </ul>
+            </li>
+            <li><strong>Key observation</strong>: The sum of an odd number of odd integers is odd. The sum of an even
+                number of odd integers is even. Therefore, for \( \sum_{v \in O} \deg(v) \) to be even, the number of
+                terms (\( |O| \)) must be even.</li>
+            <li><strong>Conclusion</strong>: Thus, the number of vertices with odd degree is always even.</li>
+        </ol>
+
+        <div class="example">
+            <strong>Example</strong>: In a graph with degrees {3, 3, 2, 2, 4, 2}, the odd-degree vertices are those with
+            degree 3 (there are 2 of them), which is even.
+        </div>
+    </div>
+
+    <div class="question">2. Define isomorphism between graphs. Check whether the given graphs are isomorphic? Justify
+        your answer. (4 marks)</div>
+    <div class="answer">
+        <div class="definition">
+            <strong>Definition</strong>: Two graphs \( G_1 = (V_1, E_1) \) and \( G_2 = (V_2, E_2) \) are
+            <strong>isomorphic</strong> if there exists a bijective function \( f: V_1 \to V_2 \) such that for any two
+            vertices \( u, v \in V_1 \), \( u \) and \( v \) are adjacent in \( G_1 \) if and only if \( f(u) \) and \(
+            f(v) \) are adjacent in \( G_2 \). This preserves both adjacency and non-adjacency.
+        </div>
+
+        <p><strong>Isomorphism Checking Protocol</strong> (when specific graphs are given):</p>
+        <ol>
+            <li><strong>Quick checks</strong>:
+                <ul>
+                    <li>Same number of vertices</li>
+                    <li>Same number of edges</li>
+                    <li>Same degree sequence (sorted list of vertex degrees)</li>
+                </ul>
+            </li>
+            <li><strong>If above match, proceed to structural checks</strong>:
+                <ul>
+                    <li>Same number of cycles of each length</li>
+                    <li>Same connectivity (number of components)</li>
+                    <li>Same diameter (longest shortest path)</li>
+                    <li>Same girth (length of shortest cycle)</li>
+                </ul>
+            </li>
+            <li><strong>Try to construct the bijection</strong>:
+                <ul>
+                    <li>Start by mapping vertices with unique degree or unique neighborhood properties</li>
+                    <li>Verify adjacency preservation</li>
+                </ul>
+            </li>
+            <li><strong>Invariants to compare</strong>:
+                <ul>
+                    <li>Adjacency matrix spectra (if advanced)</li>
+                    <li>Presence of specific subgraphs (cliques, independent sets)</li>
+                </ul>
+            </li>
+            <li><strong>If any invariant differs → graphs are not isomorphic</strong></li>
+            <li><strong>If all invariants match → may be isomorphic (but not guaranteed)</strong></li>
+        </ol>
+
+        <div class="example">
+            <strong>Example justification</strong>: "Graphs G and H both have 6 vertices and 9 edges, with degree
+            sequence (3,3,3,3,3,3). Both are regular of degree 3. However, G contains two triangles while H contains
+            none. Since the number of triangles is an isomorphism invariant, G and H are not isomorphic."
+        </div>
+    </div>
+
+    <div class="question">4. If a graph has exactly two vertices of odd degree, prove that there must be a path joining
+        these two vertices. (4 marks)</div>
+    <div class="answer">
+        <p><strong>Proof by contradiction and component analysis</strong>:</p>
+
+        <ol>
+            <li><strong>Given</strong>: Graph \( G \) with exactly two vertices \( u \) and \( v \) having odd degree.
+            </li>
+            <li><strong>Recall</strong>: By Question 1's theorem, the number of odd-degree vertices is even. Having
+                exactly two satisfies this condition.</li>
+            <li><strong>Assume for contradiction</strong> that there is no path between \( u \) and \( v \).</li>
+            <li><strong>Implication</strong>: Then \( u \) and \( v \) belong to different connected components of \( G
+                \).</li>
+            <li><strong>Consider the component containing \( u \)</strong>: Call this component \( C_u \). Within \( C_u
+                \), \( u \) has odd degree. By the Handshaking Lemma applied to \( C_u \):
+                <ul>
+                    <li>Sum of degrees in \( C_u \) = \( 2|E(C_u)| \) (even)</li>
+                    <li>But \( u \) contributes an odd number to this sum</li>
+                    <li>Therefore, there must be at least one other vertex in \( C_u \) with odd degree to make the sum
+                        even</li>
+                </ul>
+            </li>
+            <li><strong>Same logic for component containing \( v \)</strong>: There must be at least one other
+                odd-degree vertex in \( C_v \).</li>
+            <li><strong>Contradiction</strong>: Now we have at least:
+                <ul>
+                    <li>1 odd vertex (\( u \)) in \( C_u \)</li>
+                    <li>At least 1 more odd vertex in \( C_u \)</li>
+                    <li>1 odd vertex (\( v \)) in \( C_v \)</li>
+                    <li>At least 1 more odd vertex in \( C_v \)</li>
+                </ul>
+                That's at least 4 odd-degree vertices, contradicting "exactly two."
+            </li>
+            <li><strong>Conclusion</strong>: The assumption that \( u \) and \( v \) are in different components must be
+                false. Therefore, \( u \) and \( v \) are in the same connected component, meaning a path exists between
+                them.</li>
+        </ol>
+
+        <p><strong>Alternative constructive proof</strong>: Consider removing all components with no odd vertices. What
+            remains must have the two odd vertices connected through a trail.</p>
+    </div>
+
+    <div class="question">10. Prove that a graph G is disconnected if and only if its vertex set V can be partitioned
+        into two non-empty disjoint subsets V1 and V2 such that there exists no edge in G whose one end vertex is in V1
+        and the other in V2. (5 marks)</div>
+    <div class="answer">
+        <p>This is a fundamental characterization of disconnected graphs. Let's prove both directions thoroughly:</p>
+
+        <h3>Part 1 (⇒): If G is disconnected, then such a partition exists</h3>
+        <ol>
+            <li><strong>Definition</strong>: A graph is disconnected if it has at least two connected components.</li>
+            <li><strong>Construction</strong>: Let \( C_1 \) be any connected component of \( G \). Define:
+                <ul>
+                    <li>\( V_1 = V(C_1) \) (vertices of component \( C_1 \))</li>
+                    <li>\( V_2 = V \setminus V_1 \) (all other vertices)</li>
+                </ul>
+            </li>
+            <li><strong>Properties</strong>:
+                <ul>
+                    <li>\( V_1 \) and \( V_2 \) are non-empty (since \( C_1 \) is a proper component and G is
+                        disconnected)</li>
+                    <li>\( V_1 \cap V_2 = \emptyset \) (by construction)</li>
+                    <li>\( V_1 \cup V_2 = V \) (by construction)</li>
+                </ul>
+            </li>
+            <li><strong>No edges between \( V_1 \) and \( V_2 \)</strong>: By definition of connected component, there
+                are no edges between vertices in different components. If there were an edge with one endpoint in \( V_1
+                \) and the other in \( V_2 \), then that edge would connect \( C_1 \) to another component,
+                contradicting the definition of components.</li>
+            <li><strong>Thus the partition exists</strong>.</li>
+        </ol>
+
+        <h3>Part 2 (⇐): If such a partition exists, then G is disconnected</h3>
+        <ol>
+            <li><strong>Given</strong>: Partition \( V = V_1 \cup V_2 \) with \( V_1, V_2 \) non-empty, disjoint, and no
+                edges between them.</li>
+            <li><strong>Take any vertex \( u \in V_1 \) and \( v \in V_2 \)</strong>.</li>
+            <li><strong>Claim</strong>: There is no path from \( u \) to \( v \).
+
+                <p><strong>Proof of claim</strong>: Suppose a path \( u = x_0, x_1, x_2, \dots, x_k = v \) exists. Since
+                    \( u \in V_1 \) and \( v \in V_2 \), there must be some index \( i \) where \( x_i \in V_1 \) and \(
+                    x_{i+1} \in V_2 \) (or vice versa). But then the edge \( x_i x_{i+1} \) connects \( V_1 \) to \( V_2
+                    \), contradicting the "no edges" condition.</p>
+            </li>
+            <li><strong>Since there exist vertices with no path between them</strong>, the graph is disconnected by
+                definition.</li>
+        </ol>
+
+        <p><strong>Conclusion</strong>: The equivalence is proved.</p>
+
+        <div class="example">
+            <strong>Corollary</strong>: This shows that connectivity is equivalent to having no such "disconnecting
+            partition" of vertices.
+        </div>
+    </div>
+
+    <div class="question">11. The maximum number of edges in a simple graph with n vertices is \( \frac{n(n-1)}{2} \).
+        (5 marks)</div>
+    <div class="answer">
+        <p><strong>Comprehensive proof with multiple approaches</strong>:</p>
+
+        <h3>Approach 1: Combinatorial Counting</h3>
+        <ol>
+            <li>In a simple graph (no loops, no multiple edges), each edge is uniquely determined by an unordered pair
+                of distinct vertices.</li>
+            <li>From \( n \) vertices, the number of ways to choose 2 distinct vertices is the binomial coefficient:
+                \[ \binom{n}{2} = \frac{n!}{2!(n-2)!} = \frac{n(n-1)}{2} \]
+            </li>
+            <li>Each such pair can have either 0 or 1 edge in a simple graph.</li>
+            <li>To maximize edges, we put an edge for every possible pair, resulting in the <strong>complete
+                    graph</strong> \( K_n \).</li>
+            <li>Therefore, maximum edges = \( \binom{n}{2} = \frac{n(n-1)}{2} \).</li>
+        </ol>
+
+        <h3>Approach 2: Sum of Degrees</h3>
+        <ol>
+            <li>In any simple graph, maximum degree of a vertex is \( n-1 \) (connected to all other vertices).</li>
+            <li>If we try to maximize edges, we should maximize each vertex's degree.</li>
+            <li>In the complete graph \( K_n \), each vertex has degree \( n-1 \).</li>
+            <li>Sum of all degrees = \( n(n-1) \).</li>
+            <li>By Handshaking Lemma: \( \sum \deg(v) = 2|E| \)</li>
+            <li>So \( 2|E| = n(n-1) \Rightarrow |E| = \frac{n(n-1)}{2} \).</li>
+        </ol>
+
+        <h3>Approach 3: Induction</h3>
+        <ol>
+            <li><strong>Base case</strong>: \( n=1 \): Max edges = 0 = \( \frac{1×0}{2} \) ✓
+                \( n=2 \): Max edges = 1 = \( \frac{2×1}{2} \) ✓</li>
+            <li><strong>Inductive hypothesis</strong>: Assume true for \( n = k \): max edges = \( \frac{k(k-1)}{2} \).
+            </li>
+            <li><strong>For \( n = k+1 \)</strong>: Add a new vertex to the complete graph on \( k \) vertices. To make
+                it complete on \( k+1 \) vertices, connect the new vertex to all \( k \) existing vertices.</li>
+            <li>New edge count = \( \frac{k(k-1)}{2} + k = \frac{k(k-1) + 2k}{2} = \frac{k(k+1)}{2} = \frac{(k+1)k}{2}
+                \).</li>
+            <li>By induction, formula holds for all \( n \).</li>
+        </ol>
+
+        <p><strong>Why this is maximum</strong>: Any graph with \( n \) vertices that is not complete has at least one
+            missing edge between some pair of vertices, thus has fewer than \( \binom{n}{2} \) edges.</p>
+
+        <div class="example">
+            <strong>Example</strong>: For \( n=4 \), maximum edges = \( \frac{4×3}{2} = 6 \), realized by \( K_4 \).
+        </div>
+    </div>
+
+    <div class="question">12. Prove that a simple graph with n vertices and k components can have at most \(
+        \frac{(n-k)(n-k+1)}{2} \) edges. (4 marks)</div>
+    <div class="answer">
+        <p>This is an important result about maximizing edges in a graph with given number of components.</p>
+
+        <p><strong>Proof strategy</strong>: To maximize edges with fixed \( n \) and \( k \), make \( k-1 \) components
+            as small as possible (isolated vertices) and one component as large as possible (complete graph).</p>
+
+        <h3>Step-by-step proof</h3>
+        <ol>
+            <li><strong>Let the component sizes be \( n_1, n_2, \dots, n_k \)</strong>, where \( \sum_{i=1}^k n_i = n \)
+                and each \( n_i \geq 1 \).</li>
+            <li><strong>Maximum edges in component with \( n_i \) vertices</strong> = \( \frac{n_i(n_i-1)}{2} \) (if
+                it's complete).</li>
+            <li><strong>Total maximum edges</strong> = \( \sum_{i=1}^k \frac{n_i(n_i-1)}{2} = \frac{1}{2} \left( \sum
+                n_i^2 - \sum n_i \right) = \frac{1}{2} \left( \sum n_i^2 - n \right) \).</li>
+            <li><strong>To maximize</strong> \( \sum n_i^2 \) given \( \sum n_i = n \) and each \( n_i \geq 1 \), we
+                make one \( n_i \) as large as possible and others as small as possible.</li>
+            <li><strong>The smallest possible size for \( k-1 \) components</strong> is 1 (isolated vertices).</li>
+            <li><strong>Thus, optimal configuration</strong>:
+                <ul>
+                    <li>\( k-1 \) components of size 1</li>
+                    <li>1 component of size \( n - (k-1) = n-k+1 \)</li>
+                </ul>
+            </li>
+            <li><strong>Maximum edges</strong> = \( \frac{(n-k+1)(n-k)}{2} \) (from the large complete component) + 0
+                (from isolated vertices).</li>
+            <li><strong>So maximum</strong> = \( \frac{(n-k+1)(n-k)}{2} \).</li>
+        </ol>
+
+        <p><strong>Alternative justification</strong>:
+            - Adding an edge between two components reduces number of components by 1.
+            - To keep \( k \) components fixed, we cannot connect different components.
+            - Within a component of size \( m \), maximum edges is \( \binom{m}{2} \).
+            - Sum is maximized when one component is huge and others are tiny.</p>
+
+        <div class="example">
+            <strong>Example</strong>: \( n=7, k=3 \):
+            Optimal: Component sizes: 1, 1, 5
+            Max edges = \( \frac{5×4}{2} = 10 \)
+            Check: Complete graph on 5 vertices has 10 edges, plus 2 isolated vertices.
+        </div>
+    </div>
+
+    <h2>Module 2</h2>
+
+    <div class="question">18. Explain the operations union, intersection, and ring sum on graph. Find the union,
+        intersection, and ring sum of below graphs. (5 marks)</div>
+    <div class="answer">
+        <p><strong>Detailed definitions with formal notation</strong>:</p>
+
+        <p>Let \( G_1 = (V_1, E_1) \) and \( G_2 = (V_2, E_2) \) be two graphs.</p>
+
+        <h3>1. Union (\( G_1 \cup G_2 \))</h3>
+        <ul>
+            <li>Vertex set: \( V_1 \cup V_2 \)</li>
+            <li>Edge set: \( E_1 \cup E_2 \)</li>
+            <li><strong>Properties</strong>: Contains all vertices and edges from both graphs. Multiple edges may occur
+                if both graphs have the same edge.</li>
+            <li><strong>Formally</strong>: \( G_1 \cup G_2 = (V_1 \cup V_2, E_1 \cup E_2) \)</li>
+        </ul>
+
+        <h3>2. Intersection (\( G_1 \cap G_2 \))</h3>
+        <ul>
+            <li>Vertex set: \( V_1 \cap V_2 \) (only common vertices)</li>
+            <li>Edge set: \( E_1 \cap E_2 \) (only edges present in both graphs with same endpoints)</li>
+            <li><strong>Properties</strong>: Represents the common subgraph. May be disconnected.</li>
+            <li><strong>Formally</strong>: \( G_1 \cap G_2 = (V_1 \cap V_2, E_1 \cap E_2) \)</li>
+        </ul>
+
+        <h3>3. Ring Sum (\( G_1 \oplus G_2 \))</h3>
+        <ul>
+            <li>Vertex set: \( V_1 \cup V_2 \)</li>
+            <li>Edge set: \( (E_1 \cup E_2) - (E_1 \cap E_2) \) = edges in exactly one of the graphs</li>
+            <li><strong>Properties</strong>: Symmetric difference of edge sets. Removes common edges.</li>
+            <li><strong>Alternative definition</strong>: \( G_1 \oplus G_2 = (G_1 \cup G_2) - (G_1 \cap G_2) \)</li>
+            <li><strong>Note</strong>: This operation is commutative and associative.</li>
+        </ul>
+
+        <h3>Example with specific graphs</h3>
+        <p>Let \( G_1 \): V={a,b,c}, E={ab, bc}</p>
+        <p>Let \( G_2 \): V={b,c,d}, E={bc, cd}</p>
+
+        <ul>
+            <li><strong>Union \( G_1 \cup G_2 \)</strong>:
+                V={a,b,c,d}, E={ab, bc, cd}
+                (Visual: Path a-b-c-d)</li>
+            <li><strong>Intersection \( G_1 \cap G_2 \)</strong>:
+                V={b,c}, E={bc}
+                (Visual: Just edge bc)</li>
+            <li><strong>Ring sum \( G_1 \oplus G_2 \)</strong>:
+                V={a,b,c,d}, E={ab, cd}
+                (Visual: Disjoint edges ab and cd)</li>
+        </ul>
+
+        <p><strong>Geometric interpretation</strong>: Union overlays graphs, intersection finds common part, ring sum
+            finds "exclusive or" of edges.</p>
+
+        <p><strong>Applications</strong>: Ring sum is used in circuit theory, network analysis, and cycle space
+            calculations.</p>
+    </div>
+
+    <div class="question">19. Prove that a connected graph G is an Euler graph if and only if all the vertices of G are
+        of even degree. (5 marks)</div>
+    <div class="answer">
+        <p>This is <strong>Euler's Theorem</strong>, one of the most famous results in graph theory.</p>
+
+        <h3>Definitions first</h3>
+        <ul>
+            <li><strong>Euler graph</strong>: Contains an Eulerian circuit (closed trail that uses every edge exactly
+                once and returns to starting vertex).</li>
+            <li><strong>Eulerian trail</strong>: Uses every edge exactly once but may not return to start (open).</li>
+            <li><strong>Even degree</strong>: Degree is divisible by 2.</li>
+        </ul>
+
+        <h3>Proof in two parts</h3>
+
+        <h3>Part 1 (⇒): If G has an Euler circuit, then all vertices have even degree</h3>
+        <ol>
+            <li>Let \( C = v_0 e_1 v_1 e_2 v_2 \dots e_m v_0 \) be an Euler circuit (length m = |E|).</li>
+            <li><strong>Observation</strong>: Each time the circuit visits a vertex (other than the starting point at
+                the beginning/end), it arrives via one edge and departs via another.</li>
+            <li><strong>Counting contributions</strong>: For each vertex \( v \):
+                <ul>
+                    <li>If \( v \) is not the starting vertex: Each visit contributes 2 to deg(v) (one in, one out).
+                    </li>
+                    <li>If \( v \) is the starting vertex \( v_0 \): The circuit starts here and ends here. The initial
+                        departure contributes 1, and the final arrival contributes 1, totaling 2.</li>
+                </ul>
+            </li>
+            <li><strong>Conclusion</strong>: Every vertex has degree = 2 × (number of times circuit visits that vertex),
+                which is even.</li>
+        </ol>
+
+        <h3>Part 2 (⇐): If G is connected and all vertices have even degree, then G has an Euler circuit</h3>
+
+        <p><strong>Proof by construction (Hierholzer's algorithm)</strong>:</p>
+        <ol>
+            <li><strong>Step 1 - Start with any vertex</strong>: Since all degrees are even and G is connected, every
+                vertex has degree at least 2 (except trivial case). Start at any vertex \( v_0 \).</li>
+            <li><strong>Step 2 - Build initial cycle</strong>: Follow edges without repeating any, until returning to \(
+                v_0 \). This is possible because:
+                <ul>
+                    <li>Whenever we enter a vertex (other than start), we can always leave via another unused edge
+                        (since degree is even, and used edges come in pairs).</li>
+                    <li>Eventually we must return to \( v_0 \) because the graph is finite.</li>
+                </ul>
+            </li>
+            <li><strong>Step 3 - Check if all edges used</strong>: If the cycle uses all edges, we're done (it's an
+                Euler circuit).</li>
+            <li><strong>Step 4 - Otherwise, find unused edges</strong>: Let \( C \) be the current cycle. Since G is
+                connected, there must be some vertex \( u \) on \( C \) that has unused incident edges.</li>
+            <li><strong>Step 5 - Build another cycle</strong>: Starting at \( u \), use only unused edges to create
+                another cycle \( C' \) that returns to \( u \). This is possible by same reasoning as Step 2.</li>
+            <li><strong>Step 6 - Merge cycles</strong>: Splice \( C' \) into \( C \) at vertex \( u \). This creates a
+                longer cycle.</li>
+            <li><strong>Step 7 - Repeat</strong>: Continue until all edges are used.</li>
+            <li><strong>Termination</strong>: Since graph is finite and each step uses more edges, the process
+                terminates with an Euler circuit.</li>
+        </ol>
+
+        <p><strong>Why connectivity is necessary</strong>: Without connectivity, each component could satisfy the
+            even-degree condition separately, but there would be no single circuit covering all edges of the whole
+            graph.</p>
+
+        <div class="example">
+            <strong>Example</strong>: A cycle graph \( C_n \) (all vertices degree 2) has an Euler circuit. A "bowtie"
+            of two triangles sharing a vertex (degrees: 2,2,2,2,2,2) also has an Euler circuit.
+        </div>
+
+        <p><strong>Historical context</strong>: Euler solved the Königsberg bridge problem (1736), which led to this
+            theorem. The "only if" direction is easier; the "if" direction requires the constructive proof above.</p>
+    </div>
+
+    <div class="question">22. Draw a graph which is Eulerian but not Hamiltonian. (5 marks)</div>
+    <div class="answer">
+        <p><strong>Concept clarification</strong>:</p>
+        <ul>
+            <li><strong>Eulerian</strong>: Has Euler circuit (closed trail covering all edges once)</li>
+            <li><strong>Hamiltonian</strong>: Has Hamiltonian cycle (cycle visiting all vertices once)</li>
+            <li>These are independent properties: A graph can be one, both, or neither.</li>
+        </ul>
+
+        <h3>Construction of Eulerian but not Hamiltonian graph</h3>
+
+        <p><strong>Standard example</strong>: The <strong>"House of Santa Claus"</strong> or certain
+            <strong>hierarchical star-like graphs</strong>.</p>
+
+        <p><strong>Better known example</strong>: Take two copies of \( K_5 \) (complete graph on 5 vertices) and join
+            them at a single vertex.</p>
+
+        <h3>Detailed construction</h3>
+        <ol>
+            <li>Start with two disjoint complete graphs \( K_5 \), call them \( A \) and \( B \).</li>
+            <li>Identify one vertex from \( A \) with one vertex from \( B \) (merge them into a single vertex \( v \)).
+            </li>
+            <li>Resulting graph \( G \):
+                <ul>
+                    <li>Total vertices: \( 5 + 5 - 1 = 9 \)</li>
+                    <li>Vertex \( v \) has degree: \( 4 \) (from A) + \( 4 \) (from B) = \( 8 \)</li>
+                    <li>Other vertices: degree 4 (within their own \( K_5 \)) + possibly connection to \( v \)</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h3>Why it's Eulerian</h3>
+        <ul>
+            <li>All vertices have even degree (4 or 8)</li>
+            <li>Graph is connected</li>
+            <li>By Euler's theorem, it has an Euler circuit</li>
+        </ul>
+
+        <h3>Why it's not Hamiltonian</h3>
+        <ul>
+            <li>Consider what a Hamiltonian cycle would require</li>
+            <li>The cycle must visit all vertices exactly once</li>
+            <li>Vertex \( v \) is a <strong>cut vertex</strong> (removing it disconnects the graph into two components:
+                A\{v} and B\{v})</li>
+            <li>In any Hamiltonian cycle, when we first enter component A\{v} from \( v \), we must eventually leave it
+                to visit vertices in B\{v}</li>
+            <li>But to leave A\{v}, we must go through \( v \) again</li>
+            <li>This means \( v \) would be visited more than once, violating Hamiltonian condition</li>
+            <li>Formally: Any cycle containing all vertices would have to pass through \( v \) at least twice to visit
+                both sides, impossible in a Hamiltonian cycle</li>
+        </ul>
+
+        <h3>Simpler well-known example</h3>
+        <p>The <strong>"Butterfly graph"</strong> or two triangles sharing exactly one vertex:</p>
+        <ul>
+            <li>Vertices: {a,b,c,d,e} where {a,b,c} form triangle, {a,d,e} form another triangle sharing vertex a</li>
+            <li>Degrees: a:4, b:2, c:2, d:2, e:2 (all even → Eulerian)</li>
+            <li>Not Hamiltonian: Vertex a is cut vertex, same argument as above</li>
+        </ul>
+
+        <div class="graph-image">
+            <pre>
+    b
+   / \
+  a---c
+   \ /
+    d
+    |
+    e
+            </pre>
+        </div>
+
+        <p><strong>Known fact</strong>: All Hamiltonian graphs are 2-connected (no cut vertices), but Eulerian graphs
+            can have cut vertices. So any Eulerian graph with a cut vertex cannot be Hamiltonian (unless trivial).</p>
+
+        <p><strong>Best classroom example</strong>: A graph shaped like the letter <strong>"θ"</strong> (theta) or two
+            cycles joined at a single vertex.</p>
+    </div>
+
+    <div class="question">23. Define Eulerian graph and Hamilton graphs with examples. (5 marks)</div>
+    <div class="answer">
+        <h3>Eulerian Graph</h3>
+        <div class="definition">
+            <ul>
+                <li><strong>Definition</strong>: A connected graph that contains an <strong>Eulerian circuit</strong>
+                    (also called Euler circuit). An Eulerian circuit is a closed walk that traverses every edge exactly
+                    once and returns to the starting vertex.</li>
+                <li><strong>Alternative</strong>: A graph is Eulerian if it has a closed trail containing all edges.
+                </li>
+                <li><strong>Characterization</strong> (Euler's Theorem): A connected graph is Eulerian iff every vertex
+                    has even degree.</li>
+            </ul>
+        </div>
+
+        <h4>Examples</h4>
+        <ol>
+            <li><strong>Cycle graph \( C_n \)</strong>: Every vertex degree 2, has obvious Euler circuit going around
+                the cycle.</li>
+            <li><strong>Complete graph \( K_n \) with odd n</strong>: For odd n ≥ 3, every vertex has degree n-1 (even),
+                so Eulerian. \( K_3 \) (triangle) is Eulerian.</li>
+            <li><strong>Any connected graph where all vertices have even degree</strong>.</li>
+        </ol>
+
+        <h4>Non-example</h4>
+        <p>\( K_4 \) has vertices of degree 3 (odd), so not Eulerian (but it has Eulerian trails).</p>
+
+        <h3>Hamiltonian Graph</h3>
+        <div class="definition">
+            <ul>
+                <li><strong>Definition</strong>: A graph that contains a <strong>Hamiltonian cycle</strong>. A
+                    Hamiltonian cycle is a cycle that visits each vertex exactly once (except the starting/ending
+                    vertex, visited twice).</li>
+                <li><strong>Alternative</strong>: Contains a spanning cycle.</li>
+                <li><strong>No simple characterization</strong>: Unlike Eulerian graphs, there's no known simple
+                    necessary and sufficient condition for Hamiltonian graphs. This is an NP-complete problem.</li>
+            </ul>
+        </div>
+
+        <h4>Sufficient conditions (not necessary)</h4>
+        <ul>
+            <li>Dirac's Theorem: If G has n ≥ 3 vertices and every vertex has degree ≥ n/2, then G is Hamiltonian.</li>
+            <li>Ore's Theorem: If for every pair of non-adjacent vertices, sum of degrees ≥ n, then G is Hamiltonian.
+            </li>
+        </ul>
+
+        <h4>Examples</h4>
+        <ol>
+            <li><strong>Cycle graph \( C_n \)</strong>: Trivially Hamiltonian (the cycle itself).</li>
+            <li><strong>Complete graph \( K_n \) (n ≥ 3)</strong>: Always Hamiltonian (many Hamiltonian cycles).</li>
+            <li><strong>Platonic solids</strong>: Their skeletons are Hamiltonian (can trace along edges visiting each
+                vertex once).</li>
+        </ol>
+
+        <h4>Non-example</h4>
+        <p>A tree with more than 2 vertices is never Hamiltonian (contains no cycles at all).</p>
+
+        <h3>Comparison</h3>
+        <table>
+            <tr>
+                <th>Property</th>
+                <th>Eulerian</th>
+                <th>Hamiltonian</th>
+            </tr>
+            <tr>
+                <td><strong>Focus</strong></td>
+                <td>Edges</td>
+                <td>Vertices</td>
+            </tr>
+            <tr>
+                <td><strong>Characterization</strong></td>
+                <td>Simple: all degrees even</td>
+                <td>No simple characterization</td>
+            </tr>
+            <tr>
+                <td><strong>Complexity</strong></td>
+                <td>Polynomial time to check</td>
+                <td>NP-complete to check</td>
+            </tr>
+            <tr>
+                <td><strong>Example of both</strong></td>
+                <td>\( K_3 \) (triangle)</td>
+                <td>\( K_3 \)</td>
+            </tr>
+            <tr>
+                <td><strong>Eulerian but not Hamiltonian</strong></td>
+                <td>Two \( K_5 \) joined at one vertex</td>
+                <td>See Q22</td>
+            </tr>
+            <tr>
+                <td><strong>Hamiltonian but not Eulerian</strong></td>
+                <td>\( K_4 \) (all degrees 3, odd)</td>
+                <td>\( K_4 \)</td>
+            </tr>
+        </table>
+
+        <h3>Historical notes</h3>
+        <ul>
+            <li>Eulerian: Solved by Leonhard Euler in 1736 (Königsberg bridges).</li>
+            <li>Hamiltonian: Named after William Rowan Hamilton who studied them in 1850s, though the problem was known
+                earlier.</li>
+        </ul>
+    </div>
+
+    <div class="question">25. State travelling salesman problem. How it is related to Hamiltonian circuits. (5 marks)
+    </div>
+    <div class="answer">
+        <h3>Traveling Salesman Problem (TSP)</h3>
+        <ul>
+            <li><strong>Statement</strong>: Given a list of cities and the distances (or costs) between each pair of
+                cities, find the shortest possible route that visits each city exactly once and returns to the origin
+                city.</li>
+            <li><strong>Formal definition</strong>: Given a complete weighted graph \( K_n \) with edge weights \( w(e)
+                \), find a Hamiltonian cycle of minimum total weight.</li>
+            <li><strong>Variants</strong>:
+                <ol>
+                    <li><strong>Metric TSP</strong>: Distances satisfy triangle inequality.</li>
+                    <li><strong>Euclidean TSP</strong>: Cities are points in plane with Euclidean distances.</li>
+                    <li><strong>Asymmetric TSP</strong>: Distance from A to B ≠ distance from B to A.</li>
+                </ol>
+            </li>
+            <li><strong>Computational complexity</strong>: NP-hard (no known polynomial-time solution for large n).</li>
+        </ul>
+
+        <h3>Relationship to Hamiltonian cycles</h3>
+        <ol>
+            <li><strong>Fundamental equivalence</strong>: The decision version of TSP is directly reducible to the
+                Hamiltonian cycle problem:
+                <ul>
+                    <li><strong>TSP Decision Problem</strong>: "Is there a tour of length ≤ L?"</li>
+                    <li><strong>Reduction</strong>: Create an unweighted graph where edge exists iff distance ≤ some
+                        threshold. TSP solution exists iff Hamiltonian cycle exists.</li>
+                </ul>
+            </li>
+            <li><strong>TSP as weighted Hamiltonian cycle problem</strong>:
+                <ul>
+                    <li>Consider a complete graph \( K_n \) with vertices as cities.</li>
+                    <li>Each edge has weight = distance between corresponding cities.</li>
+                    <li>A Hamiltonian cycle in this graph corresponds to a permutation of cities (tour).</li>
+                    <li>The TSP seeks the Hamiltonian cycle with minimum sum of edge weights.</li>
+                </ul>
+            </li>
+            <li><strong>If distances satisfy triangle inequality</strong>:
+                <ul>
+                    <li>Minimum spanning tree gives 2-approximation for TSP.</li>
+                    <li>Christofides algorithm gives 1.5-approximation.</li>
+                    <li>But exact solution still requires finding optimal Hamiltonian cycle.</li>
+                </ul>
+            </li>
+            <li><strong>If all distances are 1</strong>:
+                <ul>
+                    <li>TSP reduces to: "Does the graph have a Hamiltonian cycle?"</li>
+                    <li>Then TSP solution exists iff graph is Hamiltonian, and optimal tour length = n.</li>
+                </ul>
+            </li>
+            <li><strong>Complexity connection</strong>:
+                <ul>
+                    <li>Hamiltonian Cycle Problem is NP-complete.</li>
+                    <li>TSP is NP-hard (at least as hard).</li>
+                    <li>In fact, TSP contains Hamiltonian Cycle as a special case.</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h3>Mathematical formulation</h3>
+        <p>Let \( d_{ij} \) = distance from city i to city j.</p>
+        <p>Let \( x_{ij} = 1 \) if tour goes directly from i to j, else 0.</p>
+        <p>Minimize: \( \sum_{i,j} d_{ij} x_{ij} \)</p>
+        <p>Subject to:</p>
+        <ul>
+            <li>Each city entered exactly once: \( \sum_i x_{ij} = 1 \) for all j</li>
+            <li>Each city left exactly once: \( \sum_j x_{ij} = 1 \) for all i</li>
+            <li>No subtours (enforces single cycle visiting all cities)</li>
+        </ul>
+
+        <h3>Practical significance</h3>
+        <ul>
+            <li>Logistics and delivery routes</li>
+            <li>Circuit board drilling</li>
+            <li>DNA sequencing</li>
+            <li>Astronomy (telescope observation scheduling)</li>
+        </ul>
+
+        <div class="example">
+            <strong>Example</strong>: 4 cities: A, B, C, D with distances:
+            AB=10, AC=15, AD=20, BC=35, BD=25, CD=30
+            Possible tours:
+            A-B-C-D-A: 10+35+30+20 = 95
+            A-B-D-C-A: 10+25+30+15 = 80 (better)
+            A-C-B-D-A: 15+35+25+20 = 95
+            etc. TSP finds the minimum.
+        </div>
+
+        <p><strong>Without Hamiltonian cycle</strong>, there's no tour visiting all cities exactly once, so TSP has no
+            solution (unless we allow revisiting, which becomes different problem).</p>
+    </div>
+
+    <div class="question">26. State and prove Euler's theorem. (5 marks)</div>
+    <div class="answer">
+        <h3>Euler's Theorem for planar graphs</h3>
+        <p>(also called Euler's Polyhedron Formula):</p>
+
+        <div class="definition">
+            <strong>Statement</strong>: For any connected planar graph (or polyhedron) drawn in the plane without edge
+            intersections:
+            \[ V - E + F = 2 \]
+            where:
+            - \( V \) = number of vertices
+            - \( E \) = number of edges
+            - \( F \) = number of faces (including the unbounded outer face)
+        </div>
+
+        <h3>Proof by induction on number of edges</h3>
+
+        <h4>Base cases</h4>
+        <ol>
+            <li><strong>Tree (acyclic connected graph)</strong>:
+                <ul>
+                    <li>For a tree: \( E = V - 1 \)</li>
+                    <li>A tree has only one face (the outer face), so \( F = 1 \)</li>
+                    <li>Check: \( V - (V-1) + 1 = 2 \) ✓</li>
+                </ul>
+            </li>
+            <li><strong>Minimal non-tree</strong>: Simple cycle (polygon):
+                <ul>
+                    <li>\( V = E \) (cycle has same number of vertices and edges)</li>
+                    <li>Creates 2 faces: inside and outside, so \( F = 2 \)</li>
+                    <li>Check: \( V - V + 2 = 2 \) ✓</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h4>Inductive hypothesis</h4>
+        <p>Assume formula holds for all connected planar graphs with fewer than \( m \) edges.</p>
+
+        <h4>Inductive step</h4>
+        <p>Consider connected planar graph \( G \) with \( E = m \) edges (\( m \geq 1 \)).</p>
+
+        <h4>Case 1</h4>
+        <p>If \( G \) has a cycle:</p>
+        <ul>
+            <li>Remove one edge from a cycle. Call new graph \( G' \).</li>
+            <li>Properties of \( G' \):
+                <ul>
+                    <li>Still connected (edge from cycle removal doesn't disconnect)</li>
+                    <li>\( V' = V \)</li>
+                    <li>\( E' = E - 1 = m - 1 \)</li>
+                    <li>\( F' = F - 1 \) (removing edge merges two faces)</li>
+                </ul>
+            </li>
+            <li>By inductive hypothesis: \( V' - E' + F' = 2 \)</li>
+            <li>Substitute: \( V - (E-1) + (F-1) = V - E + F = 2 \)</li>
+            <li>So formula holds for \( G \).</li>
+        </ul>
+
+        <h4>Case 2</h4>
+        <p>If \( G \) has no cycle (i.e., \( G \) is a tree):</p>
+        <ul>
+            <li>Already covered in base case.</li>
+        </ul>
+
+        <p><strong>Thus by induction, formula holds for all connected planar graphs</strong>.</p>
+
+        <h3>Alternative proof outline (by face induction)</h3>
+        <ol>
+            <li>Start with spanning tree of \( G \) (has \( V-1 \) edges, 1 face).</li>
+            <li>Formula holds for tree: \( V - (V-1) + 1 = 2 \).</li>
+            <li>Add back remaining edges one by one.</li>
+            <li>Each added edge:
+                <ul>
+                    <li>Increases \( E \) by 1</li>
+                    <li>Splits a face into two, increasing \( F \) by 1</li>
+                    <li>Net change: \( (V - (E+1) + (F+1)) = V - E + F \) (unchanged)</li>
+                </ul>
+            </li>
+            <li>So invariant \( V - E + F = 2 \) maintained.</li>
+        </ol>
+
+        <h3>For graphs with \( k \) components</h3>
+        <p>More general formula:
+            \[ V - E + F = 1 + k \]
+            (Proof similar, using induction on number of edges or components.)</p>
+
+        <h3>Applications</h3>
+        <ol>
+            <li><strong>Proving \( K_5 \) and \( K_{3,3} \) are non-planar</strong>:
+                <ul>
+                    <li>For \( K_5 \): \( V=5, E=10 \). If planar, \( F = 2 - V + E = 7 \).</li>
+                    <li>But each face has ≥3 edges, and each edge borders 2 faces, so \( 2E \geq 3F \Rightarrow 20 \geq
+                        21 \), contradiction.</li>
+                </ul>
+            </li>
+            <li><strong>For \( K_{3,3} \): \( V=6, E=9 \), if planar \( F=5 \).
+                    <ul>
+                        <li>Bipartite → no odd cycles → each face has ≥4 edges</li>
+                        <li>So \( 2E \geq 4F \Rightarrow 18 \geq 20 \), contradiction.</li>
+                    </ul>
+            </li>
+            <li><strong>Upper bound on edges in planar graph</strong>: \( E \leq 3V - 6 \) (if \( V \geq 3 \)).
+                <p>Proof: \( 2E \geq 3F \) and \( F = 2 - V + E \Rightarrow 2E \geq 3(2 - V + E) \Rightarrow E \leq 3V -
+                    6 \).</p>
+            </li>
+        </ol>
+
+        <p><strong>Historical note</strong>: Euler stated this for polyhedra in 1758, but first complete proof for
+            planar graphs was given by Cauchy in 1813.</p>
+    </div>
+</body>
+
+</html>

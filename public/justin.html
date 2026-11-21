@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Justin</title>
+<meta name="description" content="Explore Hari's Portfolio featuring expertise in web development, cybersecurity, and Android app development. Discover innovative projects, professional skills, and significant achievements.">
+<meta name="keywords" content="Hari Nandan K, portfolio, web development, cybersecurity, Android app development, projects, skills, achievements, technology, developer, security expert, app developer">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Justin Alexia Andrew | Cybersecurity Specialist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Manrope"', 'sans-serif'],
+                        display: ['"Space Grotesk"', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: '#0a0a0a',
+                        light: '#f4f4f5',
+                        accent: '#3b82f6', 
+                        'accent-dark': '#1d4ed8',
+                        gray: {
+                            100: '#f3f4f6',
+                            200: '#e5e7eb',
+                            800: '#1f2937',
+                            900: '#111827',
+                        }
+                    },
+                    animation: {
+                        'spin-slow': 'spin 12s linear infinite',
+                        'marquee': 'marquee 30s linear infinite',
+                    },
+                    keyframes: {
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-100%)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* --- CORE STYLES --- */
+        body {
+            background-color: #0a0a0a;
+            color: #f4f4f5;
+            cursor: none; /* Hide default cursor */
+            overflow-x: hidden;
+        }
+
+        /* Grain Overlay */
+        .grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.4;
+        }
+
+        /* Custom Cursor */
+        .cursor-dot,
+        .cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: white;
+        }
+
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+
+        /* Hover State for Cursor */
+        body.hovering .cursor-outline {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: transparent;
+            backdrop-filter: blur(2px);
+        }
+
+        /* Gradient Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            z-index: -1;
+        }
+
+        /* Grid Background */
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+        }
+
+        /* Typography Utilites */
+        .text-stroke {
+            -webkit-text-stroke: 1px rgba(255,255,255,0.1);
+            color: transparent;
+        }
+        
+        .clip-text-image {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-image: linear-gradient(to right, #fff, #aaa);
+        }
+
+        /* Project Card Hover Effect */
+        .project-card:hover .project-image {
+            transform: scale(1.05);
+            filter: grayscale(0%);
+        }
+        .project-image {
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            filter: grayscale(100%);
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+    
+    <!-- GRAIN OVERLAY -->
+    <div class="grain"></div>
+
+    <!-- BACKGROUND ELEMENTS -->
+    <div class="fixed inset-0 bg-grid pointer-events-none"></div>
+    <div class="orb bg-blue-600 w-96 h-96 top-[-10%] right-[-5%] animate-pulse" style="animation-duration: 8s;"></div>
+    <div class="orb bg-purple-600 w-64 h-64 bottom-[20%] left-[-10%] opacity-20"></div>
+
+    <!-- NAVIGATION -->
+    <nav class="fixed w-full z-50 top-0 left-0 px-6 py-6 mix-blend-difference text-white">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="#" class="text-2xl font-display font-bold tracking-tighter hover-trigger">
+                JAA<span class="text-accent">.</span>
+            </a>
+            
+            <div class="hidden md:flex space-x-12 text-sm uppercase tracking-widest font-medium">
+                <a href="#about" class="hover:text-gray-300 transition-colors hover-trigger relative group">
+                    Identity
+                    <span class="absolute -bottom-1 left-0 w-0 h-px bg-white transition-all group-hover:w-full"></span>
+                </a>
+                <a href="#expertise" class="hover:text-gray-300 transition-colors hover-trigger relative group">
+                    Expertise
+                    <span class="absolute -bottom-1 left-0 w-0 h-px bg-white transition-all group-hover:w-full"></span>
+                </a>
+                <a href="#work" class="hover:text-gray-300 transition-colors hover-trigger relative group">
+                    Projects
+                    <span class="absolute -bottom-1 left-0 w-0 h-px bg-white transition-all group-hover:w-full"></span>
+                </a>
+            </div>
+
+            <a href="#contact" class="hidden md:inline-block px-6 py-2 border border-white/20 rounded-full text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300 hover-trigger">
+                Contact Uplink
+            </a>
+            
+             <button class="md:hidden text-white text-xl hover-trigger">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="min-h-screen flex items-center justify-center relative pt-20">
+        <div class="max-w-7xl w-full px-6 relative z-10">
+            <div class="overflow-hidden mb-2">
+                <h2 class="text-accent font-mono text-sm tracking-[0.2em] uppercase opacity-0 animate-text" data-delay="0.1">Justin Alexia Andrew</h2>
+            </div>
+            
+            <div class="mt-4">
+                <h1 class="text-6xl md:text-9xl font-display font-bold leading-[0.9] tracking-tighter text-white mix-blend-screen">
+                    <span class="block overflow-hidden"><span class="block transform translate-y-full animate-slide-up">Secure.</span></span>
+                    <span class="block overflow-hidden"><span class="block transform translate-y-full animate-slide-up" style="animation-delay: 0.1s">Test.</span></span>
+                    <span class="block overflow-hidden text-transparent text-stroke"><span class="block transform translate-y-full animate-slide-up" style="animation-delay: 0.2s">Defend.</span></span>
+                </h1>
+            </div>
+
+            <div class="mt-12 flex flex-col md:flex-row justify-between items-start md:items-end border-t border-white/10 pt-8 opacity-0 animate-fade-in" style="animation-delay: 0.8s">
+                <p class="max-w-md text-gray-400 text-lg font-light leading-relaxed">
+                    Ethical Hacker & Red Team Operator based in <span class="text-white">Kozhikode, Kerala</span>. Dedicated to identifying vulnerabilities and building robust security solutions.
+                </p>
+                
+                <div class="mt-8 md:mt-0 flex gap-4">
+                    <a href="#work" class="w-16 h-16 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all duration-300 hover-trigger group">
+                        <i class="fas fa-arrow-down transform group-hover:translate-y-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MARQUEE SECTION -->
+    <div class="py-8 border-y border-white/5 bg-black/50 backdrop-blur-sm overflow-hidden">
+        <div class="flex animate-marquee whitespace-nowrap">
+            <span class="text-3xl md:text-5xl font-display font-bold text-white/10 mx-6">PARROT OS</span>
+            <span class="text-3xl md:text-5xl font-display font-bold text-white/30 mx-6">KALI LINUX</span>
+            <span class="text-3xl md:text-5xl font-display font-bold text-white/10 mx-6">NMAP</span>
+            <span class="text-3xl md:text-5xl font-display font-bold text-white/30 mx-6">METASPLOIT</span>
+            <span class="text-3xl md:text-5xl font-display font-bold text-white/10 mx-6">BURP SUITE</span>
+            <span class="text-3xl md:text-5xl font-display font-bold text-white/30 mx-6">SQLMAP</span>
+            <span class="text-3xl md:text-5xl font-display font-bold text-white/10 mx-6">WIRESHARK</span>
+            <span class="text-3xl md:text-5xl font-display font-bold text-white/30 mx-6">NESSUS</span>
+            <span class="text-3xl md:text-5xl font-display font-bold text-white/10 mx-6">SHODAN</span>
+            <span class="text-3xl md:text-5xl font-display font-bold text-white/30 mx-6">PYTHON</span>
+            <!-- Duplicate for seamless loop -->
+            <span class="text-3xl md:text-5xl font-display font-bold text-white/10 mx-6">PARROT OS</span>
+            <span class="text-3xl md:text-5xl font-display font-bold text-white/30 mx-6">KALI LINUX</span>
+        </div>
+    </div>
+
+    <!-- ABOUT GRID -->
+    <section id="about" class="py-32 px-6 relative">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12">
+            <div class="md:col-span-4">
+                <h3 class="text-xs font-mono text-accent uppercase tracking-widest mb-4">01 / Profile</h3>
+                <h2 class="text-4xl font-display font-bold text-white mb-6">Cybersecurity Professional</h2>
+                <p class="text-gray-400 leading-relaxed mb-8">
+                    A passionate cybersecurity professional and ethical hacker dedicated to protecting digital assets, uncovering vulnerabilities, and building robust security solutions. Focused on offensive security, penetration testing, and securing the Internet of Things landscape.
+                </p>
+                
+                <ul class="space-y-4 text-sm text-gray-300 font-mono">
+                    <li class="flex items-center"><span class="w-2 h-2 bg-accent rounded-full mr-4"></span>Offensive Security</li>
+                    <li class="flex items-center"><span class="w-2 h-2 bg-accent rounded-full mr-4"></span>Threat Response</li>
+                    <li class="flex items-center"><span class="w-2 h-2 bg-accent rounded-full mr-4"></span>Malware Analysis</li>
+                </ul>
+            </div>
+
+            <div class="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- Stat Card 1 -->
+                <div class="bg-white/5 p-8 rounded-2xl border border-white/5 hover:border-white/20 transition-colors duration-300 group hover-trigger">
+                    <i class="fas fa-skull-crossbones text-3xl text-gray-500 mb-6 group-hover:text-accent transition-colors"></i>
+                    <div class="text-3xl font-display font-bold text-white mb-2">95%</div>
+                    <div class="text-sm text-gray-400">Ethical Hacking & Pentesting</div>
+                </div>
+                <!-- Stat Card 2 -->
+                <div class="bg-white/5 p-8 rounded-2xl border border-white/5 hover:border-white/20 transition-colors duration-300 group hover-trigger">
+                    <i class="fab fa-linux text-3xl text-gray-500 mb-6 group-hover:text-accent transition-colors"></i>
+                    <div class="text-3xl font-display font-bold text-white mb-2">90%</div>
+                    <div class="text-sm text-gray-400">Linux System Admin (Parrot/Kali)</div>
+                </div>
+                <!-- Stat Card 3 -->
+                <div class="bg-white/5 p-8 rounded-2xl border border-white/5 hover:border-white/20 transition-colors duration-300 group hover-trigger">
+                    <i class="fab fa-python text-3xl text-gray-500 mb-6 group-hover:text-accent transition-colors"></i>
+                    <div class="text-3xl font-display font-bold text-white mb-2">90%</div>
+                    <div class="text-sm text-gray-400">Python Scripting for Security</div>
+                </div>
+                 <!-- Stat Card 4 -->
+                 <div class="bg-white/5 p-8 rounded-2xl border border-white/5 hover:border-white/20 transition-colors duration-300 group hover-trigger">
+                    <i class="fas fa-wifi text-3xl text-gray-500 mb-6 group-hover:text-accent transition-colors"></i>
+                    <div class="text-3xl font-display font-bold text-white mb-2">80%</div>
+                    <div class="text-sm text-gray-400">IoT Security Assessment</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPERTISE LIST -->
+    <section id="expertise" class="py-20 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col space-y-0">
+                <!-- Item 1 -->
+                <div class="group py-12 border-b border-white/10 flex flex-col md:flex-row justify-between items-start md:items-center hover-trigger transition-all duration-500 hover:px-4">
+                    <div class="mb-4 md:mb-0">
+                        <h3 class="text-2xl md:text-4xl font-display font-bold text-gray-500 group-hover:text-white transition-colors duration-300">Ethical Hacking & Pentesting</h3>
+                    </div>
+                    <div class="max-w-md text-right md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-10 group-hover:translate-x-0">
+                        <p class="text-gray-400 text-sm">Identifying vulnerabilities in networks and applications (OWASP Top 10). Tools: Metasploit, Burp Suite, Nessus.</p>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="group py-12 border-b border-white/10 flex flex-col md:flex-row justify-between items-start md:items-center hover-trigger transition-all duration-500 hover:px-4">
+                    <div class="mb-4 md:mb-0">
+                        <h3 class="text-2xl md:text-4xl font-display font-bold text-gray-500 group-hover:text-white transition-colors duration-300">Red Teaming & Simulation</h3>
+                    </div>
+                    <div class="max-w-md text-right md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-10 group-hover:translate-x-0">
+                        <p class="text-gray-400 text-sm">Simulating APT attacks, social engineering, and evasion techniques to test defensive capabilities.</p>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="group py-12 border-b border-white/10 flex flex-col md:flex-row justify-between items-start md:items-center hover-trigger transition-all duration-500 hover:px-4">
+                    <div class="mb-4 md:mb-0">
+                        <h3 class="text-2xl md:text-4xl font-display font-bold text-gray-500 group-hover:text-white transition-colors duration-300">IoT Security & Threat Response</h3>
+                    </div>
+                    <div class="max-w-md text-right md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-10 group-hover:translate-x-0">
+                        <p class="text-gray-400 text-sm">Firmware analysis, embedded systems, and securing communication protocols for IoT devices.</p>
+                    </div>
+                </div>
+
+                 <!-- Item 4 -->
+                 <div class="group py-12 border-b border-white/10 flex flex-col md:flex-row justify-between items-start md:items-center hover-trigger transition-all duration-500 hover:px-4">
+                    <div class="mb-4 md:mb-0">
+                        <h3 class="text-2xl md:text-4xl font-display font-bold text-gray-500 group-hover:text-white transition-colors duration-300">Cybersecurity R&D</h3>
+                    </div>
+                    <div class="max-w-md text-right md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-10 group-hover:translate-x-0">
+                        <p class="text-gray-400 text-sm">Researching emerging threats, AI/ML in cybersecurity, and developing innovative defensive strategies.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WORK SECTION -->
+    <section id="work" class="py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex justify-between items-end mb-20">
+                <div>
+                    <h3 class="text-xs font-mono text-accent uppercase tracking-widest mb-4">02 / Portfolio</h3>
+                    <h2 class="text-5xl font-display font-bold text-white">Featured Projects</h2>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+                <!-- Project 1: TexidoMeg -->
+                <div class="project-card group hover-trigger cursor-pointer">
+                    <div class="w-full aspect-[16/9] bg-gray-900 rounded-2xl overflow-hidden mb-6 relative border border-white/10">
+                        <div class="absolute inset-0 flex items-center justify-center z-10">
+                             <i class="fas fa-graduation-cap text-5xl text-white/20 group-hover:text-accent transition-colors duration-500"></i>
+                        </div>
+                        <div class="project-image w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 mix-blend-luminosity"></div>
+                        <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span class="text-accent font-mono text-xs">Co-Founder &bull; HOPE</span>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-2 group-hover:text-accent transition-colors">TexidoMeg</h3>
+                            <p class="text-gray-400 text-sm max-w-sm">Training Portal. Open-learning platform focused on cybersecurity education, mentorship, and CTF labs.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: Auto Vuln Scanner -->
+                <div class="project-card group hover-trigger cursor-pointer md:mt-16">
+                    <div class="w-full aspect-[16/9] bg-gray-900 rounded-2xl overflow-hidden mb-6 relative border border-white/10">
+                        <div class="absolute inset-0 flex items-center justify-center z-10">
+                             <i class="fas fa-search text-5xl text-white/20 group-hover:text-accent transition-colors duration-500"></i>
+                        </div>
+                        <div class="project-image w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 mix-blend-luminosity"></div>
+                        <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span class="text-accent font-mono text-xs">Open Source &bull; Python</span>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-2 group-hover:text-accent transition-colors">Auto Vuln Scanner</h3>
+                            <p class="text-gray-400 text-sm max-w-sm">Python-based automated scanner integrating Nmap for comprehensive network and web app analysis.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3: Python Library Integration -->
+                <div class="project-card group hover-trigger cursor-pointer">
+                    <div class="w-full aspect-[16/9] bg-gray-900 rounded-2xl overflow-hidden mb-6 relative border border-white/10">
+                        <div class="absolute inset-0 flex items-center justify-center z-10">
+                             <i class="fab fa-python text-5xl text-white/20 group-hover:text-accent transition-colors duration-500"></i>
+                        </div>
+                        <div class="project-image w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 mix-blend-luminosity"></div>
+                        <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span class="text-accent font-mono text-xs">Internship &bull; Keltron</span>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-2 group-hover:text-accent transition-colors">Python Automation</h3>
+                            <p class="text-gray-400 text-sm max-w-sm">Integrated Python automation libraries (Requests, Selenium, Scapy) into workflows and conducted peer training.</p>
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- Project 4: IoT Botnet Research -->
+                 <div class="project-card group hover-trigger cursor-pointer md:mt-16">
+                    <div class="w-full aspect-[16/9] bg-gray-900 rounded-2xl overflow-hidden mb-6 relative border border-white/10">
+                        <div class="absolute inset-0 flex items-center justify-center z-10">
+                             <i class="fas fa-network-wired text-5xl text-white/20 group-hover:text-accent transition-colors duration-500"></i>
+                        </div>
+                        <div class="project-image w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 mix-blend-luminosity"></div>
+                        <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span class="text-accent font-mono text-xs">Research &bull; Academic</span>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-2 group-hover:text-accent transition-colors">IoT Botnet Detection</h3>
+                            <p class="text-gray-400 text-sm max-w-sm">Research on mitigating IoT botnets using ML techniques. Traffic analysis and anomaly detection models.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT / FOOTER -->
+    <section id="contact" class="min-h-[80vh] flex flex-col justify-between py-20 px-6 relative bg-white text-black rounded-t-[3rem] mt-20">
+        <div class="max-w-7xl mx-auto w-full">
+            <div class="flex justify-between items-start mb-20">
+                <h2 class="text-6xl md:text-8xl font-display font-bold tracking-tighter leading-none">
+                    Secure your<br>digital realm.
+                </h2>
+                <div class="hidden md:block w-32 h-32 bg-accent rounded-full animate-pulse"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <p class="text-xl font-medium mb-8">Have a security assessment in mind? I'm ready to tackle new challenges.</p>
+                    <a href="mailto:harinandankofficial@tuta.io" class="inline-block px-8 py-4 bg-black text-white rounded-full text-lg font-medium hover:bg-accent hover:scale-105 transition-all duration-300 hover-trigger">
+                        harinandankofficial@tuta.io
+                    </a>
+                </div>
+                
+                <div class="flex flex-col justify-end">
+                    <div class="grid grid-cols-2 gap-8 text-sm uppercase tracking-widest mb-12">
+                        <div>
+                            <h4 class="text-gray-500 mb-4">Socials</h4>
+                            <ul class="space-y-2 font-bold">
+                                <li><a href="#" class="hover:text-accent transition-colors hover-trigger">LinkedIn</a></li>
+                                <li><a href="#" class="hover:text-accent transition-colors hover-trigger">GitHub</a></li>
+                                <li><a href="#" class="hover:text-accent transition-colors hover-trigger">Twitter</a></li>
+                                <li><a href="#" class="hover:text-accent transition-colors hover-trigger">Instagram</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-gray-500 mb-4">Contact</h4>
+                            <ul class="space-y-2 font-bold">
+                                <li><a href="tel:+917510155646" class="hover:text-accent transition-colors hover-trigger">+91 75101 55646</a></li>
+                                <li>Kozhikode, Kerala, India</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto w-full pt-8 border-t border-gray-200 flex justify-between items-center text-xs font-mono uppercase">
+            <span>© 2026 Justin Alexia Andrew.</span>
+            <span>Scroll to Top</span>
+        </div>
+    </section>
+
+    <!-- SCRIPTS FOR ANIMATION & INTERACTION -->
+    <script>
+        // --- CUSTOM CURSOR ---
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+        
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
+            
+            // Dot follows instantly
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+            
+            // Outline follows with delay (using animate for smoothness)
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+
+        // Add hover states for interactive elements
+        const interactiveElements = document.querySelectorAll('.hover-trigger');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                document.body.classList.add('hovering');
+            });
+            el.addEventListener('mouseleave', () => {
+                document.body.classList.remove('hovering');
+            });
+        });
+
+        // --- GSAP ANIMATIONS ---
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero Animations
+        gsap.to(".animate-slide-up", {
+            y: 0,
+            duration: 1.5,
+            ease: "power4.out",
+            stagger: 0.2
+        });
+
+        gsap.to(".animate-text", {
+            opacity: 1,
+            duration: 1,
+            delay: 0.5
+        });
+
+        gsap.to(".animate-fade-in", {
+            opacity: 1,
+            duration: 1,
+            delay: 1
+        });
+
+        // Scroll Reveals
+        const sections = document.querySelectorAll('section');
+        sections.forEach(section => {
+            gsap.fromTo(section.children, 
+                { y: 50, opacity: 0 },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 1,
+                    stagger: 0.2,
+                    scrollTrigger: {
+                        trigger: section,
+                        start: "top 80%",
+                    }
+                }
+            );
+        });
+
+    </script>
+
+
+</body>
+
+</html>

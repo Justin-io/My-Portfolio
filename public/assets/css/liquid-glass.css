@@ -1,0 +1,591 @@
+/*
+ * Liquid Glass Surface System
+ * One shared material language for the portfolio: soft smoked glass,
+ * restrained highlights, readable contrast and low-motion interactions.
+ */
+:root {
+  --liquid-ink: rgba(7, 11, 18, .72);
+  --liquid-ink-soft: rgba(9, 14, 23, .60);
+  --liquid-tint: rgba(255, 255, 255, .075);
+  --liquid-line: rgba(255, 255, 255, .16);
+  --liquid-line-strong: rgba(255, 255, 255, .24);
+  --liquid-text: #eef2f7;
+  --liquid-muted: #c1c9d5;
+  --liquid-radius: 24px;
+  --liquid-shadow: 0 24px 70px rgba(0, 0, 0, .25), inset 0 1px 0 rgba(255, 255, 255, .14);
+}
+
+/* The canvas stays visible, but content always has a deliberate reading surface. */
+main > section:not(.hero) > .section-header {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(24px, 3.4vw, 42px);
+  margin-bottom: 24px;
+  border: 1px solid var(--liquid-line);
+  border-radius: var(--liquid-radius);
+  background:
+    radial-gradient(ellipse at 5% 0%, rgba(255,255,255,.105), transparent 46%),
+    linear-gradient(135deg, rgba(14,20,30,.78), rgba(8,12,20,.58));
+  -webkit-backdrop-filter: blur(28px) saturate(155%);
+  backdrop-filter: blur(28px) saturate(155%);
+  box-shadow: var(--liquid-shadow);
+}
+
+main > section:not(.hero) > .section-header::before,
+.about-content::before,
+.about-visual::before,
+.flagship-card::before,
+.lab-card::before,
+.service-card::before,
+.process-card::before,
+.skills-cat-card::before,
+.achievement-card::before,
+.testimonial-card::before,
+.contact-card::before,
+.contact-form::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(118deg, rgba(255,255,255,.105), transparent 23%, transparent 72%, rgba(255,255,255,.035));
+  opacity: .72;
+}
+
+main > section:not(.hero) > .section-header .section-label {
+  color: #d9e4f2;
+}
+
+main > section:not(.hero) > .section-header .section-title {
+  color: #fff;
+  text-shadow: 0 2px 22px rgba(0,0,0,.32);
+}
+
+main > section:not(.hero) > .section-header .section-subtitle {
+  color: var(--liquid-muted);
+}
+
+/* The About section shown in the supplied screenshot. */
+#about .about-grid {
+  align-items: stretch;
+  gap: clamp(18px, 2.4vw, 30px);
+}
+
+#about .about-content,
+#about .about-visual {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-width: 0;
+  padding: clamp(22px, 2.8vw, 34px);
+  border: 1px solid var(--liquid-line);
+  border-radius: var(--liquid-radius);
+  background:
+    radial-gradient(ellipse at 0% 0%, rgba(255,255,255,.085), transparent 54%),
+    linear-gradient(145deg, rgba(12,18,28,.78), rgba(7,11,18,.66));
+  -webkit-backdrop-filter: blur(30px) saturate(160%);
+  backdrop-filter: blur(30px) saturate(160%);
+  box-shadow: var(--liquid-shadow);
+}
+
+#about .about-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#about .about-text {
+  position: relative;
+  z-index: 1;
+  color: #d0d7e2;
+  font-size: clamp(.88rem, 1vw, .98rem);
+  line-height: 1.82;
+  text-shadow: 0 1px 12px rgba(0,0,0,.28);
+}
+
+#about .about-text strong {
+  color: #fff;
+}
+
+#about .about-highlights {
+  position: relative;
+  z-index: 1;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+#about .highlight-item {
+  min-height: 100%;
+  padding: 15px;
+  border: 1px solid rgba(255,255,255,.105);
+  border-radius: 16px;
+  background: linear-gradient(145deg, rgba(255,255,255,.075), rgba(255,255,255,.025));
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  transition: transform .25s ease, border-color .25s ease, background .25s ease;
+}
+
+#about .highlight-item:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255,255,255,.24);
+  background: linear-gradient(145deg, rgba(255,255,255,.11), rgba(255,255,255,.04));
+}
+
+#about .highlight-icon {
+  color: #f5f8ff;
+  background: rgba(255,255,255,.09);
+  border: 1px solid rgba(255,255,255,.17);
+  border-radius: 11px;
+}
+
+#about .highlight-text h4 {
+  color: #f6f8fb;
+}
+
+#about .highlight-text p {
+  color: #b5bfcc;
+}
+
+#about .about-visual {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+}
+
+#about .about-image-container {
+  width: 100%;
+  min-height: 420px;
+  border: 1px solid rgba(255,255,255,.22) !important;
+  border-radius: 19px !important;
+  background: rgba(255,255,255,.055);
+  box-shadow: 0 16px 44px rgba(0,0,0,.32), inset 0 1px 0 rgba(255,255,255,.16);
+}
+
+#about .about-image-container > img {
+  border-radius: 18px;
+}
+
+#about .about-image-overlay {
+  padding: 24px !important;
+  background: linear-gradient(180deg, transparent 18%, rgba(4,8,14,.78)) !important;
+}
+
+#about .about-quote {
+  display: inline-block;
+  max-width: 100%;
+  padding: 13px 18px;
+  color: #fff !important;
+  background: rgba(8,12,18,.56) !important;
+  border: 1px solid rgba(255,255,255,.22) !important;
+  border-radius: 14px !important;
+  -webkit-backdrop-filter: blur(18px) saturate(145%);
+  backdrop-filter: blur(18px) saturate(145%);
+  box-shadow: 0 10px 30px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.17);
+}
+
+/* Shared glass material for every major card family. */
+.flagship-card,
+.lab-card,
+.service-card,
+.process-card,
+.skills-cat-card,
+.achievement-card,
+.testimonial-card,
+.contact-card,
+.contact-form,
+.timeline-content,
+.lab-controls-panel,
+.content-disclosure,
+.case-study-accordion {
+  border: 1px solid var(--liquid-line) !important;
+  border-radius: 20px !important;
+  background:
+    radial-gradient(ellipse at 12% 0%, rgba(255,255,255,.085), transparent 52%),
+    linear-gradient(145deg, rgba(13,19,29,.80), rgba(7,11,18,.70)) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  backdrop-filter: blur(24px) saturate(150%);
+  box-shadow: 0 18px 48px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.12) !important;
+}
+
+.flagship-card:hover,
+.lab-card:hover,
+.service-card:hover,
+.process-card:hover,
+.skills-cat-card:hover,
+.achievement-card:hover,
+.testimonial-card:hover,
+.contact-card:hover {
+  border-color: var(--liquid-line-strong) !important;
+  background:
+    radial-gradient(ellipse at 12% 0%, rgba(255,255,255,.12), transparent 52%),
+    linear-gradient(145deg, rgba(17,24,36,.86), rgba(8,13,21,.78)) !important;
+  box-shadow: 0 24px 58px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.16) !important;
+}
+
+.flagship-card::before,
+.lab-card::before,
+.service-card::before,
+.process-card::before,
+.skills-cat-card::before,
+.achievement-card::before,
+.testimonial-card::before,
+.contact-card::before,
+.contact-form::before {
+  z-index: 0;
+}
+
+.flagship-body,
+.lab-card-content,
+.service-card > *,
+.process-card > *,
+.skills-cat-card > *,
+.achievement-card > *,
+.testimonial-card > *,
+.contact-card > *,
+.contact-form > * {
+  position: relative;
+  z-index: 1;
+}
+
+.flagship-body,
+.lab-card-content {
+  background: transparent;
+}
+
+.flagship-title,
+.lab-card-title,
+.service-title,
+.process-title,
+.skills-cat-title,
+.achievement-title,
+.contact-title {
+  color: #f7f9fc;
+}
+
+.flagship-description,
+.lab-card-desc,
+.service-desc,
+.process-desc,
+.achievement-description,
+.contact-description,
+.field-content,
+.skills-cat-focus,
+.skills-capability-list li {
+  color: #c0c8d4;
+}
+
+.case-study-details,
+.case-field,
+.skills-cat-header,
+.service-deliverables {
+  border-color: rgba(255,255,255,.12);
+}
+
+.tag,
+.stack-tag,
+.service-icon,
+.process-step-icon,
+.skills-cat-icon,
+.achievement-icon,
+.contact-icon {
+  color: #e9eff8;
+  background: rgba(255,255,255,.075);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 10px;
+}
+
+.lab-controls-panel {
+  padding: clamp(16px, 2vw, 24px);
+}
+
+.lab-search-wrapper {
+  background: rgba(5,9,15,.46);
+  border-color: rgba(255,255,255,.17);
+  border-radius: 13px;
+}
+
+.lab-search-input {
+  color: #fff;
+}
+
+.lab-search-input::placeholder {
+  color: #9ca8b8;
+}
+
+.lab-filter-btn,
+.lab-count-pill {
+  border-radius: 999px;
+  border-color: rgba(255,255,255,.16);
+  background: rgba(255,255,255,.055);
+  color: #d7dfeb;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+.lab-filter-btn.active {
+  color: #081018;
+  background: #edf3fb;
+  border-color: #edf3fb;
+}
+
+.status-badge,
+.lab-status-badge,
+.service-badge {
+  border-radius: 999px;
+  border-color: rgba(255,255,255,.2);
+  background: rgba(6,10,16,.66);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+}
+
+/* Interactive controls share the same soft edge language. */
+.btn-secondary,
+.project-action-btn,
+.project-link,
+.lab-link,
+.nav-secondary-btn,
+.nav-cta-btn,
+.chat-chip,
+input,
+select,
+textarea {
+  border-radius: 12px;
+}
+
+.btn-secondary,
+.project-action-btn,
+.project-link,
+.lab-link,
+.nav-secondary-btn {
+  background: rgba(255,255,255,.07);
+  border-color: rgba(255,255,255,.18);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+}
+
+.nav-container {
+  padding: 10px 14px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 19px;
+  background: rgba(7,10,16,.70);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  backdrop-filter: blur(24px) saturate(150%);
+  box-shadow: 0 12px 36px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.10);
+}
+
+nav.scrolled .nav-container {
+  background: rgba(7,10,16,.82);
+}
+
+.hero-badge,
+.proof-pill,
+.hud-terminal-readout {
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 14px;
+  background: rgba(7,11,18,.58);
+  -webkit-backdrop-filter: blur(18px) saturate(145%);
+  backdrop-filter: blur(18px) saturate(145%);
+}
+
+.hero-card {
+  border-color: rgba(255,255,255,.20);
+  background: rgba(8,13,21,.68);
+  -webkit-backdrop-filter: blur(30px) saturate(160%);
+  backdrop-filter: blur(30px) saturate(160%);
+}
+
+.stat-item {
+  background: rgba(255,255,255,.065);
+  border-color: rgba(255,255,255,.14);
+}
+
+/* Focus states remain visible on glass and keyboard navigation. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+summary:focus-visible {
+  outline: 2px solid rgba(211,229,255,.92);
+  outline-offset: 3px;
+}
+
+@media (max-width: 900px) {
+  #about .about-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #about .about-visual {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  :root {
+    --liquid-radius: 19px;
+  }
+
+  main > section:not(.hero) > .section-header {
+    padding: 22px 20px;
+    margin-bottom: 18px;
+  }
+
+  #about .about-content,
+  #about .about-visual {
+    padding: 17px;
+  }
+
+  #about .about-highlights {
+    grid-template-columns: 1fr;
+  }
+
+  #about .about-image-container,
+  #about .about-image-container > img {
+    min-height: 340px !important;
+  }
+
+  .nav-container {
+    border-radius: 15px;
+    padding: 9px 10px;
+  }
+
+  .flagship-card,
+  .lab-card,
+  .service-card,
+  .process-card,
+  .skills-cat-card,
+  .achievement-card,
+  .testimonial-card,
+  .contact-card,
+  .contact-form,
+  .content-disclosure {
+    border-radius: 17px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #about .highlight-item,
+  .flagship-card,
+  .lab-card,
+  .service-card,
+  .process-card,
+  .skills-cat-card,
+  .achievement-card,
+  .testimonial-card,
+  .contact-card {
+    transition: none !important;
+  }
+
+  #about .highlight-item:hover {
+    transform: none;
+  }
+}
+
+/* Fallback for browsers without backdrop-filter. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  main > section:not(.hero) > .section-header,
+  #about .about-content,
+  #about .about-visual,
+  .flagship-card,
+  .lab-card,
+  .service-card,
+  .process-card,
+  .skills-cat-card,
+  .achievement-card,
+  .testimonial-card,
+  .contact-card,
+  .contact-form,
+  .content-disclosure {
+    background: rgba(7,11,18,.92) !important;
+  }
+}
+
+
+/*
+ * Full-page viewing pane.
+ * A single, continuous glass surface sits between the Three.js black-hole
+ * scene and the page content. Its low-opacity tint and restrained blur keep
+ * the luminous accretion ring visible instead of burying it under dark panels.
+ */
+body {
+  isolation: isolate;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: clamp(88px, 11vh, 118px) clamp(9px, 1.8vw, 28px) 16px;
+  z-index: 0;
+  pointer-events: none;
+  border: 1px solid rgba(255,255,255,.20);
+  border-radius: clamp(24px, 3vw, 38px);
+  background:
+    radial-gradient(ellipse at 16% 0%, rgba(255,255,255,.105), transparent 38%),
+    radial-gradient(ellipse at 100% 100%, rgba(255,255,255,.035), transparent 42%),
+    linear-gradient(145deg, rgba(255,255,255,.055), rgba(255,255,255,.012) 42%, rgba(5,11,20,.16));
+  -webkit-backdrop-filter: blur(5px) saturate(155%);
+  backdrop-filter: blur(5px) saturate(155%);
+  box-shadow:
+    0 28px 90px rgba(0,0,0,.24),
+    inset 0 1px 0 rgba(255,255,255,.22),
+    inset 0 -1px 0 rgba(255,255,255,.07),
+    0 0 0 1px rgba(255,255,255,.025);
+}
+
+/* Keep the site UI above the glass surface while the Three.js scene stays below it. */
+body > header {
+  position: relative;
+  z-index: 1000;
+}
+
+body > main,
+body > footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* Slightly lighter nested cards: the page-wide black-hole scene should remain visible. */
+.flagship-card,
+.lab-card,
+.service-card,
+.process-card,
+.skills-cat-card,
+.achievement-card,
+.testimonial-card,
+.contact-card,
+.contact-form,
+.timeline-content,
+.lab-controls-panel,
+.content-disclosure,
+.case-study-accordion {
+  background:
+    radial-gradient(ellipse at 12% 0%, rgba(255,255,255,.075), transparent 52%),
+    linear-gradient(145deg, rgba(13,19,29,.69), rgba(7,11,18,.55)) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(145%);
+  backdrop-filter: blur(18px) saturate(145%);
+}
+
+@media (max-width: 600px) {
+  body::before {
+    inset: 82px 7px 8px;
+    border-radius: 22px;
+    -webkit-backdrop-filter: blur(4px) saturate(145%);
+    backdrop-filter: blur(4px) saturate(145%);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  body::before {
+    background: rgba(7,11,18,.88);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  body::before {
+    background: rgba(7,11,18,.28);
+  }
+}

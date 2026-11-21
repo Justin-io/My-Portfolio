@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chronon-SQL Model: Discrete Time, Energy, and Space</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #0a0a1a;
+            --secondary-dark: #12122c;
+            --accent-blue: #00c3ff;
+            --accent-purple: #8a2be2;
+            --accent-teal: #00ffa3;
+            --accent-orange: #ff6b35;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --text-light: #f0f0f0;
+            --text-gray: #b0b0c0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background: var(--primary-dark);
+            color: var(--text-light);
+            line-height: 1.7;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(138, 43, 226, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(0, 195, 255, 0.1) 0%, transparent 20%);
+            background-attachment: fixed;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: rgba(10, 10, 26, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent-teal);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-teal);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(138, 43, 226, 0.1) 0%, rgba(10, 10, 26, 0) 70%);
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 700px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple), var(--accent-teal));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px var(--accent-blue), 0 0 10px var(--accent-blue);
+            }
+            to {
+                text-shadow: 0 0 10px var(--accent-purple), 0 0 20px var(--accent-purple);
+            }
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 30px;
+            color: var(--text-gray);
+            max-width: 600px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 35px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(0, 195, 255, 0.3);
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(138, 43, 226, 0.5);
+        }
+
+        .hero-graphic {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50%;
+            height: 70%;
+            opacity: 0.7;
+            z-index: 1;
+        }
+
+        .grid-network {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle, var(--accent-blue) 1px, transparent 1px),
+                radial-gradient(circle, var(--accent-purple) 1px, transparent 1px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            animation: pulse 4s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+
+        /* Glass Card Effect */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        .glass-card:hover::before {
+            transform: rotate(45deg) translate(20%, 20%);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 195, 255, 0.2);
+            border: 1px solid rgba(0, 255, 163, 0.3);
+        }
+
+        /* Section Styling */
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            display: inline-block;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 2px;
+        }
+
+        /* Story Section */
+        .story-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .story-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        .story-card:hover::before {
+            transform: rotate(45deg) translate(20%, 20%);
+        }
+
+        .story-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 195, 255, 0.2);
+            border: 1px solid rgba(0, 255, 163, 0.3);
+        }
+
+        .story-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            color: var(--accent-teal);
+            letter-spacing: 0.5px;
+        }
+
+        .story-card p {
+            color: var(--text-gray);
+            margin-bottom: 20px;
+        }
+
+        .story-card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--accent-blue);
+        }
+
+        /* Deep Dive Section */
+        .concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .concept-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .concept-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        .concept-card:hover::before {
+            transform: rotate(45deg) translate(20%, 20%);
+        }
+
+        .concept-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(138, 43, 226, 0.3);
+            border: 1px solid rgba(0, 195, 255, 0.5);
+        }
+
+        .concept-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--accent-purple);
+        }
+
+        .concept-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--accent-teal);
+            letter-spacing: 0.5px;
+        }
+
+        .concept-card p {
+            color: var(--text-gray);
+        }
+
+        /* Mathematical Framework */
+        .math-section {
+            background: rgba(18, 18, 44, 0.3);
+        }
+
+        .equation-container {
+            background: rgba(10, 10, 26, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 1px solid rgba(0, 195, 255, 0.3);
+            overflow-x: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .equation-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(0, 255, 163, 0.05), transparent);
+            z-index: -1;
+        }
+
+        .equation {
+            font-family: 'Courier New', monospace;
+            font-size: 1.4rem;
+            text-align: center;
+            color: var(--accent-teal);
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px dashed rgba(0, 255, 163, 0.3);
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .equation::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 195, 255, 0.1), transparent);
+            animation: equation-glow 3s infinite alternate;
+        }
+
+        @keyframes equation-glow {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+
+        .math-explanation {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .math-explanation h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent-orange);
+            margin: 25px 0 15px;
+            letter-spacing: 0.5px;
+        }
+
+        .math-explanation p {
+            margin-bottom: 15px;
+            color: var(--text-gray);
+        }
+
+        .axiom {
+            background: rgba(138, 43, 226, 0.1);
+            border-left: 3px solid var(--accent-purple);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .axiom::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.05), transparent);
+            z-index: -1;
+        }
+
+        .axiom h4 {
+            color: var(--accent-teal);
+            margin-bottom: 10px;
+        }
+
+        /* Legacy Section */
+        .legacy-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .legacy-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--text-gray);
+        }
+
+        .highlight {
+            color: var(--accent-teal);
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(18, 18, 44, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 50px 0 20px;
+            text-align: center;
+            border-top: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+        }
+
+        .footer-content {
+            margin-bottom: 30px;
+        }
+
+        .footer-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: rgba(138, 43, 226, 0.2);
+            border-radius: 50%;
+            margin: 0 10px;
+            color: var(--text-light);
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple), var(--accent-teal));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .social-links a:hover::before {
+            opacity: 1;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .copyright {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Floating Elements */
+        .floating {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 195, 255, 0.2) 0%, transparent 70%);
+            z-index: -1;
+            animation: float 15s infinite linear;
+        }
+
+        .floating:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 5%;
+            animation-duration: 20s;
+        }
+
+        .floating:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            bottom: 20%;
+            right: 10%;
+            animation-duration: 25s;
+            animation-direction: reverse;
+        }
+
+        .floating:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            top: 40%;
+            right: 20%;
+            animation-duration: 18s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(20px, 30px) rotate(90deg);
+            }
+            50% {
+                transform: translate(0, 60px) rotate(180deg);
+            }
+            75% {
+                transform: translate(-20px, 30px) rotate(270deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(360deg);
+            }
+        }
+
+        /* Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--accent-blue);
+            opacity: 0.7;
+            animation: particle-float linear infinite;
+        }
+
+        @keyframes particle-float {
+            from {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            to {
+                transform: translateY(-100vh) translateX(20px);
+                opacity: 0;
+            }
+        }
+
+        /* Interactive Elements */
+        .interactive-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .interactive-card:hover {
+            transform: scale(1.02);
+        }
+
+        .chronon-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+        }
+
+        .chronon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent-teal);
+            margin: 0 10px;
+            animation: pulse 2s infinite;
+        }
+
+        .chronon:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .chronon:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .chronon:nth-child(4) {
+            animation-delay: 0.6s;
+        }
+
+        .chronon:nth-child(5) {
+            animation-delay: 0.8s;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav ul {
+                position: fixed;
+                top: 80px;
+                right: -100%;
+                flex-direction: column;
+                background: var(--secondary-dark);
+                width: 250px;
+                height: calc(100vh - 80px);
+                padding: 40px 0;
+                transition: all 0.3s ease;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+                backdrop-filter: blur(10px);
+            }
+            
+            nav ul.active {
+                right: 0;
+            }
+            
+            nav ul li {
+                margin: 15px 0;
+                text-align: center;
+            }
+            
+            .hero {
+                text-align: center;
+            }
+            
+            .hero-content {
+                margin: 0 auto;
+            }
+            
+            .hero h1 {
+                font-size: 2.3rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .hero-graphic {
+                display: none;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            section {
+                padding: 70px 0;
+            }
+            
+            .equation {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Background Elements -->
+    <div class="floating"></div>
+    <div class="floating"></div>
+    <div class="floating"></div>
+    
+    <!-- Particles Background -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">Chronon-SQL</div>
+            <button class="mobile-menu-btn" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav>
+                <ul id="navMenu">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#story">Story</a></li>
+                    <li><a href="#concepts">Concepts</a></li>
+                    <li><a href="#math">Mathematics</a></li>
+                    <li><a href="#legacy">Legacy</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <h1>Chronon-SQL Model: Discrete Time, Energy, and Space</h1>
+            <p>A new paradigm in physics proposing that time ticks discretely, space is granular, and reality emerges from a pre-geometric quantum network.</p>
+            <a href="#story" class="cta-button">Explore the Model</a>
+        </div>
+        <div class="hero-graphic">
+            <div class="grid-network"></div>
+        </div>
+    </section>
+
+    <!-- Story Section -->
+    <section id="story">
+        <div class="container">
+            <div class="section-title">
+                <h2>The Story of Reality: From Potential to Pulse</h2>
+            </div>
+            <div class="story-content">
+                <div class="story-card glass-card interactive-card" onclick="showDetail('dawn')">
+                    <div class="story-card-icon">
+                        <i class="fas fa-infinity"></i>
+                    </div>
+                    <h3>The Dawn of Nothingness</h3>
+                    <p>In the beginning, there was the Super Quantum Level (SQL) - a pre-geometric state of pure potential. Space was composed of fundamental units called Space Grains, and time existed as Chronons, the quanta of potential waiting to be activated...</p>
+                </div>
+                <div class="story-card glass-card interactive-card" onclick="showDetail('pulse')">
+                    <div class="story-card-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>The First Pulse: The Big Bang as Awakening</h3>
+                    <p>The Big Bang was not the beginning of everything, but an event within the SQL - a Disturbance that initiated the first Chronon firing. This initial pulse marked the awakening of time itself...</p>
+                </div>
+                <div class="story-card glass-card interactive-card" onclick="showDetail('arrow')">
+                    <div class="story-card-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>The Birth of Space, Time, and the Arrow of Time</h3>
+                    <p>As Chronons fired in sequence, they created the arrow of time through increasing entropy. The network of Space Grains began to form geometric relationships, giving rise to the continuous spacetime we experience...</p>
+                </div>
+                <div class="story-card glass-card interactive-card" onclick="showDetail('emergence')">
+                    <div class="story-card-icon">
+                        <i class="fas fa-atom"></i>
+                    </div>
+                    <h3>From the Depths to Our Reality</h3>
+                    <p>The continuous firing of Chronons and the evolving network of Space Grains gave rise to all known physics laws. What we perceive as fundamental particles and forces are emergent phenomena from this underlying discrete structure...</p>
+                </div>
+                <div class="story-card glass-card interactive-card" onclick="showDetail('significance')">
+                    <div class="story-card-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>Why This Story Matters</h3>
+                    <p>This model offers solutions to fundamental problems in physics: the information paradox in black holes, the unification of quantum mechanics and gravity, and provides a new understanding of the nature of time itself...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Deep Dive Section -->
+    <section id="concepts" style="background: rgba(18, 18, 44, 0.3);">
+        <div class="container">
+            <div class="section-title">
+                <h2>The Deep Dive: Key Concepts</h2>
+            </div>
+            <div class="concepts-grid">
+                <div class="concept-card glass-card interactive-card" onclick="showConcept('chronons')">
+                    <div class="concept-icon">
+                        <i class="fas fa-cube"></i>
+                    </div>
+                    <h3>Chronons</h3>
+                    <p>The fundamental quanta of potential that constitute time. Chronons are discrete and independent of energy scales, firing in response to energy fluctuations...</p>
+                </div>
+                <div class="concept-card glass-card interactive-card" onclick="showConcept('space')">
+                    <div class="concept-icon">
+                        <i class="fas fa-border-all"></i>
+                    </div>
+                    <h3>Space Grains</h3>
+                    <p>The fundamental units of space that form a granular substrate. Space Grains constitute the elementary units of space, forming a granular network structure...</p>
+                </div>
+                <div class="concept-card glass-card interactive-card" onclick="showConcept('sql')">
+                    <div class="concept-icon">
+                        <i class="fas fa-wave-square"></i>
+                    </div>
+                    <h3>Super Quantum Level (SQL)</h3>
+                    <p>The foundational pre-geometric domain where energy exists in discrete "chunks" smaller than any known quantum. Beyond the observable quantum realm lies a hierarchical domain...</p>
+                </div>
+                <div class="concept-card glass-card interactive-card" onclick="showConcept('spacetime')">
+                    <div class="concept-icon">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </div>
+                    <h3>Emergence of Spacetime</h3>
+                    <p>Continuous spacetime arises from the network of Space Grains as they form geometric relationships. Time emerges from the sequential firing of Chronons, creating the fabric of our reality...</p>
+                </div>
+                <div class="concept-card glass-card interactive-card" onclick="showConcept('bigbang')">
+                    <div class="concept-icon">
+                        <i class="fas fa-bomb"></i>
+                    </div>
+                    <h3>Big Bang as Disturbance</h3>
+                    <p>The Big Bang was not the beginning of everything, but an event within the SQL - a Disturbance that initiated the first Chronon firing and set the universe in motion...</p>
+                </div>
+                <div class="concept-card glass-card interactive-card" onclick="showConcept('arrow')">
+                    <div class="concept-icon">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <h3>Arrow of Time</h3>
+                    <p>The directionality of time emerges from the increasing entropy as Chronons fire sequentially, creating a thermodynamic arrow that aligns with our experience of time's flow...</p>
+                </div>
+            </div>
+            
+            <!-- Chronon Visualization -->
+            <div class="chronon-visual">
+                <div class="chronon"></div>
+                <div class="chronon"></div>
+                <div class="chronon"></div>
+                <div class="chronon"></div>
+                <div class="chronon"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mathematical Framework -->
+    <section id="math" class="math-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Mathematical Framework</h2>
+            </div>
+            <div class="math-explanation">
+                <div class="equation-container">
+                    <div class="equation">
+                        ∫<sub>G</sub> (L<sub>s</sub><sup>2</sup>/ℓ<sub>P</sub><sup>2</sup>) · (T<sub>c</sub>/t) · (k<sub>B</sub> ln Ω<sub>i</sub>) · (ℏ/2T<sub>c</sub>) dV = K
+                    </div>
+                </div>
+                
+                <h3>Governing Equation Derivation</h3>
+                <p>The Chronon-SQL Model introduces a unified governing equation that encapsulates the interplay between discrete space, quantized time, entropy, and energy at the SQL level:</p>
+                
+                <p><strong>Where:</strong></p>
+                <ul>
+                    <li><strong>G</strong> is the integration over the emergent spacetime volume</li>
+                    <li><strong>L<sub>s</sub> = v·T<sub>c</sub></strong> is the characteristic size of a Space Grain</li>
+                    <li><strong>ℓ<sub>P</sub></strong> is the Planck length</li>
+                    <li><strong>T<sub>c</sub></strong> is the base Chronon duration (universal constant)</li>
+                    <li><strong>t</strong> is the cosmic time since the Big Bang</li>
+                    <li><strong>Ω<sub>i</sub></strong> is the number of accessible microstates for Space Grain i</li>
+                    <li><strong>k<sub>B</sub></strong> is the Boltzmann constant</li>
+                    <li><strong>ℏ</strong> is the reduced Planck constant</li>
+                    <li><strong>dV</strong> is the infinitesimal volume element in emergent spacetime</li>
+                    <li><strong>K</strong> is a universal constant (total conserved SQL action)</li>
+                </ul>
+                
+                <h3>Foundational Axioms</h3>
+                <p>The mathematical framework is built upon several axioms:</p>
+                
+                <div class="axiom">
+                    <h4>Axiom 1: Primacy of Chronons and Space Grains</h4>
+                    <p>Chronons and Space Grains are irreducible entities that generate spacetime rather than exist within it. Let G=(V, E) be a directed causal graph where V represents Space Grains and E represents causal links.</p>
+                </div>
+                
+                <div class="axiom">
+                    <h4>Axiom 2: Time as Activation</h4>
+                    <p>Time emerges from sequential Chronon firings, not as a background parameter. Global time is defined as: T<sub>cosmic</sub>(n) = (1/N) ∑<sub>i=1</sub><sup>N</sup> ∑<sub>k=1</sub><sup>n</sup> A<sub>i</sub>(k)T<sub>c</sub><sup>(i)</sup></p>
+                </div>
+                
+                <div class="axiom">
+                    <h4>Axiom 3: Pre-Big Bang SQL State</h4>
+                    <p>Before t=0, the SQL was static: |Ψ<sub>pre-BB</sub>⟩ = |SQL<sub>0</sub>⟩ ⊗ |no activation⟩. The Big Bang applies a unitary kick: |Ψ<sub>post-BB</sub>⟩ = Û<sub>disturb</sub>|Ψ<sub>pre-BB</sub>⟩.</p>
+                </div>
+                
+                <div class="axiom">
+                    <h4>Axiom 4: Energy Quantization at SQL</h4>
+                    <p>Minimum energy E<sub>c</sub> = ℏ/(2T<sub>c</sub>), with all transitions in integer multiples. The SQL Hamiltonian includes self-interaction and neighbor coupling: Ĥ<sub>SQL</sub> = ∑<sub>n</sub> nE<sub>c</sub>|n⟩⟨n| + ∑<sub>i,j</sub> J<sub>ij</sub>Ŝ<sub>i</sub>·Ŝ<sub>j</sub> + ζÊ<sub>i</sub><sup>2</sup></p>
+                </div>
+                
+                <div class="axiom">
+                    <h4>Axiom 5: Hierarchical Super Quantum Levels</h4>
+                    <p>Define a level operator L̂ with eigenvalues ℓ=0,1,2,... where ℓ=0 represents the observable quantum world and ℓ≥1 represents sub-Planckian SQL layers. Transitions occur when ΔS > S<sub>crit</sub>(ℓ) or E > E<sub>crit</sub>(ℓ).</p>
+                </div>
+                
+                <div class="axiom">
+                    <h4>Axiom 6: Information Conservation</h4>
+                    <p>Total information I<sub>total</sub> = ∑<sub>i</sub> I<sub>i</sub>, where I<sub>i</sub> = -∑<sub>k</sub> p<sub>k</sub> log p<sub>k</sub>, is conserved. Conjecture: I<sub>total</sub> is conserved.</p>
+                </div>
+                
+                <div class="axiom">
+                    <h4>Axiom 7: Co-Emergence of Space and Time</h4>
+                    <p>No Chronon without Space Grain, no time without activation. Speed of light emerges as: c = L<sub>s</sub>/T<sub>c</sub>.</p>
+                </div>
+                
+                <h3>Modified Uncertainty Relations</h3>
+                <p>With discrete time (Δt = mT<sub>c</sub> where m ∈ Z<sup>+</sup>), the energy-time uncertainty relation becomes:</p>
+                <div class="equation-container">
+                    <div class="equation">
+                        ΔE ≥ ℏ/(2Δt) + ℏ/(2T<sub>c</sub>)
+                    </div>
+                </div>
+                <p>This implies a baseline energy jitter due to time quantization.</p>
+                
+                <h3>Experimental Predictions</h3>
+                <p>The model makes several falsifiable predictions:</p>
+                <ul>
+                    <li>Ultra-precise atomic clocks to observe time quantization effects</li>
+                    <li>High-energy particle collisions to detect deviations from continuous spacetime</li>
+                    <li>Gravitational wave interferometry for signatures of spatial granularity</li>
+                    <li>Optical lattice spectroscopy for SQL-level energy shifts</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Legacy Section -->
+    <section id="legacy">
+        <div class="container">
+            <div class="section-title">
+                <h2>The Legacy of the Chronon-SQL Model</h2>
+            </div>
+            <div class="legacy-content glass-card">
+                <p>The Chronon-SQL Model represents a radical departure from conventional physics, proposing that <span class="highlight">time is discrete</span> rather than continuous, <span class="highlight">space is granular</span> at its most fundamental level, and <span class="highlight">reality is emergent</span> from a deeper quantum structure.</p>
+                <p>By treating spacetime as an emergent phenomenon rather than a fundamental entity, this model offers promising solutions to long-standing problems in physics, including the reconciliation of quantum mechanics with general relativity and the resolution of black hole information paradoxes.</p>
+                <p>The model resolves the black hole information paradox via information compression into Space Grains. It reinterprets time dilation as variable Chronon activation rates. It does not contradict existing physics but extends it into sub-Planckian regimes.</p>
+                <p>As we continue to explore the implications of this framework, the Chronon-SQL Model stands as a potential foundation for a new understanding of reality itself - one where the continuous, smooth fabric of spacetime we observe is merely the surface appearance of a deeper, discrete quantum structure.</p>
+                <a href="#home" class="cta-button" style="margin-top: 30px;">Return to Top</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">Chronon-SQL</div>
+                <p>Exploring the fundamental nature of reality through discrete spacetime</p>
+                <p>Author: Harinandan K. | Contact: harinandan.ofc@gmail.com</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-researchgate"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 Chronon-SQL Model. All rights reserved.</p>
+                <p>This document is the intellectual property of Harinandan K. Unauthorized reproduction, distribution, or use without permission is prohibited.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+        
+        // Close menu when clicking a link
+        document.querySelectorAll('#navMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+        
+        // Add scroll animation to sections
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('section');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            sections.forEach(section => {
+                section.style.opacity = 0;
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(section);
+            });
+            
+            // Create particles
+            createParticles();
+        });
+        
+        // Create background particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random properties
+                const size = Math.random() * 3 + 1;
+                const posX = Math.random() * 100;
+                const duration = Math.random() * 10 + 5;
+                const delay = Math.random() * 5;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+                
+                // Random color
+                const colors = [getComputedStyle(document.documentElement).getPropertyValue('--accent-blue'),
+                                getComputedStyle(document.documentElement).getPropertyValue('--accent-purple'),
+                                getComputedStyle(document.documentElement).getPropertyValue('--accent-teal')];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.background = color;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Interactive card details
+        function showDetail(section) {
+            let title, content;
+            
+            switch(section) {
+                case 'dawn':
+                    title = "The Dawn of Nothingness";
+                    content = "In the beginning, there was the Super Quantum Level (SQL) - a pre-geometric state of pure potential. Space was composed of fundamental units called Space Grains, and time existed as Chronons, the quanta of potential waiting to be activated. Energy existed in discrete \"chunks\" smaller than any known quantum.";
+                    break;
+                case 'pulse':
+                    title = "The First Pulse: The Big Bang as Awakening";
+                    content = "The Big Bang was not the beginning of everything, but an event within the SQL - a Disturbance that initiated the first Chronon firing. This initial pulse marked the awakening of time itself, transforming potential into actuality and setting the stage for the emergence of our universe.";
+                    break;
+                case 'arrow':
+                    title = "The Birth of Space, Time, and the Arrow of Time";
+                    content = "As Chronons fired in sequence, they created the arrow of time through increasing entropy. The network of Space Grains began to form geometric relationships, giving rise to the continuous spacetime we experience, with all its relativistic properties like time dilation.";
+                    break;
+                case 'emergence':
+                    title = "From the Depths to Our Reality";
+                    content = "The continuous firing of Chronons and the evolving network of Space Grains gave rise to all known physics laws. What we perceive as fundamental particles and forces are emergent phenomena from this underlying discrete structure. The continuous, smooth fabric of spacetime we observe is merely the surface appearance of a deeper, discrete quantum structure.";
+                    break;
+                case 'significance':
+                    title = "Why This Story Matters";
+                    content = "This model offers solutions to fundamental problems in physics: the information paradox in black holes, the unification of quantum mechanics and gravity, and provides a new understanding of the nature of time itself as emergent rather than fundamental. It bridges quantum mechanics and general relativity by replacing continuity with discreteness at the foundational level.";
+                    break;
+                default:
+                    title = "Chronon-SQL Model";
+                    content = "The Chronon-SQL Model represents a radical departure from conventional physics, proposing that time is discrete rather than continuous, space is granular at its most fundamental level, and reality is emergent from a deeper quantum structure.";
+            }
+            
+            alert(`${title}\n\n${content}`);
+        }
+        
+        // Concept details
+        function showConcept(concept) {
+            let title, content;
+            
+            switch(concept) {
+                case 'chronons':
+                    title = "Chronons";
+                    content = "Chronons are the fundamental quanta of potential that constitute time. They are discrete and independent of energy scales, firing in response to energy fluctuations. They exist in a latent state until activated by sufficient energy disturbance. Their activation rate varies with local energy density, leading naturally to relativistic time dilation.";
+                    break;
+                case 'space':
+                    title = "Space Grains";
+                    content = "Space Grains are the fundamental units of space that form a granular substrate. They constitute the elementary units of space, forming a granular network structure. They provide the structural lattice in which Chronons reside and define local geometry. Each occupies a node in a causal graph, with edges representing possible interactions.";
+                    break;
+                case 'sql':
+                    title = "Super Quantum Level (SQL)";
+                    content = "The Super Quantum Level is the foundational pre-geometric domain where energy exists in discrete \"chunks\" smaller than any known quantum. Beyond the observable quantum realm lies a hierarchical domain where standard quantum mechanics no longer applies. Energy is quantized into chunks Ec = ℏ/(2Tc), and transitions between levels are governed by entropy gradients.";
+                    break;
+                case 'spacetime':
+                    title = "Emergence of Spacetime";
+                    content = "Continuous spacetime arises from the network of Space Grains as they form geometric relationships. Time emerges from the sequential firing of Chronons, creating the fabric of our reality. The system behaves like a cosmic cellular automaton, where the Big Bang initiated the first disturbance, and evolution proceeds via discrete state updates.";
+                    break;
+                case 'bigbang':
+                    title = "Big Bang as Disturbance";
+                    content = "The Big Bang was not the beginning of everything, but an event within the SQL - a Disturbance that initiated the first Chronon firing and set the universe in motion. Before t=0, the SQL was static: |Ψpre-BB⟩ = |SQL₀⟩ ⊗ |no activation⟩. The Big Bang applies a unitary kick: |Ψpost-BB⟩ = Û_disturb|Ψpre-BB⟩.";
+                    break;
+                case 'arrow':
+                    title = "Arrow of Time";
+                    content = "The directionality of time emerges from the increasing entropy as Chronons fire sequentially, creating a thermodynamic arrow that aligns with our experience of time's flow. Time does not flow continuously but emerges from the pulsing activation of Chronons embedded within Space Grains, triggered by energy disturbances.";
+                    break;
+                default:
+                    title = "Chronon-SQL Concept";
+                    content = "The Chronon-SQL Model introduces fundamental concepts that redefine our understanding of spacetime at the most basic level.";
+            }
+            
+            alert(`${title}\n\n${content}`);
+        }
+        
+        // Animate chronon visualization
+        function animateChronons() {
+            const chronons = document.querySelectorAll('.chronon');
+            chronons.forEach((chronon, index) => {
+                setTimeout(() => {
+                    chronon.style.animation = 'pulse 2s infinite';
+                }, index * 200);
+            });
+        }
+        
+        // Initialize chronon animation
+        window.addEventListener('load', animateChronons);
+    </script>
+</body>
+</html>

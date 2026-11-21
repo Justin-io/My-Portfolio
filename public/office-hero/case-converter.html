@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Converter | Office Hero</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="back-nav">
+            <a href="../index.html#utilities" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Tools
+            </a>
+        </div>
+
+        <header>
+            <div class="icon-box" style="margin: 0 auto 1.5rem auto;">
+                <i class="fas fa-font"></i>
+            </div>
+            <h1 class="brand">Case Converter</h1>
+            <p class="tagline">Easily convert text between uppercase, lowercase, title case, and more.</p>
+        </header>
+
+        <div class="tool-interface" style="max-width: 900px;">
+            <textarea id="case-input" class="text-area-styled" placeholder="Type or paste your text here..."
+                style="height: 300px; margin-bottom: 2rem;"></textarea>
+
+            <div class="format-selector" style="flex-wrap: wrap; gap: 15px; justify-content: center;">
+                <button class="btn-action btn-sm" onclick="convert('sentence')">Sentence case</button>
+                <button class="btn-action btn-sm" onclick="convert('lower')">lower case</button>
+                <button class="btn-action btn-sm" onclick="convert('upper')">UPPER CASE</button>
+                <button class="btn-action btn-sm" onclick="convert('title')">Title Case</button>
+                <button class="btn-action btn-sm" onclick="convert('alternating')">aLtErNaTiNg cAsE</button>
+                <button class="btn-action btn-sm" onclick="convert('inverse')">iNVERSE cASE</button>
+                <button class="btn-action btn-sm btn-outline" onclick="copyText()"><i class="fas fa-copy"></i>
+                    Copy</button>
+                <button class="btn-action btn-sm btn-outline" onclick="clearText()"><i class="fas fa-trash"></i>
+                    Clear</button>
+            </div>
+
+            <div
+                style="margin-top: 1rem; color: var(--text-secondary); display: flex; justify-content: space-between; padding: 0 1rem;">
+                <span id="char-count">0 Characters</span>
+                <span id="word-count">0 Words</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const textarea = document.getElementById('case-input');
+        const charDisplay = document.getElementById('char-count');
+        const wordDisplay = document.getElementById('word-count');
+
+        textarea.addEventListener('input', updateStats);
+
+        function updateStats() {
+            const text = textarea.value;
+            charDisplay.innerText = `${text.length} Characters`;
+
+            const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+            wordDisplay.innerText = `${words} Words`;
+        }
+
+        function convert(type) {
+            let text = textarea.value;
+
+            switch (type) {
+                case 'upper':
+                    text = text.toUpperCase();
+                    break;
+                case 'lower':
+                    text = text.toLowerCase();
+                    break;
+                case 'title':
+                    text = text.toLowerCase().split(' ').map(function (word) {
+                        return (word.charAt(0).toUpperCase() + word.slice(1));
+                    }).join(' ');
+                    break;
+                case 'sentence':
+                    text = text.toLowerCase().replace(/(^\s*\w|[\.\!\?]\s*\w)/g, function (c) {
+                        return c.toUpperCase();
+                    });
+                    break;
+                case 'alternating':
+                    let alt = '';
+                    for (let i = 0; i < text.length; i++) {
+                        alt += i % 2 === 0 ? text[i].toLowerCase() : text[i].toUpperCase();
+                    }
+                    text = alt;
+                    break;
+                case 'inverse':
+                    let inv = '';
+                    for (let i = 0; i < text.length; i++) {
+                        inv += text[i] === text[i].toUpperCase() ? text[i].toLowerCase() : text[i].toUpperCase();
+                    }
+                    text = inv;
+                    break;
+            }
+
+            textarea.value = text;
+            updateStats();
+        }
+
+        function copyText() {
+            textarea.select();
+            document.execCommand('copy');
+            // Assuming we added a toast or feedback, specific alert for now
+        }
+
+        function clearText() {
+            textarea.value = '';
+            updateStats();
+        }
+    </script>
+</body>
+
+</html>

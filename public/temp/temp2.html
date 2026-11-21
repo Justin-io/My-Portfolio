@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumière Beauty Lounge | Premium Ladies Salon</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            gold: '#D4AF37',
+                            rose: '#E8D5D5',
+                            dark: '#1A1A1A',
+                            cream: '#F9F7F2',
+                            accent: '#C5A096'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Lato"', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'hero-pattern': "url('https://images.unsplash.com/photo-1600948836101-f9ffda59d250?q=80&w=2036&auto=format&fit=crop')",
+                        'texture': "url('https://www.transparenttextures.com/patterns/cream-paper.png')"
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles & Animations */
+        body {
+            background-color: #F9F7F2;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -4px;
+            left: 0;
+            background-color: #D4AF37;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* Image Hover Zoom */
+        .img-zoom-container {
+            overflow: hidden;
+        }
+
+        .img-zoom-container img {
+            transition: transform 0.7s ease;
+        }
+
+        .img-zoom-container:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Loader */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #F9F7F2;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader-spinner {
+            border: 3px solid #E8D5D5;
+            border-top: 3px solid #D4AF37;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Hide Scrollbar for cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #F9F7F2;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body class="text-brand-dark antialiased">
+
+    <!-- Loader -->
+    <div id="loader">
+        <div class="text-center">
+            <div class="loader-spinner mx-auto mb-4"></div>
+            <h2 class="font-serif text-2xl tracking-widest text-brand-dark">LUMIÈRE</h2>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-6 px-6 lg:px-12 bg-transparent">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="#" onclick="router('home')"
+                class="font-serif text-3xl tracking-widest font-bold text-brand-dark z-50 relative">
+                LUMIÈRE
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-12 font-sans text-sm tracking-widest uppercase text-brand-dark">
+                <a href="#" onclick="router('home')" class="nav-link active" data-page="home">Home</a>
+                <a href="#" onclick="router('services')" class="nav-link" data-page="services">Services</a>
+                <a href="#" onclick="router('gallery')" class="nav-link" data-page="gallery">Gallery</a>
+                <a href="#" onclick="router('about')" class="nav-link" data-page="about">About</a>
+                <a href="#" onclick="router('contact')" class="nav-link" data-page="contact">Contact</a>
+            </div>
+
+            <button onclick="openBooking()"
+                class="hidden md:block border border-brand-dark px-6 py-2 text-sm uppercase tracking-widest hover:bg-brand-dark hover:text-white transition-all duration-300">
+                Book Now
+            </button>
+
+            <!-- Mobile Menu Button -->
+            <button onclick="toggleMobileMenu()" class="md:hidden z-50 text-brand-dark focus:outline-none">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu"
+        class="fixed inset-0 bg-brand-cream z-40 transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center space-y-8 md:hidden">
+        <a href="#" onclick="router('home'); toggleMobileMenu()" class="font-serif text-3xl text-brand-dark">Home</a>
+        <a href="#" onclick="router('services'); toggleMobileMenu()"
+            class="font-serif text-3xl text-brand-dark">Services</a>
+        <a href="#" onclick="router('gallery'); toggleMobileMenu()"
+            class="font-serif text-3xl text-brand-dark">Gallery</a>
+        <a href="#" onclick="router('about'); toggleMobileMenu()" class="font-serif text-3xl text-brand-dark">About</a>
+        <a href="#" onclick="router('contact'); toggleMobileMenu()"
+            class="font-serif text-3xl text-brand-dark">Contact</a>
+        <button onclick="openBooking(); toggleMobileMenu()"
+            class="border border-brand-dark px-8 py-3 uppercase tracking-widest">Book Appointment</button>
+    </div>
+
+    <!-- Main Content Area -->
+    <main id="app-content" class="min-h-screen">
+        <!-- Content injected via JS -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-brand-dark text-white py-16 px-6">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div class="md:col-span-1">
+                <h3 class="font-serif text-2xl mb-6">LUMIÈRE</h3>
+                <p class="text-gray-400 font-sans text-sm leading-relaxed">
+                    Redefining beauty with elegance and precision. Your sanctuary for luxury hair, skin, and nail care.
+                </p>
+            </div>
+            <div>
+                <h4 class="font-serif text-lg mb-6 text-brand-gold">Quick Links</h4>
+                <ul class="space-y-4 text-sm text-gray-300 font-sans">
+                    <li><a href="#" onclick="router('services')" class="hover:text-brand-gold transition">Our
+                            Services</a></li>
+                    <li><a href="#" onclick="router('gallery')" class="hover:text-brand-gold transition">Portfolio</a>
+                    </li>
+                    <li><a href="#" onclick="router('about')" class="hover:text-brand-gold transition">The Team</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-serif text-lg mb-6 text-brand-gold">Contact</h4>
+                <ul class="space-y-4 text-sm text-gray-300 font-sans">
+                    <li><i class="fas fa-map-marker-alt w-6"></i> 123 Luxury Ave, Downtown</li>
+                    <li><i class="fas fa-phone w-6"></i> +1 (555) 123-4567</li>
+                    <li><i class="fas fa-envelope w-6"></i> hello@lumiere.com</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-serif text-lg mb-6 text-brand-gold">Hours</h4>
+                <ul class="space-y-2 text-sm text-gray-300 font-sans">
+                    <li class="flex justify-between"><span>Mon - Fri</span> <span>10:00 - 20:00</span></li>
+                    <li class="flex justify-between"><span>Sat</span> <span>09:00 - 18:00</span></li>
+                    <li class="flex justify-between"><span>Sun</span> <span>Closed</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="border-t border-gray-800 mt-12 pt-8 text-center text-xs text-gray-500 font-sans">
+            &copy; 2024 Lumière Beauty Lounge. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Booking Modal -->
+    <div id="booking-modal" class="fixed inset-0 z-[60] hidden">
+        <div class="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm" onclick="closeBooking()"></div>
+        <div
+            class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-lg bg-white p-8 shadow-2xl fade-in">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="font-serif text-3xl text-brand-dark">Book Appointment</h2>
+                <button onclick="closeBooking()" class="text-gray-400 hover:text-brand-dark"><i
+                        class="fas fa-times text-xl"></i></button>
+            </div>
+            <form class="space-y-6"
+                onsubmit="event.preventDefault(); alert('Request sent! We will contact you shortly.'); closeBooking();">
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="text" placeholder="First Name"
+                        class="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-brand-gold bg-transparent font-sans"
+                        required>
+                    <input type="text" placeholder="Last Name"
+                        class="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-brand-gold bg-transparent font-sans"
+                        required>
+                </div>
+                <input type="tel" placeholder="Phone Number"
+                    class="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-brand-gold bg-transparent font-sans"
+                    required>
+                <select
+                    class="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-brand-gold bg-transparent font-sans text-gray-500">
+                    <option>Select Service</option>
+                    <option>Hair Styling</option>
+                    <option>Manicure/Pedicure</option>
+                    <option>Facial Spa</option>
+                    <option>Bridal Makeup</option>
+                </select>
+                <input type="date"
+                    class="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-brand-gold bg-transparent font-sans text-gray-500">
+                <button type="submit"
+                    class="w-full bg-brand-dark text-white py-4 uppercase tracking-widest text-sm hover:bg-gray-800 transition">Confirm
+                    Booking</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // --- PAGE DATA ---
+        const pages = {
+            home: `
+                <!-- Hero Section -->
+                <section class="relative h-screen flex items-center justify-center overflow-hidden">
+                    <div class="absolute inset-0 bg-hero-pattern bg-cover bg-center bg-no-repeat bg-fixed">
+                        <div class="absolute inset-0 bg-black/20"></div>
+                    </div>
+                    <div class="relative z-10 text-center px-4 fade-in">
+                        <p class="text-white uppercase tracking-[0.3em] mb-4 text-sm font-sans">Welcome to Elegance</p>
+                        <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl text-white mb-8 italic">Lumière <br><span class="not-italic">Beauty Lounge</span></h1>
+                        <button onclick="router('services')" class="bg-white/90 backdrop-blur text-brand-dark px-10 py-4 uppercase tracking-widest text-sm hover:bg-brand-gold hover:text-white transition-all duration-300">
+                            Discover More
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Intro Section -->
+                <section class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                        <div class="relative">
+                            <div class="img-zoom-container h-[500px] w-full">
+                                <img src="https://images.unsplash.com/photo-1560750588-73207b1ef5b8?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" alt="Salon Interior">
+                            </div>
+                            <div class="absolute -bottom-10 -right-10 bg-brand-cream p-8 shadow-xl hidden md:block">
+                                <p class="font-serif text-4xl text-brand-dark">10+</p>
+                                <p class="font-sans text-xs uppercase tracking-widest text-gray-500 mt-2">Years of Excellence</p>
+                            </div>
+                        </div>
+                        <div class="space-y-6">
+                            <h2 class="font-serif text-4xl md:text-5xl text-brand-dark leading-tight">Where Beauty Meets <span class="text-brand-gold italic">Serenity</span></h2>
+                            <p class="font-sans text-gray-600 leading-relaxed">
+                                Nestled in the heart of the city, Lumière is more than just a salon; it is a sanctuary. We believe that beauty is a personal journey. Our expert stylists and therapists are dedicated to creating a bespoke experience tailored just for you.
+                            </p>
+                            <div class="pt-4">
+                                <a href="#" onclick="router('about')" class="text-brand-dark border-b border-brand-dark pb-1 text-sm uppercase tracking-widest hover:text-brand-gold hover:border-brand-gold transition">Read Our Story</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Featured Services Carousel (Simplified Grid for MVP) -->
+                <section class="bg-brand-rose/20 py-24 px-6">
+                    <div class="max-w-7xl mx-auto text-center mb-16">
+                        <span class="text-brand-gold uppercase tracking-widest text-xs font-bold">What We Do</span>
+                        <h2 class="font-serif text-4xl text-brand-dark mt-4">Signature Treatments</h2>
+                    </div>
+                    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <!-- Item 1 -->
+                        <div class="group bg-white p-8 hover:shadow-2xl transition-all duration-500 text-center cursor-pointer" onclick="router('services')">
+                            <div class="w-16 h-16 bg-brand-cream rounded-full mx-auto flex items-center justify-center mb-6 text-brand-gold text-2xl group-hover:bg-brand-dark group-hover:text-white transition-colors">
+                                <i class="fas fa-cut"></i>
+                            </div>
+                            <h3 class="font-serif text-2xl mb-4 text-brand-dark">Hair Artistry</h3>
+                            <p class="font-sans text-sm text-gray-500 leading-relaxed mb-6">From precision cuts to balayage coloring, our master stylists transform your vision into reality.</p>
+                        </div>
+                        <!-- Item 2 -->
+                        <div class="group bg-white p-8 hover:shadow-2xl transition-all duration-500 text-center cursor-pointer" onclick="router('services')">
+                            <div class="w-16 h-16 bg-brand-cream rounded-full mx-auto flex items-center justify-center mb-6 text-brand-gold text-2xl group-hover:bg-brand-dark group-hover:text-white transition-colors">
+                                <i class="fas fa-paint-brush"></i>
+                            </div>
+                            <h3 class="font-serif text-2xl mb-4 text-brand-dark">Nail Spa</h3>
+                            <p class="font-sans text-sm text-gray-500 leading-relaxed mb-6">Luxurious manicures and pedicures using premium polishes and organic scrubs.</p>
+                        </div>
+                        <!-- Item 3 -->
+                        <div class="group bg-white p-8 hover:shadow-2xl transition-all duration-500 text-center cursor-pointer" onclick="router('services')">
+                            <div class="w-16 h-16 bg-brand-cream rounded-full mx-auto flex items-center justify-center mb-6 text-brand-gold text-2xl group-hover:bg-brand-dark group-hover:text-white transition-colors">
+                                <i class="fas fa-spa"></i>
+                            </div>
+                            <h3 class="font-serif text-2xl mb-4 text-brand-dark">Facial & Spa</h3>
+                            <p class="font-sans text-sm text-gray-500 leading-relaxed mb-6">Rejuvenate your skin with our signature hydrafacials and relaxing massages.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CTA -->
+                <section class="py-32 relative bg-brand-dark text-center px-4">
+                     <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?q=80&w=2072&auto=format&fit=crop')] bg-cover bg-center opacity-40"></div>
+                     <div class="relative z-10 max-w-3xl mx-auto">
+                        <h2 class="font-serif text-4xl md:text-6xl text-white mb-8 italic">Ready for a Glow Up?</h2>
+                        <button onclick="openBooking()" class="bg-white text-brand-dark px-12 py-4 uppercase tracking-widest text-sm hover:bg-brand-gold hover:text-white transition-all duration-300">
+                            Book Your Visit
+                        </button>
+                     </div>
+                </section>
+            `,
+            services: `
+                <div class="pt-32 pb-12 bg-brand-cream text-center px-4">
+                    <h1 class="font-serif text-5xl md:text-6xl text-brand-dark mb-4">Our Menu</h1>
+                    <p class="font-sans text-gray-500 uppercase tracking-widest text-xs">Curated for Perfection</p>
+                </div>
+
+                <div class="max-w-5xl mx-auto py-16 px-6">
+                    <!-- Category 1 -->
+                    <div class="mb-16 fade-in">
+                        <div class="flex items-end mb-8 border-b border-brand-dark pb-4">
+                            <h2 class="font-serif text-3xl text-brand-dark">Hair Collection</h2>
+                        </div>
+                        <div class="space-y-6">
+                            <div class="flex justify-between items-baseline group hover:pl-4 transition-all duration-300 cursor-default">
+                                <div class="bg-white w-full p-4 flex justify-between items-center shadow-sm">
+                                    <div>
+                                        <h3 class="font-serif text-xl text-brand-dark">Signature Cut & Blowdry</h3>
+                                        <p class="text-xs text-gray-500 mt-1 font-sans">Includes wash, massage, and styling</p>
+                                    </div>
+                                    <span class="font-sans font-bold text-brand-gold">$85</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-baseline group hover:pl-4 transition-all duration-300 cursor-default">
+                                <div class="bg-white w-full p-4 flex justify-between items-center shadow-sm">
+                                    <div>
+                                        <h3 class="font-serif text-xl text-brand-dark">Balayage & Toner</h3>
+                                        <p class="text-xs text-gray-500 mt-1 font-sans">Hand-painted highlights for a natural look</p>
+                                    </div>
+                                    <span class="font-sans font-bold text-brand-gold">$180+</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-baseline group hover:pl-4 transition-all duration-300 cursor-default">
+                                <div class="bg-white w-full p-4 flex justify-between items-center shadow-sm">
+                                    <div>
+                                        <h3 class="font-serif text-xl text-brand-dark">Keratin Treatment</h3>
+                                        <p class="text-xs text-gray-500 mt-1 font-sans">Long-lasting smoothing therapy</p>
+                                    </div>
+                                    <span class="font-sans font-bold text-brand-gold">$250</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category 2 -->
+                    <div class="mb-16 fade-in" style="animation-delay: 0.1s;">
+                        <div class="flex items-end mb-8 border-b border-brand-dark pb-4">
+                            <h2 class="font-serif text-3xl text-brand-dark">Nails & Hands</h2>
+                        </div>
+                        <div class="space-y-6">
+                            <div class="flex justify-between items-baseline group hover:pl-4 transition-all duration-300 cursor-default">
+                                <div class="bg-white w-full p-4 flex justify-between items-center shadow-sm">
+                                    <div>
+                                        <h3 class="font-serif text-xl text-brand-dark">Classic Gel Manicure</h3>
+                                        <p class="text-xs text-gray-500 mt-1 font-sans">Cuticle care, shaping, gel polish</p>
+                                    </div>
+                                    <span class="font-sans font-bold text-brand-gold">$45</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-baseline group hover:pl-4 transition-all duration-300 cursor-default">
+                                <div class="bg-white w-full p-4 flex justify-between items-center shadow-sm">
+                                    <div>
+                                        <h3 class="font-serif text-xl text-brand-dark">Luxury Spa Pedicure</h3>
+                                        <p class="text-xs text-gray-500 mt-1 font-sans">Exfoliation, mask, massage, polish</p>
+                                    </div>
+                                    <span class="font-sans font-bold text-brand-gold">$65</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Category 3 -->
+                    <div class="mb-16 fade-in" style="animation-delay: 0.2s;">
+                        <div class="flex items-end mb-8 border-b border-brand-dark pb-4">
+                            <h2 class="font-serif text-3xl text-brand-dark">Face & Skin</h2>
+                        </div>
+                        <div class="space-y-6">
+                             <div class="flex justify-between items-baseline group hover:pl-4 transition-all duration-300 cursor-default">
+                                <div class="bg-white w-full p-4 flex justify-between items-center shadow-sm">
+                                    <div>
+                                        <h3 class="font-serif text-xl text-brand-dark">The Golden Glow Facial</h3>
+                                        <p class="text-xs text-gray-500 mt-1 font-sans">24k gold mask with collagen boost</p>
+                                    </div>
+                                    <span class="font-sans font-bold text-brand-gold">$140</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+            gallery: `
+                <div class="pt-32 pb-12 bg-brand-cream text-center px-4">
+                    <h1 class="font-serif text-5xl md:text-6xl text-brand-dark mb-4">Visual Diary</h1>
+                    <p class="font-sans text-gray-500 uppercase tracking-widest text-xs">Moments of Beauty</p>
+                </div>
+                
+                <div class="max-w-7xl mx-auto py-12 px-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[300px]">
+                        <div class="md:col-span-1 md:row-span-2 relative overflow-hidden group fade-in">
+                             <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=1964&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                             <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                <p class="text-white font-serif text-2xl italic">Styling</p>
+                             </div>
+                        </div>
+                        <div class="md:col-span-1 md:row-span-1 relative overflow-hidden group fade-in">
+                             <img src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                              <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                <p class="text-white font-serif text-2xl italic">Makeup</p>
+                             </div>
+                        </div>
+                        <div class="md:col-span-1 md:row-span-2 relative overflow-hidden group fade-in">
+                             <img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                              <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                <p class="text-white font-serif text-2xl italic">Nail Art</p>
+                             </div>
+                        </div>
+                        <div class="md:col-span-1 md:row-span-1 relative overflow-hidden group fade-in">
+                             <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=1974&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                              <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                <p class="text-white font-serif text-2xl italic">Bridal</p>
+                             </div>
+                        </div>
+                    </div>
+                    
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 auto-rows-[400px]">
+                        <div class="relative overflow-hidden group fade-in">
+                            <img src="https://images.unsplash.com/photo-1521590832169-dca21b279d47?q=80&w=2069&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        </div>
+                         <div class="relative overflow-hidden group fade-in">
+                            <img src="https://images.unsplash.com/photo-1487412947132-26c2449ffdd1?q=80&w=2071&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        </div>
+                     </div>
+                </div>
+            `,
+            about: `
+                 <div class="relative h-[60vh] flex items-center justify-center">
+                     <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center bg-fixed grayscale opacity-30"></div>
+                     <div class="relative z-10 text-center max-w-2xl px-6 fade-in">
+                         <h1 class="font-serif text-6xl text-brand-dark mb-6">Our Philosophy</h1>
+                         <p class="font-sans text-xl text-gray-700 leading-relaxed">
+                             "Beauty is the illumination of your soul."
+                         </p>
+                     </div>
+                 </div>
+
+                 <section class="max-w-7xl mx-auto py-24 px-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                        <div class="fade-in">
+                            <h2 class="font-serif text-4xl text-brand-dark mb-6">Established 2014</h2>
+                            <p class="font-sans text-gray-600 mb-6 leading-loose">
+                                Lumière started with a simple vision: to create a space where women could escape the chaos of the city and indulge in pure self-care. Founded by Sarah Jenkins, a stylist with 20 years of international experience, we have grown into a family of dedicated artists.
+                            </p>
+                             <p class="font-sans text-gray-600 mb-6 leading-loose">
+                                We exclusively use eco-friendly, cruelty-free products because we care about the planet as much as we care about your hair and skin.
+                            </p>
+                             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Signature_sample.svg/1200px-Signature_sample.svg.png" class="h-12 opacity-60 mt-8" alt="Signature">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 fade-in">
+                            <img src="https://images.unsplash.com/photo-1595867296366-08104e760921?q=80&w=1966&auto=format&fit=crop" class="w-full h-64 object-cover rounded-sm shadow-md mt-12">
+                            <img src="https://images.unsplash.com/photo-1582095133179-bfd08e2fc6b3?q=80&w=2070&auto=format&fit=crop" class="w-full h-64 object-cover rounded-sm shadow-md">
+                        </div>
+                    </div>
+                 </section>
+
+                 <section class="bg-brand-rose/10 py-24 px-6 text-center">
+                     <h2 class="font-serif text-4xl text-brand-dark mb-12">Meet The Masters</h2>
+                     <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+                         <div class="bg-white p-6 shadow-sm hover:shadow-xl transition-all duration-300">
+                             <div class="h-64 overflow-hidden mb-6">
+                                 <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961&auto=format&fit=crop" class="w-full h-full object-cover hover:scale-110 transition-transform">
+                             </div>
+                             <h3 class="font-serif text-xl text-brand-dark">Sarah Jenkins</h3>
+                             <p class="text-xs font-sans uppercase tracking-widest text-brand-gold mt-2">Founder & Master Stylist</p>
+                         </div>
+                          <div class="bg-white p-6 shadow-sm hover:shadow-xl transition-all duration-300">
+                             <div class="h-64 overflow-hidden mb-6">
+                                 <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1976&auto=format&fit=crop" class="w-full h-full object-cover hover:scale-110 transition-transform">
+                             </div>
+                             <h3 class="font-serif text-xl text-brand-dark">Elena Rodriguez</h3>
+                             <p class="text-xs font-sans uppercase tracking-widest text-brand-gold mt-2">Lead Esthetician</p>
+                         </div>
+                          <div class="bg-white p-6 shadow-sm hover:shadow-xl transition-all duration-300">
+                             <div class="h-64 overflow-hidden mb-6">
+                                 <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover hover:scale-110 transition-transform">
+                             </div>
+                             <h3 class="font-serif text-xl text-brand-dark">Yumi Sato</h3>
+                             <p class="text-xs font-sans uppercase tracking-widest text-brand-gold mt-2">Nail Technician</p>
+                         </div>
+                     </div>
+                 </section>
+            `,
+            contact: `
+                <div class="pt-32 pb-12 bg-brand-cream text-center px-4">
+                    <h1 class="font-serif text-5xl md:text-6xl text-brand-dark mb-4">Get in Touch</h1>
+                    <p class="font-sans text-gray-500 uppercase tracking-widest text-xs">We'd love to hear from you</p>
+                </div>
+
+                <div class="max-w-7xl mx-auto py-16 px-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 bg-white shadow-2xl overflow-hidden">
+                        <!-- Contact Info & Form -->
+                        <div class="p-8 md:p-12">
+                            <h2 class="font-serif text-3xl text-brand-dark mb-8">Send a Message</h2>
+                            <form onsubmit="event.preventDefault(); alert('Message Sent!');" class="space-y-6">
+                                <div>
+                                    <label class="block text-xs uppercase tracking-widest text-gray-500 mb-2">Name</label>
+                                    <input type="text" class="w-full bg-gray-50 border border-gray-200 p-4 font-sans focus:outline-none focus:border-brand-gold transition-colors">
+                                </div>
+                                <div>
+                                    <label class="block text-xs uppercase tracking-widest text-gray-500 mb-2">Email</label>
+                                    <input type="email" class="w-full bg-gray-50 border border-gray-200 p-4 font-sans focus:outline-none focus:border-brand-gold transition-colors">
+                                </div>
+                                <div>
+                                    <label class="block text-xs uppercase tracking-widest text-gray-500 mb-2">Message</label>
+                                    <textarea rows="4" class="w-full bg-gray-50 border border-gray-200 p-4 font-sans focus:outline-none focus:border-brand-gold transition-colors"></textarea>
+                                </div>
+                                <button class="w-full bg-brand-dark text-white py-4 uppercase tracking-widest text-sm hover:bg-brand-gold transition-colors">Send Message</button>
+                            </form>
+
+                            <div class="mt-12 grid grid-cols-2 gap-6">
+                                <div>
+                                    <h4 class="font-serif text-xl mb-2">Call Us</h4>
+                                    <p class="text-sm text-gray-500 font-sans">+1 (555) 123-4567</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-serif text-xl mb-2">Visit Us</h4>
+                                    <p class="text-sm text-gray-500 font-sans">123 Luxury Avenue,<br>New York, NY 10012</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Map Visual (Placeholder) -->
+                        <div class="relative min-h-[400px] bg-gray-200">
+                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.2219901290355!2d-74.00369368400567!3d40.71312937933185!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a22a3bda30d%3A0xb89d1fe6bc499443!2sDowntown%20Conference%20Center!5e0!3m2!1sen!2sus!4v1620246234567!5m2!1sen!2sus" width="100%" height="100%" style="border:0; filter: grayscale(100%);" allowfullscreen="" loading="lazy"></iframe>
+                        </div>
+                    </div>
+                </div>
+            `
+        };
+
+        // --- CORE FUNCTIONS ---
+
+        function router(pageName) {
+            const contentDiv = document.getElementById('app-content');
+            const navbar = document.getElementById('navbar');
+
+            // Scroll to top
+            window.scrollTo(0, 0);
+
+            // Update Active Link State
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.page === pageName) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Handle Navbar Style (Transparent only on home)
+            if (pageName === 'home') {
+                navbar.classList.add('bg-transparent');
+                navbar.classList.remove('bg-white/95', 'shadow-md', 'backdrop-blur-md');
+            } else {
+                navbar.classList.remove('bg-transparent');
+                navbar.classList.add('bg-white/95', 'shadow-md', 'backdrop-blur-md');
+            }
+
+            // Inject Content
+            contentDiv.innerHTML = pages[pageName];
+
+            // Re-trigger scroll observer for new content
+            observeElements();
+        }
+
+        // --- UI UTILITIES ---
+
+        function openBooking() {
+            const modal = document.getElementById('booking-modal');
+            modal.classList.remove('hidden');
+        }
+
+        function closeBooking() {
+            const modal = document.getElementById('booking-modal');
+            modal.classList.add('hidden');
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const isOpen = !menu.classList.contains('translate-x-full');
+
+            if (isOpen) {
+                menu.classList.add('translate-x-full');
+            } else {
+                menu.classList.remove('translate-x-full');
+            }
+        }
+
+        // --- ANIMATION OBSERVER ---
+        function observeElements() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            // Elements that should fade in
+            document.querySelectorAll('.fade-in').forEach(el => {
+                // el.style.animationPlayState = 'paused'; // Optional: if you want them hidden initially via CSS
+                observer.observe(el);
+            });
+        }
+
+        // --- INITIALIZATION ---
+        window.addEventListener('load', () => {
+            // Hide Loader
+            const loader = document.getElementById('loader');
+            loader.style.opacity = '0';
+            setTimeout(() => {
+                loader.style.display = 'none';
+            }, 500);
+
+            // Load Home
+            router('home');
+
+            // Scroll Event for Home Navbar
+            window.addEventListener('scroll', () => {
+                const navbar = document.getElementById('navbar');
+                // Only apply logic if we are on the home page (which starts transparent)
+                // If the user has scrolled down > 50px, make it solid
+                if (window.scrollY > 50) {
+                    navbar.classList.add('bg-white/95', 'shadow-md', 'backdrop-blur-md');
+                    navbar.classList.remove('bg-transparent');
+                } else if (document.querySelector('.nav-link.active').dataset.page === 'home') {
+                    // Back to top on home page
+                    navbar.classList.remove('bg-white/95', 'shadow-md', 'backdrop-blur-md');
+                    navbar.classList.add('bg-transparent');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

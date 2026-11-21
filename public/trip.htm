@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trip Coordinator</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 pb-20">
+
+    <!-- Header -->
+    <header class="bg-indigo-600 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-xl md:text-2xl font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-users"></i>
+                        Trip Coordinator
+                    </h1>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="exportData()" class="text-xs bg-indigo-500 hover:bg-indigo-400 text-white px-3 py-1.5 rounded flex items-center gap-2 transition-colors border border-indigo-400 shadow-sm">
+                        <i class="fa-solid fa-download"></i> <span class="hidden sm:inline">Export</span>
+                    </button>
+                    <button onclick="resetData()" class="text-xs bg-indigo-700 hover:bg-indigo-800 text-indigo-100 px-3 py-1.5 rounded flex items-center gap-2 transition-colors border border-indigo-500">
+                        <i class="fa-solid fa-rotate-left"></i> <span class="hidden sm:inline">Reset</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 py-6 space-y-6">
+
+        <!-- Attendance Summary Bar -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 grid grid-cols-3 divide-x divide-slate-100">
+            <div class="text-center px-2">
+                <div id="stat-coming" class="text-2xl font-bold text-green-600">0</div>
+                <div class="text-[10px] sm:text-xs font-semibold text-slate-500 uppercase tracking-wide">Coming</div>
+            </div>
+            <div class="text-center px-2">
+                <div id="stat-pending-status" class="text-2xl font-bold text-slate-400">0</div>
+                <div class="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wide">Pending</div>
+            </div>
+            <div class="text-center px-2">
+                <div id="stat-not-coming" class="text-2xl font-bold text-red-500">0</div>
+                <div class="text-[10px] sm:text-xs font-semibold text-red-400 uppercase tracking-wide">Not Coming</div>
+            </div>
+        </div>
+
+        <!-- Real-time Financial Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Total Collected -->
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-col justify-between relative overflow-hidden">
+                <div class="absolute right-0 top-0 p-4 opacity-10">
+                    <i class="fa-solid fa-wallet text-6xl"></i>
+                </div>
+                <div class="flex justify-between items-start mb-2 relative z-10">
+                    <span class="text-slate-500 text-sm font-medium">Total Collected</span>
+                </div>
+                <div id="stat-collected" class="text-3xl font-bold text-slate-800 relative z-10">₹0</div>
+                <div class="text-xs text-green-600 mt-2 font-medium relative z-10 flex items-center gap-1">
+                    <i class="fa-solid fa-check-circle"></i> <span id="stat-paid-count">0</span> Paid
+                </div>
+            </div>
+
+            <!-- Pending Collection -->
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-col justify-between">
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-slate-500 text-sm font-medium">To Be Collected</span>
+                </div>
+                <div id="stat-pending-amt" class="text-3xl font-bold text-orange-500">₹0</div>
+                <div class="text-xs text-slate-400 mt-2">
+                    From <span id="stat-unpaid-count">0</span> eligible people
+                </div>
+            </div>
+
+            <!-- Total Pool -->
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-col justify-between">
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-slate-500 text-sm font-medium">Projected Budget</span>
+                    <span class="text-[10px] text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full">Excl. "Not Coming"</span>
+                </div>
+                <div id="stat-projected" class="text-3xl font-bold text-indigo-600">₹0</div>
+                <div class="text-xs text-slate-400 mt-2">
+                    Based on <span id="stat-eligible">0</span> eligible
+                </div>
+            </div>
+        </div>
+
+        <!-- Search & Filter -->
+        <div class="sticky top-16 md:top-20 z-40 bg-slate-50 py-2 space-y-3">
+            <div class="relative">
+                <i class="fa-solid fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+                <input 
+                    type="text" 
+                    id="search-input"
+                    placeholder="Search name..." 
+                    oninput="handleSearch()"
+                    class="w-full pl-10 pr-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm bg-white"
+                />
+            </div>
+            
+            <div class="flex gap-2 overflow-x-auto pb-2 no-scrollbar" id="filter-container">
+                <!-- Filters injected by JS -->
+            </div>
+        </div>
+
+        <!-- List Section -->
+        <div id="list-container" class="space-y-6">
+            <!-- Lists injected by JS -->
+        </div>
+
+    </main>
+
+    <script>
+        // --- DATA & CONFIG ---
+        const PER_HEAD_AMOUNT = 3500;
+        const STORAGE_KEY = 'tripParticipants_v4_vanilla';
+
+        // Helper to generate initial data
+        const createP = (id, name, category, isAdmin = false) => ({
+            id, name, category, paid: false, isAdmin, status: 'pending' 
+        });
+
+        const INITIAL_DATA = [
+            // Saved Contacts & Admins
+            createP(1, "Shibil", "Saved Contacts"),
+            createP(2, "Adhersh P Pramod", "Saved Contacts", true),
+            createP(3, "Adithyan", "Saved Contacts"),
+            createP(4, "Alen Santhosh", "Saved Contacts"),
+            createP(5, "Amal", "Saved Contacts"),
+            createP(6, "Amna", "Saved Contacts"),
+            createP(7, "Anakha", "Saved Contacts"),
+            createP(8, "Anamika", "Saved Contacts"),
+            createP(9, "Athulya Chandrababu", "Saved Contacts", true),
+            createP(10, "Benedict", "Saved Contacts"),
+            createP(11, "Dheeraj prasad", "Saved Contacts"),
+            createP(12, "Diya", "Saved Contacts"),
+            createP(14, "Fajna Shamsu", "Saved Contacts"),
+            createP(15, "Fathima Safa", "Saved Contacts"),
+            createP(16, "Gopika", "Saved Contacts"),
+            createP(17, "Hiba Abdul Hakeem", "Saved Contacts"),
+            createP(18, "Ihsan", "Saved Contacts"),
+            createP(19, "Jannath Rafi", "Saved Contacts"),
+            createP(20, "Jos P Jomon", "Saved Contacts"),
+            createP(21, "Milan raphy", "Saved Contacts"),
+            createP(22, "Minha Neharin", "Saved Contacts"),
+            createP(23, "Nagul", "Saved Contacts"),
+            createP(24, "Naithik", "Saved Contacts"),
+            createP(25, "Najim", "Saved Contacts"),
+            createP(26, "Rinshad", "Saved Contacts"),
+            createP(27, "Riya Mehar", "Saved Contacts"),
+            createP(28, "Safa", "Saved Contacts"),
+            createP(29, "Safvan", "Saved Contacts"),
+            createP(30, "Shammas", "Saved Contacts"),
+            createP(31, "Sreenanda", "Saved Contacts"),
+            createP(32, "SreenatSreenath", "Saved Contacts"),
+            createP(33, "Sreenidhi", "Saved Contacts"),
+            createP(34, "Thanay Krishna C U", "Saved Contacts"),
+            createP(35, "Umair", "Saved Contacts"),
+            createP(36, "Zahra", "Saved Contacts"),
+            // Unsaved Contacts
+            createP(37, "Rahul", "Unsaved Contacts"),
+            createP(38, "aashmi", "Unsaved Contacts"),
+            createP(39, "AKSHAY K S", "Unsaved Contacts"),
+            createP(40, "Amritha", "Unsaved Contacts"),
+            createP(41, "Anatt Santhosh", "Unsaved Contacts"),
+            createP(42, "Athul Krishna .s", "Unsaved Contacts"),
+            createP(43, "Christin Ck", "Unsaved Contacts"),
+            createP(44, "Hena Haneef", "Unsaved Contacts"),
+            createP(45, "Mefff", "Unsaved Contacts"),
+            createP(46, "Sujin", "Unsaved Contacts"),
+            createP(47, "Pramitha V P", "Unsaved Contacts"),
+            createP(48, "Rajaram", "Unsaved Contacts"),
+            createP(49, "Rishad", "Unsaved Contacts"),
+            createP(51, "Sidharth", "Unsaved Contacts"),
+            createP(52, "Stanly", "Unsaved Contacts"),
+            createP(53, "syamjithh", "Unsaved Contacts"),
+            createP(54, "zamreeeen", "Unsaved Contacts"),
+            createP(55, "Amer", "Unsaved Contacts"),
+            createP(55, "Shyam", "Unsaved Contacts"),
+        ];
+
+        // --- STATE ---
+        let participants = [];
+        let currentFilter = 'all';
+        let searchTerm = '';
+
+        // --- INITIALIZATION ---
+        function init() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                participants = JSON.parse(saved);
+                // Basic migration check
+                if (!participants[0].hasOwnProperty('status')) {
+                    participants = participants.map(p => ({...p, status: 'pending'}));
+                }
+            } else {
+                participants = JSON.parse(JSON.stringify(INITIAL_DATA));
+            }
+            renderFilters();
+            renderApp();
+        }
+
+        // --- LOGIC ---
+
+        function save() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(participants));
+            renderApp();
+        }
+
+        function togglePayment(id) {
+            const p = participants.find(x => x.id === id);
+            if(p) {
+                p.paid = !p.paid;
+                save();
+            }
+        }
+
+        function toggleStatus(id, event) {
+            if(event) event.stopPropagation();
+            const p = participants.find(x => x.id === id);
+            if(p) {
+                // Cycle: Pending -> Coming -> Not Coming -> Pending
+                if(p.status === 'pending') p.status = 'coming';
+                else if(p.status === 'coming') p.status = 'not_coming';
+                else p.status = 'pending';
+                save();
+            }
+        }
+
+        function resetData() {
+            if(confirm("Are you sure you want to reset all data?")) {
+                participants = JSON.parse(JSON.stringify(INITIAL_DATA));
+                save();
+            }
+        }
+
+        function handleSearch() {
+            searchTerm = document.getElementById('search-input').value.toLowerCase();
+            renderApp();
+        }
+
+        function setFilter(filter) {
+            currentFilter = filter;
+            renderFilters();
+            renderApp();
+        }
+
+        function exportData() {
+            const date = new Date().toLocaleDateString('en-IN');
+            const time = new Date().toLocaleTimeString('en-IN');
+            
+            const stats = calculateStats();
+
+            let content = `TRIP COORDINATION REPORT\nGenerated: ${date} at ${time}\n`;
+            content += `=================================================\n\n`;
+            
+            content += `FINANCIAL SUMMARY\n`;
+            content += `-----------------\n`;
+            content += `Total Collected:  ${formatCurrency(stats.totalCollected)}\n`;
+            content += `Pending Amount:   ${formatCurrency(stats.pendingAmount)}\n`;
+            content += `Expected Total:   ${formatCurrency(stats.totalExpected)}\n\n`;
+            
+            content += `ATTENDANCE SUMMARY\n`;
+            content += `------------------\n`;
+            content += `Coming:           ${stats.comingCount}\n`;
+            content += `Not Coming:       ${stats.notComingCount}\n`;
+            content += `Pending Confirm:  ${stats.pendingStatusCount}\n\n`;
+            
+            content += `=================================================\n`;
+            content += `DETAILED LIST\n`;
+            content += `=================================================\n\n`;
+
+            const getStatusStr = (status) => {
+                if(status === 'coming') return '[ COMING    ]';
+                if(status === 'not_coming') return '[ NOT COMING]';
+                return '[ PENDING   ]';
+            };
+
+            const getPayStr = (paid) => paid ? '[ PAID  ]' : '[ UNPAID]';
+
+            ['Saved Contacts', 'Unsaved Contacts'].forEach(category => {
+                content += `--- ${category} ---\n`;
+                const catPeople = participants.filter(p => p.category === category);
+                catPeople.forEach(p => {
+                    const line = `${getStatusStr(p.status)} ${getPayStr(p.paid)} ${p.name} ${p.isAdmin ? '(Admin)' : ''}`;
+                    content += `${line}\n`;
+                });
+                content += `\n`;
+            });
+
+            const element = document.createElement("a");
+            const file = new Blob([content], {type: 'text/plain'});
+            element.href = URL.createObjectURL(file);
+            element.download = `Trip_Report_${date.replace(/\//g, '-')}.txt`;
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        function calculateStats() {
+            const totalListSize = participants.length;
+            const paidCount = participants.filter(p => p.paid).length;
+            
+            const comingCount = participants.filter(p => p.status === 'coming').length;
+            const notComingCount = participants.filter(p => p.status === 'not_coming').length;
+            const pendingStatusCount = participants.filter(p => p.status === 'pending').length;
+
+            const totalCollected = paidCount * PER_HEAD_AMOUNT;
+            
+            // Eligible = Everyone EXCEPT those explicitly "Not Coming"
+            const eligibleForPaymentCount = totalListSize - notComingCount;
+            const totalExpected = eligibleForPaymentCount * PER_HEAD_AMOUNT;
+            
+            const pendingAmount = totalExpected - totalCollected;
+
+            return {
+                paidCount, comingCount, notComingCount, pendingStatusCount,
+                totalCollected, eligibleForPaymentCount, totalExpected, pendingAmount
+            };
+        }
+
+        const formatCurrency = (amount) => {
+            return new Intl.NumberFormat('en-IN', {
+                style: 'currency',
+                currency: 'INR',
+                maximumFractionDigits: 0
+            }).format(amount);
+        };
+
+        // --- RENDERING ---
+
+        function renderFilters() {
+            const filters = [
+                { id: 'all', label: 'All' },
+                { id: 'coming', label: 'Coming' },
+                { id: 'not_coming', label: 'Not Coming' },
+                { id: 'paid', label: 'Paid' },
+                { id: 'unpaid', label: 'Unpaid' },
+            ];
+
+            const container = document.getElementById('filter-container');
+            container.innerHTML = filters.map(f => `
+                <button 
+                    onclick="setFilter('${f.id}')"
+                    class="whitespace-nowrap px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors ${
+                        currentFilter === f.id 
+                        ? 'bg-slate-800 text-white shadow-md' 
+                        : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-100'
+                    }"
+                >
+                    ${f.label}
+                </button>
+            `).join('');
+        }
+
+        function renderApp() {
+            const stats = calculateStats();
+
+            // Update Header Stats
+            document.getElementById('stat-coming').innerText = stats.comingCount;
+            document.getElementById('stat-pending-status').innerText = stats.pendingStatusCount;
+            document.getElementById('stat-not-coming').innerText = stats.notComingCount;
+            
+            document.getElementById('stat-collected').innerText = formatCurrency(stats.totalCollected);
+            document.getElementById('stat-paid-count').innerText = stats.paidCount;
+            
+            document.getElementById('stat-pending-amt').innerText = formatCurrency(stats.pendingAmount);
+            document.getElementById('stat-unpaid-count').innerText = (stats.eligibleForPaymentCount - stats.paidCount);
+            
+            document.getElementById('stat-projected').innerText = formatCurrency(stats.totalExpected);
+            document.getElementById('stat-eligible').innerText = stats.eligibleForPaymentCount;
+
+            // Filter List
+            const filtered = participants.filter(p => {
+                const matchesSearch = p.name.toLowerCase().includes(searchTerm);
+                let matchesFilter = true;
+                if (currentFilter === 'paid') matchesFilter = p.paid;
+                if (currentFilter === 'unpaid') matchesFilter = !p.paid;
+                if (currentFilter === 'coming') matchesFilter = p.status === 'coming';
+                if (currentFilter === 'not_coming') matchesFilter = p.status === 'not_coming';
+                return matchesSearch && matchesFilter;
+            });
+
+            const categories = ['Saved Contacts', 'Unsaved Contacts'];
+            const container = document.getElementById('list-container');
+            container.innerHTML = '';
+
+            categories.forEach(cat => {
+                const catPeople = filtered.filter(p => p.category === cat);
+                
+                // Header HTML
+                let html = `
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                        <div class="bg-slate-100 px-4 py-3 border-b border-slate-200 flex justify-between items-center">
+                            <h2 class="font-bold text-slate-700 text-sm uppercase tracking-wide">${cat}</h2>
+                            <span class="text-xs font-medium text-slate-500">${catPeople.length}</span>
+                        </div>
+                        <div class="divide-y divide-slate-100">
+                `;
+
+                if (catPeople.length === 0) {
+                    html += `
+                        <div class="p-8 text-center text-slate-400">
+                            <i class="fa-solid fa-circle-exclamation text-2xl mb-2 opacity-50"></i><br>
+                            No names found.
+                        </div>
+                    `;
+                } else {
+                    html += catPeople.map(p => {
+                        // Styling Logic
+                        const isNotComing = p.status === 'not_coming';
+                        const isComing = p.status === 'coming';
+                        const isPaid = p.paid;
+
+                        const rowClass = `relative px-4 py-3 flex items-center justify-between transition-all ${isNotComing ? 'bg-slate-50 opacity-60 grayscale-[0.5]' : ''} ${isPaid ? 'bg-green-50/30' : ''}`;
+                        
+                        const avatarClass = `w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold shadow-sm shrink-0 ${isPaid ? 'bg-gradient-to-br from-green-400 to-green-600 text-white' : 'bg-slate-200 text-slate-500'}`;
+
+                        let statusBadgeClass = 'bg-blue-50 text-blue-600';
+                        let statusText = 'Pending';
+                        if(isComing) { statusBadgeClass = 'bg-green-100 text-green-700'; statusText = 'Coming'; }
+                        if(isNotComing) { statusBadgeClass = 'bg-red-100 text-red-700'; statusText = 'Not Coming'; }
+
+                        let statusBtnClass = 'bg-slate-50 border-slate-200 text-slate-400 hover:bg-slate-100';
+                        let statusIcon = 'fa-question';
+                        if(isComing) { statusBtnClass = 'bg-green-100 border-green-200 text-green-600 hover:bg-green-200'; statusIcon = 'fa-user-check'; }
+                        if(isNotComing) { statusBtnClass = 'bg-red-100 border-red-200 text-red-600 hover:bg-red-200'; statusIcon = 'fa-user-xmark'; }
+
+                        let payBtnClass = isPaid ? 'bg-green-600 border-green-600 text-white shadow-md' : 'bg-white border-slate-200 text-slate-400 hover:border-slate-300';
+
+                        return `
+                            <div class="${rowClass}">
+                                <div class="flex items-center gap-3 flex-1">
+                                    <div class="${avatarClass}">
+                                        ${p.name.charAt(0).toUpperCase()}
+                                    </div>
+                                    <div class="min-w-0">
+                                        <div class="font-semibold text-slate-800 text-sm truncate pr-2 flex items-center gap-1.5">
+                                            ${p.name}
+                                            ${p.isAdmin ? '<i class="fa-solid fa-crown text-yellow-500"></i>' : ''}
+                                        </div>
+                                        <div class="flex items-center gap-2 mt-0.5">
+                                            <span class="text-[10px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider ${statusBadgeClass}">
+                                                ${statusText}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <button onclick="toggleStatus(${p.id}, event)" class="w-9 h-9 rounded-lg flex items-center justify-center transition-colors border ${statusBtnClass}" title="Toggle Attendance">
+                                        <i class="fa-solid ${statusIcon}"></i>
+                                    </button>
+                                    <button onclick="togglePayment(${p.id})" class="flex flex-col items-center justify-center w-20 py-1.5 rounded-lg border transition-all ${payBtnClass}">
+                                        <span class="text-[10px] font-bold uppercase">${isPaid ? 'Paid' : 'Unpaid'}</span>
+                                        <span class="text-xs font-bold">${isPaid ? '₹3.5k' : '-'}</span>
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+
+                html += `</div></div>`;
+                container.innerHTML += html;
+            });
+        }
+
+        // Init
+        init();
+
+    </script>
+</body>
+</html>
+

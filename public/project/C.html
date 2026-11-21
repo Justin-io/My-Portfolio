@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+#define MAX 100
+char stack[MAX];
+int top = -1;
+
+void push(char c) {
+    if (top < MAX-1) stack[++top] = c;
+}
+
+char pop() {
+    return top >= 0 ? stack[top--] : '$';
+}
+
+int prec(char c) {
+    return (c == '+' || c == '-') ? 1 : (c == '*' || c == '/') ? 2 : 0;
+}
+
+int main() {
+    char infix[100], postfix[100] = "";
+    printf("Enter Infix: ");
+    fgets(infix, 100, stdin);
+    infix[strcspn(infix, "\n")] = 0;
+
+    int j = 0;
+    for (int i = 0; infix[i]; i++) {
+        char ch = infix[i];
+        if (isalnum(ch)) postfix[j++] = ch;
+        else if (ch == '(') push(ch);
+        else if (ch == ')') while (stack[top] != '(') postfix[j++] = pop(); pop();
+        else {
+            while (top >= 0 && prec(stack[top]) >= prec(ch))
+                postfix[j++] = pop();
+            push(ch);
+        }
+    }
+    while (top != -1) postfix[j++] = pop();
+    postfix[j] = '\0';
+    printf("Postfix: %s\n", postfix);
+    return 0;
+}

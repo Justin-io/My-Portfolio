@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JWT Debugger | Office Hero</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="back-nav">
+            <a href="../index.html#utilities" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Tools
+            </a>
+        </div>
+
+        <header>
+            <div class="icon-box" style="margin: 0 auto 1.5rem auto;">
+                <i class="fas fa-key"></i>
+            </div>
+            <h1 class="brand">JWT Debugger</h1>
+            <p class="tagline">Decode and inspect JSON Web Tokens. Client-side only.</p>
+        </header>
+
+        <div class="tool-interface" style="max-width: 1000px;">
+            <div style="margin-bottom: 2rem;">
+                <h3 style="margin-bottom: 10px; color: var(--text-secondary); text-align: left;">Encoded Token</h3>
+                <textarea id="jwt-input" class="text-area-styled" placeholder="Paste your JWT token here (eyJ...)"
+                    style="height: 150px; color: var(--accent); border-color: var(--accent);"></textarea>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; text-align: left;">
+                <div>
+                    <h3 style="margin-bottom: 10px; color: #fb7185;">Header</h3>
+                    <pre id="header-output"
+                        style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 12px; min-height: 200px; color: #fb7185; font-family: 'JetBrains Mono'; border: 1px solid var(--glass-border); overflow-x: auto;">{}</pre>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 10px; color: #c084fc;">Payload</h3>
+                    <pre id="payload-output"
+                        style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 12px; min-height: 200px; color: #c084fc; font-family: 'JetBrains Mono'; border: 1px solid var(--glass-border); overflow-x: auto;">{}</pre>
+                </div>
+            </div>
+
+            <div id="status-validity"
+                style="margin-top: 2rem; padding: 1rem; border-radius: 8px; text-align: center; display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        const input = document.getElementById('jwt-input');
+        const headerOut = document.getElementById('header-output');
+        const payloadOut = document.getElementById('payload-output');
+        const statusDiv = document.getElementById('status-validity');
+
+        function decode(str) {
+            str = str.replace(/-/g, '+').replace(/_/g, '/');
+            switch (str.length % 4) {
+                case 0: break;
+                case 2: str += '=='; break;
+                case 3: str += '='; break;
+                default: throw 'Illegal base64url string!';
+            }
+            return decodeURIComponent(atob(str).split('').map(function (c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+        }
+
+        input.addEventListener('input', () => {
+            const token = input.value.trim();
+            if (!token) {
+                headerOut.innerText = '{}';
+                payloadOut.innerText = '{}';
+                statusDiv.style.display = 'none';
+                return;
+            }
+
+            try {
+                const parts = token.split('.');
+                if (parts.length !== 3) throw new Error("Invalid Token Structure (must have 3 parts)");
+
+                const header = JSON.parse(decode(parts[0]));
+                const payload = JSON.parse(decode(parts[1]));
+
+                headerOut.innerText = JSON.stringify(header, null, 2);
+                payloadOut.innerText = JSON.stringify(payload, null, 2);
+
+                // Check Expiration
+                if (payload.exp) {
+                    const exp = new Date(payload.exp * 1000);
+                    const now = new Date();
+                    const isExpired = now > exp;
+
+                    statusDiv.style.display = 'block';
+                    if (isExpired) {
+                        statusDiv.style.background = 'rgba(239, 68, 68, 0.2)';
+                        statusDiv.style.color = '#f87171';
+                        statusDiv.innerHTML = `<i class="fas fa-times-circle"></i> Token Expired on ${exp.toLocaleString()}`;
+                    } else {
+                        statusDiv.style.background = 'rgba(74, 222, 128, 0.2)';
+                        statusDiv.style.color = '#4ade80';
+                        statusDiv.innerHTML = `<i class="fas fa-check-circle"></i> Token Active. Expires: ${exp.toLocaleString()}`;
+                    }
+                } else {
+                    statusDiv.style.display = 'none';
+                }
+
+            } catch (e) {
+                headerOut.innerText = "Error decoding";
+                payloadOut.innerText = "Invalid JWT Token";
+                statusDiv.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>

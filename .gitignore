@@ -1,0 +1,50 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Production Outputs
+dist/
+dist-ssr/
+build/
+*.tsbuildinfo
+
+# Temporary Artifacts & Screenshots
+.aistudio/
+scratch/
+r*.png
+media_*.png
+media_*.jpg
+
+# Secrets & Environment (Zero Data Leak)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.cert
+*.crt
+id_rsa*
+*.secret
+
+# Logs & Diagnostics
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Test & Coverage
+coverage/
+.nyc_output/
+
+# Operating System & Editors
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+.vscode/*
+!.vscode/extensions.json

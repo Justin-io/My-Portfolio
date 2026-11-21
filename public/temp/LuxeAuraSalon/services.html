@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services | Luxe Aura Ladies Salon</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet">
+
+    <!-- AOS Animation Library -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'rose-gold': '#B76E79',
+                        'rose-gold-light': '#E6C1C7',
+                        'rose-gold-dark': '#965A63',
+                        'charcoal': '#1A1A1A',
+                        'off-white': '#F9F9F9',
+                        'cream': '#FDFBF7',
+                    },
+                    fontFamily: {
+                        sans: ['Lato', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+
+<body class="bg-cream text-charcoal font-sans antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-24">
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="index.html" class="flex items-center gap-2 group">
+                        <span
+                            class="font-serif text-3xl font-bold tracking-wider text-charcoal group-hover:text-rose-gold transition-colors duration-300">LUXE<span
+                                class="text-rose-gold">AURA</span></span>
+                    </a>
+                </div>
+                <div class="hidden md:flex space-x-12 items-center">
+                    <a href="index.html"
+                        class="font-medium text-sm tracking-widest uppercase hover:text-rose-gold transition-colors duration-300 border-b-2 border-transparent hover:border-rose-gold">Home</a>
+                    <a href="services.html"
+                        class="font-medium text-sm tracking-widest uppercase hover:text-rose-gold transition-colors duration-300 border-b-2 border-transparent border-rose-gold">Services</a>
+                    <a href="contact.html"
+                        class="font-medium text-sm tracking-widest uppercase hover:text-rose-gold transition-colors duration-300 border-b-2 border-transparent hover:border-rose-gold">Contact</a>
+                    <a href="contact.html"
+                        class="bg-rose-gold text-white px-8 py-3 rounded-full font-serif italic text-lg hover:bg-rose-gold-dark transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">Book
+                        Now</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <div class="pt-32 pb-20 bg-white text-center px-4 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full bg-rose-gold opacity-5"></div>
+        <div class="relative z-10" data-aos="fade-down">
+            <h1 class="font-serif text-5xl md:text-6xl font-bold mb-6 text-charcoal">Our <span
+                    class="text-rose-gold italic">Services</span></h1>
+            <p class="text-gray-500 max-w-2xl mx-auto text-lg font-light">Explore our comprehensive menu of premium
+                beauty treatments, curated to enhance your natural radiance.</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+
+        <!-- Hair Section -->
+        <div class="mb-24" id="hair">
+            <div class="flex flex-col md:flex-row items-center mb-12" data-aos="fade-right">
+                <div class="w-full md:w-1/2 md:pr-12 mb-8 md:mb-0">
+                    <img src="./images/hair.png" alt="Hair Styling"
+                        class="rounded-xl shadow-2xl w-full h-[400px] object-cover">
+                </div>
+                <div class="w-full md:w-1/2">
+                    <span class="text-rose-gold font-bold tracking-widest uppercase text-sm mb-2 block">The Crown</span>
+                    <h2 class="font-serif text-4xl font-bold mb-8">Hair Artistry</h2>
+                    <div class="space-y-6">
+                        <!-- Item -->
+                        <div
+                            class="flex justify-between items-center border-b border-gray-200 pb-4 group hover:pl-2 transition-all cursor-pointer">
+                            <div>
+                                <h4
+                                    class="font-serif text-xl font-bold text-gray-800 group-hover:text-rose-gold transition-colors">
+                                    Signature Cut & Blowdry</h4>
+                                <p class="text-gray-500 text-sm mt-1">Includes consultation and wash</p>
+                            </div>
+                            <span class="font-serif text-xl font-bold text-rose-gold">$85</span>
+                        </div>
+                        <!-- Item -->
+                        <div
+                            class="flex justify-between items-center border-b border-gray-200 pb-4 group hover:pl-2 transition-all cursor-pointer">
+                            <div>
+                                <h4
+                                    class="font-serif text-xl font-bold text-gray-800 group-hover:text-rose-gold transition-colors">
+                                    Balayage & Toning</h4>
+                                <p class="text-gray-500 text-sm mt-1">Hand-painted highlights for a natural look</p>
+                            </div>
+                            <span class="font-serif text-xl font-bold text-rose-gold">$220</span>
+                        </div>
+                        <!-- Item -->
+                        <div
+                            class="flex justify-between items-center border-b border-gray-200 pb-4 group hover:pl-2 transition-all cursor-pointer">
+                            <div>
+                                <h4
+                                    class="font-serif text-xl font-bold text-gray-800 group-hover:text-rose-gold transition-colors">
+                                    Keratin Treatment</h4>
+                                <p class="text-gray-500 text-sm mt-1">Smoothing therapy for frizz-free hair</p>
+                            </div>
+                            <span class="font-serif text-xl font-bold text-rose-gold">$300</span>
+                        </div>
+                        <!-- Item -->
+                        <div
+                            class="flex justify-between items-center border-b border-gray-200 pb-4 group hover:pl-2 transition-all cursor-pointer">
+                            <div>
+                                <h4
+                                    class="font-serif text-xl font-bold text-gray-800 group-hover:text-rose-gold transition-colors">
+                                    Luxury Scalp Spa</h4>
+                                <p class="text-gray-500 text-sm mt-1">Exfoliation, massage, and deep conditioning</p>
+                            </div>
+                            <span class="font-serif text-xl font-bold text-rose-gold">$120</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skin Section -->
+        <div class="mb-24" id="skin">
+            <div class="flex flex-col md:flex-row-reverse items-center mb-12" data-aos="fade-left">
+                <div class="w-full md:w-1/2 md:pl-12 mb-8 md:mb-0">
+                    <img src="./images/facial.png" alt="Facial Spa"
+                        class="rounded-xl shadow-2xl w-full h-[400px] object-cover">
+                </div>
+                <div class="w-full md:w-1/2">
+                    <span class="text-rose-gold font-bold tracking-widest uppercase text-sm mb-2 block">The Glow</span>
+                    <h2 class="font-serif text-4xl font-bold mb-8">Skin Therapies</h2>
+                    <div class="space-y-6">
+                        <!-- Item -->
+                        <div
+                            class="flex justify-between items-center border-b border-gray-200 pb-4 group hover:pl-2 transition-all cursor-pointer">
+                            <div>
+                                <h4
+                                    class="font-serif text-xl font-bold text-gray-800 group-hover:text-rose-gold transition-colors">
+                                    Hydra-Glow Facial</h4>
+                                <p class="text-gray-500 text-sm mt-1">Deep hydration and extraction</p>
+                            </div>
+                            <span class="font-serif text-xl font-bold text-rose-gold">$150</span>
+                        </div>
+                        <!-- Item -->
+                        <div
+                            class="flex justify-between items-center border-b border-gray-200 pb-4 group hover:pl-2 transition-all cursor-pointer">
+                            <div>
+                                <h4
+                                    class="font-serif text-xl font-bold text-gray-800 group-hover:text-rose-gold transition-colors">
+                                    Age-Defying Gold Facial</h4>
+                                <p class="text-gray-500 text-sm mt-1">24k gold mask with collagen boost</p>
+                            </div>
+                            <span class="font-serif text-xl font-bold text-rose-gold">$195</span>
+                        </div>
+                        <!-- Item -->
+                        <div
+                            class="flex justify-between items-center border-b border-gray-200 pb-4 group hover:pl-2 transition-all cursor-pointer">
+                            <div>
+                                <h4
+                                    class="font-serif text-xl font-bold text-gray-800 group-hover:text-rose-gold transition-colors">
+                                    LED Light Therapy</h4>
+                                <p class="text-gray-500 text-sm mt-1">Targeted skin rejuvenation treatment</p>
+                            </div>
+                            <span class="font-serif text-xl font-bold text-rose-gold">$90</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Packages CTA -->
+        <div class="bg-rose-gold text-white rounded-2xl p-12 text-center relative overflow-hidden" data-aos="zoom-in">
+            <div class="absolute top-0 right-0 -mr-10 -mt-10 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl"></div>
+            <div class="relative z-10">
+                <h2 class="font-serif text-4xl font-bold mb-4">Bridal & Special Occasions</h2>
+                <p class="text-rose-gold-light max-w-2xl mx-auto mb-8">Let us prepare you for your big day with our
+                    exclusive packages including trial sessions, makeup, hair, and spa days.</p>
+                <a href="contact.html"
+                    class="bg-white text-rose-gold px-10 py-4 rounded-full font-bold hover:bg-gray-100 transition-colors shadow-lg">Inquire
+                    for Pricing</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-20 pb-10 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-12 mb-16">
+                <div>
+                    <a href="index.html"
+                        class="block font-serif text-3xl font-bold tracking-wider text-rose-gold mb-6">LUXE<span
+                            class="text-white">AURA</span></a>
+                    <p class="text-gray-400 leading-relaxed text-sm">Elevating beauty standards with luxury treatments
+                        and personalized care. Your journey to radiance starts here.</p>
+                </div>
+                <div>
+                    <h4 class="font-serif text-xl mb-6">Link</h4>
+                    <ul class="space-y-4 text-gray-400 text-sm">
+                        <li><a href="index.html" class="hover:text-rose-gold transition-colors">Home</a></li>
+                        <li><a href="services.html" class="hover:text-rose-gold transition-colors">Services</a></li>
+                        <li><a href="contact.html" class="hover:text-rose-gold transition-colors">Contact</a></li>
+                        <li><a href="#" class="hover:text-rose-gold transition-colors">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-serif text-xl mb-6">Contact</h4>
+                    <ul class="space-y-4 text-gray-400 text-sm">
+                        <li class="flex items-start"><span class="mr-3 text-rose-gold">📍</span> 123 Luxury Lane,
+                            Fashion District, City</li>
+                        <li class="flex items-start"><span class="mr-3 text-rose-gold">📞</span> +1 (555) 123-4567</li>
+                        <li class="flex items-start"><span class="mr-3 text-rose-gold">✉️</span> hello@luxeaura.com</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-serif text-xl mb-6">Hours</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li class="flex justify-between"><span>Mon - Fri</span> <span>9:00 AM - 8:00 PM</span></li>
+                        <li class="flex justify-between"><span>Saturday</span> <span>10:00 AM - 6:00 PM</span></li>
+                        <li class="flex justify-between"><span>Sunday</span> <span class="text-rose-gold">Closed</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-500 text-xs tracking-wider uppercase">
+                &copy; 2026 Luxe Aura Ladies Salon. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true,
+            duration: 800,
+        });
+    </script>
+</body>
+
+</html>

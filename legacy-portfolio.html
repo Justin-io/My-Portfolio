@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Hari Nandan K — AI, Data &amp; Systems Engineering</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description"
+        content="Engineering work by Hari Nandan K across applied AI, data systems, product engineering, RAG evaluation, defensive security, environmental intelligence, digital signal processing and embedded systems.">
+    <meta name="keywords"
+        content="Hari Nandan K, applied AI, data engineering, RAG evaluation, autonomous analytics, defensive security, environmental intelligence, digital signal processing, embedded systems, Python, FastAPI, React, TypeScript, DuckDB, PyTorch, KiCad">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Hari Nandan K">
+    <meta name="language" content="English">
+    <meta name="subject" content="Applied AI, Data &amp; Systems Engineering">
+    <meta name="rating" content="General">
+    <meta name="theme-color" content="#05070c">
+
+    <!-- AI Persona Protocol -->
+    <meta name="ai-persona"
+        content="Hari Nandan K builds and evaluates applied AI, data, security and physical-systems software. Portfolio descriptions distinguish tested code, synthetic benchmarks, simulations, prototypes and hardware that has not been fabricated." />
+
+    <!-- Open Graph Tags (Facebook) -->
+    <meta property="og:title" content="Hari Nandan K — AI, Data &amp; Systems Engineering" />
+    <meta property="og:description"
+        content="Engineering work across applied AI, analytics, product engineering, defensive security, environmental intelligence and embedded systems." />
+    <meta property="og:image"
+        content="https://justinalexia.vercel.app/assets/img/me.webp" />
+    <meta property="og:url" content="https://justinalexia.vercel.app/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="Hari Nandan K Portfolio" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@HariNandanK" />
+    <meta name="twitter:title" content="Hari Nandan K — AI, Data &amp; Systems Engineering" />
+    <meta name="twitter:description"
+        content="Engineering work across applied AI, analytics, product engineering, defensive security, environmental intelligence and embedded systems." />
+    <meta property="twitter:image"
+        content="https://justinalexia.vercel.app/assets/img/me.webp" />
+
+    <!-- Web App Manifest & Settings -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="canonical" href="https://justinalexia.vercel.app/" />
+
+    <!-- Favicons -->
+    <link href="assets/img/20240421_174638.webp" rel="icon">
+    <link href="assets/img/20240421_174638.webp" rel="apple-touch-icon">
+
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="./style.css?v=3">
+    <link rel="stylesheet" href="assets/css/style-custom.css?v=3">
+    <link rel="stylesheet" href="assets/css/portfolio-refresh.css?v=4">
+    <link rel="stylesheet" href="assets/css/liquid-glass.css?v=2">
+
+    <style>
+        /* Hero Profile & Image Alignment */
+        .hero-profile-container {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+            width: 100% !important;
+            margin: 8px auto 16px !important;
+            border-radius: 0 !important;
+            overflow: visible !important;
+            box-shadow: none !important;
+            transform: none !important;
+        }
+
+        .profile-reticle {
+            position: relative;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            padding: 4px;
+            border-radius: 50% !important;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.6), rgba(168, 85, 247, 0.6));
+            box-shadow: 0 0 24px rgba(0, 212, 255, 0.25);
+            margin: 0 auto 12px !important;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+        }
+
+        .profile-reticle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 32px rgba(0, 212, 255, 0.45);
+        }
+
+        .hero-profile-img {
+            width: 120px !important;
+            height: 120px !important;
+            object-fit: cover !important;
+            border: 2px solid rgba(255, 255, 255, 0.25) !important;
+            border-radius: 50% !important;
+            display: block !important;
+            margin: 0 auto !important;
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease;
+        }
+
+        .hero-profile-img.switching {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        .hero-profile-meta {
+            text-align: center !important;
+            width: 100% !important;
+            margin-bottom: 0 !important;
+        }
+    </style>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.181.0/build/three.webgpu.min.js",
+        "three/webgpu": "https://cdn.jsdelivr.net/npm/three@0.181.0/build/three.webgpu.min.js",
+        "three/tsl": "https://cdn.jsdelivr.net/npm/three@0.181.0/build/three.tsl.min.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.181.0/examples/jsm/"
+      }
+    }
+    </script>
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "url": "https://justinalexia.vercel.app/",
+        "name": "Hari Nandan K Portfolio",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "?search={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Harinandan K",
+        "alternateName": "Hari Nandan K",
+        "jobTitle": "Independent AI & Systems Engineer",
+        "url": "https://justinalexia.vercel.app/",
+        "sameAs": [
+          "https://github.com/Justin-io",
+          "https://github.com/Justin-io/build-with-hari",
+          "https://github.com/Justin-io/BugBounty",
+          "https://github.com/Justin-io/nikki",
+          "https://github.com/Justin-io/safespend",
+          "https://github.com/Justin-io/HOPE-Ecom",
+          "https://github.com/Justin-io/autonomous-ai-data-scientist",
+          "https://github.com/Justin-io/rag-eval-platform",
+          "https://github.com/Justin-io/realtime-graph-fraud-platform",
+          "https://github.com/Justin-io/V.O.I.D.E",
+          "https://github.com/Justin-io/NASA-MODIIS",
+          "https://github.com/Justin-io/scascd",
+          "https://github.com/Justin-io/SENTINEL-X-Streaming-SIEM-Threat-Detection-Platform",
+          "https://github.com/Justin-io/Q-SAFE",
+          "https://github.com/Justin-io/adnr-workstation",
+          "https://github.com/Justin-io/ORION-X-R1",
+          "https://github.com/Justin-io/MOSAIC-SIGMA",
+          "https://github.com/hope-int/IES-Notes"
+        ],
+        "description": "Independent builder working across applied AI, data systems, product engineering, retrieval evaluation, defensive security, environmental intelligence and embedded software.",
+        "address": {
+          "@type": "PostalAddress",
+          "addressRegion": "Kerala",
+          "addressCountry": "India"
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://justinalexia.vercel.app/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Work",
+            "item": "https://justinalexia.vercel.app/#work"
+          }
+        ]
+      }
+    ]
+    </script>
+
+
+
+
+</head>
+
+<body class="command-center-theme">
+    <!-- Skip to main content for accessibility -->
+    <a href="#work" class="skip-link">Skip to main content</a>
+
+    <!-- Custom Cursor -->
+    <div class="cursor" aria-hidden="true"></div>
+    <div class="cursor-follower" aria-hidden="true"></div>
+    <!-- Three.js Black Hole Background -->
+    <div id="canvas-container" aria-hidden="true"></div>
+
+<!-- Navigation -->
+    <header>
+        <nav id="navbar" aria-label="Main Navigation">
+            <div class="nav-container">
+                <a href="#home" class="logo" style="text-decoration: none; font-weight: 800; letter-spacing: 1px;" aria-label="Hari Nandan K Home">HN</a>
+                <ul class="nav-links">
+                    <li><a href="#work" class="nav-link">Selected Work</a></li>
+                    <li><a href="#services" class="nav-link">Services</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#skills" class="nav-link">Technical Stack</a></li>
+                    <li><a href="#lab" class="nav-link">R&amp;D Archive</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <a href="CV.pdf" class="nav-secondary-btn" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-pdf"></i> Resume</a>
+                    <a href="#contact" class="nav-cta-btn"><i class="fas fa-rocket"></i> Start a Project</a>
+                    <button class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main">
+
+    <!-- Hero Section -->
+        <section class="hero" id="home">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="hud-ping-dot" aria-hidden="true"></span>
+                    <span>Independent AI &amp; Systems Engineering · Selected Builds</span>
+                </div>
+                <h1 class="hero-headline">
+                    Engineering intelligent systems with evidence, not just impressive demos.
+                </h1>
+                <p class="subtitle">
+                    Hari Nandan K builds across applied AI, product engineering, analytics, retrieval evaluation, defensive security and physical-systems software. The work spans autonomous analysis pipelines, behavioural budgeting tools, scientific evaluation harnesses, environmental data systems, computer vision, digital signal processing and embedded design.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#work" class="btn btn-primary">
+                        <i class="fas fa-arrow-down" aria-hidden="true"></i>
+                        <span>Explore Selected Work</span>
+                    </a>
+                    <a href="https://github.com/Justin-io" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-github" aria-hidden="true"></i>
+                        <span>GitHub Repositories</span>
+                    </a>
+                    <a href="CV.pdf" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+                        <i class="fas fa-file-pdf" aria-hidden="true"></i>
+                        <span>Resume</span>
+                    </a>
+                </div>
+                <div class="hero-proof-bar" aria-label="Engineering focus">
+                    <div class="proof-pill"><i class="fas fa-vial" aria-hidden="true"></i> Testable engineering</div>
+                    <div class="proof-pill"><i class="fas fa-database" aria-hidden="true"></i> Data provenance</div>
+                    <div class="proof-pill"><i class="fas fa-shield-halved" aria-hidden="true"></i> Explicit security boundaries</div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-card hud-panel" role="region" aria-label="Engineering portfolio snapshot">
+                    <div class="hud-corners" aria-hidden="true">
+                        <span class="hud-corner top-left"></span>
+                        <span class="hud-corner top-right"></span>
+                        <span class="hud-corner bottom-left"></span>
+                        <span class="hud-corner bottom-right"></span>
+                    </div>
+                    <div class="hero-card-content">
+                        <div class="hud-header">
+                            <div class="hud-id">
+                                <i class="fas fa-microchip hud-pulse-icon" aria-hidden="true"></i>
+                                <span>ENGINEERING INDEX // HN-2026</span>
+                            </div>
+                            <span class="hud-status-badge status-live">
+                                <span class="hud-dot" aria-hidden="true"></span> SELECTED BUILDS
+                            </span>
+                        </div>
+                        <div class="hero-profile-container" id="hero-profile-container">
+                            <div class="profile-reticle">
+                                <img src="assets/img/me.webp" alt="Hari Nandan K" id="hero-main-img" class="hero-profile-img" width="120" height="120" loading="eager">
+                            </div>
+                            <div class="hero-profile-meta">
+                                <div class="profile-name">Hari Nandan K</div>
+                                <div class="profile-title">AI · Data · Security · Physical Systems</div>
+                            </div>
+                        </div>
+                        <div class="hero-stats hud-stats-grid">
+                            <div class="stat-item hud-stat">
+                                <div class="stat-number">46</div>
+                                <div class="stat-label">AI Scientist Tests</div>
+                                <div class="stat-sub">10 suites · repo test matrix</div>
+                            </div>
+                            <div class="stat-item hud-stat">
+                                <div class="stat-number">6</div>
+                                <div class="stat-label">RAG Architectures</div>
+                                <div class="stat-sub">Comparable evaluation harness</div>
+                            </div>
+                            <div class="stat-item hud-stat">
+                                <div class="stat-number">8</div>
+                                <div class="stat-label">Fraud Models</div>
+                                <div class="stat-sub">Synthetic graph benchmark</div>
+                            </div>
+                            <div class="stat-item hud-stat">
+                                <div class="stat-number">3</div>
+                                <div class="stat-label">Engineering Domains</div>
+                                <div class="stat-sub">AI/data · security · physical systems</div>
+                            </div>
+                        </div>
+                        <div class="hud-terminal-readout">
+                            <div class="terminal-line"><span class="term-prefix">&gt;</span> <span class="term-key">EVIDENCE:</span> Repository test matrices &amp; benchmark harnesses</div>
+                            <div class="terminal-line"><span class="term-prefix">&gt;</span> <span class="term-key">BOUNDARIES:</span> Synthetic data, simulations &amp; prototypes labelled</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Selected Engineering Work -->
+        <section id="work" class="command-section" style="position: relative;">
+        <span id="projects" style="position: absolute; top: -100px; left: 0; visibility: hidden;"></span>
+        <div class="section-header">
+            <div class="section-label">SELECTED ENGINEERING WORK</div>
+            <h2 class="section-title">Systems built to be examined</h2>
+            <p class="section-subtitle">Three projects that best represent my current direction: autonomous analysis, scientific evaluation and graph-based risk modelling. Each card links to its source and states what the available evidence actually supports.</p>
+        </div>
+        <div class="projects-container">
+            <div class="flagship-grid">
+                <article class="flagship-card" data-category="ai data">
+                    <div class="flagship-media">
+                        <img src="assets/img/generated/ai_data_scientist.webp" alt="Autonomous AI Data Scientist analyst workspace" class="flagship-img" loading="eager">
+                        <div class="flagship-media-overlay">
+                            <span class="status-badge status-bench"><i class="fas fa-vial" aria-hidden="true"></i> Research build · 46 tests reported passing</span>
+                        </div>
+                    </div>
+                    <div class="flagship-body">
+                        <div class="flagship-category">AUTONOMOUS AI / ANALYTICS ENGINEERING</div>
+                        <h3 class="flagship-title">Autonomous AI Data Scientist</h3>
+                        <p class="flagship-description">A controlled analysis workflow that turns business questions into evidence-linked SQL, statistical investigation and reviewable reports. The system is designed to refuse unsupported questions rather than invent missing data.</p>
+                        <details class="case-study-accordion">
+                            <summary>Engineering breakdown <span>Problem · architecture · evidence · limits</span></summary>
+                            <div class="case-study-details">
+                                <div class="case-field">
+                                    <span class="field-label label-problem"><i class="fas fa-triangle-exclamation" aria-hidden="true"></i> Problem</span>
+                                    <div class="field-content">Text-to-SQL systems can select the wrong grain, create join fanout, mutate data or produce plausible explanations unsupported by the warehouse.</div>
+                                </div>
+                                <div class="case-field">
+                                    <span class="field-label label-role"><i class="fas fa-user-gear" aria-hidden="true"></i> System design</span>
+                                    <div class="field-content">A 21-state bounded workflow with a canonical semantic layer, SQL AST validation, hypothesis testing, an independent critic and human review checkpoints.</div>
+                                </div>
+                                <div class="case-field">
+                                    <span class="field-label label-arch"><i class="fas fa-sitemap" aria-hidden="true"></i> Architecture</span>
+                                    <div class="field-content">Python, FastAPI, DuckDB and a React + TypeScript analyst workspace. SHA-256 dataset references bind generated claims to the data used for analysis.</div>
+                                </div>
+                                <div class="case-field">
+                                    <span class="field-label label-eval"><i class="fas fa-vial-circle-check" aria-hidden="true"></i> Repository evidence</span>
+                                    <div class="field-content">The committed TEST_MATRIX.md records 46 passing tests across 10 suites, covering warehouse generation, semantic validation, SQL safety, statistics, causal checks, evidence verification and API flows.</div>
+                                </div>
+                                <div class="case-field">
+                                    <span class="field-label label-limit"><i class="fas fa-circle-info" aria-hidden="true"></i> Scope limit</span>
+                                    <div class="field-content">The bundled warehouse and scenarios are synthetic. Passing tests verify implemented code paths; they do not establish accuracy on external customer data or production business outcomes.</div>
+                                </div>
+                            </div>
+                        </details>
+                        <div class="project-tags">
+                            <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">DuckDB</span><span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">SQL AST</span><span class="tag">Bayesian Statistics</span><span class="tag">SHA-256 Evidence</span>
+                        </div>
+                        <div class="project-card-actions">
+                            <a href="https://github.com/Justin-io/autonomous-ai-data-scientist" class="project-action-btn btn-action-github" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Source Repository</a>
+                            <a href="https://github.com/Justin-io/autonomous-ai-data-scientist/blob/main/TEST_MATRIX.md" class="project-action-btn btn-action-arch" target="_blank" rel="noopener noreferrer"><i class="fas fa-clipboard-check" aria-hidden="true"></i> Test Matrix</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="flagship-card" data-category="ai research">
+                    <div class="flagship-media">
+                        <img src="assets/img/generated/rag_eval_platform.webp" alt="RAG evaluation and benchmarking workspace" class="flagship-img" loading="lazy">
+                        <div class="flagship-media-overlay">
+                            <span class="status-badge status-bench"><i class="fas fa-chart-line" aria-hidden="true"></i> Evaluation framework · 34 tests reported passing</span>
+                        </div>
+                    </div>
+                    <div class="flagship-body">
+                        <div class="flagship-category">RETRIEVAL SYSTEMS / EMPIRICAL EVALUATION</div>
+                        <h3 class="flagship-title">RAG Evaluation Platform</h3>
+                        <p class="flagship-description">A reproducible harness for comparing retrieval-augmented generation architectures under a shared evaluation protocol, with retrieval, grounding, robustness, latency and cost measurements.</p>
+                        <details class="case-study-accordion">
+                            <summary>Engineering breakdown <span>Problem · architecture · evidence · limits</span></summary>
+                            <div class="case-study-details">
+                                <div class="case-field">
+                                    <span class="field-label label-problem"><i class="fas fa-triangle-exclamation" aria-hidden="true"></i> Problem</span>
+                                    <div class="field-content">RAG demos often report anecdotal quality without comparable datasets, retrieval metrics, adversarial cases or operational cost measurements.</div>
+                                </div>
+                                <div class="case-field">
+                                    <span class="field-label label-arch"><i class="fas fa-sitemap" aria-hidden="true"></i> Architectures</span>
+                                    <div class="field-content">Naive, hybrid BM25+dense with RRF, reranked, query-rewriting/HyDE, GraphRAG and agentic RAG, executed through a common harness.</div>
+                                </div>
+                                <div class="case-field">
+                                    <span class="field-label label-eval"><i class="fas fa-vial-circle-check" aria-hidden="true"></i> Evaluation</span>
+                                    <div class="field-content">Precision@k, Recall@k, MRR, NDCG@k, faithfulness, citation precision/recall, adversarial robustness, latency percentiles and token/cost models, with paired statistical comparisons.</div>
+                                </div>
+                                <div class="case-field">
+                                    <span class="field-label label-results"><i class="fas fa-circle-check" aria-hidden="true"></i> Repository evidence</span>
+                                    <div class="field-content">The committed TEST_MATRIX.md records 34 passing tests across 9 suites, covering ingestion, retrieval stores, six architectures, metrics, robustness, statistics, storage and API execution.</div>
+                                </div>
+                                <div class="case-field">
+                                    <span class="field-label label-limit"><i class="fas fa-circle-info" aria-hidden="true"></i> Scope limit</span>
+                                    <div class="field-content">The included challenge sets are synthetic. Results from this harness are dataset- and configuration-dependent, not a universal ranking of RAG architectures or proof of customer-corpus performance.</div>
+                                </div>
+                            </div>
+                        </details>
+                        <div class="project-tags">
+                            <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">React</span><span class="tag">BM25</span><span class="tag">RRF</span><span class="tag">HyDE</span><span class="tag">GraphRAG</span><span class="tag">Statistical Testing</span>
+                        </div>
+                        <div class="project-card-actions">
+                            <a href="https://github.com/Justin-io/rag-eval-platform" class="project-action-btn btn-action-github" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Source Repository</a>
+                            <a href="https://github.com/Justin-io/rag-eval-platform/blob/main/TEST_MATRIX.md" class="project-action-btn btn-action-arch" target="_blank" rel="noopener noreferrer"><i class="fas fa-clipboard-check" aria-hidden="true"></i> Test Matrix</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="flagship-card" data-category="ai data security">
+                    <div class="flagship-media">
+                        <img src="assets/img/generated/graph_fraud_platform.webp" alt="Real-time graph fraud detection system" class="flagship-img" loading="lazy">
+                        <div class="flagship-media-overlay">
+                            <span class="status-badge status-proto"><i class="fas fa-network-wired" aria-hidden="true"></i> Synthetic benchmark · 8-model progression</span>
+                        </div>
+                    </div>
+                    <div class="flagship-body">
+                        <div class="flagship-category">GRAPH ML / FINANCIAL RISK RESEARCH</div>
+                        <h3 class="flagship-title">FraudShield AI — Real-Time Graph Fraud Platform</h3>
+                        <p class="flagship-description">A streaming fraud-research platform that models relationships among users, cards, devices, IPs, merchants and addresses, then compares tabular, anomaly-detection and graph-learning approaches.</p>
+                        <details class="case-study-accordion">
+                            <summary>Engineering breakdown <span>Problem · architecture · evidence · limits</span></summary>
+                            <div class="case-study-details">
+                                <div class="case-field">
+                                    <span class="field-label label-problem"><i class="fas fa-triangle-exclamation" aria-hidden="true"></i> Problem</span>
+                                    <div class="field-content">Isolated transaction features can miss coordinated patterns that emerge across linked entities and change over time.</div>
+                                </div>
+                                <div class="case-field">
+                                    <span class="field-label label-arch"><i class="fas fa-sitemap" aria-hidden="true"></i> Architecture</span>
+                                    <div class="field-content">A temporal heterogeneous graph, streaming feature windows, point-in-time state, drift monitoring and a FastAPI + React investigation interface.</div>
+                                </div>
+                                <div class="case-field">
+                                    <span class="field-label label-eval"><i class="fas fa-vial-circle-check" aria-hidden="true"></i> Model comparison</span>
+                                    <div class="field-content">Eight model families from logistic/XGBoost baselines and anomaly detectors to GCN, GraphSAGE, GAT and Temporal GNN, compared with leakage-aware temporal evaluation.</div>
+                                </div>
+                                <div class="case-field">
+                                    <span class="field-label label-results"><i class="fas fa-circle-check" aria-hidden="true"></i> Repository evidence</span>
+                                    <div class="field-content">The README reports 24/24 tests passing and approximately 12.8 ms P99 typical latency for its stated local workload. Treat that latency as a repository-reported synthetic benchmark, not a financial-network SLA.</div>
+                                </div>
+                                <div class="case-field">
+                                    <span class="field-label label-limit"><i class="fas fa-circle-info" aria-hidden="true"></i> Scope limit</span>
+                                    <div class="field-content">The simulator and injected fraud patterns are synthetic. This is not connected to a bank or live payment processor and has not established production fraud-detection performance.</div>
+                                </div>
+                            </div>
+                        </details>
+                        <div class="project-tags">
+                            <span class="tag">Python</span><span class="tag">PyTorch</span><span class="tag">PyTorch Geometric</span><span class="tag">FastAPI</span><span class="tag">Graph Neural Networks</span><span class="tag">SSE</span><span class="tag">Temporal Evaluation</span>
+                        </div>
+                        <div class="project-card-actions">
+                            <a href="https://github.com/Justin-io/realtime-graph-fraud-platform" class="project-action-btn btn-action-github" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Source Repository</a>
+                            <a href="https://github.com/Justin-io/realtime-graph-fraud-platform#9-test-suite-verification-2424-passing" class="project-action-btn btn-action-arch" target="_blank" rel="noopener noreferrer"><i class="fas fa-clipboard-check" aria-hidden="true"></i> Test Evidence</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Services Section -->
+        <section id="services">
+        <div class="section-header">
+            <div class="section-label">ENGINEERING CAPABILITIES</div>
+            <h2 class="section-title">From technical question to reviewable system</h2>
+            <p class="section-subtitle">I take on bounded engineering problems where architecture, implementation and validation matter. Scope and acceptance criteria are agreed before delivery.</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-brain" aria-hidden="true"></i></div>
+                <h3 class="service-title">Applied AI &amp; Retrieval Systems</h3>
+                <p class="service-desc">Build AI-assisted workflows with explicit data boundaries, retrieval evaluation and human review where the output is consequential.</p>
+                <ul class="service-deliverables">
+                    <li><i class="fas fa-check"></i> Document ingestion and retrieval pipelines</li>
+                    <li><i class="fas fa-check"></i> Tool-using and multi-step agent workflows</li>
+                    <li><i class="fas fa-check"></i> RAG evaluation, regression tests and traceability</li>
+                    <li><i class="fas fa-check"></i> Structured outputs, API integration and review flows</li>
+                </ul>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-chart-line" aria-hidden="true"></i></div>
+                <h3 class="service-title">Data &amp; Analytics Engineering</h3>
+                <p class="service-desc">Turn data sources into clear, inspectable analytical workflows instead of ungrounded narratives or one-off dashboards.</p>
+                <ul class="service-deliverables">
+                    <li><i class="fas fa-check"></i> SQL-backed analytics and semantic data models</li>
+                    <li><i class="fas fa-check"></i> FastAPI services and analytical data stores</li>
+                    <li><i class="fas fa-check"></i> Statistical evaluation and experiment reporting</li>
+                    <li><i class="fas fa-check"></i> Interactive dashboards and evidence-linked reports</li>
+                </ul>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-shield-halved" aria-hidden="true"></i></div>
+                <h3 class="service-title">Defensive Security Tooling</h3>
+                <p class="service-desc">Develop defensive utilities and controlled research environments with clear authorization boundaries and explainable outputs.</p>
+                <ul class="service-deliverables">
+                    <li><i class="fas fa-check"></i> Static file triage and integrity workflows</li>
+                    <li><i class="fas fa-check"></i> Access control, audit logging and evidence chains</li>
+                    <li><i class="fas fa-check"></i> Lab SIEM pipelines and detection prototypes</li>
+                    <li><i class="fas fa-check"></i> Threat-data visualization and analyst workflows</li>
+                </ul>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-microchip" aria-hidden="true"></i></div>
+                <h3 class="service-title">Embedded &amp; Applied Systems</h3>
+                <p class="service-desc">Bridge software, signal processing and hardware-oriented engineering through simulation, firmware references and documented design work.</p>
+                <ul class="service-deliverables">
+                    <li><i class="fas fa-check"></i> ESP32-oriented embedded software and tooling</li>
+                    <li><i class="fas fa-check"></i> DSP workflows and measurement interfaces</li>
+                    <li><i class="fas fa-check"></i> Telemetry ingestion and digital-twin prototypes</li>
+                    <li><i class="fas fa-check"></i> KiCad design documentation and engineering reviews</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Process Section -->
+    <section id="process">
+        <div class="section-header">
+            <div class="section-label">HOW I WORK</div>
+            <h2 class="section-title">A Disciplined 5-Step Process</h2>
+            <p class="section-subtitle">From initial scope to a documented delivery, with acceptance criteria and known constraints made explicit.</p>
+        </div>
+
+        <details class="content-disclosure"><summary>Explore the delivery process <span>5 stages</span></summary><div class="process-container">
+            
+            <div class="process-card">
+                <div class="process-step-num">
+                    <span>01</span>
+                    <i class="fas fa-compass process-step-icon"></i>
+                </div>
+                <h3 class="process-title">Discover</h3>
+                <p class="process-desc">
+                    We align on your exact product objectives, target users, technical constraints, and definition of success through a focused scoping session.
+                </p>
+            </div>
+
+            <div class="process-card">
+                <div class="process-step-num">
+                    <span>02</span>
+                    <i class="fas fa-drafting-compass process-step-icon"></i>
+                </div>
+                <h3 class="process-title">Architect</h3>
+                <p class="process-desc">
+                    I design the system architecture, database models, AI/LLM integration strategy, and security boundaries before writing code.
+                </p>
+            </div>
+
+            <div class="process-card">
+                <div class="process-step-num">
+                    <span>03</span>
+                    <i class="fas fa-code process-step-icon"></i>
+                </div>
+                <h3 class="process-title">Build</h3>
+                <p class="process-desc">
+                    Rapid, modular development in iterative sprints with clean, type-safe code, automated test coverage, and transparent asynchronous progress demos.
+                </p>
+            </div>
+
+            <div class="process-card">
+                <div class="process-step-num">
+                    <span>04</span>
+                    <i class="fas fa-vial-circle-check process-step-icon"></i>
+                </div>
+                <h3 class="process-title">Validate</h3>
+                <p class="process-desc">
+                    Run project-specific tests, evaluate outputs against the selected datasets, inspect failure modes and record unresolved gaps.
+                </p>
+            </div>
+
+            <div class="process-card">
+                <div class="process-step-num">
+                    <span>05</span>
+                    <i class="fas fa-cloud-arrow-up process-step-icon"></i>
+                </div>
+                <h3 class="process-title">Deploy &amp; Support</h3>
+                <p class="process-desc">
+                    Prepare the deployment or handover appropriate to the agreed scope, document operation and known limitations, and define support boundaries.
+                </p>
+            </div>
+
+        </div></details>
+    </section>
+
+
+    <!-- About Section -->
+        <section id="about">
+        <div class="section-header">
+            <div class="section-label">ABOUT THE BUILDER</div>
+            <h2 class="section-title">Curiosity across software and physical systems</h2>
+            <p class="section-subtitle">A practical engineering approach: understand the system, make assumptions explicit, build a testable implementation and show where the evidence stops.</p>
+        </div>
+        <div class="about-grid">
+            <div class="about-content">
+                <p class="about-text">
+                    I am Hari Nandan K, an independent builder working across <strong>applied AI, data systems, defensive security, environmental intelligence, digital signal processing and embedded engineering</strong>. My repositories range from autonomous analysis and retrieval evaluation to geospatial research, audio DSP and hardware design.
+                </p>
+                <p class="about-text">
+                    I care about the engineering beneath the interface: data contracts, state machines, SQL safety, evaluation methodology, provenance, access control, latency budgets and how a system behaves when its assumptions fail.
+                </p>
+                <p class="about-text">
+                    I also build client-facing engineering and estimation tooling through <strong>Build with Hari</strong>, alongside education and community products through the <strong>HOPE</strong> initiative. The goal is to make technical work and learning more practical through reviewable product workflows, interactive documents, coding tools and AI-assisted experiences.
+                </p>
+                <p class="about-text">
+                    I distinguish a passing test suite from field validation, synthetic data from measured data, and a digital hardware design from a fabricated board. That distinction is part of the engineering, not a footnote.
+                </p>
+                <div class="about-highlights">
+                    <div class="highlight-item">
+                        <div class="highlight-icon"><i class="fas fa-vial" aria-hidden="true"></i></div>
+                        <div class="highlight-text">
+                            <h4>Evaluation before claims</h4>
+                            <p>Use test matrices, benchmark protocols and explicit datasets to show what has actually been exercised.</p>
+                        </div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-icon"><i class="fas fa-fingerprint" aria-hidden="true"></i></div>
+                        <div class="highlight-text">
+                            <h4>Traceable outputs</h4>
+                            <p>Preserve data lineage, hashes, source context and the reasoning behind system decisions.</p>
+                        </div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-icon"><i class="fas fa-shield-halved" aria-hidden="true"></i></div>
+                        <div class="highlight-text">
+                            <h4>Bounded security work</h4>
+                            <p>Prefer defensive tooling, explicit authorization and isolated lab environments.</p>
+                        </div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-icon"><i class="fas fa-microchip" aria-hidden="true"></i></div>
+                        <div class="highlight-text">
+                            <h4>Software meets hardware</h4>
+                            <p>Explore embedded firmware, DSP, telemetry systems and computer-aided hardware design.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="about-visual">
+                <div class="about-image-container" style="position: relative; overflow: hidden; border-radius: 14px; min-height: 420px;">
+                    <img src="assets/img/me.webp" alt="Hari Nandan K" class="about-image-slide active" loading="lazy" style="width:100%;height:100%;min-height:420px;object-fit:cover;">
+                    <div class="about-image-overlay" style="position:absolute;bottom:0;left:0;width:100%;padding:1.5rem;background:linear-gradient(to top,rgba(0,0,0,.85),transparent);">
+                        <p class="about-quote" style="color:white;font-size:1.05rem;margin:0;text-align:center;">Build carefully. Measure honestly. Explain the limits.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Skills Section (Evidence-Based Capabilities) -->
+        <section id="skills">
+        <div class="section-header">
+            <div class="section-label">TECHNICAL CAPABILITIES</div>
+            <h2 class="section-title">Tools used in the work</h2>
+            <p class="section-subtitle">A repository-grounded stack grouped by engineering domain. Inclusion means a tool appears in selected project code or documentation; depth varies by project.</p>
+        </div>
+        <details class="content-disclosure">
+            <summary>Explore technologies and methods <span>5 engineering domains</span></summary>
+            <div class="skills-evidence-grid">
+                <div class="skills-cat-card">
+                    <div class="skills-cat-header">
+                        <div class="skills-cat-icon"><i class="fas fa-brain" aria-hidden="true"></i></div>
+                        <div><h3 class="skills-cat-title">AI, ML &amp; Retrieval</h3><div class="skills-cat-focus">Agents · model evaluation · inference</div></div>
+                    </div>
+                    <ul class="skills-capability-list">
+                        <li><i class="fas fa-check"></i> Multi-step orchestration and bounded state machines</li>
+                        <li><i class="fas fa-check"></i> RAG, BM25, reciprocal-rank fusion and GraphRAG</li>
+                        <li><i class="fas fa-check"></i> PyTorch, graph learning and anomaly detection</li>
+                        <li><i class="fas fa-check"></i> Bayesian reasoning and statistical evaluation</li>
+                    </ul>
+                    <div class="skills-stack-tags"><span class="stack-tag">Python</span><span class="stack-tag">PyTorch</span><span class="stack-tag">scikit-learn</span><span class="stack-tag">Ollama</span><span class="stack-tag">BM25</span><span class="stack-tag">GraphRAG</span><span class="stack-tag">HyDE</span></div>
+                </div>
+                <div class="skills-cat-card">
+                    <div class="skills-cat-header">
+                        <div class="skills-cat-icon"><i class="fas fa-server" aria-hidden="true"></i></div>
+                        <div><h3 class="skills-cat-title">Backend &amp; Data Systems</h3><div class="skills-cat-focus">APIs · analytical storage · event flow</div></div>
+                    </div>
+                    <ul class="skills-capability-list">
+                        <li><i class="fas fa-check"></i> REST APIs, streaming endpoints and service integration</li>
+                        <li><i class="fas fa-check"></i> SQL validation, semantic models and data contracts</li>
+                        <li><i class="fas fa-check"></i> Evidence stores, hashing and experiment persistence</li>
+                        <li><i class="fas fa-check"></i> Telemetry ingestion and event-time processing</li>
+                    </ul>
+                    <div class="skills-stack-tags"><span class="stack-tag">FastAPI</span><span class="stack-tag">Flask</span><span class="stack-tag">Node.js</span><span class="stack-tag">Express</span><span class="stack-tag">DuckDB</span><span class="stack-tag">PostgreSQL</span><span class="stack-tag">SQLite</span></div>
+                </div>
+                <div class="skills-cat-card">
+                    <div class="skills-cat-header">
+                        <div class="skills-cat-icon"><i class="fas fa-code" aria-hidden="true"></i></div>
+                        <div><h3 class="skills-cat-title">Web &amp; Interactive Systems</h3><div class="skills-cat-focus">Interfaces · visualization · connectivity</div></div>
+                    </div>
+                    <ul class="skills-capability-list">
+                        <li><i class="fas fa-check"></i> Responsive application interfaces and analyst workspaces</li>
+                        <li><i class="fas fa-check"></i> Interactive 3D visualization and scientific views</li>
+                        <li><i class="fas fa-check"></i> WebRTC peer connectivity and real-time streams</li>
+                        <li><i class="fas fa-check"></i> Progressive web application workflows</li>
+                    </ul>
+                    <div class="skills-stack-tags"><span class="stack-tag">TypeScript</span><span class="stack-tag">JavaScript</span><span class="stack-tag">React</span><span class="stack-tag">Vite</span><span class="stack-tag">Tailwind CSS</span><span class="stack-tag">Three.js</span><span class="stack-tag">WebRTC</span><span class="stack-tag">SSE</span></div>
+                </div>
+                <div class="skills-cat-card">
+                    <div class="skills-cat-header">
+                        <div class="skills-cat-icon"><i class="fas fa-shield-halved" aria-hidden="true"></i></div>
+                        <div><h3 class="skills-cat-title">Defensive Security</h3><div class="skills-cat-focus">Integrity · access · detection research</div></div>
+                    </div>
+                    <ul class="skills-capability-list">
+                        <li><i class="fas fa-check"></i> RBAC, signed tokens and authorization boundaries</li>
+                        <li><i class="fas fa-check"></i> SHA-256 integrity and tamper-evident audit records</li>
+                        <li><i class="fas fa-check"></i> Static file inspection and safe quarantine workflows</li>
+                        <li><i class="fas fa-check"></i> Synthetic SIEM telemetry and Sigma-subset detections</li>
+                    </ul>
+                    <div class="skills-stack-tags"><span class="stack-tag">HMAC-SHA256</span><span class="stack-tag">SHA-256</span><span class="stack-tag">YARA</span><span class="stack-tag">Sigma</span><span class="stack-tag">RBAC</span><span class="stack-tag">MITRE ATT&amp;CK</span></div>
+                </div>
+                <div class="skills-cat-card">
+                    <div class="skills-cat-header">
+                        <div class="skills-cat-icon"><i class="fas fa-microchip" aria-hidden="true"></i></div>
+                        <div><h3 class="skills-cat-title">Embedded, DSP &amp; Hardware</h3><div class="skills-cat-focus">Firmware references · signal processing · EDA</div></div>
+                    </div>
+                    <ul class="skills-capability-list">
+                        <li><i class="fas fa-check"></i> ESP32-S3-oriented firmware reference and C/C++ development</li>
+                        <li><i class="fas fa-check"></i> LMS, NLMS, FIR and real-time audio analysis</li>
+                        <li><i class="fas fa-check"></i> KiCad schematics, PCB constraints and design reviews</li>
+                        <li><i class="fas fa-check"></i> SystemVerilog and simulation-led engineering studies</li>
+                        <li><i class="fas fa-check"></i> Raspberry Pi edge vision, camera pipelines and environmental sensors</li>
+                    </ul>
+                    <div class="skills-stack-tags"><span class="stack-tag">C / C++</span><span class="stack-tag">ESP-IDF</span><span class="stack-tag">NumPy</span><span class="stack-tag">SciPy</span><span class="stack-tag">PortAudio</span><span class="stack-tag">KiCad</span><span class="stack-tag">SystemVerilog</span><span class="stack-tag">Raspberry Pi</span><span class="stack-tag">OpenCV</span><span class="stack-tag">face_recognition</span><span class="stack-tag">DHT22</span><span class="stack-tag">ADS1115</span><span class="stack-tag">Edge-TTS</span></div>
+                </div>
+            </div>
+        </details>
+    </section>
+
+
+    
+        <section id="lab" class="command-section">
+        <div class="section-header">
+            <div class="section-label">RESEARCH &amp; DEVELOPMENT ARCHIVE</div>
+            <h2 class="section-title">Experiments, prototypes and deeper systems</h2>
+            <p class="section-subtitle">A curated view of the broader repository portfolio. Project status, dataset scope and validation limits are stated explicitly; synthetic benchmarks and digital designs are not presented as field deployments.</p>
+        </div>
+        <details class="content-disclosure archive-disclosure">
+            <summary>Open the R&amp;D archive <span>22 projects · searchable</span></summary>
+            <div class="projects-container">
+                <div class="lab-controls-panel">
+                    <div class="lab-search-wrapper">
+                        <i class="fas fa-search lab-search-icon" aria-hidden="true"></i>
+                        <input type="search" id="labSearchInput" class="lab-search-input" placeholder="Search 22 projects by name, method or technology..." aria-label="Search the R&amp;D archive">
+                        <span id="labSearchCount" class="lab-count-pill">Showing 22 of 22</span>
+                    </div>
+                    <div class="lab-filters" role="tablist" aria-label="Filter projects by category">
+                        <button class="lab-filter-btn active" data-filter="all" role="tab" aria-selected="true">All (22)</button>
+                        <button class="lab-filter-btn" data-filter="ai" role="tab" aria-selected="false">AI &amp; Data</button>
+                        <button class="lab-filter-btn" data-filter="security" role="tab" aria-selected="false">Security</button>
+                        <button class="lab-filter-btn" data-filter="hardware" role="tab" aria-selected="false">Hardware &amp; DSP</button>
+                        <button class="lab-filter-btn" data-filter="product" role="tab" aria-selected="false">Product &amp; Web</button>
+                    </div>
+                </div>
+                <div id="labEmptyState" class="lab-empty-state" style="display:none;">
+                    <i class="fas fa-search-minus" style="font-size:2.5rem;color:#d3e3a1;margin-bottom:15px;" aria-hidden="true"></i>
+                    <h4 style="font-size:1.2rem;color:#fff;margin-bottom:8px;">No projects match this search</h4>
+                    <p style="color:var(--text-secondary);font-size:.9rem;">Try another project name, engineering method or technology.</p>
+                    <button id="labResetBtn" class="btn btn-secondary" style="margin-top:15px;padding:8px 18px;font-size:.85rem;">Reset filters</button>
+                </div>
+                <div class="lab-grid" id="labGrid">
+                <article class="lab-card" data-category="ai data" data-search="alex nasa modiis viirs modis earth observation active fire satellite harmonization provenance geospatial">
+                    <div class="lab-card-image">
+                        <img src="assets/img/generated/timeline_nasa.webp" alt="ALEX environmental observation platform" loading="lazy">
+                        <span class="lab-status-badge status-proto"><i class="fas fa-circle-info" aria-hidden="true"></i> Research platform · versioned integration evidence</span>
+                    </div>
+                    <div class="lab-card-content">
+                        <div class="lab-card-category">ENVIRONMENTAL INTELLIGENCE / REMOTE SENSING</div>
+                        <h4 class="lab-card-title">ALEX — NASA-MODIS / VIIRS Intelligence</h4>
+                        <p class="lab-card-desc">A research platform for harmonizing MODIS and VIIRS active-fire observations across different sensor footprints and orbital passes. It combines footprint-aware spatial association, temporal evidence, cryptographic provenance and incident workflows; derived groupings remain hypotheses rather than confirmed fire events.</p>
+                        <div class="project-tags"><span class="tag">TypeScript</span><span class="tag">MODIS / VIIRS</span><span class="tag">Geospatial</span><span class="tag">Provenance</span><span class="tag">RBAC</span></div>
+                        <div class="lab-card-actions">
+                            <a href="https://github.com/Justin-io/NASA-MODIIS" class="lab-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Source Repository</a>
+                        </div>
+                        <details class="case-study-accordion">
+                            <summary>Scope &amp; limitations <span>Read before interpreting results</span></summary>
+                            <div class="case-study-details"><div class="case-field"><span class="field-label label-limit"><i class="fas fa-circle-info" aria-hidden="true"></i> Evidence boundary</span><div class="field-content">The v2.8.0 integration registry reports 49 passing tests and 91 API endpoints; the checked v2.7.0 test report records 43 passing tests. These are versioned repository records, not independently executed verification of the current deployment. Several integrations require external credentials, and provider availability must be checked in the target environment.</div></div></div>
+                        </details>
+                    </div>
+                </article>
+
+                <article class="lab-card" data-category="hardware data" data-search="afterlight nasa space apps 2026 planetary archaeology threejs moon mars globe rover paths orbital">
+                    <div class="lab-card-image">
+                        <img src="assets/img/blog/space.webp" alt="AFTERLIGHT planetary archaeology visualization" loading="lazy">
+                        <span class="lab-status-badge status-proto"><i class="fas fa-circle-info" aria-hidden="true"></i> Research submission · 6 tests documented</span>
+                    </div>
+                    <div class="lab-card-content">
+                        <div class="lab-card-category">3D SCIENCE / PLANETARY HERITAGE</div>
+                        <h4 class="lab-card-title">AFTERLIGHT — Planetary Archaeology</h4>
+                        <p class="lab-card-desc">An interactive Three.js platform for exploring spacecraft heritage across the Solar System, with lunar and Martian globes, rover traverse paths, 3D hardware inspection and source-linked scientific claims.</p>
+                        <div class="project-tags"><span class="tag">Three.js</span><span class="tag">WebGL</span><span class="tag">Scientific Data</span><span class="tag">3D Visualization</span><span class="tag">Provenance</span></div>
+                        <div class="lab-card-actions">
+                            <a href="https://github.com/Justin-io/scascd" class="lab-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Source Repository</a>
+                        </div>
+                        <details class="case-study-accordion">
+                            <summary>Scope &amp; limitations <span>Read before interpreting results</span></summary>
+                            <div class="case-study-details"><div class="case-field"><span class="field-label label-limit"><i class="fas fa-circle-info" aria-hidden="true"></i> Evidence boundary</span><div class="field-content">The repository's test report documents six unit tests and browser checks. Scientific coordinates and archival records still depend on the cited source data and stated uncertainty.</div></div></div>
+                        </details>
+                    </div>
+                </article>
+
+                <article class="lab-card" data-category="ai data" data-search="voide void industrial telemetry digital twin chiller synthetic data event replay risk remaining useful life">
+                    <div class="lab-card-image">
+                        <img src="assets/img/generated/riscv_thermostat.webp" alt="V.O.I.D.E. industrial telemetry concept" loading="lazy">
+                        <span class="lab-status-badge status-proto"><i class="fas fa-circle-info" aria-hidden="true"></i> MVP · synthetic telemetry</span>
+                    </div>
+                    <div class="lab-card-content">
+                        <div class="lab-card-category">INDUSTRIAL TELEMETRY / DIGITAL TWIN</div>
+                        <h4 class="lab-card-title">V.O.I.D.E. — Telemetry Intelligence</h4>
+                        <p class="lab-card-desc">An industrial telemetry workbench with event-time ingestion, schema checks, deterministic replay, per-asset twin state, health indicators and a statistical baseline for chiller-like systems.</p>
+                        <div class="project-tags"><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">CSV Ingestion</span><span class="tag">Digital Twin</span><span class="tag">Statistical Baselines</span></div>
+                        <div class="lab-card-actions">
+                            <a href="https://github.com/Justin-io/V.O.I.D.E" class="lab-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Source Repository</a>
+                        </div>
+                        <details class="case-study-accordion">
+                            <summary>Scope &amp; limitations <span>Read before interpreting results</span></summary>
+                            <div class="case-study-details"><div class="case-field"><span class="field-label label-limit"><i class="fas fa-circle-info" aria-hidden="true"></i> Evidence boundary</span><div class="field-content">The V.O.I.D.E. 2.0 README explicitly uses reproducible synthetic telemetry. Risk and remaining-useful-life estimates are heuristic; no real-plant validation or safety certification is claimed.</div></div></div>
+                        </details>
+                    </div>
+                </article>
+
+                <article class="lab-card" data-category="security data" data-search="sentinel x siem threat detection synthetic lab telemetry sigma yara mitre attack incidents">
+                    <div class="lab-card-image">
+                        <img src="assets/img/generated/vulnerability_scanner.webp" alt="SENTINEL-X SIEM dashboard concept" loading="lazy">
+                        <span class="lab-status-badge status-proto"><i class="fas fa-circle-info" aria-hidden="true"></i> Lab-only · synthetic events</span>
+                    </div>
+                    <div class="lab-card-content">
+                        <div class="lab-card-category">CYBER DEFENCE / SIEM RESEARCH</div>
+                        <h4 class="lab-card-title">SENTINEL-X — Streaming SIEM</h4>
+                        <p class="lab-card-desc">A local lab SIEM that normalizes endpoint and network-style events, applies deterministic YAML and Sigma-subset detections, correlates alerts into incidents and exposes hunt and metrics interfaces.</p>
+                        <div class="project-tags"><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">Sigma Subset</span><span class="tag">MITRE ATT&amp;CK</span><span class="tag">SQLite</span><span class="tag">Prometheus</span></div>
+                        <div class="lab-card-actions">
+                            <a href="https://github.com/Justin-io/SENTINEL-X-Streaming-SIEM-Threat-Detection-Platform" class="lab-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Source Repository</a>
+                        </div>
+                        <details class="case-study-accordion">
+                            <summary>Scope &amp; limitations <span>Read before interpreting results</span></summary>
+                            <div class="case-study-details"><div class="case-field"><span class="field-label label-limit"><i class="fas fa-circle-info" aria-hidden="true"></i> Evidence boundary</span><div class="field-content">The README states that seeded adversary-like records are inert synthetic data and instructs users not to connect the lab to customer, public or third-party networks.</div></div></div>
+                        </details>
+                    </div>
+                </article>
+
+                <article class="lab-card" data-category="security ai" data-search="aegis x soc security operations console autonomous agents bayesian evidence fusion emulation">
+                    <div class="lab-card-image">
+                        <img src="assets/img/generated/aegis_x.png" alt="AEGIS-X security operations console" loading="lazy">
+                        <span class="lab-status-badge status-proto"><i class="fas fa-circle-info" aria-hidden="true"></i> Research console · emulated telemetry</span>
+                    </div>
+                    <div class="lab-card-content">
+                        <div class="lab-card-category">SECURITY OPERATIONS / AGENTIC SYSTEMS</div>
+                        <h4 class="lab-card-title">AEGIS-X — Autonomous Security Operations Console</h4>
+                        <p class="lab-card-desc">A security-operations research console combining multi-tier signal handling, specialist analysis agents, Bayesian evidence fusion, incident context and cryptographic audit records.</p>
+                        <div class="project-tags"><span class="tag">Node.js</span><span class="tag">Agent Workflows</span><span class="tag">Bayesian Fusion</span><span class="tag">SHA-256</span><span class="tag">Security Analytics</span></div>
+                        <div class="lab-card-actions">
+                            <a href="https://github.com/Justin-io/SOC" class="lab-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Source Repository</a>
+                        </div>
+                        <details class="case-study-accordion">
+                            <summary>Scope &amp; limitations <span>Read before interpreting results</span></summary>
+                            <div class="case-study-details"><div class="case-field"><span class="field-label label-limit"><i class="fas fa-circle-info" aria-hidden="true"></i> Evidence boundary</span><div class="field-content">The public README describes a research console and emulated telemetry. Do not interpret agent counts, risk scores or simulated incidents as live SOC deployment evidence.</div></div></div>
+                        </details>
+                    </div>
+                </article>
+
+                <article class="lab-card" data-category="security" data-search="q safe qsafe malware file static inspection local first quarantine hash sha256 yara clamav capa">
+                    <div class="lab-card-image">
+                        <img src="assets/img/qsafe.webp" alt="Q-SAFE local malware triage tool" loading="lazy">
+                        <span class="lab-status-badge status-proto"><i class="fas fa-circle-info" aria-hidden="true"></i> Early-stage defensive tool</span>
+                    </div>
+                    <div class="lab-card-content">
+                        <div class="lab-card-category">LOCAL SECURITY / FILE TRIAGE</div>
+                        <h4 class="lab-card-title">Q-SAFE — Local-First Malware Triage</h4>
+                        <p class="lab-card-desc">A defensive file-inspection utility using static format checks, entropy and packing indicators, suspicious-string heuristics, SHA-256 reporting and an explicit reversible quarantine flow.</p>
+                        <div class="project-tags"><span class="tag">Python</span><span class="tag">Static Analysis</span><span class="tag">SHA-256</span><span class="tag">YARA</span><span class="tag">ClamAV</span><span class="tag">capa</span></div>
+                        <div class="lab-card-actions">
+                            <a href="https://github.com/Justin-io/Q-SAFE" class="lab-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Source Repository</a>
+                        </div>
+                        <details class="case-study-accordion">
+                            <summary>Scope &amp; limitations <span>Read before interpreting results</span></summary>
+                            <div class="case-study-details"><div class="case-field"><span class="field-label label-limit"><i class="fas fa-circle-info" aria-hidden="true"></i> Evidence boundary</span><div class="field-content">The README explicitly says this is not certified antivirus or production EDR. Samples are not executed, and heuristic findings are triage leads—not proof of malware. Detection has no published independent held-out benchmark.</div></div></div>
+                        </details>
+                    </div>
+                </article>
+
+                <article class="lab-card" data-category="hardware data" data-search="adnr audio dsp adaptive noise reduction workstation lms nlms fir portaudio esp32 s3 offline">
+                    <div class="lab-card-image">
+                        <img src="assets/img/generated/adnr_workstation.webp" alt="ADNR adaptive audio workstation" loading="lazy">
+                        <span class="lab-status-badge status-proto"><i class="fas fa-circle-info" aria-hidden="true"></i> Desktop engineering app · 33 tests badge</span>
+                    </div>
+                    <div class="lab-card-content">
+                        <div class="lab-card-category">DIGITAL SIGNAL PROCESSING / AUDIO</div>
+                        <h4 class="lab-card-title">ADNR — Adaptive Noise Reduction Workstation</h4>
+                        <p class="lab-card-desc">An offline desktop DSP environment with dual-channel audio processing, LMS/NLMS adaptive filters, FIR processing, live spectrum and convergence views, experiment logging and an ESP32-S3 C/ESP-IDF reference.</p>
+                        <div class="project-tags"><span class="tag">Python</span><span class="tag">PySide6</span><span class="tag">NumPy</span><span class="tag">SciPy</span><span class="tag">PortAudio</span><span class="tag">ESP32-S3 Reference</span></div>
+                        <div class="lab-card-actions">
+                            <a href="https://github.com/Justin-io/adnr-workstation" class="lab-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Source Repository</a>
+                        </div>
+                        <details class="case-study-accordion">
+                            <summary>Scope &amp; limitations <span>Read before interpreting results</span></summary>
+                            <div class="case-study-details"><div class="case-field"><span class="field-label label-limit"><i class="fas fa-circle-info" aria-hidden="true"></i> Evidence boundary</span><div class="field-content">The repository includes a desktop application and embedded C reference implementation. That is not evidence of a fabricated or deployed ESP32 hardware product.</div></div></div>
+                        </details>
+                    </div>
+                </article>
+
+                <article class="lab-card" data-category="security systems" data-search="chameleon p2p encrypted chat voice video webrtc aes gcm browser">
+                    <div class="lab-card-image">
+                        <img src="assets/img/generated/the_lab.webp" alt="Chameleon peer-to-peer communication concept" loading="lazy">
+                        <span class="lab-status-badge status-proto"><i class="fas fa-circle-info" aria-hidden="true"></i> Prototype · peer connectivity required</span>
+                    </div>
+                    <div class="lab-card-content">
+                        <div class="lab-card-category">PRIVACY / PEER-TO-PEER COMMUNICATION</div>
+                        <h4 class="lab-card-title">Chameleon — P2P Chat, Voice &amp; Video</h4>
+                        <p class="lab-card-desc">A browser-native peer-to-peer communication experiment using WebRTC for direct text, media and call sessions, with AES-GCM encryption and an installable web-app interface.</p>
+                        <div class="project-tags"><span class="tag">TypeScript</span><span class="tag">WebRTC</span><span class="tag">AES-GCM</span><span class="tag">PWA</span><span class="tag">Peer-to-Peer</span></div>
+                        <div class="lab-card-actions">
+                            <a href="https://github.com/Justin-io/Chameleon-P2P" class="lab-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Source Repository</a>
+                        </div>
+                        <details class="case-study-accordion">
+                            <summary>Scope &amp; limitations <span>Read before interpreting results</span></summary>
+                            <div class="case-study-details"><div class="case-field"><span class="field-label label-limit"><i class="fas fa-circle-info" aria-hidden="true"></i> Evidence boundary</span><div class="field-content">Connectivity depends on browser, signaling and network traversal conditions. The repository's security design should not be read as a completed independent security audit or a guarantee of zero metadata.</div></div></div>
+                        </details>
+                    </div>
+                </article>
+
+                <article class="lab-card" data-category="ai systems" data-search="jarvis desktop assistant linux ollama flask socketio threejs telemetry voice local ai">
+                    <div class="lab-card-image">
+                        <img src="assets/img/jarvis.webp" alt="J.A.R.V.I.S. desktop assistant" loading="lazy">
+                        <span class="lab-status-badge status-proto"><i class="fas fa-circle-info" aria-hidden="true"></i> Prototype · Linux desktop</span>
+                    </div>
+                    <div class="lab-card-content">
+                        <div class="lab-card-category">LOCAL AI / DESKTOP AUTOMATION</div>
+                        <h4 class="lab-card-title">J.A.R.V.I.S. — Linux Desktop Assistant</h4>
+                        <p class="lab-card-desc">A Linux-oriented assistant experiment combining local Ollama inference, a Flask and Socket.IO interface, system telemetry, Three.js visualization and multi-step terminal workflows.</p>
+                        <div class="project-tags"><span class="tag">Python</span><span class="tag">Ollama</span><span class="tag">Flask</span><span class="tag">Socket.IO</span><span class="tag">Three.js</span><span class="tag">Linux</span></div>
+                        <div class="lab-card-actions">
+                            <a href="https://github.com/Justin-io/J.A.R.V.I.S.M1" class="lab-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Source Repository</a>
+                        </div>
+                        <details class="case-study-accordion">
+                            <summary>Scope &amp; limitations <span>Read before interpreting results</span></summary>
+                            <div class="case-study-details"><div class="case-field"><span class="field-label label-limit"><i class="fas fa-circle-info" aria-hidden="true"></i> Evidence boundary</span><div class="field-content">This is a personal assistant prototype. Local model quality, available tools and terminal permissions determine what it can safely execute.</div></div></div>
+                        </details>
+                    </div>
+                </article>
+
+
+                <article class="lab-card" data-category="ai systems" data-search="friday f r i d a y browser voice assistant single file html javascript pwa offline speech recognition speech synthesis localstorage no backend">
+                    <div class="lab-card-image">
+                        <img src="assets/img/generated/jarvis_web.webp" alt="F.R.I.D.A.Y. browser voice assistant" loading="lazy">
+                        <span class="lab-status-badge status-proto"><i class="fas fa-circle-info" aria-hidden="true"></i> Experimental browser prototype · no backend</span>
+                    </div>
+                    <div class="lab-card-content">
+                        <div class="lab-card-category">BROWSER AI / VOICE INTERFACE EXPERIMENT</div>
+                        <h4 class="lab-card-title">F.R.I.D.A.Y. — Single-File Browser Assistant</h4>
+                        <p class="lab-card-desc">A zero-build browser assistant experiment packaged in a single HTML file, with a voice interface, installable PWA behavior, offline-capable client state and a responsive interface.</p>
+                        <div class="project-tags"><span class="tag">HTML</span><span class="tag">JavaScript</span><span class="tag">Web Speech API</span><span class="tag">SpeechSynthesis</span><span class="tag">PWA</span><span class="tag">localStorage</span></div>
+                        <div class="lab-card-actions">
+                            <a href="https://github.com/Justin-io/F.R.I.D.A.Y" class="lab-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Source Repository</a>
+                        </div>
+                        <details class="case-study-accordion">
+                            <summary>Scope &amp; limitations <span>Read before interpreting results</span></summary>
+                            <div class="case-study-details"><div class="case-field"><span class="field-label label-limit"><i class="fas fa-circle-info" aria-hidden="true"></i> Evidence boundary</span><div class="field-content">Speech recognition availability varies by browser, locale and permissions. Speech synthesis uses browser-provided voices, and offline behavior depends on cached resources. This is a browser-side experiment, not a secure operating-system assistant.</div></div></div>
+                        </details>
+                    </div>
+                </article>
+
+                <article class="lab-card" data-category="hardware" data-search="orion x fpga pcie gen2 ddr3l kicad pcb high speed design">
+                    <div class="lab-card-image">
+                        <img src="assets/img/generated/the_lab.webp" alt="ORION-X FPGA accelerator PCB design" loading="lazy">
+                        <span class="lab-status-badge status-proto"><i class="fas fa-circle-info" aria-hidden="true"></i> Digital hardware design · DRC findings open</span>
+                    </div>
+                    <div class="lab-card-content">
+                        <div class="lab-card-category">FPGA / HIGH-SPEED PCB ENGINEERING</div>
+                        <h4 class="lab-card-title">ORION-X R1 — FPGA PCIe Accelerator</h4>
+                        <p class="lab-card-desc">A KiCad design package for a Kintex-7 FPGA accelerator concept with PCIe Gen2 x4, DDR3L memory, a 12-layer stackup, signal- and power-integrity documents, schematics and manufacturing outputs.</p>
+                        <div class="project-tags"><span class="tag">KiCad</span><span class="tag">FPGA</span><span class="tag">PCIe Gen2 x4</span><span class="tag">DDR3L</span><span class="tag">SI / PI</span><span class="tag">12-Layer PCB</span></div>
+                        <div class="lab-card-actions">
+                            <a href="https://github.com/Justin-io/ORION-X-R1" class="lab-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Source Repository</a>
+                        </div>
+                        <details class="case-study-accordion">
+                            <summary>Scope &amp; limitations <span>Read before interpreting results</span></summary>
+                            <div class="case-study-details"><div class="case-field"><span class="field-label label-limit"><i class="fas fa-circle-info" aria-hidden="true"></i> Evidence boundary</span><div class="field-content">The latest checked DRC report, generated 17 November 2026, lists 69 DRC violations, including dangling tracks and vias. It is not DRC-clean or fabrication-ready; closure and independent engineering review remain necessary.</div></div></div>
+                        </details>
+                    </div>
+                </article>
+
+                <article class="lab-card" data-category="hardware data" data-search="mosaic sigma multi physics material interrogation metasurface ultrasonic eis analog reservoir bayesian">
+                    <div class="lab-card-image">
+                        <img src="assets/img/generated/aura_ap.webp" alt="MOSAIC Sigma multi-physics design concept" loading="lazy">
+                        <span class="lab-status-badge status-proto"><i class="fas fa-circle-info" aria-hidden="true"></i> Simulation-led design · not fabricated</span>
+                    </div>
+                    <div class="lab-card-content">
+                        <div class="lab-card-category">MULTI-PHYSICS / EXPERIMENTAL COMPUTING</div>
+                        <h4 class="lab-card-title">MOSAIC-Σ — Autonomous Matter Intelligence</h4>
+                        <p class="lab-card-desc">A digital research design for a modular instrument concept combining microwave metasurface interrogation, ultrasonic and impedance measurements, analog reservoir computation and Bayesian experiment selection.</p>
+                        <div class="project-tags"><span class="tag">KiCad</span><span class="tag">SystemVerilog</span><span class="tag">Python</span><span class="tag">RF Concepts</span><span class="tag">EIS</span><span class="tag">Bayesian Design</span></div>
+                        <div class="lab-card-actions">
+                            <a href="https://github.com/Justin-io/MOSAIC-SIGMA" class="lab-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Source Repository</a>
+                        </div>
+                        <details class="case-study-accordion">
+                            <summary>Scope &amp; limitations <span>Read before interpreting results</span></summary>
+                            <div class="case-study-details"><div class="case-field"><span class="field-label label-limit"><i class="fas fa-circle-info" aria-hidden="true"></i> Evidence boundary</span><div class="field-content">The repository explicitly states that physical fabrication is excluded. Reported results are based on numerical or circuit simulation, not measurements from a fabricated instrument.</div></div></div>
+                        </details>
+                    </div>
+                </article>
+
+                <article class="lab-card" data-category="ai data" data-search="lexiquery legal document assistant rag parent child indexing pdf citations active development">
+                    <div class="lab-card-image">
+                        <img src="assets/img/generated/lexiquery_ai.webp" alt="LexiQuery AI legal document assistant" loading="lazy">
+                        <span class="lab-status-badge status-proto"><i class="fas fa-circle-info" aria-hidden="true"></i> v0.1.0 · active development</span>
+                    </div>
+                    <div class="lab-card-content">
+                        <div class="lab-card-category">DOCUMENT AI / DOMAIN-SPECIFIC RAG</div>
+                        <h4 class="lab-card-title">LexiQuery AI — Legal Document Assistant</h4>
+                        <p class="lab-card-desc">An early legal-document Q&amp;A application built around PDF ingestion, parent-child retrieval and citation-oriented answers, with an emphasis on preserving clause context.</p>
+                        <div class="project-tags"><span class="tag">Python</span><span class="tag">RAG</span><span class="tag">PDF Ingestion</span><span class="tag">Semantic Retrieval</span><span class="tag">Citations</span></div>
+                        <div class="lab-card-actions">
+                            <a href="https://github.com/Justin-io/LexiQuery-AI" class="lab-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Source Repository</a>
+                        </div>
+                        <details class="case-study-accordion">
+                            <summary>Scope &amp; limitations <span>Read before interpreting results</span></summary>
+                            <div class="case-study-details"><div class="case-field"><span class="field-label label-limit"><i class="fas fa-circle-info" aria-hidden="true"></i> Evidence boundary</span><div class="field-content">This is a software prototype, not legal advice or a substitute for qualified counsel. Citation-oriented output does not guarantee that every answer is correct or complete.</div></div></div>
+                        </details>
+                    </div>
+                </article>
+
+                <article class="lab-card" data-category="data systems" data-search="whatsapp automation suite baileys node express react sqlite campaigns opt out rate limits scheduler">
+                    <div class="lab-card-image">
+                        <img src="assets/img/generated/whatsapp_automation.png" alt="WhatsApp automation suite" loading="lazy">
+                        <span class="lab-status-badge status-proto"><i class="fas fa-circle-info" aria-hidden="true"></i> Application build · consent safeguards</span>
+                    </div>
+                    <div class="lab-card-content">
+                        <div class="lab-card-category">MESSAGING / WORKFLOW AUTOMATION</div>
+                        <h4 class="lab-card-title">WhatsApp Automation Suite</h4>
+                        <p class="lab-card-desc">A Node.js and React messaging workflow application with multi-device connectivity, campaign composition, scheduled follow-ups, contact management, response inbox, opt-out handling and rate controls.</p>
+                        <div class="project-tags"><span class="tag">Node.js</span><span class="tag">Express</span><span class="tag">React</span><span class="tag">Vite</span><span class="tag">Baileys</span><span class="tag">SQLite</span></div>
+                        <div class="lab-card-actions">
+                            <a href="https://github.com/Justin-io/whatsapp-automation-suite" class="lab-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Source Repository</a>
+                        </div>
+                        <details class="case-study-accordion">
+                            <summary>Scope &amp; limitations <span>Read before interpreting results</span></summary>
+                            <div class="case-study-details"><div class="case-field"><span class="field-label label-limit"><i class="fas fa-circle-info" aria-hidden="true"></i> Evidence boundary</span><div class="field-content">The public README describes Baileys-based connectivity, not an official Meta Cloud API integration. Deployments must follow platform policies, consent requirements and applicable messaging laws.</div></div></div>
+                        </details>
+                    </div>
+                </article>
+
+                <article class="lab-card" data-category="ai data" data-search="hope edu hub education platform ai tutor documents sheets assignments presentations roadmap community supabase">
+                    <div class="lab-card-image">
+                        <img src="assets/img/hope_ppt.webp" alt="HOPE education platform" loading="lazy">
+                        <span class="lab-status-badge status-proto"><i class="fas fa-circle-info" aria-hidden="true"></i> Education platform · active codebase</span>
+                    </div>
+                    <div class="lab-card-content">
+                        <div class="lab-card-category">EDTECH / LEARNING SYSTEMS</div>
+                        <h4 class="lab-card-title">HOPE Edu-Hub — Academic Super-Platform</h4>
+                        <p class="lab-card-desc">An education-oriented application codebase with AI tutor workflows, document and spreadsheet tools, presentation and report generation, project design, learning roadmaps and community features.</p>
+                        <div class="project-tags"><span class="tag">React</span><span class="tag">Vite</span><span class="tag">Supabase</span><span class="tag">AI Tutor</span><span class="tag">Hope Docs</span><span class="tag">Learning Tools</span></div>
+                        <div class="lab-card-actions">
+                            <a href="https://github.com/hope-int/IES-Notes" class="lab-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Source Repository</a>
+                        </div>
+                        <details class="case-study-accordion">
+                            <summary>Scope &amp; limitations <span>Read before interpreting results</span></summary>
+                            <div class="case-study-details"><div class="case-field"><span class="field-label label-limit"><i class="fas fa-circle-info" aria-hidden="true"></i> Evidence boundary</span><div class="field-content">This is an evolving platform codebase. Capabilities described in project documentation should be checked against the current deployment and configured providers before being treated as generally available.</div></div></div>
+                        </details>
+                    </div>
+                </article>
+
+                <article class="lab-card" data-category="ai data" data-search="autonomous agentic business intelligence BI analytics refusal semantic layer SQL statistics evidence pending test">
+                    <div class="lab-card-image">
+                        <img src="assets/img/generated/agentic_bi.webp" alt="Autonomous agentic BI workspace" loading="lazy">
+                        <span class="lab-status-badge status-proto"><i class="fas fa-circle-info" aria-hidden="true"></i> Prototype · validation pending</span>
+                    </div>
+                    <div class="lab-card-content">
+                        <div class="lab-card-category">BUSINESS INTELLIGENCE / ANALYTICS</div>
+                        <h4 class="lab-card-title">Autonomous Agentic BI</h4>
+                        <p class="lab-card-desc">A 16-stage business analytics workflow with semantic grounding, SQL validation, statistical decomposition, counterargument review, evidence-linked claims and a deliberate refusal path when available data cannot support a question.</p>
+                        <div class="project-tags"><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">DuckDB</span><span class="tag">React</span><span class="tag">SQL AST</span><span class="tag">Statistics</span><span class="tag">Evidence Store</span></div>
+                        <div class="lab-card-actions">
+                            <a href="https://github.com/Justin-io/autonomous-agentic-bi" class="lab-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Source Repository</a>
+                        </div>
+                        <details class="case-study-accordion">
+                            <summary>Scope &amp; limitations <span>Read before interpreting results</span></summary>
+                            <div class="case-study-details"><div class="case-field"><span class="field-label label-limit"><i class="fas fa-circle-info" aria-hidden="true"></i> Evidence boundary</span><div class="field-content">The repository's committed TEST_MATRIX.md marks its test suites PENDING. This is a design and implementation prototype, not a validated analytics product.</div></div></div>
+                        </details>
+                    </div>
+                </article>
+
+                <article class="lab-card" data-category="ai systems" data-search="personalized email generator agentic ai fastapi nextjs prospect research duckduckgo openrouter llama">
+                    <div class="lab-card-image">
+                        <img src="assets/img/generated/agentic_sales.webp" alt="Personalized email generator agent" loading="lazy">
+                        <span class="lab-status-badge status-proto"><i class="fas fa-circle-info" aria-hidden="true"></i> Prototype · agent workflow</span>
+                    </div>
+                    <div class="lab-card-content">
+                        <div class="lab-card-category">AGENTIC AUTOMATION / SALES RESEARCH</div>
+                        <h4 class="lab-card-title">Personalized Email Generator</h4>
+                        <p class="lab-card-desc">A Next.js and FastAPI application that researches publicly available prospect context and uses an LLM workflow to prepare tailored sales-email drafts.</p>
+                        <div class="project-tags"><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">Next.js</span><span class="tag">OpenRouter</span><span class="tag">Research Agent</span></div>
+                        <div class="lab-card-actions">
+                            <a href="https://github.com/Justin-io/Personalized-Email-Generator-Agentic-AI-" class="lab-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Source Repository</a>
+                        </div>
+                        <details class="case-study-accordion">
+                            <summary>Scope &amp; limitations <span>Read before interpreting results</span></summary>
+                            <div class="case-study-details"><div class="case-field"><span class="field-label label-limit"><i class="fas fa-circle-info" aria-hidden="true"></i> Evidence boundary</span><div class="field-content">Automated prospect research may be incomplete or inaccurate. Outputs require human verification, and outreach must follow privacy, anti-spam and platform rules.</div></div></div>
+                        </details>
+                    </div>
+                </article>
+                <article class="lab-card" data-category="ai systems" data-search="build with hari engineering studio client intake react 19 express cloud run firestore gemini estimation 35 tests">
+                    <div class="lab-card-image">
+                        <img src="assets/img/generated/the_lab.webp" alt="Build with Hari product engineering studio" loading="lazy">
+                        <span class="lab-status-badge status-proto"><i class="fas fa-circle-info" aria-hidden="true"></i> Product engineering platform · 35 tests reported passing</span>
+                    </div>
+                    <div class="lab-card-content">
+                        <div class="lab-card-category">PRODUCT ENGINEERING / CLIENT SYSTEMS</div>
+                        <h4 class="lab-card-title">Build with Hari — Engineering Studio</h4>
+                        <p class="lab-card-desc">A client-intake and estimation platform for independent engineering engagements. It combines a React 19 frontend, Express API, Firestore-backed enquiry records and a Gemini-assisted document and syllabus estimator with a deterministic local rule fallback.</p>
+                        <div class="project-tags"><span class="tag">React 19</span><span class="tag">TypeScript</span><span class="tag">Express</span><span class="tag">Cloud Run</span><span class="tag">Firestore</span><span class="tag">Gemini</span><span class="tag">Zod</span></div>
+                        <div class="lab-card-actions">
+                            <a href="https://github.com/Justin-io/build-with-hari" class="lab-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Source Repository</a>
+                        </div>
+                        <details class="case-study-accordion">
+                            <summary>Scope &amp; limitations <span>Read before interpreting results</span></summary>
+                            <div class="case-study-details">
+                                <div class="case-field">
+                                    <span class="field-label label-eval"><i class="fas fa-vial-circle-check" aria-hidden="true"></i> Repository evidence</span>
+                                    <div class="field-content">The README reports 35 automated tests covering pricing rules, add-ons, quantity bounds, bundle deduplication, rate limiting, validation schemas and HTTP endpoints.</div>
+                                </div>
+                                <div class="case-field">
+                                    <span class="field-label label-limit"><i class="fas fa-circle-info" aria-hidden="true"></i> Evidence boundary</span>
+                                    <div class="field-content">Cloud Run, Firestore, Vercel and Gemini use external configuration and credentials. The documented architecture is not a guarantee that every live resource is currently deployed or available; generated estimates remain subject to human review.</div>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                </article>
+                <article class="lab-card" data-category="security" data-search="bug bounty engineering academy security research education 26 modules prerequisite graph labs evidence gated hypotheses exploit chain reports api security">
+                    <div class="lab-card-image">
+                        <img src="assets/img/generated/recon_framework.webp" alt="Bug Bounty Engineering Academy research workstation" loading="lazy">
+                        <span class="lab-status-badge status-proto"><i class="fas fa-circle-info" aria-hidden="true"></i> Research-learning platform · synthetic labs</span>
+                    </div>
+                    <div class="lab-card-content">
+                        <div class="lab-card-category">SECURITY EDUCATION / RESEARCH WORKFLOWS</div>
+                        <h4 class="lab-card-title">Bug Bounty Engineering Academy</h4>
+                        <p class="lab-card-desc">A structured security-research workstation built around a ten-stage research cycle. It combines a 26-module curriculum, prerequisite graph, adaptive flashcard scheduling, evidence-gated hypotheses, controlled protocol labs, case studies and report/exploit-chain review tools.</p>
+                        <div class="project-tags"><span class="tag">React 19</span><span class="tag">TypeScript</span><span class="tag">Vite</span><span class="tag">SM-2</span><span class="tag">Security Labs</span><span class="tag">Evidence Gates</span></div>
+                        <div class="lab-card-actions">
+                            <a href="https://github.com/Justin-io/BugBounty" class="lab-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Source Repository</a>
+                        </div>
+                        <details class="case-study-accordion">
+                            <summary>Scope &amp; limitations <span>Read before interpreting results</span></summary>
+                            <div class="case-study-details">
+                                <div class="case-field">
+                                    <span class="field-label label-eval"><i class="fas fa-vial-circle-check" aria-hidden="true"></i> Repository evidence</span>
+                                    <div class="field-content">The source includes deterministic tests for seven research-engine areas: prerequisite gating, spaced repetition, evidence-gated verdicts, lab evaluation, exploit-chain integrity, report quality and import validation.</div>
+                                </div>
+                                <div class="case-field">
+                                    <span class="field-label label-limit"><i class="fas fa-circle-info" aria-hidden="true"></i> Evidence boundary</span>
+                                    <div class="field-content">The repository distinguishes verified curriculum structure from reconstructed teaching units and original synthetic labs. The reference PDF itself was not bundled with the checked source snapshot; labs are educational fixtures, not authorization to test third-party systems.</div>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                </article>
+
+                <article class="lab-card" data-category="ai hardware" data-search="nikki aura raspberry pi attendance computer vision face recognition opencv flask edge tts DHT22 MQ135 ADS1115">
+                    <div class="lab-card-image">
+                        <img src="assets/img/generated/iot_camp.webp" alt="NIKKI Raspberry Pi edge-vision attendance prototype" loading="lazy">
+                        <span class="lab-status-badge status-proto"><i class="fas fa-circle-info" aria-hidden="true"></i> Raspberry Pi prototype · biometric safeguards incomplete</span>
+                    </div>
+                    <div class="lab-card-content">
+                        <div class="lab-card-category">EDGE VISION / EMBEDDED IOT</div>
+                        <h4 class="lab-card-title">NIKKI / AURA — Intelligent Attendance System</h4>
+                        <p class="lab-card-desc">A Raspberry Pi attendance prototype combining camera-based face detection and recognition, a Flask dashboard, live enrollment, voice interaction and environmental sensing through DHT22 and MQ135/ADS1115 hardware.</p>
+                        <div class="project-tags"><span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">face_recognition</span><span class="tag">Flask</span><span class="tag">Raspberry Pi 4</span><span class="tag">DHT22</span><span class="tag">ADS1115</span><span class="tag">Edge-TTS</span></div>
+                        <div class="lab-card-actions">
+                            <a href="https://github.com/Justin-io/nikki" class="lab-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Source Repository</a>
+                        </div>
+                        <details class="case-study-accordion">
+                            <summary>Scope &amp; limitations <span>Read before interpreting results</span></summary>
+                            <div class="case-study-details">
+                                <div class="case-field">
+                                    <span class="field-label label-arch"><i class="fas fa-sitemap" aria-hidden="true"></i> Implementation</span>
+                                    <div class="field-content">The documented design includes CSI camera with USB fallback, threaded vision/sensor/voice workers, local face enrollment, attendance APIs and Raspberry Pi GPIO/I²C sensor wiring.</div>
+                                </div>
+                                <div class="case-field">
+                                    <span class="field-label label-limit"><i class="fas fa-circle-info" aria-hidden="true"></i> Privacy &amp; validation boundary</span>
+                                    <div class="field-content">The documentation identifies pickle-based local persistence, no API authentication, no roles and no data encryption. Reported face-recognition figures are developer test notes, not an independently validated benchmark. Do not use with real biometric or attendance records until consent, security, retention and accuracy controls are implemented.</div>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                </article>
+
+                <article class="lab-card" data-category="ai data" data-search="safespend personal finance budgeting safe spend impulse checker dopamine delay wishlist recurring bills expense income AI assistant">
+                    <div class="lab-card-image">
+                        <img src="assets/img/generated/safespend.webp" alt="SafeSpend personal budgeting interface" loading="lazy">
+                        <span class="lab-status-badge status-proto"><i class="fas fa-circle-info" aria-hidden="true"></i> Personal finance prototype · manual data entry</span>
+                    </div>
+                    <div class="lab-card-content">
+                        <div class="lab-card-category">PERSONAL FINANCE / BEHAVIOURAL PRODUCT DESIGN</div>
+                        <h4 class="lab-card-title">SafeSpend — Behaviour-Aware Budgeting</h4>
+                        <p class="lab-card-desc">A budgeting application with daily safe-to-spend calculations, income and expense tracking, recurring bills, analytics, a purchase impulse check, a 24-hour delay flow, wishlist management and an AI assistant for natural-language ledger actions.</p>
+                        <div class="project-tags"><span class="tag">React 19</span><span class="tag">TypeScript</span><span class="tag">Vite</span><span class="tag">Budget Calculations</span><span class="tag">Puter KV</span><span class="tag">Gemini</span><span class="tag">Chart.js</span></div>
+                        <div class="lab-card-actions">
+                            <a href="https://github.com/Justin-io/safespend" class="lab-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Source Repository</a>
+                        </div>
+                        <details class="case-study-accordion">
+                            <summary>Scope &amp; limitations <span>Read before interpreting results</span></summary>
+                            <div class="case-study-details">
+                                <div class="case-field">
+                                    <span class="field-label label-arch"><i class="fas fa-sitemap" aria-hidden="true"></i> Data &amp; interaction model</span>
+                                    <div class="field-content">The public code stores manually entered records in browser LocalStorage, with optional Puter KV sync when signed in. The AI assistant can propose or initiate structured ledger actions through the app workflow.</div>
+                                </div>
+                                <div class="case-field">
+                                    <span class="field-label label-limit"><i class="fas fa-circle-info" aria-hidden="true"></i> Scope limit</span>
+                                    <div class="field-content">No bank-feed or payment-account integration is evidenced in this repository. Financial records and provider API keys are stored through browser LocalStorage and optional Puter KV sync; this is not an encrypted vault and should not be used on shared devices. AI-generated suggestions are not regulated financial advice; review entries and recommendations before relying on them.</div>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                </article>
+
+                <article class="lab-card" data-category="product" data-search="shoproyince hope ecom ecommerce storefront react product catalog shopping cart category search product cards front end">
+                    <div class="lab-card-image">
+                        <img src="assets/img/generated/timeline_shoproyince.webp" alt="Shoproyince e-commerce storefront prototype" loading="lazy">
+                        <span class="lab-status-badge status-proto"><i class="fas fa-circle-info" aria-hidden="true"></i> Front-end prototype · sample catalog</span>
+                    </div>
+                    <div class="lab-card-content">
+                        <div class="lab-card-category">PRODUCT ENGINEERING / E-COMMERCE UI</div>
+                        <h4 class="lab-card-title">Shoproyince — E-commerce Storefront</h4>
+                        <p class="lab-card-desc">A React storefront prototype with a sample product catalog, category filtering, text search, product cards and shopping-cart interactions including quantity updates and item removal.</p>
+                        <div class="project-tags"><span class="tag">React</span><span class="tag">JavaScript</span><span class="tag">Create React App</span><span class="tag">Product UI</span><span class="tag">Cart State</span></div>
+                        <div class="lab-card-actions">
+                            <a href="https://github.com/Justin-io/HOPE-Ecom" class="lab-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Source Repository</a>
+                        </div>
+                        <details class="case-study-accordion">
+                            <summary>Scope &amp; limitations <span>Read before interpreting results</span></summary>
+                            <div class="case-study-details">
+                                <div class="case-field">
+                                    <span class="field-label label-limit"><i class="fas fa-circle-info" aria-hidden="true"></i> Evidence boundary</span>
+                                    <div class="field-content">The inspected app uses in-memory sample products and client-side cart state. A production backend, customer accounts, inventory, order management and payment-provider integration are not established by this repository snapshot.</div>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                </article>
+                </div>
+                <div class="lab-archive-panel">
+                    <p class="archive-intro">Further reading and tools:</p>
+                    <div class="archive-links">
+                        <a href="phy.htm" class="btn btn-secondary"><i class="fas fa-atom" aria-hidden="true"></i> Theoretical physics notes · speculative</a>
+                        <a href="cyb.htm" class="btn btn-secondary"><i class="fas fa-shield-halved" aria-hidden="true"></i> Cybersecurity research notes</a>
+                        <a href="tools.html" class="btn btn-secondary"><i class="fas fa-toolbox" aria-hidden="true"></i> Browser utilities</a>
+                    </div>
+                </div>
+            </div>
+        </details>
+    </section>
+
+
+    <!-- Achievements & Credibility Section -->
+        <section id="achievements">
+        <div class="section-header">
+            <div class="section-label">ENGINEERING EVIDENCE</div>
+            <h2 class="section-title">What has been tested — and what has not</h2>
+            <p class="section-subtitle">A public portfolio should let reviewers distinguish automated tests, synthetic benchmarks, simulations and real-world validation.</p>
+        </div>
+        <div class="achievements-container">
+            <div class="achievement-card">
+                <div class="achievement-icon"><i class="fas fa-vial" aria-hidden="true"></i></div>
+                <div class="achievement-date">Automated test matrices</div>
+                <h3 class="achievement-title">Tests attached to source</h3>
+                <p class="achievement-description">The AI Data Scientist repository records 46 passing tests across 10 suites; the RAG Evaluation repository records 34 passing tests across 9 suites. Bug Bounty Engineering Academy adds deterministic tests for prerequisite gating, review scheduling, evidence gates, lab evaluation, exploit-chain integrity, report quality and import validation. These are repository-level test records, not a production uptime or accuracy guarantee.</p>
+            </div>
+            <div class="achievement-card">
+                <div class="achievement-icon"><i class="fas fa-database" aria-hidden="true"></i></div>
+                <div class="achievement-date">Data provenance</div>
+                <h3 class="achievement-title">Synthetic data is labelled</h3>
+                <p class="achievement-description">The RAG and fraud projects use synthetic challenge data; V.O.I.D.E. 2.0 uses synthetic telemetry and separate ground-truth files. No real customer or plant performance is inferred from those datasets.</p>
+            </div>
+            <div class="achievement-card">
+                <div class="achievement-icon"><i class="fas fa-shield-halved" aria-hidden="true"></i></div>
+                <div class="achievement-date">Security boundaries</div>
+                <h3 class="achievement-title">Defensive tools have stated limits</h3>
+                <p class="achievement-description">Q-SAFE is early-stage static triage, not certified antivirus or EDR. SENTINEL-X is a synthetic lab SIEM and is not intended for connection to third-party networks. NIKKI/AURA's biometric attendance prototype currently uses local pickle persistence and lacks API authentication and data encryption, so it is not suitable for deployment with sensitive attendance records.</p>
+            </div>
+            <div class="achievement-card">
+                <div class="achievement-icon"><i class="fas fa-microchip" aria-hidden="true"></i></div>
+                <div class="achievement-date">Hardware readiness</div>
+                <h3 class="achievement-title">Digital design is not fabrication</h3>
+                <p class="achievement-description">ORION-X's latest checked DRC report lists 69 findings dated 17 November 2026. MOSAIC-Σ is simulation-led and explicitly not fabricated. Neither is described here as a validated physical product.</p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Contact Section (Start a Project Lead Form) -->
+    <section id="contact">
+        <div class="section-header">
+            <div class="section-label">START A PROJECT</div>
+            <h2 class="section-title">Let's Build Something Exceptional</h2>
+            <p class="section-subtitle">Have an ambitious product idea, need an intelligent automation tool, or want to augment your engineering team? Submit an inquiry below.</p>
+        </div>
+        <div class="contact-container">
+            <div class="contact-info">
+                <div class="contact-card">
+                    <h3 class="contact-title">Direct Partnership</h3>
+                    <p class="contact-description">
+                        I work with founders, startups and product teams to scope and build applied AI, analytics, automation and software systems with clear deliverables and technical handover.
+                    </p>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>Direct Email</h4>
+                            <p><a href="mailto:harinandan.ofc@gmail.com" style="color: inherit; text-decoration: none;">harinandan.ofc@gmail.com</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>Availability</h4>
+                            <p style="color: #00ff64; font-weight: 600;">Available for scoped engineering engagements</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-location-dot"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>Location</h4>
+                            <p>Kerala, India (Remote Worldwide)</p>
+                        </div>
+                    </div>
+                    <div class="footer-links">
+                        <a href="https://github.com/Justin-io" class="footer-link" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                        <a href="CV.pdf" class="footer-link" target="_blank"><i class="fas fa-file-pdf"></i> Resume</a>
+                        <a href="tools.html" class="footer-link"><i class="fas fa-wrench"></i> Utilities</a>
+                        <a href="blog.html" class="footer-link"><i class="fas fa-newspaper"></i> Blog</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form">
+                <h3 class="contact-title">Project Inquiry Form</h3>
+                <form action="https://getform.io/f/161d40d2-275f-4027-b38d-926c67413486" method="POST" id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Your Name *</label>
+                            <input type="text" id="name" name="name" placeholder="Alex Morgan" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Work Email *</label>
+                            <input type="email" id="email" name="email" placeholder="alex@company.com" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="project_type">What are you looking to build? *</label>
+                        <select id="project_type" name="project_type" required>
+                            <option value="" disabled selected>Select a Service Offering...</option>
+                            <option value="AI Application &amp; LLM Systems">AI Application / Custom RAG / Autonomous Agent</option>
+                            <option value="Full-Stack Web App / MVP">Full-Stack Web Product / SaaS MVP</option>
+                            <option value="Workflow Automation &amp; Bots">Workflow Automation / WhatsApp Bot / Data Scraper</option>
+                            <option value="Security Engineering &amp; Audit">Security Audit / API Hardening / Zero-Trust Architecture</option>
+                            <option value="Other Custom Engineering">Other Custom Engineering Project</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="timeline">Estimated Timeline</label>
+                            <select id="timeline" name="timeline">
+                                <option value="Urgent (< 2 Weeks)">Urgent (&lt; 2 Weeks)</option>
+                                <option value="1 Month" selected>1 Month</option>
+                                <option value="2-3 Months">2–3 Months</option>
+                                <option value="Flexible / Ongoing">Flexible / Ongoing Partnership</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="budget">Estimated Budget</label>
+                            <select id="budget" name="budget">
+                                <option value="$1,500 - $3,000">$1,500 – $3,000</option>
+                                <option value="$3,000 - $6,000" selected>$3,000 – $6,000</option>
+                                <option value="$6,000 - $10,000+">$6,000 – $10,000+</option>
+                                <option value="Custom / Let's Discuss">Custom / Let's Discuss</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Project Overview &amp; Key Requirements *</label>
+                        <textarea id="message" name="message" rows="4" placeholder="Tell me about your product goals, technical stack, current bottlenecks, and any specific deadlines..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="form-submit">
+                        <i class="fas fa-paper-plane" aria-hidden="true"></i> Send Project Inquiry
+                    </button>
+
+                    <div id="contactFormStatus" role="status" aria-live="polite" style="display: none; margin-top: 15px; border-radius: 10px; padding: 12px 16px; font-size: 0.9rem;"></div>
+
+                    <div class="form-guarantee">
+                        <i class="fas fa-shield-halved" aria-hidden="true"></i>
+                        <span>Direct enquiry · Scope and requirements reviewed before commitment</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    </main>
+
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">HN</div>
+            <div class="footer-text">
+                Hari Nandan K &mdash; AI, Data &amp; Systems Engineer.<br>
+                Building applied AI, analytical tools, defensive utilities and engineering prototypes.
+            </div>
+            <div class="footer-links">
+                <a href="#work" class="footer-link">Work</a>
+                <a href="#services" class="footer-link">Services</a>
+                <a href="#process" class="footer-link">Process</a>
+                <a href="#about" class="footer-link">About</a>
+                <a href="#lab" class="footer-link">Lab</a>
+                <a href="#contact" class="footer-link">Contact</a>
+                <a href="tools.html" class="footer-link">Utilities</a>
+                <a href="blog.html" class="footer-link">Blog</a>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2026 Hari Nandan K.
+            </div>
+        </div>
+    </footer>
+
+
+
+
+    <!-- Timeline Image Modal -->
+    <div id="timeline-modal" class="image-modal">
+        <span class="close-modal">&times;</span>
+        <div class="modal-nav-container">
+            <a class="modal-prev" id="modal-prev">&#10094;</a>
+            <img class="modal-content" id="img01">
+            <a class="modal-next" id="modal-next">&#10095;</a>
+        </div>
+        <div id="caption"></div>
+    </div>
+
+
+
+    <script src="assets/js/performance.js"></script>
+    <script src="assets/js/main.js?v=2"></script>
+    <script src="assets/js/portfolio-motion.js?v=2" defer></script>
+    <script type="module" src="assets/js/three-scenes.js?v=25"></script><script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    }, err => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+    </script>
+</body>
+
+</html>

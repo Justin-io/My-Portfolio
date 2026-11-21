@@ -1,0 +1,21 @@
+{
+    "name": "Hari Nandan K - Portfolio",
+    "short_name": "Hari Portfolio",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#040404",
+    "theme_color": "#040404",
+    "icons": [
+        {
+            "src": "assets/img/20240421_174638.webp",
+            "sizes": "192x192",
+            "type": "image/webp"
+        },
+        {
+            "src": "assets/img/20240421_174638.webp",
+            "sizes": "512x512",
+            "type": "image/webp"
+        }
+    ],
+    "orientation": "portrait"
+}

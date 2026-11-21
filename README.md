@@ -1,45 +1,46 @@
-# Hari Nandan K — Engineering Portfolio
+# Hari Nandan K. — Applied AI & Systems Engineering Portfolio
 
-Source for [justinalexia.vercel.app](https://justinalexia.vercel.app/), a static portfolio covering selected work in applied AI, data systems, retrieval evaluation, product engineering, defensive security, environmental intelligence, digital signal processing and embedded engineering.
+Production-ready personal portfolio and technical case study platform engineered with React 19, TypeScript, Tailwind CSS v4, and Vite.
 
-## What the site contains
+## Architecture & Technology Stack
 
-- **Selected engineering work** — three case studies with architecture, repository test evidence and explicit scope limits.
-- **R&D archive** — a searchable selection of 22 repository-backed project entries, including AI/data systems, security research, edge vision, personal finance, e-commerce, environmental intelligence, DSP and digital hardware research.
-- **Technical capabilities** — tools and methods observed in the selected project code and documentation.
-- **Engineering evidence** — a distinction between automated tests, synthetic benchmarks, simulations, prototypes and physical validation.
-- **Contact and resume links** — direct project inquiry and CV access.
+- **Framework**: React 19 (`react`, `react-dom`)
+- **Language**: TypeScript (`strict: true`)
+- **Styling**: Tailwind CSS v4 (`@tailwindcss/vite`) with custom liquid-glass and obsidian astrometric tokens
+- **Animations & Physics**: Motion v12 (`motion`), custom parametric snake trajectory physics, and hydro-droplet nanobot swarm engine
+- **Icons**: Lucide React
+- **Build Toolchain**: Vite 8 with ESModule bundling
 
-## Implementation
+## Flagship Case Studies
 
-The deployed site is a static HTML/CSS/JavaScript application. It uses:
+1. **Autonomous AI Data Scientist**: 7-stage deterministic reasoning pipeline with AST SQL validation and hypothesis testing.
+2. **Production RAG Evaluation Platform**: Dual-layer retrieval vs. faithfulness verification harnesses.
+3. **V.O.I.D.E. Industrial Intelligence**: Multichannel industrial chiller telemetry analysis with regularized predictive modeling.
+4. **ORION-X R1 Accelerator**: AMD Kintex-7 XC7K160T PCIe Gen2 x4 hardware design study in KiCad.
+5. **JARVIS Architecture**: 3-tier local-first personal assistant with privacy-preserving cloud routing.
 
-- Three.js (WebGPU import map) for the interactive background scene.
-- GSAP and ScrollTrigger for motion.
-- Bootstrap and local/vendor CSS for layout and components.
-- Vanilla JavaScript for navigation, project filtering, contact form handling and progressive enhancement.
-- A service worker for basic same-origin caching.
-
-There is no application build step required for the static portfolio itself. Preview locally with any static HTTP server from the repository root, for example:
+## Development & Build Commands
 
 ```bash
-python3 -m http.server 8080
+# Install production-locked dependencies
+npm install
+
+# Run static type checking
+npm run lint
+
+# Execute automated logic and physics test suite
+npm test
+
+# Build production bundle
+npm run build
+
+# Preview production build locally
+npm run preview
 ```
 
-Then open [http://localhost:8080](http://localhost:8080).
+## Security & Production Hardening
 
-## Content and evidence policy
-
-Project descriptions are based on the linked repository documentation and checked project artifacts. Metrics are scoped to the project that reports them. Synthetic data, benchmark harnesses, emulated telemetry, simulation outputs and code-level tests are not presented as real-world production validation.
-
-The public project list is curated. Older experiments, forks, empty repositories, inaccessible repositories and unrelated templates are not automatically represented as completed work. Some repositories are deliberately omitted because their current source or documentation does not support a reliable project description.
-
-## License
-
-The repository includes a **BSD 2-Clause License** in `LICENSE`. That license applies according to its terms to covered source code. Third-party libraries, fonts, images and other assets may have separate licenses or usage conditions; review their respective notices before reuse.
-
-## Links
-
-- Portfolio: https://justinalexia.vercel.app/
-- GitHub profile: https://github.com/Justin-io
-- Selected projects: https://github.com/Justin-io
+- **Zero Data Leak**: No secret keys, credentials, or private API endpoints committed in code or bundles.
+- **Sanitized Manifest**: Strict `.gitignore` preventing exposure of local credentials, `.env*` files, operating system caches, and debug logs.
+- **Security Headers**: Enforced via `vercel.json` (`X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Strict-Transport-Security`, `Permissions-Policy`).
+- **Input Validation**: Client-side form constraints with strict mailto construction and AST validation.
