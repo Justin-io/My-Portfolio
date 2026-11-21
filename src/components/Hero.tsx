@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   ArrowRight,
+  ArrowUpRight,
   Cpu,
   Compass,
   ChevronLeft,
@@ -534,21 +535,14 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
             </p>
           </div>
 
-          {/* CTA Action Row with Slide-Up-From-Bottom Entrance Animations */}
-          <div className="mt-9 pt-6 border-t border-white/15 overflow-hidden">
+          {/* CTA Action Row */}
+          <div className="mt-9 pt-6 border-t border-white/15">
             <div className="flex flex-wrap items-center gap-3 sm:gap-4">
-              <motion.a
+              <a
                 href="/#work"
                 onClick={(e) => {
                   e.preventDefault();
                   onNavigate('/', 'work');
-                }}
-                initial={{ opacity: 0, y: 44, filter: 'blur(6px)' }}
-                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                transition={{
-                  delay: 0.95,
-                  duration: 0.85,
-                  ease: [0.22, 1, 0.36, 1]
                 }}
                 data-nanobot-keyword="Explore My Work"
                 data-nanobot-priority="2"
@@ -556,61 +550,62 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
               >
                 <span>Explore My Work</span>
                 <ArrowRight className="w-4 h-4" />
-              </motion.a>
+              </a>
 
-              <motion.a
+              <a
                 href="/contact"
                 onClick={(e) => {
                   e.preventDefault();
                   onNavigate('/contact', 'contact');
                 }}
-                initial={{ opacity: 0, y: 44, filter: 'blur(6px)' }}
-                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                transition={{
-                  delay: 1.15,
-                  duration: 0.85,
-                  ease: [0.22, 1, 0.36, 1]
-                }}
                 className="inline-flex items-center gap-2.5 px-5 sm:px-6 py-3.5 rounded-xl glass-interactive text-[#FFFFFF] text-sm font-medium whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FFFFFF]"
               >
                 <span>Get in Touch</span>
-              </motion.a>
+              </a>
 
-              <motion.a
+              <a
                 href="/projects"
                 onClick={(e) => {
                   e.preventDefault();
                   onNavigate('/projects');
                 }}
-                initial={{ opacity: 0, y: 36, filter: 'blur(4px)' }}
-                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                transition={{
-                  delay: 1.32,
-                  duration: 0.85,
-                  ease: [0.22, 1, 0.36, 1]
-                }}
                 className="inline-flex items-center gap-2 px-3 py-3 text-sm font-medium text-[#A1A1AA] hover:text-[#FFFFFF] transition-colors whitespace-nowrap shrink-0"
               >
                 <span>All 5 Case Studies</span>
-              </motion.a>
+              </a>
 
               {OWNER_CONTACT_INFO.resumeAvailable && (
-                <motion.a
+                <a
                   href="/resume.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  initial={{ opacity: 0, y: 36 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    delay: 1.45,
-                    duration: 0.85,
-                    ease: [0.22, 1, 0.36, 1]
-                  }}
                   className="inline-flex items-center gap-2 px-3 py-3 text-sm font-medium text-[#A1A1AA] hover:text-[#FFFFFF] transition-colors whitespace-nowrap shrink-0"
                 >
-                  <span>View Resume</span>
-                </motion.a>
+                  <span>Resume</span>
+                </a>
               )}
+
+              <a
+                href={OWNER_CONTACT_INFO.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-3 text-sm font-medium text-[#A1A1AA] hover:text-[#FFFFFF] transition-colors whitespace-nowrap shrink-0"
+                aria-label="GitHub Profile: Justin-io"
+              >
+                <span>GitHub</span>
+                <ArrowUpRight className="w-3.5 h-3.5 text-[#71717A]" />
+              </a>
+
+              <a
+                href={OWNER_CONTACT_INFO.linkedinUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-3 text-sm font-medium text-[#A1A1AA] hover:text-[#FFFFFF] transition-colors whitespace-nowrap shrink-0"
+                aria-label="LinkedIn Profile: Hari Nandan K."
+              >
+                <span>LinkedIn</span>
+                <ArrowUpRight className="w-3.5 h-3.5 text-[#71717A]" />
+              </a>
             </div>
           </div>
         </div>

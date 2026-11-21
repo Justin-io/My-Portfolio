@@ -8,7 +8,8 @@ import {
   getAdjacentProjects,
   getVoideChillerTelemetry,
   simulateJarvisRouting,
-  validateContactInquiry
+  validateContactInquiry,
+  GETFORM_ENDPOINT
 } from './portfolioLogic';
 import {
   computeAsciiMorphFrame,
@@ -145,6 +146,19 @@ test('validateContactInquiry enforces required fields and builds mailto URI when
   });
   assert.equal(valid.valid, true);
   assert.ok(valid.mailtoHref?.startsWith('mailto:harinandhan972@gmail.com?subject='));
+
+  assert.equal(GETFORM_ENDPOINT, 'https://getform.io/f/161d40d2-275f-4027-b38d-926c67413486');
+
+  const validWithProjectType = validateContactInquiry({
+    name: 'Sarah Connor',
+    email: 'sarah@skynet-defense.org',
+    project_type: 'AI Application & LLM Systems',
+    timeline: '1 Month',
+    budget: '$3,000 - $6,000',
+    message: 'Need autonomous telemetry analysis and defensive security audit.'
+  });
+  assert.equal(validWithProjectType.valid, true);
+  assert.ok(validWithProjectType.mailtoHref?.includes('AI%20Application%20%26%20LLM%20Systems'));
 });
 
 test('computeAsciiMorphFrame transitions Hari Nandan K. into a hyper-detailed ASCII snake and slithers out during navbar-seek', () => {

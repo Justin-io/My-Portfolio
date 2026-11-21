@@ -202,6 +202,8 @@ export function simulateJarvisRouting(
   };
 }
 
+export const GETFORM_ENDPOINT = 'https://getform.io/f/161d40d2-275f-4027-b38d-926c67413486';
+
 export interface ContactFormInput {
   name: string;
   email: string;
